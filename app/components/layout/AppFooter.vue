@@ -1,7 +1,7 @@
 <template>
   <footer class="bg-neutral-800 text-white py-12 mt-16">
     <div class="container mx-auto px-6">
-      <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
         <!-- School Info -->
         <div class="md:col-span-1">
           <div class="flex items-center gap-4 mb-4">
@@ -75,17 +75,6 @@
           </div>
         </div>
 
-        <!-- Additional Links -->
-        <div class="md:col-span-1">
-          <h4 class="text-lg font-semibold mb-4">Tautan Tambahan</h4>
-          <ul class="space-y-2">
-            <li><a href="#" class="text-neutral-300 hover:text-white transition duration-300">Galeri</a></li>
-            <li><a href="#" class="text-neutral-300 hover:text-white transition duration-300">Ekstrakurikuler</a></li>
-            <li><a href="#" class="text-neutral-300 hover:text-white transition duration-300">Alumni</a></li>
-            <li><a href="#" class="text-neutral-300 hover:text-white transition duration-300">Karir</a></li>
-            <li><a href="#" class="text-neutral-300 hover:text-white transition duration-300">FAQ</a></li>
-          </ul>
-        </div>
       </div>
 
       <!-- Additional Links Row -->
