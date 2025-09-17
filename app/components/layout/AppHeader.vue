@@ -9,32 +9,45 @@ const menuItems = [
   {
     title: 'Beranda',
     submenu: [
-      { title: 'Home', desc: 'Halaman utama website', icon: 'lucide:home' },
-      { title: 'Dashboard', desc: 'Panel kontrol siswa', icon: 'lucide:layout-dashboard' }
+      { title: 'Home', desc: 'Halaman utama website', icon: 'lucide:home', to: '/' },
+      { title: 'Dashboard', desc: 'Panel kontrol siswa', icon: 'lucide:layout-dashboard', to: '/dashboard' }
     ]
   },
   {
     title: 'Tentang Kami',
     submenu: [
-      { title: 'Sejarah', desc: 'Perjalanan sekolah', icon: 'lucide:book-open' },
-      { title: 'Visi Misi', desc: 'Visi dan misi sekolah', icon: 'lucide:target' },
-      { title: 'Struktur Organisasi', desc: 'Tim pengelola', icon: 'lucide:users' }
+      { title: 'Sejarah', desc: 'Perjalanan sekolah', icon: 'lucide:book-open', to: '/sejarah' },
+      { title: 'Visi Misi', desc: 'Visi dan misi sekolah', icon: 'lucide:target', to: '/visi-misi' },
+      { title: 'Profile Sekolah', desc: 'Profil lengkap sekolah', icon: 'lucide:building', to: '/informasi/profile-sekolah' },
+      { title: 'Struktur Organisasi', desc: 'Tim pengelola', icon: 'lucide:users', to: '/informasi/struktur-organisasi' }
     ]
   },
   {
     title: 'Jurusan',
     submenu: [
-      { title: 'RPL', desc: 'Rekayasa Perangkat Lunak', icon: 'lucide:code' },
-      { title: 'TKJ', desc: 'Teknik Komputer Jaringan', icon: 'lucide:network' },
-      { title: 'Animasi', desc: 'Desain Komunikasi Visual', icon: 'lucide:palette' }
+      { title: 'RPL', desc: 'Rekayasa Perangkat Lunak', icon: 'lucide:code', to: '/jurusan/rpl' },
+      { title: 'TKJ', desc: 'Teknik Komputer Jaringan', icon: 'lucide:network', to: '/jurusan/tkj' },
+      { title: 'DKV', desc: 'Desain Komunikasi Visual', icon: 'lucide:palette', to: '/jurusan/dkv' },
+      { title: 'EI', desc: 'Teknik Elektronika Industri', icon: 'lucide:zap', to: '/jurusan/ei' },
+      { title: 'MT', desc: 'Mekatronika', icon: 'lucide:cog', to: '/jurusan/mt' },
+      { title: 'BC', desc: 'Broadcasting', icon: 'lucide:radio', to: '/jurusan/bc' },
+      { title: 'Animasi', desc: 'Animasi', icon: 'lucide:film', to: '/jurusan/animasi' },
+      { title: 'AV', desc: 'Teknik Audio Visual', icon: 'lucide:video', to: '/jurusan/av' }
     ]
   },
   {
     title: 'Informasi',
     submenu: [
-      { title: 'Berita', desc: 'Berita terbaru sekolah', icon: 'lucide:newspaper' },
-      { title: 'Prestasi', desc: 'Pencapaian siswa', icon: 'lucide:trophy' },
-      { title: 'Kontak', desc: 'Informasi kontak', icon: 'lucide:phone' }
+      { title: 'Berita', desc: 'Berita terbaru sekolah', icon: 'lucide:newspaper', to: '/berita' },
+      { title: 'Prestasi', desc: 'Pencapaian siswa', icon: 'lucide:trophy', to: '/prestasi' },
+      { title: 'Kontak', desc: 'Informasi kontak', icon: 'lucide:phone', to: '/kontak' }
+    ]
+  },
+  {
+    title: 'Utilitas',
+    submenu: [
+      { title: 'Anonymous BK', desc: 'Konsultasi anonim', icon: 'lucide:shield', to: '/utilitas/anonymous-bk' },
+      { title: 'Traffic Tracker', desc: 'Pelacak lalu lintas website', icon: 'lucide:bar-chart', to: '/utilitas/traffic-tracker' }
     ]
   }
 ]
@@ -79,7 +92,7 @@ onMounted(() => {
                 <!-- Submenu -->
                 <div class="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border border-gray-200">
                     <div class="py-2">
-                        <div v-for="(sub, subIndex) in item.submenu" :key="subIndex" class="px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors duration-200">
+                        <NuxtLink v-for="(sub, subIndex) in item.submenu" :key="subIndex" :to="sub.to" class="block px-4 py-3 hover:bg-gray-50 transition-colors duration-200">
                             <div class="flex items-center gap-3">
                                 <Icon :name="sub.icon" size="20" class="text-blue-600" />
                                 <div>
@@ -87,7 +100,7 @@ onMounted(() => {
                                     <p class="text-sm text-gray-600">{{ sub.desc }}</p>
                                 </div>
                             </div>
-                        </div>
+                        </NuxtLink>
                     </div>
                 </div>
             </div>
