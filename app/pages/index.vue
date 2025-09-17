@@ -7,25 +7,46 @@
 <template>
 
 <main class="flex flex-col gap-20">
-    <section class="h-screen flex items-center justify-center">
+    <section class="min-h-screen flex items-center justify-center pt-24 md:pt-20 pb-10 px-4">
         <div class="absolute bg-blend-darken bg-[url(/images/background-aula.jpg)] w-full h-full bg-cover bg-top top-0 left-0 right-0 bottom-0">
             <div class="bg-gradient-to-t from-black/65 to-transparent w-full h-full"> </div>
         </div>
-        <div class="z-50 flex md:flex-row flex-col items-center md:gap-100 gap-20">
-            <div class="flex flex-col gap-3 text-white">
-                <h1 class="text-4xl font-bold">INORASI</h1>
-                <p>Inovasi Raih Prestasi</p>
-                
-                <a href="#" class="text-lg gap-2 flex items-center justify-center hover:text-blue-600 transition">
-                    Pelajari Lebih Dalam
-                    <Icon name="lucide:chevron-right" size="24" />
-                </a>
+        <div class="z-50 flex md:flex-row flex-col items-center md:gap-12 gap-6">
+            <div class="flex flex-col gap-2 md:gap-3 text-white max-w-sm md:max-w-md text-center md:text-left">
+                <h1 class="text-2xl md:text-4xl lg:text-5xl font-bold">INORASI</h1>
+                <p class="text-sm md:text-lg lg:text-xl font-semibold">Inovasi Raih Prestasi</p>
+                <p class="text-xs md:text-base leading-relaxed">
+                    SMK Negeri 2 Singosari - Tempat di mana inovasi bertemu dengan prestasi. Kami berkomitmen untuk membentuk generasi muda yang siap menghadapi tantangan masa depan melalui pendidikan kejuruan berkualitas.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-2 md:gap-3 mt-2 md:mt-3 justify-center md:justify-start items-center">
+                    <a href="#" class="w-fit bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 md:px-5 md:py-2 rounded-lg font-semibold transition flex items-center gap-2 text-xs md:text-sm">
+                        Pelajari Lebih Dalam
+                        <Icon name="lucide:book-open" size="14" />
+                    </a>
+                    <a href="#berita" class="w-fit border-2 border-white text-white hover:bg-white hover:text-black px-3 py-2 md:px-5 md:py-2 rounded-lg font-semibold transition flex items-center gap-2 text-xs md:text-sm">
+                        Berita Terbaru
+                        <Icon name="lucide:newspaper" size="14" />
+                    </a>
+                </div>
+                <div class="flex gap-3 md:gap-5 mt-3 md:mt-4 justify-center md:justify-start">
+                    <div class="text-center">
+                        <div class="text-base md:text-xl font-bold">7</div>
+                        <div class="text-xs md:text-sm">Jurusan</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-base md:text-xl font-bold">1000+</div>
+                        <div class="text-xs md:text-sm">Siswa</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-base md:text-xl font-bold">50+</div>
+                        <div class="text-xs md:text-sm">Prestasi</div>
+                    </div>
+                </div>
             </div>
-            <div class="flex items-center justify-center">
+            <div class="flex items-center justify-center mt-4 md:mt-0">
                 <img
-                    src="/images/logo.webp" 
-                    width="300"
-                    height="300" />
+                    src="/images/logo.webp"
+                    class="w-32 h-32 md:w-56 md:h-56 lg:w-64 lg:h-64 drop-shadow-lg" />
             </div>
         </div>
     </section>
@@ -61,23 +82,11 @@ Wassalamu'alaikum wr.wb.
             </div>
         </div>
     </section>
-    <section class="h-min-screen">
-        <div class="text-center md:text-left container mx-auto flex flex-col items-center gap-5">
+    <section class="h-min-screen py-20">
+        <div class="text-center container mx-auto flex flex-col items-center gap-5">
             <h2 class="text-3xl font-bold">Jejak Sejarah Kami</h2>
             <p>Perjalanan SMK Negeri 2 Singosari dalam mengembangkan pendidikan kejuruan berkualitas di Kabupaten Malang.</p>
-            <div class="flex flex-col">
-                <div class="w-100 shadow-sm gap-5 flex flex-col p-5 rounded-lg bg-neutral-200">
-                    <div class="flex flex-col">
-                        <div class="bg-neutral-100 p-2 w-fit rounded-lg">
-                            <p class="text-blue-600 font-bold">2007</p>
-                        </div>
-                        <h3 class="text-2xl text-right font-bold">Awal Berdiri</h3>
-                    </div>
-                    <p class="text-sm text-right">
-                        SMK Negeri 2 Singosari didirikan secara resmi pada tanggal 25 Mei 2007 berdasarkan surat Perjanjian Kerjasama No. 0570ax/C5.4/Kep/KU/2007 antara Bupati Malang dengan Direktur Pendidikan Sekolah Menengah Kejuruan.
-                    </p>
-                </div>
-            </div>
+            <Timeline />
         </div>
     </section>
     <section class="h-fit">
@@ -90,37 +99,7 @@ Wassalamu'alaikum wr.wb.
     <section class="h-min-screen">
         <div class="container mx-auto flex flex-col items-center gap-5">
             <h2 class="text-3xl font-bold">Prestasi</h2>
-            <div class="w-auto md:w-200 flex flex-col bg-neutral-100 gap-5 rounded-lg shadow-sm p-8">
-                <div class="flex flex-col md:flex-row items-center gap-10">
-                    <img src="/images/placeholder.jpg" width="350" />
-                    <div class="flex flex-col gap-5">
-                        <h3 class="text-2xl font-bold">
-                            LKS 2023 Kab. Malang : Kami Lolos Enam Bidang Lomba untuk Menuju Tingkat Provinsi
-                        </h3>
-                        <p>
-                            SMKN 2 Singosari sukses menggelar Lomba Kompetensi Siswa (LKS) SMK tingkat Kabupaten Malang selama dua hari sejak Senin (6/3). Hasilnya, 13 siswa berhasil meraih prestasi dengan 6 bidang lomba lolos ke tingkat Provinsi Jawa Timur.
-                        </p>
-                    </div>
-                </div>
-                <div>
-                    <div class="bg-neutral-600 h-1 w-full">
-
-                    </div>
-                </div>
-                <div class="flex justify-between">
-                    <div class="flex gap-5">
-                        <button class="border-neutral-400 border-1 cursor-pointer bg-neutral-300 p-2 flex items-center justify-center rounded-full shadow-lg transition hover:bg-blue-600 hover:border-blue-600 hover:text-white hover:scale-110">
-                            <Icon name="lucide:chevron-left" size="24" />
-                        </button>
-                        <button class="border-neutral-400 border-1 cursor-pointer bg-neutral-300 p-2 flex items-center justify-center rounded-full shadow-lg transition hover:bg-blue-600 hover:text-white hover:border-blue-600 hover:scale-110">
-                            <Icon name="lucide:chevron-right" size="24" />
-                        </button>
-                    </div>
-                    <div class="flex items-center justify-center">
-                        <h3 class="text-2xl font-bold">1/5</h3>
-                    </div>
-                </div>
-            </div>
+            <AchievementCarousel />
         </div>
     </section>
     <section class="h-min-screen">

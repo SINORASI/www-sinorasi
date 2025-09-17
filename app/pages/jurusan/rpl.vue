@@ -12,7 +12,7 @@
 
 <template>
     <main>
-        <section class="h-screen flex flex-col items-center justify-center md:gap-15 gap-8">
+        <section class="min-h-screen flex flex-col items-center justify-center md:gap-15 gap-8 px-4 pt-24 md:pt-20 pb-10">
             <div class="flex md:flex-row flex-col justify-center items-center gap-4">
                 <img src="/images/majorIcon/rpl.webp" alt="logo jurusan" class="md:w-70 w-20">
                 <h1 class="font-bold text-4xl tracking-wider text-center">Rekayasa Perangkat Lunak</h1>
@@ -21,7 +21,7 @@
             <hr class="border-1 border-zinc-200 max-w-4xl w-full">
 
             <div class="flex md:max-w-4xl max-w-lg w-full p-2">
-                <p class="text-center tracking-wide">di poin ini akan di jelaskan sedikt tentang jurusan RPL, RPL tuh ngapain aja sih dll. di poin ini akan di jelaskan sedikt tentang jurusan RPL, RPL tuh ngapain aja sih dll. di poin ini akan di jelaskan sedikt tentang jurusan RPL, RPL tuh ngapain aja sih dll. di poin ini akan di jelaskan sedikt tentang jurusan RPL, RPL tuh ngapain aja sih dll</p>
+                <p class="text-center tracking-wide break-words">di poin ini akan di jelaskan sedikt tentang jurusan RPL, RPL tuh ngapain aja sih dll. di poin ini akan di jelaskan sedikt tentang jurusan RPL, RPL tuh ngapain aja sih dll. di poin ini akan di jelaskan sedikt tentang jurusan RPL, RPL tuh ngapain aja sih dll. di poin ini akan di jelaskan sedikt tentang jurusan RPL, RPL tuh ngapain aja sih dll</p>
             </div>
         </section>
 

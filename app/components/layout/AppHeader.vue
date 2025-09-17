@@ -1,36 +1,104 @@
+<script setup lang="ts">
+import { ref, onMounted, onUnmounted } from 'vue'
+
+const headerClass = ref('bg-transparent border-b-transparent')
+const sizeClass = ref('full')
+const isSidebarOpen = ref(false)
+
+const menuItems = [
+  {
+    title: 'Beranda',
+    submenu: [
+      { title: 'Home', desc: 'Halaman utama website', icon: 'lucide:home' },
+      { title: 'Dashboard', desc: 'Panel kontrol siswa', icon: 'lucide:layout-dashboard' }
+    ]
+  },
+  {
+    title: 'Tentang Kami',
+    submenu: [
+      { title: 'Sejarah', desc: 'Perjalanan sekolah', icon: 'lucide:book-open' },
+      { title: 'Visi Misi', desc: 'Visi dan misi sekolah', icon: 'lucide:target' },
+      { title: 'Struktur Organisasi', desc: 'Tim pengelola', icon: 'lucide:users' }
+    ]
+  },
+  {
+    title: 'Jurusan',
+    submenu: [
+      { title: 'RPL', desc: 'Rekayasa Perangkat Lunak', icon: 'lucide:code' },
+      { title: 'TKJ', desc: 'Teknik Komputer Jaringan', icon: 'lucide:network' },
+      { title: 'Animasi', desc: 'Desain Komunikasi Visual', icon: 'lucide:palette' }
+    ]
+  },
+  {
+    title: 'Informasi',
+    submenu: [
+      { title: 'Berita', desc: 'Berita terbaru sekolah', icon: 'lucide:newspaper' },
+      { title: 'Prestasi', desc: 'Pencapaian siswa', icon: 'lucide:trophy' },
+      { title: 'Kontak', desc: 'Informasi kontak', icon: 'lucide:phone' }
+    ]
+  }
+]
+
+onMounted(() => {
+  const handleScroll = () => {
+    if (window.scrollY > window.innerHeight) {
+      headerClass.value = 'bg-neutral-600/30 backdrop-blur-2xl border-b-neutral-400'
+      sizeClass.value = 'compact'
+    } else {
+      headerClass.value = 'bg-transparent border-b-transparent'
+      sizeClass.value = 'full'
+    }
+  }
+  window.addEventListener('scroll', handleScroll)
+  // Call once to set initial state
+  handleScroll()
+  onUnmounted(() => {
+    window.removeEventListener('scroll', handleScroll)
+  })
+})
+</script>
+
 <template>
-<header class="z-100 bg-neutral-600/30 backdrop-blur-2xl border-b-1 border-b-neutral-400 fixed top-0 left-0 right-0">
-    <div class="p-4 flex items-center justify-around gap-5">
-        <div class="flex items-center justify-center gap-5">
-            <img src="/images/logo.webp" width="80" alt="Logo SMKN 2 Singosari" />
+<header :class="['z-100 border-b-1 fixed top-0 left-0 right-0 transition-all duration-500 ease-in-out', headerClass]">
+    <div :class="(sizeClass === 'full' ? 'p-4 gap-5' : 'p-3 gap-4') + ' flex items-center justify-around transition-all duration-500 ease-in-out'">
+        <div :class="(sizeClass === 'full' ? 'gap-5' : 'gap-3') + ' flex items-center justify-center transition-all duration-500 ease-in-out'">
+            <img :src="'/images/logo.webp'" :style="{ width: sizeClass === 'full' ? '80px' : '50px', transition: 'width 0.5s ease-in-out' }" alt="Logo SMKN 2 Singosari" />
             <div class="flex flex-col">
-                <h2 class="text-2xl font-bold">STEMDASI</h2>
-                <p>SMKN 2 Singosari</p>
+                <h2 :style="{ fontSize: sizeClass === 'full' ? '1.3rem' : '1.125rem', transition: 'font-size 0.5s ease-in-out' }" class="font-bold">SMKN 2 Singosari</h2>
+                <p class="-mt-1" :style="{ fontSize: sizeClass === 'full' ? '1rem' : '0.875rem', transition: 'font-size 0.5s ease-in-out' }">Inovasi Raih Prestasi</p>
             </div>
         </div>
-        <div class="hidden md:flex gap-5">
-            <div class="flex cursor-pointer gap-3 items-center justify-center">
-                <p>Beranda</p>
-                <Icon name="lucide:chevron-down" size="20" />
-            </div>
-            <div class="flex cursor-pointer gap-3 items-center justify-center">
-                <p>Lorem</p>
-                <Icon name="lucide:chevron-down" size="20" />
-            </div>
-            <div class="flex cursor-pointer gap-3 items-center justify-center">
-                <p>Lorem</p>
-                <Icon name="lucide:chevron-down" size="20" />
-            </div>
-            <div class="flex cursor-pointer gap-3 items-center justify-center">
-                <p>Lorem</p>
-                <Icon name="lucide:chevron-down" size="20" />
+        <div :class="(sizeClass === 'full' ? 'gap-5' : 'gap-4') + ' hidden md:flex transition-all duration-500 ease-in-out'">
+            <div v-for="(item, index) in menuItems" :key="index" class="relative group">
+                <div :class="(sizeClass === 'full' ? 'gap-3' : 'gap-2') + ' flex cursor-pointer items-center justify-center transition-all duration-500 ease-in-out'">
+                    <p :style="{ fontSize: sizeClass === 'full' ? '1rem' : '0.875rem', transition: 'font-size 0.5s ease-in-out' }" class="group-hover:text-blue-600 transition-colors duration-300">{{ item.title }}</p>
+                    <span class="group-hover:rotate-180 transition-transform duration-500 ease-in-out inline-flex items-center">
+                        <Icon name="lucide:chevron-down" :size="sizeClass === 'full' ? 20 : 16" :style="{ transform: sizeClass === 'full' ? 'scale(1)' : 'scale(0.8)', transition: 'transform 0.5s ease-in-out' }" />
+                    </span>
+                </div>
+                <!-- Submenu -->
+                <div class="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border border-gray-200">
+                    <div class="py-2">
+                        <div v-for="(sub, subIndex) in item.submenu" :key="subIndex" class="px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors duration-200">
+                            <div class="flex items-center gap-3">
+                                <Icon :name="sub.icon" size="20" class="text-blue-600" />
+                                <div>
+                                    <p class="font-medium text-gray-900">{{ sub.title }}</p>
+                                    <p class="text-sm text-gray-600">{{ sub.desc }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div>
-            <button class="cursor-pointer">
-                <Icon name="lucide:align-justify" size="30" />
+        <div class="transition-all duration-500 ease-in-out">
+            <button class="cursor-pointer" @click="isSidebarOpen = !isSidebarOpen">
+                <Icon name="lucide:align-justify" :size="sizeClass === 'full' ? 30 : 24" :style="{ transform: sizeClass === 'full' ? 'scale(1)' : 'scale(0.8)', transition: 'transform 0.5s ease-in-out' }" />
             </button>
         </div>
     </div>
 </header>
+
+<MobileSidebar :is-open="isSidebarOpen" :menu-items="menuItems" @close="isSidebarOpen = false" />
 </template>
