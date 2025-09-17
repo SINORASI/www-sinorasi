@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+* {
+    font-family: Montserrat;
+    scroll-behavior: smooth;
+}
