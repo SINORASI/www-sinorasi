@@ -30,7 +30,6 @@ const major = route.params.majorName as MajorName;
 
         <section class="min-h-screen">
             <div class="container mx-auto flex flex-col items-center gap-5">
-                <h2 class="text-3xl font-bold">Prestasi</h2>
                 <KaproCarousel />
             </div>
         </section>

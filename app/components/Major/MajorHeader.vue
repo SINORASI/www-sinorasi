@@ -49,7 +49,6 @@ onMounted(() => {
     }
   }
   window.addEventListener('scroll', handleScroll)
-  // Call once to set initial state
   handleScroll()
   onUnmounted(() => {
     window.removeEventListener('scroll', handleScroll)
@@ -82,7 +81,6 @@ if (!majorDatas[major]) {
                         <Icon name="lucide:chevron-down" :size="sizeClass === 'full' ? 20 : 16" :style="{ transform: sizeClass === 'full' ? 'scale(1)' : 'scale(0.8)', transition: 'transform 0.5s ease-in-out' }" />
                     </span>
                 </div>
-                <!-- Submenu -->
                 <div class="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border border-gray-200">
                     <div class="py-2">
                         <div v-for="(sub, subIndex) in item.submenu" :key="subIndex" class="px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors duration-200">

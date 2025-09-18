@@ -1,15 +1,12 @@
 <template>
   <transition name="sidebar">
     <div v-if="isOpen" class="fixed inset-0 z-[100] flex">
-      <!-- Backdrop -->
       <div
         class="sidebar-backdrop fixed inset-0 bg-black/50 backdrop-blur-sm"
         @click="$emit('close')"
       ></div>
 
-      <!-- Sidebar -->
       <div class="sidebar-panel relative ml-auto flex h-full w-80 max-w-[90vw] flex-col bg-white shadow-2xl">
-        <!-- Header -->
         <div class="flex flex-shrink-0 items-center justify-between border-b border-gray-200 p-4">
           <h2 class="text-lg font-bold text-gray-800">Menu</h2>
           <button
@@ -20,7 +17,6 @@
           </button>
         </div>
 
-        <!-- Menu Items -->
         <div class="flex-1 overflow-y-auto p-4">
           <div v-for="(item, index) in menuItems" :key="index" class="mb-6">
             <h3 class="mb-3 text-base font-semibold text-gray-800">{{ item.title }}</h3>
@@ -62,7 +58,6 @@ defineEmits<{
 </script>
 
 <style scoped>
-/* Sidebar Transitions */
 .sidebar-enter-active,
 .sidebar-leave-active {
   transition: all 0.3s ease-in-out;
@@ -73,7 +68,6 @@ defineEmits<{
   opacity: 0;
 }
 
-/* Panel Transitions */
 .sidebar-enter-active .sidebar-panel,
 .sidebar-leave-active .sidebar-panel {
     transition: transform 0.3s ease-in-out;
@@ -84,7 +78,6 @@ defineEmits<{
   transform: translateX(100%);
 }
 
-/* Backdrop Transitions */
 .sidebar-enter-active .sidebar-backdrop,
 .sidebar-leave-active .sidebar-backdrop {
     transition: opacity 0.3s ease-in-out;

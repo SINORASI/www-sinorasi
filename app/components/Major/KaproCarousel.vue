@@ -20,7 +20,7 @@ const kapros: Record<MajorName, kaproProfile[]> =  {
             image: '/images/profile-placeholder.png',
             jabatan: 'Kepala Jurusan Program RPL',
             kaproName: 'RR. Henning Gratyanis A, S.Pd',
-            quote: 'Kowe lapo ae'
+            quote: 'Kowe lapo ae hah, kelas 10 lapo ae'
         },
     ],
     tkj: [
@@ -35,7 +35,7 @@ const kapros: Record<MajorName, kaproProfile[]> =  {
         {
             image: '/images/profile-placeholder.png',
             jabatan: 'Kepala Jurusan Program DKV',
-            kaproName: 'Alifah Diantebes Aindra, S.Pd',
+            kaproName: 'Zoulfikar Ramsanjanie Aqsha, S.Kom',
             quote: 'Jadilah dirimu sendiri selagi dirimu masih mengenali dirimu'
         },
     ],
@@ -43,7 +43,7 @@ const kapros: Record<MajorName, kaproProfile[]> =  {
         {
             image: '/images/profile-placeholder.png',
             jabatan: 'Kepala Jurusan Program Animasi',
-            kaproName: 'Alifah Diantebes Aindra, S.Pd',
+            kaproName: 'Dimas Maharendra Oktendima, S.Pd',
             quote: 'Jadilah dirimu sendiri selagi dirimu masih mengenali dirimu'
         },
     ],
@@ -51,7 +51,7 @@ const kapros: Record<MajorName, kaproProfile[]> =  {
         {
             image: '/images/profile-placeholder.png',
             jabatan: 'Kepala Jurusan Program Broadcasting',
-            kaproName: 'Alifah Diantebes Aindra, S.Pd',
+            kaproName: 'Febrina Candra Cahyaning Dian, S.Sn',
             quote: 'Jadilah dirimu sendiri selagi dirimu masih mengenali dirimu'
         },
     ],
@@ -59,7 +59,7 @@ const kapros: Record<MajorName, kaproProfile[]> =  {
         {
             image: '/images/profile-placeholder.png',
             jabatan: 'Kepala Jurusan Program TEI',
-            kaproName: 'Alifah Diantebes Aindra, S.Pd',
+            kaproName: 'Mokhamad Amrul Sadat, ST, M.Pd',
             quote: 'Jadilah dirimu sendiri selagi dirimu masih mengenali dirimu'
         }
     ],
@@ -67,7 +67,7 @@ const kapros: Record<MajorName, kaproProfile[]> =  {
         {
             image: '/images/profile-placeholder.png',
             jabatan: 'Kepala Jurusan Program Mekatronika',
-            kaproName: 'Alifah Diantebes Aindra, S.Pd',
+            kaproName: 'Hermawan, ST, M.Pd',
             quote: 'Jadilah dirimu sendiri selagi dirimu masih mengenali dirimu'
         }
     ],
@@ -75,7 +75,7 @@ const kapros: Record<MajorName, kaproProfile[]> =  {
         {
             image: '/images/profile-placeholder.png',
             jabatan: 'Kepala Jurusan Program TAV',
-            kaproName: 'Alifah Diantebes Aindra, S.Pd',
+            kaproName: 'Falkudin, S.T',
             quote: 'Jadilah dirimu sendiri selagi dirimu masih mengenali dirimu sendiri'
         }
     ],
@@ -97,38 +97,101 @@ const next = () => {
 </script>
 
 <template>
-    <div class="w-full max-w-sm md:w-200 md:max-w-none flex bg-neutral-100 gap-5 rounded-lg shadow-sm p-4 md:p-8 relative mx-auto">
-        <div class="overflow-hidden">
-            <div class="flex transition-transform duration-500 ease-in-out" :style="{ transform: `translateX(-${current * 100}%)` }">
-                <div class="flex-shrink-0 w-full">
-                    <div class="flex flex-col md:flex-row items-center gap-6 md:gap-10">
-                        <div class="flex flex-col gap-5">
-                            <p>{{ kapro[current]?.quote }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="flex justify-between">
-            <div class="flex flex-col gap-5">
-                <div class="flex justify-center items-center gap-5">
-                    <button @click="prev" class="border-neutral-400 border-1 cursor-pointer bg-neutral-300 p-2 flex items-center justify-center rounded-full shadow-lg transition hover:bg-blue-600 hover:border-blue-600 hover:text-white hover:scale-110">
-                        <Icon name="lucide:chevron-left" size="24" />
-                    </button>
-                    <img :src="kapro[current]?.image" class="w-48 md:w-80" alt="Kapro" />
-                    <button @click="next" class="border-neutral-400 border-1 cursor-pointer bg-neutral-300 p-2 flex items-center justify-center rounded-full shadow-lg transition hover:bg-blue-600 hover:border-blue-600 hover:text-white hover:scale-110">
-                        <Icon name="lucide:chevron-right" size="24" />
-                    </button>
-                </div>
-                <div class="bg-neutral-300 p-4 rounded-lg w-[350px]">
-                    <h2 class="tracking-wide text-center font-bold">{{ kapro[current]?.kaproName }}</h2>
-                </div>
-                
-            </div>
-            <div class="flex items-center justify-center">
-                <h3 class="text-2xl font-bold">0{{ current + 1 }}/0{{ kapro.length }}</h3>
-            </div>
-        </div>
+  <div class="w-full max-w-sm md:w-250 md:max-w-none flex flex-col gap-5 rounded-lg p-4 md:p-8 relative mx-auto">
+    <div class="rounded-lg bg-zinc-200/20 p-4 flex justify-center items-center">
+        <Transition 
+            name="slide" 
+            mode="out-in"
+            enter-active-class="transition-all duration-500 ease-out"
+            enter-from-class="opacity-50 transform translate-x-4"
+            enter-to-class="opacity-100 transform translate-x-0"
+            leave-active-class="transition-all duration-500 ease-in"
+            leave-from-class="opacity-100 transform translate-x-0"
+            leave-to-class="opacity-50 transform -translate-x-4"
+          >
+            <h1 :key="current" class="font-bold tracking-wider text-2xl">{{ kapro[current]?.jabatan }}</h1>
+        </Transition>
     </div>
+    <div class="flex items-center gap-4 w-full">
+        <button 
+        @click="prev"
+        class="border-neutral-400 border cursor-pointer bg-neutral-300 p-2 flex items-center justify-center rounded-full shadow-lg transition hover:bg-blue-600 hover:border-blue-600 hover:text-white hover:scale-110 flex-shrink-0"
+      >
+        <Icon name="lucide:chevron-left" size="24" />
+      </button>
+
+      <div class="flex justify-center w-48 md:w-60">
+        <Transition 
+          name="slide" 
+          mode="out-in"
+          enter-active-class="transition-all duration-500 ease-out"
+          enter-from-class="opacity-0 transform translate-x-2"
+          enter-to-class="opacity-100 transform translate-x-0"
+          leave-active-class="transition-all duration-500 ease-in"
+          leave-from-class="opacity-100 transform translate-x-0"
+          leave-to-class="opacity-0 transform -translate-x-2"
+        >
+          <img 
+            :key="current"
+            :src="kapro[current]?.image" 
+            class="w-48 md:w-60 rounded-lg" 
+            alt="Kapro Tool"
+          />
+        </Transition>
+      </div>
+
+      <button 
+        @click="next" 
+        class="border-neutral-400 border cursor-pointer bg-neutral-300 p-2 flex items-center justify-center rounded-full shadow-lg transition hover:bg-blue-600 hover:border-blue-600 hover:text-white hover:scale-110 flex-shrink-0"
+      >
+        <Icon name="lucide:chevron-right" size="24" />
+      </button>
+
+      <div class="flex justify-center items-center flex-1 ml-8 mr-8 bg-zinc-200/20 p-6 rounded-lg h-75">
+        <Transition 
+          name="slide" 
+          mode="out-in"
+          enter-active-class="transition-all duration-500 ease-out"
+          enter-from-class="opacity-0 transform translate-x-8"
+          enter-to-class="opacity-100 transform translate-x-0"
+          leave-active-class="transition-all duration-500 ease-in"
+          leave-from-class="opacity-100 transform translate-x-0"
+          leave-to-class="opacity-0 transform -translate-x-8"
+        >
+          <p 
+            :key="current"
+            class="tracking-wide font-bold text-lg text-center max-w-md"
+          >
+            {{ kapro[current]?.quote }}
+          </p>
+        </Transition>
+      </div>
+    </div>
+    
+    <div class="flex justify-between items-center py-3 ml-5">
+      <div class="flex gap-5">
+        <div class="text-center p-4 rounded-lg bg-zinc-200/20 w-[320px]">
+          <Transition 
+            name="slide" 
+            mode="out-in"
+            enter-active-class="transition-all duration-500 ease-out"
+            enter-from-class="opacity-50 transform translate-x-4"
+            enter-to-class="opacity-100 transform translate-x-0"
+            leave-active-class="transition-all duration-500 ease-in"
+            leave-from-class="opacity-100 transform translate-x-0"
+            leave-to-class="opacity-50 transform -translate-x-4"
+          >
+          <h2 :key="current" class="font-bold tracking-wide">
+            {{ kapro[current]?.kaproName }}
+          </h2>
+          </Transition>
+        </div>
+      </div>
+      <div class="flex items-center justify-center mr-10">
+        <h3 class="text-2xl font-bold">
+          0{{ current + 1 }}/0{{ kapro.length }}
+        </h3>
+      </div>
+    </div>
+  </div>
 </template>

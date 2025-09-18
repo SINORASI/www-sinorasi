@@ -130,7 +130,6 @@ onMounted(() => {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* Mobile responsiveness */
 @media (max-width: 768px) {
   .timeline-item.center {
     display: flex;
