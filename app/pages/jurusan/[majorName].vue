@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import KaproCarousel from '~/components/Major/KaproCarousel.vue';
 import { majorDatas } from '~/datas/data';
 import type { MajorName } from '~/types/majorType';
 
@@ -28,24 +29,9 @@ const major = route.params.majorName as MajorName;
         </section>
 
         <section class="min-h-screen">
-            <div class="container mx-auto flex md:flex-row flex-col justify-center items-center gap-2.5">
-                <div class="flex flex-col justify-center items-center gap-2.5 max-w-6xl w-full relative">
-                    <h1 class="text-lg font-bold tracking-wide">Kepala Jurusan Program RPL</h1>
-                    <div class="flex justify-center items-center gap-2.5">
-                        <img src="/images/profile-placeholder.png" alt="Foto Guru" width="300">
-                    </div>
-                    <div class="flex justify-center items-center">
-                        <div class="flex justify-center items-center max-w-6xl w-full">
-                            <div class="bg-zinc-300 rounded-lg py-3 px-4">
-                                <h2 class="text-lg font-bold tracking-wide">Nama Guru</h2>
-                            </div>
-                            <h3 class="font-semibold absolute bottom-2.5 right-0">01/03</h3>
-                        </div>  
-                    </div>
-                </div>
-                <div class="flex flex-col justify-center items-center max-w-2xl w-full">
-                    <p class="text-md font-semibold text-center">"Jadilah dirimu sendiri, selagi itu adalah pilihanmu</p>
-                </div>
+            <div class="container mx-auto flex flex-col items-center gap-5">
+                <h2 class="text-3xl font-bold">Prestasi</h2>
+                <KaproCarousel />
             </div>
         </section>
 
