@@ -1,21 +1,23 @@
 <script lang="ts" setup>
-    definePageMeta({
-        layout: 'major'
-    });
+import { majorDatas } from '~/datas/data';
+import type { MajorName } from '~/types/majorType';
 
-    const currentIndex = 0;
+definePageMeta({
+    layout: 'major'
+});
 
-    const prev = () => {
-        
-    }
+const route = useRoute();
+const major = route.params.majorName as MajorName;
+
+
 </script>
 
 <template>
     <main>
         <section class="min-h-screen flex flex-col items-center justify-center md:gap-15 gap-8 px-4 pt-24 md:pt-20 pb-10">
             <div class="flex md:flex-row flex-col justify-center items-center gap-4">
-                <img src="/images/majorIcon/rpl.webp" alt="logo jurusan" class="md:w-70 w-20">
-                <h1 class="font-bold text-4xl tracking-wider text-center">Rekayasa Perangkat Lunak</h1>
+                <img :src="majorDatas[major]?.logo" alt="logo jurusan" class="md:w-70 w-20">
+                <h1 class="font-bold text-4xl tracking-wider text-center">{{ majorDatas[major]?.nameMajor }}</h1>
             </div>
 
             <hr class="border-1 border-zinc-200 max-w-4xl w-full">

@@ -30,7 +30,7 @@
                 </div>
                 <div class="flex gap-3 md:gap-5 mt-3 md:mt-4 justify-center md:justify-start">
                     <div class="text-center">
-                        <div class="text-base md:text-xl font-bold">7</div>
+                        <div class="text-base md:text-xl font-bold">8</div>
                         <div class="text-xs md:text-sm">Jurusan</div>
                     </div>
                     <div class="text-center">

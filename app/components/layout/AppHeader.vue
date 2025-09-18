@@ -28,11 +28,11 @@ const menuItems = [
       { title: 'RPL', desc: 'Rekayasa Perangkat Lunak', icon: 'lucide:code', to: '/jurusan/rpl' },
       { title: 'TKJ', desc: 'Teknik Komputer Jaringan', icon: 'lucide:network', to: '/jurusan/tkj' },
       { title: 'DKV', desc: 'Desain Komunikasi Visual', icon: 'lucide:palette', to: '/jurusan/dkv' },
-      { title: 'EI', desc: 'Teknik Elektronika Industri', icon: 'lucide:zap', to: '/jurusan/ei' },
-      { title: 'MT', desc: 'Mekatronika', icon: 'lucide:cog', to: '/jurusan/mt' },
-      { title: 'BC', desc: 'Broadcasting', icon: 'lucide:radio', to: '/jurusan/bc' },
+      { title: 'EI', desc: 'Teknik Elektronika Industri', icon: 'lucide:zap', to: '/jurusan/tei' },
+      { title: 'MT', desc: 'Mekatronika', icon: 'lucide:cog', to: '/jurusan/mekatronika' },
+      { title: 'BC', desc: 'Broadcasting', icon: 'lucide:radio', to: '/jurusan/broadcasting' },
       { title: 'Animasi', desc: 'Animasi', icon: 'lucide:film', to: '/jurusan/animasi' },
-      { title: 'AV', desc: 'Teknik Audio Visual', icon: 'lucide:video', to: '/jurusan/av' }
+      { title: 'AV', desc: 'Teknik Audio Visual', icon: 'lucide:video', to: '/jurusan/tav' }
     ]
   },
   {

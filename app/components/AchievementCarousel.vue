@@ -24,7 +24,7 @@
         </button>
       </div>
       <div class="flex items-center justify-center">
-        <h3 class="text-2xl font-bold">{{ current + 1 }}/{{ achievements.length }}</h3>
+        <h3 class="text-2xl font-bold">0{{ current + 1 }}/0{{ achievements.length }}</h3>
       </div>
     </div>
   </div>
