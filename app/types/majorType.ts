@@ -6,3 +6,8 @@ export interface kaproProfile {
     kaproName: string;
     quote: string;
 }
+
+export interface careerProps {
+    image: string,
+    title: string
+} 

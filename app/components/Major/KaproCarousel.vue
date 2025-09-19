@@ -18,7 +18,7 @@ const kapros: Record<MajorName, kaproProfile[]> =  {
         },
         {
             image: '/images/profile-placeholder.png',
-            jabatan: 'Kepala Jurusan Program RPL',
+            jabatan: 'Guru Produktif RPL',
             kaproName: 'RR. Henning Gratyanis A, S.Pd',
             quote: 'Kowe lapo ae hah, kelas 10 lapo ae'
         },
@@ -86,13 +86,34 @@ const major = route.params.majorName as MajorName;
 const kapro = kapros[major] || [];
 
 const current = ref(0);
+const direction = ref('next');
 
 const prev = () => {
-    current.value = (current.value - 1 + kapro.length) % kapro.length;
+  direction.value = 'prev';
+  current.value = (current.value - 1 + kapro.length) % kapro.length;
 }
 
 const next = () => {
-    current.value = (current.value + 1) % kapro.length;
+  direction.value = 'next';
+  current.value = (current.value + 1) % kapro.length;
+}
+
+const getTransitionClasses = () => {
+  if (direction.value === 'next') {
+    return {
+      enterFrom: 'opacity-0 transform translate-x-8',
+      enterTo: 'opacity-100 transform translate-x-0',
+      leaveFrom: 'opacity-100 transform translate-x-0',
+      leaveTo: 'opacity-0 transform -translate-x-8'
+    }
+  } else {
+    return {
+      enterFrom: 'opacity-0 transform -translate-x-8',
+      enterTo: 'opacity-100 transform translate-x-0',
+      leaveFrom: 'opacity-100 transform translate-x-0',
+      leaveTo: 'opacity-0 transform translate-x-8'
+    }
+  }
 }
 </script>
 
@@ -103,11 +124,11 @@ const next = () => {
             name="slide" 
             mode="out-in"
             enter-active-class="transition-all duration-500 ease-out"
-            enter-from-class="opacity-50 transform translate-x-4"
-            enter-to-class="opacity-100 transform translate-x-0"
+            :enter-from-class="getTransitionClasses().enterFrom"
+            :enter-to-class="getTransitionClasses().enterTo"
             leave-active-class="transition-all duration-500 ease-in"
-            leave-from-class="opacity-100 transform translate-x-0"
-            leave-to-class="opacity-50 transform -translate-x-4"
+            :leave-from-class="getTransitionClasses().leaveFrom"
+            :leave-to-class="getTransitionClasses().leaveTo"
           >
             <h1 :key="current" class="font-bold tracking-wider text-2xl">{{ kapro[current]?.jabatan }}</h1>
         </Transition>
@@ -125,11 +146,11 @@ const next = () => {
           name="slide" 
           mode="out-in"
           enter-active-class="transition-all duration-500 ease-out"
-          enter-from-class="opacity-0 transform translate-x-2"
-          enter-to-class="opacity-100 transform translate-x-0"
+          :enter-from-class="getTransitionClasses().enterFrom"
+          :enter-to-class="getTransitionClasses().enterTo"
           leave-active-class="transition-all duration-500 ease-in"
-          leave-from-class="opacity-100 transform translate-x-0"
-          leave-to-class="opacity-0 transform -translate-x-2"
+          :leave-from-class="getTransitionClasses().leaveFrom"
+          :leave-to-class="getTransitionClasses().leaveTo"
         >
           <img 
             :key="current"
@@ -147,16 +168,16 @@ const next = () => {
         <Icon name="lucide:chevron-right" size="24" />
       </button>
 
-      <div class="flex justify-center items-center flex-1 ml-8 mr-8 bg-zinc-200/20 p-6 rounded-lg h-75">
+      <div class="flex justify-center items-center flex-1 ml-8 bg-zinc-200/20 p-6 rounded-lg h-75">
         <Transition 
           name="slide" 
           mode="out-in"
           enter-active-class="transition-all duration-500 ease-out"
-          enter-from-class="opacity-0 transform translate-x-8"
-          enter-to-class="opacity-100 transform translate-x-0"
+          :enter-from-class="getTransitionClasses().enterFrom"
+          :enter-to-class="getTransitionClasses().enterTo"
           leave-active-class="transition-all duration-500 ease-in"
-          leave-from-class="opacity-100 transform translate-x-0"
-          leave-to-class="opacity-0 transform -translate-x-8"
+          :leave-from-class="getTransitionClasses().leaveFrom"
+          :leave-to-class="getTransitionClasses().leaveTo"
         >
           <p 
             :key="current"
@@ -175,11 +196,11 @@ const next = () => {
             name="slide" 
             mode="out-in"
             enter-active-class="transition-all duration-500 ease-out"
-            enter-from-class="opacity-50 transform translate-x-4"
-            enter-to-class="opacity-100 transform translate-x-0"
+            :enter-from-class="getTransitionClasses().enterFrom"
+            :enter-to-class="getTransitionClasses().enterTo"
             leave-active-class="transition-all duration-500 ease-in"
-            leave-from-class="opacity-100 transform translate-x-0"
-            leave-to-class="opacity-50 transform -translate-x-4"
+            :leave-from-class="getTransitionClasses().leaveFrom"
+            :leave-to-class="getTransitionClasses().leaveTo"
           >
           <h2 :key="current" class="font-bold tracking-wide">
             {{ kapro[current]?.kaproName }}

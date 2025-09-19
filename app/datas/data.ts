@@ -38,21 +38,21 @@ export const majorDatas = {
         logo: '/images/majorIcon/tei.webp',
         short: 'TEI',
         nameMajor: 'Teknik Elektronika Industri',
-        bgColor: 'bg-orange-600/30 backdrop-blur-2xl border-b-orange-400',
+        bgColor: 'bg-green-600/30 backdrop-blur-2xl border-b-green-400',
         textColor: 'text-green-600'
     },
     mekatronika: {
         logo: '/images/majorIcon/mekatronika.webp',
         short: 'TMT',
         nameMajor: 'Teknik Mekatronika',
-        bgColor: 'bg-orange-600/30 backdrop-blur-2xl border-b-orange-400',
+        bgColor: 'bg-green-800/30 backdrop-blur-2xl border-b-green-400',
         textColor: 'text-green-800'
     },
     tav: {
         logo: '/images/majorIcon/tav.webp',
         short: 'TAV',
         nameMajor: 'Teknik Audio Video',
-        bgColor: 'bg-orange-600/30 backdrop-blur-2xl border-b-orange-400',
+        bgColor: 'bg-green-400/30 backdrop-blur-2xl border-b-green-400',
         textColor: 'text-green-400'
     },
 }
