@@ -1,5 +1,5 @@
 <template>
-  <section class="flex items-center justify-center h-screen container mx-auto px-6 py-12">
+  <section class="flex items-center justify-center h-screen container mx-auto my-24 px-6">
     <div class="flex flex-col items-center justify-center gap-10">
       <h1 class="font-bold text-4xl">Sambutan</h1>
 
@@ -37,8 +37,12 @@
               </div>
             </div>
           </div>
-          <button @click="prev" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full">‹</button>
-          <button @click="next" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full">›</button>
+          <button @click="prev" class="border-neutral-400 left-0 absolute top-60 m-5 border-1 cursor-pointer bg-neutral-300 p-2 flex items-center justify-center rounded-full shadow-lg transition hover:bg-blue-600 hover:border-blue-600 hover:text-white hover:scale-110">
+          <Icon name="lucide:chevron-left" size="24" />
+          </button>
+          <button @click="next" class="absolute right-0 top-60 border-neutral-400 m-5 border-1 cursor-pointer bg-neutral-300 p-2 flex items-center justify-center rounded-full shadow-lg transition hover:bg-blue-600 hover:border-blue-600 hover:text-white hover:scale-110">
+            <Icon name="lucide:chevron-right" size="24" />
+          </button>
         </div>
       </div>
     </div>
@@ -56,24 +60,46 @@
     <div class="flex flex-col items-center justify-center gap-10">
       <h2 class="font-bold text-3xl">Visi dan Misi</h2>
       <p class="text-sm">Video profil ini memperlihatkan perjalanan dan komitmen sekolah dalam membentuk peserta didik yang unggul dalam berprestasi, berkarakter, serta siap menghadapi tantangan di masa depan.</p>
-      <div class="flex items-center p-10 justify-center bg-neutral-300 rounded-lg shadow-sm">
-        <div class="flex gap-5 items-center">
-          <div class="w-fit h-fit bg-neutral-600 rounded-lg p-4">
-            <h3 class="font-bold text-2xl">Visi</h3>
-          </div>
-          <div class="flex flex-col  gap-5">
-            <div class="p-4 text-center bg-neutral-600 rounded-lg shadow-sm">
-              <p class="text-sm">SMK Negeri 2 Singosari memiliki komitmen jangka panjang terhadap pengembangan sumber daya manusia.Pandangan kedepan dan cita-cita SMK Negeri 2 Singosari dinyatakan dalam Visi sebagai berikut :</p>
+      <Carousel>
+        <template #slide-0>
+           <div class="flex items-center p-10 justify-center rounded-lg">
+            <div class="flex gap-5 items-center">
+              <div class="w-fit h-fit bg-neutral-300 rounded-lg p-4">
+                <h3 class="font-bold text-2xl">Visi</h3>
+              </div>
+              <div class="flex flex-col  gap-5">
+                <div class="p-4 text-center bg-neutral-300 rounded-lg shadow-sm">
+                  <p class="text-sm">SMK Negeri 2 Singosari memiliki komitmen jangka panjang terhadap pengembangan sumber daya manusia.Pandangan kedepan dan cita-cita SMK Negeri 2 Singosari dinyatakan dalam Visi sebagai berikut :</p>
+                </div>
+                <div class="p-4 text-center bg-neutral-300 rounded-lg shadow-sm">
+                  <p class="text-sm">SMK Negeri 2 Singosari memiliki komitmen jangka panjang terhadap pengembangan sumber daya manusia.Pandangan kedepan dan cita-cita SMK Negeri 2 Singosari dinyatakan dalam Visi sebagai berikut :</p>
+                </div>
+              </div>
             </div>
-            <div class="p-4 text-center bg-neutral-600 rounded-lg shadow-sm">
-              <p class="text-sm">SMK Negeri 2 Singosari memiliki komitmen jangka panjang terhadap pengembangan sumber daya manusia.Pandangan kedepan dan cita-cita SMK Negeri 2 Singosari dinyatakan dalam Visi sebagai berikut :</p>
+          </div>
+        </template>
+        <template #slide-1>
+          <div class="flex items-center p-10 justify-center rounded-lg">
+            <div class="flex gap-5 items-center">
+              <div class="w-fit h-fit bg-neutral-300 rounded-lg p-4">
+                <h3 class="font-bold text-2xl">Visi</h3>
+              </div>
+              <div class="flex flex-col  gap-5">
+                <div class="p-4 text-center bg-neutral-300 rounded-lg shadow-sm">
+                  <p class="text-sm">SMK Negeri 2 Singosari memiliki komitmen jangka panjang terhadap pengembangan sumber daya manusia.Pandangan kedepan dan cita-cita SMK Negeri 2 Singosari dinyatakan dalam Visi sebagai berikut :</p>
+                </div>
+                <div class="p-4 text-center bg-neutral-300 rounded-lg shadow-sm">
+                  <p class="text-sm">SMK Negeri 2 Singosari memiliki komitmen jangka panjang terhadap pengembangan sumber daya manusia.Pandangan kedepan dan cita-cita SMK Negeri 2 Singosari dinyatakan dalam Visi sebagai berikut :</p>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+        </template>
+      </Carousel>
+      
     </div>
   </section>
-  <section class="flex items-center justify-center h-screen container mx-auto px-6 py-12">
+  <section class="flex items-center justify-center h-screen container mx-auto px-30 py-12">
     <div class="flex flex-col items-center justify-center gap-10">
       <h2 class="font-bold text-3xl">Sejarah SMK Negeri 02 Singosari</h2>
       <div class="flex flex-col gap-4">

@@ -16,8 +16,6 @@ const menuItems = [
   {
     title: 'Tentang Kami',
     submenu: [
-      { title: 'Sejarah', desc: 'Perjalanan sekolah', icon: 'lucide:book-open', to: '/sejarah' },
-      { title: 'Visi Misi', desc: 'Visi dan misi sekolah', icon: 'lucide:target', to: '/visi-misi' },
       { title: 'Profile Sekolah', desc: 'Profil lengkap sekolah', icon: 'lucide:building', to: '/informasi/profile-sekolah' },
       { title: 'Struktur Organisasi', desc: 'Tim pengelola', icon: 'lucide:users', to: '/informasi/struktur-organisasi' }
     ]
@@ -30,17 +28,17 @@ const menuItems = [
       { title: 'DKV', desc: 'Desain Komunikasi Visual', icon: 'lucide:palette', to: '/jurusan/dkv' },
       { title: 'EI', desc: 'Teknik Elektronika Industri', icon: 'lucide:zap', to: '/jurusan/tei' },
       { title: 'MT', desc: 'Mekatronika', icon: 'lucide:cog', to: '/jurusan/mekatronika' },
-      { title: 'BC', desc: 'Broadcasting', icon: 'lucide:radio', to: '/jurusan/broadcasting' },
+      { title: 'BC', desc: 'Broadcasting', icon: 'lucide:video', to: '/jurusan/broadcasting' },
       { title: 'Animasi', desc: 'Animasi', icon: 'lucide:film', to: '/jurusan/animasi' },
-      { title: 'AV', desc: 'Teknik Audio Visual', icon: 'lucide:video', to: '/jurusan/tav' }
+      { title: 'AV', desc: 'Teknik Audio Visual', icon: 'lucide:audio-lines', to: '/jurusan/tav' }
     ]
   },
   {
     title: 'Informasi',
     submenu: [
       { title: 'Berita', desc: 'Berita terbaru sekolah', icon: 'lucide:newspaper', to: '/berita' },
-      { title: 'Prestasi', desc: 'Pencapaian siswa', icon: 'lucide:trophy', to: '/prestasi' },
-      { title: 'Kontak', desc: 'Informasi kontak', icon: 'lucide:phone', to: '/kontak' }
+      { title: 'Organisasi', desc: 'Organisasi yang ada di sekolah', icon: 'lucide:newspaper', to: '/berita' },
+      { title: 'Extra', desc: 'Extra yang ada di sekolah', icon: 'lucide:newspaper', to: '/berita' },
     ]
   },
   {
@@ -63,7 +61,6 @@ onMounted(() => {
     }
   }
   window.addEventListener('scroll', handleScroll)
-  // Call once to set initial state
   handleScroll()
   onUnmounted(() => {
     window.removeEventListener('scroll', handleScroll)
@@ -89,7 +86,6 @@ onMounted(() => {
                         <Icon name="lucide:chevron-down" :size="sizeClass === 'full' ? 20 : 16" :style="{ transform: sizeClass === 'full' ? 'scale(1)' : 'scale(0.8)', transition: 'transform 0.5s ease-in-out' }" />
                     </span>
                 </div>
-                <!-- Submenu -->
                 <div class="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border border-gray-200">
                     <div class="py-2">
                         <NuxtLink v-for="(sub, subIndex) in item.submenu" :key="subIndex" :to="sub.to" class="block px-4 py-3 hover:bg-gray-50 transition-colors duration-200">

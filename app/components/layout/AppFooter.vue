@@ -2,7 +2,6 @@
   <footer class="bg-neutral-800 text-white py-12 mt-16">
     <div class="container mx-auto px-6">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-        <!-- School Info -->
         <div class="md:col-span-1">
           <div class="flex items-center gap-4 mb-4">
             <img src="/images/logo.webp" width="60" alt="Logo SMKN 2 Singosari" class="rounded-full" />
@@ -16,7 +15,6 @@
           </p>
         </div>
 
-        <!-- Quick Links -->
         <div class="md:col-span-1">
           <h4 class="text-lg font-semibold mb-4">Tautan Cepat</h4>
           <ul class="space-y-2">
@@ -28,7 +26,6 @@
           </ul>
         </div>
 
-        <!-- Contact Info -->
         <div class="md:col-span-1">
           <h4 class="text-lg font-semibold mb-4">Kontak Kami</h4>
           <div class="space-y-3">
@@ -51,7 +48,6 @@
           </div>
         </div>
 
-        <!-- Social Media -->
         <div class="md:col-span-1">
           <h4 class="text-lg font-semibold mb-4">Ikuti Kami</h4>
           <div class="flex gap-4">
@@ -77,7 +73,6 @@
 
       </div>
 
-      <!-- Additional Links Row -->
       <div class="border-t border-neutral-700 mt-8 pt-8">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
           <div>
@@ -115,7 +110,6 @@
         </div>
       </div>
 
-      <!-- Copyright -->
       <div class="border-t border-neutral-700 mt-8 pt-8 text-center">
         <p class="text-sm text-neutral-400">
           &copy; 2024 SMK Negeri 2 Singosari. All rights reserved. | Designed with <Icon name="lucide:heart" size="14" class="inline text-red-500" /> by Inovasi Raih Prestasi

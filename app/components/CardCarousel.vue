@@ -34,4 +34,5 @@ const next = () => {
 const prev = () => {
   currentIndex.value = (currentIndex.value - 1 + 2) % 2;
 };
+
 </script>

@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
-import type { MajorName, kaproProfile } from '~/types/majorType';
+import type { MajorName } from '~/models/MajorName';
+import type { kaproProfile } from '~/models/kaproProfile';
+import { majorDatas } from '~/datas/data';
 
 const kapros: Record<MajorName, kaproProfile[]> =  {
     rpl: [
@@ -30,6 +32,12 @@ const kapros: Record<MajorName, kaproProfile[]> =  {
             kaproName: 'Gayan Laga, S.Pd',
             quote: 'Jadilah dirimu sendiri selagi dirimu masih mengenali dirimu'
         },
+        {
+            image: '/images/profile-placeholder.png',
+            jabatan: 'Guru Produktif TKJ',
+            kaproName: 'Zulfa Rumailah, S.Pd',
+            quote: 'Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri'
+        },
     ],
     dkv: [
         {
@@ -37,6 +45,12 @@ const kapros: Record<MajorName, kaproProfile[]> =  {
             jabatan: 'Kepala Jurusan Program DKV',
             kaproName: 'Zoulfikar Ramsanjanie Aqsha, S.Kom',
             quote: 'Jadilah dirimu sendiri selagi dirimu masih mengenali dirimu'
+        },
+        {
+            image: '/images/profile-placeholder.png',
+            jabatan: 'Guru Produktif DKV',
+            kaproName: 'Ivan Satryana, S.Pd',
+            quote: 'Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri'
         },
     ],
     animasi: [
@@ -46,6 +60,12 @@ const kapros: Record<MajorName, kaproProfile[]> =  {
             kaproName: 'Dimas Maharendra Oktendima, S.Pd',
             quote: 'Jadilah dirimu sendiri selagi dirimu masih mengenali dirimu'
         },
+        {
+            image: '/images/profile-placeholder.png',
+            jabatan: 'Guru Produktif Animasi',
+            kaproName: 'Wardatul Maulidiyah, S.Pd',
+            quote: 'Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri'
+        },
     ],
     broadcasting: [
         {
@@ -54,6 +74,12 @@ const kapros: Record<MajorName, kaproProfile[]> =  {
             kaproName: 'Febrina Candra Cahyaning Dian, S.Sn',
             quote: 'Jadilah dirimu sendiri selagi dirimu masih mengenali dirimu'
         },
+        {
+            image: '/images/profile-placeholder.png',
+            jabatan: 'Guru Produktif Broadcasting',
+            kaproName: 'Sofianasari, S.Sn',
+            quote: 'Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri'
+        },
     ],
     tei: [
         {
@@ -61,7 +87,13 @@ const kapros: Record<MajorName, kaproProfile[]> =  {
             jabatan: 'Kepala Jurusan Program TEI',
             kaproName: 'Mokhamad Amrul Sadat, ST, M.Pd',
             quote: 'Jadilah dirimu sendiri selagi dirimu masih mengenali dirimu'
-        }
+        },
+        {
+            image: '/images/profile-placeholder.png',
+            jabatan: 'Guru Produktif TEI',
+            kaproName: 'Anjar Afif Afandi, ST, M.Pd',
+            quote: 'Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri'
+        },
     ],
     mekatronika: [
         {
@@ -69,7 +101,13 @@ const kapros: Record<MajorName, kaproProfile[]> =  {
             jabatan: 'Kepala Jurusan Program Mekatronika',
             kaproName: 'Hermawan, ST, M.Pd',
             quote: 'Jadilah dirimu sendiri selagi dirimu masih mengenali dirimu'
-        }
+        },
+        {
+            image: '/images/profile-placeholder.png',
+            jabatan: 'Guru Produktif Mekatronika',
+            kaproName: 'Anjar Afif Afandi, ST, M.Pd',
+            quote: 'Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri'
+        },
     ],
     tav: [
         {
@@ -77,7 +115,13 @@ const kapros: Record<MajorName, kaproProfile[]> =  {
             jabatan: 'Kepala Jurusan Program TAV',
             kaproName: 'Falkudin, S.T',
             quote: 'Jadilah dirimu sendiri selagi dirimu masih mengenali dirimu sendiri'
-        }
+        },
+        {
+            image: '/images/profile-placeholder.png',
+            jabatan: 'Guru Produktif TAV',
+            kaproName: 'Drs. H. Ahmad Maksum, M.Pd',
+            quote: 'Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri'
+        },
     ],
 };
 
@@ -136,7 +180,7 @@ const getTransitionClasses = () => {
     <div class="flex items-center gap-4 w-full">
         <button 
         @click="prev"
-        class="border-neutral-400 border cursor-pointer bg-neutral-300 p-2 flex items-center justify-center rounded-full shadow-lg transition hover:bg-blue-600 hover:border-blue-600 hover:text-white hover:scale-110 flex-shrink-0"
+        :class="`border-neutral-400 border cursor-pointer bg-neutral-300 p-2 flex items-center justify-center rounded-full shadow-lg transition hover: hover:text-white hover:scale-110 flex-shrink-0 ${majorDatas[major]?.btnColor}`"
       >
         <Icon name="lucide:chevron-left" size="24" />
       </button>
@@ -163,7 +207,7 @@ const getTransitionClasses = () => {
 
       <button 
         @click="next" 
-        class="border-neutral-400 border cursor-pointer bg-neutral-300 p-2 flex items-center justify-center rounded-full shadow-lg transition hover:bg-blue-600 hover:border-blue-600 hover:text-white hover:scale-110 flex-shrink-0"
+        :class="`border-neutral-400 border cursor-pointer bg-neutral-300 p-2 flex items-center justify-center rounded-full shadow-lg transition hover:text-white hover:scale-110 flex-shrink-0 ${majorDatas[major]?.btnColor}`"
       >
         <Icon name="lucide:chevron-right" size="24" />
       </button>

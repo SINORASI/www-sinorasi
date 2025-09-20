@@ -1,14 +1,12 @@
 <template>
-  <div class="bg-gray-100 font-serif p-4 sm:p-6 md:p-8">
+  <div class="font-serif p-4 sm:p-6 md:p-8">
     <div class="max-w-5xl mx-auto">
-      <!-- Section Title -->
       <div class="flex items-center mb-6">
         <div class="flex-grow border-t border-gray-400"></div>
         <h2 class="text-2xl font-bold mx-4 text-gray-800 tracking-widest">UPCOMING EVENTS</h2>
         <div class="flex-grow border-t border-gray-400"></div>
       </div>
 
-      <!-- Events List -->
       <div class="space-y-6">
         <EventCard
           v-for="event in events"
@@ -27,7 +25,6 @@
 import { ref } from 'vue';
 import EventCard from './EventCard.vue';
 
-// Sample data for the events, now including an imageUrl
 const events = ref([
   {
     id: 1,

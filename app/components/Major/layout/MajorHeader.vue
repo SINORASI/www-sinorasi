@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
 import { majorDatas } from '~/datas/data';
-import type { MajorName } from '~/types/majorType';
+import type { MajorName } from '~/models/MajorName';
 
 const headerClass = ref('bg-transparent border-b-transparent')
 const sizeClass = ref('full')
@@ -41,7 +41,7 @@ const menuItems = [
 onMounted(() => {
   const handleScroll = () => {
     if (window.scrollY > window.innerHeight) {
-      headerClass.value = `${majorDatas[major]?.bgColor}`
+      headerClass.value = `${majorDatas[major]?.headerColor}`
       sizeClass.value = 'compact'
     } else {
       headerClass.value = 'bg-transparent border-b-transparent'

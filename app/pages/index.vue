@@ -51,7 +51,7 @@
         </div>
     </section>
     <section class="h-fit">
-        <div class="text-center md:text-left flex flex-col md:flex-row gap-10 container mx-auto">
+        <div class="text-center md:text-left flex flex-col md:flex-row gap-10 container mx-auto px-10 md:px-30">
             <div class="flex items-center flex-col gap-10">
                 <img src="/images/kepsek.webp" width="auto" height="auto" alt="Foto Kepsek" />
                 <div class="w-fit bg-neutral-200 rounded-lg p-2">
@@ -74,27 +74,25 @@ Wassalamu'alaikum wr.wb.
         </div>
     </section>
     <section class="h-min-screen">
-        <div class="container mx-auto flex text-center flex-col items-center gap-5">
+        <div class="container mx-auto px-10 md:px-60 flex text-center flex-col items-center gap-5">
             <h2 class="text-3xl font-bold">Video Profil Sekolah</h2>
             <p>Video profil ini memperlihatkan perjalanan dan komitmen sekolah dalam membentuk peserta didik yang unggul dalam berprestasi, berkarakter, serta siap menghadapi tantangan di masa depan.</p>
             <ScriptYouTubePlayer video-id="45j-vqtLMzE"/>
         </div>
     </section>
     <section class="h-min-screen py-20">
-        <div class="text-center container mx-auto flex flex-col items-center gap-5">
+        <div class="text-center container mx-auto flex flex-col items-center gap-5 px-10 md:px-0">
             <h2 class="text-3xl font-bold">Jejak Sejarah Kami</h2>
             <p>Perjalanan SMK Negeri 2 Singosari dalam mengembangkan pendidikan kejuruan berkualitas di Kabupaten Malang.</p>
             <Timeline />
         </div>
     </section>
     <section class="h-fit">
-        <div class="container mx-auto">
-            <div>
-
-            </div>
+        <div class="container mx-auto flex items-center justify-center">
+            <MajorCarousel />
         </div>
     </section>
-    <section class="h-min-screen">
+    <section class="h-fit">
         <div class="container mx-auto flex flex-col items-center gap-5">
             <h2 class="text-3xl font-bold">Prestasi</h2>
             <AchievementCarousel />

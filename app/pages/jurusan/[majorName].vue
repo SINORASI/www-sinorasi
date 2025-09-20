@@ -1,7 +1,9 @@
 <script lang="ts" setup>
 import KaproCarousel from '~/components/Major/KaproCarousel.vue';
 import { majorDatas } from '~/datas/data';
-import type { MajorName } from '~/types/majorType';
+import type { MajorName } from '~/models/MajorName';
+import ReferenceJob from '~/components/Major/ReferenceJob.vue';
+import MajorTopics from '~/components/Major/MajorTopics.vue';
 
 definePageMeta({
     layout: 'major'
@@ -9,7 +11,6 @@ definePageMeta({
 
 const route = useRoute();
 const major = route.params.majorName as MajorName;
-
 
 </script>
 
@@ -35,12 +36,10 @@ const major = route.params.majorName as MajorName;
         </section>
 
         <section class="min-h-screen">
-            <div class="flex justify-center items-center">
-                <h1>Apa saja yang dipelajari di jurusan RPL?</h1>
-                <div class="grid grid-cols-2 gap-2.5">
-                    <div class="">
-
-                    </div>
+            <div class="flex justify-center items-center flex-col gap-4.5">
+                <h1 class="text-3xl font-bold text-center mb-12 text-gray-800">Apa saja yang dipelajari di jurusan RPL?</h1>
+                <div>
+                    <MajorTopics />
                 </div>
             </div>
         </section>
@@ -48,19 +47,8 @@ const major = route.params.majorName as MajorName;
         <section class="min-h-screen">
             <div class="flex justify-center flex-col items-center">
                 <h1 class="font-bold text-4xl">Saat Lulus nanti punya kesempatan kerja jadi apa?</h1>
-                <div class="flex justify-center items-center flex-col gap-4 mt-4.5">
-                    <div class="bg-zinc-300 p-4 rounded-2xl flex justify-left items-center gap-2.5">
-                        <img src="/images/logo.webp" width="60" alt="logo profesi">
-                        <h2>Software Engineer</h2>
-                    </div>
-                    <div class="bg-zinc-300 p-4 rounded-2xl flex justify-left items-center gap-2.5">
-                        <img src="/images/logo.webp" width="60" alt="logo profesi">
-                        <h2>Web Developer</h2>
-                    </div>
-                    <div class="bg-zinc-300 p-4 rounded-2xl flex justify-left items-center gap-2.5">
-                        <img src="/images/logo.webp" width="60" alt="logo profesi">
-                        <h2>Data Analyst</h2>
-                    </div>
+                <div class="flex justify-center items-center flex-col mt-8">
+                    <ReferenceJob />
                 </div>
             </div>
         </section>
@@ -84,9 +72,9 @@ const major = route.params.majorName as MajorName;
         </section>
 
         <section class="min-h-screen">
-            <div class="flex justify-center items-center ">
-                <div class="">
-
+            <div class="flex justify-center items-center flex-col">
+                <div class="flex justify-center items-center flex-col gap-4 mt-8">
+                    <MajorAchievement />
                 </div>
             </div>
         </section>
