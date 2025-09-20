@@ -3,21 +3,42 @@
     <div class="flex flex-col items-center justify-center gap-10">
       <h1 class="font-bold text-4xl">Sambutan</h1>
 
-      <div class="flex gap-5 bg-neutral-100 rounded-lg p-8">
-        <div class="flex items-center justify-center h-130">
-          <div class="flex gap-5">
-            <div class="flex justify-start text-right flex-col gap-5">
-              <h2 class="font-bold text-3xl">Lorem Ipsum</h2>
-              <p class="text-sm">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, aut beatae consequatur deleniti esse expedita minus necessitatibus neque perspiciatis ratione.</p>
+      <div class="bg-neutral-100 rounded-lg p-8">
+        <div class="relative overflow-hidden">
+          <div class="flex transition-transform duration-300" :style="{ transform: `translateX(-${currentIndex * 100}%)` }">
+            <div class="flex-shrink-0 w-full flex gap-5 items-center justify-center h-130">
+              <div class="flex gap-5">
+                <div class="flex justify-start text-right flex-col gap-5">
+                  <h2 class="font-bold text-3xl">Lorem Ipsum</h2>
+                  <p class="text-sm">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, aut beatae consequatur deleniti esse expedita minus necessitatibus neque perspiciatis ratione.</p>
+                </div>
+                <div class="shrink-0 w-60 h-60 ">
+                  <img src="/images/logo.webp" class="w-full h-full shadow-sm rounded-lg" />
+                </div>
+                <div class="flex justify-end flex-col gap-5">
+                  <h2 class="font-bold text-3xl">Lorem Ipsum</h2>
+                  <p class="text-sm">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, aut beatae consequatur deleniti esse expedita minus necessitatibus neque perspiciatis ratione.</p>
+                </div>
+              </div>
             </div>
-            <div class="shrink-0 w-60 h-60 ">
-              <img src="/images/logo.webp" class="w-full h-full shadow-sm rounded-lg" />
-            </div>
-            <div class="flex justify-end flex-col gap-5">
-              <h2 class="font-bold text-3xl">Lorem Ipsum</h2>
-              <p class="text-sm">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, aut beatae consequatur deleniti esse expedita minus necessitatibus neque perspiciatis ratione.</p>
+            <div class="flex-shrink-0 w-full flex gap-5 items-center justify-center h-130">
+              <div class="flex gap-5">
+                <div class="flex justify-start text-right flex-col gap-5">
+                  <h2 class="font-bold text-3xl">Dolor Sit</h2>
+                  <p class="text-sm">Dolor sit amet, consectetur adipisicing elit. Accusantium, aut beatae consequatur deleniti esse expedita minus necessitatibus neque perspiciatis ratione.</p>
+                </div>
+                <div class="shrink-0 w-60 h-60 ">
+                  <img src="/images/logo.webp" class="w-full h-full shadow-sm rounded-lg" />
+                </div>
+                <div class="flex justify-end flex-col gap-5">
+                  <h2 class="font-bold text-3xl">Amet Consectetur</h2>
+                  <p class="text-sm">Amet consectetur adipisicing elit. Accusantium, aut beatae consequatur deleniti esse expedita minus necessitatibus neque perspiciatis ratione.</p>
+                </div>
+              </div>
             </div>
           </div>
+          <button @click="prev" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full">‹</button>
+          <button @click="next" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full">›</button>
         </div>
       </div>
     </div>
@@ -115,4 +136,15 @@
   </section>
 </template>
 <script setup lang="ts">
+import { ref } from 'vue';
+
+const currentIndex = ref(0);
+
+const next = () => {
+  currentIndex.value = (currentIndex.value + 1) % 2;
+};
+
+const prev = () => {
+  currentIndex.value = (currentIndex.value - 1 + 2) % 2;
+};
 </script>

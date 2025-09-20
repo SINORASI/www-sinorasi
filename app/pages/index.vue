@@ -77,9 +77,7 @@ Wassalamu'alaikum wr.wb.
         <div class="container mx-auto flex text-center flex-col items-center gap-5">
             <h2 class="text-3xl font-bold">Video Profil Sekolah</h2>
             <p>Video profil ini memperlihatkan perjalanan dan komitmen sekolah dalam membentuk peserta didik yang unggul dalam berprestasi, berkarakter, serta siap menghadapi tantangan di masa depan.</p>
-            <div>
-                <ScriptYouTubePlayer video-id="45j-vqtLMzE"/>
-            </div>
+            <ScriptYouTubePlayer video-id="45j-vqtLMzE"/>
         </div>
     </section>
     <section class="h-min-screen py-20">
