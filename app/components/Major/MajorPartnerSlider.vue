@@ -1,60 +1,60 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted } from "vue";
 
 interface Company {
-  id: number
-  name: string
-  logo: string
-  website?: string
+  id: number;
+  name: string;
+  logo: string;
+  website?: string;
 }
 
 interface CompanyData {
-  [key: string]: Company[]
+  [key: string]: Company[];
 }
 
 interface Props {
-  majorName?: string
+  majorName?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  majorName: 'tkj'
-})
+  majorName: "tkj",
+});
 
 const companiesData: CompanyData = {
   tkj: [
-    { id: 1, name: 'Microsoft', logo: '/api/placeholder/200/80', website: 'https://microsoft.com' },
-    { id: 2, name: 'Google', logo: '/api/placeholder/200/80', website: 'https://google.com' },
-    { id: 3, name: 'IBM', logo: '/api/placeholder/200/80', website: 'https://ibm.com' },
-    { id: 4, name: 'Amazon', logo: '/api/placeholder/200/80', website: 'https://amazon.com' },
-    { id: 5, name: 'Oracle', logo: '/api/placeholder/200/80', website: 'https://oracle.com' },
-    { id: 6, name: 'Cisco', logo: '/api/placeholder/200/80', website: 'https://cisco.com' }
-  ]
-}
+    { id: 1, name: "Microsoft", logo: "/api/placeholder/200/80", website: "https://microsoft.com" },
+    { id: 2, name: "Google", logo: "/api/placeholder/200/80", website: "https://google.com" },
+    { id: 3, name: "IBM", logo: "/api/placeholder/200/80", website: "https://ibm.com" },
+    { id: 4, name: "Amazon", logo: "/api/placeholder/200/80", website: "https://amazon.com" },
+    { id: 5, name: "Oracle", logo: "/api/placeholder/200/80", website: "https://oracle.com" },
+    { id: 6, name: "Cisco", logo: "/api/placeholder/200/80", website: "https://cisco.com" },
+  ],
+};
 
 const currentCompanies = computed(() => {
-  return companiesData[props.majorName] || []
-})
+  return companiesData[props.majorName] || [];
+});
 
 // Digandakan untuk menciptakan efek loop
 const duplicatedCompanies = computed(() => {
-  return [...currentCompanies.value, ...currentCompanies.value]
-})
+  return [...currentCompanies.value, ...currentCompanies.value];
+});
 
-const sliderRef = ref<HTMLElement>()
+const sliderRef = ref<HTMLElement>();
 
 onMounted(() => {
   if (sliderRef.value) {
-    const count = currentCompanies.value.length
-    const duration = count * 3 // 3 detik per logo
-    sliderRef.value.style.setProperty('--animation-duration', `${duration}s`)
+    const count = currentCompanies.value.length;
+    const duration = count * 3; // 3 detik per logo
+    sliderRef.value.style.setProperty("--animation-duration", `${duration}s`);
   }
-})
+});
 
 const openCompanyWebsite = (company: Company) => {
   if (company.website) {
-    window.open(company.website, '_blank')
+    window.open(company.website, "_blank");
   }
-}
+};
 </script>
 
 <template>
@@ -64,10 +64,7 @@ const openCompanyWebsite = (company: Company) => {
     </div>
 
     <div class="relative w-full overflow-hidden h-[120px]">
-      <div
-        ref="sliderRef"
-        class="slider-track"
-      >
+      <div ref="sliderRef" class="slider-track">
         <div
           v-for="(company, index) in duplicatedCompanies"
           :key="`${company.id}-${index}`"
