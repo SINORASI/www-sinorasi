@@ -26,7 +26,7 @@ const major = route.params.majorName as MajorName;
             <hr class="border-1 border-zinc-200 max-w-4xl w-full">
 
             <div class="flex md:max-w-4xl max-w-lg w-full p-2">
-                <p class="text-center tracking-wide break-words">di poin ini akan di jelaskan sedikt tentang jurusan RPL, RPL tuh ngapain aja sih dll. di poin ini akan di jelaskan sedikt tentang jurusan RPL, RPL tuh ngapain aja sih dll. di poin ini akan di jelaskan sedikt tentang jurusan RPL, RPL tuh ngapain aja sih dll. di poin ini akan di jelaskan sedikt tentang jurusan RPL, RPL tuh ngapain aja sih dll</p>
+                <p class="text-center tracking-wide break-words">di poin ini akan di jelaskan sedikt tentang jurusan {{ majorDatas[major]?.short }}, {{ majorDatas[major]?.short }} tuh ngapain aja sih dll. di poin ini akan di jelaskan sedikt tentang jurusan {{ majorDatas[major]?.short }}, {{ majorDatas[major]?.short }} tuh ngapain aja sih dll. di poin ini akan di jelaskan sedikt tentang jurusan {{ majorDatas[major]?.short }}, {{ majorDatas[major]?.short }} tuh ngapain aja sih dll. di poin ini akan di jelaskan sedikt tentang jurusan {{ majorDatas[major]?.short }}, {{ majorDatas[major]?.short }} tuh ngapain aja sih dll</p>
             </div>
         </section>
 
@@ -66,7 +66,7 @@ const major = route.params.majorName as MajorName;
             <div class="flex justify-center items-center flex-col gap-4.5">
                 <h1 class="tracking-wide font-bold text-4xl">Minigame</h1>
                 <div class="flex justify-center items-center max-w-6xl w-full h-84 bg-zinc-500 p-6 rounded-lg">
-                    <h1 class="text-white">Minigame RPL</h1>
+                    <h1 class="text-white">Minigame {{ majorDatas[major]?.short }}</h1>
                 </div>
             </div>
         </section>

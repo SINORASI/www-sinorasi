@@ -1,42 +1,12 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
-import { majorDatas } from '~/datas/data';
+import { majorDatas, majorMenus } from '~/datas/data';
 import type { MajorName } from '~/models/MajorName';
 
 const headerClass = ref('bg-transparent border-b-transparent')
 const sizeClass = ref('full')
 
-const menuItems = [
-  {
-    title: 'Pengenalan',
-    submenu: [
-      { title: 'Apa itu RPL?', desc: 'Pengantar jurusan RPL', icon: 'lucide:info' },
-      { title: 'Kurikulum', desc: 'Mata pelajaran yang dipelajari', icon: 'lucide:book' }
-    ]
-  },
-  {
-    title: 'Kompetensi',
-    submenu: [
-      { title: 'Programming', desc: 'Pengembangan perangkat lunak', icon: 'lucide:code' },
-      { title: 'Database', desc: 'Manajemen data', icon: 'lucide:database' },
-      { title: 'Web Development', desc: 'Pembuatan website', icon: 'lucide:globe' }
-    ]
-  },
-  {
-    title: 'Fasilitas',
-    submenu: [
-      { title: 'Lab Komputer', desc: 'Fasilitas praktikum', icon: 'lucide:monitor' },
-      { title: 'Software', desc: 'Tools pengembangan', icon: 'lucide:pyramid' }
-    ]
-  },
-  {
-    title: 'Karir',
-    submenu: [
-      { title: 'Prospect Kerja', desc: 'Peluang karir lulusan', icon: 'lucide:briefcase' },
-      { title: 'Alumni', desc: 'Kisah sukses alumni', icon: 'lucide:users' }
-    ]
-  }
-]
+const menuItems = computed(() => majorMenus[major] || [])
 
 onMounted(() => {
   const handleScroll = () => {
