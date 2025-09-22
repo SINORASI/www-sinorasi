@@ -213,8 +213,8 @@ const getTransitionClasses = () => {
     
     <div class="flex justify-between items-center py-3 ml-5">
       <div class="flex gap-5">
-        <div class="text-center p-4 rounded-lg bg-zinc-200/20 w-[320px]">
-          <h2 :key="current" class="font-bold tracking-wide">
+        <div class="text-center p-4 rounded-lg bg-zinc-200/20 w-full max-w-xs sm:max-w-sm">
+          <h2 :key="current" class="font-bold tracking-wide text-sm sm:text-base break-words">
             {{ kapro[current]?.kaproName }}
           </h2>
         </div>

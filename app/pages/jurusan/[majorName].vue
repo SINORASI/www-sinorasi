@@ -16,7 +16,7 @@ const major = route.params.majorName as MajorName;
 </script>
 
 <template>
-    <main>
+    <main class="overflow-x-hidden">
         <section class="min-h-screen flex flex-col items-center justify-center md:gap-15 gap-8 px-4 pt-24 md:pt-20 pb-10">
             <div class="flex md:flex-row flex-col justify-center items-center gap-4">
                 <img :src="majorDatas[major]?.logo" alt="logo jurusan" class="md:w-70 w-20">
@@ -31,49 +31,48 @@ const major = route.params.majorName as MajorName;
         </section>
 
         <section class="min-h-screen">
-            <div class="container mx-auto flex flex-col items-center gap-5">
+            <div class="container mx-auto flex flex-col items-center gap-5 px-4">
                 <KaproCarousel />
             </div>
         </section>
 
         <section class="min-h-screen">
-            <div class="flex justify-center items-center flex-col gap-4.5">
-                <div>
+            <div class="flex justify-center items-center flex-col gap-4.5 px-4">
+                <div class="w-full">
                     <MajorTopics />
                 </div>
             </div>
         </section>
 
         <section class="min-h-screen">
-            <div class="flex justify-center flex-col items-center">
-                <h1 class="font-bold text-4xl">Saat Lulus nanti punya kesempatan kerja jadi apa?</h1>
-                <div class="flex justify-center items-center flex-col mt-8">
+            <div class="flex justify-center flex-col items-center px-4">
+                <h1 class="font-bold text-2xl md:text-4xl text-center">Saat Lulus nanti punya kesempatan kerja jadi apa?</h1>
+                <div class="flex justify-center items-center flex-col mt-8 w-full">
                     <ReferenceCareers />
                 </div>
             </div>
         </section>
 
         <section class="min-h-screen">
-            <div class="flex justify-center items-center">
-                <h1 class="text-4xl font-bold tracking-wide">Bekerja Sama Dengan Industri Berikut</h1>
-                <div class="flex flex-col justify-center items-center gap-2.5">
+            <div class="flex justify-center items-center px-4">
+                <div class="flex flex-col justify-center items-center gap-2.5 w-full">
                     <MajorPartnerSlider />
                 </div>
             </div>
         </section>
 
         <section class="min-h-screen">
-            <div class="flex justify-center items-center flex-col gap-4.5">
-                <h1 class="tracking-wide font-bold text-4xl">Minigame</h1>
-                <div class="flex justify-center items-center max-w-6xl w-full h-84 bg-zinc-500 p-6 rounded-lg">
-                    <h1 class="text-white">Minigame {{ majorDatas[major]?.short }}</h1>
+            <div class="flex justify-center items-center flex-col gap-4.5 px-4">
+                <h1 class="tracking-wide font-bold text-2xl md:text-4xl text-center">Minigame</h1>
+                <div class="flex justify-center items-center max-w-6xl w-full h-64 md:h-84 bg-zinc-500 p-4 md:p-6 rounded-lg mx-auto">
+                    <h1 class="text-white text-center">Minigame {{ majorDatas[major]?.short }}</h1>
                 </div>
             </div>
         </section>
 
         <section class="min-h-screen">
-            <div class="flex justify-center items-center flex-col">
-                <div class="flex justify-center items-center flex-col gap-4 mt-8">
+            <div class="flex justify-center items-center flex-col px-4">
+                <div class="flex justify-center items-center flex-col gap-4 mt-8 w-full">
                     <MajorAchievement />
                 </div>
             </div>

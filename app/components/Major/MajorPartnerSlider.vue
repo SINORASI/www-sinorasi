@@ -60,7 +60,7 @@ const openCompanyWebsite = (company: Company) => {
 <template>
   <div class="w-full overflow-hidden py-12 relative bg-white">
     <div class="text-center text-black font-bold mb-8">
-      <h2 class="text-3xl font-bold">Bekerja Sama Dengan Industri Berikut</h2>
+      <h2 class="text-4xl font-bold">Bekerja Sama Dengan Industri Berikut</h2>
     </div>
 
     <div class="relative w-full overflow-hidden h-[120px]">
@@ -77,9 +77,9 @@ const openCompanyWebsite = (company: Company) => {
           <img
             :src="company.logo"
             :alt="`${company.name} logo`"
-            class="w-44 h-20 object-contain grayscale hover:grayscale-0 transition duration-300"
+            class="w-32 sm:w-40 md:w-44 h-16 sm:h-18 md:h-20 object-contain grayscale hover:grayscale-0 transition duration-300"
           />
-          <p class="text-black mt-2 text-sm text-center font-semibold">
+          <p class="text-black mt-2 text-xs sm:text-sm text-center font-semibold px-2">
             {{ company.name }}
           </p>
         </div>
@@ -91,7 +91,7 @@ const openCompanyWebsite = (company: Company) => {
 <style scoped>
 .slider-track {
   display: flex;
-  gap: 40px;
+  gap: 2rem;
   width: max-content;
   animation: scroll-left var(--animation-duration, 30s) linear infinite;
 }
