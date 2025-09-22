@@ -164,18 +164,7 @@ const getTransitionClasses = () => {
 <template>
   <div class="w-full max-w-sm md:w-250 md:max-w-none flex flex-col gap-5 rounded-lg p-4 md:p-8 relative mx-auto">
     <div class="rounded-lg bg-zinc-200/20 p-4 flex justify-center items-center">
-        <Transition 
-            name="slide" 
-            mode="out-in"
-            enter-active-class="transition-all duration-500 ease-out"
-            :enter-from-class="getTransitionClasses().enterFrom"
-            :enter-to-class="getTransitionClasses().enterTo"
-            leave-active-class="transition-all duration-500 ease-in"
-            :leave-from-class="getTransitionClasses().leaveFrom"
-            :leave-to-class="getTransitionClasses().leaveTo"
-          >
-            <h1 :key="current" class="font-bold tracking-wider text-2xl">{{ kapro[current]?.jabatan }}</h1>
-        </Transition>
+      <h1 :key="current" class="font-bold tracking-wider text-2xl">{{ kapro[current]?.jabatan }}</h1>
     </div>
     <div class="flex items-center gap-4 w-full">
         <button 
@@ -200,7 +189,7 @@ const getTransitionClasses = () => {
             :key="current"
             :src="kapro[current]?.image" 
             class="w-48 md:w-60 rounded-lg" 
-            alt="Kapro Tool"
+            :alt="kapro[current]?.kaproName"
           />
         </Transition>
       </div>
@@ -213,43 +202,21 @@ const getTransitionClasses = () => {
       </button>
 
       <div class="flex justify-center items-center flex-1 ml-8 bg-zinc-200/20 p-6 rounded-lg h-75">
-        <Transition 
-          name="slide" 
-          mode="out-in"
-          enter-active-class="transition-all duration-500 ease-out"
-          :enter-from-class="getTransitionClasses().enterFrom"
-          :enter-to-class="getTransitionClasses().enterTo"
-          leave-active-class="transition-all duration-500 ease-in"
-          :leave-from-class="getTransitionClasses().leaveFrom"
-          :leave-to-class="getTransitionClasses().leaveTo"
+        <p 
+          :key="current"
+          class="tracking-wide font-bold text-lg text-center max-w-md"
         >
-          <p 
-            :key="current"
-            class="tracking-wide font-bold text-lg text-center max-w-md"
-          >
-            {{ kapro[current]?.quote }}
-          </p>
-        </Transition>
+          {{ kapro[current]?.quote }}
+        </p>
       </div>
     </div>
     
     <div class="flex justify-between items-center py-3 ml-5">
       <div class="flex gap-5">
         <div class="text-center p-4 rounded-lg bg-zinc-200/20 w-[320px]">
-          <Transition 
-            name="slide" 
-            mode="out-in"
-            enter-active-class="transition-all duration-500 ease-out"
-            :enter-from-class="getTransitionClasses().enterFrom"
-            :enter-to-class="getTransitionClasses().enterTo"
-            leave-active-class="transition-all duration-500 ease-in"
-            :leave-from-class="getTransitionClasses().leaveFrom"
-            :leave-to-class="getTransitionClasses().leaveTo"
-          >
           <h2 :key="current" class="font-bold tracking-wide">
             {{ kapro[current]?.kaproName }}
           </h2>
-          </Transition>
         </div>
       </div>
       <div class="flex items-center justify-center mr-10">

@@ -2,8 +2,9 @@
 import KaproCarousel from '~/components/Major/KaproCarousel.vue';
 import { majorDatas } from '~/datas/data';
 import type { MajorName } from '~/models/MajorName';
-import ReferenceJob from '~/components/Major/ReferenceJob.vue';
+import ReferenceCareers from '~/components/Major/ReferenceCareers.vue';
 import MajorTopics from '~/components/Major/MajorTopics.vue';
+import MajorPartnerSlider from '~/components/Major/MajorPartnerSlider.vue';
 
 definePageMeta({
     layout: 'major'
@@ -37,7 +38,6 @@ const major = route.params.majorName as MajorName;
 
         <section class="min-h-screen">
             <div class="flex justify-center items-center flex-col gap-4.5">
-                <h1 class="text-3xl font-bold text-center mb-12 text-gray-800">Apa saja yang dipelajari di jurusan RPL?</h1>
                 <div>
                     <MajorTopics />
                 </div>
@@ -48,7 +48,7 @@ const major = route.params.majorName as MajorName;
             <div class="flex justify-center flex-col items-center">
                 <h1 class="font-bold text-4xl">Saat Lulus nanti punya kesempatan kerja jadi apa?</h1>
                 <div class="flex justify-center items-center flex-col mt-8">
-                    <ReferenceJob />
+                    <ReferenceCareers />
                 </div>
             </div>
         </section>
@@ -57,7 +57,7 @@ const major = route.params.majorName as MajorName;
             <div class="flex justify-center items-center">
                 <h1 class="text-4xl font-bold tracking-wide">Bekerja Sama Dengan Industri Berikut</h1>
                 <div class="flex flex-col justify-center items-center gap-2.5">
-                    
+                    <MajorPartnerSlider />
                 </div>
             </div>
         </section>

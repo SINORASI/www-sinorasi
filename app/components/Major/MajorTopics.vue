@@ -3,11 +3,10 @@ import { ref } from 'vue';
 import { majorDatas } from '~/datas/data';
 import type { MajorName } from '~/models/MajorName';
 
-interface ProgrammingLanguage {
+interface MajorTopic {
   id: string
   title: string
   description: string
-  isSpecial: boolean
 }
 
 interface ExpandedItems {
@@ -20,71 +19,100 @@ const expandedRightItems = ref<ExpandedItems>({});
 const route = useRoute();
 const major = route.params.majorName as MajorName;
 
-const leftColumnLanguages: ProgrammingLanguage[] = [
+const leftColumnLanguages: MajorTopic[] = [
   {
     id: 'visual-desktop',
     title: 'Pemrograman Visual Berbasis Desktop',
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices mauris. Maecenas vitae mattis tellus. Nullam quis imperdiet augue. Vestibulum auctor ornare leo, non suscipit magna interdum eu.',
-    isSpecial: false
   },
   {
     id: 'python-1',
     title: 'PYTHON',
     description: 'Python adalah bahasa pemrograman tingkat tinggi yang mudah dipelajari dan sangat populer. Digunakan untuk pengembangan web, data science, machine learning, dan automasi. Python memiliki sintaks yang sederhana dan readable, membuatnya ideal untuk pemula maupun profesional.',
-    isSpecial: false
   },
   {
     id: 'javascript',
     title: 'JAVASCRIPT',
     description: 'JavaScript adalah bahasa pemrograman yang paling populer untuk pengembangan web. Digunakan untuk membuat website interaktif, aplikasi mobile, dan bahkan aplikasi desktop. JavaScript berjalan di browser dan juga di server menggunakan Node.js.',
-    isSpecial: false
   },
   {
     id: 'php',
     title: 'PHP',
     description: 'PHP adalah bahasa pemrograman server-side yang sangat populer untuk pengembangan web. Digunakan oleh platform besar seperti Facebook, WordPress, dan Wikipedia. PHP mudah dipelajari dan memiliki komunitas yang besar.',
-    isSpecial: false
   }
 ]
 
-const rightColumnLanguages: ProgrammingLanguage[] = [
+const rightColumnLanguages: MajorTopic[] = [
   {
     id: 'python-2',
     title: 'PYTHON',
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices mauris. Maecenas vitae mattis tellus. Nullam quis imperdiet augue. Vestibulum auctor ornare leo, non suscipit magna interdum eu.',
-    isSpecial: false
   },
   {
     id: 'java',
     title: 'JAVA',
     description: 'Java adalah bahasa pemrograman yang kuat dan platform-independent. Digunakan untuk pengembangan aplikasi enterprise, aplikasi Android, dan sistem backend yang besar. Java mengikuti prinsip "Write Once, Run Anywhere".',
-    isSpecial: false
   },
   {
     id: 'csharp',
     title: 'C#',
     description: 'C# adalah bahasa pemrograman yang dikembangkan oleh Microsoft. Sangat populer untuk pengembangan aplikasi Windows, web applications menggunakan .NET framework, dan game development menggunakan Unity.',
-    isSpecial: false
   },
   {
     id: 'kotlin',
     title: 'KOTLIN',
     description: 'Kotlin adalah bahasa pemrograman modern yang dikembangkan oleh JetBrains. Sangat populer untuk pengembangan aplikasi Android dan dapat berjalan di JVM. Kotlin 100% interoperable dengan Java dan memiliki sintaks yang lebih concise.',
-    isSpecial: false
   }
 ];
 
+const rightOpenOrder = ref<string[]>([]);
+const leftOpenOrder = ref<string[]>([]);
+
 const toggleLeftExpanded = (id: string): void => {
-  expandedLeftItems.value = {
-    ...expandedLeftItems.value,
-    [id]: !expandedLeftItems.value[id]
+  if (expandedLeftItems.value[id]) {
+    expandedLeftItems.value = {
+      ...expandedLeftItems.value,
+      [id]: false
+    }
+    leftOpenOrder.value = leftOpenOrder.value.filter(item => item !== id);
+  } else {
+      if (leftOpenOrder.value.length >= 2) {
+        const oldestId = leftOpenOrder.value[0] as string;
+        expandedLeftItems.value = {
+          ...expandedLeftItems.value,
+          [oldestId]: false
+      }
+      leftOpenOrder.value = leftOpenOrder.value.slice(1);
+    }
+    expandedLeftItems.value = {
+      ...expandedLeftItems.value,
+      [id]: true
+    }
+    leftOpenOrder.value.push(id);
   }
 }
 
 const toggleRightExpanded = (id: string): void => {
-  expandedRightItems.value = {
-    ...expandedRightItems.value,
-    [id]: !expandedRightItems.value[id]
+  if (expandedRightItems.value[id]) {
+    expandedRightItems.value = {
+      ...expandedRightItems.value,
+      [id]: false
+    }
+    rightOpenOrder.value = rightOpenOrder.value.filter(item => item !== id);
+  } else {
+      if (rightOpenOrder.value.length >= 2) {
+        const oldestId = rightOpenOrder.value[0] as string;
+        expandedRightItems.value = {
+          ...expandedRightItems.value,
+          [oldestId]: false
+      }
+      rightOpenOrder.value = rightOpenOrder.value.slice(1);
+    }
+    expandedRightItems.value = {
+      ...expandedRightItems.value,
+      [id]: true
+    }
+    rightOpenOrder.value.push(id);
   }
 }
 </script>  
@@ -101,10 +129,7 @@ const toggleRightExpanded = (id: string): void => {
             <button
               @click="toggleLeftExpanded(lang.id)"
               :class="[
-                'w-full p-4 flex items-center justify-between transition-all duration-200 text-white font-semibold text-lg',
-                lang.isSpecial 
-                  ? 'bg-orange-500 hover:bg-orange-600' 
-                  : `${majorDatas[major]?.bgColor} ${majorDatas[major]?.hoverBgColor}`
+                `w-full p-4 flex items-center justify-between transition-all duration-200 text-white font-semibold text-lg ${majorDatas[major]?.bgColor} ${majorDatas[major]?.hoverBgColor}`
               ]"
             >
               <span>{{ lang.title }}</span>
@@ -154,10 +179,7 @@ const toggleRightExpanded = (id: string): void => {
             <button
               @click="toggleRightExpanded(lang.id)"
               :class="[
-                'w-full p-4 flex items-center justify-between transition-all duration-200 text-white font-semibold text-lg',
-                lang.isSpecial 
-                  ? 'bg-orange-500 hover:bg-orange-600' 
-                  : `${majorDatas[major]?.bgColor} ${majorDatas[major]?.hoverBgColor}`
+                `w-full p-4 flex items-center justify-between transition-all duration-200 text-white font-semibold text-lg ${majorDatas[major]?.bgColor} ${majorDatas[major]?.hoverBgColor}`
               ]"
             >
               <span>{{ lang.title }}</span>
