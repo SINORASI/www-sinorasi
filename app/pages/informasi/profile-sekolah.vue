@@ -49,7 +49,9 @@
   </section>
   <section class="flex items-center justify-center h-screen container mx-auto px-6 py-12">
     <div class="bg-neutral-200 p-8 rounded-lg flex flex-col items-center justify-center gap-5">
-      <h2 class="font-bold text-3xl">Video Profil Sekolah</h2>
+      <div class="bg-neutral-200/50 backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
+        <h2 class="font-bold text-3xl">Video Profil Sekolah</h2>
+      </div>
       <p class="text-sm w-6/12 text-center">Video profil ini memperlihatkan perjalanan dan komitmen sekolah dalam membentuk peserta didik yang unggul dalam berprestasi, berkarakter, serta siap menghadapi tantangan di masa depan.</p>
       <div class="bg-neutral-600 h-100 w-full rounded-lg shadow-sm">
 
@@ -58,7 +60,9 @@
   </section>
   <section class="flex items-center justify-center h-screen container mx-auto px-6 py-12">
     <div class="flex flex-col items-center justify-center gap-10">
-      <h2 class="font-bold text-3xl">Visi dan Misi</h2>
+      <div class="bg-neutral-200/50 backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
+        <h2 class="font-bold text-3xl">Visi dan Misi</h2>
+      </div>
       <p class="text-sm">Video profil ini memperlihatkan perjalanan dan komitmen sekolah dalam membentuk peserta didik yang unggul dalam berprestasi, berkarakter, serta siap menghadapi tantangan di masa depan.</p>
       <Carousel>
         <template #slide-0>
@@ -101,7 +105,9 @@
   </section>
   <section class="flex items-center justify-center h-screen container mx-auto px-30 py-12">
     <div class="flex flex-col items-center justify-center gap-10">
-      <h2 class="font-bold text-3xl">Sejarah SMK Negeri 02 Singosari</h2>
+      <div class="bg-neutral-200/50 backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
+        <h2 class="font-bold text-3xl">Sejarah SMK Negeri 02 Singosari</h2>
+      </div>
       <div class="flex flex-col gap-4">
         <p class="text-sm">
           Didirikan berdasarkan surat Perjanjian Kerjasama antara Bupati Malang dengan Direktur Pendidikan Sekolah Menengah Kejuruan No.0570ax/C5.4/Kep/KU/2007 Tanggal 25 Mei 2007. Sebagai Pengembangan dari Program Keahlian Teknik Audio Video, Teknik Elektronika Industri, dan Teknik Informatika (Rekayasa Perangkat Lunak) yang berasal dari SMK Negeri 1 Singosari yang telah meraih prestasi sebagai Juara Lomba Kompetensi Siswa baik tingkat Propinsi Jawa Timur maupun Tingkat Nasional.
@@ -118,12 +124,16 @@
   </section>
   <section class="flex items-center justify-center h-screen container mx-auto px-6 py-12">
     <div class="flex flex-col items-center justify-center gap-10">
-      <h2 class="font-bold text-3xl">Mars SMKN2 2 Singosari</h2>
+      <div class="bg-neutral-200/50 backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
+        <h2 class="font-bold text-3xl">Mars SMKN2 2 Singosari</h2>
+      </div>
     </div>
   </section>
   <section class="flex items-center justify-center h-screen container mx-auto px-6 py-12">
     <div class="flex flex-col items-center justify-center gap-10">
-      <h2 class="font-bold text-3xl">Kontak</h2>
+      <div class="bg-neutral-200/50 backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
+        <h2 class="font-bold text-3xl">Kontak</h2>
+      </div>
       <div class="flex flex-col gap-2">
         <div class="flex flex-col gap-2">
           <div class="w-fit h-fit p-4 rounded-lg bg-neutral-300 text-center">

@@ -15,14 +15,18 @@
         </div>
 
         <div class="flex flex-col items-center gap-10">
-          <h2 class="text-3xl font-bold">Kurikulum</h2>
+          <div class="bg-neutral-200/50 backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
+            <h2 class="text-3xl font-bold">Kurikulum</h2>
+          </div>
           <div class="flex gap-10">
             <StaffCard v-for="staff in staffData.kurikulum" :key="staff.name" :staff="staff" />
           </div>
         </div>
 
         <div class="flex flex-col items-center gap-10">
-          <h2 class="text-3xl font-bold">Kesiswaan</h2>
+          <div class="bg-neutral-200/50 backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
+            <h2 class="text-3xl font-bold">Kesiswaan</h2>
+          </div>
           <div class="grid grid-cols-3 grid-rows-2 gap-10">
             <StaffCard v-for="staff in staffData.kesiswaan" :key="staff.name" :staff="staff" />
           </div>
@@ -30,13 +34,17 @@
       </div>
 
       <div class="flex flex-col items-center gap-10">
-        <h2 class="text-3xl font-bold">Sapras</h2>
+        <div class="bg-neutral-200/50 backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
+          <h2 class="text-3xl font-bold">Sapras</h2>
+        </div>
         <div class="flex gap-10">
           <StaffCard v-for="staff in staffData.sapras" :key="staff.name" :staff="staff" />
         </div>
 
         <div class="flex flex-col items-center gap-10">
-          <h2 class="text-3xl font-bold">Humas</h2>
+          <div class="bg-neutral-200/50 backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
+            <h2 class="text-3xl font-bold">Humas</h2>
+          </div>
           <div class="flex flex-col gap-10">
             <div class="flex gap-10">
               <StaffCard v-for="staff in staffData.humas.slice(0, 3)" :key="staff.name" :staff="staff" />

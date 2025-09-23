@@ -112,7 +112,7 @@
 
       <div class="border-t border-neutral-700 mt-8 pt-8 text-center">
         <p class="text-sm text-neutral-400">
-          &copy; 2024 SMK Negeri 2 Singosari. All rights reserved. | Designed with <Icon name="lucide:heart" size="14" class="inline text-red-500" /> by Inovasi Raih Prestasi
+          &copy; 2024 SMK Negeri 2 Singosari. All rights reserved.
         </p>
       </div>
 

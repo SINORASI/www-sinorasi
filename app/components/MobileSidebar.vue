@@ -23,7 +23,7 @@
             <div v-for="(sub, subIndex) in item.submenu" :key="subIndex" class="mb-3 ml-4 border-l-2 border-gray-200 transition-colors duration-200 hover:border-blue-300">
               <NuxtLink :to="sub.to" class="block">
                 <div class="flex cursor-pointer items-start gap-3 rounded p-2 transition-colors duration-200 hover:bg-gray-50">
-                  <Icon :name="sub.icon" size="18" class="mt-0.5 flex-shrink-0 text-blue-600" />
+                  <Icon :name="sub.icon" size="18" class="mt-0.5 flex-shrink-0" :style="{ color: item.title === 'Jurusan' ? getIconColor(sub.title) : '#000000' }" />
                   <div class="flex-1">
                     <p class="text-sm font-medium text-gray-900">{{ sub.title }}</p>
                     <p class="text-xs leading-relaxed text-gray-600">{{ sub.desc }}</p>
@@ -39,6 +39,38 @@
 </template>
 
 <script setup lang="ts">
+import { majorColorSchemes } from "~/utils/majorColors";
+import type { MajorName } from "~/models/MajorName";
+
+const getMajorName = (displayName: string): MajorName => {
+  const majorMap: Record<string, MajorName> = {
+    RPL: "rpl",
+    TKJ: "tkj",
+    DKV: "dkv",
+    EI: "tei",
+    MT: "mekatronika",
+    BC: "broadcasting",
+    Animasi: "animasi",
+    AV: "tav",
+  };
+  return majorMap[displayName] || "rpl";
+};
+
+const getIconColor = (displayName: string): string => {
+  const majorMap: Record<string, MajorName> = {
+    RPL: "rpl",
+    TKJ: "tkj",
+    DKV: "dkv",
+    EI: "tei",
+    MT: "mekatronika",
+    BC: "broadcasting",
+    Animasi: "animasi",
+    AV: "tav",
+  };
+  const major = majorMap[displayName] || "rpl";
+  return majorColorSchemes[major]?.primary;
+};
+
 defineProps<{
   isOpen: boolean
   menuItems: Array<{

@@ -58,7 +58,10 @@ definePageMeta({
         </div>
       </div>
     </section>
-    <section id="information" class="h-fit">
+    <section id="information" class="flex items-center justify-center flex-col h-fit">
+      <div class="w-fit bg-neutral-200/50 backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
+          <h2 class="text-3xl font-bold">Jejak Sejarah Kami</h2>
+        </div>
       <div class="text-center md:text-left flex flex-col md:flex-row gap-10 container mx-auto px-10 md:px-30">
         <div class="flex items-center flex-col gap-10">
           <img src="/images/kepsek.webp" width="auto" height="auto" alt="Foto Kepsek" />
@@ -86,7 +89,9 @@ definePageMeta({
     </section>
     <section class="h-min-screen">
       <div class="container mx-auto px-10 md:px-60 flex text-center flex-col items-center gap-5">
-        <h2 class="text-3xl font-bold">Video Profil Sekolah</h2>
+        <div class="bg-neutral-200/50 backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
+          <h2 class="text-3xl font-bold">Video Profil Sekolah</h2>
+        </div>
         <p>
           Video profil ini memperlihatkan perjalanan dan komitmen sekolah dalam membentuk peserta didik yang unggul
           dalam berprestasi, berkarakter, serta siap menghadapi tantangan di masa depan.
@@ -96,7 +101,9 @@ definePageMeta({
     </section>
     <section class="h-min-screen py-20">
       <div class="text-center container mx-auto flex flex-col items-center gap-5 px-10 md:px-0">
-        <h2 class="text-3xl font-bold">Jejak Sejarah Kami</h2>
+        <div class="bg-neutral-200/50 backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
+          <h2 class="text-3xl font-bold">Jejak Sejarah Kami</h2>
+        </div>
         <p>
           Perjalanan SMK Negeri 2 Singosari dalam mengembangkan pendidikan kejuruan berkualitas di Kabupaten Malang.
         </p>
@@ -110,13 +117,17 @@ definePageMeta({
     </section>
     <section class="h-fit">
       <div class="container mx-auto flex flex-col items-center gap-5">
-        <h2 class="text-3xl font-bold">Prestasi</h2>
+        <div class="bg-neutral-200/50 backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
+          <h2 class="text-3xl font-bold">Prestasi</h2>
+        </div>
         <AchievementCarousel />
       </div>
     </section>
     <section class="h-min-screen" id="berita">
       <div class="container mx-auto flex flex-col items-center gap-5">
-        <h2 class="text-3xl font-bold">Berita Terbaru</h2>
+        <div class="bg-neutral-200/50 backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
+          <h2 class="text-3xl font-bold">Berita Terbaru</h2>
+        </div>
         <p>SMK Negeri 2 Singosari</p>
         <div class="flex flex-col gap-10 md:gap-0 md:flex-row w-full items-center justify-around">
           <div class="flex flex-col gap-10">

@@ -7,20 +7,6 @@ const headerClass = ref("bg-transparent border-b-transparent");
 const sizeClass = ref("full");
 const isSidebarOpen = ref(false);
 
-const getMajorName = (displayName: string): MajorName => {
-  const majorMap: Record<string, MajorName> = {
-    RPL: "rpl",
-    TKJ: "tkj",
-    DKV: "dkv",
-    EI: "tei",
-    MT: "mekatronika",
-    BC: "broadcasting",
-    Animasi: "animasi",
-    AV: "tav",
-  };
-  return majorMap[displayName] || "rpl";
-};
-
 const getIconColor = (displayName: string): string => {
   const majorMap: Record<string, MajorName> = {
     RPL: "rpl",
@@ -32,8 +18,9 @@ const getIconColor = (displayName: string): string => {
     Animasi: "animasi",
     AV: "tav",
   };
+  
   const major = majorMap[displayName] || "rpl";
-  return majorColorSchemes[major]?.primary || "#000000";
+  return majorColorSchemes[major]?.primary;
 };
 
 const menuItems = [
@@ -41,7 +28,6 @@ const menuItems = [
     title: "Beranda",
     submenu: [
       { title: "Home", desc: "Halaman utama website", icon: "lucide:home", to: "/" },
-      { title: "Dashboard", desc: "Panel kontrol siswa", icon: "lucide:layout-dashboard", to: "/dashboard" },
     ],
   },
   {
@@ -78,8 +64,9 @@ const menuItems = [
     title: "Informasi",
     submenu: [
       { title: "Berita", desc: "Berita terbaru sekolah", icon: "lucide:newspaper", to: "/berita" },
-      { title: "Organisasi", desc: "Organisasi yang ada di sekolah", icon: "lucide:newspaper", to: "/berita" },
-      { title: "Extra", desc: "Extra yang ada di sekolah", icon: "lucide:newspaper", to: "/berita" },
+      { title: "Organisasi", desc: "Organisasi yang ada di sekolah", icon: "lucide:newspaper", to: "/organsasi" },
+      { title: "Extracurricular", desc: "Extracurricular yang ada di sekolah", icon: "lucide:newspaper", to: "/extra" },
+      { title: "Events", desc: "Acara yang sedang/akan berlansung di sekolah", icon: "lucide:newspaper", to: "/acara" },
     ],
   },
   {
@@ -88,7 +75,7 @@ const menuItems = [
       { title: "Anonymous BK", desc: "Konsultasi anonim", icon: "lucide:shield", to: "/utilitas/anonymous-bk" },
       {
         title: "Traffic Tracker",
-        desc: "Pelacak lalu lintas website",
+        desc: "Temukan berapa lama kamu bisa kesekolah!",
         icon: "lucide:bar-chart",
         to: "/utilitas/traffic-tracker",
       },
@@ -115,7 +102,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <header :class="['text-white z-100 border-b-1 fixed top-0 left-0 right-0 transition-all duration-500 ease-in-out', headerClass]">
+  <header :class="['z-100 border-b-1 fixed top-0 left-0 right-0 transition-all duration-500 ease-in-out', headerClass]">
     <div
       :class="
         (sizeClass === 'full' ? 'p-4 gap-5' : 'p-3 gap-4') +
@@ -192,11 +179,7 @@ onMounted(() => {
                 class="block px-4 py-3 hover:bg-gray-50 transition-colors duration-200"
               >
                 <div class="flex items-center gap-3">
-                  <Icon
-                    :name="sub.icon"
-                    size="20"
-                    :style="{ color: item.title === 'Jurusan' ? getIconColor(sub.title) : '#000000' }"
-                  />
+                  <Icon :name="sub.icon" size="20" :style="{ color: item.title === 'Jurusan' ? getIconColor(sub.title) : '#000000' }" />
                   <div>
                     <p class="font-medium text-gray-900">{{ sub.title }}</p>
                     <p class="text-sm text-gray-600">{{ sub.desc }}</p>
