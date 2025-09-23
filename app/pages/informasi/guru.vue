@@ -1,10 +1,8 @@
 <template>
+  <div class="py-30">
     <ImageCarousel />
+  </div>
   <div class="bg-neutral-100 font-serif py-12 px-4 sm:px-6 lg:px-8 space-y-16">
-    <!-- 
-      Loop through each teacher category and render a carousel component for it.
-      We pass the title, pagination info, and the list of teachers as props.
-    -->
     <TeacherCategoryCarousel
       v-for="category in teacherCategories"
       :key="category.title"
@@ -15,10 +13,6 @@
     />
   </div>
 
-  <!-- 
-    The Modal is placed here, at the top level. 
-    Its visibility is controlled by this parent component's state.
-  -->
   <TeacherDetailModal
     v-if="isModalVisible"
     :teacher="selectedTeacher"
@@ -30,16 +24,12 @@
 
 <script setup>
 import { ref } from 'vue';
-// --- STATE MANAGEMENT for the entire page ---
 const isModalVisible = ref(false);
 const selectedTeacher = ref(null);
 const selectedTeacherCategoryTitle = ref('');
-const currentTeacherList = ref([]); // Holds the list of teachers from the currently active category
+const currentTeacherList = ref([]);
 const selectedTeacherIndex = ref(0);
 
-
-// --- PAGE DATA ---
-// A single source of truth for all teacher categories.
 const teacherCategories = ref([
   {
     title: 'Guru Pendidikan Agama Islam',
@@ -80,8 +70,6 @@ const teacherCategories = ref([
 ]);
 
 
-// --- METHODS ---
-// This function is triggered by an emit from a child carousel component.
 const handleOpenModal = (teacher, teacherList, categoryTitle) => {
   currentTeacherList.value = teacherList; // Store the list of the relevant category
   selectedTeacherCategoryTitle.value = categoryTitle;
@@ -94,7 +82,6 @@ const handleCloseModal = () => {
   isModalVisible.value = false;
 };
 
-// Navigate within the currently active teacher list
 const handleNavigate = (direction) => {
   const newIndex = selectedTeacherIndex.value + direction;
   const listLength = currentTeacherList.value.length;
