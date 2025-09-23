@@ -7,7 +7,6 @@ const headerClass = ref("bg-transparent border-b-transparent");
 const sizeClass = ref("full");
 const isSidebarOpen = ref(false);
 
-// Map display names to MajorName type
 const getMajorName = (displayName: string): MajorName => {
   const majorMap: Record<string, MajorName> = {
     RPL: "rpl",
@@ -22,7 +21,6 @@ const getMajorName = (displayName: string): MajorName => {
   return majorMap[displayName] || "rpl";
 };
 
-// Get icon color for a major
 const getIconColor = (displayName: string): string => {
   const majorMap: Record<string, MajorName> = {
     RPL: "rpl",
@@ -117,7 +115,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <header :class="['z-100 border-b-1 fixed top-0 left-0 right-0 transition-all duration-500 ease-in-out', headerClass]">
+  <header :class="['text-white z-100 border-b-1 fixed top-0 left-0 right-0 transition-all duration-500 ease-in-out', headerClass]">
     <div
       :class="
         (sizeClass === 'full' ? 'p-4 gap-5' : 'p-3 gap-4') +

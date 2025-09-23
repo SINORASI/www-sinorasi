@@ -1,10 +1,9 @@
 <template>
   <div class="w-fit flex flex-col gap-5 items-center rounded-lg">
-    <!-- Desktop Arrows -->
     <div class="hidden md:flex gap-5 items-center">
       <button
         @click="prev"
-        class="h-fit w-fit border-neutral-400 border cursor-pointer bg-neutral-300 p-2 items-center justify-center rounded-full shadow-lg transition hover:bg-blue-600 hover:border-blue-600 hover:text-white hover:scale-110"
+        class="h-fit w-fit border-neutral-400 flex items-center justify-center border cursor-pointer bg-neutral-300 p-2 items-center justify-center rounded-full shadow-lg transition hover:bg-blue-600 hover:border-blue-600 hover:text-white hover:scale-110"
       >
         <Icon name="lucide:chevron-left" size="24" />
       </button>
@@ -21,13 +20,12 @@
 
       <button
         @click="next"
-        class="h-fit w-fit border-neutral-400 border cursor-pointer bg-neutral-300 p-2 items-center justify-center rounded-full shadow-lg transition hover:bg-blue-600 hover:border-blue-600 hover:text-white hover:scale-110"
+        class="h-fit w-fit border-neutral-400 border flex items-center justify-center cursor-pointer bg-neutral-300 p-2 items-center justify-center rounded-full shadow-lg transition hover:bg-blue-600 hover:border-blue-600 hover:text-white hover:scale-110"
       >
         <Icon name="lucide:chevron-right" size="24" />
       </button>
     </div>
 
-    <!-- Mobile View with Single Card -->
     <div class="md:hidden flex flex-col items-center gap-5">
       <div ref="mobileCarousel" class="overflow-hidden w-60">
         <div
@@ -44,19 +42,18 @@
         </div>
       </div>
 
-      <!-- Mobile Navigation Buttons -->
       <div class="flex gap-5">
         <button
           @click="prev"
           :disabled="currentIndex === 0"
-          class="border-neutral-400 border cursor-pointer bg-neutral-300 p-2 items-center justify-center rounded-full shadow-lg transition hover:bg-blue-600 hover:border-blue-600 hover:text-white hover:scale-110 disabled:opacity-50"
+          class="border-neutral-400 border flex items-center justify-center cursor-pointer bg-neutral-300 p-2 items-center justify-center rounded-full shadow-lg transition hover:bg-blue-600 hover:border-blue-600 hover:text-white hover:scale-110 disabled:opacity-50"
         >
           <Icon name="lucide:chevron-left" size="24" />
         </button>
         <button
           @click="next"
           :disabled="currentIndex === items.length - 1"
-          class="border-neutral-400 border cursor-pointer bg-neutral-300 p-2 items-center justify-center rounded-full shadow-lg transition hover:bg-blue-600 hover:border-blue-600 hover:text-white hover:scale-110 disabled:opacity-50"
+          class="border-neutral-400 border cursor-pointer bg-neutral-300 flex items-center justify-center p-2 items-center justify-center rounded-full shadow-lg transition hover:bg-blue-600 hover:border-blue-600 hover:text-white hover:scale-110 disabled:opacity-50"
         >
           <Icon name="lucide:chevron-right" size="24" />
         </button>

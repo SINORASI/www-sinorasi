@@ -24,7 +24,7 @@ definePageMeta({
             class="flex flex-col sm:flex-row gap-2 md:gap-3 mt-2 md:mt-3 justify-center md:justify-start items-center"
           >
             <a
-              href="#"
+              href="#information"
               class="w-fit bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 md:px-5 md:py-2 rounded-lg font-semibold transition flex items-center gap-2 text-xs md:text-sm"
             >
               Pelajari Lebih Dalam
@@ -58,7 +58,7 @@ definePageMeta({
         </div>
       </div>
     </section>
-    <section class="h-fit">
+    <section id="information" class="h-fit">
       <div class="text-center md:text-left flex flex-col md:flex-row gap-10 container mx-auto px-10 md:px-30">
         <div class="flex items-center flex-col gap-10">
           <img src="/images/kepsek.webp" width="auto" height="auto" alt="Foto Kepsek" />
@@ -114,7 +114,7 @@ definePageMeta({
         <AchievementCarousel />
       </div>
     </section>
-    <section class="h-min-screen">
+    <section class="h-min-screen" id="berita">
       <div class="container mx-auto flex flex-col items-center gap-5">
         <h2 class="text-3xl font-bold">Berita Terbaru</h2>
         <p>SMK Negeri 2 Singosari</p>
