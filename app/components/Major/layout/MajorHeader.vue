@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted, computed } from "vue";
 import { majorDatas, majorMenus } from "~/datas/data";
 import type { MajorName } from "~/models/MajorName";
+import MobileSidebar from "~/components/MobileSidebar.vue";
 
 const headerClass = ref("bg-transparent border-b-transparent");
 const sizeClass = ref("full");
+const isOpen = ref(false);
 
 const menuItems = computed(() => majorMenus[major] || []);
 
@@ -122,7 +124,7 @@ if (!majorDatas[major]) {
       </div>
 
       <div class="transition-all duration-500 ease-in-out">
-        <button class="cursor-pointer">
+        <button class="cursor-pointer" @click="isOpen = !isOpen">
           <Icon
             name="lucide:align-justify"
             :size="sizeClass === 'full' ? 30 : 24"
@@ -135,4 +137,5 @@ if (!majorDatas[major]) {
       </div>
     </div>
   </header>
+  <MobileSidebar :is-open="isOpen" :menu-items="menuItems" @close="isOpen = false" />
 </template>

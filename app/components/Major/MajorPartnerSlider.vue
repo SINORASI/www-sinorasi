@@ -22,12 +22,12 @@ const props = withDefaults(defineProps<Props>(), {
 
 const companiesData: CompanyData = {
   tkj: [
-    { id: 1, name: "Microsoft", logo: "/api/placeholder/200/80", website: "https://microsoft.com" },
-    { id: 2, name: "Google", logo: "/api/placeholder/200/80", website: "https://google.com" },
-    { id: 3, name: "IBM", logo: "/api/placeholder/200/80", website: "https://ibm.com" },
-    { id: 4, name: "Amazon", logo: "/api/placeholder/200/80", website: "https://amazon.com" },
-    { id: 5, name: "Oracle", logo: "/api/placeholder/200/80", website: "https://oracle.com" },
-    { id: 6, name: "Cisco", logo: "/api/placeholder/200/80", website: "https://cisco.com" },
+    { id: 1, name: "Microsoft", logo: "/images/logo.webp", website: "https://microsoft.com" },
+    { id: 2, name: "Google", logo: "/images/logo.webp", website: "https://google.com" },
+    { id: 3, name: "IBM", logo: "/images/logo.webp", website: "https://ibm.com" },
+    { id: 4, name: "Amazon", logo: "/images/logo.webp", website: "https://amazon.com" },
+    { id: 5, name: "Oracle", logo: "/images/logo.webp", website: "https://oracle.com" },
+    { id: 6, name: "Cisco", logo: "/images/logo.webp", website: "https://cisco.com" },
   ],
 };
 
@@ -35,7 +35,6 @@ const currentCompanies = computed(() => {
   return companiesData[props.majorName] || [];
 });
 
-// Digandakan untuk menciptakan efek loop
 const duplicatedCompanies = computed(() => {
   return [...currentCompanies.value, ...currentCompanies.value];
 });
