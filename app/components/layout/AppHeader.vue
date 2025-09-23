@@ -64,7 +64,7 @@ const menuItems = [
     title: "Informasi",
     submenu: [
       { title: "Berita", desc: "Berita terbaru sekolah", icon: "lucide:newspaper", to: "/berita" },
-      { title: "Organisasi", desc: "Organisasi yang ada di sekolah", icon: "lucide:newspaper", to: "/organsasi" },
+      { title: "Organisasi", desc: "Organisasi yang ada di sekolah", icon: "lucide:newspaper", to: "/organisasi" },
       { title: "Extracurricular", desc: "Extracurricular yang ada di sekolah", icon: "lucide:newspaper", to: "/extra" },
       { title: "Events", desc: "Acara yang sedang/akan berlansung di sekolah", icon: "lucide:newspaper", to: "/acara" },
     ],

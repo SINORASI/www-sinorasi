@@ -83,7 +83,7 @@ onMounted(() => {
   top: 0;
   bottom: 0;
   width: 2px;
-  background: #3b82f6;
+  background: gray;
   transform: translateX(-50%);
 }
 
