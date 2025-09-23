@@ -60,7 +60,7 @@ definePageMeta({
     </section>
     <section id="information" class="flex items-center justify-center flex-col h-fit">
       <div class="w-fit bg-neutral-200/50 backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
-          <h2 class="text-3xl font-bold">Jejak Sejarah Kami</h2>
+          <h2 class="text-3xl font-bold">Sambutan Kepala Sekolah</h2>
         </div>
       <div class="text-center md:text-left flex flex-col md:flex-row gap-10 container mx-auto px-10 md:px-30">
         <div class="flex items-center flex-col gap-10">
@@ -96,7 +96,13 @@ definePageMeta({
           Video profil ini memperlihatkan perjalanan dan komitmen sekolah dalam membentuk peserta didik yang unggul
           dalam berprestasi, berkarakter, serta siap menghadapi tantangan di masa depan.
         </p>
-        <ScriptYouTubePlayer video-id="45j-vqtLMzE" />
+        <ScriptYouTubePlayer video-id="Kks6HnhPzVQ">
+          <template #placeholder="{ placeholder }">
+            <div class="relative">
+              <img :src="'/images/placeholder.jpg'" alt="Video Placeholder" class="rounded-lg">
+            </div>
+          </template>
+        </ScriptYouTubePlayer>
       </div>
     </section>
     <section class="h-min-screen py-20">
@@ -129,24 +135,21 @@ definePageMeta({
           <h2 class="text-3xl font-bold">Berita Terbaru</h2>
         </div>
         <p>SMK Negeri 2 Singosari</p>
-        <div class="flex flex-col gap-10 md:gap-0 md:flex-row w-full items-center justify-around">
-          <div class="flex flex-col gap-10">
-            <CardNews title="Kami Lolos Enam Bidang Lomba untuk Menuju Tingkat Provinsi" />
-            <CardNews title="Kami Lolos Enam Bidang Lomba untuk Menuju Tingkat Provinsi" />
-          </div>
-          <div class="flex flex-col items-center justify-center text-center gap-5">
-            <h3 class="text-2xl font-bold">Kategori Berita</h3>
-            <div class="flex flex-col gap-3">
-              <p class="font-bold p-2 rounded-full bg-neutral-100 pl-4 pr-4">Kategori Berita</p>
-              <p class="font-bold p-2 rounded-full bg-neutral-100 pl-4 pr-4">Kategori Berita</p>
-              <p class="font-bold p-2 rounded-full bg-neutral-100 pl-4 pr-4">Kategori Berita</p>
-              <p class="font-bold p-2 rounded-full bg-neutral-100 pl-4 pr-4">Kategori Berita</p>
-            </div>
-          </div>
-          <div class="flex flex-col gap-10">
-            <CardNews title="Kami Lolos Enam Bidang Lomba untuk Menuju Tingkat Provinsi" />
-            <CardNews title="Kami Lolos Enam Bidang Lomba untuk Menuju Tingkat Provinsi" />
-          </div>
+        <div class="flex flex-wrap gap-5 justify-center">
+          <p class="font-bold p-2 rounded-full bg-neutral-100 pl-4 pr-4">Kategori Berita</p>
+          <p class="font-bold p-2 rounded-full bg-neutral-100 pl-4 pr-4">Kategori Berita</p>
+          <p class="font-bold p-2 rounded-full bg-neutral-100 pl-4 pr-4">Kategori Berita</p>
+          <p class="font-bold p-2 rounded-full bg-neutral-100 pl-4 pr-4">Kategori Berita</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 w-full mt-5 place-items-center">
+          <CardNews title="Kami Lolos Enam Bidang Lomba untuk Menuju Tingkat Provinsi" />
+          <CardNews title="Kami Lolos Enam Bidang Lomba untuk Menuju Tingkat Provinsi" />
+          <CardNews title="Kami Lolos Enam Bidang Lomba untuk Menuju Tingkat Provinsi" />
+          <CardNews title="Kami Lolos Enam Bidang Lomba untuk Menuju Tingkat Provinsi" />
+          <CardNews title="Kami Lolos Enam Bidang Lomba untuk Menuju Tingkat Provinsi" />
+          <CardNews title="Kami Lolos Enam Bidang Lomba untuk Menuju Tingkat Provinsi" />
+          <CardNews title="Kami Lolos Enam Bidang Lomba untuk Menuju Tingkat Provinsi" />
+          <CardNews title="Kami Lolos Enam Bidang Lomba untuk Menuju Tingkat Provinsi" />
         </div>
       </div>
     </section>

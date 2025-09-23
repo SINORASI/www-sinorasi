@@ -13,7 +13,7 @@
         <p class="text-gray-600 text-sm">{{ item.description }}</p>
       </div>
       <div class="timeline-marker">
-        <Icon :name="item.icon" size="24" class="text-blue-600" />
+        <Icon :name="item.icon" size="24" :class="index % 2 === 0 ? 'text-blue-600' : 'text-orange-600'" />
       </div>
     </div>
   </div>

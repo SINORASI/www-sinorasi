@@ -8,11 +8,14 @@
         "@nuxt/icon": "^2.0.0",
         "@nuxt/scripts": "^0.11.13",
         "@tailwindcss/vite": "^4.1.13",
-        "@unhead/vue": "^2.0.14",
+        "@unhead/vue": "^2.0.17",
         "nuxt": "^4.1.2",
         "tailwindcss": "^4.1.13",
         "vue": "^3.5.21",
         "vue-router": "^4.5.1",
+      },
+      "devDependencies": {
+        "@iconify-json/simple-icons": "^1.2.52",
       },
     },
   },
@@ -136,6 +139,8 @@
     "@esbuild/win32-ia32": ["@esbuild/win32-ia32@0.25.10", "", { "os": "win32", "cpu": "ia32" }, "sha512-QHPDbKkrGO8/cz9LKVnJU22HOi4pxZnZhhA2HYHez5Pz4JeffhDjf85E57Oyco163GnzNCVkZK0b/n4Y0UHcSw=="],
 
     "@esbuild/win32-x64": ["@esbuild/win32-x64@0.25.10", "", { "os": "win32", "cpu": "x64" }, "sha512-9KpxSVFCu0iK1owoez6aC/s/EdUQLDN3adTxGCqxMVhrPDj6bt5dbrHDXUuq+Bs2vATFBBrQS5vdQ/Ed2P+nbw=="],
+
+    "@iconify-json/simple-icons": ["@iconify-json/simple-icons@1.2.52", "", { "dependencies": { "@iconify/types": "*" } }, "sha512-c41YOMzBhl3hp58WJLxT+Qq3UhBd8GZAMkbS8ddlCuIGLW0COGe2YSfOA2+poA8/bxLhUQODRNjAy3KhiAOtzA=="],
 
     "@iconify/collections": ["@iconify/collections@1.0.596", "", { "dependencies": { "@iconify/types": "*" } }, "sha512-+fc3aqkxIZlKa6n2Ez28OFOM2pDzh+Jf4YI8grhz/9JKhkkxFoLJAWrLFgepd6dp9sOme57gCy/p+mApZeKYAA=="],
 
