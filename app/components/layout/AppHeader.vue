@@ -2,6 +2,7 @@
 import { ref, onMounted, onUnmounted, computed } from "vue";
 import { majorColorSchemes } from "~/utils/majorColors";
 import type { MajorName } from "~/models/MajorName";
+import { JobTitles } from "~/datas/data";
 
 const headerClass = ref("bg-transparent border-b-transparent");
 const sizeClass = ref("full");
@@ -45,6 +46,12 @@ const menuItems = [
         icon: "lucide:users",
         to: "/informasi/struktur-organisasi",
       },
+      {
+        title: "Sarana Prasarana",
+        desc: "Kondisi bangunan sekolah",
+        icon: "lucide:users",
+        to: "/informasi/sarana-prasarana",
+      }
     ],
   },
   {
@@ -65,7 +72,7 @@ const menuItems = [
     submenu: [
       { title: "Berita", desc: "Berita terbaru sekolah", icon: "lucide:newspaper", to: "/berita" },
       { title: "Organisasi", desc: "Organisasi yang ada di sekolah", icon: "lucide:newspaper", to: "/organisasi" },
-      { title: "Extracurricular", desc: "Extracurricular yang ada di sekolah", icon: "lucide:newspaper", to: "/extra" },
+      { title: "Extracurricular", desc: "Ekstrakurikuler yang ada di sekolah", icon: "lucide:newspaper", to: "/ekstrakurikuler/" },
       { title: "Events", desc: "Acara yang sedang/akan berlansung di sekolah", icon: "lucide:newspaper", to: "/acara" },
     ],
   },

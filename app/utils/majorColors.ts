@@ -89,7 +89,6 @@ export const getMajorIconFilter = (major: MajorName): string => {
   const colors = majorColorSchemes[major];
   if (!colors) return "";
 
-  // Convert hex to RGB for filter calculation
   const hexToRgb = (hex: string) => {
     const r = parseInt(hex.slice(1, 3), 16);
     const g = parseInt(hex.slice(3, 5), 16);
@@ -100,10 +99,8 @@ export const getMajorIconFilter = (major: MajorName): string => {
   const rgb = hexToRgb(colors.primary);
   const brightness = Math.round((rgb.r * 299 + rgb.g * 587 + rgb.b * 114) / 1000);
 
-  // Calculate filter values based on target color
   const filters: string[] = [];
 
-  // Adjust brightness and saturation
   if (brightness < 128) {
     filters.push("brightness(1.2)");
   } else {
@@ -112,7 +109,6 @@ export const getMajorIconFilter = (major: MajorName): string => {
 
   filters.push("saturate(1.3)");
 
-  // Add hue rotation if needed for better color matching
   const hueRotateMap: Record<MajorName, number> = {
     rpl: 25, // Orange
     tkj: 45, // Yellow

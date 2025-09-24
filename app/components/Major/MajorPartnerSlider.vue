@@ -44,7 +44,7 @@ const sliderRef = ref<HTMLElement>();
 onMounted(() => {
   if (sliderRef.value) {
     const count = currentCompanies.value.length;
-    const duration = count * 3; // 3 detik per logo
+    const duration = count * 3;
     sliderRef.value.style.setProperty("--animation-duration", `${duration}s`);
   }
 });
