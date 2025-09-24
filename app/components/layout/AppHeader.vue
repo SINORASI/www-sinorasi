@@ -37,7 +37,7 @@ const menuItems = [
       {
         title: "Profile Sekolah",
         desc: "Profil lengkap sekolah",
-        icon: "lucide:building",
+        icon: "lucide:cannabis",
         to: "/informasi/profile-sekolah",
       },
       {
@@ -49,7 +49,7 @@ const menuItems = [
       {
         title: "Sarana Prasarana",
         desc: "Kondisi bangunan sekolah",
-        icon: "lucide:users",
+        icon: "lucide:building-2",
         to: "/informasi/sarana-prasarana",
       }
     ],
@@ -71,9 +71,9 @@ const menuItems = [
     title: "Informasi",
     submenu: [
       { title: "Berita", desc: "Berita terbaru sekolah", icon: "lucide:newspaper", to: "/berita" },
-      { title: "Organisasi", desc: "Organisasi yang ada di sekolah", icon: "lucide:newspaper", to: "/organisasi" },
-      { title: "Extracurricular", desc: "Ekstrakurikuler yang ada di sekolah", icon: "lucide:newspaper", to: "/ekstrakurikuler/" },
-      { title: "Events", desc: "Acara yang sedang/akan berlansung di sekolah", icon: "lucide:newspaper", to: "/acara" },
+      { title: "Organisasi", desc: "Organisasi yang ada di sekolah", icon: "lucide:person-standing", to: "/organisasi" },
+      { title: "Extracurricular", desc: "Ekstrakurikuler yang ada di sekolah", icon: "lucide:workflow", to: "/ekstrakurikuler/" },
+      { title: "Events", desc: "Acara yang sedang/akan berlansung di sekolah", icon: "lucide:hand-metal", to: "/acara" },
     ],
   },
   {
