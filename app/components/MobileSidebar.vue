@@ -27,17 +27,26 @@
             </h3>
             <div v-if="(openSections[item.title] ?? false) || searchQuery.trim()">
               <div v-for="(sub, subIndex) in item.submenu" :key="subIndex" class="mb-3 ml-4 border-l-2 border-gray-200 transition-colors duration-200 hover:border-blue-300">
-              <NuxtLink :to="sub.to" class="block">
-                <div class="flex cursor-pointer items-start gap-3 rounded p-2 transition-colors duration-200 hover:bg-gray-50">
-                  <Icon :name="sub.icon" size="18" class="mt-0.5 flex-shrink-0" :style="{ color: item.title === 'Jurusan' ? getIconColor(sub.title) : '#000000' }" />
-                  <div class="flex-1">
-                    <p class="text-sm font-medium text-gray-900">{{ sub.title }}</p>
-                    <p class="text-xs leading-relaxed text-gray-600">{{ sub.desc }}</p>
+                <a v-if="sub.external" :href="sub.to" target="_blank" class="block">
+                  <div class="flex cursor-pointer items-start gap-3 rounded p-2 transition-colors duration-200 hover:bg-gray-50">
+                    <Icon :name="sub.icon" size="18" class="mt-0.5 flex-shrink-0" :style="{ color: '#000000' }" />
+                    <div class="flex-1">
+                      <p class="text-sm font-medium text-gray-900">{{ sub.title }}</p>
+                      <p class="text-xs leading-relaxed text-gray-600">{{ sub.desc }}</p>
+                    </div>
                   </div>
-                </div>
-              </NuxtLink>
+                </a>
+                <NuxtLink v-else :to="sub.to" class="block">
+                  <div class="flex cursor-pointer items-start gap-3 rounded p-2 transition-colors duration-200 hover:bg-gray-50">
+                    <Icon :name="sub.icon" size="18" class="mt-0.5 flex-shrink-0" :style="{ color: item.title === 'Jurusan' ? getIconColor(sub.title) : '#000000' }" />
+                    <div class="flex-1">
+                      <p class="text-sm font-medium text-gray-900">{{ sub.title }}</p>
+                      <p class="text-xs leading-relaxed text-gray-600">{{ sub.desc }}</p>
+                    </div>
+                  </div>
+                </NuxtLink>
+              </div>
             </div>
-          </div>
           </div>
         </div>
       </div>
@@ -54,7 +63,7 @@ const menuItems = [
   {
     title: "Beranda",
     submenu: [
-      { title: "Home", desc: "Halaman utama website", icon: "lucide:home", to: "/", tags: ["home", "beranda"] },
+      { title: "Home", desc: "Halaman utama website", icon: "lucide:home", to: "/", external: false, tags: ["home", "beranda"] },
     ],
   },
   {
@@ -65,6 +74,7 @@ const menuItems = [
         desc: "Profil lengkap sekolah",
         icon: "lucide:cannabis",
         to: "/informasi/profile-sekolah",
+        external: false,
         tags: ["profile", "sekolah", "tentang", "kami"],
       },
       {
@@ -72,6 +82,7 @@ const menuItems = [
         desc: "Tim pengelola",
         icon: "lucide:users",
         to: "/informasi/struktur-organisasi",
+        external: false,
         tags: ["struktur", "organisasi", "tim", "pengelola"],
       },
       {
@@ -79,6 +90,7 @@ const menuItems = [
         desc: "Kondisi bangunan sekolah",
         icon: "lucide:building-2",
         to: "/informasi/sarana-prasarana",
+        external: false,
         tags: ["sarana", "prasarana", "bangunan", "sekolah", "fasilitas"],
       }
     ],
@@ -86,36 +98,45 @@ const menuItems = [
   {
     title: "Jurusan",
     submenu: [
-      { title: "RPL", desc: "Rekayasa Perangkat Lunak", icon: "lucide:code", to: "/jurusan/rpl", tags: ["rpl", "rekayasa", "perangkat", "lunak", "programming"] },
-      { title: "TKJ", desc: "Teknik Komputer Jaringan", icon: "lucide:network", to: "/jurusan/tkj", tags: ["tkj", "teknik", "komputer", "jaringan", "networking"] },
-      { title: "DKV", desc: "Desain Komunikasi Visual", icon: "lucide:palette", to: "/jurusan/dkv", tags: ["dkv", "desain", "komunikasi", "visual", "design"] },
-      { title: "EI", desc: "Teknik Elektronika Industri", icon: "lucide:zap", to: "/jurusan/tei", tags: ["tei", "elektronika", "industri", "elektronik"] },
-      { title: "MT", desc: "Mekatronika", icon: "lucide:cog", to: "/jurusan/mekatronika", tags: ["mekatronika", "mekatronik"] },
-      { title: "BC", desc: "Broadcasting", icon: "lucide:video", to: "/jurusan/broadcasting", tags: ["broadcasting", "broadcast"] },
-      { title: "Animasi", desc: "Animasi", icon: "lucide:film", to: "/jurusan/animasi", tags: ["animasi", "animation"] },
-      { title: "AV", desc: "Teknik Audio Visual", icon: "lucide:audio-lines", to: "/jurusan/tav", tags: ["tav", "audio", "visual", "teknik"] },
+      { title: "RPL", desc: "Rekayasa Perangkat Lunak", icon: "lucide:code", to: "/jurusan/rpl", external: false, tags: ["rpl", "rekayasa", "perangkat", "lunak", "programming"] },
+      { title: "TKJ", desc: "Teknik Komputer Jaringan", icon: "lucide:network", to: "/jurusan/tkj", external: false, tags: ["tkj", "teknik", "komputer", "jaringan", "networking"] },
+      { title: "DKV", desc: "Desain Komunikasi Visual", icon: "lucide:palette", to: "/jurusan/dkv", external: false, tags: ["dkv", "desain", "komunikasi", "visual", "design"] },
+      { title: "EI", desc: "Teknik Elektronika Industri", icon: "lucide:zap", to: "/jurusan/tei", external: false, tags: ["tei", "elektronika", "industri", "elektronik"] },
+      { title: "MT", desc: "Mekatronika", icon: "lucide:cog", to: "/jurusan/mekatronika", external: false, tags: ["mekatronika", "mekatronik"] },
+      { title: "BC", desc: "Broadcasting", icon: "lucide:video", to: "/jurusan/broadcasting", external: false, tags: ["broadcasting", "broadcast"] },
+      { title: "Animasi", desc: "Animasi", icon: "lucide:film", to: "/jurusan/animasi", external: false, tags: ["animasi", "animation"] },
+      { title: "AV", desc: "Teknik Audio Visual", icon: "lucide:audio-lines", to: "/jurusan/tav", external: false, tags: ["tav", "audio", "visual", "teknik"] },
     ],
   },
   {
     title: "Informasi",
     submenu: [
-      { title: "Berita", desc: "Berita terbaru sekolah", icon: "lucide:newspaper", to: "/berita", tags: ["berita", "news"] },
-      { title: "Organisasi", desc: "Organisasi yang ada di sekolah", icon: "lucide:person-standing", to: "/organisasi", tags: ["organisasi", "organization"] },
-      { title: "Extracurricular", desc: "Ekstrakurikuler yang ada di sekolah", icon: "lucide:workflow", to: "/ekstrakurikuler/", tags: ["ekstrakurikuler", "extracurricular", "extra"] },
-      { title: "Events", desc: "Acara yang sedang/akan berlansung di sekolah", icon: "lucide:hand-metal", to: "/acara", tags: ["events", "acara"] },
+      { title: "Berita", desc: "Berita terbaru sekolah", icon: "lucide:newspaper", to: "/berita", external: false, tags: ["berita", "news"] },
+      { title: "Organisasi", desc: "Organisasi yang ada di sekolah", icon: "lucide:person-standing", to: "/organisasi", external: false, tags: ["organisasi", "organization"] },
+      { title: "Extracurricular", desc: "Ekstrakurikuler yang ada di sekolah", icon: "lucide:workflow", to: "/ekstrakurikuler/", external: false, tags: ["ekstrakurikuler", "extracurricular", "extra"] },
+      { title: "Events", desc: "Acara yang sedang/akan berlansung di sekolah", icon: "lucide:hand-metal", to: "/acara", external: false, tags: ["events", "acara"] },
     ],
   },
   {
     title: "Utilitas",
     submenu: [
-      { title: "Anonymous BK", desc: "Konsultasi anonim", icon: "lucide:shield", to: "/utilitas/anonymous-bk", tags: ["anonymous", "bk", "konsultasi", "counseling"] },
+      { title: "Anonymous BK", desc: "Konsultasi anonim", icon: "lucide:shield", to: "/utilitas/anonymous-bk", external: false, tags: ["anonymous", "bk", "konsultasi", "counseling"] },
       {
         title: "Traffic Tracker",
         desc: "Temukan berapa lama kamu bisa kesekolah!",
         icon: "lucide:bar-chart",
         to: "/utilitas/traffic-tracker",
+        external: false,
         tags: ["traffic", "tracker", "sekolah", "time"],
       },
+    ],
+  },
+  {
+    title: "Layanan",
+    submenu: [
+      { title: "Kementerian Pendidikan dan Kebudayaan", desc: "Situs resmi Kemdikbud", icon: "lucide:external-link", to: "https://www.kemdikbud.go.id", external: true, tags: ["kemdikbud", "pendidikan", "layanan"] },
+      { title: "Dinas Pendidikan Jawa Timur", desc: "Dinas Pendidikan Provinsi Jawa Timur", icon: "lucide:external-link", to: "https://www.disdik.jatimprov.go.id", external: true, tags: ["disdik", "jatim", "pendidikan", "layanan"] },
+      { title: "Pemerintah Kabupaten Malang", desc: "Situs resmi Pemkab Malang", icon: "lucide:external-link", to: "https://www.malangkab.go.id", external: true, tags: ["malangkab", "pemerintah", "kabupaten", "layanan"] },
     ],
   },
 ];

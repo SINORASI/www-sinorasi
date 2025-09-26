@@ -1,5 +1,4 @@
 <template>
-    <!-- Hero Section -->
     <section id="pendahuluan" class="flex items-center justify-center py-16 md:py-30 h-screen bg-gradient-to-br from-blue-50 via-white to-slate-50">
         <div class="text-center px-6 max-w-4xl">
             <h1 class="font-bold text-4xl md:text-5xl lg:text-6xl text-slate-800 mb-6 leading-tight">

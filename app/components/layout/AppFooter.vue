@@ -22,7 +22,7 @@
             <li><NuxtLink to="/informasi/profile-sekolah" class="text-neutral-300 hover:text-white transition duration-300">Profile Sekolah</NuxtLink></li>
             <li><NuxtLink to="/berita" class="text-neutral-300 hover:text-white transition duration-300">Berita</NuxtLink></li>
             <li><NuxtLink to="/acara" class="text-neutral-300 hover:text-white transition duration-300">Acara</NuxtLink></li>
-            <li><NuxtLink to="/link-terkait" class="text-neutral-300 hover:text-white transition duration-300">Link Terkait</NuxtLink></li>
+            <li><NuxtLink to="/informasi/kontak" class="text-neutral-300 hover:text-white transition duration-300">Layanan</NuxtLink></li>
           </ul>
         </div>
 
@@ -74,7 +74,7 @@
       </div>
 
       <div class="border-t border-neutral-700 mt-8 pt-8">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-8">
           <div>
             <h5 class="text-sm font-semibold mb-3 text-neutral-300">Program Studi</h5>
             <ul class="space-y-1">
@@ -111,6 +111,14 @@
             <ul class="space-y-1">
               <li><NuxtLink to="/utilitas/anonymous-bk" class="text-xs text-neutral-400 hover:text-white transition duration-300">Anonymous BK</NuxtLink></li>
               <li><NuxtLink to="/utilitas/traffic-tracker" class="text-xs text-neutral-400 hover:text-white transition duration-300">Traffic Tracker</NuxtLink></li>
+            </ul>
+          </div>
+          <div>
+            <h5 class="text-sm font-semibold mb-3 text-neutral-300">Layanan</h5>
+            <ul class="space-y-1">
+              <li><a href="https://www.kemdikbud.go.id" target="_blank" class="text-xs text-neutral-400 hover:text-white transition duration-300">Kementerian Pendidikan dan Kebudayaan</a></li>
+              <li><a href="https://www.disdik.jatimprov.go.id" target="_blank" class="text-xs text-neutral-400 hover:text-white transition duration-300">Dinas Pendidikan Jawa Timur</a></li>
+              <li><a href="https://www.malangkab.go.id" target="_blank" class="text-xs text-neutral-400 hover:text-white transition duration-300">Pemerintah Kabupaten Malang</a></li>
             </ul>
           </div>
         </div>
