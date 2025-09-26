@@ -1,5 +1,5 @@
 <template>
-  <div class="font-serif py-30 px-4 sm:px-6 lg:px-8">
+  <div class="font-serif py-50 px-4 sm:px-6 lg:px-8">
     <div class="container mx-auto">
       <div class="text-center mb-10">
         <div class="bg-neutral-200/50 backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">

@@ -87,7 +87,7 @@ definePageMeta({
         </div>
       </div>
     </section>
-    <section class="h-min-screen">
+    <section class="h-min-screen" id="video-profil">
       <div class="container mx-auto px-10 md:px-60 flex text-center flex-col items-center gap-5">
         <div class="bg-neutral-200/50 backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
           <h2 class="text-3xl font-bold">Video Profil Sekolah</h2>
@@ -105,7 +105,7 @@ definePageMeta({
         </ScriptYouTubePlayer>
       </div>
     </section>
-    <section class="h-min-screen py-20">
+    <section id="jejak-sejarah" class="h-min-screen py-20">
       <div class="text-center container mx-auto flex flex-col items-center gap-5 px-10 md:px-0">
         <div class="bg-neutral-200/50 backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
           <h2 class="text-3xl font-bold">Jejak Sejarah Kami</h2>
@@ -116,12 +116,15 @@ definePageMeta({
         <Timeline />
       </div>
     </section>
-    <section class="h-fit">
+    <section class="h-fit flex items-center flex-col gap-10" id="Jurusan">
+      <div class="bg-neutral-200/50 backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
+        <h2 class="text-3xl font-bold">Jurusan</h2>
+      </div>
       <div class="container mx-auto flex items-center justify-center">
         <MajorCarousel />
       </div>
     </section>
-    <section class="h-fit">
+    <section class="h-fit" id="prestasi">
       <div class="container mx-auto flex flex-col items-center gap-5">
         <div class="bg-neutral-200/50 backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
           <h2 class="text-3xl font-bold">Prestasi</h2>

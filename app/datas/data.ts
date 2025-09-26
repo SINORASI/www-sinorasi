@@ -2,6 +2,7 @@ import type { MajorName } from "../models/MajorName";
 import type { MajorData } from "../models/MajorData";
 import type { Staff } from "../models/Staff";
 import type { News } from "../models/News";
+import type { Event } from "../models/Event";
 import type { jobTitle } from "~/models/jobTitles";
 
 export interface MenuItem {
@@ -991,4 +992,135 @@ Program kerjasama akan dimulai pada semester ganjil tahun ajaran 2024/2025 denga
     publishedAt: "2024-05-20",
     author: "Tim Humas SMKN 1 Sinorasi",
   },
+  {
+    id: "10",
+    slug: "dummy-news-1",
+    title: "Dummy News 1",
+    subtitle: "This is a dummy news item for testing",
+    thumbnail: "/images/placeholder.jpg",
+    tags: ["Dummy"],
+    content: "# Dummy News 1\n\nThis is dummy content.",
+    publishedAt: "2024-01-01",
+    author: "Dummy Author",
+  },
+  {
+    id: "11",
+    slug: "dummy-news-2",
+    title: "Dummy News 2",
+    subtitle: "This is another dummy news item",
+    thumbnail: "/images/placeholder.jpg",
+    tags: ["Dummy"],
+    content: "# Dummy News 2\n\nThis is dummy content.",
+    publishedAt: "2024-01-01",
+    author: "Dummy Author",
+  },
+  {
+    id: "12",
+    slug: "dummy-news-3",
+    title: "Dummy News 3",
+    subtitle: "Yet another dummy news item",
+    thumbnail: "/images/placeholder.jpg",
+    tags: ["Dummy"],
+    content: "# Dummy News 3\n\nThis is dummy content.",
+    publishedAt: "2024-01-01",
+    author: "Dummy Author",
+  },
+];
+
+export const eventData: Event[] = [
+ {
+   id: "1",
+   slug: "tanggal-dan-bulan",
+   title: "INI ADALAH NAMA EVENT / JUDUL EVENT",
+   details: "Hari, Jam • Tempat / Lokasi",
+   date: "Tanggal & Bulan",
+   imageUrl: "/images/placeholder.jpg",
+   content: `# INI ADALAH NAMA EVENT / JUDUL EVENT
+
+## Detail Event
+
+Hari, Jam • Tempat / Lokasi
+
+### Deskripsi
+Ini adalah deskripsi lengkap dari event ini. Event ini akan diadakan di lokasi yang telah ditentukan dengan tujuan untuk meningkatkan keterampilan siswa.
+
+### Agenda
+- Pembukaan
+- Sesi utama
+- Penutupan
+
+### Kontak
+Untuk informasi lebih lanjut, hubungi panitia event.`,
+   publishedAt: "2024-09-01",
+   author: "Tim Event SMKN 1 Sinorasi",
+ },
+ {
+   id: "2",
+   slug: "community-tech-meetup",
+   title: "Community Tech Meetup",
+   details: "Sabtu, 14:00 • Gedung Inovasi / Lt. 3",
+   date: "30 September",
+   imageUrl: "/images/placeholder.jpg",
+   content: `# Community Tech Meetup
+
+## Detail Event
+
+Sabtu, 14:00 • Gedung Inovasi / Lt. 3
+
+### Deskripsi
+Community Tech Meetup adalah acara pertemuan komunitas teknologi yang diadakan oleh SMKN 1 Sinorasi. Acara ini bertujuan untuk berbagi pengetahuan dan pengalaman di bidang teknologi.
+
+### Agenda
+- Registrasi peserta
+- Pembukaan oleh MC
+- Sharing session dari pembicara
+- Networking session
+- Penutupan dan doorprize
+
+### Pembicara
+- Teknisi Senior dari Industri
+- Guru SMKN 1 Sinorasi
+- Mahasiswa Teknik
+
+### Kontak
+Email: event@smkn1sinorasi.sch.id`,
+   publishedAt: "2024-09-15",
+   author: "Tim Event SMKN 1 Sinorasi",
+ },
+ {
+   id: "3",
+   slug: "vue-js-workshop-the-next-level",
+   title: "Vue.js Workshop: The Next Level",
+   details: "Minggu, 09:00 • Ruang Seminar / Blok A",
+   date: "15 Oktober",
+   imageUrl: "/images/placeholder.jpg",
+   content: `# Vue.js Workshop: The Next Level
+
+## Detail Event
+
+Minggu, 09:00 • Ruang Seminar / Blok A
+
+### Deskripsi
+Workshop Vue.js lanjutan yang akan membahas teknik-teknik advanced dalam pengembangan aplikasi web menggunakan Vue.js. Cocok untuk siswa yang sudah memiliki pengetahuan dasar Vue.js.
+
+### Agenda
+- Review konsep dasar Vue.js
+- Composition API
+- State management dengan Pinia
+- Testing Vue components
+- Deployment dan optimasi
+
+### Persyaratan
+- Pengetahuan dasar Vue.js
+- Laptop dengan Node.js terinstall
+- Akun GitHub
+
+### Instruktur
+Tim Developer dari Jurusan RPL SMKN 1 Sinorasi
+
+### Kontak
+WhatsApp: +62 812-3456-7890`,
+   publishedAt: "2024-09-20",
+   author: "Tim Event SMKN 1 Sinorasi",
+ },
 ];

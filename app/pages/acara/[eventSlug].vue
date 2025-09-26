@@ -1,35 +1,29 @@
 <template>
   <div class="container mx-auto px-6 py-40">
-    <div v-if="news" class="max-w-4xl mx-auto">
+    <div v-if="event" class="max-w-4xl mx-auto">
       <nav class="mb-8">
         <ol class="flex items-center space-x-2 text-sm text-gray-600">
           <li><NuxtLink to="/" class="hover:text-blue-600">Beranda</NuxtLink></li>
           <li>/</li>
-          <li><NuxtLink to="/berita" class="hover:text-blue-600">Berita</NuxtLink></li>
+          <li><NuxtLink to="/acara" class="hover:text-blue-600">Acara</NuxtLink></li>
           <li>/</li>
-          <li class="text-gray-900 truncate max-w-xs" :title="news.title">{{ news.title }}</li>
+          <li class="text-gray-900 truncate max-w-xs" :title="event.title">{{ event.title }}</li>
         </ol>
       </nav>
 
       <header class="mb-8">
         <div class="mb-4">
-          <img :src="news.thumbnail" :alt="news.title" class="w-full h-64 md:h-96 object-cover rounded-lg shadow-lg" />
+          <img :src="event.imageUrl" :alt="event.title" class="w-full h-64 md:h-96 object-cover rounded-lg shadow-lg" />
         </div>
 
         <div class="mb-6">
-          <div class="flex flex-wrap gap-2 mb-4">
-            <span v-for="tag in news.tags" :key="tag"
-                  class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-              {{ tag }}
-            </span>
-          </div>
-
-          <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{{ news.title }}</h1>
-          <p class="text-lg text-gray-600 mb-4">{{ news.subtitle }}</p>
+          <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{{ event.title }}</h1>
+          <p class="text-lg text-gray-600 mb-4">{{ event.details }}</p>
 
           <div class="flex items-center text-sm text-gray-500 space-x-4">
-            <span v-if="news.author">Oleh: {{ news.author }}</span>
-            <span>Diterbitkan: {{ formatDate(news.publishedAt) }}</span>
+            <span>{{ event.date }}</span>
+            <span v-if="event.author">Oleh: {{ event.author }}</span>
+            <span>Diterbitkan: {{ formatDate(event.publishedAt) }}</span>
           </div>
         </div>
       </header>
@@ -38,46 +32,46 @@
         <div v-html="renderedContent"></div>
       </article>
 
-      <section id="berita-lainnya" class="mt-12 pt-8 border-t border-gray-200">
-        <h2 class="text-2xl font-bold text-gray-900 mb-6">Berita Lainnya</h2>
+      <section id="acara-lainnya" class="mt-12 pt-8 border-t border-gray-200">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">Acara Lainnya</h2>
         <div class="flex space-x-6 overflow-x-auto pb-4 scrollbar-hide">
-          <div v-for="relatedNews in relatedNews" :key="relatedNews.id" class="flex-shrink-0 w-64">
-            <NewsCard :news="relatedNews" />
+          <div v-for="otherEvent in otherEvents" :key="otherEvent.id" class="flex-shrink-0 w-64">
+            <EventCard :event="otherEvent" />
           </div>
         </div>
       </section>
     </div>
 
     <div v-else class="text-center py-12">
-      <h1 class="text-3xl font-bold text-gray-900 mb-4">Berita Tidak Ditemukan</h1>
-      <p class="text-gray-600 mb-6">Maaf, berita yang Anda cari tidak tersedia.</p>
-      <NuxtLink to="/berita" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-        Kembali ke Berita
+      <h1 class="text-3xl font-bold text-gray-900 mb-4">Acara Tidak Ditemukan</h1>
+      <p class="text-gray-600 mb-6">Maaf, acara yang Anda cari tidak tersedia.</p>
+      <NuxtLink to="/acara" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+        Kembali ke Acara
       </NuxtLink>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { newsData } from '~/datas/data'
-import type { News } from '~/models/News'
+import { eventData } from '~/datas/data'
+import type { Event } from '~/models/Event'
 
 const route = useRoute()
-const slug = route.params.slug as string
+const eventSlug = route.params.eventSlug as string
 
-const news = computed(() => {
-  return newsData.find(n => n.slug === slug)
+const event = computed(() => {
+  return eventData.find(e => e.slug === eventSlug)
 })
 
-const relatedNews = computed(() => {
-  if (!news.value) return []
-  return newsData.filter(n => n.id !== news.value!.id).slice(0, 4)
+const otherEvents = computed(() => {
+  if (!event.value) return []
+  return eventData.filter(e => e.id !== event.value!.id).slice(0, 4)
 })
 
 const renderedContent = computed(() => {
-  if (!news.value) return ''
+  if (!event.value) return ''
 
-  let content = news.value.content
+  let content = event.value.content
 
   content = content.replace(/^### (.*$)/gim, '<h3 class="text-xl font-semibold mt-6 mb-3">$1</h3>')
   content = content.replace(/^## (.*$)/gim, '<h2 class="text-2xl font-semibold mt-8 mb-4">$1</h2>')
@@ -128,11 +122,11 @@ const formatDate = (dateString: string) => {
 }
 
 useHead({
-  title: news.value ? `${news.value.title} - SMKN 1 Sinorasi` : 'Berita Tidak Ditemukan',
+  title: event.value ? `${event.value.title} - SMKN 1 Sinorasi` : 'Acara Tidak Ditemukan',
   meta: [
     {
       name: 'description',
-      content: news.value ? news.value.subtitle : 'Berita SMKN 1 Sinorasi'
+      content: event.value ? event.value.details : 'Acara SMKN 1 Sinorasi'
     }
   ]
 })

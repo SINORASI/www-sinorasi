@@ -1,5 +1,5 @@
 <template>
-  <section class="flex items-center justify-center h-screen container mx-auto my-24 px-6">
+  <section id="sambutan" class="flex items-center justify-center h-screen container mx-auto my-24 px-6">
     <div class="flex flex-col items-center justify-center gap-10">
       <h1 class="font-bold text-4xl">Sambutan</h1>
 
@@ -47,7 +47,7 @@
       </div>
     </div>
   </section>
-  <section class="flex items-center justify-center h-screen container mx-auto px-6 py-12">
+  <section id="video-profil-sekolah" class="flex items-center justify-center h-screen container mx-auto px-6 py-12">
     <div class="bg-neutral-200 p-8 rounded-lg flex flex-col items-center justify-center gap-5">
       <div class="bg-neutral-200/50 backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
         <h2 class="font-bold text-3xl">Video Profil Sekolah</h2>
@@ -58,7 +58,7 @@
       </div>
     </div>
   </section>
-  <section class="flex items-center justify-center h-screen container mx-auto px-6 py-12">
+  <section id="visi-dan-misi" class="flex items-center justify-center h-screen container mx-auto px-6 py-12">
     <div class="flex flex-col items-center justify-center gap-10">
       <div class="bg-neutral-200/50 backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
         <h2 class="font-bold text-3xl">Visi dan Misi</h2>
@@ -103,7 +103,7 @@
       
     </div>
   </section>
-  <section class="flex items-center justify-center h-screen container mx-auto px-30 py-12">
+  <section id="sejarah-smk-negeri-02-singosari" class="flex items-center justify-center h-screen container mx-auto px-30 py-12">
     <div class="flex flex-col items-center justify-center gap-10">
       <div class="bg-neutral-200/50 backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
         <h2 class="font-bold text-3xl">Sejarah SMK Negeri 02 Singosari</h2>
@@ -122,14 +122,14 @@
 
     </div>
   </section>
-  <section class="flex items-center justify-center h-screen container mx-auto px-6 py-12">
+  <section id="mars-smkn2-2-singosari" class="flex items-center justify-center h-screen container mx-auto px-6 py-12">
     <div class="flex flex-col items-center justify-center gap-10">
       <div class="bg-neutral-200/50 backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
         <h2 class="font-bold text-3xl">Mars SMKN2 2 Singosari</h2>
       </div>
     </div>
   </section>
-  <section class="flex items-center justify-center h-screen container mx-auto px-6 py-12">
+  <section id="kontak" class="flex items-center justify-center h-screen container mx-auto px-6 py-12">
     <div class="flex flex-col items-center justify-center gap-10">
       <div class="bg-neutral-200/50 backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
         <h2 class="font-bold text-3xl">Kontak</h2>

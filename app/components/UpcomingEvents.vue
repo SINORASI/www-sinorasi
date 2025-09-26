@@ -9,43 +9,16 @@
 
       <div class="space-y-6">
         <EventCard
-          v-for="event in events"
+          v-for="(event, index) in eventData"
           :key="event.id"
-          :date="event.date"
-          :title="event.title"
-          :details="event.details"
-          :image-url="event.imageUrl"
+          :event="event"
+          :direction="index % 2 === 0 ? 'left' : 'right'"
         />
       </div>
     </div>
   </div>
 </template>
 
-<script setup>
-import { ref } from 'vue';
-import EventCard from './EventCard.vue';
-
-const events = ref([
-  {
-    id: 1,
-    date: 'Tanggal & Bulan',
-    title: 'INI ADALAH NAMA EVENT / JUDUL EVENT',
-    details: 'Hari, Jam • Tempat / Lokasi',
-    imageUrl: '/images/placeholder.jpg',
-  },
-  {
-    id: 2,
-    date: '30 September',
-    title: 'Community Tech Meetup',
-    details: 'Sabtu, 14:00 • Gedung Inovasi / Lt. 3',
-    imageUrl: '/images/placeholder.jpg',
-  },
-  {
-    id: 3,
-    date: '15 Oktober',
-    title: 'Vue.js Workshop: The Next Level',
-    details: 'Minggu, 09:00 • Ruang Seminar / Blok A',
-    imageUrl: '/images/placeholder.jpg',
-  },
-]);
+<script setup lang="ts">
+import { eventData } from '~/datas/data';
 </script>

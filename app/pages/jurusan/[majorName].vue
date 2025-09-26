@@ -16,10 +16,10 @@ const major = route.params.majorName as MajorName;
 
 <template>
   <main class="overflow-x-hidden">
-    <section class="min-h-screen flex flex-col items-center justify-center md:gap-15 gap-8 px-4 pt-24 md:pt-20 pb-10">
+    <section id="tentang-jurusan" class="min-h-screen flex flex-col items-center justify-center md:gap-15 gap-8 px-4 pt-24 md:pt-20 pb-10">
       <div class="flex md:flex-row flex-col justify-center items-center gap-4">
         <img :src="majorDatas[major]?.logo" alt="logo jurusan" class="md:w-70 w-20" />
-        <h1 class="font-bold text-4xl tracking-wider text-center">{{ majorDatas[major]?.nameMajor }}</h1>
+        <h2 class="font-bold text-4xl tracking-wider text-center">{{ majorDatas[major]?.nameMajor }}</h2>
       </div>
 
       <hr class="border-1 border-zinc-200 max-w-4xl w-full" />
@@ -36,13 +36,13 @@ const major = route.params.majorName as MajorName;
       </div>
     </section>
 
-    <section class="min-h-screen">
+    <section id="kepala-program" class="min-h-screen">
       <div class="container mx-auto flex flex-col items-center gap-5 px-4">
         <KaproCarousel />
       </div>
     </section>
 
-    <section class="min-h-screen">
+    <section id="materi-pembelajaran" class="min-h-screen">
       <div class="flex justify-center items-center flex-col gap-4.5 px-4">
         <div class="w-full">
           <MajorTopics />
@@ -50,16 +50,16 @@ const major = route.params.majorName as MajorName;
       </div>
     </section>
 
-    <section class="min-h-screen">
+    <section id="kesempatan-kerja" class="min-h-screen">
       <div class="flex justify-center flex-col items-center px-4">
-        <h1 class="font-bold text-2xl md:text-4xl text-center">Saat Lulus nanti punya kesempatan kerja jadi apa?</h1>
+        <h2 class="font-bold text-2xl md:text-4xl text-center">Saat Lulus nanti punya kesempatan kerja jadi apa?</h2>
         <div class="flex justify-center items-center flex-col mt-8 w-full">
           <ReferenceCareers />
         </div>
       </div>
     </section>
 
-    <section class="min-h-screen">
+    <section id="mitra-kerja" class="min-h-screen">
       <div class="flex justify-center items-center px-4">
         <div class="flex flex-col justify-center items-center gap-2.5 w-full">
           <MajorPartnerSlider />
@@ -67,9 +67,9 @@ const major = route.params.majorName as MajorName;
       </div>
     </section>
 
-    <section class="min-h-screen">
+    <section id="minigame" class="min-h-screen">
       <div class="flex justify-center items-center flex-col gap-4.5 px-4">
-        <h1 class="tracking-wide font-bold text-2xl md:text-4xl text-center">Minigame</h1>
+        <h2 class="tracking-wide font-bold text-2xl md:text-4xl text-center">Minigame</h2>
         <div
           class="flex justify-center items-center max-w-6xl w-full h-64 md:h-84 bg-zinc-500 p-4 md:p-6 rounded-lg mx-auto"
         >
@@ -78,7 +78,7 @@ const major = route.params.majorName as MajorName;
       </div>
     </section>
 
-    <section class="min-h-screen">
+    <section id="prestasi" class="min-h-screen">
       <div class="flex justify-center items-center flex-col px-4">
         <div class="flex justify-center items-center flex-col gap-4 mt-8 w-full">
           <MajorAchievement />

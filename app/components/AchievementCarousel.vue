@@ -11,8 +11,10 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> 
     </div>
+
+    <div class="border-t border-gray-300"></div>
 
     <div class="flex justify-between">
       <div class="flex gap-5">

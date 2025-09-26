@@ -18,11 +18,11 @@
         <div class="md:col-span-1">
           <h4 class="text-lg font-semibold mb-4">Tautan Cepat</h4>
           <ul class="space-y-2">
-            <li><a href="#" class="text-neutral-300 hover:text-white transition duration-300">Beranda</a></li>
-            <li><a href="#" class="text-neutral-300 hover:text-white transition duration-300">Tentang Kami</a></li>
-            <li><a href="#" class="text-neutral-300 hover:text-white transition duration-300">Jurusan</a></li>
-            <li><a href="#" class="text-neutral-300 hover:text-white transition duration-300">Prestasi</a></li>
-            <li><a href="#" class="text-neutral-300 hover:text-white transition duration-300">Berita</a></li>
+            <li><NuxtLink to="/" class="text-neutral-300 hover:text-white transition duration-300">Beranda</NuxtLink></li>
+            <li><NuxtLink to="/informasi/profile-sekolah" class="text-neutral-300 hover:text-white transition duration-300">Profile Sekolah</NuxtLink></li>
+            <li><NuxtLink to="/berita" class="text-neutral-300 hover:text-white transition duration-300">Berita</NuxtLink></li>
+            <li><NuxtLink to="/acara" class="text-neutral-300 hover:text-white transition duration-300">Acara</NuxtLink></li>
+            <li><NuxtLink to="/link-terkait" class="text-neutral-300 hover:text-white transition duration-300">Link Terkait</NuxtLink></li>
           </ul>
         </div>
 
@@ -78,33 +78,39 @@
           <div>
             <h5 class="text-sm font-semibold mb-3 text-neutral-300">Program Studi</h5>
             <ul class="space-y-1">
-              <li><a href="#" class="text-xs text-neutral-400 hover:text-white transition duration-300">Teknik Komputer Jaringan</a></li>
-              <li><a href="#" class="text-xs text-neutral-400 hover:text-white transition duration-300">Rekayasa Perangkat Lunak</a></li>
-              <li><a href="#" class="text-xs text-neutral-400 hover:text-white transition duration-300">Multimedia</a></li>
+              <li><NuxtLink to="/jurusan/tkj" class="text-xs text-neutral-400 hover:text-white transition duration-300">Teknik Komputer Jaringan</NuxtLink></li>
+              <li><NuxtLink to="/jurusan/rpl" class="text-xs text-neutral-400 hover:text-white transition duration-300">Rekayasa Perangkat Lunak</NuxtLink></li>
+              <li><NuxtLink to="/jurusan/dkv" class="text-xs text-neutral-400 hover:text-white transition duration-300">Desain Komunikasi Visual</NuxtLink></li>
+              <li><NuxtLink to="/jurusan/tei" class="text-xs text-neutral-400 hover:text-white transition duration-300">Teknik Elektronika Industri</NuxtLink></li>
+              <li><NuxtLink to="/jurusan/mekatronika" class="text-xs text-neutral-400 hover:text-white transition duration-300">Teknik Mekatronika</NuxtLink></li>
+              <li><NuxtLink to="/jurusan/broadcasting" class="text-xs text-neutral-400 hover:text-white transition duration-300">Broadcasting</NuxtLink></li>
+              <li><NuxtLink to="/jurusan/animasi" class="text-xs text-neutral-400 hover:text-white transition duration-300">Animasi</NuxtLink></li>
+              <li><NuxtLink to="/jurusan/tav" class="text-xs text-neutral-400 hover:text-white transition duration-300">Teknik Audio Video</NuxtLink></li>
             </ul>
           </div>
           <div>
             <h5 class="text-sm font-semibold mb-3 text-neutral-300">Fasilitas</h5>
             <ul class="space-y-1">
-              <li><a href="#" class="text-xs text-neutral-400 hover:text-white transition duration-300">Laboratorium</a></li>
-              <li><a href="#" class="text-xs text-neutral-400 hover:text-white transition duration-300">Perpustakaan</a></li>
-              <li><a href="#" class="text-xs text-neutral-400 hover:text-white transition duration-300">Lapangan Olahraga</a></li>
+              <li><NuxtLink to="/informasi/sarana-prasarana" class="text-xs text-neutral-400 hover:text-white transition duration-300">Sarana Prasarana</NuxtLink></li>
             </ul>
           </div>
           <div>
             <h5 class="text-sm font-semibold mb-3 text-neutral-300">Informasi</h5>
             <ul class="space-y-1">
-              <li><a href="#" class="text-xs text-neutral-400 hover:text-white transition duration-300">PPDB</a></li>
-              <li><a href="#" class="text-xs text-neutral-400 hover:text-white transition duration-300">Kalender Akademik</a></li>
-              <li><a href="#" class="text-xs text-neutral-400 hover:text-white transition duration-300">Kurikulum</a></li>
+              <li><NuxtLink to="/berita" class="text-xs text-neutral-400 hover:text-white transition duration-300">Berita</NuxtLink></li>
+              <li><NuxtLink to="/organisasi" class="text-xs text-neutral-400 hover:text-white transition duration-300">Organisasi</NuxtLink></li>
+              <li><NuxtLink to="/informasi/struktur-organisasi" class="text-xs text-neutral-400 hover:text-white transition duration-300">Struktur Organisasi</NuxtLink></li>
+              <li><NuxtLink to="/informasi/guru" class="text-xs text-neutral-400 hover:text-white transition duration-300">Guru</NuxtLink></li>
+              <li><NuxtLink to="/informasi/kontak" class="text-xs text-neutral-400 hover:text-white transition duration-300">Kontak</NuxtLink></li>
+              <li><NuxtLink to="/ekstrakurikuler" class="text-xs text-neutral-400 hover:text-white transition duration-300">Ekstrakurikuler</NuxtLink></li>
+              <li><NuxtLink to="/acara" class="text-xs text-neutral-400 hover:text-white transition duration-300">Acara</NuxtLink></li>
             </ul>
           </div>
           <div>
-            <h5 class="text-sm font-semibold mb-3 text-neutral-300">Dukungan</h5>
+            <h5 class="text-sm font-semibold mb-3 text-neutral-300">Utilitas</h5>
             <ul class="space-y-1">
-              <li><a href="#" class="text-xs text-neutral-400 hover:text-white transition duration-300">Bantuan</a></li>
-              <li><a href="#" class="text-xs text-neutral-400 hover:text-white transition duration-300">Kontak Admin</a></li>
-              <li><a href="#" class="text-xs text-neutral-400 hover:text-white transition duration-300">Sitemap</a></li>
+              <li><NuxtLink to="/utilitas/anonymous-bk" class="text-xs text-neutral-400 hover:text-white transition duration-300">Anonymous BK</NuxtLink></li>
+              <li><NuxtLink to="/utilitas/traffic-tracker" class="text-xs text-neutral-400 hover:text-white transition duration-300">Traffic Tracker</NuxtLink></li>
             </ul>
           </div>
         </div>
