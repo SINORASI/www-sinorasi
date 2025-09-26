@@ -59,13 +59,13 @@ definePageMeta({
       </div>
     </section>
     <section id="information" class="flex items-center justify-center flex-col h-fit">
-      <div class="w-fit bg-neutral-200/50 backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
+      <div class="w-fit bg-secondary backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
           <h2 class="text-3xl font-bold">Sambutan Kepala Sekolah</h2>
         </div>
       <div class="text-center md:text-left flex flex-col md:flex-row gap-10 container mx-auto px-10 md:px-30">
         <div class="flex items-center flex-col gap-10">
           <img src="/images/kepsek.webp" width="auto" height="auto" alt="Foto Kepsek" />
-          <div class="w-fit bg-neutral-200 rounded-lg p-2">
+          <div class="w-fit bg-secondary rounded-lg p-2">
             <p class="font-bold">Sumijah S. Pd M.Si</p>
           </div>
         </div>
@@ -89,7 +89,7 @@ definePageMeta({
     </section>
     <section class="h-min-screen" id="video-profil">
       <div class="container mx-auto px-10 md:px-60 flex text-center flex-col items-center gap-5">
-        <div class="bg-neutral-200/50 backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
+        <div class="bg-secondary backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
           <h2 class="text-3xl font-bold">Video Profil Sekolah</h2>
         </div>
         <p>
@@ -107,7 +107,7 @@ definePageMeta({
     </section>
     <section id="jejak-sejarah" class="h-min-screen py-20">
       <div class="text-center container mx-auto flex flex-col items-center gap-5 px-10 md:px-0">
-        <div class="bg-neutral-200/50 backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
+        <div class="bg-secondary backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
           <h2 class="text-3xl font-bold">Jejak Sejarah Kami</h2>
         </div>
         <p>
@@ -117,7 +117,7 @@ definePageMeta({
       </div>
     </section>
     <section class="h-fit flex items-center flex-col gap-10" id="Jurusan">
-      <div class="bg-neutral-200/50 backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
+      <div class="bg-secondary backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
         <h2 class="text-3xl font-bold">Jurusan</h2>
       </div>
       <div class="container mx-auto flex items-center justify-center">
@@ -126,7 +126,7 @@ definePageMeta({
     </section>
     <section class="h-fit" id="prestasi">
       <div class="container mx-auto flex flex-col items-center gap-5">
-        <div class="bg-neutral-200/50 backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
+        <div class="bg-secondary backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
           <h2 class="text-3xl font-bold">Prestasi</h2>
         </div>
         <AchievementCarousel />
@@ -134,15 +134,15 @@ definePageMeta({
     </section>
     <section class="h-min-screen" id="berita">
       <div class="container mx-auto flex flex-col items-center gap-5">
-        <div class="bg-neutral-200/50 backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
+        <div class="bg-secondary backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
           <h2 class="text-3xl font-bold">Berita Terbaru</h2>
         </div>
         <p>SMK Negeri 2 Singosari</p>
         <div class="flex flex-wrap gap-5 justify-center">
-          <p class="font-bold p-2 rounded-full bg-neutral-100 pl-4 pr-4">Kategori Berita</p>
-          <p class="font-bold p-2 rounded-full bg-neutral-100 pl-4 pr-4">Kategori Berita</p>
-          <p class="font-bold p-2 rounded-full bg-neutral-100 pl-4 pr-4">Kategori Berita</p>
-          <p class="font-bold p-2 rounded-full bg-neutral-100 pl-4 pr-4">Kategori Berita</p>
+          <p class="font-bold p-2 rounded-full bg-tertiary pl-4 pr-4">Kategori Berita</p>
+          <p class="font-bold p-2 rounded-full bg-tertiary pl-4 pr-4">Kategori Berita</p>
+          <p class="font-bold p-2 rounded-full bg-tertiary pl-4 pr-4">Kategori Berita</p>
+          <p class="font-bold p-2 rounded-full bg-tertiary pl-4 pr-4">Kategori Berita</p>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 w-full mt-5 place-items-center">
           <CardNews title="Kami Lolos Enam Bidang Lomba untuk Menuju Tingkat Provinsi" />

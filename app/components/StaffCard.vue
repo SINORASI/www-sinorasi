@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col">
+  <div class="flex flex-col bg-secondary rounded-lg p-4">
     <img :src="staff.image" class="w-50 h-50 rounded-lg shadow-sm" :alt="staff.name" />
     <div class="flex flex-col items-center">
       <p class="font-bold text-base">{{ staff.name }}</p>

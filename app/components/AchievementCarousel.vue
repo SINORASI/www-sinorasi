@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full max-w-sm md:w-200 md:max-w-none flex flex-col bg-neutral-100 gap-5 rounded-lg shadow-sm p-4 md:p-8 relative mx-auto">
+  <div class="w-full max-w-sm md:w-200 md:max-w-none flex flex-col bg-secondary gap-5 rounded-lg shadow-sm p-4 md:p-8 relative mx-auto border border-neutral-300">
     <div class="overflow-hidden">
       <div class="flex transition-transform duration-500 ease-in-out" :style="{ transform: `translateX(-${current * 100}%)` }">
         <div v-for="(achievement, index) in achievements" :key="index" class="flex-shrink-0 w-full">
@@ -18,10 +18,10 @@
 
     <div class="flex justify-between">
       <div class="flex gap-5">
-        <button @click="prev" class="border-neutral-400 border-1 cursor-pointer bg-neutral-300 p-2 flex items-center justify-center rounded-full shadow-lg transition hover:bg-blue-600 hover:border-blue-600 hover:text-white hover:scale-110">
+        <button @click="prev" class="border-neutral-400 border-1 cursor-pointer bg-tertiary p-2 flex items-center justify-center rounded-full shadow-lg transition hover:bg-blue-600 hover:border-blue-600 hover:text-white hover:scale-110">
           <Icon name="lucide:chevron-left" size="24" />
         </button>
-        <button @click="next" class="border-neutral-400 border-1 cursor-pointer bg-neutral-300 p-2 flex items-center justify-center rounded-full shadow-lg transition hover:bg-blue-600 hover:border-blue-600 hover:text-white hover:scale-110">
+        <button @click="next" class="border-neutral-400 border-1 cursor-pointer bg-tertiary p-2 flex items-center justify-center rounded-full shadow-lg transition hover:bg-blue-600 hover:border-blue-600 hover:text-white hover:scale-110">
           <Icon name="lucide:chevron-right" size="24" />
         </button>
       </div>

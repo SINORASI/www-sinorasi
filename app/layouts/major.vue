@@ -4,7 +4,7 @@
 </script>
 
 <template>
-    <div>
+    <div class="bg-primary">
         <MajorHeader />
         <slot />
         <AppFooter />

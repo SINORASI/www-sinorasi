@@ -1,5 +1,5 @@
 <template>
-  <div class="w-fit h-fit p-4 rounded-lg bg-neutral-300 text-center">
+  <div class="w-fit h-fit p-4 rounded-lg bg-secondary text-center">
     <div class="relative overflow-hidden rounded-lg">
       <div class="flex transition-transform duration-300" :style="{ transform: `translateX(-${currentIndex * 100}%)` }">
         <div v-for="(content, index) in contents" :key="index" class="flex-shrink-0 w-full">

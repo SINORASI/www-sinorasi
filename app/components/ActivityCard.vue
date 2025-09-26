@@ -1,5 +1,5 @@
 <template>
-    <div class="w-90 h-fit gap-2 flex flex-col p-4 bg-neutral-100 rounded-sm shadow-sm">
+    <div class="w-90 h-fit gap-2 flex flex-col p-4 bg-secondary rounded-sm shadow-sm">
         <img
             src="/images/placeholder.jpg"
             class="w-full h-50 rounded-sm" />

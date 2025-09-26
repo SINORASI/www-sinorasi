@@ -5,7 +5,7 @@
   <div v-else class="timeline">
     <div class="timeline-line"></div>
     <div v-for="(item, index) in timelineItems" :key="index" class="timeline-item" :class="index % 2 === 0 ? 'left' : 'right'">
-      <div class="timeline-content bg-white shadow-lg rounded-lg p-6">
+      <div class="timeline-content bg-secondary shadow-lg rounded-lg p-6 border border-neutral-300">
         <div :class="['px-3 py-1 rounded-full w-fit mb-4', index % 2 === 0 ? 'bg-blue-100' : 'bg-orange-100']">
           <span :class="['font-bold', index % 2 === 0 ? 'text-blue-600' : 'text-orange-600']">{{ item.year }}</span>
         </div>

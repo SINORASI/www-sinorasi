@@ -1,6 +1,6 @@
 <template>
   <NuxtLink :to="`/acara/${event.slug}`" class="block">
-    <div :class="['flex items-center justify-between py-8', direction === 'right' ? 'flex-row-reverse' : '']">
+    <div :class="['flex items-center justify-between py-8 bg-secondary', direction === 'right' ? 'flex-row-reverse' : '']">
       <!-- Event Details -->
       <div class="flex flex-col h-full justify-between pr-12">
         <div>

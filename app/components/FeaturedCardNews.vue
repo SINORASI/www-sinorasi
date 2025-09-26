@@ -1,5 +1,5 @@
 <template>
-  <NuxtLink :to="`/berita/${news.slug}`" class="block bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+  <NuxtLink :to="`/berita/${news.slug}`" class="block bg-secondary rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
     <div class="p-6">
       <div class="w-full h-80 bg-gray-200 rounded-md mb-4 overflow-hidden">
         <img :src="news.thumbnail" :alt="news.title" class="w-full h-full object-cover" />
