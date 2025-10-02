@@ -2,6 +2,58 @@
 definePageMeta({
   layout: "default",
 });
+
+interface CounterProps {
+  jurusanTarget?: number
+  siswaTarget?: number
+  prestasiTarget?: number
+  duration?: number
+}
+
+const props = withDefaults(defineProps<CounterProps>(), {
+  jurusanTarget: 8,
+  siswaTarget: 1000,
+  prestasiTarget: 50,
+  duration: 2000
+});
+
+const jurusanCount = ref(0)
+const siswaCount = ref(0)
+const prestasiCount = ref(0)
+
+const animateCounter = (
+  counterRef: { value: number },
+  target: number,
+  duration: number
+): void => {
+  const startTime = performance.now()
+  const startValue = 0
+
+  const animate = (currentTime: number): void => {
+    const elapsed = currentTime - startTime
+    const progress = Math.min(elapsed / duration, 1)
+
+    const easeOut = 1 - Math.pow(1 - progress, 3)
+    
+    counterRef.value = Math.floor(startValue + (target - startValue) * easeOut)
+
+    if (progress < 1) {
+      requestAnimationFrame(animate)
+    } else {
+      counterRef.value = target
+    }
+  }
+
+  requestAnimationFrame(animate)
+}
+
+onMounted(() => {
+  setTimeout(() => {
+    animateCounter(jurusanCount, props.jurusanTarget, props.duration)
+    animateCounter(siswaCount, props.siswaTarget, props.duration)
+    animateCounter(prestasiCount, props.prestasiTarget, props.duration)
+  }, 100)
+});
 </script>
 
 <template>
@@ -38,18 +90,18 @@ definePageMeta({
               <Icon name="lucide:newspaper" size="14" />
             </a>
           </div>
-          <div class="flex gap-3 md:gap-5 mt-3 md:mt-4 justify-center md:justify-start">
-            <div class="text-center">
-              <div class="text-base md:text-xl font-bold">8</div>
-              <div class="text-xs md:text-sm">Jurusan</div>
+          <div class="flex gap-3 md:gap-10 mt-3 md:mt-4 justify-center md:justify-start">
+            <div class="flex justify-center flex-col items-center">
+              <div class="text-base md:text-2xl font-bold">{{ jurusanCount }}</div>
+              <div class="text-xs md:text-lg">Jurusan</div>
             </div>
-            <div class="text-center">
-              <div class="text-base md:text-xl font-bold">1000+</div>
-              <div class="text-xs md:text-sm">Siswa</div>
+            <div class="flex justify-center flex-col items-center">
+              <div class="text-base md:text-2xl font-bold">{{ siswaCount }}+</div>
+              <div class="text-xs md:text-lg">Siswa</div>
             </div>
-            <div class="text-center">
-              <div class="text-base md:text-xl font-bold">50+</div>
-              <div class="text-xs md:text-sm">Prestasi</div>
+            <div class="flex justify-center flex-col items-center">
+              <div class="text-base md:text-2xl font-bold">{{ prestasiCount }}+</div>
+              <div class="text-xs md:text-lg">Prestasi</div>
             </div>
           </div>
         </div>
@@ -59,19 +111,20 @@ definePageMeta({
       </div>
     </section>
     <section id="information" class="flex items-center justify-center flex-col h-fit">
-      <div class="w-fit bg-secondary backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
-          <h2 class="text-3xl font-bold">Sambutan Kepala Sekolah</h2>
-        </div>
-      <div class="text-center md:text-left flex flex-col md:flex-row gap-10 container mx-auto px-10 md:px-30">
-        <div class="flex items-center flex-col gap-10">
-          <img src="/images/kepsek.webp" width="auto" height="auto" alt="Foto Kepsek" />
-          <div class="w-fit bg-secondary rounded-lg p-2">
-            <p class="font-bold">Sumijah S. Pd M.Si</p>
+      <div class="text-center md:text-left flex flex-col md:flex-row gap-20 py-10 container mx-auto px-10 md:px-30">
+        <div class="flex items-center flex-col shadow-lg rounded-2xl">
+          <img src="/images/kepsek.webp" width="600" height="600" alt="Foto Kepsek" class="rounded-t-2xl"/>
+          <div class="w-fit bg-secondary rounded-lg py-6">
+            <p class="font-bold text-lg">Sumijah S. Pd M.Si</p>
           </div>
         </div>
-        <div class="flex justify-center flex-col gap-5">
-          <h2 class="text-3xl font-bold">Selamat datang di SMK Negeri 2 Singosari</h2>
-          <p>
+        <div class="flex justify-center flex-col gap-5 max-w-6xl w-full">
+          <div class="flex flex-col gap-2">
+            <h1 class="text-4xl font-bold">Sambutan Kepala Sekolah</h1>
+          </div>
+          <hr class="border-2 border-zinc-100 max-w-lg w-full">
+          <h2 class="text-2xl font-semibold">Selamat datang di SMK Negeri 2 Singosari</h2>
+          <p class="max-w-3xl w-full">
             Assalamu'alaikum wr.wb. Puji syukur kepada Alloh SWT atas terbitnya website SMK Negeri 2 Singosari untuk
             menjawab kebutuhan informasi melalui teknologi informasi. Dalam memajukan pendidikan di era teknologi yang
             pesat, diperlukan sarana prasarana kondusif dan informasi bagi siswa, guru, orangtua maupun masyarakat.
@@ -79,7 +132,7 @@ definePageMeta({
             Singosari. Besar harapan kami sarana ini memberi manfaat bagi semua pihak di lingkup pendidikan khususnya
             SMK Negeri 2 Singosari.
           </p>
-          <p>
+          <p class="max-w-3xl w-full">
             Kami mengharapkan masukan dari berbagai pihak agar terus belajar dan meng-update sehingga tampilan, isi dan
             mutu website berkembang lebih baik. Terima kasih atas kerjasamanya, maju terus SMK Negeri 2 Singosari.
             Wassalamu'alaikum wr.wb.
@@ -90,12 +143,8 @@ definePageMeta({
     <section class="h-min-screen" id="video-profil">
       <div class="container mx-auto px-10 md:px-60 flex text-center flex-col items-center gap-5">
         <div class="bg-secondary backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
-          <h2 class="text-3xl font-bold">Video Profil Sekolah</h2>
+          <h2 class="text-4xl font-bold">Video Profil Sekolah</h2>
         </div>
-        <p>
-          Video profil ini memperlihatkan perjalanan dan komitmen sekolah dalam membentuk peserta didik yang unggul
-          dalam berprestasi, berkarakter, serta siap menghadapi tantangan di masa depan.
-        </p>
         <ScriptYouTubePlayer video-id="Kks6HnhPzVQ">
           <template #placeholder="{ placeholder }">
             <div class="relative">

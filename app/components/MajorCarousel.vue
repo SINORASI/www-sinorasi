@@ -1,3 +1,85 @@
+<script setup>
+import { ref } from "vue";
+
+const items = [
+  {
+    image: "/images/placeholder.jpg",
+    logo: "/images/majorIcon/rpl.webp",
+    title: "Rekayasa Perangkat Lunak",
+  },
+  {
+    image: "/images/placeholder.jpg",
+    logo: "/images/majorIcon/tkj.webp",
+    title: "Teknik Komputer Jaringan",
+  },
+  {
+    image: "/images/placeholder.jpg",
+    logo: "/images/majorIcon/dkv.webp",
+    title: "Desain Komunikasi Visual",
+  },
+  {
+    image: "/images/placeholder.jpg",
+    logo: "/images/majorIcon/animasi.webp",
+    title: "Animasi",
+  },
+  {
+    image: "/images/placeholder.jpg",
+    logo: "/images/majorIcon/broadcasting.webp",
+    title: "Broadcasting",
+  },
+  {
+    image: "/images/placeholder.jpg",
+    logo: "/images/majorIcon/tei.webp",
+    title: "Teknik Elektronika Industri",
+  },
+  {
+    image: "/images/placeholder.jpg",
+    logo: "/images/majorIcon/mekatronika.webp",
+    title: "Teknik Mekatronika",
+  },
+  {
+    image: "/images/placeholder.jpg",
+    logo: "/images/majorIcon/tav.webp",
+    title: "Teknik Audio Video",
+  },
+];
+
+const currentIndex = ref(0);
+const carouselContainer = ref<HTMLElement | null>(null);
+
+function next() {
+  if (carouselContainer.value) {
+    const maxScroll = carouselContainer.value.scrollWidth - carouselContainer.value.clientWidth;
+    if (carouselContainer.value.scrollLeft >= maxScroll) {
+      carouselContainer.value.scrollTo({ left: carouselContainer.value.scrollLeft + 1020, behavior: 'smooth' });
+      currentIndex.value = 0;
+    } else {
+      carouselContainer.value.scrollTo({ 
+        left: carouselContainer.value.scrollLeft + 1020, 
+        behavior: 'smooth' 
+      });
+      currentIndex.value = (currentIndex.value + 1) % items.length;
+    }
+  }
+}
+
+function prev() {
+  if (carouselContainer.value) {
+    if (carouselContainer.value.scrollLeft <= 0) {
+      const maxScroll = carouselContainer.value.scrollWidth - carouselContainer.value.clientWidth
+      carouselContainer.value.scrollTo({ left: maxScroll, behavior: 'instant' })
+      currentIndex.value = items.value.length - 1
+    } else {
+      carouselContainer.value.scrollTo({ 
+        left: carouselContainer.value.scrollLeft - 1020, 
+        behavior: 'smooth' 
+      })
+      currentIndex.value = (currentIndex.value - 1 + items.value.length) % items.value.length
+    }
+  }
+}
+</script>
+
 <template>
   <div class="w-fit flex flex-col gap-5 items-center rounded-lg">
     <div class="hidden md:flex gap-5 items-center">
@@ -61,76 +143,3 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import { ref } from "vue";
-
-const items = [
-  {
-    image: "/images/placeholder.jpg",
-    logo: "/images/majorIcon/rpl.webp",
-    title: "Rekayasa Perangkat Lunak",
-  },
-  {
-    image: "/images/placeholder.jpg",
-    logo: "/images/majorIcon/tkj.webp",
-    title: "Teknik Komputer Jaringan",
-  },
-  {
-    image: "/images/placeholder.jpg",
-    logo: "/images/majorIcon/dkv.webp",
-    title: "Desain Komunikasi Visual",
-  },
-  {
-    image: "/images/placeholder.jpg",
-    logo: "/images/majorIcon/animasi.webp",
-    title: "Animasi",
-  },
-  {
-    image: "/images/placeholder.jpg",
-    logo: "/images/majorIcon/broadcasting.webp",
-    title: "Broadcasting",
-  },
-  {
-    image: "/images/placeholder.jpg",
-    logo: "/images/majorIcon/tei.webp",
-    title: "Teknik Elektronika Industri",
-  },
-  {
-    image: "/images/placeholder.jpg",
-    logo: "/images/majorIcon/mekatronika.webp",
-    title: "Teknik Mekatronika",
-  },
-  {
-    image: "/images/placeholder.jpg",
-    logo: "/images/majorIcon/tav.webp",
-    title: "Teknik Audio Video",
-  },
-];
-
-const currentIndex = ref(0);
-const carouselContainer = ref(null);
-
-function next() {
-  if (carouselContainer.value) {
-    const maxScroll = carouselContainer.value.scrollWidth - carouselContainer.value.clientWidth;
-    if (carouselContainer.value.scrollLeft < maxScroll) {
-      carouselContainer.value.scrollTo({ left: carouselContainer.value.scrollLeft + 1020, behavior: 'smooth' });
-    }
-  }
-  if (currentIndex.value < items.length - 1) {
-    currentIndex.value++;
-  }
-}
-
-function prev() {
-  if (carouselContainer.value) {
-    if (carouselContainer.value.scrollLeft > 0) {
-      carouselContainer.value.scrollTo({ left: carouselContainer.value.scrollLeft - 1020, behavior: 'smooth' });
-    }
-  }
-  if (currentIndex.value > 0) {
-    currentIndex.value--;
-  }
-}
-</script>
