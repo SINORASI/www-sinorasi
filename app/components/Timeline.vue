@@ -1,24 +1,3 @@
-<template>
-  <div v-if="isMobile">
-    <MobileTimeline :timeline-items="timelineItems" />
-  </div>
-  <div v-else class="timeline">
-    <div class="timeline-line"></div>
-    <div v-for="(item, index) in timelineItems" :key="index" class="timeline-item" :class="index % 2 === 0 ? 'left' : 'right'">
-      <div class="timeline-content bg-secondary shadow-lg rounded-lg p-6 border border-neutral-300">
-        <div :class="['px-3 py-1 rounded-full w-fit mb-4', index % 2 === 0 ? 'bg-blue-100' : 'bg-orange-100']">
-          <span :class="['font-bold', index % 2 === 0 ? 'text-blue-600' : 'text-orange-600']">{{ item.year }}</span>
-        </div>
-        <h3 class="text-xl font-bold text-gray-800 mb-2">{{ item.title }}</h3>
-        <p class="text-gray-600 text-sm">{{ item.description }}</p>
-      </div>
-      <div class="timeline-marker">
-        <Icon :name="item.icon" size="24" :class="index % 2 === 0 ? 'text-blue-600' : 'text-orange-600'" />
-      </div>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
 
@@ -68,6 +47,27 @@ onMounted(() => {
   })
 })
 </script>
+
+<template>
+  <div v-if="isMobile">
+    <MobileTimeline :timeline-items="timelineItems" />
+  </div>
+  <div v-else class="timeline">
+    <div class="timeline-line"></div>
+    <div v-for="(item, index) in timelineItems" :key="index" class="timeline-item" :class="index % 2 === 0 ? 'left' : 'right'">
+      <div class="timeline-content bg-secondary shadow-lg rounded-lg p-6 border border-neutral-300">
+        <div :class="['px-3 py-1 rounded-full w-fit mb-4', index % 2 === 0 ? 'bg-blue-100' : 'bg-orange-100']">
+          <span :class="['font-bold', index % 2 === 0 ? 'text-blue-600' : 'text-orange-600']">{{ item.year }}</span>
+        </div>
+        <h3 class="text-xl font-bold text-gray-800 mb-2">{{ item.title }}</h3>
+        <p class="text-gray-600 text-sm">{{ item.description }}</p>
+      </div>
+      <div class="timeline-marker">
+        <Icon :name="item.icon" size="24" :class="index % 2 === 0 ? 'text-blue-600' : 'text-orange-600'" />
+      </div>
+    </div>
+  </div>
+</template>
 
 <style scoped>
 .timeline {

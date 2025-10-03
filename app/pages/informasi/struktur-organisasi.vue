@@ -1,65 +1,55 @@
-<template>
-  <div class="flex items-center justify-center h-min-screen container mx-auto px-6 py-34">
-    <div class="flex flex-col items-center justify-center gap-5">
-      <h1 class="text-center font-bold text-4xl">Struktur Organisasi</h1>
-      <p>SMKN 2 Singosari</p>
+<script lang="ts" setup>
 
-      <div class="flex flex-col gap-20">
-        <div class="flex flex-col items-center gap-5">
-          <div class="flex flex-col gap-5">
-            <StaffCard v-for="staff in staffData.kepsek" :key="staff.name" :staff="staff" />
-          </div>
-          <div class="flex gap-10">
-            <StaffCard v-for="staff in staffData.wakasek" :key="staff.name" :staff="staff" />
-          </div>
-        </div>
-
-        <div class="flex flex-col items-center gap-10">
-          <div class="bg-neutral-200/50 backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
-            <h2 class="text-3xl font-bold">Kurikulum</h2>
-          </div>
-          <div class="flex gap-10">
-            <StaffCard v-for="staff in staffData.kurikulum" :key="staff.name" :staff="staff" />
-          </div>
-        </div>
-
-        <div class="flex flex-col items-center gap-10">
-          <div class="bg-neutral-200/50 backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
-            <h2 class="text-3xl font-bold">Kesiswaan</h2>
-          </div>
-          <div class="grid grid-cols-3 grid-rows-2 gap-10">
-            <StaffCard v-for="staff in staffData.kesiswaan" :key="staff.name" :staff="staff" />
-          </div>
-        </div>
-      </div>
-
-      <div class="flex flex-col items-center gap-10">
-        <div class="bg-neutral-200/50 backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
-          <h2 class="text-3xl font-bold">Sapras</h2>
-        </div>
-        <div class="flex gap-10">
-          <StaffCard v-for="staff in staffData.sapras" :key="staff.name" :staff="staff" />
-        </div>
-
-        <div class="flex flex-col items-center gap-10">
-          <div class="bg-neutral-200/50 backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
-            <h2 class="text-3xl font-bold">Humas</h2>
-          </div>
-          <div class="flex flex-col gap-10">
-            <div class="flex gap-10">
-              <StaffCard v-for="staff in staffData.humas.slice(0, 3)" :key="staff.name" :staff="staff" />
-            </div>
-            <div class="flex gap-10 items-center justify-center">
-              <StaffCard v-for="staff in staffData.humas.slice(3)" :key="staff.name" :staff="staff" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
-
-<script setup lang="ts">
-import StaffCard from '~/components/StaffCard.vue';
-import { staffData } from '~/datas/data';
 </script>
+
+<template>
+  <main>
+    <section class="h-[650px] w-full bg-zinc-600"></section>
+
+    <section class="h-fit flex justify-center items-center gap-8 mt-10">
+      <div class="shadow-lg rounded-2xl p-6 max-w-6xl w-full flex justify-center items-center flex-col gap-8">
+        <div class="bg-zinc-400 rounded-lg py-4 px-10">
+          <h1 class="text-white">Kepala Sekolah</h1>
+        </div>
+        <div class="flex justify-center items-center gap-4">
+          <img src="/images/placeholder.jpg" alt="Profile Guru" width="250" class="rounded-lg shadow-lg">
+          <img src="/images/placeholder.jpg" alt="Profile Guru" width="350" class="rounded-lg shadow-lg">
+          <img src="/images/placeholder.jpg" alt="Profile Guru" width="250" class="rounded-lg shadow-lg">
+        </div>
+        <div class="w-[560px]">
+          <p class="text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis, quo iure possimus dolorum eum nihil saepe architecto natus, porro quae nam impedit libero iste id? Enim aliquid illo voluptatibus. Eaque.</p>
+        </div>
+      </div>
+    </section>
+    <section class="h-fit flex justify-center items-center gap-8 mt-10">
+      <div class="shadow-lg rounded-2xl p-6 max-w-6xl w-full flex justify-center items-center flex-col gap-8">
+        <div class="bg-zinc-400 rounded-lg py-4 px-10">
+          <h1 class="text-white">Kepala Tata Usaha</h1>
+        </div>
+        <div class="flex justify-center items-center gap-4">
+          <img src="/images/placeholder.jpg" alt="Profile Guru" width="250" class="rounded-lg shadow-lg">
+          <img src="/images/placeholder.jpg" alt="Profile Guru" width="350" class="rounded-lg shadow-lg">
+          <img src="/images/placeholder.jpg" alt="Profile Guru" width="250" class="rounded-lg shadow-lg">
+        </div>
+        <div class="w-[560px]">
+          <p class="text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis, quo iure possimus dolorum eum nihil saepe architecto natus, porro quae nam impedit libero iste id? Enim aliquid illo voluptatibus. Eaque.</p>
+        </div>
+      </div>
+    </section>
+    <section class="h-fit flex justify-center items-center gap-8 mt-8">
+      <div class="shadow-lg rounded-2xl p-6 max-w-6xl w-full flex justify-center items-center flex-col gap-8">
+        <div class="bg-zinc-400 rounded-lg py-4 px-10">
+          <h1 class="text-white">Wakil Kepala Sekolah Bagian Kesiswaan</h1>
+        </div>
+        <div class="flex justify-center items-center gap-4">
+          <img src="/images/placeholder.jpg" alt="Profile Guru" width="250" class="rounded-lg shadow-lg">
+          <img src="/images/placeholder.jpg" alt="Profile Guru" width="350" class="rounded-lg shadow-lg">
+          <img src="/images/placeholder.jpg" alt="Profile Guru" width="250" class="rounded-lg shadow-lg">
+        </div>
+        <div class="w-[560px]">
+          <p class="text-center">Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis, quo iure possimus dolorum eum nihil saepe architecto natus, porro quae nam impedit libero iste id? Enim aliquid illo voluptatibus. Eaque.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</template>
