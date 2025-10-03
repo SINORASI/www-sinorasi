@@ -1,186 +1,250 @@
-<template>
-  <section id="sambutan" class="flex items-center justify-center h-screen container mx-auto my-24 px-6">
-    <div class="flex flex-col items-center justify-center gap-10">
-      <h1 class="font-bold text-4xl">Sambutan</h1>
-
-      <div class="bg-neutral-100 rounded-lg p-8">
-        <div class="relative overflow-hidden">
-          <div class="flex transition-transform duration-300" :style="{ transform: `translateX(-${currentIndex * 100}%)` }">
-            <div class="flex-shrink-0 w-full flex gap-5 items-center justify-center h-130">
-              <div class="flex gap-5">
-                <div class="flex justify-start text-right flex-col gap-5">
-                  <h2 class="font-bold text-3xl">Lorem Ipsum</h2>
-                  <p class="text-sm">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, aut beatae consequatur deleniti esse expedita minus necessitatibus neque perspiciatis ratione.</p>
-                </div>
-                <div class="shrink-0 w-60 h-60 ">
-                  <img src="/images/logo.webp" class="w-full h-full shadow-sm rounded-lg" />
-                </div>
-                <div class="flex justify-end flex-col gap-5">
-                  <h2 class="font-bold text-3xl">Lorem Ipsum</h2>
-                  <p class="text-sm">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, aut beatae consequatur deleniti esse expedita minus necessitatibus neque perspiciatis ratione.</p>
-                </div>
-              </div>
-            </div>
-            <div class="flex-shrink-0 w-full flex gap-5 items-center justify-center h-130">
-              <div class="flex gap-5">
-                <div class="flex justify-start text-right flex-col gap-5">
-                  <h2 class="font-bold text-3xl">Dolor Sit</h2>
-                  <p class="text-sm">Dolor sit amet, consectetur adipisicing elit. Accusantium, aut beatae consequatur deleniti esse expedita minus necessitatibus neque perspiciatis ratione.</p>
-                </div>
-                <div class="shrink-0 w-60 h-60 ">
-                  <img src="/images/logo.webp" class="w-full h-full shadow-sm rounded-lg" />
-                </div>
-                <div class="flex justify-end flex-col gap-5">
-                  <h2 class="font-bold text-3xl">Amet Consectetur</h2>
-                  <p class="text-sm">Amet consectetur adipisicing elit. Accusantium, aut beatae consequatur deleniti esse expedita minus necessitatibus neque perspiciatis ratione.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <button @click="prev" class="border-neutral-400 left-0 absolute top-60 m-5 border-1 cursor-pointer bg-neutral-300 p-2 flex items-center justify-center rounded-full shadow-lg transition hover:bg-blue-600 hover:border-blue-600 hover:text-white hover:scale-110">
-          <Icon name="lucide:chevron-left" size="24" />
-          </button>
-          <button @click="next" class="absolute right-0 top-60 border-neutral-400 m-5 border-1 cursor-pointer bg-neutral-300 p-2 flex items-center justify-center rounded-full shadow-lg transition hover:bg-blue-600 hover:border-blue-600 hover:text-white hover:scale-110">
-            <Icon name="lucide:chevron-right" size="24" />
-          </button>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section id="video-profil-sekolah" class="flex items-center justify-center h-screen container mx-auto px-6 py-12">
-    <div class="bg-neutral-200 p-8 rounded-lg flex flex-col items-center justify-center gap-5">
-      <div class="bg-neutral-200/50 backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
-        <h2 class="font-bold text-3xl">Video Profil Sekolah</h2>
-      </div>
-      <p class="text-sm w-6/12 text-center">Video profil ini memperlihatkan perjalanan dan komitmen sekolah dalam membentuk peserta didik yang unggul dalam berprestasi, berkarakter, serta siap menghadapi tantangan di masa depan.</p>
-      <div class="bg-neutral-600 h-100 w-full rounded-lg shadow-sm">
-
-      </div>
-    </div>
-  </section>
-  <section id="visi-dan-misi" class="flex items-center justify-center h-screen container mx-auto px-6 py-12">
-    <div class="flex flex-col items-center justify-center gap-10">
-      <div class="bg-neutral-200/50 backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
-        <h2 class="font-bold text-3xl">Visi dan Misi</h2>
-      </div>
-      <p class="text-sm">Video profil ini memperlihatkan perjalanan dan komitmen sekolah dalam membentuk peserta didik yang unggul dalam berprestasi, berkarakter, serta siap menghadapi tantangan di masa depan.</p>
-      <Carousel>
-        <template #slide-0>
-           <div class="flex items-center p-10 justify-center rounded-lg">
-            <div class="flex gap-5 items-center">
-              <div class="w-fit h-fit bg-neutral-300 rounded-lg p-4">
-                <h3 class="font-bold text-2xl">Visi</h3>
-              </div>
-              <div class="flex flex-col  gap-5">
-                <div class="p-4 text-center bg-neutral-300 rounded-lg shadow-sm">
-                  <p class="text-sm">SMK Negeri 2 Singosari memiliki komitmen jangka panjang terhadap pengembangan sumber daya manusia.Pandangan kedepan dan cita-cita SMK Negeri 2 Singosari dinyatakan dalam Visi sebagai berikut :</p>
-                </div>
-                <div class="p-4 text-center bg-neutral-300 rounded-lg shadow-sm">
-                  <p class="text-sm">SMK Negeri 2 Singosari memiliki komitmen jangka panjang terhadap pengembangan sumber daya manusia.Pandangan kedepan dan cita-cita SMK Negeri 2 Singosari dinyatakan dalam Visi sebagai berikut :</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </template>
-        <template #slide-1>
-          <div class="flex items-center p-10 justify-center rounded-lg">
-            <div class="flex gap-5 items-center">
-              <div class="w-fit h-fit bg-neutral-300 rounded-lg p-4">
-                <h3 class="font-bold text-2xl">Visi</h3>
-              </div>
-              <div class="flex flex-col  gap-5">
-                <div class="p-4 text-center bg-neutral-300 rounded-lg shadow-sm">
-                  <p class="text-sm">SMK Negeri 2 Singosari memiliki komitmen jangka panjang terhadap pengembangan sumber daya manusia.Pandangan kedepan dan cita-cita SMK Negeri 2 Singosari dinyatakan dalam Visi sebagai berikut :</p>
-                </div>
-                <div class="p-4 text-center bg-neutral-300 rounded-lg shadow-sm">
-                  <p class="text-sm">SMK Negeri 2 Singosari memiliki komitmen jangka panjang terhadap pengembangan sumber daya manusia.Pandangan kedepan dan cita-cita SMK Negeri 2 Singosari dinyatakan dalam Visi sebagai berikut :</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </template>
-      </Carousel>
-      
-    </div>
-  </section>
-  <section id="sejarah-smk-negeri-02-singosari" class="flex items-center justify-center h-screen container mx-auto px-30 py-12">
-    <div class="flex flex-col items-center justify-center gap-10">
-      <div class="bg-neutral-200/50 backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
-        <h2 class="font-bold text-3xl">Sejarah SMK Negeri 02 Singosari</h2>
-      </div>
-      <div class="flex flex-col gap-4">
-        <p class="text-sm">
-          Didirikan berdasarkan surat Perjanjian Kerjasama antara Bupati Malang dengan Direktur Pendidikan Sekolah Menengah Kejuruan No.0570ax/C5.4/Kep/KU/2007 Tanggal 25 Mei 2007. Sebagai Pengembangan dari Program Keahlian Teknik Audio Video, Teknik Elektronika Industri, dan Teknik Informatika (Rekayasa Perangkat Lunak) yang berasal dari SMK Negeri 1 Singosari yang telah meraih prestasi sebagai Juara Lomba Kompetensi Siswa baik tingkat Propinsi Jawa Timur maupun Tingkat Nasional.
-        </p>
-        <p class="text-sm">
-          Sebagai awal berdirinya Sekolah terpadu yang direncanakan oleh Pemkab Malang yang nantinya terdiri atas TK Pembina, SD Negeri dan SMP Negeri di kabupaten Malang, dengan menempati Lahan seluas kurang lebih 4,9 Ha. Pendidik dan Tenaga kependidikan serta peralatan semua berasal dari SMK Negeri 1 Singosari dan ditambah dengan peralatan serta fasilitas (Hotspot Internet Akses menggunakan WIFI, Lab.Komputer, dll) baru sehingga lebih lengkap dan memadai.
-        </p>
-        <p class="text-sm">
-          Di awal tahun pelajaran 2008/2009 mulai Operasional dan menerima siswa baru dengan 3 Program Keahlian yaitu AV,EI dan RPL yang jumlah siswanya 205 orang siswa (6 rombel).Pada 20 maret tahun 2009 pergantian Kepala Sekolah dari Plt. Bapak H.Bagus Gunawan,S.Pd, M.Si ke Kepala UPTD definitive Bapak Drs.H.M. Qodri MP.Sa, yang selanjutnya dibuka lagi 4 program keahlian khusus Informatika (TKJ,MM,ANM dan BC) jadi jumlah seluruhnya ada 7 Program Keahlian. Pada tahun pelajaran 2010/2011 dibuka lagi 1 program Keahlian Elektro (Mekatronika) sehingga lengkap sudah seluruh Program Elektro dan Informatika ada di SMK Negeri 2 Singosari yang berbasis pendidikan elektro dan IT Negeri di Kabupaten malang, sejak 1 Juni 2011 terjadi penggantian Kepala Sekolah Ke Drs.SUHARTO
-        </p>
-      </div>
-
-    </div>
-  </section>
-  <section id="mars-smkn2-2-singosari" class="flex items-center justify-center h-screen container mx-auto px-6 py-12">
-    <div class="flex flex-col items-center justify-center gap-10">
-      <div class="bg-neutral-200/50 backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
-        <h2 class="font-bold text-3xl">Mars SMKN2 2 Singosari</h2>
-      </div>
-    </div>
-  </section>
-  <section id="kontak" class="flex items-center justify-center h-screen container mx-auto px-6 py-12">
-    <div class="flex flex-col items-center justify-center gap-10">
-      <div class="bg-neutral-200/50 backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
-        <h2 class="font-bold text-3xl">Kontak</h2>
-      </div>
-      <div class="flex flex-col gap-2">
-        <div class="flex flex-col gap-2">
-          <div class="w-fit h-fit p-4 rounded-lg bg-neutral-300 text-center">
-            <h3 class="font-bold text-2xl">Alamat</h3>
-          </div>
-          <div class="p-4 rounded-lg bg-neutral-200 text-center">
-            <p class="text-base">Jl. Perusahaan No.20, Tunjungtirto, Singosari, Jajar, Tanjungtirto, Kec. Singosari, Malang, Jawa Timur 65153</p>
-          </div>
-        </div>
-        <div class="flex flex-col gap-2">
-          <div class="w-fit h-fit p-4 rounded-lg bg-neutral-300 text-center">
-            <h3 class="font-bold text-2xl">Alamat</h3>
-          </div>
-          <div class="p-4 rounded-lg bg-neutral-200 text-center">
-            <p class="text-base">Jl. Perusahaan No.20, Tunjungtirto, Singosari, Jajar, Tanjungtirto, Kec. Singosari, Malang, Jawa Timur 65153</p>
-          </div>
-        </div>
-        <div class="flex flex-col gap-2">
-          <div class="w-fit h-fit p-4 rounded-lg bg-neutral-300 text-center">
-            <h3 class="font-bold text-2xl">Alamat</h3>
-          </div>
-          <div class="p-4 rounded-lg bg-neutral-200 text-center">
-            <p class="text-base">Jl. Perusahaan No.20, Tunjungtirto, Singosari, Jajar, Tanjungtirto, Kec. Singosari, Malang, Jawa Timur 65153</p>
-          </div>
-        </div>
-        <div class="flex flex-col gap-2">
-          <div class="w-fit h-fit p-4 rounded-lg bg-neutral-300 text-center">
-            <h3 class="font-bold text-2xl">Alamat</h3>
-          </div>
-          <div class="p-4 rounded-lg bg-neutral-200 text-center">
-            <p class="text-base">Jl. Perusahaan No.20, Tunjungtirto, Singosari, Jajar, Tanjungtirto, Kec. Singosari, Malang, Jawa Timur 65153</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-</template>
 <script setup lang="ts">
-import { ref } from 'vue';
-
-const currentIndex = ref(0);
-
-const next = () => {
-  currentIndex.value = (currentIndex.value + 1) % 2;
-};
-
-const prev = () => {
-  currentIndex.value = (currentIndex.value - 1 + 2) % 2;
-};
 </script>
+
+<template>
+  <section class="w-full h-screen">
+    <div class="bg-neutral-300 w-full h-full">
+      <!-- Image -->
+    </div>
+  </section>
+  <section class="flex items-center justify-center flex-col container mx-auto px-30 py-20 min-h-screen">
+    <h1 class="bg-neutral-200 rounded-lg shadow-sm p-4 text-4xl font-bold mb-5">Sambutan Kepala Sekolah</h1>
+    <p class="bg-neutral-200 rounded-lg shadow-sm p-4 text-2xl text-justify">
+      SMK Negeri 2 Singosari
+    </p>
+    <div class="w-200 flex items-center justify-center">
+      <img src="/images/kepsek.webp" alt="Kepala Sekolah" class="rounded-lg shadow-sm w-1/3 mt-5" />
+    </div>
+    <div class="flex flex-col gap-5 bg-neutral-100 rounded-lg shadow-sm p-4 text-base">
+      <p class="font-bold text-1xl">Assalamualaikum Warahmatullahi Wabarakatuh</p>
+      <p class="text-base">
+        Puji syukur kepada Alloh SWT, Tuhan Yang Maha Esa yang telah memberikan rahmat dan anugerahNya sehingga website SMK Negeri 2 Singosari ini dapat terbit. Salah satu tujuan dari website ini adalah untuk menjawab akan setiap kebutuhan informasi dengan memanfaatkan sarana teknologi informasi yang ada. Kami sadar sepenuhnya dalam rangka memajukan pendidikan di era berkembangnya Teknologi Informasi yang begitu pesat, sangat diperlukan berbagai sarana prasarana yang kondusif, kebutuhan berbagai informasi siswa, guru, orangtua maupun masyarakat, sehingga kami berusaha mewujudkan hal tersebut semaksimal mungkin. Semoga dengan adanya website ini dapat membantu dan bermanfaat, terutama informasi yang berhubungan dengan pendidikan, ilmu pengetahuan dan informasi seputar SMK Negeri 2 Singosari.
+      </p>
+      <p class="text-base">
+        Besar harapan kami, sarana ini dapat memberi manfaat bagi semua pihak yang ada dilingkup pendidikan dan pemerhati pendidikan secara khusus bagi SMK Negeri 2 Singosari.
+      </p>
+      <p class="text-base">
+        Akhirnya kami mengharapkan masukan dari berbagai pihak untuk website ini agar kami terus belajar dan meng-update diri, sehingga tampilan, isi dan mutu website akan terus berkembang dan lebih baik nantinya. Terima kasih atas kerjasamanya, maju terus untuk mencapai SMK Negeri 2 Singosari yang lebih baik lagi.
+      </p>
+      <p class="font-bold text-1xl">Wassalamualaikum Warahmatullahi Wabarakatuh</p>
+    </div>
+    <div class="flex flex-row gap-5 items-center justify-center w-full mt-5">
+      <div class="flex items-center">
+        <div class="w-2 h-2 bg-neutral-600 rounded-full mx-1"></div>
+        <div class="w-2 h-2 bg-neutral-600 rounded-full mx-1"></div>
+        <div class="w-2 h-2 bg-neutral-600 rounded-full mx-1"></div>
+      </div>
+    </div>
+  </section>
+  <section class="w-full h-screen py-20">
+    <div class="flex h-100">
+      <div class="relative h-full w-full">
+        <img src="/images/placeholder.jpg" class="object-cover w-full h-full" />
+        <div class="flex flex-col gap-5 bg-neutral-300/60 p-4 absolute bottom-0 right-0 left-0">
+          <h2 class="text-3xl font-bold">Video Profil</h2>
+          <p class="text-base">SMK Negeri 02 Singosari</p>
+          <p>
+            Lorem Ipsum alergi makan nasi, kalo makan nasi nanti sakit perut lalu mual dan muntah muntah, kalo udah muntah muntah yaa berarti udah gak fit dan sakit
+          </p>
+        </div>
+      </div>
+      <div class="relative h-full w-full">
+        <img src="/images/placeholder.jpg" class="object-cover w-full h-full" />
+      </div>
+      <div class="relative h-full w-full">
+        <img src="/images/placeholder.jpg" class="object-cover w-full h-full" />
+        <div class="flex flex-col gap-5 bg-neutral-300/60 p-4 absolute bottom-0 right-0 left-0">
+          <h2 class="text-3xl font-bold">Video Profil</h2>
+          <p class="text-base">SMK Negeri 02 Singosari</p>
+          <p>
+            Lorem Ipsum alergi makan nasi, kalo makan nasi nanti sakit perut lalu mual dan muntah muntah, kalo udah muntah muntah yaa berarti udah gak fit dan sakit
+          </p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="flex items-center justify-center w-full mt-5">
+        <div class="flex items-center">
+          <div class="w-2 h-2 bg-neutral-600 rounded-full mx-1"></div>
+          <div class="w-2 h-2 bg-neutral-600 rounded-full mx-1"></div>
+          <div class="w-2 h-2 bg-neutral-600 rounded-full mx-1"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="w-full h-screen container mx-auto px-30 py-20">
+    <div class="flex flex-col gap-5 mb-10">
+      <div class="flex justify-between items-center bg-neutral-200 rounded-lg shadow-md p-6">
+        <div class="flex flex-col">
+          <h2 class="font-bold text-3xl">Visi Dan Misi</h2>
+          <p>SMK Negeri 02 Singosari</p>
+        </div>
+        <div class="flex items-center justify-center">
+          <button class="flex items-center justify-center w-16 h-16">
+            <Icon name="lucide:plus" class="text-5xl text-neutral-600 hover:text-neutral-800" />
+          </button>
+        </div>
+      </div>
+      <div class="flex gap-5 bg-neutral-200 rounded-lg shadow-md p-6">
+        <div class="bg-neutral-500 rounded-lg h-80 w-600">
+          <img src="/images/placeholder.jpg" alt="Visi Misi" class="object-cover w-full h-full rounded-lg" />
+        </div>
+        <div class="flex flex-col gap-5 p-4">
+          <h3 class="font-bold text-2xl mb-2">Sejarah SMK Negeri 2 Singosari</h3>
+          <p class="text-base text-justify">
+            Didirikan berdasarkan surat Perjanjian Kerjasama antara Bupati Malang dengan Direktur Pendidikan Sekolah Menengah Kejuruan No.0570ax/C5.4/Kep/KU/2007 Tanggal 25 Mei 2007. Sebagai Pengembangan dari Program Keahlian Teknik Audio Video, Teknik Elektronika Industri, dan Teknik Informatika (Rekayasa Perangkat Lunak) yang berasal dari SMK Negeri 1 Singosari yang telah meraih prestasi sebagai Juara Lomba Kompetensi Siswa baik tingkat Propinsi Jawa Timur maupun Tingkat Nasional.
+          </p>
+          <button class="text-neutral-500  cursor-pointer text-base font-semibold rounded-lg hover:text-neutral-800 inline-flex items-center w-fit">
+            Baca Selengkapnya <icon name="lucide:arrow-right" class="inline-block ml-2" />
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEMOS -->
+
+  <section class="h-screen flex items-center justify-center flex-col container mx-auto px-30 py-40">
+    <h1 class="bg-neutral-200 rounded-lg shadow-sm p-4 text-4xl font-bold mb-5">Sambutan Kepala Sekolah</h1>
+    <p class="bg-neutral-200 rounded-lg shadow-sm p-4 text-2xl text-justify">
+      SMK Negeri 2 Singosari
+    </p>
+    <div class="flex gap-5 mt-20">
+      <div class="h-full flex items-start justify-center">
+        <div class="bg-neutral-100 flex flex-col gap-5 p-4 rounded-lg shadow-sm">
+          <h2 class="text-2xl font-bold">Lorem Ipsum</h2>
+          <p class="text-base text-neutral-400">“Kalian bukan hanya siswa biasa - kalian adalah calon pemimpin masa depan. SMK Negeri 2 Singosari berkomitmen mengasah potensi terbaik dalam diri kalian untuk menghadapi tantangan dunia.”</p>
+        </div>
+      </div>
+      <div class="h-full flex items-center justify-center">
+        <img src="/images/kepsek.webp" alt="Kepala Sekolah" class=" rounded-lg shadow-sm " />
+      </div>
+      <div class="h-full flex items-end justify-center">
+        <div class="bg-neutral-100 flex flex-col gap-5 p-4 rounded-lg shadow-sm">
+          <h2 class="text-2xl font-bold">Lorem Ipsum</h2>
+          <p class="text-base text-neutral-400">“Kalian bukan hanya siswa biasa - kalian adalah calon pemimpin masa depan. SMK Negeri 2 Singosari berkomitmen mengasah potensi terbaik dalam diri kalian untuk menghadapi tantangan dunia.”</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEMOS -->
+  <section class="w-full flex flex-col items-center justify-center h-screen gap-5 container mx-auto py-20">
+    <h1 class="bg-neutral-200 rounded-lg shadow-sm p-4 text-4xl font-bold">Video Profil Sekolah</h1>
+    <p class="bg-neutral-200 rounded-lg shadow-sm p-4 text-2xl text-justify">
+      SMK Negeri 2 Singosari
+    </p>
+    <p class="bg-neutral-200 rounded-lg shadow-sm p-4 text-medium text-center">
+      Mengenal lebih dekat SMK Negeri 2 Singosari - sekolah yang membangun generasi<br></br> terampil dan berkarakter untuk masa depan yang lebih cerah.
+    </p>
+  </section>
+
+  <!-- DEMOS -->
+  <section class="w-full flex flex-col items-center justify-center h-screen gap-5 container mx-auto py-20">
+    <h1 class="bg-neutral-200 rounded-lg shadow-sm p-4 text-4xl font-bold">Maps Lokasi SMKN 02 Singosari</h1>
+    <p class="bg-neutral-200 rounded-lg shadow-sm p-4 text-2xl text-justify">
+      SMK Negeri 2 Singosari
+    </p>
+    <div class="flex gap-5 w-full">
+      <div class="bg-neutral-300 w-full h-full flex items-center justify-center rounded-lg">
+        <p class="text-neutral-600">[Google Maps Placeholder]</p>
+      </div>      
+      <div class="bg-neutral-100 p-4 flex flex-col justify-center w-full mt-5">
+        <p class="font-bold">Kontak Terkait</p>
+        <div class="flex flex-col gap-4 items-start justify-center">
+          <div class="flex gap-5">
+            <div class="rounded-full flex items-center justify-center p-2 h-fit bg-neutral-300">
+              <icon name="lucide:locate" class="text-base" />
+            </div>
+            <p>
+              Jl. Perusahaan No.20, Tunjungtirto, Singosari, Jajar, Tanjungtirto, Kec. Singosari, Malang, Jawa Timur 65153
+            </p>
+          </div>
+           <div class="flex gap-5">
+            <div class="rounded-full flex items-center justify-center p-2 h-fit bg-neutral-300">
+              <icon name="lucide:phone-call" class="text-base" />
+            </div>
+            <p>
+              Jl. Perusahaan No.20, Tunjungtirto, Singosari, Jajar, Tanjungtirto, Kec. Singosari, Malang, Jawa Timur 65153
+            </p>
+          </div>
+           <div class="flex gap-5">
+            <div class="rounded-full flex items-center justify-center p-2 h-fit bg-neutral-300">
+              <icon name="lucide:mail" class="text-base" />
+            </div>
+            <p>
+              Jl. Perusahaan No.20, Tunjungtirto, Singosari, Jajar, Tanjungtirto, Kec. Singosari, Malang, Jawa Timur 65153
+            </p>
+          </div>
+           <div class="flex gap-5">
+            <div class="rounded-full flex items-center justify-center p-2 h-fit bg-neutral-300">
+              <icon name="lucide:book" class="text-base" />
+            </div>
+            <p>
+              Jl. Perusahaan No.20, Tunjungtirto, Singosari, Jajar, Tanjungtirto, Kec. Singosari, Malang, Jawa Timur 65153
+            </p>
+          </div>
+           <div class="flex gap-5">
+            <div class="rounded-full flex items-center justify-center p-2 h-fit bg-neutral-300">
+              <icon name="lucide:clock" class="text-base" />
+            </div>
+            <p>
+              Jl. Perusahaan No.20, Tunjungtirto, Singosari, Jajar, Tanjungtirto, Kec. Singosari, Malang, Jawa Timur 65153
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <!-- DEMOS -->
+  <section class="w-full flex flex-col items-center justify-center h-screen gap-5 container mx-auto py-20">
+    <h1 class="bg-neutral-200 rounded-lg shadow-sm p-4 text-4xl font-bold">Mars SMK</h1>
+    <p class="bg-neutral-200 rounded-lg shadow-sm p-4 text-2xl text-justify">
+      SMK Negeri 2 Singosari
+    </p>
+    <p class="bg-neutral-200 rounded-lg shadow-sm p-4 text-medium text-center">
+      Mengenal lebih dekat SMK Negeri 2 Singosari - sekolah yang membangun generasi<br></br> terampil dan berkarakter untuk masa depan yang lebih cerah.
+    </p>
+  </section>
+
+
+  <section class="w-full flex flex-col items-center justify-center h-screen gap-5 container mx-auto py-20">
+    <div class="flex flex-col gap-5">
+      <div class="flex gap-5">
+        <div class="bg-neutral-300 p-4 rounded-lg shadow-sm flex items-center justify-center">
+          <h2 class="font-bold text-3xl">Visi</h2>
+        </div>
+        <div class="bg-neutral-300 p-4 rounded-lg shadow-sm">
+          <p class="text-base text-justify">
+            “Menjadi SMK Unggulan di Bidang Elektronika, Informatika, dan Animasi Berkualitas yang Berkesesuaian Kepentingan Masyarakat”
+          </p>
+        </div>
+      </div>
+      <div class="flex gap-5">
+        <div class="h-fit bg-neutral-300 p-4 rounded-lg shadow-sm flex items-center justify-center">
+          <h2 class="font-bold text-3xl">Misi</h2>
+        </div>
+        <div class="flex flex-col gap-5">
+          <div class="bg-neutral-300 p-4 rounded-lg shadow-sm">
+            <p class="text-base text-justify">
+              “Menjadi SMK Unggulan di Bidang Elektronika, Informatika, dan Animasi Berkualitas yang Berkesesuaian Kepentingan Masyarakat”
+            </p>
+          </div>
+          <div class="bg-neutral-300 p-4 rounded-lg shadow-sm">
+            <p class="text-base text-justify">
+              “Menjadi SMK Unggulan di Bidang Elektronika, Informatika, dan Animasi Berkualitas yang Berkesesuaian Kepentingan Masyarakat”
+            </p>
+          </div>
+          <div class="bg-neutral-300 p-4 rounded-lg shadow-sm">
+            <p class="text-base text-justify">
+              “Menjadi SMK Unggulan di Bidang Elektronika, Informatika, dan Animasi Berkualitas yang Berkesesuaian Kepentingan Masyarakat”
+            </p>
+          </div>
+        </div>
+        
+      </div>
+    </div>    
+  </section>
+
+</template>
