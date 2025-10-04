@@ -7,14 +7,14 @@
       ></div>
 
       <div class="sidebar-panel relative sm:ml-auto flex h-full w-full sm:w-80 flex-col bg-white shadow-2xl">
-        <div class="flex flex-shrink-0 items-center justify-between border-b border-gray-200 p-4">
-          <div class="flex-1">
+        <div class="flex flex-shrink-0 items-center justify-between gap-3 border-b border-gray-200 p-4">
+          <div class="flex-1 min-w-0">
             <h2 class="text-lg font-semibold text-gray-800 truncate">{{ pageTitle }}</h2>
             <p class="text-sm text-gray-500 truncate">{{ pageSubtitle }}</p>
           </div>
           <button
             @click="$emit('close')"
-            class="rounded-full p-2 transition-colors duration-200 hover:bg-gray-100 ml-2"
+            class="flex-shrink-0 rounded-full p-2 transition-colors duration-200 hover:bg-gray-100"
           >
             <Icon name="lucide:x" size="20" class="text-gray-600" />
           </button>
@@ -76,7 +76,7 @@
                     </div>
                   </div>
                 </a>
-                <NuxtLink v-else :to="sub.to" class="block" @click="emit('close')">
+                <NuxtLink v-else :to="sub.to || '#'" class="block" @click="emit('close')">
                   <div class="flex cursor-pointer items-start gap-3 rounded p-2 transition-colors duration-200 hover:bg-gray-50" :class="{ 'bg-blue-50 border border-blue-200': searchQuery.trim() && (sub as any).score > 80 }">
                     <Icon :name="sub.icon" size="18" class="mt-0.5 flex-shrink-0" :style="{ color: item.title === 'Jurusan' ? getIconColor(sub.title) : '#000000' }" />
                     <div class="flex-1">
@@ -382,7 +382,8 @@ const filteredMenuItems = computed(() => {
     let score = 0
     const title = item.title.toLowerCase()
     const desc = item.desc.toLowerCase()
-    const tags = item.tags.map((tag: string) => tag.toLowerCase())
+    // Handle both menu types: with tags (global) and without tags (major-specific)
+    const tags = item.tags ? item.tags.map((tag: string) => tag.toLowerCase()) : []
     
     // Exact title match gets highest score
     if (title === query) score += 100
@@ -391,15 +392,39 @@ const filteredMenuItems = computed(() => {
     // Title contains query gets medium-high score
     else if (title.includes(query)) score += 60
     
-    // Exact tag match gets high score
-    if (tags.some((tag: string) => tag === query)) score += 90
-    // Tag starts with query gets medium-high score  
-    else if (tags.some((tag: string) => tag.startsWith(query))) score += 70
-    // Tag contains query gets medium score
-    else if (tags.some((tag: string) => tag.includes(query))) score += 50
+    // Only search tags if they exist
+    if (tags.length > 0) {
+      // Exact tag match gets high score
+      if (tags.some((tag: string) => tag === query)) score += 90
+      // Tag starts with query gets medium-high score  
+      else if (tags.some((tag: string) => tag.startsWith(query))) score += 70
+      // Tag contains query gets medium score
+      else if (tags.some((tag: string) => tag.includes(query))) score += 50
+    }
     
     // Description contains query gets lower score
     if (desc.includes(query)) score += 30
+    
+    // Additional word matching for major-specific menus (without tags)
+    if (tags.length === 0) {
+      // Split title and desc into words for better matching
+      const titleWords = title.split(/\s+/)
+      const descWords = desc.split(/\s+/)
+      const queryWords = query.split(/\s+/)
+      
+      queryWords.forEach(queryWord => {
+        if (queryWord.length > 2) {
+          titleWords.forEach(titleWord => {
+            if (titleWord.startsWith(queryWord)) score += 40
+            else if (titleWord.includes(queryWord)) score += 20
+          })
+          descWords.forEach(descWord => {
+            if (descWord.startsWith(queryWord)) score += 25
+            else if (descWord.includes(queryWord)) score += 15
+          })
+        }
+      })
+    }
     
     // Fuzzy matching for common typos and partial matches
     const fuzzyMatches = [
@@ -413,15 +438,19 @@ const filteredMenuItems = computed(() => {
       { pattern: /prestasi/, matches: ['prestasi', 'achievement', 'juara'] },
       { pattern: /robotik/, matches: ['robotik', 'robot', 'teknologi'] },
       { pattern: /kerjasama/, matches: ['kerjasama', 'partnership', 'industri'] },
-      { pattern: /program/, matches: ['program', 'tahun', 'ajaran'] },
+      { pattern: /program/, matches: ['program', 'tahun', 'ajaran', 'kurikulum', 'pembelajaran'] },
       { pattern: /teknologi/, matches: ['teknologi', 'technology', 'digital'] },
-      { pattern: /magang/, matches: ['magang', 'internship', 'industri'] }
+      { pattern: /magang/, matches: ['magang', 'internship', 'industri'] },
+      { pattern: /lab|laboratorium/, matches: ['lab', 'laboratorium', 'praktikum', 'fasilitas'] },
+      { pattern: /karir|kerja/, matches: ['karir', 'kerja', 'pekerjaan', 'profesi'] },
+      { pattern: /kompetensi|skill/, matches: ['kompetensi', 'skill', 'keahlian', 'kemampuan'] },
+      { pattern: /pengenalan|intro/, matches: ['pengenalan', 'introduction', 'apa itu', 'tentang'] },
     ]
     
     fuzzyMatches.forEach(({ pattern, matches }) => {
       if (pattern.test(query)) {
         matches.forEach(match => {
-          if (title.includes(match) || tags.some((tag: string) => tag.includes(match))) {
+          if (title.includes(match) || desc.includes(match) || tags.some((tag: string) => tag.includes(match))) {
             score += 45
           }
         })
@@ -453,7 +482,8 @@ const filteredMenuItems = computed(() => {
   const fallbackItems = currentMenuItems.value.map(section => ({
     ...section,
     submenu: section.submenu.filter((item: any) => {
-      const searchText = `${item.title} ${item.desc} ${item.tags.join(' ')}`.toLowerCase()
+      const tags = item.tags || []
+      const searchText = `${item.title} ${item.desc} ${tags.join(' ')}`.toLowerCase()
       return query.split(' ').some(word => 
         word.length > 2 && searchText.includes(word)
       )
