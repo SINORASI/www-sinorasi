@@ -7,10 +7,14 @@
       ></div>
 
       <div class="sidebar-panel relative sm:ml-auto flex h-full w-full sm:w-80 flex-col bg-white shadow-2xl">
-        <div class="flex flex-shrink-0 items-end justify-end border-b border-gray-200 p-4">
+        <div class="flex flex-shrink-0 items-center justify-between border-b border-gray-200 p-4">
+          <div class="flex-1">
+            <h2 class="text-lg font-semibold text-gray-800 truncate">{{ pageTitle }}</h2>
+            <p class="text-sm text-gray-500 truncate">{{ pageSubtitle }}</p>
+          </div>
           <button
             @click="$emit('close')"
-            class="rounded-full p-2 transition-colors duration-200 hover:bg-gray-100"
+            class="rounded-full p-2 transition-colors duration-200 hover:bg-gray-100 ml-2"
           >
             <Icon name="lucide:x" size="20" class="text-gray-600" />
           </button>
@@ -52,7 +56,7 @@
             </h3>
             <div v-if="(openSections[item.title] ?? false) || searchQuery.trim()">
               <div v-for="(sub, subIndex) in item.submenu" :key="subIndex" class="mb-3 ml-4 border-l-2 border-gray-200 transition-colors duration-200 hover:border-blue-300">
-                <a v-if="sub.external" :href="sub.to" target="_blank" class="block">
+                <a v-if="sub.external" :href="sub.to" target="_blank" class="block" @click="emit('close')">
                   <div class="flex cursor-pointer items-start gap-3 rounded p-2 transition-colors duration-200 hover:bg-gray-50" :class="{ 'bg-blue-50 border border-blue-200': searchQuery.trim() && (sub as any).score > 80 }">
                     <Icon :name="sub.icon" size="18" class="mt-0.5 flex-shrink-0" :style="{ color: '#000000' }" />
                     <div class="flex-1">
@@ -72,7 +76,7 @@
                     </div>
                   </div>
                 </a>
-                <NuxtLink v-else :to="sub.to" class="block">
+                <NuxtLink v-else :to="sub.to" class="block" @click="emit('close')">
                   <div class="flex cursor-pointer items-start gap-3 rounded p-2 transition-colors duration-200 hover:bg-gray-50" :class="{ 'bg-blue-50 border border-blue-200': searchQuery.trim() && (sub as any).score > 80 }">
                     <Icon :name="sub.icon" size="18" class="mt-0.5 flex-shrink-0" :style="{ color: item.title === 'Jurusan' ? getIconColor(sub.title) : '#000000' }" />
                     <div class="flex-1">
@@ -102,10 +106,139 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { majorColorSchemes } from "~/utils/majorColors";
 import type { MajorName } from "~/models/MajorName";
 import { newsData } from "~/datas/data";
+
+// Get current route for dynamic title
+const route = useRoute()
+
+// Define emit function
+const emit = defineEmits<{
+  close: []
+}>()
+
+// Watch for route changes and auto-close sidebar
+watch(() => route.path, (newPath, oldPath) => {
+  // Only auto-close if the route actually changed
+  if (newPath !== oldPath) {
+    // Small delay to allow for smooth transition
+    setTimeout(() => {
+      emit('close')
+    }, 100)
+  }
+}, { immediate: false })
+
+// Computed property for dynamic page title
+const pageTitle = computed(() => {
+  const path = route.path
+  
+  // Handle specific routes
+  if (path === '/') return 'Beranda'
+  if (path === '/berita') return 'Berita Terbaru'
+  if (path === '/acara') return 'Events & Acara'
+  if (path === '/organisasi') return 'Organisasi Sekolah'
+  if (path === '/ekstrakurikuler') return 'Ekstrakurikuler'
+  if (path === '/informasi/profile-sekolah') return 'Profil Sekolah'
+  if (path === '/informasi/struktur-organisasi') return 'Struktur Organisasi'
+  if (path === '/informasi/sarana-prasarana') return 'Sarana Prasarana'
+  if (path === '/informasi/guru') return 'Data Guru'
+  if (path === '/informasi/kontak') return 'Kontak Kami'
+  if (path === '/utilitas/anonymous-bk') return 'Anonymous BK'
+  if (path === '/utilitas/traffic-tracker') return 'Traffic Tracker'
+  
+  // Handle dynamic routes
+  if (path.startsWith('/jurusan/')) {
+    const majorName = route.params.majorName as string
+    const majorMap: Record<string, string> = {
+      'rpl': 'Rekayasa Perangkat Lunak',
+      'tkj': 'Teknik Komputer Jaringan',
+      'dkv': 'Desain Komunikasi Visual',
+      'tei': 'Teknik Elektronika Industri',
+      'mekatronika': 'Mekatronika',
+      'broadcasting': 'Broadcasting',
+      'animasi': 'Animasi',
+      'tav': 'Teknik Audio Visual'
+    }
+    return majorMap[majorName] || 'Jurusan'
+  }
+  
+  if (path.startsWith('/berita/')) {
+    return 'Detail Berita'
+  }
+  
+  if (path.startsWith('/acara/')) {
+    return 'Detail Acara'
+  }
+  
+  if (path.startsWith('/ekstrakurikuler/')) {
+    const extraName = route.params.extra as string
+    if (extraName === 'voli') return 'Ekstrakurikuler Voli'
+    if (extraName === 'basket') return 'Ekstrakurikuler Basket'
+    if (extraName === 'catur') return 'Ekstrakurikuler Catur'
+    return 'Ekstrakurikuler'
+  }
+  
+  if (path.startsWith('/organisasi/')) {
+    return 'Detail Organisasi'
+  }
+  
+  // Default fallback
+  return 'SMKN 2 Singosari'
+})
+
+// Computed property for page subtitle
+const pageSubtitle = computed(() => {
+  const path = route.path
+  
+  if (path === '/') return 'Halaman utama website'
+  if (path === '/berita') return 'Informasi dan kabar terbaru'
+  if (path === '/acara') return 'Events dan kegiatan sekolah'
+  if (path === '/organisasi') return 'Organisasi di sekolah'
+  if (path === '/ekstrakurikuler') return 'Kegiatan ekstrakurikuler'
+  if (path === '/informasi/profile-sekolah') return 'Informasi lengkap sekolah'
+  if (path === '/informasi/struktur-organisasi') return 'Struktur pengelola sekolah'
+  if (path === '/informasi/sarana-prasarana') return 'Fasilitas dan bangunan sekolah'
+  if (path === '/informasi/guru') return 'Informasi tenaga pendidik'
+  if (path === '/informasi/kontak') return 'Hubungi kami'
+  if (path === '/utilitas/anonymous-bk') return 'Konsultasi anonim'
+  if (path === '/utilitas/traffic-tracker') return 'Cek waktu perjalanan'
+  
+  // Handle dynamic routes
+  if (path.startsWith('/jurusan/')) {
+    const majorName = route.params.majorName as string
+    const majorMap: Record<string, string> = {
+      'rpl': 'Rekayasa Perangkat Lunak',
+      'tkj': 'Teknik Komputer Jaringan', 
+      'dkv': 'Desain Komunikasi Visual',
+      'tei': 'Teknik Elektronika Industri',
+      'mekatronika': 'Mekatronika',
+      'broadcasting': 'Broadcasting',
+      'animasi': 'Animasi',
+      'tav': 'Teknik Audio Visual'
+    }
+    return `Program Keahlian ${majorMap[majorName] || 'Unknown'}`
+  }
+  
+  if (path.startsWith('/berita/')) {
+    return 'Baca berita lengkap'
+  }
+  
+  if (path.startsWith('/acara/')) {
+    return 'Informasi detail acara'
+  }
+  
+  if (path.startsWith('/ekstrakurikuler/')) {
+    return 'Informasi kegiatan ekstrakurikuler'
+  }
+  
+  if (path.startsWith('/organisasi/')) {
+    return 'Detail organisasi sekolah'
+  }
+  
+  return 'SMKN 2 Singosari'
+})
 
 const menuItems = [
   {
@@ -218,11 +351,19 @@ const menuItems = [
   },
 ];
 
+const props = defineProps<{
+  isOpen: boolean
+  menuItems?: any[]
+}>()
+
+// Use passed menuItems prop if available, otherwise use default menuItems
+const currentMenuItems = computed(() => props.menuItems || menuItems)
+
 const searchQuery = ref('')
 
 // Advanced search algorithm with fuzzy matching and relevance scoring
 const filteredMenuItems = computed(() => {
-  if (!searchQuery.value.trim()) return menuItems
+  if (!searchQuery.value.trim()) return currentMenuItems.value
 
   const query = searchQuery.value.toLowerCase().trim()
   
@@ -281,11 +422,11 @@ const filteredMenuItems = computed(() => {
   }
 
   // Filter and score all items
-  const scoredItems = menuItems.map(section => {
+  const scoredItems = currentMenuItems.value.map(section => {
     const scoredSubmenu = section.submenu
-      .map(item => ({ ...item, score: calculateRelevanceScore(item) }))
-      .filter(item => item.score > 0)
-      .sort((a, b) => b.score - a.score) // Sort by relevance score descending
+      .map((item: any) => ({ ...item, score: calculateRelevanceScore(item) }))
+      .filter((item: any) => item.score > 0)
+      .sort((a: any, b: any) => b.score - a.score) // Sort by relevance score descending
     
     return {
       ...section,
@@ -299,9 +440,9 @@ const filteredMenuItems = computed(() => {
   }
 
   // Fallback: more lenient search for any partial matches
-  const fallbackItems = menuItems.map(section => ({
+  const fallbackItems = currentMenuItems.value.map(section => ({
     ...section,
-    submenu: section.submenu.filter(item => {
+    submenu: section.submenu.filter((item: any) => {
       const searchText = `${item.title} ${item.desc} ${item.tags.join(' ')}`.toLowerCase()
       return query.split(' ').some(word => 
         word.length > 2 && searchText.includes(word)
@@ -348,14 +489,6 @@ const getIconColor = (displayName: string): string => {
   const major = majorMap[displayName] || "rpl";
   return majorColorSchemes[major]?.primary;
 };
-
-defineProps<{
-  isOpen: boolean
-}>()
-
-defineEmits<{
-  close: []
-}>()
 
 const openSections = ref<Record<string, boolean>>({})
 

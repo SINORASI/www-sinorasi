@@ -13,14 +13,15 @@
     "@nuxt/fonts": "^0.11.4",
     "@nuxt/icon": "^2.0.0",
     "@nuxt/scripts": "^0.11.13",
-    "@tailwindcss/vite": "^4.1.13",
+    "@tailwindcss/vite": "^4.1.14",
     "@unhead/vue": "^2.0.17",
     "nuxt": "^4.1.2",
-    "tailwindcss": "^4.1.13",
-    "vue": "^3.5.21",
+    "tailwindcss": "^4.1.14",
+    "vue": "^3.5.22",
     "vue-router": "^4.5.1"
   },
   "devDependencies": {
-    "@iconify-json/simple-icons": "^1.2.52"
+    "@iconify-json/lucide": "^1.2.68",
+    "@iconify-json/simple-icons": "^1.2.53"
   }
 }
