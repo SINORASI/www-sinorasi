@@ -61,7 +61,7 @@ onMounted(() => {
         <div class="w-full h-full bg-gradient-to-t from-black/65 to-transparent"></div>
       </div>
       <div class="z-50 flex flex-col items-center gap-6 md:flex-row md:gap-12">
-        <div class="flex flex-col max-w-sm gap-2 text-center text-white md:gap-3 md:max-w-md md:text-left">
+        <div class="flex flex-col max-w-sm gap-2 text-center text-white md:gap-4 md:max-w-md md:text-left">
           <h1 class="text-2xl font-bold md:text-4xl lg:text-5xl">INORASI</h1>
           <p class="text-sm font-semibold md:text-lg lg:text-xl">Inovasi Raih Prestasi</p>
           <p class="text-xs leading-relaxed md:text-base">
@@ -118,9 +118,9 @@ onMounted(() => {
           <div class="flex flex-col gap-2">
             <h1 class="text-4xl font-bold">Sambutan Kepala Sekolah</h1>
           </div>
-          <hr class="w-full max-w-lg border-2 border-zinc-100" />
+          <hr class="w-full max-w-md border-2 border-zinc-100">
           <h2 class="text-2xl font-semibold">Selamat datang di SMK Negeri 2 Singosari</h2>
-          <p class="w-full max-w-3xl">
+          <p class="w-full max-w-4xl">
             Assalamu'alaikum wr.wb. Puji syukur kepada Alloh SWT atas terbitnya website SMK Negeri 2 Singosari untuk
             menjawab kebutuhan informasi melalui teknologi informasi. Dalam memajukan pendidikan di era teknologi yang
             pesat, diperlukan sarana prasarana kondusif dan informasi bagi siswa, guru, orangtua maupun masyarakat.
@@ -128,7 +128,7 @@ onMounted(() => {
             Singosari. Besar harapan kami sarana ini memberi manfaat bagi semua pihak di lingkup pendidikan khususnya
             SMK Negeri 2 Singosari.
           </p>
-          <p class="w-full max-w-3xl">
+          <p class="w-full max-w-4xl">
             Kami mengharapkan masukan dari berbagai pihak agar terus belajar dan meng-update sehingga tampilan, isi dan
             mutu website berkembang lebih baik. Terima kasih atas kerjasamanya, maju terus SMK Negeri 2 Singosari.
             Wassalamu'alaikum wr.wb.
@@ -138,7 +138,7 @@ onMounted(() => {
     </section>
     <section class="h-min-screen" id="video-profil">
       <div class="container flex flex-col items-center gap-5 px-10 mx-auto text-center md:px-60">
-        <div class="p-4 border rounded-lg bg-secondary backdrop-blur-2xl border-neutral-300">
+        <div class="p-4 bg-secondary backdrop-blur-2xl">
           <h2 class="text-4xl font-bold">Video Profil Sekolah</h2>
         </div>
         <ScriptYouTubePlayer video-id="Kks6HnhPzVQ">

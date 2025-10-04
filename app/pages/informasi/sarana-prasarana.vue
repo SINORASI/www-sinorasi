@@ -1,8 +1,12 @@
+<script lang="ts" setup>
+
+</script>
+
 <template>
   <div class="py-30">
     <ImageCarousel />
   </div>
-  <div class="px-4 py-12 font-serif bg-primary sm:px-6 lg:px-8">
+  <div class="px-4 py-12 font-serif bg-neutral-100 sm:px-6 lg:px-8">
     <div class="container mx-auto">
       <div class="mb-10 text-center">
         <div class="p-4 border rounded-lg bg-neutral-200/50 backdrop-blur-2xl border-neutral-300">
@@ -52,56 +56,3 @@
     </div>
   </div>
 </template>
-
-<script setup>
-const facilities = [
-  {
-    name: 'Aula Utama',
-    image: '/images/placeholder.jpg',
-    description: 'Aula utama digunakan untuk acara-acara besar seperti upacara, pertemuan, dan lomba. Dilengkapi dengan sistem audio dan proyektor.',
-    condition: 'Baik'
-  },
-  {
-    name: 'Laboratorium RPL',
-    image: '/images/placeholder.jpg',
-    description: 'Lab komputer untuk jurusan Rekayasa Perangkat Lunak dengan 30 unit PC dan perangkat lunak pengembangan terbaru.',
-    condition: 'Baik'
-  },
-  {
-    name: 'Laboratorium TKJ',
-    image: '/images/placeholder.jpg',
-    description: 'Laboratorium Teknik Komputer dan Jaringan dengan peralatan jaringan, server, dan workstation untuk praktikum.',
-    condition: 'Baik'
-  },
-  {
-    name: 'Lapangan Olahraga',
-    image: '/images/placeholder.jpg',
-    description: 'Lapangan multifungsi untuk olahraga seperti basket, voli, dan upacara. Dilengkapi dengan tribun penonton.',
-    condition: 'Baik'
-  },
-  {
-    name: 'Perpustakaan',
-    image: '/images/placeholder.jpg',
-    description: 'Perpustakaan dengan koleksi buku, jurnal, dan ruang baca yang nyaman. Tersedia akses internet untuk penelitian.',
-    condition: 'Baik'
-  },
-  {
-    name: 'Kantin',
-    image: '/images/placeholder.jpg',
-    description: 'Kantin sekolah yang menyediakan makanan dan minuman sehat untuk siswa dan guru selama jam istirahat.',
-    condition: 'Baik'
-  },
-  {
-    name: 'Ruang Kelas',
-    image: '/images/placeholder.jpg',
-    description: 'Ruang kelas yang nyaman dengan fasilitas AC, proyektor, dan papan tulis interaktif untuk mendukung pembelajaran.',
-    condition: 'Baik'
-  },
-  {
-    name: 'Masjid',
-    image: '/images/placeholder.jpg',
-    description: 'Masjid sekolah untuk kegiatan ibadah dan pengajian. Tersedia ruang wudu dan tempat sholat yang bersih.',
-    condition: 'Baik'
-  }
-]
-</script>
