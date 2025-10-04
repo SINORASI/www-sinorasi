@@ -158,7 +158,7 @@ onMounted(() => {
         <p>
           Perjalanan SMK Negeri 2 Singosari dalam mengembangkan pendidikan kejuruan berkualitas di Kabupaten Malang.
         </p>
-        <Timeline />
+        <SchoolTimeline />
       </div>
     </section>
     <section class="h-fit flex items-center flex-col gap-10" id="Jurusan">
@@ -189,14 +189,14 @@ onMounted(() => {
           <p class="font-bold p-2 rounded-full bg-tertiary pl-4 pr-4">Kategori Berita</p>
         </div>
         <div class="grid w-full grid-cols-1 gap-5 mt-5 md:grid-cols-2 lg:grid-cols-4 place-items-center">
-          <CardNews title="Kami Lolos Enam Bidang Lomba untuk Menuju Tingkat Provinsi" />
-          <CardNews title="Kami Lolos Enam Bidang Lomba untuk Menuju Tingkat Provinsi" />
-          <CardNews title="Kami Lolos Enam Bidang Lomba untuk Menuju Tingkat Provinsi" />
-          <CardNews title="Kami Lolos Enam Bidang Lomba untuk Menuju Tingkat Provinsi" />
-          <CardNews title="Kami Lolos Enam Bidang Lomba untuk Menuju Tingkat Provinsi" />
-          <CardNews title="Kami Lolos Enam Bidang Lomba untuk Menuju Tingkat Provinsi" />
-          <CardNews title="Kami Lolos Enam Bidang Lomba untuk Menuju Tingkat Provinsi" />
-          <CardNews title="Kami Lolos Enam Bidang Lomba untuk Menuju Tingkat Provinsi" />
+          <ImageOverlayCard title="Kami Lolos Enam Bidang Lomba untuk Menuju Tingkat Provinsi" />
+          <ImageOverlayCard title="Kami Lolos Enam Bidang Lomba untuk Menuju Tingkat Provinsi" />
+          <ImageOverlayCard title="Kami Lolos Enam Bidang Lomba untuk Menuju Tingkat Provinsi" />
+          <ImageOverlayCard title="Kami Lolos Enam Bidang Lomba untuk Menuju Tingkat Provinsi" />
+          <ImageOverlayCard title="Kami Lolos Enam Bidang Lomba untuk Menuju Tingkat Provinsi" />
+          <ImageOverlayCard title="Kami Lolos Enam Bidang Lomba untuk Menuju Tingkat Provinsi" />
+          <ImageOverlayCard title="Kami Lolos Enam Bidang Lomba untuk Menuju Tingkat Provinsi" />
+          <ImageOverlayCard title="Kami Lolos Enam Bidang Lomba untuk Menuju Tingkat Provinsi" />
         </div>
       </div>
     </section>

@@ -1,6 +1,6 @@
 <template>
   <div class="py-30">
-    <ImageCarousel />
+    <ContactCarousel />
   </div>
   <div class="bg-neutral-100 font-serif py-12 px-4 sm:px-6 lg:px-8">
     <div class="container mx-auto">

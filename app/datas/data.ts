@@ -3,7 +3,7 @@ import type { MajorData } from "../models/MajorData";
 import type { Staff } from "../models/Staff";
 import type { News } from "../models/News";
 import type { Event } from "../models/Event";
-import type { jobTitle } from "~/models/jobTitles";
+import type { JobTitle } from "~/models/JobTitle";
 
 export interface MenuItem {
   title: string;
@@ -352,7 +352,7 @@ export const majorMenus: Record<MajorName, MenuItem[]> = {
   ],
 };
 
-export const JobTitles: Record<MajorName, jobTitle[]> = {
+export const JobTitles: Record<MajorName, JobTitle[]> = {
   rpl: [
     {
       id: "1",

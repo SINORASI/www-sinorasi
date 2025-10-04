@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import type { MajorName } from "~/models/MajorName";
-import type { kaproProfile } from "~/models/kaproProfile";
+import type { KaproProfile } from "~/models/KaproProfile";
 import { majorDatas } from "~/datas/data";
 
-const kapros: Record<MajorName, kaproProfile[]> = {
+const kapros: Record<MajorName, KaproProfile[]> = {
   rpl: [
     {
       image: "/images/profile-placeholder.png",

@@ -1,4 +1,4 @@
-export interface kaproProfile {
+export interface KaproProfile {
     image: string;
     jabatan: string;
     kaproName: string;
