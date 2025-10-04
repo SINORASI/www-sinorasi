@@ -17,31 +17,78 @@
         </div>
 
         <div class="flex-1 overflow-y-auto p-4">
-          <div class="mb-4">
-            <input type="text" placeholder="Search..." v-model="searchQuery" class="w-full text-lg text-gray-800 bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+          <div class="mb-4 relative">
+            <div class="relative">
+              <input 
+                type="text" 
+                placeholder="Cari halaman, berita, jurusan, atau ekstrakurikuler..." 
+                v-model="searchQuery" 
+                class="w-full text-lg text-gray-800 bg-gray-50 border border-gray-200 rounded-lg px-3 py-3 pr-10 outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200" 
+              />
+              <Icon name="lucide:search" size="20" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            </div>
+            <div v-if="searchQuery.trim() && filteredMenuItems.length === 0" class="mt-2 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+              <p class="text-sm text-yellow-700">
+                <Icon name="lucide:info" size="16" class="inline mr-1" />
+                Tidak ada hasil untuk "<strong>{{ searchQuery }}</strong>". Coba kata kunci lain seperti "voli", "basket", "robotik", "prestasi", atau "rpl".
+              </p>
+            </div>
+            <div v-if="searchQuery.trim() && filteredMenuItems.length > 0" class="mt-2 p-2 bg-green-50 border border-green-200 rounded-lg">
+              <p class="text-xs text-green-700">
+                <Icon name="lucide:check-circle" size="14" class="inline mr-1" />
+                Ditemukan {{ filteredMenuItems.reduce((total, section) => total + section.submenu.length, 0) }} hasil
+              </p>
+            </div>
           </div>
           <div v-for="(item, index) in filteredMenuItems" :key="index" class="mb-6">
             <h3 @click="toggleSection(item.title)" class="cursor-pointer mb-3 text-base font-semibold text-gray-800 flex items-center justify-between">
               {{ item.title }}
-              <Icon name="lucide:chevron-down" size="16" class="transition-transform" :class="{ 'rotate-180': openSections[item.title] ?? false }" />
+              <div class="flex items-center gap-2">
+                <span v-if="searchQuery.trim()" class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full">
+                  {{ item.submenu.length }}
+                </span>
+                <Icon name="lucide:chevron-down" size="16" class="transition-transform" :class="{ 'rotate-180': openSections[item.title] ?? false }" />
+              </div>
             </h3>
             <div v-if="(openSections[item.title] ?? false) || searchQuery.trim()">
               <div v-for="(sub, subIndex) in item.submenu" :key="subIndex" class="mb-3 ml-4 border-l-2 border-gray-200 transition-colors duration-200 hover:border-blue-300">
                 <a v-if="sub.external" :href="sub.to" target="_blank" class="block">
-                  <div class="flex cursor-pointer items-start gap-3 rounded p-2 transition-colors duration-200 hover:bg-gray-50">
+                  <div class="flex cursor-pointer items-start gap-3 rounded p-2 transition-colors duration-200 hover:bg-gray-50" :class="{ 'bg-blue-50 border border-blue-200': searchQuery.trim() && (sub as any).score > 80 }">
                     <Icon :name="sub.icon" size="18" class="mt-0.5 flex-shrink-0" :style="{ color: '#000000' }" />
                     <div class="flex-1">
-                      <p class="text-sm font-medium text-gray-900">{{ sub.title }}</p>
-                      <p class="text-xs leading-relaxed text-gray-600">{{ sub.desc }}</p>
+                      <div class="flex items-center gap-2">
+                        <p class="text-sm font-medium text-gray-900" v-html="highlightSearchTerm(sub.title, searchQuery)"></p>
+                        <span v-if="item.title === 'Berita' && sub.title !== 'Semua Berita'" class="text-xs bg-red-100 text-red-700 px-1.5 py-0.5 rounded">
+                          Berita
+                        </span>
+                        <span v-if="searchQuery.trim() && (sub as any).score > 90" class="text-xs bg-green-100 text-green-700 px-1.5 py-0.5 rounded">
+                          Perfect match
+                        </span>
+                        <span v-else-if="searchQuery.trim() && (sub as any).score > 70" class="text-xs bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded">
+                          Good match
+                        </span>
+                      </div>
+                      <p class="text-xs leading-relaxed text-gray-600" v-html="highlightSearchTerm(sub.desc, searchQuery)"></p>
                     </div>
                   </div>
                 </a>
                 <NuxtLink v-else :to="sub.to" class="block">
-                  <div class="flex cursor-pointer items-start gap-3 rounded p-2 transition-colors duration-200 hover:bg-gray-50">
+                  <div class="flex cursor-pointer items-start gap-3 rounded p-2 transition-colors duration-200 hover:bg-gray-50" :class="{ 'bg-blue-50 border border-blue-200': searchQuery.trim() && (sub as any).score > 80 }">
                     <Icon :name="sub.icon" size="18" class="mt-0.5 flex-shrink-0" :style="{ color: item.title === 'Jurusan' ? getIconColor(sub.title) : '#000000' }" />
                     <div class="flex-1">
-                      <p class="text-sm font-medium text-gray-900">{{ sub.title }}</p>
-                      <p class="text-xs leading-relaxed text-gray-600">{{ sub.desc }}</p>
+                      <div class="flex items-center gap-2">
+                        <p class="text-sm font-medium text-gray-900" v-html="highlightSearchTerm(sub.title, searchQuery)"></p>
+                        <span v-if="item.title === 'Berita' && sub.title !== 'Semua Berita'" class="text-xs bg-red-100 text-red-700 px-1.5 py-0.5 rounded">
+                          Berita
+                        </span>
+                        <span v-if="searchQuery.trim() && (sub as any).score > 90" class="text-xs bg-green-100 text-green-700 px-1.5 py-0.5 rounded">
+                          Perfect match
+                        </span>
+                        <span v-else-if="searchQuery.trim() && (sub as any).score > 70" class="text-xs bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded">
+                          Good match
+                        </span>
+                      </div>
+                      <p class="text-xs leading-relaxed text-gray-600" v-html="highlightSearchTerm(sub.desc, searchQuery)"></p>
                     </div>
                   </div>
                 </NuxtLink>
@@ -58,6 +105,7 @@
 import { ref, computed } from 'vue'
 import { majorColorSchemes } from "~/utils/majorColors";
 import type { MajorName } from "~/models/MajorName";
+import { newsData } from "~/datas/data";
 
 const menuItems = [
   {
@@ -118,6 +166,35 @@ const menuItems = [
     ],
   },
   {
+    title: "Berita",
+    submenu: [
+      { title: "Semua Berita", desc: "Daftar lengkap berita sekolah", icon: "lucide:newspaper", to: "/berita", external: false, tags: ["berita", "news", "semua", "daftar"] },
+      ...newsData.slice(0, 8).map(news => ({
+        title: news.title,
+        desc: news.subtitle,
+        icon: "lucide:file-text",
+        to: `/berita/${news.slug}`,
+        external: false,
+        tags: [
+          "berita", 
+          "news", 
+          ...news.tags.map(tag => tag.toLowerCase()),
+          ...news.title.toLowerCase().split(' '),
+          ...news.subtitle.toLowerCase().split(' ')
+        ].filter(tag => tag.length > 2)
+      }))
+    ],
+  },
+  {
+    title: "Ekstrakurikuler",
+    submenu: [
+      { title: "Voli", desc: "Ekstrakurikuler Bola Voli", icon: "lucide:trophy", to: "/ekstrakurikuler/voli", external: false, tags: ["voli", "volleyball", "bola voli", "olahraga", "volley"] },
+      { title: "Basket", desc: "Ekstrakurikuler Bola Basket", icon: "lucide:trophy", to: "/ekstrakurikuler/basket", external: false, tags: ["basket", "basketball", "bola basket", "olahraga"] },
+      { title: "Catur", desc: "Ekstrakurikuler Catur", icon: "lucide:crown", to: "/ekstrakurikuler/catur", external: false, tags: ["catur", "chess", "strategi", "permainan"] },
+      { title: "Semua Ekstrakurikuler", desc: "Daftar lengkap ekstrakurikuler", icon: "lucide:workflow", to: "/ekstrakurikuler/", external: false, tags: ["ekstrakurikuler", "extracurricular", "extra", "semua", "daftar"] },
+    ],
+  },
+  {
     title: "Utilitas",
     submenu: [
       { title: "Anonymous BK", desc: "Konsultasi anonim", icon: "lucide:shield", to: "/utilitas/anonymous-bk", external: false, tags: ["anonymous", "bk", "konsultasi", "counseling"] },
@@ -143,20 +220,105 @@ const menuItems = [
 
 const searchQuery = ref('')
 
+// Advanced search algorithm with fuzzy matching and relevance scoring
 const filteredMenuItems = computed(() => {
   if (!searchQuery.value.trim()) return menuItems
 
-  const query = searchQuery.value.toLowerCase()
+  const query = searchQuery.value.toLowerCase().trim()
+  
+  // Helper function to calculate relevance score
+  const calculateRelevanceScore = (item: any) => {
+    let score = 0
+    const title = item.title.toLowerCase()
+    const desc = item.desc.toLowerCase()
+    const tags = item.tags.map((tag: string) => tag.toLowerCase())
+    
+    // Exact title match gets highest score
+    if (title === query) score += 100
+    // Title starts with query gets high score
+    else if (title.startsWith(query)) score += 80
+    // Title contains query gets medium-high score
+    else if (title.includes(query)) score += 60
+    
+    // Exact tag match gets high score
+    if (tags.some((tag: string) => tag === query)) score += 90
+    // Tag starts with query gets medium-high score  
+    else if (tags.some((tag: string) => tag.startsWith(query))) score += 70
+    // Tag contains query gets medium score
+    else if (tags.some((tag: string) => tag.includes(query))) score += 50
+    
+    // Description contains query gets lower score
+    if (desc.includes(query)) score += 30
+    
+    // Fuzzy matching for common typos and partial matches
+    const fuzzyMatches = [
+      { pattern: /vol[iy]?/, matches: ['voli', 'volleyball', 'volley'] },
+      { pattern: /basket/, matches: ['basket', 'basketball'] },
+      { pattern: /catur/, matches: ['catur', 'chess'] },
+      { pattern: /extra?/, matches: ['ekstrakurikuler', 'extracurricular'] },
+      { pattern: /organisasi/, matches: ['organisasi', 'organization'] },
+      { pattern: /berita|news/, matches: ['berita', 'news'] },
+      { pattern: /acara/, matches: ['acara', 'events', 'event'] },
+      { pattern: /prestasi/, matches: ['prestasi', 'achievement', 'juara'] },
+      { pattern: /robotik/, matches: ['robotik', 'robot', 'teknologi'] },
+      { pattern: /kerjasama/, matches: ['kerjasama', 'partnership', 'industri'] },
+      { pattern: /program/, matches: ['program', 'tahun', 'ajaran'] },
+      { pattern: /teknologi/, matches: ['teknologi', 'technology', 'digital'] },
+      { pattern: /magang/, matches: ['magang', 'internship', 'industri'] }
+    ]
+    
+    fuzzyMatches.forEach(({ pattern, matches }) => {
+      if (pattern.test(query)) {
+        matches.forEach(match => {
+          if (title.includes(match) || tags.some((tag: string) => tag.includes(match))) {
+            score += 45
+          }
+        })
+      }
+    })
+    
+    return score
+  }
 
-  return menuItems.map(item => ({
-    ...item,
-    submenu: item.submenu.filter(sub =>
-      sub.title.toLowerCase().includes(query) ||
-      sub.desc.toLowerCase().includes(query) ||
-      sub.tags.some(tag => tag.toLowerCase().includes(query))
-    )
-  })).filter(item => item.submenu.length > 0)
+  // Filter and score all items
+  const scoredItems = menuItems.map(section => {
+    const scoredSubmenu = section.submenu
+      .map(item => ({ ...item, score: calculateRelevanceScore(item) }))
+      .filter(item => item.score > 0)
+      .sort((a, b) => b.score - a.score) // Sort by relevance score descending
+    
+    return {
+      ...section,
+      submenu: scoredSubmenu
+    }
+  }).filter(section => section.submenu.length > 0)
+
+  // If we have results, return them sorted by best match
+  if (scoredItems.length > 0) {
+    return scoredItems
+  }
+
+  // Fallback: more lenient search for any partial matches
+  const fallbackItems = menuItems.map(section => ({
+    ...section,
+    submenu: section.submenu.filter(item => {
+      const searchText = `${item.title} ${item.desc} ${item.tags.join(' ')}`.toLowerCase()
+      return query.split(' ').some(word => 
+        word.length > 2 && searchText.includes(word)
+      )
+    })
+  })).filter(section => section.submenu.length > 0)
+
+  return fallbackItems
 })
+
+// Function to highlight search terms in text
+const highlightSearchTerm = (text: string, query: string): string => {
+  if (!query.trim()) return text
+  
+  const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi')
+  return text.replace(regex, '<mark class="bg-yellow-200 text-yellow-900 px-1 rounded">$1</mark>')
+}
 
 const getMajorName = (displayName: string): MajorName => {
   const majorMap: Record<string, MajorName> = {

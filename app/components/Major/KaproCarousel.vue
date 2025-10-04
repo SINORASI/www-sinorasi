@@ -22,7 +22,7 @@ const kapros: Record<MajorName, kaproProfile[]> = {
       image: "/images/profile-placeholder.png",
       jabatan: "Guru Produktif RPL",
       kaproName: "RR. Henning Gratyanis A, S.Pd",
-      quote: "Kowe lapo ae hah, kelas 10 lapo ae",
+      quote: "Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri",
     },
   ],
   tkj: [
@@ -162,63 +162,75 @@ const getTransitionClasses = () => {
 </script>
 
 <template>
-  <div class="w-full max-w-sm md:w-250 md:max-w-none flex flex-col gap-5 rounded-lg p-4 md:p-8 relative mx-auto">
+  <div class="w-full max-w-sm md:max-w-4xl lg:max-w-6xl flex flex-col gap-5 rounded-lg p-4 md:p-8 relative mx-auto">
+    <!-- Jabatan Title -->
     <div class="rounded-lg bg-zinc-200/20 p-4 flex justify-center items-center">
-      <h1 :key="current" class="font-bold tracking-wider text-2xl">{{ kapro[current]?.jabatan }}</h1>
+      <h1 class="font-bold tracking-wider text-xl md:text-2xl text-center">
+        {{ kapro[current]?.jabatan }}
+      </h1>
     </div>
-    <div class="flex items-center gap-4 w-full">
-      <button
-        @click="prev"
-        :class="`border-neutral-400 border cursor-pointer bg-neutral-300 p-2 flex items-center justify-center rounded-full shadow-lg transition hover: hover:text-white hover:scale-110 flex-shrink-0 ${majorDatas[major]?.btnColor}`"
-      >
-        <Icon name="lucide:chevron-left" size="24" />
-      </button>
 
-      <div class="flex justify-center w-48 md:w-60">
-        <Transition
-          name="slide"
-          mode="out-in"
-          enter-active-class="transition-all duration-500 ease-out"
-          :enter-from-class="getTransitionClasses().enterFrom"
-          :enter-to-class="getTransitionClasses().enterTo"
-          leave-active-class="transition-all duration-500 ease-in"
-          :leave-from-class="getTransitionClasses().leaveFrom"
-          :leave-to-class="getTransitionClasses().leaveTo"
-        >
-          <img
-            :key="current"
-            :src="kapro[current]?.image"
-            class="w-48 md:w-60 rounded-lg"
-            :alt="kapro[current]?.kaproName"
-          />
-        </Transition>
+    <!-- Main Content - Image & Quote Section -->
+    <div class="flex flex-col lg:flex-row items-stretch gap-4 w-full">
+      <!-- Left Section: Navigation + Image + Name -->
+      <div class="flex flex-col gap-4">
+        <!-- Navigation + Image -->
+        <div class="flex items-center gap-4 justify-center">
+          <button
+            @click="prev"
+            :class="`border-neutral-400 border cursor-pointer bg-neutral-300 p-2 flex items-center justify-center rounded-full shadow-lg transition hover:text-white hover:scale-110 flex-shrink-0 ${majorDatas[major]?.btnColor}`"
+          >
+            <Icon name="lucide:chevron-left" size="24" />
+          </button>
+
+          <div class="flex justify-center w-48 md:w-60">
+            <Transition
+              name="slide"
+              mode="out-in"
+              enter-active-class="transition-all duration-500 ease-out"
+              :enter-from-class="getTransitionClasses().enterFrom"
+              :enter-to-class="getTransitionClasses().enterTo"
+              leave-active-class="transition-all duration-500 ease-in"
+              :leave-from-class="getTransitionClasses().leaveFrom"
+              :leave-to-class="getTransitionClasses().leaveTo"
+            >
+              <img
+                :key="current"
+                :src="kapro[current]?.image"
+                class="w-48 md:w-60 rounded-lg"
+                :alt="kapro[current]?.kaproName"
+              />
+            </Transition>
+          </div>
+
+          <button
+            @click="next"
+            :class="`border-neutral-400 border cursor-pointer bg-neutral-300 p-2 flex items-center justify-center rounded-full shadow-lg transition hover:text-white hover:scale-110 flex-shrink-0 ${majorDatas[major]?.btnColor}`"
+          >
+            <Icon name="lucide:chevron-right" size="24" />
+          </button>
+        </div>
+
+        <div class="flex justify-center px-12">
+          <div class="text-center p-4 rounded-lg bg-zinc-200/20 w-48 md:w-60">
+            <h2 class="font-bold tracking-wide text-sm sm:text-base break-words">
+              {{ kapro[current]?.kaproName }}
+            </h2>
+          </div>
+        </div>
       </div>
 
-      <button
-        @click="next"
-        :class="`border-neutral-400 border cursor-pointer bg-neutral-300 p-2 flex items-center justify-center rounded-full shadow-lg transition hover:text-white hover:scale-110 flex-shrink-0 ${majorDatas[major]?.btnColor}`"
-      >
-        <Icon name="lucide:chevron-right" size="24" />
-      </button>
-
-      <div class="flex justify-center items-center flex-1 ml-8 bg-zinc-200/20 p-6 rounded-lg h-75">
-        <p :key="current" class="tracking-wide font-bold text-lg text-center max-w-md">
+      <div class="flex justify-center items-center flex-1 w-full lg:ml-4 bg-zinc-200/20 p-6 rounded-lg min-h-[150px]">
+        <p class="tracking-wide font-bold text-base md:text-lg text-center max-w-md">
           {{ kapro[current]?.quote }}
         </p>
       </div>
     </div>
 
-    <div class="flex justify-between items-center py-3 ml-5">
-      <div class="flex gap-5">
-        <div class="text-center p-4 rounded-lg bg-zinc-200/20 w-full max-w-xs sm:max-w-sm">
-          <h2 :key="current" class="font-bold tracking-wide text-sm sm:text-base break-words">
-            {{ kapro[current]?.kaproName }}
-          </h2>
-        </div>
-      </div>
-      <div class="flex items-center justify-center mr-10">
-        <h3 class="text-2xl font-bold">0{{ current + 1 }}/0{{ kapro.length }}</h3>
-      </div>
+    <div class="flex justify-center items-center py-3">
+      <h3 class="text-xl md:text-2xl font-bold">
+        {{ String(current + 1).padStart(2, '0') }}/{{ String(kapro.length).padStart(2, '0') }}
+      </h3>
     </div>
   </div>
 </template>

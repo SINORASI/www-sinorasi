@@ -1,5 +1,7 @@
 <script lang="ts" setup>
+import { ref } from 'vue';
 
+const searchQuery = ref('');
 </script>
 
 <template>
@@ -21,7 +23,7 @@
       </div>
     </section>
 
-    <section class="h-fit w-full flex flex-col justify-center items-center gap-4">
+    <section class="h-fit w-full flex flex-col justify-center items-center gap-4 py-12">
       <div class="max-w-6xl w-full mt-14">
         <h1 class="font-bold tracking-wider text-4xl text-center">Daftar Sarana dan Prasarana</h1>
       </div>
@@ -31,6 +33,45 @@
         </div>
         <div class="bg-zinc-200 rounded-lg py-4 px-6">
           <h2 class="font-bold tracking-wide">Sarana Infrastruktur</h2>
+        </div>
+      </div>
+
+      <div class="flex justify-center items-center gap-4">
+        <div class="font-serif py-4 px-4 sm:px-6 lg:px-8">
+          <div class="w-[700px] mx-auto text-center">
+            <div class="mt-8 relative">
+              <div class="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
+                <Icon name="lucide:search" />
+              </div>
+              <input
+                v-model="searchQuery"
+                type="text"
+                placeholder="Search"
+                class="w-full py-4 pl-14 pr-5 text-lg border-2 border-black rounded-full"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-col justify-center items-center gap-6 max-w-6xl w-full mx-auto mt-8 px-4">
+        <div 
+          v-for="index in 3" 
+          :key="index" 
+          class="relative h-84 w-full rounded-lg overflow-hidden shadow-lg"
+        >
+          <img 
+            src="/images/background-aula.jpg" 
+            :alt="`Lingkup Kejuruan ${index}`"
+            class="w-full h-full object-cover"
+          />
+          <div class="absolute inset-0 bg-black/20 bg-opacity-40"></div>
+          <div class="absolute top-6 left-6 z-10">
+            <h2 class="text-white text-2xl md:text-3xl font-bold leading-tight">
+              LINGKUP KERJA<br />
+              SISWA KEJURUAN
+            </h2>
+          </div>
         </div>
       </div>
     </section>

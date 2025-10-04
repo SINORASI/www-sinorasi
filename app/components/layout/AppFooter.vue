@@ -51,12 +51,6 @@
         <div class="md:col-span-1">
           <h4 class="text-lg font-semibold mb-4">Ikuti Kami</h4>
           <div class="flex gap-4">
-            <a href="#" class="w-10 h-10 bg-neutral-700 rounded-full flex items-center justify-center hover:bg-blue-600 transition duration-300">
-              <Icon name="lucide:facebook" size="20" />
-            </a>
-            <a href="#" class="w-10 h-10 bg-neutral-700 rounded-full flex items-center justify-center hover:bg-blue-400 transition duration-300">
-              <Icon name="lucide:twitter" size="20" />
-            </a>
             <a href="#" class="w-10 h-10 bg-neutral-700 rounded-full flex items-center justify-center hover:bg-pink-600 transition duration-300">
               <Icon name="lucide:instagram" size="20" />
             </a>

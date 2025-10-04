@@ -1,12 +1,21 @@
 <template>
   <div
-    class="bg-secondary p-4 rounded-lg text-center cursor-pointer hover:shadow-xl hover:transform hover:-translate-y-1 transition-all duration-300"
+    class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow cursor-pointer"
     @click="$emit('showDetails', teacher)"
   >
-    <div class="aspect-square bg-tertiary rounded-md flex items-center justify-center mb-4">
-      <img src="/images/placeholder.jpg" class="w-full h-full rounded-lg" />
+    <div class="relative aspect-[3/3]">
+      <img 
+        :src="teacher.image || '/images/placeholder.jpg'" 
+        :alt="teacher.name"
+        class="w-full h-full object-cover"
+      />
+      
+      <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+        <p class="font-semibold text-white text-center text-sm">
+          {{ teacher.name }}{{ teacher.degree ? ', ' + teacher.degree : '' }}
+        </p>
+      </div>
     </div>
-    <p class="font-semibold text-neutral-800">{{ teacher.name }}, {{ teacher.degree }}</p>
   </div>
 </template>
 

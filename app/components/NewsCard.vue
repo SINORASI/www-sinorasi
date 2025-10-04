@@ -1,3 +1,11 @@
+<script setup lang="ts">
+import type { News } from '~/models/News'
+
+defineProps<{
+  news: News
+}>()
+</script>
+
 <template>
   <NuxtLink :to="`/berita/${news.slug}`" class="block bg-secondary rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
     <div class="p-4">
@@ -14,14 +22,6 @@
     </div>
   </NuxtLink>
 </template>
-
-<script setup lang="ts">
-import type { News } from '~/models/News'
-
-defineProps<{
-  news: News
-}>()
-</script>
 
 <style scoped>
 .line-clamp-2 {

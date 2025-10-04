@@ -121,9 +121,8 @@ onMounted(() => {
         <div class="flex justify-center flex-col gap-5 max-w-6xl w-full">
           <div class="flex flex-col gap-2">
             <h1 class="text-4xl font-bold">Sambutan Kepala Sekolah</h1>
-          </div>
           <hr class="border-2 border-zinc-100 max-w-md w-full">
-          <h2 class="text-2xl font-semibold">Selamat datang di SMK Negeri 2 Singosari</h2>
+          <h2 class="text-2xl font-semibold">Sambutan</h2>
           <p class="max-w-4xl w-full">
             Assalamu'alaikum wr.wb. Puji syukur kepada Alloh SWT atas terbitnya website SMK Negeri 2 Singosari untuk
             menjawab kebutuhan informasi melalui teknologi informasi. Dalam memajukan pendidikan di era teknologi yang
@@ -138,12 +137,13 @@ onMounted(() => {
             Wassalamu'alaikum wr.wb.
           </p>
         </div>
+        </div>
       </div>
     </section>
     <section class="h-min-screen" id="video-profil">
       <div class="container mx-auto px-10 md:px-60 flex text-center flex-col items-center gap-5">
-        <div class="bg-secondary backdrop-blur-2xl p-4">
-          <h2 class="text-4xl font-bold">Video Profil Sekolah</h2>
+        <div class="bg-secondary backdrop-blur-2xl py-4 px-8 rounded-lg shadow-md">
+          <h2 class="text-4xl font-bold">Video Profil</h2>
         </div>
         <ScriptYouTubePlayer video-id="Kks6HnhPzVQ">
           <template #placeholder="{ placeholder }">
@@ -156,8 +156,8 @@ onMounted(() => {
     </section>
     <section id="jejak-sejarah" class="h-min-screen py-20">
       <div class="text-center container mx-auto flex flex-col items-center gap-5 px-10 md:px-0">
-        <div class="bg-secondary backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
-          <h2 class="text-3xl font-bold">Jejak Sejarah Kami</h2>
+        <div class="bg-secondary backdrop-blur-2xl p-4 shadow-md rounded-lg px-6 py-4">
+          <h2 class="text-3xl font-bold">Sejarah</h2>
         </div>
         <p>
           Perjalanan SMK Negeri 2 Singosari dalam mengembangkan pendidikan kejuruan berkualitas di Kabupaten Malang.
@@ -166,16 +166,16 @@ onMounted(() => {
       </div>
     </section>
     <section class="h-fit flex items-center flex-col gap-10" id="Jurusan">
-      <div class="bg-secondary backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
-        <h2 class="text-3xl font-bold">Jurusan</h2>
+      <div class="bg-secondary backdrop-blur-2xl py-4 px-8 rounded-lg shadow-md">
+        <h2 class="text-3xl font-bold">Daftar Jurusan</h2>
       </div>
       <div class="container mx-auto flex items-center justify-center">
         <MajorCarousel />
       </div>
     </section>
-    <section class="h-fit" id="prestasi">
+    <section>
       <div class="container mx-auto flex flex-col items-center gap-5">
-        <div class="bg-secondary backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
+        <div class="bg-secondary backdrop-blur-2xl px-8 py-4 shadow-md rounded-lg">
           <h2 class="text-3xl font-bold">Prestasi</h2>
         </div>
         <AchievementCarousel />
@@ -183,10 +183,9 @@ onMounted(() => {
     </section>
     <section class="h-min-screen" id="berita">
       <div class="container mx-auto flex flex-col items-center gap-5">
-        <div class="bg-secondary backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
-          <h2 class="text-3xl font-bold">Berita Terbaru</h2>
+        <div class="bg-secondary backdrop-blur-2xl py-4 px-8 shadow-md rounded-lg">
+          <h2 class="text-3xl font-bold">Berita</h2>
         </div>
-        <p>SMK Negeri 2 Singosari</p>
         <div class="flex flex-wrap gap-5 justify-center">
           <p class="font-bold p-2 rounded-full bg-tertiary pl-4 pr-4">Kategori Berita</p>
           <p class="font-bold p-2 rounded-full bg-tertiary pl-4 pr-4">Kategori Berita</p>
