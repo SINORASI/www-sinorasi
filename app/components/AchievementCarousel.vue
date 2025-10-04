@@ -1,9 +1,9 @@
 <template>
-  <div class="w-full max-w-sm md:w-200 md:max-w-none flex flex-col bg-secondary gap-5 rounded-lg shadow-sm p-4 md:p-8 relative mx-auto border border-neutral-300">
+  <div class="relative flex flex-col w-full max-w-sm gap-5 p-4 mx-auto border rounded-lg shadow-sm md:w-200 md:max-w-none bg-secondary md:p-8 border-neutral-300">
     <div class="overflow-hidden">
       <div class="flex transition-transform duration-500 ease-in-out" :style="{ transform: `translateX(-${current * 100}%)` }">
         <div v-for="(achievement, index) in achievements" :key="index" class="flex-shrink-0 w-full">
-          <div class="flex flex-col md:flex-row items-center gap-6 md:gap-10">
+          <div class="flex flex-col items-center gap-6 md:flex-row md:gap-10">
             <img :src="achievement.image" class="w-48 md:w-80" alt="Achievement" />
             <div class="flex flex-col gap-5">
               <h3 class="text-2xl font-bold">{{ achievement.title }}</h3>
@@ -18,10 +18,10 @@
 
     <div class="flex justify-between">
       <div class="flex gap-5">
-        <button @click="prev" class="border-neutral-400 border-1 cursor-pointer bg-tertiary p-2 flex items-center justify-center rounded-full shadow-lg transition hover:bg-blue-600 hover:border-blue-600 hover:text-white hover:scale-110">
+        <button @click="prev" class="flex items-center justify-center p-2 transition rounded-full shadow-lg cursor-pointer border-neutral-400 border-1 bg-tertiary hover:bg-blue-600 hover:border-blue-600 hover:text-white hover:scale-110">
           <Icon name="lucide:chevron-left" size="24" />
         </button>
-        <button @click="next" class="border-neutral-400 border-1 cursor-pointer bg-tertiary p-2 flex items-center justify-center rounded-full shadow-lg transition hover:bg-blue-600 hover:border-blue-600 hover:text-white hover:scale-110">
+        <button @click="next" class="flex items-center justify-center p-2 transition rounded-full shadow-lg cursor-pointer border-neutral-400 border-1 bg-tertiary hover:bg-blue-600 hover:border-blue-600 hover:text-white hover:scale-110">
           <Icon name="lucide:chevron-right" size="24" />
         </button>
       </div>

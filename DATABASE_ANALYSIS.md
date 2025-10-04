@@ -198,16 +198,7 @@ CREATE TABLE staff_subjects (
 );
 
 -- Insert default categories
-INSERT INTO staff_categories (name, display_name, sort_order) VALUES
-('kepsek', 'Kepala Sekolah', 1),
-('wakasek', 'Wakil Kepala Sekolah', 2),
-('kurikulum', 'Kurikulum', 3),
-('kesiswaan', 'Kesiswaan', 4),
-('humas', 'Humas', 5),
-('sarana', 'Sarana Prasarana', 6),
-('guru', 'Guru', 7),
-('tata_usaha', 'Tata Usaha', 8);
-```
+
 
 **Features to Implement:**
 - Staff directory with search
