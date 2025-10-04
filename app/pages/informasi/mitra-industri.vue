@@ -4,6 +4,16 @@ const showDialog = ref(false);
 const selectedPartner = ref<any>(null);
 const currentImageIndex = ref(0);
 
+useHead({
+  title: 'Mitra Industri - Informasi - SMKN 2 Singosari',
+  meta: [
+    {
+      name: 'description',
+      content: 'Daftar mitra industri dan kerjasama SMK Negeri 2 Singosari dengan berbagai perusahaan.'
+    }
+  ]
+});
+
 const filters = [
     { id: 'ALL', label: 'ALL' },
     { id: 'RPL', label: 'RPL' },

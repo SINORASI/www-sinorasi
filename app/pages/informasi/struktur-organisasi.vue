@@ -1,5 +1,13 @@
 <script lang="ts" setup>
-
+useHead({
+  title: 'Struktur Organisasi - Informasi - SMKN 2 Singosari',
+  meta: [
+    {
+      name: 'description',
+      content: 'Struktur organisasi sekolah SMK Negeri 2 Singosari. Kepala sekolah dan jajarannya.'
+    }
+  ]
+});
 </script>
 
 <template>

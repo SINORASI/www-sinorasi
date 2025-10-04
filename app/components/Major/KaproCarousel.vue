@@ -2,7 +2,10 @@
 import { ref } from "vue";
 import type { MajorName } from "~/models/MajorName";
 import type { KaproProfile } from "~/models/KaproProfile";
-import { majorDatas } from "~/datas/data";
+import type { MajorData } from "~/models/MajorData";
+
+// Fetch majors data from API
+const { data: majorDatas } = await useFetch<Record<MajorName, MajorData>>('/api/majors');
 
 const kapros: Record<MajorName, KaproProfile[]> = {
   rpl: [

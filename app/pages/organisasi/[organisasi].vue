@@ -1,3 +1,21 @@
+<script setup lang="ts">
+const route = useRoute();
+const orgName = route.params.organisasi as string;
+
+// Capitalize first letter for display
+const displayName = orgName.charAt(0).toUpperCase() + orgName.slice(1);
+
+useHead({
+  title: `${displayName} - Organisasi - SMKN 2 Singosari`,
+  meta: [
+    {
+      name: 'description',
+      content: `Informasi lengkap tentang organisasi ${displayName} di SMK Negeri 2 Singosari`
+    }
+  ]
+});
+</script>
+
 <template>
     <section id="hero" class="py-50 h-fit">
         <div class="flex flex-col gap-20">

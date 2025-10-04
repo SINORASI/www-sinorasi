@@ -109,10 +109,20 @@
 import { ref, computed, watch } from 'vue'
 import { majorColorSchemes } from "~/utils/majorColors";
 import type { MajorName } from "~/models/MajorName";
-import { newsData } from "~/datas/data";
+import type { News } from '~/models/News';
 
 // Get current route for dynamic title
 const route = useRoute()
+
+// Fetch news data from API
+const { data: newsResponse } = await useFetch('/api/news', {
+  query: { limit: 8 }
+})
+
+const newsData = computed(() => {
+  const response = newsResponse.value as { data?: News[], total?: number } | null
+  return response?.data || []
+})
 
 // Define emit function
 const emit = defineEmits<{
@@ -302,7 +312,7 @@ const menuItems = [
     title: "Berita",
     submenu: [
       { title: "Semua Berita", desc: "Daftar lengkap berita sekolah", icon: "lucide:newspaper", to: "/berita", external: false, tags: ["berita", "news", "semua", "daftar"] },
-      ...newsData.slice(0, 8).map(news => ({
+      ...newsData.value.slice(0, 8).map((news: News) => ({
         title: news.title,
         desc: news.subtitle,
         icon: "lucide:file-text",
@@ -311,10 +321,10 @@ const menuItems = [
         tags: [
           "berita", 
           "news", 
-          ...news.tags.map(tag => tag.toLowerCase()),
+          ...news.tags.map((tag: string) => tag.toLowerCase()),
           ...news.title.toLowerCase().split(' '),
           ...news.subtitle.toLowerCase().split(' ')
-        ].filter(tag => tag.length > 2)
+        ].filter((tag: string) => tag.length > 2)
       }))
     ],
   },

@@ -1,19 +1,26 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, computed } from "vue";
-import { majorDatas, majorMenus } from "~/datas/data";
 import type { MajorName } from "~/models/MajorName";
+import type { MajorData } from "~/models/MajorData";
 import MobileSidebar from "~/components/MobileSidebar.vue";
+
+const route = useRoute();
+const major = route.params.majorName as MajorName;
+
+// Fetch major data and menus from API
+const { data: majorDatas } = await useFetch<Record<MajorName, MajorData>>('/api/majors')
+const { data: majorMenus } = await useFetch('/api/majors/menus')
 
 const headerClass = ref("bg-transparent border-b-transparent");
 const sizeClass = ref("full");
 const isOpen = ref(false);
 
-const menuItems = computed(() => majorMenus[major] || []);
+const menuItems = computed(() => majorMenus.value?.[major] || []);
 
 onMounted(() => {
   const handleScroll = () => {
     if (window.scrollY > window.innerHeight) {
-      headerClass.value = `${majorDatas[major]?.headerColor}`;
+      headerClass.value = `${majorDatas.value?.[major]?.headerColor}`;
       sizeClass.value = "compact";
     } else {
       headerClass.value = "bg-transparent border-b-transparent";
@@ -27,9 +34,7 @@ onMounted(() => {
   });
 });
 
-const route = useRoute();
-const major = route.params.majorName as MajorName;
-if (!majorDatas[major]) {
+if (!majorDatas.value?.[major]) {
   throw createError({ status: 404, statusMessage: "Jurusan yang Anda cari tidak ditemukan" });
 }
 </script>

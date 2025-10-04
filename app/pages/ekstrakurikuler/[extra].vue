@@ -5,12 +5,28 @@ interface ActivityProps {
     desc: string
 }
 
+const route = useRoute();
+const extraName = route.params.extra as string;
+
 const items = [
     { image: '/images/placeholder.jpg', title: 'Kejuaraan Antar Sekolah Se-Surabaya', desc: 'Tim basket putra berhasil meraih juara 2 dalam kompetisi bergengsi yang diikuti 32 sekolah menengah atas di Surabaya dengan persaingan yang sangat ketat'},
     { image: '/images/placeholder.jpg', title: 'Pelatihan Intensif Teknik Dasar', desc: 'Mengadakan pelatihan khusus bersama pelatih profesional untuk meningkatkan kemampuan dribbling, shooting, dan passing seluruh anggota ekstrakurikuler'},
     { image: '/images/placeholder.jpg', title: 'Turnamen Internal Antar Kelas', desc: 'Event tahunan yang melibatkan seluruh siswa sekolah dalam kompetisi basket antar kelas untuk mempererat tali persaudaraan dan sportivitas'},
     { image: '/images/placeholder.jpg', title: 'Workshop Strategi Permainan', desc: 'Sesi pembelajaran mendalam tentang taktik dan strategi permainan basket modern yang dipimpin langsung oleh mantan pemain profesional'},
 ]
+
+// Capitalize first letter for display
+const displayName = extraName.charAt(0).toUpperCase() + extraName.slice(1);
+
+useHead({
+  title: `${displayName} - Ekstrakurikuler - SMKN 2 Singosari`,
+  meta: [
+    {
+      name: 'description',
+      content: `Informasi lengkap tentang ekstrakurikuler ${displayName} di SMK Negeri 2 Singosari`
+    }
+  ]
+});
 </script>
 
 <template>

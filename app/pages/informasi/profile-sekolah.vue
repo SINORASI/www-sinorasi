@@ -1,4 +1,13 @@
 <script setup lang="ts">
+useHead({
+  title: 'Profil Sekolah - Informasi - SMKN 2 Singosari',
+  meta: [
+    {
+      name: 'description',
+      content: 'Profil lengkap SMK Negeri 2 Singosari. Sejarah, visi misi, dan sambutan kepala sekolah.'
+    }
+  ]
+});
 </script>
 
 <template>

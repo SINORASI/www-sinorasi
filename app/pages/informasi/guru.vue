@@ -54,6 +54,16 @@ const selectedTeacherCategoryTitle = ref('');
 const currentTeacherList = ref([]);
 const selectedTeacherIndex = ref(0);
 
+useHead({
+  title: 'Guru Pengajar - Informasi - SMKN 2 Singosari',
+  meta: [
+    {
+      name: 'description',
+      content: 'Daftar guru pengajar di SMK Negeri 2 Singosari. Tenaga pendidik profesional dan berpengalaman.'
+    }
+  ]
+});
+
 const teacherCategories = ref([
   {
     title: 'Guru Pendidikan Agama Islam',

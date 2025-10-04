@@ -59,19 +59,24 @@
 </template>
 
 <script setup lang="ts">
-import { newsData } from '~/datas/data'
 import type { News } from '~/models/News'
 
 const route = useRoute()
 const slug = route.params.slug as string
 
-const news = computed(() => {
-  return newsData.find(n => n.slug === slug)
+// Fetch single news from API
+const { data: news } = await useFetch<News>(`/api/news/${slug}`)
+
+// Fetch all news for related items
+const { data: allNewsResponse } = await useFetch<{ data: News[], total: number }>('/api/news', {
+  query: {
+    limit: 5
+  }
 })
 
 const relatedNews = computed(() => {
-  if (!news.value) return []
-  return newsData.filter(n => n.id !== news.value!.id).slice(0, 4)
+  if (!news.value || !allNewsResponse.value?.data) return []
+  return allNewsResponse.value.data.filter((n: News) => n.id !== news.value!.id).slice(0, 4)
 })
 
 const renderedContent = computed(() => {
@@ -128,11 +133,11 @@ const formatDate = (dateString: string) => {
 }
 
 useHead({
-  title: news.value ? `${news.value.title} - SMKN 1 Sinorasi` : 'Berita Tidak Ditemukan',
+  title: news.value ? `${news.value.title} - SMKN 2 Singosari` : 'Berita Tidak Ditemukan',
   meta: [
     {
       name: 'description',
-      content: news.value ? news.value.subtitle : 'Berita SMKN 1 Sinorasi'
+      content: news.value ? news.value.subtitle : 'Berita SMKN 2 Singosari'
     }
   ]
 })

@@ -1,3 +1,153 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+
+interface TrafficResults {
+  time: string;
+  distance: string;
+  traffic: string;
+  route: string;
+  bestTime: string;
+  tips: string;
+  recommendation: string;
+}
+
+const config = useRuntimeConfig()
+const apiKey = config.public.googleMapsApiKey
+
+const homeAddress = ref('')
+const results = ref<TrafficResults | null>(null)
+const loading = ref(false)
+const error = ref('')
+
+const schoolAddress = 'SMK Negeri 2 Singosari, Jl. Raya Singosari, Singosari, Malang, Jawa Timur, Indonesia'
+
+const getCurrentLocation = () => {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const lat = position.coords.latitude
+        const lng = position.coords.longitude
+        homeAddress.value = `${lat},${lng}`
+      },
+      (err) => {
+        error.value = 'Tidak dapat mendapatkan lokasi saat ini. Pastikan izin lokasi diaktifkan.'
+      }
+    )
+  } else {
+    error.value = 'Geolokasi tidak didukung oleh browser ini.'
+  }
+}
+
+const getTrafficStatus = (trafficDuration: number, normalDuration: number) => {
+  const ratio = trafficDuration / normalDuration
+  if (ratio < 1.2) return 'Lancar'
+  if (ratio < 1.5) return 'Padat'
+  return 'Macet'
+}
+
+const getBestTime = () => {
+  const now = new Date()
+  const hour = now.getHours()
+  if (hour < 7) return '06:30 - 07:00 pagi'
+  if (hour < 9) return 'Sekarang atau hindari jam sibuk'
+  if (hour < 12) return 'Setelah jam sibuk pagi'
+  if (hour < 15) return 'Siapkan waktu lebih'
+  if (hour < 18) return 'Hindari jam pulang kerja'
+  return 'Luar jam sibuk'
+}
+
+const getTips = (traffic: string, duration: string) => {
+  if (traffic === 'Macet') return 'Pertimbangkan transportasi umum atau berangkat lebih awal.'
+  if (duration.includes('jam')) return 'Perjalanan cukup lama, pastikan kondisi kendaraan baik.'
+  return 'Perjalanan normal, selamat jalan!'
+}
+
+const getRecommendation = (duration: string, traffic: string) => {
+  const durationMin = parseInt(duration.split(' ')[0] || '0')
+  if (traffic === 'Macet' || durationMin > 60) return 'Tidak direkomendasikan saat ini.'
+  if (durationMin > 30) return 'Direkomendasikan jika mendesak.'
+  return 'Direkomendasikan.'
+}
+
+const calculateRoute = async () => {
+  if (!apiKey) {
+    error.value = 'API Key Google Maps tidak dikonfigurasi.'
+    return
+  }
+
+  loading.value = true
+  error.value = ''
+  results.value = null
+
+  try {
+    // Geocode home address to lat,lng
+    const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(homeAddress.value)}&key=${apiKey}`
+    const geocodeResponse = await fetch(geocodeUrl)
+    const geocodeData = await geocodeResponse.json()
+
+    if (geocodeData.status !== 'OK') {
+      throw new Error('Alamat tidak ditemukan.')
+    }
+
+    const origin = geocodeData.results[0].geometry.location
+    
+    // Geocode school address
+    const schoolGeocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(schoolAddress)}&key=${apiKey}`
+    const schoolGeocodeResponse = await fetch(schoolGeocodeUrl)
+    const schoolGeocodeData = await schoolGeocodeResponse.json()
+
+    if (schoolGeocodeData.status !== 'OK') {
+      throw new Error('Alamat sekolah tidak ditemukan.')
+    }
+
+    const destination = schoolGeocodeData.results[0].geometry.location
+
+    // Get directions
+    const directionsUrl = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin.lat},${origin.lng}&destination=${destination.lat},${destination.lng}&mode=driving&departure_time=now&key=${apiKey}`
+    const directionsResponse = await fetch(directionsUrl)
+    const directionsData = await directionsResponse.json()
+
+    if (directionsData.status !== 'OK') {
+      throw new Error('Tidak dapat menghitung rute.')
+    }
+
+    const route = directionsData.routes[0]
+    const leg = route.legs[0]
+    
+    const duration = leg.duration_in_traffic ? leg.duration_in_traffic.text : leg.duration.text
+    const distance = leg.distance.text
+    const traffic = getTrafficStatus(leg.duration_in_traffic?.value || leg.duration.value, leg.duration.value)
+    const routeSummary = route.summary
+    const bestTime = getBestTime()
+    const tips = getTips(traffic, duration)
+
+    results.value = {
+      time: duration,
+      distance,
+      traffic,
+      route: routeSummary,
+      bestTime,
+      tips,
+      recommendation: getRecommendation(duration, traffic)
+    }
+  } catch (err: any) {
+    error.value = err.message || 'Terjadi kesalahan saat menghitung rute.'
+  } finally {
+    loading.value = false
+  }
+}
+
+useHead({
+  title: 'Traffic Tracker - Utilitas - SMKN 2 Singosari',
+  meta: [
+    {
+      name: 'description',
+      content: 'Cek estimasi waktu tempuh ke SMK Negeri 2 Singosari dari lokasi Anda dengan traffic tracker.'
+    }
+  ]
+});
+</script>
+
 <template>
   <div class="font-serif py-50 px-4 sm:px-6 lg:px-8">
     <div class="container mx-auto">
@@ -82,123 +232,3 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import { ref } from 'vue'
-
-const config = useRuntimeConfig()
-const apiKey = config.public.googleMapsApiKey
-
-const homeAddress = ref('')
-const results = ref(null)
-const loading = ref(false)
-const error = ref('')
-
-const schoolAddress = 'SMK Negeri 2 Singosari, Jl. Raya Singosari, Singosari, Malang, Jawa Timur, Indonesia'
-
-const getCurrentLocation = () => {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const lat = position.coords.latitude
-        const lng = position.coords.longitude
-        homeAddress.value = `${lat},${lng}`
-      },
-      (err) => {
-        error.value = 'Tidak dapat mendapatkan lokasi saat ini. Pastikan izin lokasi diaktifkan.'
-      }
-    )
-  } else {
-    error.value = 'Geolokasi tidak didukung oleh browser ini.'
-  }
-}
-
-const calculateRoute = async () => {
-  if (!apiKey) {
-    error.value = 'API Key Google Maps tidak dikonfigurasi.'
-    return
-  }
-
-  loading.value = true
-  error.value = ''
-  results.value = null
-
-  try {
-    // Geocode home address to lat,lng
-    const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(homeAddress.value)}&key=${apiKey}`
-    const geocodeResponse = await fetch(geocodeUrl)
-    const geocodeData = await geocodeResponse.json()
-
-    if (geocodeData.status !== 'OK') {
-      throw new Error('Alamat tidak ditemukan.')
-    }
-
-    const origin = geocodeData.results[0].geometry.location
-    const originStr = `${origin.lat},${origin.lng}`
-
-    // Directions API
-    const directionsUrl = `https://maps.googleapis.com/maps/api/directions/json?origin=${originStr}&destination=${encodeURIComponent(schoolAddress)}&departure_time=now&traffic_model=best_guess&key=${apiKey}`
-    const directionsResponse = await fetch(directionsUrl)
-    const directionsData = await directionsResponse.json()
-
-    if (directionsData.status !== 'OK') {
-      throw new Error('Tidak dapat menghitung rute.')
-    }
-
-    const route = directionsData.routes[0]
-    const leg = route.legs[0]
-
-    const duration = leg.duration_in_traffic ? leg.duration_in_traffic.text : leg.duration.text
-    const distance = leg.distance.text
-    const traffic = getTrafficStatus(leg.duration_in_traffic?.value || leg.duration.value, leg.duration.value)
-    const routeSummary = route.summary
-    const bestTime = getBestTime()
-    const tips = getTips(traffic, duration)
-
-    results.value = {
-      time: duration,
-      distance,
-      traffic,
-      route: routeSummary,
-      bestTime,
-      tips,
-      recommendation: getRecommendation(duration, traffic)
-    }
-  } catch (err) {
-    error.value = err.message || 'Terjadi kesalahan saat menghitung rute.'
-  } finally {
-    loading.value = false
-  }
-}
-
-const getTrafficStatus = (trafficDuration, normalDuration) => {
-  const ratio = trafficDuration / normalDuration
-  if (ratio < 1.2) return 'Lancar'
-  if (ratio < 1.5) return 'Padat'
-  return 'Macet'
-}
-
-const getBestTime = () => {
-  const now = new Date()
-  const hour = now.getHours()
-  if (hour < 7) return '06:30 - 07:00 pagi'
-  if (hour < 9) return 'Sekarang atau hindari jam sibuk'
-  if (hour < 12) return 'Setelah jam sibuk pagi'
-  if (hour < 15) return 'Siapkan waktu lebih'
-  if (hour < 18) return 'Hindari jam pulang kerja'
-  return 'Luar jam sibuk'
-}
-
-const getTips = (traffic, duration) => {
-  if (traffic === 'Macet') return 'Pertimbangkan transportasi umum atau berangkat lebih awal.'
-  if (duration.includes('jam')) return 'Perjalanan cukup lama, pastikan kondisi kendaraan baik.'
-  return 'Perjalanan normal, selamat jalan!'
-}
-
-const getRecommendation = (duration, traffic) => {
-  const durationMin = parseInt(duration.split(' ')[0])
-  if (traffic === 'Macet' || durationMin > 60) return 'Tidak direkomendasikan saat ini.'
-  if (durationMin > 30) return 'Direkomendasikan jika mendesak.'
-  return 'Direkomendasikan.'
-}
-</script>

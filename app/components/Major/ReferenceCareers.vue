@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { MajorName } from '~/models/MajorName';
-import { JobTitles } from '~/datas/data';
-import { majorDatas } from '~/datas/data';
+import type { JobTitle } from '~/models/JobTitle';
+import type { MajorData } from '~/models/MajorData';
 
 interface ExpandedItems {
   [key: string]: boolean
@@ -11,7 +11,12 @@ const Items = ref<ExpandedItems>({});
 
 const route = useRoute();
 const major = route.params.majorName as MajorName;
-const Careers = JobTitles[major] || [];
+
+// Fetch job titles and major data from API
+const { data: JobTitles } = await useFetch<Record<MajorName, JobTitle[]>>('/api/job-titles')
+const { data: majorDatas } = await useFetch<Record<MajorName, MajorData>>('/api/majors')
+
+const Careers = computed(() => JobTitles.value?.[major] || [])
 
 const toggleExpanded = (id: number): void => {
   Items.value = {

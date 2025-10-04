@@ -4,6 +4,16 @@ const tags = ref('')
 const isSubmitting = ref(false)
 const showGuidelines = ref(false)
 
+useHead({
+  title: 'Anonymous BK - Utilitas - SMKN 2 Singosari',
+  meta: [
+    {
+      name: 'description',
+      content: 'Sampaikan cerita atau keluhan Anda secara anonim kepada BK SMK Negeri 2 Singosari.'
+    }
+  ]
+});
+
 const submitStory = async () => {
   if (!story.value.trim()) {
     alert('Silakan masukkan cerita Anda')

@@ -2,6 +2,16 @@
 import { ref } from 'vue';
 
 const searchQuery = ref('');
+
+useHead({
+  title: 'Sarana Prasarana - Informasi - SMKN 2 Singosari',
+  meta: [
+    {
+      name: 'description',
+      content: 'Fasilitas sarana dan prasarana yang tersedia di SMK Negeri 2 Singosari untuk mendukung pembelajaran.'
+    }
+  ]
+});
 </script>
 
 <template>

@@ -27,6 +27,16 @@ const closeSeksiBidangDialog = () => {
     showSeksiBidangDialog.value = false;
 };
 
+useHead({
+  title: 'Organisasi - SMKN 2 Singosari',
+  meta: [
+    {
+      name: 'description',
+      content: 'Daftar organisasi siswa di SMK Negeri 2 Singosari. Bergabunglah dan kembangkan kemampuanmu!'
+    }
+  ]
+});
+
 // Carousel data - 5 members
 const carouselMembers: CarouselMember[] = [
     { name: 'Sumiijah S.Pd M.Pd', image: '/images/profile-placeholder.png' },

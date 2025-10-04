@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { majorDatas } from "~/datas/data";
 import type { MajorName } from "~/models/MajorName";
+import type { MajorData } from "~/models/MajorData";
+
+// Fetch majors data from API
+const { data: majorDatas } = await useFetch<Record<MajorName, MajorData>>('/api/majors');
 
 interface MajorTopic {
   id: string;

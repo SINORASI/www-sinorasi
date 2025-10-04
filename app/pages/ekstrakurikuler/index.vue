@@ -12,6 +12,16 @@ const closeDialog = () => {
   isDialogOpen.value = false;
   document.body.style.overflow = '';
 };
+
+useHead({
+  title: 'Ekstrakurikuler - SMKN 2 Singosari',
+  meta: [
+    {
+      name: 'description',
+      content: 'Daftar ekstrakurikuler dan organisasi di SMK Negeri 2 Singosari. Kembangkan bakat dan minatmu!'
+    }
+  ]
+});
 </script>
 <template>
     <section class="h-screen flex items-center justify-start py-30">

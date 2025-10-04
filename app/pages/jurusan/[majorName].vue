@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import KaproCarousel from "~/components/Major/KaproCarousel.vue";
-import { majorDatas } from "~/datas/data";
 import type { MajorName } from "~/models/MajorName";
+import type { MajorData } from "~/models/MajorData";
 import ReferenceCareers from "~/components/Major/ReferenceCareers.vue";
 import MajorTopics from "~/components/Major/MajorTopics.vue";
 import MajorPartnerSlider from "~/components/Major/MajorPartnerSlider.vue";
@@ -12,6 +12,20 @@ definePageMeta({
 
 const route = useRoute();
 const major = route.params.majorName as MajorName;
+
+// Fetch majors data from API
+const { data: majorDatas } = await useFetch<Record<MajorName, MajorData>>('/api/majors');
+
+// Set dynamic page title
+useHead({
+  title: () => majorDatas.value?.[major]?.nameMajor ? `${majorDatas.value[major].nameMajor} - SMKN 2 Singosari` : 'Jurusan - SMKN 2 Singosari',
+  meta: [
+    {
+      name: 'description',
+      content: () => majorDatas.value?.[major]?.nameMajor ? `Informasi lengkap tentang jurusan ${majorDatas.value[major].nameMajor} di SMK Negeri 2 Singosari` : 'Jurusan di SMK Negeri 2 Singosari'
+    }
+  ]
+});
 </script>
 
 <template>

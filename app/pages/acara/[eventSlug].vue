@@ -53,19 +53,24 @@
 </template>
 
 <script setup lang="ts">
-import { eventData } from '~/datas/data'
 import type { Event } from '~/models/Event'
 
 const route = useRoute()
 const eventSlug = route.params.eventSlug as string
 
-const event = computed(() => {
-  return eventData.find(e => e.slug === eventSlug)
+// Fetch single event from API
+const { data: event } = await useFetch<Event>(`/api/events/${eventSlug}`)
+
+// Fetch all events for related items
+const { data: allEventsResponse } = await useFetch<{ data: Event[], total: number }>('/api/events', {
+  query: {
+    limit: 5
+  }
 })
 
 const otherEvents = computed(() => {
-  if (!event.value) return []
-  return eventData.filter(e => e.id !== event.value!.id).slice(0, 4)
+  if (!event.value || !allEventsResponse.value?.data) return []
+  return allEventsResponse.value.data.filter((e: Event) => e.id !== event.value!.id).slice(0, 4)
 })
 
 const renderedContent = computed(() => {
@@ -122,11 +127,11 @@ const formatDate = (dateString: string) => {
 }
 
 useHead({
-  title: event.value ? `${event.value.title} - SMKN 1 Sinorasi` : 'Acara Tidak Ditemukan',
+  title: event.value ? `${event.value.title} - SMKN 2 Singosari` : 'Acara Tidak Ditemukan',
   meta: [
     {
       name: 'description',
-      content: event.value ? event.value.details : 'Acara SMKN 1 Sinorasi'
+      content: event.value ? event.value.details : 'Acara SMKN 2 Singosari'
     }
   ]
 })
