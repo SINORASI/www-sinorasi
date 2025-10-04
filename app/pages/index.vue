@@ -117,16 +117,9 @@ onMounted(() => {
         <div class="flex flex-col justify-center w-full max-w-6xl gap-5">
           <div class="flex flex-col gap-2">
             <h1 class="text-4xl font-bold">Sambutan Kepala Sekolah</h1>
-<<<<<<< HEAD
           <hr class="border-2 border-zinc-100 max-w-md w-full">
           <h2 class="text-2xl font-semibold">Sambutan</h2>
           <p class="max-w-4xl w-full">
-=======
-          </div>
-          <hr class="w-full max-w-md border-2 border-zinc-100">
-          <h2 class="text-2xl font-semibold">Selamat datang di SMK Negeri 2 Singosari</h2>
-          <p class="w-full max-w-4xl">
->>>>>>> 8e6dba9eef6def3ef0bb55f5daaac4d8af739b0a
             Assalamu'alaikum wr.wb. Puji syukur kepada Alloh SWT atas terbitnya website SMK Negeri 2 Singosari untuk
             menjawab kebutuhan informasi melalui teknologi informasi. Dalam memajukan pendidikan di era teknologi yang
             pesat, diperlukan sarana prasarana kondusif dan informasi bagi siswa, guru, orangtua maupun masyarakat.
@@ -144,15 +137,9 @@ onMounted(() => {
       </div>
     </section>
     <section class="h-min-screen" id="video-profil">
-<<<<<<< HEAD
       <div class="container mx-auto px-10 md:px-60 flex text-center flex-col items-center gap-5">
         <div class="bg-secondary backdrop-blur-2xl py-4 px-8 rounded-lg shadow-md">
           <h2 class="text-4xl font-bold">Video Profil</h2>
-=======
-      <div class="container flex flex-col items-center gap-5 px-10 mx-auto text-center md:px-60">
-        <div class="p-4 bg-secondary backdrop-blur-2xl">
-          <h2 class="text-4xl font-bold">Video Profil Sekolah</h2>
->>>>>>> 8e6dba9eef6def3ef0bb55f5daaac4d8af739b0a
         </div>
         <ScriptYouTubePlayer video-id="Kks6HnhPzVQ">
           <template #placeholder="{ placeholder }">
@@ -163,17 +150,10 @@ onMounted(() => {
         </ScriptYouTubePlayer>
       </div>
     </section>
-<<<<<<< HEAD
     <section id="jejak-sejarah" class="h-min-screen py-20">
       <div class="text-center container mx-auto flex flex-col items-center gap-5 px-10 md:px-0">
         <div class="bg-secondary backdrop-blur-2xl p-4 shadow-md rounded-lg px-6 py-4">
           <h2 class="text-3xl font-bold">Sejarah</h2>
-=======
-    <section id="jejak-sejarah" class="py-20 h-min-screen">
-      <div class="container flex flex-col items-center gap-5 px-10 mx-auto text-center md:px-0">
-        <div class="p-4 border rounded-lg bg-secondary backdrop-blur-2xl border-neutral-300">
-          <h2 class="text-3xl font-bold">Jejak Sejarah Kami</h2>
->>>>>>> 8e6dba9eef6def3ef0bb55f5daaac4d8af739b0a
         </div>
         <p>
           Perjalanan SMK Negeri 2 Singosari dalam mengembangkan pendidikan kejuruan berkualitas di Kabupaten Malang.
@@ -181,36 +161,23 @@ onMounted(() => {
         <Timeline />
       </div>
     </section>
-<<<<<<< HEAD
     <section class="h-fit flex items-center flex-col gap-10" id="Jurusan">
       <div class="bg-secondary backdrop-blur-2xl py-4 px-8 rounded-lg shadow-md">
         <h2 class="text-3xl font-bold">Daftar Jurusan</h2>
-=======
-    <section class="flex flex-col items-center gap-10 h-fit" id="Jurusan">
-      <div class="p-4 border rounded-lg bg-secondary backdrop-blur-2xl border-neutral-300">
-        <h2 class="text-3xl font-bold">Jurusan</h2>
->>>>>>> 8e6dba9eef6def3ef0bb55f5daaac4d8af739b0a
       </div>
       <div class="container flex items-center justify-center mx-auto">
         <MajorCarousel />
       </div>
     </section>
-<<<<<<< HEAD
     <section>
       <div class="container mx-auto flex flex-col items-center gap-5">
         <div class="bg-secondary backdrop-blur-2xl px-8 py-4 shadow-md rounded-lg">
-=======
-    <section class="h-fit" id="prestasi">
-      <div class="container flex flex-col items-center gap-5 mx-auto">
-        <div class="p-4 border rounded-lg bg-secondary backdrop-blur-2xl border-neutral-300">
->>>>>>> 8e6dba9eef6def3ef0bb55f5daaac4d8af739b0a
           <h2 class="text-3xl font-bold">Prestasi</h2>
         </div>
         <AchievementCarousel />
       </div>
     </section>
     <section class="h-min-screen" id="berita">
-<<<<<<< HEAD
       <div class="container mx-auto flex flex-col items-center gap-5">
         <div class="bg-secondary backdrop-blur-2xl py-4 px-8 shadow-md rounded-lg">
           <h2 class="text-3xl font-bold">Berita</h2>
@@ -220,18 +187,6 @@ onMounted(() => {
           <p class="font-bold p-2 rounded-full bg-tertiary pl-4 pr-4">Kategori Berita</p>
           <p class="font-bold p-2 rounded-full bg-tertiary pl-4 pr-4">Kategori Berita</p>
           <p class="font-bold p-2 rounded-full bg-tertiary pl-4 pr-4">Kategori Berita</p>
-=======
-      <div class="container flex flex-col items-center gap-5 mx-auto">
-        <div class="p-4 border rounded-lg bg-secondary backdrop-blur-2xl border-neutral-300">
-          <h2 class="text-3xl font-bold">Berita Terbaru</h2>
-        </div>
-        <p>SMK Negeri 2 Singosari</p>
-        <div class="flex flex-wrap justify-center gap-5">
-          <p class="p-2 pl-4 pr-4 font-bold rounded-full bg-tertiary">Kategori Berita</p>
-          <p class="p-2 pl-4 pr-4 font-bold rounded-full bg-tertiary">Kategori Berita</p>
-          <p class="p-2 pl-4 pr-4 font-bold rounded-full bg-tertiary">Kategori Berita</p>
-          <p class="p-2 pl-4 pr-4 font-bold rounded-full bg-tertiary">Kategori Berita</p>
->>>>>>> 8e6dba9eef6def3ef0bb55f5daaac4d8af739b0a
         </div>
         <div class="grid w-full grid-cols-1 gap-5 mt-5 md:grid-cols-2 lg:grid-cols-4 place-items-center">
           <CardNews title="Kami Lolos Enam Bidang Lomba untuk Menuju Tingkat Provinsi" />
