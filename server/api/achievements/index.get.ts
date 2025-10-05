@@ -1,68 +1,175 @@
-import type { Achievement } from '~/models/Achievement';
+import type { MajorName } from "~/models/MajorName";
 
-export default defineEventHandler(async (event): Promise<{ data: Achievement[], total: number }> => {
-  // TODO: Replace with actual API call
-  // const response = await $fetch('https://your-api.com/api/achievements');
-  
+interface MajorAchievement {
+  id: number;
+  title: string;
+  description: string;
+  studentName: string;
+  year: number;
+  majorName: MajorName;
+}
+
+const achievementsData: MajorAchievement[] = [
+  // RPL Achievements
+  {
+    id: 1,
+    majorName: "rpl",
+    title: "JUARA 1 LOMBA KOMPETENSI SISWA (LKS) IT SOFTWARE TINGKAT PROVINSI JAWA TIMUR",
+    description: "Siswa pembelajaran kita dilakukan cukup baik di ruang kelas. Tempat duduk dan meja siswa yang ada di dalam ruangan ada dalam kondisi cukup baik, dan jumlah kursi semakin lengkap. Untuk media pembelajaran sudah memadai, antara lain ada perlengkapan aspek Isilah, Lab. Komputer, dan Bengkel. Jumlah buku semakin lengkap.",
+    studentName: "lorem ipsum",
+    year: 2024,
+  },
+  {
+    id: 2,
+    majorName: "rpl",
+    title: "JUARA 2 LOMBA WEB DEVELOPMENT TINGKAT NASIONAL",
+    description: "Siswa pembelajaran kita dilakukan cukup baik di ruang kelas. Tempat duduk dan meja siswa yang ada di dalam ruangan ada dalam kondisi cukup baik, dan jumlah kursi semakin lengkap. Untuk media pembelajaran sudah memadai, antara lain ada perlengkapan aspek Isilah, Lab. Komputer, dan Bengkel. Jumlah buku semakin lengkap.",
+    studentName: "Ahmad Fajar",
+    year: 2024,
+  },
+  {
+    id: 3,
+    majorName: "rpl",
+    title: "JUARA 1 LOMBA MOBILE APP DEVELOPMENT PROVINSI JAWA TIMUR",
+    description: "Siswa pembelajaran kita dilakukan cukup baik di ruang kelas. Tempat duduk dan meja siswa yang ada di dalam ruangan ada dalam kondisi cukup baik, dan jumlah kursi semakin lengkap. Untuk media pembelajaran sudah memadai, antara lain ada perlengkapan aspek Isilah, Lab. Komputer, dan Bengkel. Jumlah buku semakin lengkap.",
+    studentName: "Dewi Sartika",
+    year: 2023,
+  },
+
+  // TKJ Achievements
+  {
+    id: 4,
+    majorName: "tkj",
+    title: "JUARA 1 LOMBA NETWORK SECURITY TINGKAT PROVINSI JAWA TIMUR",
+    description: "Siswa pembelajaran kita dilakukan cukup baik di ruang kelas. Tempat duduk dan meja siswa yang ada di dalam ruangan ada dalam kondisi cukup baik, dan jumlah kursi semakin lengkap. Untuk media pembelajaran sudah memadai, antara lain ada perlengkapan aspek Isilah, Lab. Komputer, dan Bengkel. Jumlah buku semakin lengkap.",
+    studentName: "Budi Santoso",
+    year: 2024,
+  },
+  {
+    id: 5,
+    majorName: "tkj",
+    title: "JUARA 2 LOMBA CISCO NETWORKING TINGKAT NASIONAL",
+    description: "Siswa pembelajaran kita dilakukan cukup baik di ruang kelas. Tempat duduk dan meja siswa yang ada di dalam ruangan ada dalam kondisi cukup baik, dan jumlah kursi semakin lengkap. Untuk media pembelajaran sudah memadai, antara lain ada perlengkapan aspek Isilah, Lab. Komputer, dan Bengkel. Jumlah buku semakin lengkap.",
+    studentName: "Rina Wijaya",
+    year: 2024,
+  },
+
+  // DKV Achievements
+  {
+    id: 6,
+    majorName: "dkv",
+    title: "JUARA 1 LOMBA DESAIN GRAFIS TINGKAT PROVINSI JAWA TIMUR",
+    description: "Siswa pembelajaran kita dilakukan cukup baik di ruang kelas. Tempat duduk dan meja siswa yang ada di dalam ruangan ada dalam kondisi cukup baik, dan jumlah kursi semakin lengkap. Untuk media pembelajaran sudah memadai, antara lain ada perlengkapan aspek Isilah, Lab. Komputer, dan Bengkel. Jumlah buku semakin lengkap.",
+    studentName: "Maya Kusuma",
+    year: 2024,
+  },
+  {
+    id: 7,
+    majorName: "dkv",
+    title: "JUARA 1 LOMBA UI/UX DESIGN TINGKAT NASIONAL",
+    description: "Siswa pembelajaran kita dilakukan cukup baik di ruang kelas. Tempat duduk dan meja siswa yang ada di dalam ruangan ada dalam kondisi cukup baik, dan jumlah kursi semakin lengkap. Untuk media pembelajaran sudah memadai, antara lain ada perlengkapan aspek Isilah, Lab. Komputer, dan Bengkel. Jumlah buku semakin lengkap.",
+    studentName: "Siti Nurhaliza",
+    year: 2023,
+  },
+
+  // Animasi Achievements
+  {
+    id: 8,
+    majorName: "animasi",
+    title: "JUARA 1 LOMBA 3D ANIMATION TINGKAT PROVINSI JAWA TIMUR",
+    description: "Siswa pembelajaran kita dilakukan cukup baik di ruang kelas. Tempat duduk dan meja siswa yang ada di dalam ruangan ada dalam kondisi cukup baik, dan jumlah kursi semakin lengkap. Untuk media pembelajaran sudah memadai, antara lain ada perlengkapan aspek Isilah, Lab. Komputer, dan Bengkel. Jumlah buku semakin lengkap.",
+    studentName: "Andi Pratama",
+    year: 2024,
+  },
+  {
+    id: 9,
+    majorName: "animasi",
+    title: "JUARA 2 LOMBA CHARACTER DESIGN TINGKAT NASIONAL",
+    description: "Siswa pembelajaran kita dilakukan cukup baik di ruang kelas. Tempat duduk dan meja siswa yang ada di dalam ruangan ada dalam kondisi cukup baik, dan jumlah kursi semakin lengkap. Untuk media pembelajaran sudah memadai, antara lain ada perlengkapan aspek Isilah, Lab. Komputer, dan Bengkel. Jumlah buku semakin lengkap.",
+    studentName: "Lisa Amelia",
+    year: 2024,
+  },
+
+  // Broadcasting Achievements
+  {
+    id: 10,
+    majorName: "broadcasting",
+    title: "JUARA 1 LOMBA VIDEO PRODUCTION TINGKAT PROVINSI JAWA TIMUR",
+    description: "Siswa pembelajaran kita dilakukan cukup baik di ruang kelas. Tempat duduk dan meja siswa yang ada di dalam ruangan ada dalam kondisi cukup baik, dan jumlah kursi semakin lengkap. Untuk media pembelajaran sudah memadai, antara lain ada perlengkapan aspek Isilah, Lab. Komputer, dan Bengkel. Jumlah buku semakin lengkap.",
+    studentName: "Dimas Aditya",
+    year: 2024,
+  },
+  {
+    id: 11,
+    majorName: "broadcasting",
+    title: "JUARA 1 LOMBA FILM PENDEK TINGKAT NASIONAL",
+    description: "Siswa pembelajaran kita dilakukan cukup baik di ruang kelas. Tempat duduk dan meja siswa yang ada di dalam ruangan ada dalam kondisi cukup baik, dan jumlah kursi semakin lengkap. Untuk media pembelajaran sudah memadai, antara lain ada perlengkapan aspek Isilah, Lab. Komputer, dan Bengkel. Jumlah buku semakin lengkap.",
+    studentName: "Nina Safitri",
+    year: 2023,
+  },
+
+  // TEI Achievements
+  {
+    id: 12,
+    majorName: "tei",
+    title: "JUARA 1 LOMBA ELECTRICAL INSTALLATION TINGKAT PROVINSI JAWA TIMUR",
+    description: "Siswa pembelajaran kita dilakukan cukup baik di ruang kelas. Tempat duduk dan meja siswa yang ada di dalam ruangan ada dalam kondisi cukup baik, dan jumlah kursi semakin lengkap. Untuk media pembelajaran sudah memadai, antara lain ada perlengkapan aspek Isilah, Lab. Komputer, dan Bengkel. Jumlah buku semakin lengkap.",
+    studentName: "Fahmi Rizki",
+    year: 2024,
+  },
+  {
+    id: 13,
+    majorName: "tei",
+    title: "JUARA 2 LOMBA INDUSTRIAL AUTOMATION TINGKAT NASIONAL",
+    description: "Siswa pembelajaran kita dilakukan cukup baik di ruang kelas. Tempat duduk dan meja siswa yang ada di dalam ruangan ada dalam kondisi cukup baik, dan jumlah kursi semakin lengkap. Untuk media pembelajaran sudah memadai, antara lain ada perlengkapan aspek Isilah, Lab. Komputer, dan Bengkel. Jumlah buku semakin lengkap.",
+    studentName: "Eka Putra",
+    year: 2024,
+  },
+
+  // Mekatronika Achievements
+  {
+    id: 14,
+    majorName: "mekatronika",
+    title: "JUARA 1 LOMBA ROBOTICS TINGKAT PROVINSI JAWA TIMUR",
+    description: "Siswa pembelajaran kita dilakukan cukup baik di ruang kelas. Tempat duduk dan meja siswa yang ada di dalam ruangan ada dalam kondisi cukup baik, dan jumlah kursi semakin lengkap. Untuk media pembelajaran sudah memadai, antara lain ada perlengkapan aspek Isilah, Lab. Komputer, dan Bengkel. Jumlah buku semakin lengkap.",
+    studentName: "Reza Firmansyah",
+    year: 2024,
+  },
+  {
+    id: 15,
+    majorName: "mekatronika",
+    title: "JUARA 1 LOMBA MECHATRONICS ENGINEERING TINGKAT NASIONAL",
+    description: "Siswa pembelajaran kita dilakukan cukup baik di ruang kelas. Tempat duduk dan meja siswa yang ada di dalam ruangan ada dalam kondisi cukup baik, dan jumlah kursi semakin lengkap. Untuk media pembelajaran sudah memadai, antara lain ada perlengkapan aspek Isilah, Lab. Komputer, dan Bengkel. Jumlah buku semakin lengkap.",
+    studentName: "Yudi Setiawan",
+    year: 2023,
+  },
+
+  // TAV Achievements
+  {
+    id: 16,
+    majorName: "tav",
+    title: "JUARA 1 LOMBA AUDIO ENGINEERING TINGKAT PROVINSI JAWA TIMUR",
+    description: "Siswa pembelajaran kita dilakukan cukup baik di ruang kelas. Tempat duduk dan meja siswa yang ada di dalam ruangan ada dalam kondisi cukup baik, dan jumlah kursi semakin lengkap. Untuk media pembelajaran sudah memadai, antara lain ada perlengkapan aspek Isilah, Lab. Komputer, dan Bengkel. Jumlah buku semakin lengkap.",
+    studentName: "Doni Hermawan",
+    year: 2024,
+  },
+  {
+    id: 17,
+    majorName: "tav",
+    title: "JUARA 2 LOMBA SOUND SYSTEM DESIGN TINGKAT NASIONAL",
+    description: "Siswa pembelajaran kita dilakukan cukup baik di ruang kelas. Tempat duduk dan meja siswa yang ada di dalam ruangan ada dalam kondisi cukup baik, dan jumlah kursi semakin lengkap. Untuk media pembelajaran sudah memadai, antara lain ada perlengkapan aspek Isilah, Lab. Komputer, dan Bengkel. Jumlah buku semakin lengkap.",
+    studentName: "Arif Budiman",
+    year: 2024,
+  },
+];
+
+export default defineEventHandler((event) => {
   const query = getQuery(event);
-  const limit = parseInt(query.limit as string) || 10;
-  const offset = parseInt(query.offset as string) || 0;
-  const category = query.category as string;
+  const major = query.major as MajorName | undefined;
 
-  // Mock data
-  const allAchievements: Achievement[] = [
-    {
-      id: '1',
-      image: '/images/placeholder.jpg',
-      title: 'LKS 2023 Kab. Malang : Kami Lolos Enam Bidang Lomba untuk Menuju Tingkat Provinsi',
-      description: 'SMKN 2 Singosari sukses menggelar Lomba Kompetensi Siswa (LKS) SMK tingkat Kabupaten Malang selama dua hari sejak Senin (6/3). Hasilnya, 13 siswa berhasil meraih prestasi dengan 6 bidang lomba lolos ke tingkat Provinsi Jawa Timur.',
-      date: '2023-03-06',
-      category: 'Kompetisi'
-    },
-    {
-      id: '2',
-      image: '/images/placeholder.jpg',
-      title: 'Juara 1 Lomba Karya Tulis Ilmiah Tingkat Nasional',
-      description: 'Tim siswa SMKN 2 Singosari berhasil meraih juara 1 dalam Lomba Karya Tulis Ilmiah yang diselenggarakan oleh Kementerian Pendidikan dan Kebudayaan dengan tema Inovasi Teknologi untuk Masa Depan.',
-      date: '2023-08-15',
-      category: 'Akademik'
-    },
-    {
-      id: '3',
-      image: '/images/placeholder.jpg',
-      title: 'Prestasi di Kompetisi Robotik Internasional',
-      description: 'Siswa jurusan Teknik Mekatronika membawa pulang medali emas dalam kompetisi robotik internasional yang diadakan di Singapura, menunjukkan kemampuan tinggi dalam bidang teknologi.',
-      date: '2023-11-20',
-      category: 'Internasional'
-    },
-    {
-      id: '4',
-      image: '/images/placeholder.jpg',
-      title: 'Akreditasi Unggul untuk Program Keahlian RPL',
-      description: 'Program Keahlian Rekayasa Perangkat Lunak SMKN 2 Singosari mendapat akreditasi unggul dari Badan Akreditasi Nasional, menjadikan program ini sebagai salah satu yang terbaik di Indonesia.',
-      date: '2024-01-10',
-      category: 'Akreditasi'
-    },
-    {
-      id: '5',
-      image: '/images/placeholder.jpg',
-      title: 'Kerjasama dengan Industri Teknologi Terdepan',
-      description: 'SMKN 2 Singosari menjalin kerjasama strategis dengan perusahaan teknologi terkemuka untuk memberikan pengalaman praktis kepada siswa dalam dunia kerja nyata.',
-      date: '2024-02-05',
-      category: 'Kerjasama'
-    }
-  ];
-
-  let filteredAchievements = allAchievements;
-  
-  if (category) {
-    filteredAchievements = allAchievements.filter(a => a.category === category);
+  if (major) {
+    return achievementsData.filter((achievement) => achievement.majorName === major);
   }
 
-  const paginatedData = filteredAchievements.slice(offset, offset + limit);
-
-  return {
-    data: paginatedData,
-    total: filteredAchievements.length
-  };
+  return achievementsData;
 });

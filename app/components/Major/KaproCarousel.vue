@@ -148,92 +148,186 @@ const next = () => {
 const getTransitionClasses = () => {
   if (direction.value === "next") {
     return {
-      enterFrom: "opacity-0 transform translate-x-8",
+      enterFrom: "opacity-0 transform translate-x-full",
       enterTo: "opacity-100 transform translate-x-0",
       leaveFrom: "opacity-100 transform translate-x-0",
-      leaveTo: "opacity-0 transform -translate-x-8",
+      leaveTo: "opacity-0 transform -translate-x-full",
     };
   } else {
     return {
-      enterFrom: "opacity-0 transform -translate-x-8",
+      enterFrom: "opacity-0 transform -translate-x-full",
       enterTo: "opacity-100 transform translate-x-0",
       leaveFrom: "opacity-100 transform translate-x-0",
-      leaveTo: "opacity-0 transform translate-x-8",
+      leaveTo: "opacity-0 transform translate-x-full",
     };
   }
 };
 </script>
 
 <template>
-  <div class="w-full max-w-sm md:max-w-4xl lg:max-w-6xl flex flex-col gap-5 rounded-lg p-4 md:p-8 relative mx-auto">
-    <!-- Jabatan Title -->
-    <div class="rounded-lg bg-zinc-200/20 p-4 flex justify-center items-center">
-      <h1 class="font-bold tracking-wider text-xl md:text-2xl text-center">
-        {{ kapro[current]?.jabatan }}
-      </h1>
-    </div>
-
-    <!-- Main Content - Image & Quote Section -->
-    <div class="flex flex-col lg:flex-row items-stretch gap-4 w-full">
-      <!-- Left Section: Navigation + Image + Name -->
-      <div class="flex flex-col gap-4">
-        <!-- Navigation + Image -->
-        <div class="flex items-center gap-4 justify-center">
-          <button
-            @click="prev"
-            :class="`border-neutral-400 border cursor-pointer bg-neutral-300 p-2 flex items-center justify-center rounded-full shadow-lg transition hover:text-white hover:scale-110 flex-shrink-0 ${majorDatas[major]?.btnColor}`"
+  <div class="w-full max-w-5xl mx-auto px-4 py-6">
+    <div class="bg-white rounded-xl overflow-hidden">
+      
+      <!-- Grid Layout -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 p-5 lg:p-8">
+        
+        <!-- Left: Image Section -->
+        <div class="flex flex-col items-center space-y-4">
+          <!-- Position Badge -->
+          <Transition
+            name="fade"
+            mode="out-in"
+            enter-active-class="transition-opacity duration-300"
+            enter-from-class="opacity-0"
+            enter-to-class="opacity-100"
+            leave-active-class="transition-opacity duration-200"
+            leave-from-class="opacity-100"
+            leave-to-class="opacity-0"
           >
-            <Icon name="lucide:chevron-left" size="24" />
-          </button>
-
-          <div class="flex justify-center w-48 md:w-60">
-            <Transition
-              name="slide"
-              mode="out-in"
-              enter-active-class="transition-all duration-500 ease-out"
-              :enter-from-class="getTransitionClasses().enterFrom"
-              :enter-to-class="getTransitionClasses().enterTo"
-              leave-active-class="transition-all duration-500 ease-in"
-              :leave-from-class="getTransitionClasses().leaveFrom"
-              :leave-to-class="getTransitionClasses().leaveTo"
+            <div 
+              :key="current"
+              :class="[
+                'px-5 py-1.5 rounded-full font-bold text-xs sm:text-sm',
+                majorDatas?.[major]?.bgColor || 'bg-orange-500'
+              ]"
             >
-              <img
-                :key="current"
-                :src="kapro[current]?.image"
-                class="w-48 md:w-60 rounded-lg"
-                :alt="kapro[current]?.kaproName"
-              />
+              {{ kapro[current]?.jabatan }}
+            </div>
+          </Transition>
+
+          <!-- Profile Image -->
+          <div class="relative w-56 sm:w-64 aspect-[3/4]">
+            <div class="absolute inset-0 rounded-lg overflow-hidden shadow-md bg-gray-200">
+              <Transition
+                name="slide"
+                mode="out-in"
+                enter-active-class="transition-all duration-500 ease-out"
+                :enter-from-class="getTransitionClasses().enterFrom"
+                :enter-to-class="getTransitionClasses().enterTo"
+                leave-active-class="transition-all duration-500 ease-in"
+                :leave-from-class="getTransitionClasses().leaveFrom"
+                :leave-to-class="getTransitionClasses().leaveTo"
+              >
+                <img
+                  :key="current"
+                  :src="kapro[current]?.image"
+                  :alt="kapro[current]?.kaproName"
+                  class="w-full h-full object-cover"
+                />
+              </Transition>
+            </div>
+          </div>
+
+          <!-- Name -->
+          <Transition
+            name="fade"
+            mode="out-in"
+            enter-active-class="transition-opacity duration-300"
+            enter-from-class="opacity-0"
+            enter-to-class="opacity-100"
+            leave-active-class="transition-opacity duration-200"
+            leave-from-class="opacity-100"
+            leave-to-class="opacity-0"
+          >
+            <h2 :key="current" class="text-lg sm:text-xl font-bold text-gray-900 text-center px-2">
+              {{ kapro[current]?.kaproName }}
+            </h2>
+          </Transition>
+        </div>
+
+        <!-- Right: Quote Section -->
+        <div class="flex flex-col justify-between min-h-[350px]">
+          
+          <!-- Quote -->
+          <div class="flex-1 flex items-center justify-center p-4">
+            <Transition
+              name="fade"
+              mode="out-in"
+              enter-active-class="transition-opacity duration-400"
+              enter-from-class="opacity-0"
+              enter-to-class="opacity-100"
+              leave-active-class="transition-opacity duration-300"
+              leave-from-class="opacity-100"
+              leave-to-class="opacity-0"
+            >
+              <div :key="current" class="text-center">
+                <div 
+                  :class="[
+                    'w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-4',
+                    majorDatas?.[major]?.bgColor || 'bg-orange-500'
+                  ]"
+                >
+                  <Icon name="lucide:quote" class="w-5 h-5 text-white" />
+                </div>
+                <p class="text-xl sm:text-2xl font-medium text-gray-800 leading-relaxed">
+                  {{ kapro[current]?.quote }}
+                </p>
+              </div>
             </Transition>
           </div>
 
-          <button
-            @click="next"
-            :class="`border-neutral-400 border cursor-pointer bg-neutral-300 p-2 flex items-center justify-center rounded-full shadow-lg transition hover:text-white hover:scale-110 flex-shrink-0 ${majorDatas[major]?.btnColor}`"
-          >
-            <Icon name="lucide:chevron-right" size="24" />
-          </button>
-        </div>
+          <!-- Navigation -->
+          <div class="space-y-3">
+            <!-- Dots -->
+            <div class="flex justify-center items-center gap-2">
+              <button
+                v-for="(item, idx) in kapro"
+                :key="idx"
+                @click="current = idx"
+                :class="[
+                  'h-1.5 rounded-full transition-all duration-300',
+                  current === idx ? 'w-10' : 'w-1.5',
+                  current === idx 
+                    ? (majorDatas?.[major]?.bgColor || 'bg-orange-500')
+                    : 'bg-gray-300 hover:bg-gray-400'
+                ]"
+                :aria-label="`Go to profile ${idx + 1}`"
+              ></button>
+            </div>
 
-        <div class="flex justify-center px-12">
-          <div class="text-center p-4 rounded-lg bg-zinc-200/20 w-48 md:w-60">
-            <h2 class="font-bold tracking-wide text-sm sm:text-base break-words">
-              {{ kapro[current]?.kaproName }}
-            </h2>
+            <!-- Buttons -->
+            <div class="flex items-center justify-between">
+              <button
+                @click="prev"
+                :class="[
+                  'flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all duration-300',
+                  'bg-gray-100 hover:bg-gray-200 text-gray-700'
+                ]"
+                aria-label="Previous"
+              >
+                <Icon name="lucide:chevron-left" class="w-4 h-4" />
+                <span class="text-xs sm:text-sm">Prev</span>
+              </button>
+
+              <div class="flex items-baseline gap-1">
+                <span 
+                  :class="[
+                    'text-xl font-bold',
+                    majorDatas?.[major]?.textColor || 'text-orange-500'
+                  ]"
+                >
+                  {{ String(current + 1).padStart(2, '0') }}
+                </span>
+                <span class="text-base text-gray-400">
+                  /{{ String(kapro.length).padStart(2, '0') }}
+                </span>
+              </div>
+
+              <button
+                @click="next"
+                :class="[
+                  'flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all duration-300',
+                  'bg-gray-100 hover:bg-gray-200 text-gray-700'
+                ]"
+                aria-label="Next"
+              >
+                <span class="text-xs sm:text-sm">Next</span>
+                <Icon name="lucide:chevron-right" class="w-4 h-4" />
+              </button>
+            </div>
           </div>
         </div>
       </div>
-
-      <div class="flex justify-center items-center flex-1 w-full lg:ml-4 bg-zinc-200/20 p-6 rounded-lg min-h-[150px]">
-        <p class="tracking-wide font-bold text-base md:text-lg text-center max-w-md">
-          {{ kapro[current]?.quote }}
-        </p>
-      </div>
-    </div>
-
-    <div class="flex justify-center items-center py-3">
-      <h3 class="text-xl md:text-2xl font-bold">
-        {{ String(current + 1).padStart(2, '0') }}/{{ String(kapro.length).padStart(2, '0') }}
-      </h3>
     </div>
   </div>
 </template>

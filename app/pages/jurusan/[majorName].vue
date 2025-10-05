@@ -32,20 +32,20 @@ useHead({
   <main class="overflow-x-hidden">
     <section id="tentang-jurusan" class="min-h-screen flex flex-col items-center justify-center md:gap-15 gap-8 px-4 pt-24 md:pt-20 pb-10">
       <div class="flex md:flex-row flex-col justify-center items-center gap-4">
-        <img :src="majorDatas[major]?.logo" alt="logo jurusan" class="md:w-70 w-20" />
-        <h2 class="font-bold text-4xl tracking-wider text-center">{{ majorDatas[major]?.nameMajor }}</h2>
+        <img :src="majorDatas?.[major]?.logo" alt="logo jurusan" class="md:w-70 w-20" />
+        <h2 class="font-bold text-4xl tracking-wider text-center">{{ majorDatas?.[major]?.nameMajor }}</h2>
       </div>
 
       <hr class="border-1 border-zinc-200 max-w-4xl w-full" />
 
       <div class="flex md:max-w-4xl max-w-lg w-full p-2">
         <p class="text-center tracking-wide break-words">
-          di poin ini akan di jelaskan sedikt tentang jurusan {{ majorDatas[major]?.short }},
-          {{ majorDatas[major]?.short }} tuh ngapain aja sih dll. di poin ini akan di jelaskan sedikt tentang jurusan
-          {{ majorDatas[major]?.short }}, {{ majorDatas[major]?.short }} tuh ngapain aja sih dll. di poin ini akan di
-          jelaskan sedikt tentang jurusan {{ majorDatas[major]?.short }}, {{ majorDatas[major]?.short }} tuh ngapain aja
-          sih dll. di poin ini akan di jelaskan sedikt tentang jurusan {{ majorDatas[major]?.short }},
-          {{ majorDatas[major]?.short }} tuh ngapain aja sih dll
+          di poin ini akan di jelaskan sedikt tentang jurusan {{ majorDatas?.[major]?.short }},
+          {{ majorDatas?.[major]?.short }} tuh ngapain aja sih dll. di poin ini akan di jelaskan sedikt tentang jurusan
+          {{ majorDatas?.[major]?.short }}, {{ majorDatas?.[major]?.short }} tuh ngapain aja sih dll. di poin ini akan di
+          jelaskan sedikt tentang jurusan {{ majorDatas?.[major]?.short }}, {{ majorDatas?.[major]?.short }} tuh ngapain aja
+          sih dll. di poin ini akan di jelaskan sedikt tentang jurusan {{ majorDatas?.[major]?.short }},
+          {{ majorDatas?.[major]?.short }} tuh ngapain aja sih dll
         </p>
       </div>
     </section>
@@ -87,7 +87,7 @@ useHead({
         <div
           class="flex justify-center items-center max-w-6xl w-full h-64 md:h-84 bg-zinc-500 p-4 md:p-6 rounded-lg mx-auto"
         >
-          <h1 class="text-white text-center">Minigame {{ majorDatas[major]?.short }}</h1>
+          <h1 class="text-white text-center">Minigame {{ majorDatas?.[major]?.short }}</h1>
         </div>
       </div>
     </section>

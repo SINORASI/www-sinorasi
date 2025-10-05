@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
+import type { MajorName } from "~/models/MajorName";
 
 interface Company {
   id: number;
@@ -8,43 +9,28 @@ interface Company {
   website?: string;
 }
 
-interface CompanyData {
-  [key: string]: Company[];
-}
+const route = useRoute();
+const major = route.params.majorName as MajorName;
 
-interface Props {
-  majorName?: string;
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  majorName: "tkj",
-});
-
-const companiesData: CompanyData = {
-  tkj: [
-    { id: 1, name: "Microsoft", logo: "/images/logo.webp", website: "https://microsoft.com" },
-    { id: 2, name: "Google", logo: "/images/logo.webp", website: "https://google.com" },
-    { id: 3, name: "IBM", logo: "/images/logo.webp", website: "https://ibm.com" },
-    { id: 4, name: "Amazon", logo: "/images/logo.webp", website: "https://amazon.com" },
-    { id: 5, name: "Oracle", logo: "/images/logo.webp", website: "https://oracle.com" },
-    { id: 6, name: "Cisco", logo: "/images/logo.webp", website: "https://cisco.com" },
-  ],
-};
+// Fetch partners data from API
+const { data: partnersData } = await useFetch<Company[]>(`/api/partners/${major}`);
 
 const currentCompanies = computed(() => {
-  return companiesData[props.majorName] || [];
+  return partnersData.value || [];
 });
 
+// Triple the array for seamless infinite loop
 const duplicatedCompanies = computed(() => {
-  return [...currentCompanies.value, ...currentCompanies.value];
+  const base = currentCompanies.value;
+  return [...base, ...base, ...base];
 });
 
 const sliderRef = ref<HTMLElement>();
 
 onMounted(() => {
-  if (sliderRef.value) {
+  if (sliderRef.value && currentCompanies.value.length > 0) {
     const count = currentCompanies.value.length;
-    const duration = count * 3;
+    const duration = count * 3; // 3 seconds per item
     sliderRef.value.style.setProperty("--animation-duration", `${duration}s`);
   }
 });
@@ -57,27 +43,36 @@ const openCompanyWebsite = (company: Company) => {
 </script>
 
 <template>
-  <div class="w-full overflow-hidden py-12 relative bg-white">
-    <div class="text-center text-black font-bold mb-8">
-      <h2 class="text-4xl font-bold">Bekerja Sama Dengan Industri Berikut</h2>
+  <div class="w-full overflow-hidden py-12 bg-white">
+    <div class="text-center mb-10">
+      <h2 class="text-3xl sm:text-4xl font-bold text-gray-900">
+        Bekerja Sama Dengan Industri Berikut
+      </h2>
     </div>
 
-    <div class="relative w-full overflow-hidden h-[120px]">
-      <div ref="sliderRef" class="slider-track">
-        <div
-          v-for="(company, index) in duplicatedCompanies"
-          :key="`${company.id}-${index}`"
-          class="slide-item"
-          @click="openCompanyWebsite(company)"
-        >
-          <img
-            :src="company.logo"
-            :alt="`${company.name} logo`"
-            class="w-32 sm:w-40 md:w-44 h-16 sm:h-18 md:h-20 object-contain grayscale hover:grayscale-0 transition duration-300"
-          />
-          <p class="text-black mt-2 text-xs sm:text-sm text-center font-semibold px-2">
-            {{ company.name }}
-          </p>
+    <div class="relative w-full overflow-hidden">
+      <div class="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-white to-transparent z-10"></div>
+      <div class="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-white to-transparent z-10"></div>
+      
+      <div class="py-8">
+        <div ref="sliderRef" class="slider-track">
+          <div
+            v-for="(company, index) in duplicatedCompanies"
+            :key="`${company.id}-${index}`"
+            class="slide-item"
+            @click="openCompanyWebsite(company)"
+          >
+            <div class="company-card">
+              <img
+                :src="company.logo"
+                :alt="`${company.name} logo`"
+                class="w-28 sm:w-36 h-20 sm:h-24 object-contain transition-all duration-300"
+              />
+            </div>
+            <p class="text-gray-700 mt-3 text-xs sm:text-sm text-center font-semibold">
+              {{ company.name }}
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -87,9 +82,13 @@ const openCompanyWebsite = (company: Company) => {
 <style scoped>
 .slider-track {
   display: flex;
-  gap: 2rem;
+  gap: 3rem;
   width: max-content;
   animation: scroll-left var(--animation-duration, 30s) linear infinite;
+}
+
+.slider-track:hover {
+  animation-play-state: paused;
 }
 
 .slide-item {
@@ -97,16 +96,34 @@ const openCompanyWebsite = (company: Company) => {
   display: flex;
   flex-direction: column;
   align-items: center;
+  transition: transform 0.3s ease;
+}
+
+.company-card {
+  padding: 1.5rem;
+  border-radius: 1rem;
+  transition: all 0.3s ease;
   cursor: pointer;
-  margin-top: 0.5rem;
+}
+
+.company-card:hover {
+  transform: translateY(-4px);
+}
+
+.company-card img {
+  filter: grayscale(100%);
+}
+
+.company-card:hover img {
+  filter: grayscale(0%);
 }
 
 @keyframes scroll-left {
   0% {
-    transform: translateX(0%);
+    transform: translateX(0);
   }
   100% {
-    transform: translateX(-50%);
+    transform: translateX(calc(-100% / 3));
   }
 }
 </style>

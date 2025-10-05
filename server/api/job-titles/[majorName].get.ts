@@ -8,19 +8,19 @@ const JobTitles: Record<MajorName, JobTitle[]> = {
       id: "1",
       image: "/images/logo.webp",
       title: "Software Engineer",
-      description: "lorem ipsum dolor sit amet liraz vira noedn edjd ask to vom ti",
+      description: "profesional yang merancang, mengembangkan, menguji, dan memelihara perangkat lunak komputer, aplikasi, dan sistem untuk memecahkan masalah dunia nyata",
     },
     {
       id: "2",
       image: "/images/logo.webp",
       title: "Web Developer",
-      description: "lorem ipsum dolor sit amet liraz vira noedn edjd ask to vom ti",
+      description: "Profesional yang membangun, mengembangkan, dan memelihara situs web dan aplikasi web",
     },
     {
       id: "3",
       image: "/images/logo.webp",
       title: "Frontend Developer",
-      description: "lorem ipsum dolor sit amet liraz vira noedn edjd ask to vom ti",
+      description: "profesional yang berfokus pada sisi visual dan interaktif aplikasi atau situs web yang langsung dilihat dan digunakan oleh pengguna",
     },
   ],
   tkj: [

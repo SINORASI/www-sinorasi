@@ -501,20 +501,6 @@ const highlightSearchTerm = (text: string, query: string): string => {
   return text.replace(regex, '<mark class="bg-yellow-200 text-yellow-900 px-1 rounded">$1</mark>')
 }
 
-const getMajorName = (displayName: string): MajorName => {
-  const majorMap: Record<string, MajorName> = {
-    RPL: "rpl",
-    TKJ: "tkj",
-    DKV: "dkv",
-    EI: "tei",
-    MT: "mekatronika",
-    BC: "broadcasting",
-    Animasi: "animasi",
-    AV: "tav",
-  };
-  return majorMap[displayName] || "rpl";
-};
-
 const getIconColor = (displayName: string): string => {
   const majorMap: Record<string, MajorName> = {
     RPL: "rpl",

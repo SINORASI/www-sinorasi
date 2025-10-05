@@ -1,16 +1,11 @@
 <script setup lang="ts">
-import { ref } from "vue";
 import type { MajorName } from "~/models/MajorName";
 import type { MajorData } from "~/models/MajorData";
+import type { MajorTopic } from "~/models/MajorTopic";
 
-// Fetch majors data from API
+// Fetch majors data and topics from API
 const { data: majorDatas } = await useFetch<Record<MajorName, MajorData>>('/api/majors');
-
-interface MajorTopic {
-  id: string;
-  title: string;
-  description: string;
-}
+const { data: majorTopics } = await useFetch<Record<MajorName, MajorTopic[]>>('/api/major-topics');
 
 interface ExpandedItems {
   [key: string]: boolean;
@@ -18,83 +13,44 @@ interface ExpandedItems {
 
 const expandedLeftItems = ref<ExpandedItems>({});
 const expandedRightItems = ref<ExpandedItems>({});
+const leftOpenOrder = ref<string[]>([]);
+const rightOpenOrder = ref<string[]>([]);
 
 const route = useRoute();
 const major = route.params.majorName as MajorName;
 
-const leftColumnLanguages: MajorTopic[] = [
-  {
-    id: "visual-desktop",
-    title: "Pemrograman Visual Berbasis Desktop",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices mauris. Maecenas vitae mattis tellus. Nullam quis imperdiet augue. Vestibulum auctor ornare leo, non suscipit magna interdum eu.",
-  },
-  {
-    id: "python-1",
-    title: "PYTHON",
-    description:
-      "Python adalah bahasa pemrograman tingkat tinggi yang mudah dipelajari dan sangat populer. Digunakan untuk pengembangan web, data science, machine learning, dan automasi. Python memiliki sintaks yang sederhana dan readable, membuatnya ideal untuk pemula maupun profesional.",
-  },
-  {
-    id: "javascript",
-    title: "JAVASCRIPT",
-    description:
-      "JavaScript adalah bahasa pemrograman yang paling populer untuk pengembangan web. Digunakan untuk membuat website interaktif, aplikasi mobile, dan bahkan aplikasi desktop. JavaScript berjalan di browser dan juga di server menggunakan Node.js.",
-  },
-  {
-    id: "php",
-    title: "PHP",
-    description:
-      "PHP adalah bahasa pemrograman server-side yang sangat populer untuk pengembangan web. Digunakan oleh platform besar seperti Facebook, WordPress, dan Wikipedia. PHP mudah dipelajari dan memiliki komunitas yang besar.",
-  },
-];
+// Split topics into two columns dynamically
+const leftColumnTopics = computed(() => {
+  const topics = majorTopics.value?.[major] || [];
+  return topics.filter((_, idx) => idx % 2 === 0);
+});
 
-const rightColumnLanguages: MajorTopic[] = [
-  {
-    id: "python-2",
-    title: "PYTHON",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices mauris. Maecenas vitae mattis tellus. Nullam quis imperdiet augue. Vestibulum auctor ornare leo, non suscipit magna interdum eu.",
-  },
-  {
-    id: "java",
-    title: "JAVA",
-    description:
-      'Java adalah bahasa pemrograman yang kuat dan platform-independent. Digunakan untuk pengembangan aplikasi enterprise, aplikasi Android, dan sistem backend yang besar. Java mengikuti prinsip "Write Once, Run Anywhere".',
-  },
-  {
-    id: "csharp",
-    title: "C#",
-    description:
-      "C# adalah bahasa pemrograman yang dikembangkan oleh Microsoft. Sangat populer untuk pengembangan aplikasi Windows, web applications menggunakan .NET framework, dan game development menggunakan Unity.",
-  },
-  {
-    id: "kotlin",
-    title: "KOTLIN",
-    description:
-      "Kotlin adalah bahasa pemrograman modern yang dikembangkan oleh JetBrains. Sangat populer untuk pengembangan aplikasi Android dan dapat berjalan di JVM. Kotlin 100% interoperable dengan Java dan memiliki sintaks yang lebih concise.",
-  },
-];
-
-const rightOpenOrder = ref<string[]>([]);
-const leftOpenOrder = ref<string[]>([]);
+const rightColumnTopics = computed(() => {
+  const topics = majorTopics.value?.[major] || [];
+  return topics.filter((_, idx) => idx % 2 === 1);
+});
 
 const toggleLeftExpanded = (id: string): void => {
   if (expandedLeftItems.value[id]) {
+    // Close the item
     expandedLeftItems.value = {
       ...expandedLeftItems.value,
       [id]: false,
     };
     leftOpenOrder.value = leftOpenOrder.value.filter((item) => item !== id);
   } else {
+    // Check if we already have 2 items open
     if (leftOpenOrder.value.length >= 2) {
-      const oldestId = leftOpenOrder.value[0] as string;
-      expandedLeftItems.value = {
-        ...expandedLeftItems.value,
-        [oldestId]: false,
-      };
-      leftOpenOrder.value = leftOpenOrder.value.slice(1);
+      const oldestId = leftOpenOrder.value[0];
+      if (oldestId) {
+        expandedLeftItems.value = {
+          ...expandedLeftItems.value,
+          [oldestId]: false,
+        };
+        leftOpenOrder.value = leftOpenOrder.value.slice(1);
+      }
     }
+    // Open the new item
     expandedLeftItems.value = {
       ...expandedLeftItems.value,
       [id]: true,
@@ -105,20 +61,25 @@ const toggleLeftExpanded = (id: string): void => {
 
 const toggleRightExpanded = (id: string): void => {
   if (expandedRightItems.value[id]) {
+    // Close the item
     expandedRightItems.value = {
       ...expandedRightItems.value,
       [id]: false,
     };
     rightOpenOrder.value = rightOpenOrder.value.filter((item) => item !== id);
   } else {
+    // Check if we already have 2 items open
     if (rightOpenOrder.value.length >= 2) {
-      const oldestId = rightOpenOrder.value[0] as string;
-      expandedRightItems.value = {
-        ...expandedRightItems.value,
-        [oldestId]: false,
-      };
-      rightOpenOrder.value = rightOpenOrder.value.slice(1);
+      const oldestId = rightOpenOrder.value[0];
+      if (oldestId) {
+        expandedRightItems.value = {
+          ...expandedRightItems.value,
+          [oldestId]: false,
+        };
+        rightOpenOrder.value = rightOpenOrder.value.slice(1);
+      }
     }
+    // Open the new item
     expandedRightItems.value = {
       ...expandedRightItems.value,
       [id]: true,
@@ -129,82 +90,176 @@ const toggleRightExpanded = (id: string): void => {
 </script>
 
 <template>
-  <div class="max-w-4xl mx-auto px-4">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
-      <div class="space-y-4">
-        <div v-for="lang in leftColumnLanguages" :key="lang.id" class="bg-white rounded-lg shadow-md overflow-hidden">
-          <button
-            @click="toggleLeftExpanded(lang.id)"
-            :class="[
-              `w-full p-4 flex items-center justify-between transition-all duration-200 text-white font-semibold text-lg ${majorDatas[major]?.bgColor} ${majorDatas[major]?.hoverBgColor}`,
-            ]"
-          >
-            <span>{{ lang.title }}</span>
-            <svg
-              v-if="expandedLeftItems[lang.id]"
-              class="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
-            </svg>
-            <svg v-else class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-            </svg>
-          </button>
+  <div class="w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-10 lg:py-12">
+    <div class="max-w-6xl mx-auto">
+      <!-- Header Section -->
+      <div class="mb-8 sm:mb-10">
+        <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 text-center">
+          Apa Saja Yang Dipelajari Di Jurusan {{ majorDatas?.[major]?.nameMajor || 'RPL' }} ?
+        </h2>
+      </div>
 
-          <div
-            :class="[
-              'transition-all duration-300 ease-in-out overflow-hidden',
-              expandedLeftItems[lang.id] ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0',
-            ]"
+      <!-- Two Column Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+        <!-- Left Column -->
+        <div class="space-y-4">
+          <div 
+            v-for="topic in leftColumnTopics" 
+            :key="topic.id"
+            class="transition-all duration-300"
           >
-            <div class="p-6 bg-white">
-              <p class="text-gray-700 leading-relaxed">
-                {{ lang.description }}
-              </p>
+            <!-- Collapsed Button -->
+            <button
+              v-if="!expandedLeftItems[topic.id]"
+              @click="toggleLeftExpanded(topic.id)"
+              :class="[
+                'w-full px-5 py-3.5 flex items-center justify-between rounded-md transition-all duration-200',
+                majorDatas?.[major]?.bgColor || 'bg-orange-500',
+                majorDatas?.[major]?.hoverBgColor || 'hover:bg-orange-600'
+              ]"
+            >
+              <span class="text-black font-bold text-sm sm:text-base uppercase tracking-wide">
+                {{ topic.title }}
+              </span>
+              
+              <!-- Plus Icon -->
+              <div class="w-7 h-7 flex items-center justify-center bg-white rounded flex-shrink-0 ml-3">
+                <svg 
+                  class="w-5 h-5 text-orange-500" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" />
+                </svg>
+              </div>
+            </button>
+
+            <!-- Expanded Card -->
+            <div
+              v-else
+              class="bg-white rounded-md overflow-hidden border border-gray-200"
+            >
+              <!-- Header -->
+              <button
+                @click="toggleLeftExpanded(topic.id)"
+                :class="[
+                  'w-full px-5 py-3.5 flex items-center justify-between transition-all duration-200',
+                  majorDatas?.[major]?.bgColor || 'bg-orange-500',
+                  majorDatas?.[major]?.hoverBgColor || 'hover:bg-orange-600'
+                ]"
+              >
+                <span class="text-black font-bold text-sm sm:text-base uppercase tracking-wide">
+                  {{ topic.title }}
+                </span>
+                
+                <!-- Minus Icon -->
+                <div class="w-7 h-7 flex items-center justify-center bg-white rounded flex-shrink-0 ml-3">
+                  <svg 
+                    class="w-5 h-5 text-orange-500" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M20 12H4" />
+                  </svg>
+                </div>
+              </button>
+
+              <!-- Content -->
+              <div class="p-5 sm:p-6 bg-white">
+                <p class="text-gray-700 text-sm sm:text-base leading-relaxed">
+                  {{ topic.description }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="space-y-4">
+          <div 
+            v-for="topic in rightColumnTopics" 
+            :key="topic.id"
+            class="transition-all duration-300"
+          >
+            <!-- Collapsed Button -->
+            <button
+              v-if="!expandedRightItems[topic.id]"
+              @click="toggleRightExpanded(topic.id)"
+              :class="[
+                'w-full px-5 py-3.5 flex items-center justify-between rounded-md transition-all duration-200',
+                majorDatas?.[major]?.bgColor || 'bg-orange-500',
+                majorDatas?.[major]?.hoverBgColor || 'hover:bg-orange-600'
+              ]"
+            >
+              <span class="text-black font-bold text-sm sm:text-base uppercase tracking-wide">
+                {{ topic.title }}
+              </span>
+              
+              <!-- Plus Icon -->
+              <div class="w-7 h-7 flex items-center justify-center bg-white rounded flex-shrink-0 ml-3">
+                <svg 
+                  class="w-5 h-5 text-orange-500" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" />
+                </svg>
+              </div>
+            </button>
+
+            <!-- Expanded Card -->
+            <div
+              v-else
+              class="bg-white rounded-md overflow-hidden border border-gray-200"
+            >
+              <!-- Header -->
+              <button
+                @click="toggleRightExpanded(topic.id)"
+                :class="[
+                  'w-full px-5 py-3.5 flex items-center justify-between transition-all duration-200',
+                  majorDatas?.[major]?.bgColor || 'bg-orange-500',
+                  majorDatas?.[major]?.hoverBgColor || 'hover:bg-orange-600'
+                ]"
+              >
+                <span class="text-black font-bold text-sm sm:text-base uppercase tracking-wide">
+                  {{ topic.title }}
+                </span>
+                
+                <!-- Minus Icon -->
+                <div class="w-7 h-7 flex items-center justify-center bg-white rounded flex-shrink-0 ml-3">
+                  <svg 
+                    class="w-5 h-5 text-orange-500" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M20 12H4" />
+                  </svg>
+                </div>
+              </button>
+
+              <!-- Content -->
+              <div class="p-5 sm:p-6 bg-white">
+                <p class="text-gray-700 text-sm sm:text-base leading-relaxed">
+                  {{ topic.description }}
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="space-y-4">
-        <div v-for="lang in rightColumnLanguages" :key="lang.id" class="bg-white rounded-lg shadow-md overflow-hidden">
-          <button
-            @click="toggleRightExpanded(lang.id)"
-            :class="[
-              `w-full p-4 flex items-center justify-between transition-all duration-200 text-white font-semibold text-lg ${majorDatas[major]?.bgColor} ${majorDatas[major]?.hoverBgColor}`,
-            ]"
-          >
-            <span>{{ lang.title }}</span>
-            <svg
-              v-if="expandedRightItems[lang.id]"
-              class="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
-            </svg>
-            <svg v-else class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-            </svg>
-          </button>
-
-          <div
-            :class="[
-              'transition-all duration-300 ease-in-out overflow-hidden',
-              expandedRightItems[lang.id] ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0',
-            ]"
-          >
-            <div class="p-6 bg-white">
-              <p class="text-gray-700 leading-relaxed">
-                {{ lang.description }}
-              </p>
-            </div>
-          </div>
-        </div>
+      <!-- Empty State -->
+      <div 
+        v-if="leftColumnTopics.length === 0 && rightColumnTopics.length === 0" 
+        class="text-center py-12"
+      >
+        <p class="text-gray-500 text-base">
+          Belum ada topik pembelajaran untuk jurusan ini.
+        </p>
       </div>
     </div>
   </div>
