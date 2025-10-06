@@ -124,6 +124,16 @@ const newsData = computed(() => {
   return response?.data || []
 })
 
+// Fetch organizations data from API
+const { data: organizationsResponse } = await useFetch('/api/organizations', {
+  query: { limit: 10 }
+})
+
+const organizationsData = computed(() => {
+  const response = organizationsResponse.value as { data?: any[], total?: number } | null
+  return response?.data || []
+})
+
 // Define emit function
 const emit = defineEmits<{
   close: []
@@ -303,9 +313,28 @@ const menuItems = [
     title: "Informasi",
     submenu: [
       { title: "Berita", desc: "Berita terbaru sekolah", icon: "lucide:newspaper", to: "/berita", external: false, tags: ["berita", "news"] },
-      { title: "Organisasi", desc: "Organisasi yang ada di sekolah", icon: "lucide:person-standing", to: "/organisasi", external: false, tags: ["organisasi", "organization"] },
+      { title: "Organisasi", desc: "Semua organisasi sekolah", icon: "lucide:person-standing", to: "/organisasi", external: false, tags: ["organisasi", "organization", "semua"] },
       { title: "Extracurricular", desc: "Ekstrakurikuler yang ada di sekolah", icon: "lucide:workflow", to: "/ekstrakurikuler/", external: false, tags: ["ekstrakurikuler", "extracurricular", "extra"] },
       { title: "Events", desc: "Acara yang sedang/akan berlansung di sekolah", icon: "lucide:hand-metal", to: "/acara", external: false, tags: ["events", "acara"] },
+    ],
+  },
+  {
+    title: "Organisasi",
+    submenu: [
+      { title: "Semua Organisasi", desc: "Daftar lengkap organisasi sekolah", icon: "lucide:users", to: "/organisasi", external: false, tags: ["organisasi", "semua", "daftar"] },
+      ...organizationsData.value.map((org: any) => ({
+        title: org.name,
+        desc: org.description,
+        icon: "lucide:shield",
+        to: `/organisasi/${org.slug}`,
+        external: false,
+        tags: [
+          "organisasi",
+          org.name.toLowerCase(),
+          ...org.name.toLowerCase().split(' '),
+          ...(org.description?.toLowerCase().split(' ').filter((word: string) => word.length > 3) || [])
+        ]
+      }))
     ],
   },
   {
@@ -354,6 +383,13 @@ const menuItems = [
   {
     title: "Layanan",
     submenu: [
+      { title: "E-Dapodik", desc: "Sistem Dapodik", icon: "lucide:database", to: "http://dapodik.smkn2-singosari.sch.id/", external: true, tags: ["dapodik", "data", "layanan"] },
+      { title: "E-Perpustakaan", desc: "Perpustakaan Digital", icon: "lucide:book-open", to: "http://perpus.smkn2-singosari.sch.id/", external: true, tags: ["perpustakaan", "library", "buku", "layanan"] },
+      { title: "E-Prakerin", desc: "Sistem Praktek Kerja Industri", icon: "lucide:briefcase", to: "http://prakerin.smkn2-singosari.sch.id/", external: true, tags: ["prakerin", "pkl", "magang", "industri", "layanan"] },
+      { title: "E-Raport", desc: "Raport Digital", icon: "lucide:file-text", to: "http://eraportbaru.smkn2-singosari.sch.id/", external: true, tags: ["raport", "nilai", "rapor", "layanan"] },
+      { title: "E-BKK", desc: "Bursa Kerja Khusus", icon: "lucide:users", to: "http://bkk.smkn2-singosari.sch.id", external: true, tags: ["bkk", "bursa", "kerja", "lowongan", "layanan"] },
+      { title: "E-DataCenter", desc: "Data Center Sekolah", icon: "lucide:hard-drive", to: "http://cloud.smkn2-singosari.sch.id/", external: true, tags: ["datacenter", "cloud", "storage", "layanan"] },
+      { title: "E-Kelulusan", desc: "Informasi Kelulusan", icon: "lucide:graduation-cap", to: "http://kelulusan.smkn2-singosari.sch.id/", external: true, tags: ["kelulusan", "lulus", "graduation", "layanan"] },
       { title: "Kementerian Pendidikan dan Kebudayaan", desc: "Situs resmi Kemdikbud", icon: "lucide:external-link", to: "https://www.kemdikbud.go.id", external: true, tags: ["kemdikbud", "pendidikan", "layanan"] },
       { title: "Dinas Pendidikan Jawa Timur", desc: "Dinas Pendidikan Provinsi Jawa Timur", icon: "lucide:external-link", to: "https://www.disdik.jatimprov.go.id", external: true, tags: ["disdik", "jatim", "pendidikan", "layanan"] },
       { title: "Pemerintah Kabupaten Malang", desc: "Situs resmi Pemkab Malang", icon: "lucide:external-link", to: "https://www.malangkab.go.id", external: true, tags: ["malangkab", "pemerintah", "kabupaten", "layanan"] },
@@ -414,11 +450,11 @@ const filteredMenuItems = computed(() => {
       
       queryWords.forEach(queryWord => {
         if (queryWord.length > 2) {
-          titleWords.forEach(titleWord => {
+          titleWords.forEach((titleWord: string) => {
             if (titleWord.startsWith(queryWord)) score += 40
             else if (titleWord.includes(queryWord)) score += 20
           })
-          descWords.forEach(descWord => {
+          descWords.forEach((descWord: string) => {
             if (descWord.startsWith(queryWord)) score += 25
             else if (descWord.includes(queryWord)) score += 15
           })

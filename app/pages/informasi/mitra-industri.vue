@@ -157,82 +157,81 @@ const filteredPartners = computed(() => {
 </script>
 
 <template>
-    <section class="w-full h-fit bg-black p-4 py-20">
-        <div class="max-w-7xl mx-auto">
-            <!-- Title -->
-            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white text-center mb-6">
-                MITRA INDUSTRI
-            </h1>
-
-            <!-- Description -->
-            <p class="text-white text-center text-sm md:text-base lg:text-lg mb-10 max-w-5xl mx-auto px-4">
-                Mitra industri yang bekerjasama dengan SMK Negeri 02 Singosari dalam bidang Teknik hingga E-Craft
-                baik itu kerjasama untuk Prakrin (PKL) ataupun bekerja sama dalam urusan mencari SDM yang jujur,
-                sopan dan berkualitas tinggi
-            </p>
+    <div class="min-h-screen bg-gradient-to-b from-white via-blue-50 to-white py-24">
+        <div class="container mx-auto px-4 sm:px-6">
+            <!-- Page Header -->
+            <div class="text-center mb-12">
+                <div class="bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl shadow-xl rounded-2xl px-10 py-6 border border-blue-200 inline-block mb-6">
+                    <h1 class="text-4xl md:text-5xl font-bold text-white">MITRA INDUSTRI</h1>
+                </div>
+                <p class="text-gray-600 max-w-4xl mx-auto text-lg leading-relaxed">
+                    Mitra industri yang bekerjasama dengan SMK Negeri 02 Singosari dalam bidang Teknik hingga E-Craft
+                    baik itu kerjasama untuk Prakrin (PKL) ataupun bekerja sama dalam urusan mencari SDM yang jujur,
+                    sopan dan berkualitas tinggi
+                </p>
+            </div>
 
             <!-- Filter Buttons -->
-            <div class="flex flex-wrap justify-center gap-3 md:gap-4">
+            <div class="flex flex-wrap justify-center gap-3 mb-12">
                 <button
                     v-for="filter in filters"
                     :key="filter.id"
                     @click="selectFilter(filter.id)"
                     :class="[
-                        'px-6 md:px-8 py-2 md:py-3 rounded-full font-semibold text-sm md:text-base transition-all duration-300',
+                        'px-6 py-2 rounded-full font-semibold text-sm transition-all duration-300',
                         selectedFilter === filter.id
-                            ? 'bg-gray-300 text-black'
-                            : 'bg-transparent text-white border-2 border-white hover:bg-white hover:text-black'
+                            ? 'bg-blue-600 text-white shadow-md'
+                            : 'bg-white text-gray-700 border-2 border-gray-200 hover:border-blue-600 hover:text-blue-600'
                     ]"
                 >
                     {{ filter.label }}
                 </button>
             </div>
-        </div>
-    </section>
 
-    <!-- Partners Grid Section -->
-    <section class="w-full h-fit bg-blue-600 p-6 md:p-10 lg:p-16">
-        <div class="max-w-7xl mx-auto">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div
-                    v-for="partner in filteredPartners"
-                    :key="partner.id"
-                    class="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-300"
-                >
-                    <!-- Card Header with Logo and Name -->
-                    <div class="flex items-start gap-4 mb-4">
-                        <!-- Logo -->
-                        <div class="w-16 h-16 bg-gray-700 rounded-xl flex-shrink-0 overflow-hidden">
-                            <img 
-                                :src="partner.logo" 
-                                :alt="partner.name"
-                                class="w-full h-full object-cover"
-                            />
-                        </div>
-                        <!-- Company Name -->
-                        <div class="flex-1">
-                            <h3 class="font-bold text-base md:text-lg text-gray-900 leading-tight">
-                                {{ partner.name }}
-                            </h3>
-                        </div>
-                    </div>
-
-                    <!-- Description -->
-                    <p class="text-sm text-gray-700 leading-relaxed mb-4">
-                        {{ partner.description }}
-                    </p>
-
-                    <!-- Lihat Selengkapnya Button -->
-                    <button
-                        @click="openDialog(partner)"
-                        class="text-blue-600 hover:text-blue-800 font-semibold text-sm transition-colors duration-200"
+            <!-- Partners Grid -->
+            <div class="max-w-7xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div
+                        v-for="partner in filteredPartners"
+                        :key="partner.id"
+                        class="bg-white rounded-2xl shadow-xl border-2 border-blue-100 p-6 hover:shadow-2xl hover:border-blue-200 transition-all duration-300"
                     >
-                        Lihat Selengkapnya...
-                    </button>
+                        <!-- Card Header with Logo and Name -->
+                        <div class="flex items-start gap-4 mb-4">
+                            <!-- Logo -->
+                            <div class="w-16 h-16 bg-blue-100 rounded-xl flex-shrink-0 overflow-hidden">
+                                <img 
+                                    :src="partner.logo" 
+                                    :alt="partner.name"
+                                    class="w-full h-full object-cover"
+                                />
+                            </div>
+                            <!-- Company Name -->
+                            <div class="flex-1">
+                                <h3 class="font-bold text-lg text-gray-900 leading-tight">
+                                    {{ partner.name }}
+                                </h3>
+                            </div>
+                        </div>
+
+                        <!-- Description -->
+                        <p class="text-sm text-gray-600 leading-relaxed mb-4">
+                            {{ partner.description }}
+                        </p>
+
+                        <!-- Lihat Selengkapnya Button -->
+                        <button
+                            @click="openDialog(partner)"
+                            class="text-blue-600 hover:text-blue-800 font-semibold text-sm transition-colors inline-flex items-center group"
+                        >
+                            Lihat Selengkapnya
+                            <Icon name="lucide:arrow-right" size="16" class="ml-1 group-hover:translate-x-1 transition-transform" />
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
     <!-- Fullscreen Dialog -->
     <Teleport to="body">
@@ -242,63 +241,63 @@ const filteredPartners = computed(() => {
                 class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4"
                 @click.self="closeDialog"
             >
-                <div class="bg-white rounded-3xl w-full max-w-5xl max-h-[90vh] overflow-y-auto shadow-2xl">
+                <div class="bg-white rounded-2xl w-full max-w-5xl max-h-[90vh] overflow-y-auto shadow-2xl border-2 border-blue-100">
                     <!-- Close Button -->
                     <button
                         @click="closeDialog"
-                        class="absolute top-6 right-6 text-gray-500 hover:text-gray-700 text-3xl font-bold z-10"
+                        class="sticky top-4 right-4 float-right text-gray-500 hover:text-gray-700 bg-white rounded-full p-2 shadow-md hover:shadow-lg transition-all z-10"
                     >
-                        ×
+                        <Icon name="lucide:x" size="24" />
                     </button>
 
-                    <div class="p-8 md:p-12">
+                    <div class="p-8 md:p-12 clear-both">
                         <div class="grid md:grid-cols-2 gap-8 md:gap-12">
                             <!-- Left Side - Carousel -->
                             <div class="flex flex-col">
                                 <!-- Main Image with Carousel -->
-                                <div class="relative bg-gray-100 rounded-2xl overflow-hidden aspect-square mb-6">
-                                    <img
-                                        :src="selectedPartner.images[currentImageIndex]"
-                                        :alt="selectedPartner.name"
-                                        class="w-full h-full object-contain p-8"
-                                    />
-                                    
-                                    <!-- Previous Button -->
-                                    <button
-                                        v-if="selectedPartner.images.length > 1"
-                                        @click="prevImage"
-                                        class="absolute left-4 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-2 shadow-lg transition-all"
-                                    >
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                                        </svg>
-                                    </button>
-
-                                    <!-- Next Button -->
-                                    <button
-                                        v-if="selectedPartner.images.length > 1"
-                                        @click="nextImage"
-                                        class="absolute right-4 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 hover:bg-opacity-100 rounded-full p-2 shadow-lg transition-all"
-                                    >
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                        </svg>
-                                    </button>
-
-                                    <!-- Dots Indicator -->
-                                    <div
-                                        v-if="selectedPartner.images.length > 1"
-                                        class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2"
-                                    >
+                                <div class="bg-white rounded-2xl border-2 border-blue-100 overflow-hidden shadow-lg">
+                                    <div class="relative aspect-square">
+                                        <div class="w-full h-full flex items-center justify-center bg-blue-50 p-8">
+                                            <img
+                                                :src="selectedPartner.images[currentImageIndex]"
+                                                :alt="selectedPartner.name"
+                                                class="max-w-full max-h-full object-contain"
+                                            />
+                                        </div>
+                                        
+                                        <!-- Previous Button -->
                                         <button
-                                            v-for="(image, index) in selectedPartner.images"
-                                            :key="index"
-                                            @click="goToImage(index)"
-                                            :class="[
-                                                'w-2 h-2 rounded-full transition-all',
-                                                currentImageIndex === index ? 'bg-blue-600 w-6' : 'bg-gray-400'
-                                            ]"
-                                        />
+                                            v-if="selectedPartner.images.length > 1"
+                                            @click="prevImage"
+                                            class="absolute left-4 top-1/2 -translate-y-1/2 bg-white hover:bg-blue-600 hover:text-white rounded-full p-2 shadow-lg transition-all"
+                                        >
+                                            <Icon name="lucide:chevron-left" size="24" />
+                                        </button>
+
+                                        <!-- Next Button -->
+                                        <button
+                                            v-if="selectedPartner.images.length > 1"
+                                            @click="nextImage"
+                                            class="absolute right-4 top-1/2 -translate-y-1/2 bg-white hover:bg-blue-600 hover:text-white rounded-full p-2 shadow-lg transition-all"
+                                        >
+                                            <Icon name="lucide:chevron-right" size="24" />
+                                        </button>
+
+                                        <!-- Dots Indicator -->
+                                        <div
+                                            v-if="selectedPartner.images.length > 1"
+                                            class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2"
+                                        >
+                                            <button
+                                                v-for="(image, index) in selectedPartner.images"
+                                                :key="index"
+                                                @click="goToImage(index)"
+                                                :class="[
+                                                    'rounded-full transition-all',
+                                                    currentImageIndex === index ? 'bg-blue-600 w-6 h-2' : 'bg-gray-300 w-2 h-2 hover:bg-gray-400'
+                                                ]"
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -306,51 +305,43 @@ const filteredPartners = computed(() => {
                             <!-- Right Side - Content -->
                             <div class="flex flex-col">
                                 <!-- Company Name -->
-                                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-                                    {{ selectedPartner.name }}
-                                </h2>
+                                <div class="bg-gradient-to-r from-blue-600 to-blue-800 rounded-xl px-6 py-4 border border-blue-200 mb-6">
+                                    <h2 class="text-2xl md:text-3xl font-bold text-white">
+                                        {{ selectedPartner.name }}
+                                    </h2>
+                                </div>
 
                                 <!-- Description Title -->
-                                <h3 class="text-lg font-bold text-gray-900 mb-3">
-                                    Deskripsi Industri :
+                                <h3 class="text-lg font-bold text-gray-800 mb-3 flex items-center">
+                                    <Icon name="lucide:info" size="20" class="mr-2 text-blue-600" />
+                                    Deskripsi Industri
                                 </h3>
 
                                 <!-- Full Description -->
-                                <p class="text-gray-700 text-justify leading-relaxed mb-8">
-                                    {{ selectedPartner.fullDescription }}
-                                </p>
+                                <div class="bg-blue-50 border-l-4 border-blue-600 rounded-r-xl p-6 mb-8">
+                                    <p class="text-gray-700 text-justify leading-relaxed">
+                                        {{ selectedPartner.fullDescription }}
+                                    </p>
+                                </div>
 
                                 <!-- Navigation Buttons -->
                                 <div class="flex items-center justify-center gap-4 mt-auto">
                                     <!-- Kembali Button -->
                                     <button
                                         @click="closeDialog"
-                                        class="flex items-center gap-2 px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold rounded-lg transition-colors"
+                                        class="flex items-center gap-2 px-6 py-3 bg-white border-2 border-gray-200 hover:border-blue-600 hover:text-blue-600 text-gray-700 font-semibold rounded-lg transition-all"
                                     >
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                                        </svg>
+                                        <Icon name="lucide:arrow-left" size="18" />
                                         Kembali
                                     </button>
 
                                     <!-- Home Button -->
-                                    <button
-                                        class="p-3 bg-gray-200 hover:bg-gray-300 rounded-lg transition-colors"
+                                    <NuxtLink
+                                        to="/"
+                                        class="p-3 bg-white border-2 border-gray-200 hover:border-blue-600 hover:text-blue-600 rounded-lg transition-all"
                                     >
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-                                        </svg>
-                                    </button>
-
-                                    <!-- Selanjutnya Button -->
-                                    <button
-                                        class="flex items-center gap-2 px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold rounded-lg transition-colors"
-                                    >
-                                        Selanjutnya
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                        </svg>
-                                    </button>
+                                        <Icon name="lucide:home" size="20" />
+                                    </NuxtLink>
                                 </div>
                             </div>
                         </div>

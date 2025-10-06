@@ -1,176 +1,262 @@
 <script lang="ts" setup>
-interface ActivityProps {
-    image: string,
-    title: string,
-    desc: string
-}
+import { computed } from 'vue';
+import type { Extracurricular } from '~/models/Extracurricular';
 
 const route = useRoute();
-const extraName = route.params.extra as string;
+const extraSlug = computed(() => route.params.extra as string);
 
-const items = [
-    { image: '/images/placeholder.jpg', title: 'Kejuaraan Antar Sekolah Se-Surabaya', desc: 'Tim basket putra berhasil meraih juara 2 dalam kompetisi bergengsi yang diikuti 32 sekolah menengah atas di Surabaya dengan persaingan yang sangat ketat'},
-    { image: '/images/placeholder.jpg', title: 'Pelatihan Intensif Teknik Dasar', desc: 'Mengadakan pelatihan khusus bersama pelatih profesional untuk meningkatkan kemampuan dribbling, shooting, dan passing seluruh anggota ekstrakurikuler'},
-    { image: '/images/placeholder.jpg', title: 'Turnamen Internal Antar Kelas', desc: 'Event tahunan yang melibatkan seluruh siswa sekolah dalam kompetisi basket antar kelas untuk mempererat tali persaudaraan dan sportivitas'},
-    { image: '/images/placeholder.jpg', title: 'Workshop Strategi Permainan', desc: 'Sesi pembelajaran mendalam tentang taktik dan strategi permainan basket modern yang dipimpin langsung oleh mantan pemain profesional'},
-]
+// Fetch extracurricular data
+const { data: extraResponse, pending, error } = await useFetch(`/api/extracurriculars/${extraSlug.value}`);
+const extra = computed(() => extraResponse.value as Extracurricular | null);
 
-// Capitalize first letter for display
-const displayName = extraName.charAt(0).toUpperCase() + extraName.slice(1);
+// Fetch related extracurriculars
+const { data: relatedResponse } = await useFetch('/api/extracurriculars', {
+  query: { limit: 6 }
+});
+const relatedExtras = computed(() => {
+  const all = relatedResponse.value?.data || [];
+  return all.filter((e: any) => e.slug !== extraSlug.value).slice(0, 3);
+});
 
 useHead({
-  title: `${displayName} - Ekstrakurikuler - SMKN 2 Singosari`,
+  title: computed(() => extra.value ? `${extra.value.name} - Ekstrakurikuler SMKN 2 Singosari` : 'Ekstrakurikuler'),
   meta: [
     {
       name: 'description',
-      content: `Informasi lengkap tentang ekstrakurikuler ${displayName} di SMK Negeri 2 Singosari`
+      content: computed(() => extra.value?.description || 'Ekstrakurikuler SMK Negeri 2 Singosari')
     }
   ]
 });
 </script>
 
 <template>
-    <main class="bg-primary">
-        <section class="flex flex-col items-center justify-center gap-16 py-20 h-fit md:py-40 md:gap-30 bg-slate-50">
-            <h1 class="text-5xl font-bold tracking-wide text-center md:text-6xl lg:text-8xl text-slate-800">BASKET</h1>
-            <div class="flex items-center justify-center p-8 shadow-lg bg-zinc-600 rounded-2xl w-fit">
-                <div class="grid grid-cols-2 gap-8 text-white md:grid-cols-4 md:gap-12">
-                    <div class="flex flex-col gap-3 text-center">
-                        <p class="text-3xl font-bold md:text-4xl">50+</p>
-                        <p class="text-lg font-medium md:text-xl">Anggota</p>
+    <div class="py-30 min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50">
+        <!-- Loading State -->
+        <div v-if="pending" class="container mx-auto px-4 py-8">
+            <div class="bg-white rounded-2xl shadow-xl p-8 mb-8 animate-pulse">
+                <div class="h-8 bg-gray-200 rounded w-1/3 mb-4"></div>
+                <div class="h-4 bg-gray-200 rounded w-2/3"></div>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8 mb-8">
+                <div class="bg-white rounded-2xl shadow-xl p-6 animate-pulse">
+                    <div class="h-64 bg-gray-200 rounded"></div>
+                </div>
+                <div class="space-y-4">
+                    <div class="h-4 bg-gray-200 rounded animate-pulse"></div>
+                    <div class="h-4 bg-gray-200 rounded animate-pulse"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Error State -->
+        <div v-else-if="error || !extra" class="container mx-auto px-4 py-8">
+            <div class="bg-white rounded-2xl shadow-xl border-2 border-red-100 p-12 text-center">
+                <Icon name="lucide:alert-circle" size="64" class="text-red-400 mx-auto mb-4" />
+                <h1 class="text-2xl font-bold text-gray-800 mb-2">Ekstrakurikuler Tidak Ditemukan</h1>
+                <p class="text-gray-600 mb-6">Ekstrakurikuler yang Anda cari tidak tersedia atau telah dihapus.</p>
+                <NuxtLink to="/ekstrakurikuler" class="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-semibold">
+                    <Icon name="lucide:arrow-left" size="20" class="inline mr-2" />
+                    Kembali ke Daftar
+                </NuxtLink>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div v-else class="container mx-auto px-4 py-8">
+            <!-- Breadcrumb -->
+            <nav class="flex items-center space-x-2 text-sm text-gray-600 mb-6">
+                <NuxtLink to="/" class="hover:text-blue-600 transition">Home</NuxtLink>
+                <Icon name="lucide:chevron-right" size="16" />
+                <NuxtLink to="/ekstrakurikuler" class="hover:text-blue-600 transition">Ekstrakurikuler</NuxtLink>
+                <Icon name="lucide:chevron-right" size="16" />
+                <span class="text-gray-800 font-semibold">{{ extra.name }}</span>
+            </nav>
+
+            <!-- Hero Section -->
+            <div class="bg-gradient-to-r from-blue-600 to-blue-800 rounded-2xl shadow-2xl p-8 md:p-12 text-white mb-8">
+                <div class="flex items-center mb-4">
+                    <div class="p-3 bg-white/20 backdrop-blur-sm rounded-full mr-4">
+                        <Icon :name="extra.icon || 'lucide:activity'" size="32" />
                     </div>
-                    <div class="flex flex-col gap-3 text-center">
-                        <p class="text-3xl font-bold md:text-4xl">10+</p>
-                        <p class="text-lg font-medium md:text-xl">Juara</p>
+                    <div>
+                        <h1 class="text-4xl font-bold">{{ extra.name }}</h1>
+                        <p v-if="extra.category" class="text-blue-100 text-lg mt-1">{{ extra.category }}</p>
                     </div>
-                    <div class="flex flex-col gap-3 text-center">
-                        <p class="text-3xl font-bold md:text-4xl">5</p>
-                        <p class="text-lg font-medium md:text-xl">Tahun</p>
+                </div>
+                <p class="text-lg text-blue-50">{{ extra.description }}</p>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="bg-white rounded-2xl shadow-xl border-2 border-blue-100 p-8 max-w-4xl mx-auto mb-8">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+                    <div v-if="extra.memberCount" class="text-center">
+                        <p class="text-3xl md:text-4xl font-bold text-blue-600 mb-2">{{ extra.memberCount }}+</p>
+                        <p class="text-gray-600 font-medium">Anggota</p>
                     </div>
-                    <div class="flex flex-col gap-3 text-center">
-                        <p class="text-3xl font-bold md:text-4xl">3</p>
-                        <p class="text-lg font-medium md:text-xl">Pertemuan</p>
+                    <div v-if="extra.achievementCount" class="text-center">
+                        <p class="text-3xl md:text-4xl font-bold text-orange-600 mb-2">{{ extra.achievementCount }}+</p>
+                        <p class="text-gray-600 font-medium">Juara</p>
+                    </div>
+                    <div v-if="extra.yearEstablished" class="text-center">
+                        <p class="text-3xl md:text-4xl font-bold text-blue-600 mb-2">{{ new Date().getFullYear() - extra.yearEstablished }}</p>
+                        <p class="text-gray-600 font-medium">Tahun</p>
+                    </div>
+                    <div v-if="extra.meetingsPerWeek" class="text-center">
+                        <p class="text-3xl md:text-4xl font-bold text-orange-600 mb-2">{{ extra.meetingsPerWeek }}</p>
+                        <p class="text-gray-600 font-medium">Pertemuan</p>
                     </div>
                 </div>
             </div>
-        </section>
-        
-        <section class="flex items-center justify-center py-16 h-fit md:py-24">
-            <div class="flex flex-col items-center justify-center w-full max-w-6xl gap-12 px-6 lg:flex-row lg:gap-16">
-                <div class="w-full lg:max-w-2xl">
-                    <img src="/images/placeholder.jpg" alt="Kegiatan Ekstrakurikuler Basket" class="object-cover w-full rounded-lg shadow-md h-80 md:h-96">
-                </div>
-                <div class="w-full py-4">
-                    <h1 class="py-2 text-3xl font-bold tracking-wide md:text-4xl text-slate-800">Ekstrakurikuler Basket</h1>
-                    <hr class="w-24 mb-6 border-2 border-blue-600 md:w-32">
-                    <div class="p-8 bg-white border rounded-lg shadow-sm border-slate-200">
-                        <p class="text-lg leading-relaxed tracking-wide text-justify text-slate-700">
-                            Ekstrakurikuler basket sekolah kami telah berdiri sejak tahun 2019 dan menjadi salah satu wadah pengembangan bakat siswa di bidang olahraga. Dengan fasilitas lapangan yang memadai dan bimbingan pelatih berpengalaman, kami berkomitmen membentuk karakter sportif dan jiwa kompetitif siswa. Kegiatan latihan rutin dilaksanakan tiga kali seminggu dengan fokus pada pengembangan teknik dasar, strategi permainan, dan pembentukan mental juara yang kuat untuk menghadapi berbagai kompetisi.
-                        </p>
+
+            <!-- About Section -->
+            <div v-if="extra.fullDescription" class="bg-white rounded-2xl shadow-xl border-2 border-blue-100 overflow-hidden max-w-6xl mx-auto mb-8">
+                <div class="grid lg:grid-cols-2 gap-0">
+                    <div class="h-80 lg:h-auto">
+                        <img :src="extra.image || '/images/placeholder.jpg'" :alt="extra.name" class="object-cover w-full h-full" />
+                    </div>
+                    <div class="p-8 md:p-10 flex flex-col justify-center">
+                        <div class="bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl shadow-xl rounded-xl px-6 py-3 border border-blue-200 inline-block mb-6 w-fit">
+                            <h2 class="text-2xl md:text-3xl font-bold text-white">Tentang</h2>
+                        </div>
+                        <div class="text-gray-700 leading-relaxed text-lg prose prose-lg max-w-none" v-html="extra.fullDescription"></div>
                     </div>
                 </div>
             </div>
-        </section>
 
-        <section class="h-fit">
-            <div class=""></div>
-        </section>
+            <!-- Information Cards -->
+            <div class="grid md:grid-cols-2 gap-8 mb-8 max-w-6xl mx-auto">
+                <!-- Info Card -->
+                <div class="bg-white rounded-2xl shadow-xl border-2 border-blue-100 p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                        <Icon name="lucide:info" size="24" class="text-blue-600 mr-2" />
+                        Informasi
+                    </h2>
+                    <div class="space-y-4">
+                        <div v-if="extra.coach" class="flex items-start">
+                            <Icon name="lucide:user" size="20" class="text-blue-600 mr-3 mt-0.5" />
+                            <div>
+                                <p class="font-semibold text-gray-700">Pembina</p>
+                                <p class="text-gray-600">{{ extra.coach }}</p>
+                            </div>
+                        </div>
+                        <div v-if="extra.schedule" class="flex items-start">
+                            <Icon name="lucide:calendar" size="20" class="text-blue-600 mr-3 mt-0.5" />
+                            <div>
+                                <p class="font-semibold text-gray-700">Jadwal</p>
+                                <p class="text-gray-600">{{ extra.schedule }}</p>
+                            </div>
+                        </div>
+                        <div v-if="extra.location" class="flex items-start">
+                            <Icon name="lucide:map-pin" size="20" class="text-blue-600 mr-3 mt-0.5" />
+                            <div>
+                                <p class="font-semibold text-gray-700">Lokasi</p>
+                                <p class="text-gray-600">{{ extra.location }}</p>
+                            </div>
+                        </div>
+                        <div v-if="extra.fee" class="flex items-start">
+                            <Icon name="lucide:wallet" size="20" class="text-orange-600 mr-3 mt-0.5" />
+                            <div>
+                                <p class="font-semibold text-gray-700">Biaya</p>
+                                <p class="text-orange-600 font-bold">{{ extra.fee }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        <section class="flex items-center justify-center py-20 h-fit md:py-40 bg-slate-50">
-            <div class="flex flex-col items-center justify-center">
-                <h1 class="mb-4 text-4xl font-bold text-center md:text-5xl text-slate-800">Aktivitas Terkait</h1>
-                <p class="max-w-2xl mb-16 text-lg text-center text-slate-600">Berbagai kegiatan dan prestasi yang telah dicapai oleh ekstrakurikuler basket</p>
-                <div class="grid w-full max-w-6xl grid-cols-1 gap-8 px-6 py-8 md:grid-cols-2 md:gap-12 md:py-12">
-                    <div v-for="(item, idx) in items" :key="idx" class="overflow-hidden transition-shadow duration-300 bg-white rounded-lg shadow-md hover:shadow-lg">
-                        <img :src="item.image" alt="Aktivitas" class="object-cover w-full h-56 md:h-64">
+                <!-- Requirements Card -->
+                <div v-if="extra.requirements && extra.requirements.length > 0" class="bg-white rounded-2xl shadow-xl border-2 border-blue-100 p-6">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                        <Icon name="lucide:clipboard-check" size="24" class="text-blue-600 mr-2" />
+                        Persyaratan
+                    </h2>
+                    <ul class="space-y-3">
+                        <li v-for="(req, idx) in extra.requirements" :key="idx" class="flex items-start text-gray-700">
+                            <Icon name="lucide:check-circle" size="20" class="text-blue-600 mr-3 mt-0.5 flex-shrink-0" />
+                            <span>{{ req }}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Activities Section -->
+            <div v-if="extra.activities && extra.activities.length > 0" class="max-w-6xl mx-auto mb-8">
+                <div class="text-center mb-12">
+                    <div class="bg-gradient-to-r from-orange-500 to-orange-600 backdrop-blur-2xl shadow-xl rounded-2xl px-10 py-6 border border-orange-200 inline-block mb-4">
+                        <h2 class="text-3xl md:text-4xl font-bold text-white">Aktivitas Terkait</h2>
+                    </div>
+                    <p class="text-gray-600 text-lg">Berbagai kegiatan dan prestasi yang telah dicapai</p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div 
+                        v-for="(activity, idx) in extra.activities" 
+                        :key="idx"
+                        class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-2xl hover:border-blue-200 transition-all duration-300"
+                    >
+                        <img :src="activity.image || '/images/placeholder.jpg'" :alt="activity.title" class="object-cover w-full h-56" />
                         <div class="p-6">
-                            <h1 class="mb-4 text-xl font-bold md:text-2xl text-slate-800">{{ item.title }}</h1>
-                            <p class="mb-4 leading-relaxed text-slate-600">{{ item.desc }}</p>
-                            <h2 class="font-semibold tracking-wide text-right text-blue-600">15 Maret 2024</h2>
+                            <h3 class="text-xl font-bold text-gray-800 mb-3">{{ activity.title }}</h3>
+                            <p class="text-gray-600 leading-relaxed mb-4">{{ activity.description }}</p>
+                            <div v-if="activity.date" class="flex items-center text-blue-600 font-semibold">
+                                <Icon name="lucide:calendar" size="18" class="mr-2" />
+                                <span>{{ activity.date }}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
 
-        <section class="flex items-center justify-center py-20 h-fit md:py-40">
-            <div class="flex flex-col items-center justify-center">
-                <h1 class="mb-4 text-4xl font-bold text-center md:text-5xl text-slate-800">INFORMASI PENDAFTARAN BASKET</h1>
-                <p class="max-w-3xl px-6 mb-12 text-lg text-center text-slate-600">Bergabunglah dengan ekstrakurikuler basket dan kembangkan potensi olahraga Anda</p>
-                <div class="bg-slate-100 max-w-5xl w-full rounded-lg min-h-[500px] md:h-[640px] mt-8 md:mt-12 mx-6">
-                    <div class="h-full p-8 bg-white border rounded-lg shadow-sm md:p-12 border-slate-200">
-                        <h2 class="mb-8 text-2xl font-bold text-center md:text-3xl text-slate-800">Syarat dan Ketentuan Pendaftaran</h2>
-                        
-                        <div class="grid gap-8 md:grid-cols-2 md:gap-12">
-                            <div>
-                                <h3 class="flex items-center mb-6 text-xl font-bold text-blue-600">
-                                    <span class="flex items-center justify-center w-8 h-8 mr-3 text-sm bg-blue-100 rounded-full">1</span>
-                                    Persyaratan
-                                </h3>
-                                <ul class="space-y-3 text-slate-700">
-                                    <li class="flex items-start">
-                                        <span class="flex-shrink-0 w-2 h-2 mt-2 mr-3 bg-blue-600 rounded-full"></span>
-                                        <span>Siswa aktif kelas 7-11</span>
-                                    </li>
-                                    <li class="flex items-start">
-                                        <span class="flex-shrink-0 w-2 h-2 mt-2 mr-3 bg-blue-600 rounded-full"></span>
-                                        <span>Mengisi formulir pendaftaran</span>
-                                    </li>
-                                    <li class="flex items-start">
-                                        <span class="flex-shrink-0 w-2 h-2 mt-2 mr-3 bg-blue-600 rounded-full"></span>
-                                        <span>Surat persetujuan orang tua</span>
-                                    </li>
-                                    <li class="flex items-start">
-                                        <span class="flex-shrink-0 w-2 h-2 mt-2 mr-3 bg-blue-600 rounded-full"></span>
-                                        <span>Sertifikat kesehatan</span>
-                                    </li>
-                                    <li class="flex items-start">
-                                        <span class="flex-shrink-0 w-2 h-2 mt-2 mr-3 bg-blue-600 rounded-full"></span>
-                                        <span>Pas foto 3x4 (2 lembar)</span>
-                                    </li>
-                                </ul>
+            <!-- Registration Section -->
+            <div v-if="extra.registrationOpen" class="max-w-5xl mx-auto mb-8">
+                <div class="text-center mb-12">
+                    <div class="bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl shadow-xl rounded-2xl px-10 py-6 border border-blue-200 inline-block mb-4">
+                        <h2 class="text-3xl md:text-4xl font-bold text-white">Informasi Pendaftaran</h2>
+                    </div>
+                    <p class="text-gray-600 text-lg">Bergabunglah dengan ekstrakurikuler {{ extra.name.toLowerCase() }} dan kembangkan potensi Anda</p>
+                </div>
+                
+                <div class="bg-white rounded-2xl shadow-xl border-2 border-blue-100 p-8 md:p-12">
+                    <div v-if="extra.registrationPeriod" class="bg-gradient-to-r from-blue-50 to-orange-50 border-2 border-blue-200 rounded-xl p-6 text-center mb-8">
+                        <p class="text-2xl font-bold text-blue-800 mb-2">{{ extra.registrationPeriod }}</p>
+                        <p v-if="extra.contactInfo" class="text-gray-700 mb-4">Untuk informasi lebih lanjut, hubungi:</p>
+                        <div class="flex flex-col md:flex-row items-center justify-center gap-4 text-gray-700">
+                            <div v-if="extra.contactInfo" class="flex items-center">
+                                <Icon name="lucide:phone" size="18" class="mr-2 text-blue-600" />
+                                <span class="font-semibold">{{ extra.contactInfo }}</span>
                             </div>
-                            
-                            <div>
-                                <h3 class="flex items-center mb-6 text-xl font-bold text-blue-600">
-                                    <span class="flex items-center justify-center w-8 h-8 mr-3 text-sm bg-blue-100 rounded-full">2</span>
-                                    Informasi Latihan
-                                </h3>
-                                <div class="space-y-4 text-slate-700">
-                                    <div class="pl-4 border-l-4 border-blue-600">
-                                        <p class="font-semibold">Jadwal Latihan</p>
-                                        <p>Senin, Rabu, Jumat</p>
-                                    </div>
-                                    <div class="pl-4 border-l-4 border-blue-600">
-                                        <p class="font-semibold">Waktu</p>
-                                        <p>15.30 - 17.30 WIB</p>
-                                    </div>
-                                    <div class="pl-4 border-l-4 border-blue-600">
-                                        <p class="font-semibold">Tempat</p>
-                                        <p>Lapangan Basket Sekolah</p>
-                                    </div>
-                                    <div class="pl-4 border-l-4 border-blue-600">
-                                        <p class="font-semibold">Biaya</p>
-                                        <p>Rp 150.000/bulan</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="pt-8 mt-12 text-center border-t border-slate-200">
-                            <div class="p-6 border border-blue-200 rounded-lg bg-blue-50">
-                                <p class="mb-2 text-xl font-bold text-blue-800">Pendaftaran dibuka: 1-31 Juli 2024</p>
-                                <p class="mb-4 text-slate-700">Untuk informasi lebih lanjut, hubungi:</p>
-                                <div class="flex flex-col items-center justify-center gap-4 md:flex-row text-slate-600">
-                                    <span class="font-semibold">Coach Budi: 0812-3456-7890</span>
-                                    <span class="hidden md:inline">|</span>
-                                    <span>Ruang Guru Olahraga</span>
-                                </div>
+                            <span v-if="extra.contactInfo && extra.location" class="hidden md:inline text-gray-400">|</span>
+                            <div v-if="extra.location" class="flex items-center">
+                                <Icon name="lucide:map-pin" size="18" class="mr-2 text-orange-600" />
+                                <span>{{ extra.location }}</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-    </main>
+
+            <!-- Related Extracurriculars -->
+            <div v-if="relatedExtras.length > 0" class="bg-white rounded-2xl shadow-xl border-2 border-blue-100 p-8">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                    <Icon name="lucide:sparkles" size="24" class="text-blue-600 mr-2" />
+                    Ekstrakurikuler Lainnya
+                </h2>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <NuxtLink
+                        v-for="related in relatedExtras"
+                        :key="related.id"
+                        :to="`/ekstrakurikuler/${related.slug}`"
+                        class="bg-gradient-to-br from-blue-50 to-white rounded-2xl shadow-lg border-2 border-blue-100 p-6 hover:shadow-2xl hover:border-blue-300 transition-all duration-300 group text-center"
+                    >
+                        <div class="inline-block p-4 bg-blue-100 rounded-full mb-4 group-hover:bg-blue-200 transition-colors">
+                            <Icon :name="related.icon || 'lucide:activity'" size="32" class="text-blue-600" />
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors mb-2">
+                            {{ related.name }}
+                        </h3>
+                        <p v-if="related.category" class="text-sm text-blue-600 font-semibold">{{ related.category }}</p>
+                    </NuxtLink>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>

@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import type { News } from '~/models/News';
+
 definePageMeta({
   layout: "default",
 });
@@ -20,6 +22,37 @@ const props = withDefaults(defineProps<CounterProps>(), {
 const jurusanCount = ref(0);
 const siswaCount = ref(0);
 const prestasiCount = ref(0);
+
+// News section
+const selectedCategory = ref<string>('all');
+const newsCategories = ref<string[]>(['all', 'Pengumuman', 'Prestasi', 'Kerjasama', 'Program Baru']);
+const newsData = ref<News[]>([]);
+const isLoadingNews = ref(false);
+
+// Fetch news data
+const fetchNews = async (category: string = 'all') => {
+  isLoadingNews.value = true;
+  try {
+    const query: Record<string, any> = { limit: 8 };
+    if (category !== 'all') {
+      query.tag = category;
+    }
+    
+    const response = await $fetch('/api/news', { query });
+    newsData.value = response.data || [];
+  } catch (error) {
+    console.error('Error fetching news:', error);
+    newsData.value = [];
+  } finally {
+    isLoadingNews.value = false;
+  }
+};
+
+// Filter news by category
+const filterByCategory = (category: string) => {
+  selectedCategory.value = category;
+  fetchNews(category);
+};
 
 // Timeline data
 const isMobile = ref(false);
@@ -124,6 +157,9 @@ onMounted(() => {
     animateCounter(prestasiCount, props.prestasiTarget, props.duration);
   }, 100);
   
+  // Fetch initial news data
+  fetchNews();
+  
   // Check if mobile
   const checkMobile = () => {
     isMobile.value = window.innerWidth < 768;
@@ -202,219 +238,420 @@ useHead({
         </div>
       </div>
     </section>
-    <section id="information" class="flex flex-col items-center justify-center h-fit">
-      <div class="container flex flex-col gap-20 px-10 py-10 mx-auto text-center md:text-left md:flex-row md:px-30">
-        <div class="flex flex-col items-center shadow-lg rounded-2xl">
-          <img src="/images/kepsek.webp" width="600" height="600" alt="Foto Kepsek" class="rounded-t-2xl" />
-          <div class="py-6 rounded-lg w-fit bg-secondary">
-            <p class="text-lg font-bold">Sumijah S. Pd M.Si</p>
+    <section id="information" class="py-20 bg-gradient-to-b from-white via-blue-50 to-white">
+      <div class="container mx-auto px-4 md:px-10">
+        <div class="flex flex-col lg:flex-row items-center justify-center gap-12">
+          
+          <!-- Photo Card -->
+          <div class="lg:w-2/5 w-full max-w-md">
+            <div class="relative group">
+              <div class="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white transform transition-all duration-500 group-hover:scale-105 group-hover:shadow-3xl">
+                <img 
+                  src="/images/kepsek.webp" 
+                  width="600" 
+                  height="600" 
+                  alt="Foto Kepala Sekolah" 
+                  class="w-full h-auto"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-blue-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              </div>
+              <div class="absolute -bottom-4 -left-4 w-32 h-32 bg-gradient-to-br from-orange-500 to-orange-700 rounded-full opacity-20 blur-2xl -z-10"></div>
+            </div>
+            <div class="mt-6 bg-white rounded-2xl shadow-lg px-6 py-5 border border-gray-100 text-center">
+              <p class="text-xl font-bold text-gray-800">Sumijah S.Pd M.Si</p>
+              <p class="text-sm text-gray-600 mt-1">Kepala Sekolah SMKN 2 Singosari</p>
+            </div>
+          </div>
+
+          <!-- Content Area -->
+          <div class="lg:w-3/5 w-full max-w-3xl flex flex-col gap-6">
+            <div class="bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl p-6 shadow-xl rounded-2xl border border-blue-200">
+              <h2 class="text-3xl font-bold text-white text-center lg:text-left">Sambutan Kepala Sekolah</h2>
+            </div>
+            
+            <div class="bg-white shadow-xl rounded-2xl p-8 border-2 border-blue-100">
+              <h3 class="text-2xl font-bold text-gray-800 mb-4">Assalamu'alaikum Wr. Wb.</h3>
+              <div class="space-y-4 text-gray-600 leading-relaxed">
+                <p>
+                  Puji syukur kepada Allah SWT atas terbitnya website SMK Negeri 2 Singosari untuk menjawab kebutuhan informasi melalui teknologi informasi. Dalam memajukan pendidikan di era teknologi yang pesat, diperlukan sarana prasarana kondusif dan informasi bagi siswa, guru, orangtua maupun masyarakat.
+                </p>
+                <p>
+                  Besar harapan kami sarana ini memberi manfaat bagi semua pihak di lingkup pendidikan khususnya SMK Negeri 2 Singosari. Kami mengharapkan masukan dari berbagai pihak agar terus belajar dan meng-update sehingga tampilan, isi dan mutu website berkembang lebih baik. Terima kasih atas kerjasamanya, maju terus SMK Negeri 2 Singosari.
+                </p>
+                <p class="italic">Wassalamu'alaikum wr.wb.</p>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="flex flex-col justify-center w-full max-w-6xl gap-5">
-          <div class="flex flex-col gap-2">
-            <h1 class="text-4xl font-bold">Sambutan Kepala Sekolah</h1>
-          <hr class="border-2 border-zinc-100 max-w-md w-full">
-          <h2 class="text-2xl font-semibold">Sambutan</h2>
-          <p class="max-w-4xl w-full">
-            Assalamu'alaikum wr.wb. Puji syukur kepada Alloh SWT atas terbitnya website SMK Negeri 2 Singosari untuk
-            menjawab kebutuhan informasi melalui teknologi informasi. Dalam memajukan pendidikan di era teknologi yang
-            pesat, diperlukan sarana prasarana kondusif dan informasi bagi siswa, guru, orangtua maupun masyarakat.
-            Semoga website ini bermanfaat untuk informasi pendidikan, ilmu pengetahuan dan seputar SMK Negeri 2
-            Singosari. Besar harapan kami sarana ini memberi manfaat bagi semua pihak di lingkup pendidikan khususnya
-            SMK Negeri 2 Singosari.
-          </p>
-          <p class="w-full max-w-4xl">
-            Kami mengharapkan masukan dari berbagai pihak agar terus belajar dan meng-update sehingga tampilan, isi dan
-            mutu website berkembang lebih baik. Terima kasih atas kerjasamanya, maju terus SMK Negeri 2 Singosari.
-            Wassalamu'alaikum wr.wb.
-          </p>
-        </div>
-        </div>
       </div>
     </section>
-    <section class="h-min-screen" id="video-profil">
-      <div class="container mx-auto px-10 md:px-60 flex text-center flex-col items-center gap-5">
-        <div class="bg-secondary backdrop-blur-2xl py-4 px-8 rounded-lg shadow-md">
-          <h2 class="text-4xl font-bold">Video Profil</h2>
-        </div>
-        <ScriptYouTubePlayer video-id="Kks6HnhPzVQ">
-          <template #placeholder="{ placeholder }">
-            <div class="relative">
-              <img :src="'/images/placeholder.jpg'" alt="Video Placeholder" class="rounded-lg" />
+    <section class="h-min-screen py-20 bg-gradient-to-b from-white via-blue-50 to-white" id="video-profil">
+      <div class="container mx-auto px-4 md:px-10">
+        <div class="flex flex-col lg:flex-row items-center justify-center gap-12">
+          
+          <!-- Left Side: Video Player -->
+          <div class="lg:w-3/5 w-full">
+            <div class="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white group">
+              <ScriptYouTubePlayer video-id="Kks6HnhPzVQ" class="aspect-video">
+                <template #placeholder="{ placeholder }">
+                  <div class="relative w-full aspect-video">
+                    <img :src="'/images/placeholder.jpg'" alt="Video Placeholder" class="w-full h-full object-cover" />
+                    <div class="absolute inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm">
+                      <div class="bg-white/90 rounded-full p-5 shadow-xl group-hover:scale-110 transition-transform duration-300">
+                        <Icon name="lucide:play" size="40" class="text-blue-600" />
+                      </div>
+                    </div>
+                  </div>
+                </template>
+              </ScriptYouTubePlayer>
             </div>
-          </template>
-        </ScriptYouTubePlayer>
+          </div>
+
+          <!-- Right Side: Title and Description -->
+          <div class="lg:w-2/5 w-full max-w-md flex flex-col gap-6 text-center lg:text-left">
+            <div class="bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl p-6 shadow-xl rounded-2xl border border-blue-200">
+              <h2 class="text-3xl font-bold text-white">Video Profil Sekolah</h2>
+            </div>
+            
+            <div class="bg-white shadow-xl rounded-2xl p-8 border-2 border-blue-100">
+              <h3 class="text-xl font-semibold text-gray-800 mb-3">Mengenal SMKN 2 Singosari Lebih Dekat</h3>
+              <p class="text-gray-600 leading-relaxed">
+                Tonton video profil kami untuk melihat fasilitas, program keahlian, dan prestasi yang telah diraih oleh SMKN 2 Singosari.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
-    <section id="jejak-sejarah" class="h-min-screen py-20">
-      <div class="text-center container mx-auto flex flex-col items-center gap-5 px-10 md:px-0">
-        <div class="bg-secondary backdrop-blur-2xl p-4 shadow-md rounded-lg px-6 py-4">
-          <h2 class="text-3xl font-bold">Sejarah</h2>
+    <section id="jejak-sejarah" class="h-min-screen py-20 bg-gradient-to-b from-white via-blue-50 to-white overflow-hidden">
+      <div class="text-center container mx-auto flex flex-col items-center gap-8 px-4 md:px-10 relative">
+        <!-- Decorative Background Elements -->
+        <div class="absolute top-0 left-0 w-72 h-72 bg-blue-200 rounded-full opacity-20 blur-3xl -z-10"></div>
+        <div class="absolute bottom-0 right-0 w-96 h-96 bg-orange-200 rounded-full opacity-20 blur-3xl -z-10"></div>
+        
+        <!-- Section Header -->
+        <div class="flex flex-col items-center gap-4">
+          <div class="bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl p-6 shadow-xl rounded-2xl px-10 py-6 border border-blue-200">
+            <h2 class="text-4xl font-bold text-white">Jejak Sejarah Kami</h2>
+          </div>
+          <p class="text-gray-600 max-w-2xl text-lg">
+            Perjalanan panjang SMK Negeri 2 Singosari dalam mengembangkan pendidikan kejuruan berkualitas di Kabupaten Malang.
+          </p>
+          
+          <!-- Year Range Badge -->
+          <div class="flex items-center gap-3 bg-white px-6 py-3 rounded-full shadow-md border border-blue-100">
+            <Icon name="lucide:calendar" size="20" class="text-blue-600" />
+            <span class="font-semibold text-gray-700">2007 - 2023</span>
+            <span class="text-gray-400">|</span>
+            <span class="text-blue-600 font-bold">{{ timelineItems.length }} Milestone</span>
+          </div>
         </div>
-        <p>
-          Perjalanan SMK Negeri 2 Singosari dalam mengembangkan pendidikan kejuruan berkualitas di Kabupaten Malang.
-        </p>
         
         <!-- Mobile Timeline -->
         <div v-if="isMobile" class="relative flex flex-col items-center py-10 w-full">
-          <div class="absolute left-1/2 transform -translate-x-1/2 w-1 bg-blue-600 h-full top-0"></div>
-          <div v-for="(item, index) in timelineItems" :key="index" class="relative flex flex-col items-center mb-12 w-full max-w-md">
-            <div class="bg-white shadow-lg rounded-lg p-6 w-full text-center border border-neutral-300">
-              <div :class="['px-3 py-1 rounded-full w-fit mb-4 mx-auto', index % 2 === 0 ? 'bg-blue-100' : 'bg-orange-100']">
-                <span :class="['font-bold', index % 2 === 0 ? 'text-blue-600' : 'text-orange-600']">{{ item.year }}</span>
+          <div class="absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-blue-400 via-blue-600 to-blue-400 h-full top-0 rounded-full shadow-lg"></div>
+          
+          <div v-for="(item, index) in timelineItems" :key="index" class="relative flex flex-col items-center mb-16 w-full max-w-md group">
+            <!-- Connecting Line -->
+            <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-1 h-8 bg-gradient-to-b from-transparent to-blue-600"></div>
+            
+            <!-- Icon Circle -->
+            <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full flex items-center justify-center shadow-xl z-20 mb-6 group-hover:scale-110 transition-transform duration-300 border-4 border-white">
+              <Icon :name="item.icon" size="28" class="text-white" />
+            </div>
+            
+            <!-- Content Card -->
+            <div class="bg-white shadow-xl rounded-2xl p-6 w-full text-center border-2 border-blue-100 hover:border-blue-300 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+              <div :class="['inline-block px-4 py-2 rounded-full mb-4 font-bold text-lg', 
+                index % 2 === 0 ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white' : 'bg-gradient-to-r from-orange-500 to-orange-600 text-white']">
+                {{ item.year }}
               </div>
-              <h3 class="text-xl font-bold text-gray-800 mb-2">{{ item.title }}</h3>
-              <p class="text-gray-600 text-sm">{{ item.description }}</p>
+              <h3 class="text-xl font-bold text-gray-800 mb-3">{{ item.title }}</h3>
+              <p class="text-gray-600 text-sm leading-relaxed">{{ item.description }}</p>
             </div>
-            <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-md mt-4 z-10">
-              <Icon :name="item.icon" size="20" class="text-blue-600" />
-            </div>
-            <div v-if="index < timelineItems.length - 1" class="w-1 h-8 bg-blue-600 mt-4"></div>
           </div>
         </div>
         
         <!-- Desktop Timeline -->
-        <div v-else class="timeline">
-          <div class="timeline-line"></div>
-          <div v-for="(item, index) in timelineItems" :key="index" class="timeline-item" :class="index % 2 === 0 ? 'left' : 'right'">
-            <div class="timeline-content bg-secondary shadow-lg rounded-lg p-6 border border-neutral-300">
-              <div :class="['px-3 py-1 rounded-full w-fit mb-4', index % 2 === 0 ? 'bg-blue-100' : 'bg-orange-100']">
-                <span :class="['font-bold', index % 2 === 0 ? 'text-blue-600' : 'text-orange-600']">{{ item.year }}</span>
+        <div v-else class="timeline-container">
+          <div class="timeline-line-gradient"></div>
+          
+          <div v-for="(item, index) in timelineItems" :key="index" 
+               class="timeline-item" 
+               :class="index % 2 === 0 ? 'left' : 'right'">
+            
+            <!-- Content Card -->
+            <div class="timeline-content bg-white shadow-xl rounded-2xl p-8 border-2 border-blue-100 hover:border-blue-300 transition-all duration-300 hover:shadow-2xl hover:scale-105 group">
+              <div :class="['inline-block px-4 py-2 rounded-full mb-4 font-bold text-lg shadow-md',
+                index % 2 === 0 ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white' : 'bg-gradient-to-r from-orange-500 to-orange-600 text-white']">
+                {{ item.year }}
               </div>
-              <h3 class="text-xl font-bold text-gray-800 mb-2">{{ item.title }}</h3>
-              <p class="text-gray-600 text-sm">{{ item.description }}</p>
+              <h3 class="text-2xl font-bold text-gray-800 mb-3 group-hover:text-blue-600 transition-colors">{{ item.title }}</h3>
+              <p class="text-gray-600 leading-relaxed">{{ item.description }}</p>
+              
+              <!-- Decorative Corner -->
+              <div :class="['absolute top-4 w-3 h-3 rounded-full', 
+                index % 2 === 0 ? 'right-4 bg-blue-400' : 'left-4 bg-orange-400']"></div>
             </div>
-            <div class="timeline-marker">
-              <Icon :name="item.icon" size="24" :class="index % 2 === 0 ? 'text-blue-600' : 'text-orange-600'" />
+            
+            <!-- Marker Icon -->
+            <div class="timeline-marker-enhanced">
+              <div :class="['timeline-marker-inner', 
+                index % 2 === 0 ? 'bg-gradient-to-br from-blue-500 to-blue-700' : 'bg-gradient-to-br from-orange-500 to-orange-700']">
+                <Icon :name="item.icon" size="28" class="text-white" />
+              </div>
             </div>
+            
+            <!-- Connector Line -->
+            <div :class="['timeline-connector', index % 2 === 0 ? 'timeline-connector-left' : 'timeline-connector-right']"></div>
+          </div>
+        </div>
+        
+        <!-- Bottom CTA -->
+        <div class="mt-10 bg-gradient-to-r from-blue-600 to-blue-800 text-white px-8 py-6 rounded-2xl shadow-xl max-w-2xl">
+          <div class="flex items-center justify-between gap-6 flex-wrap">
+            <div class="flex-1 min-w-[200px]">
+              <h3 class="text-xl font-bold mb-2">Ingin Tahu Lebih Banyak?</h3>
+              <p class="text-blue-100 text-sm">Lihat profil lengkap sekolah kami</p>
+            </div>
+            <NuxtLink
+              to="/informasi/profile-sekolah"
+              class="inline-flex items-center gap-2 px-6 py-3 bg-white text-blue-600 font-semibold rounded-lg hover:bg-blue-50 transition-colors duration-200 shadow-md hover:shadow-lg"
+            >
+              Profil Sekolah
+              <Icon name="lucide:arrow-right" size="18" />
+            </NuxtLink>
           </div>
         </div>
       </div>
     </section>
-    <section class="h-fit flex items-center flex-col gap-10" id="Jurusan">
-      <div class="bg-secondary backdrop-blur-2xl py-4 px-8 rounded-lg shadow-md">
-        <h2 class="text-3xl font-bold">Daftar Jurusan</h2>
+    <section class="h-fit flex items-center flex-col gap-8 py-20" id="Jurusan">
+      <div class="bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl p-6 shadow-xl rounded-2xl px-10 py-6 border border-blue-200">
+        <h2 class="text-3xl font-bold text-white">Daftar Jurusan</h2>
       </div>
       <div class="container flex items-center justify-center mx-auto">
         <MajorCarousel />
       </div>
     </section>
-    <section>
-      <div class="container mx-auto flex flex-col items-center gap-5">
-        <div class="bg-secondary backdrop-blur-2xl px-8 py-4 shadow-md rounded-lg">
-          <h2 class="text-3xl font-bold">Prestasi</h2>
+    <section class="py-20 bg-gradient-to-b from-white via-blue-50 to-white">
+      <div class="container mx-auto flex flex-col items-center gap-8">
+        <div class="bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl p-6 shadow-xl rounded-2xl px-10 py-6 border border-blue-200">
+          <h2 class="text-3xl font-bold text-white">Prestasi Terbaru</h2>
         </div>
         
         <!-- Achievement Carousel -->
-        <div class="relative flex flex-col w-full max-w-sm gap-5 p-4 mx-auto border rounded-lg shadow-sm md:w-200 md:max-w-none bg-secondary md:p-8 border-neutral-300">
+        <div class="relative flex flex-col w-full max-w-4xl gap-6 p-8 mx-auto border-2 border-blue-100 rounded-2xl shadow-xl bg-white">
           <div class="overflow-hidden">
             <div class="flex transition-transform duration-500 ease-in-out" :style="{ transform: `translateX(-${currentAchievement * 100}%)` }">
               <div v-for="(achievement, index) in achievements" :key="index" class="flex-shrink-0 w-full">
-                <div class="flex flex-col items-center gap-6 md:flex-row md:gap-10">
-                  <img :src="achievement.image" class="w-48 md:w-80" alt="Achievement" />
-                  <div class="flex flex-col gap-5">
-                    <h3 class="text-2xl font-bold">{{ achievement.title }}</h3>
-                    <p>{{ achievement.description }}</p>
+                <div class="flex flex-col items-center gap-8 md:flex-row">
+                  <img :src="achievement.image" class="w-full md:w-1/3 rounded-lg shadow-md" alt="Achievement" />
+                  <div class="flex flex-col gap-4 text-center md:text-left">
+                    <h3 class="text-2xl font-bold text-gray-800">{{ achievement.title }}</h3>
+                    <p class="text-gray-600 leading-relaxed">{{ achievement.description }}</p>
                   </div>
                 </div>
               </div>
             </div> 
           </div>
 
-          <div class="border-t border-gray-300"></div>
+          <div class="border-t border-gray-200"></div>
 
-          <div class="flex justify-between">
-            <div class="flex gap-5">
-              <button @click="prevAchievement" class="flex items-center justify-center p-2 transition rounded-full shadow-lg cursor-pointer border-neutral-400 border-1 bg-tertiary hover:bg-blue-600 hover:border-blue-600 hover:text-white hover:scale-110">
-                <Icon name="lucide:chevron-left" size="24" />
+          <div class="flex justify-between items-center">
+            <div class="flex gap-4">
+              <button @click="prevAchievement" class="flex items-center justify-center p-3 transition rounded-full shadow-md cursor-pointer bg-gray-100 hover:bg-blue-600 hover:text-white hover:scale-110 border border-gray-200">
+                <Icon name="lucide:chevron-left" size="20" />
               </button>
-              <button @click="nextAchievement" class="flex items-center justify-center p-2 transition rounded-full shadow-lg cursor-pointer border-neutral-400 border-1 bg-tertiary hover:bg-blue-600 hover:border-blue-600 hover:text-white hover:scale-110">
-                <Icon name="lucide:chevron-right" size="24" />
+              <button @click="nextAchievement" class="flex items-center justify-center p-3 transition rounded-full shadow-md cursor-pointer bg-gray-100 hover:bg-blue-600 hover:text-white hover:scale-110 border border-gray-200">
+                <Icon name="lucide:chevron-right" size="20" />
               </button>
             </div>
-            <div class="flex items-center justify-center">
-              <h3 class="text-2xl font-bold">0{{ currentAchievement + 1 }}/0{{ achievements.length }}</h3>
+            <div class="font-bold text-gray-700">
+              <span class="text-2xl text-blue-600">{{ String(currentAchievement + 1).padStart(2, '0') }}</span>
+              <span class="text-gray-400 mx-1">/</span>
+              <span class="text-lg">{{ String(achievements.length).padStart(2, '0') }}</span>
             </div>
           </div>
         </div>
       </div>
     </section>
-    <section class="h-min-screen" id="berita">
-      <div class="container mx-auto flex flex-col items-center gap-5">
-        <div class="bg-secondary backdrop-blur-2xl py-4 px-8 shadow-md rounded-lg">
-          <h2 class="text-3xl font-bold">Berita</h2>
+    <section class="h-min-screen py-20" id="berita">
+      <div class="container mx-auto flex flex-col items-center gap-8">
+        <div class="bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl p-6 shadow-xl rounded-2xl px-10 py-6 border border-blue-200">
+          <h2 class="text-3xl font-bold text-white">Berita & Informasi</h2>
         </div>
-        <div class="flex flex-wrap gap-5 justify-center">
-          <p class="font-bold p-2 rounded-full bg-tertiary pl-4 pr-4">Kategori Berita</p>
-          <p class="font-bold p-2 rounded-full bg-tertiary pl-4 pr-4">Kategori Berita</p>
-          <p class="font-bold p-2 rounded-full bg-tertiary pl-4 pr-4">Kategori Berita</p>
-          <p class="font-bold p-2 rounded-full bg-tertiary pl-4 pr-4">Kategori Berita</p>
+        
+        <!-- Category Filter -->
+        <div class="flex flex-wrap gap-3 justify-center">
+          <button
+            v-for="category in newsCategories"
+            :key="category"
+            @click="filterByCategory(category)"
+            :class="[
+              'font-semibold px-4 py-2 rounded-full transition-all duration-300 text-sm',
+              selectedCategory === category
+                ? 'bg-blue-600 text-white shadow-md'
+                : 'bg-white text-gray-700 hover:bg-blue-50 border border-gray-200'
+            ]"
+          >
+            {{ category === 'all' ? 'Semua' : category }}
+          </button>
         </div>
-        <div class="grid w-full grid-cols-1 gap-5 mt-5 md:grid-cols-2 lg:grid-cols-4 place-items-center">
-          <div v-for="i in 8" :key="i" class="relative w-80 h-80 bg-secondary rounded-lg shadow-sm overflow-hidden group cursor-pointer border border-neutral-300">
-            <img src="/images/placeholder.jpg" width="auto" height="auto" class="w-full h-full object-cover" alt="Placeholder">
-            <div class="absolute bottom-0 left-0 right-0 p-4 transition-transform duration-500 group-hover:-translate-y-8 bg-black/20 bg-opacity-50">
-              <p class="font-bold text-white transition-transform duration-500 group-hover:-translate-y-2">Kami Lolos Enam Bidang Lomba untuk Menuju Tingkat Provinsi</p>
-              <p class="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-200 mt-2"></p>
-            </div>
+        
+        <!-- Loading State -->
+        <div v-if="isLoadingNews" class="flex items-center justify-center py-20">
+          <div class="flex flex-col items-center gap-3">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+            <p class="text-gray-600">Memuat berita...</p>
           </div>
+        </div>
+        
+        <!-- News Grid -->
+        <div v-else-if="newsData.length > 0" class="grid w-full grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-5 place-items-stretch px-4">
+          <NuxtLink
+            v-for="news in newsData"
+            :key="news.id"
+            :to="`/berita/${news.slug}`"
+            class="relative bg-white rounded-2xl shadow-lg overflow-hidden group cursor-pointer border border-gray-100 hover:shadow-xl transition-all duration-300 flex flex-col"
+          >
+            <div class="h-48 overflow-hidden">
+              <img :src="news.thumbnail" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" :alt="news.title">
+            </div>
+            <div class="p-5 flex flex-col flex-grow">
+              <p class="text-xs font-semibold text-blue-600 mb-2">{{ news.tags.join(', ') }}</p>
+              <h3 class="font-bold text-gray-800 mb-2 flex-grow">{{ news.title }}</h3>
+              <p class="text-sm text-gray-500 line-clamp-2">{{ news.subtitle }}</p>
+            </div>
+          </NuxtLink>
+        </div>
+        
+        <!-- Empty State -->
+        <div v-else class="flex flex-col items-center justify-center py-20 gap-4">
+          <Icon name="lucide:newspaper" size="64" class="text-gray-400" />
+          <p class="text-gray-600 text-lg">Tidak ada berita untuk kategori ini</p>
+        </div>
+        
+        <!-- View All Button -->
+        <div class="mt-8">
+          <NuxtLink
+            to="/berita"
+            class="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-200 shadow-md hover:shadow-lg"
+          >
+            Lihat Semua Berita
+            <Icon name="lucide:arrow-right" size="18" />
+          </NuxtLink>
         </div>
       </div>
     </section>
+    <FAQSection />
   </main>
 </template>
 
 <style scoped>
-.timeline {
+/* Desktop Timeline Styles */
+.timeline-container {
   position: relative;
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
-  padding: 2rem 0;
+  padding: 3rem 0;
 }
 
-.timeline-line {
+.timeline-line-gradient {
   position: absolute;
   left: 50%;
   top: 0;
   bottom: 0;
-  width: 2px;
-  background: gray;
+  width: 4px;
+  background: linear-gradient(to bottom, 
+    transparent,
+    #3b82f6 10%,
+    #2563eb 50%,
+    #3b82f6 90%,
+    transparent
+  );
   transform: translateX(-50%);
+  border-radius: 2px;
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
 }
 
 .timeline-item {
   position: relative;
-  margin-bottom: 3rem;
+  margin-bottom: 4rem;
   clear: both;
 }
 
 .timeline-item.left .timeline-content {
   text-align: right;
-  margin-right: 2rem;
-  width: 45%;
+  margin-right: 3rem;
+  width: 42%;
   float: left;
 }
 
 .timeline-item.right .timeline-content {
   text-align: left;
-  margin-left: 2rem;
-  width: 45%;
+  margin-left: 3rem;
+  width: 42%;
   float: right;
 }
 
-.timeline-marker {
+.timeline-marker-enhanced {
   position: absolute;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  background: white;
+  z-index: 10;
+}
+
+.timeline-marker-inner {
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
-  width: 48px;
-  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  border: 5px solid white;
+  transition: all 0.3s ease;
+}
+
+.timeline-item:hover .timeline-marker-inner {
+  transform: scale(1.15) rotate(5deg);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+}
+
+.timeline-connector {
+  position: absolute;
+  top: 50%;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(to right, transparent, #3b82f6);
+  transform: translateY(-50%);
+}
+
+.timeline-connector-left {
+  right: 50%;
+  margin-right: 32px;
+}
+
+.timeline-connector-right {
+  left: 50%;
+  margin-left: 32px;
+  background: linear-gradient(to left, transparent, #3b82f6);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.timeline-item {
+  animation: fadeInUp 0.6s ease-out;
 }
 </style>

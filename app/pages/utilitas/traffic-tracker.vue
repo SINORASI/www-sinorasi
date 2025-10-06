@@ -149,85 +149,138 @@ useHead({
 </script>
 
 <template>
-  <div class="font-serif py-50 px-4 sm:px-6 lg:px-8">
-    <div class="container mx-auto">
-      <div class="text-center mb-10">
-        <div class="bg-neutral-200/50 backdrop-blur-2xl p-4 rounded-lg border border-neutral-300">
-          <h2 class="text-3xl font-bold">Traffic Tracker</h2>
+  <div class="min-h-screen bg-gradient-to-b from-white via-blue-50 to-white py-24">
+    <div class="container mx-auto px-4 sm:px-6">
+      <!-- Page Header -->
+      <div class="text-center mb-12">
+        <div class="bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl shadow-xl rounded-2xl px-10 py-6 border border-blue-200 inline-block mb-4">
+          <h1 class="text-3xl md:text-4xl font-bold text-white">Traffic Tracker</h1>
         </div>
+        <p class="text-gray-600 text-lg max-w-3xl mx-auto">
+          Masukkan alamat rumah Anda untuk mendapatkan estimasi waktu tempuh ke SMK Negeri 2 Singosari, termasuk jarak, kondisi lalu lintas, dan informasi lainnya.
+        </p>
       </div>
-      <p class="text-center text-gray-700 mb-8">
-        Masukkan alamat rumah Anda untuk mendapatkan estimasi waktu tempuh ke SMK Negeri 2 Singosari, termasuk jarak, kondisi lalu lintas, dan informasi lainnya.
-      </p>
+
+      <!-- Form Section -->
       <div class="max-w-md mx-auto mb-12">
-        <form @submit.prevent="calculateRoute" class="bg-white p-6 rounded-lg shadow-md">
-          <div class="mb-4">
-            <label for="address" class="block text-sm font-medium text-gray-700 mb-2">Alamat Rumah</label>
+        <form @submit.prevent="calculateRoute" class="bg-white rounded-2xl shadow-xl border-2 border-blue-100 p-8">
+          <div class="mb-6">
+            <label for="address" class="block text-sm font-bold text-gray-800 mb-3 flex items-center">
+              <Icon name="lucide:map-pin" size="18" class="mr-2 text-blue-600" />
+              Alamat Rumah
+            </label>
             <input
               v-model="homeAddress"
               type="text"
               id="address"
               placeholder="Masukkan alamat lengkap"
-              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
               required
             />
           </div>
-          <div class="mb-4">
+          <div class="mb-6">
             <button
               type="button"
               @click="getCurrentLocation"
-              class="w-full bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded-md transition"
+              class="w-full bg-white border-2 border-gray-200 hover:border-blue-600 hover:text-blue-600 font-semibold py-3 px-4 rounded-xl transition-all shadow-sm hover:shadow-md flex items-center justify-center gap-2"
             >
+              <Icon name="lucide:locate-fixed" size="20" />
               Gunakan Lokasi Saat Ini
             </button>
           </div>
           <button
             type="submit"
             :disabled="loading"
-            class="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-semibold py-2 px-4 rounded-md transition"
+            class="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-bold py-4 px-4 rounded-xl transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2"
           >
+            <Icon v-if="loading" name="lucide:loader-2" class="animate-spin" size="20" />
+            <Icon v-else name="lucide:navigation" size="20" />
             {{ loading ? 'Menghitung...' : 'Hitung Estimasi' }}
           </button>
         </form>
-        <div v-if="error" class="mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
-          {{ error }}
+        
+        <!-- Error Message -->
+        <div v-if="error" class="mt-6 bg-red-50 border-l-4 border-red-600 rounded-r-xl p-4">
+          <div class="flex items-start">
+            <Icon name="lucide:alert-circle" size="20" class="text-red-600 mr-3 mt-0.5 flex-shrink-0" />
+            <p class="text-red-700">{{ error }}</p>
+          </div>
         </div>
       </div>
-      <div v-if="results" class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="bg-white p-6 rounded-lg shadow-md text-center">
-          <Icon name="lucide:clock" size="32" class="text-blue-600 mb-4 mx-auto" />
-          <h3 class="text-xl font-semibold mb-2">Waktu Tempuh</h3>
-          <p class="text-2xl font-bold text-blue-600">{{ results.time }}</p>
-          <p class="text-sm text-gray-600">Estimasi dengan kondisi lalu lintas saat ini</p>
+
+      <!-- Results Section -->
+      <div v-if="results" class="max-w-6xl mx-auto">
+        <!-- Main Stats Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div class="bg-white rounded-2xl shadow-xl border-2 border-blue-100 p-8 text-center hover:shadow-2xl transition-shadow">
+            <div class="inline-block p-4 bg-blue-100 rounded-full mb-4">
+              <Icon name="lucide:clock" size="32" class="text-blue-600" />
+            </div>
+            <h3 class="text-xl font-bold text-gray-800 mb-2">Waktu Tempuh</h3>
+            <p class="text-3xl font-bold text-blue-600 mb-2">{{ results.time }}</p>
+            <p class="text-sm text-gray-600">Estimasi dengan kondisi lalu lintas saat ini</p>
+          </div>
+
+          <div class="bg-white rounded-2xl shadow-xl border-2 border-orange-100 p-8 text-center hover:shadow-2xl transition-shadow">
+            <div class="inline-block p-4 bg-orange-100 rounded-full mb-4">
+              <Icon name="lucide:map-pin" size="32" class="text-orange-600" />
+            </div>
+            <h3 class="text-xl font-bold text-gray-800 mb-2">Jarak</h3>
+            <p class="text-3xl font-bold text-orange-600 mb-2">{{ results.distance }}</p>
+            <p class="text-sm text-gray-600">Jarak total perjalanan</p>
+          </div>
+
+          <div class="bg-white rounded-2xl shadow-xl border-2 border-blue-100 p-8 text-center hover:shadow-2xl transition-shadow">
+            <div class="inline-block p-4 bg-blue-100 rounded-full mb-4">
+              <Icon name="lucide:traffic-cone" size="32" class="text-blue-600" />
+            </div>
+            <h3 class="text-xl font-bold text-gray-800 mb-2">Kondisi Lalu Lintas</h3>
+            <p :class="results.traffic === 'Lancar' ? 'text-green-600' : results.traffic === 'Padat' ? 'text-yellow-600' : 'text-red-600'" class="text-3xl font-bold mb-2">
+              {{ results.traffic }}
+            </p>
+            <p class="text-sm text-gray-600">Berdasarkan data real-time</p>
+          </div>
         </div>
-        <div class="bg-white p-6 rounded-lg shadow-md text-center">
-          <Icon name="lucide:map-pin" size="32" class="text-blue-600 mb-4 mx-auto" />
-          <h3 class="text-xl font-semibold mb-2">Jarak</h3>
-          <p class="text-2xl font-bold text-blue-600">{{ results.distance }}</p>
-          <p class="text-sm text-gray-600">Jarak total perjalanan</p>
-        </div>
-        <div class="bg-white p-6 rounded-lg shadow-md text-center">
-          <Icon name="lucide:traffic-cone" size="32" class="text-blue-600 mb-4 mx-auto" />
-          <h3 class="text-xl font-semibold mb-2">Kondisi Lalu Lintas</h3>
-          <p :class="results.traffic === 'Lancar' ? 'text-green-600' : results.traffic === 'Padat' ? 'text-yellow-600' : 'text-red-600'" class="text-2xl font-bold">
-            {{ results.traffic }}
+
+        <!-- Recommendation Card -->
+        <div class="bg-white rounded-2xl shadow-xl border-2 border-orange-100 p-8 text-center mb-8">
+          <div class="bg-gradient-to-r from-orange-500 to-orange-600 rounded-xl px-6 py-3 border border-orange-200 inline-block mb-4">
+            <h3 class="text-xl font-bold text-white">Rekomendasi</h3>
+          </div>
+          <p :class="results.recommendation.includes('Tidak') ? 'text-red-600' : results.recommendation.includes('Direkomendasikan jika') ? 'text-yellow-600' : 'text-green-600'" class="text-2xl font-bold">
+            {{ results.recommendation }}
           </p>
-          <p class="text-sm text-gray-600">Berdasarkan data real-time</p>
         </div>
-      </div>
-      <div v-if="results" class="mt-8 bg-white p-6 rounded-lg shadow-md text-center">
-        <h3 class="text-xl font-semibold mb-2">Rekomendasi</h3>
-        <p :class="results.recommendation.includes('Tidak') ? 'text-red-600' : results.recommendation.includes('Direkomendasikan jika') ? 'text-yellow-600' : 'text-green-600'" class="text-lg font-bold">
-          {{ results.recommendation }}
-        </p>
-      </div>
-      <div v-if="results" class="mt-8 bg-white p-6 rounded-lg shadow-md">
-        <h3 class="text-xl font-semibold mb-4">Informasi Tambahan</h3>
-        <ul class="list-disc list-inside text-gray-700 space-y-2">
-          <li>Rute terbaik: {{ results.route }}</li>
-          <li>Waktu keberangkatan optimal: {{ results.bestTime }}</li>
-          <li>Tips: {{ results.tips }}</li>
-        </ul>
+
+        <!-- Additional Information Card -->
+        <div class="bg-white rounded-2xl shadow-xl border-2 border-blue-100 p-8">
+          <div class="bg-gradient-to-r from-blue-600 to-blue-800 rounded-xl px-6 py-3 border border-blue-200 inline-block mb-6">
+            <h3 class="text-xl font-bold text-white">Informasi Tambahan</h3>
+          </div>
+          <ul class="space-y-4 text-gray-700">
+            <li class="flex items-start gap-3 p-4 bg-blue-50 rounded-xl border-l-4 border-blue-600">
+              <Icon name="lucide:route" size="20" class="text-blue-600 mt-0.5 flex-shrink-0" />
+              <div>
+                <span class="font-semibold">Rute terbaik:</span>
+                <p class="text-gray-600 mt-1">{{ results.route }}</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3 p-4 bg-orange-50 rounded-xl border-l-4 border-orange-600">
+              <Icon name="lucide:calendar-clock" size="20" class="text-orange-600 mt-0.5 flex-shrink-0" />
+              <div>
+                <span class="font-semibold">Waktu keberangkatan optimal:</span>
+                <p class="text-gray-600 mt-1">{{ results.bestTime }}</p>
+              </div>
+            </li>
+            <li class="flex items-start gap-3 p-4 bg-blue-50 rounded-xl border-l-4 border-blue-600">
+              <Icon name="lucide:lightbulb" size="20" class="text-blue-600 mt-0.5 flex-shrink-0" />
+              <div>
+                <span class="font-semibold">Tips:</span>
+                <p class="text-gray-600 mt-1">{{ results.tips }}</p>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>

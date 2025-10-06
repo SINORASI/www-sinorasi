@@ -1,0 +1,206 @@
+<script lang="ts" setup>
+interface ActivityProps {
+    image: string,
+    title: string,
+    desc: string
+}
+
+const route = useRoute();
+const extraName = route.params.extra as string;
+
+const items = [
+    { image: '/images/placeholder.jpg', title: 'Kejuaraan Antar Sekolah Se-Surabaya', desc: 'Tim basket putra berhasil meraih juara 2 dalam kompetisi bergengsi yang diikuti 32 sekolah menengah atas di Surabaya dengan persaingan yang sangat ketat'},
+    { image: '/images/placeholder.jpg', title: 'Pelatihan Intensif Teknik Dasar', desc: 'Mengadakan pelatihan khusus bersama pelatih profesional untuk meningkatkan kemampuan dribbling, shooting, dan passing seluruh anggota ekstrakurikuler'},
+    { image: '/images/placeholder.jpg', title: 'Turnamen Internal Antar Kelas', desc: 'Event tahunan yang melibatkan seluruh siswa sekolah dalam kompetisi basket antar kelas untuk mempererat tali persaudaraan dan sportivitas'},
+    { image: '/images/placeholder.jpg', title: 'Workshop Strategi Permainan', desc: 'Sesi pembelajaran mendalam tentang taktik dan strategi permainan basket modern yang dipimpin langsung oleh mantan pemain profesional'},
+]
+
+// Capitalize first letter for display
+const displayName = extraName.charAt(0).toUpperCase() + extraName.slice(1);
+
+useHead({
+  title: `${displayName} - Ekstrakurikuler - SMKN 2 Singosari`,
+  meta: [
+    {
+      name: 'description',
+      content: `Informasi lengkap tentang ekstrakurikuler ${displayName} di SMK Negeri 2 Singosari`
+    }
+  ]
+});
+</script>
+
+<template>
+    <div class="min-h-screen bg-gradient-to-b from-white via-blue-50 to-white">
+        <!-- Hero Section -->
+        <section class="py-20 md:py-32">
+            <div class="container mx-auto px-4 sm:px-6">
+                <!-- Page Title -->
+                <div class="text-center mb-12">
+                    <div class="bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl p-6 shadow-xl rounded-2xl px-10 py-6 border border-blue-200 inline-block mb-6">
+                        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white uppercase">{{ displayName }}</h1>
+                    </div>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="bg-white rounded-2xl shadow-xl border-2 border-blue-100 p-8 max-w-4xl mx-auto">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+                        <div class="text-center">
+                            <p class="text-3xl md:text-4xl font-bold text-blue-600 mb-2">50+</p>
+                            <p class="text-gray-600 font-medium">Anggota</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-3xl md:text-4xl font-bold text-orange-600 mb-2">10+</p>
+                            <p class="text-gray-600 font-medium">Juara</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-3xl md:text-4xl font-bold text-blue-600 mb-2">5</p>
+                            <p class="text-gray-600 font-medium">Tahun</p>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-3xl md:text-4xl font-bold text-orange-600 mb-2">3</p>
+                            <p class="text-gray-600 font-medium">Pertemuan</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- About Section -->
+        <section class="py-16">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="bg-white rounded-2xl shadow-xl border-2 border-blue-100 overflow-hidden max-w-6xl mx-auto">
+                    <div class="grid lg:grid-cols-2 gap-0">
+                        <div class="h-80 lg:h-auto">
+                            <img src="/images/placeholder.jpg" alt="Kegiatan Ekstrakurikuler" class="object-cover w-full h-full">
+                        </div>
+                        <div class="p-8 md:p-10 flex flex-col justify-center">
+                            <div class="bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl shadow-xl rounded-xl px-6 py-3 border border-blue-200 inline-block mb-6 w-fit">
+                                <h2 class="text-2xl md:text-3xl font-bold text-white">Tentang</h2>
+                            </div>
+                            <p class="text-gray-700 leading-relaxed text-lg">
+                                Ekstrakurikuler {{ displayName.toLowerCase() }} sekolah kami telah berdiri sejak tahun 2019 dan menjadi salah satu wadah pengembangan bakat siswa di bidang olahraga. Dengan fasilitas lapangan yang memadai dan bimbingan pelatih berpengalaman, kami berkomitmen membentuk karakter sportif dan jiwa kompetitif siswa. Kegiatan latihan rutin dilaksanakan tiga kali seminggu dengan fokus pada pengembangan teknik dasar, strategi permainan, dan pembentukan mental juara yang kuat untuk menghadapi berbagai kompetisi.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Activities Section -->
+        <section class="py-20">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="text-center mb-12">
+                    <div class="bg-gradient-to-r from-orange-500 to-orange-600 backdrop-blur-2xl shadow-xl rounded-2xl px-10 py-6 border border-orange-200 inline-block mb-4">
+                        <h2 class="text-3xl md:text-4xl font-bold text-white">Aktivitas Terkait</h2>
+                    </div>
+                    <p class="text-gray-600 max-w-2xl mx-auto text-lg">Berbagai kegiatan dan prestasi yang telah dicapai</p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                    <div v-for="(item, idx) in items" :key="idx" class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-2xl hover:border-blue-200 transition-all duration-300">
+                        <img :src="item.image" alt="Aktivitas" class="object-cover w-full h-56">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-3">{{ item.title }}</h3>
+                            <p class="text-gray-600 leading-relaxed mb-4">{{ item.desc }}</p>
+                            <div class="flex items-center text-blue-600 font-semibold">
+                                <Icon name="lucide:calendar" size="18" class="mr-2" />
+                                <span>15 Maret 2024</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Registration Section -->
+        <section class="py-20">
+            <div class="container mx-auto px-4 sm:px-6">
+                <div class="text-center mb-12">
+                    <div class="bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl shadow-xl rounded-2xl px-10 py-6 border border-blue-200 inline-block mb-4">
+                        <h2 class="text-3xl md:text-4xl font-bold text-white">Informasi Pendaftaran</h2>
+                    </div>
+                    <p class="text-gray-600 max-w-3xl mx-auto text-lg">Bergabunglah dengan ekstrakurikuler {{ displayName.toLowerCase() }} dan kembangkan potensi olahraga Anda</p>
+                </div>
+                
+                <div class="bg-white rounded-2xl shadow-xl border-2 border-blue-100 p-8 md:p-12 max-w-5xl mx-auto">
+                    <div class="grid md:grid-cols-2 gap-10 mb-10">
+                        <!-- Requirements -->
+                        <div>
+                            <div class="flex items-center mb-6">
+                                <div class="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold mr-3">1</div>
+                                <h3 class="text-2xl font-bold text-gray-800">Persyaratan</h3>
+                            </div>
+                            <ul class="space-y-3">
+                                <li class="flex items-start text-gray-700">
+                                    <Icon name="lucide:check-circle" size="20" class="text-blue-600 mr-3 mt-0.5 flex-shrink-0" />
+                                    <span>Siswa aktif kelas 7-11</span>
+                                </li>
+                                <li class="flex items-start text-gray-700">
+                                    <Icon name="lucide:check-circle" size="20" class="text-blue-600 mr-3 mt-0.5 flex-shrink-0" />
+                                    <span>Mengisi formulir pendaftaran</span>
+                                </li>
+                                <li class="flex items-start text-gray-700">
+                                    <Icon name="lucide:check-circle" size="20" class="text-blue-600 mr-3 mt-0.5 flex-shrink-0" />
+                                    <span>Surat persetujuan orang tua</span>
+                                </li>
+                                <li class="flex items-start text-gray-700">
+                                    <Icon name="lucide:check-circle" size="20" class="text-blue-600 mr-3 mt-0.5 flex-shrink-0" />
+                                    <span>Sertifikat kesehatan</span>
+                                </li>
+                                <li class="flex items-start text-gray-700">
+                                    <Icon name="lucide:check-circle" size="20" class="text-blue-600 mr-3 mt-0.5 flex-shrink-0" />
+                                    <span>Pas foto 3x4 (2 lembar)</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Schedule Info -->
+                        <div>
+                            <div class="flex items-center mb-6">
+                                <div class="w-10 h-10 bg-orange-600 text-white rounded-full flex items-center justify-center font-bold mr-3">2</div>
+                                <h3 class="text-2xl font-bold text-gray-800">Informasi Latihan</h3>
+                            </div>
+                            <div class="space-y-4">
+                                <div class="bg-blue-50 border-l-4 border-blue-600 p-4 rounded-r-lg">
+                                    <p class="font-semibold text-gray-800 mb-1">Jadwal Latihan</p>
+                                    <p class="text-gray-600">Senin, Rabu, Jumat</p>
+                                </div>
+                                <div class="bg-blue-50 border-l-4 border-blue-600 p-4 rounded-r-lg">
+                                    <p class="font-semibold text-gray-800 mb-1">Waktu</p>
+                                    <p class="text-gray-600">15.30 - 17.30 WIB</p>
+                                </div>
+                                <div class="bg-blue-50 border-l-4 border-blue-600 p-4 rounded-r-lg">
+                                    <p class="font-semibold text-gray-800 mb-1">Tempat</p>
+                                    <p class="text-gray-600">Lapangan Basket Sekolah</p>
+                                </div>
+                                <div class="bg-orange-50 border-l-4 border-orange-600 p-4 rounded-r-lg">
+                                    <p class="font-semibold text-gray-800 mb-1">Biaya</p>
+                                    <p class="text-orange-600 font-bold">Rp 150.000/bulan</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Contact Info -->
+                    <div class="pt-8 border-t-2 border-blue-100">
+                        <div class="bg-gradient-to-r from-blue-50 to-orange-50 border-2 border-blue-200 rounded-xl p-6 text-center">
+                            <p class="text-2xl font-bold text-blue-800 mb-2">Pendaftaran dibuka: 1-31 Juli 2024</p>
+                            <p class="text-gray-700 mb-4">Untuk informasi lebih lanjut, hubungi:</p>
+                            <div class="flex flex-col md:flex-row items-center justify-center gap-4 text-gray-700">
+                                <div class="flex items-center">
+                                    <Icon name="lucide:phone" size="18" class="mr-2 text-blue-600" />
+                                    <span class="font-semibold">Coach Budi: 0812-3456-7890</span>
+                                </div>
+                                <span class="hidden md:inline text-gray-400">|</span>
+                                <div class="flex items-center">
+                                    <Icon name="lucide:map-pin" size="18" class="mr-2 text-orange-600" />
+                                    <span>Ruang Guru Olahraga</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</template>

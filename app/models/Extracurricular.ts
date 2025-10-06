@@ -19,14 +19,48 @@ export interface ExtracurricularInfo {
   }[];
 }
 
+export interface ExtracurricularActivity {
+  id: string;
+  image: string;
+  title: string;
+  description: string;
+  date: string;
+}
+
 export interface Extracurricular {
   id: string;
   slug: string;
   name: string;
   description: string;
-  image: string;
+  category?: string;
+  icon?: string;
+  image?: string;
   established?: string;
-  statistics: ExtracurricularStats;
-  registrationInfo: ExtracurricularInfo;
-  activities: Activity[];
+  
+  // Stats
+  memberCount?: number;
+  achievementCount?: number;
+  yearEstablished?: number;
+  meetingsPerWeek?: number;
+  
+  // Details
+  coach?: string;
+  schedule?: string;
+  location?: string;
+  fee?: string;
+  fullDescription?: string;
+  
+  // Lists
+  requirements?: string[];
+  activities?: ExtracurricularActivity[];
+  
+  // Registration
+  registrationOpen?: boolean;
+  registrationPeriod?: string;
+  contactInfo?: string;
+  
+  // Legacy support
+  statistics?: ExtracurricularStats;
+  registrationInfo?: ExtracurricularInfo;
 }
+

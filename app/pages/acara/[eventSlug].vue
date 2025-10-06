@@ -1,53 +1,94 @@
 <template>
-  <div class="container mx-auto px-6 py-40">
-    <div v-if="event" class="max-w-4xl mx-auto">
-      <nav class="mb-8">
-        <ol class="flex items-center space-x-2 text-sm text-gray-600">
-          <li><NuxtLink to="/" class="hover:text-blue-600">Beranda</NuxtLink></li>
-          <li>/</li>
-          <li><NuxtLink to="/acara" class="hover:text-blue-600">Acara</NuxtLink></li>
-          <li>/</li>
-          <li class="text-gray-900 truncate max-w-xs" :title="event.title">{{ event.title }}</li>
-        </ol>
-      </nav>
+  <div class="min-h-screen bg-gradient-to-b from-white via-blue-50 to-white py-24">
+    <div class="container mx-auto px-4 sm:px-6">
+      <div v-if="event" class="max-w-4xl mx-auto">
+        <!-- Breadcrumb -->
+        <nav class="mb-8">
+          <ol class="flex items-center space-x-2 text-sm">
+            <li>
+              <NuxtLink to="/" class="text-gray-600 hover:text-blue-600 transition-colors flex items-center">
+                <Icon name="lucide:home" size="16" class="mr-1" />
+                Beranda
+              </NuxtLink>
+            </li>
+            <li><Icon name="lucide:chevron-right" size="14" class="text-gray-400" /></li>
+            <li>
+              <NuxtLink to="/acara" class="text-gray-600 hover:text-blue-600 transition-colors">Acara</NuxtLink>
+            </li>
+            <li><Icon name="lucide:chevron-right" size="14" class="text-gray-400" /></li>
+            <li class="text-blue-600 font-medium truncate max-w-xs" :title="event.title">{{ event.title }}</li>
+          </ol>
+        </nav>
 
-      <header class="mb-8">
-        <div class="mb-4">
-          <img :src="event.imageUrl" :alt="event.title" class="w-full h-64 md:h-96 object-cover rounded-lg shadow-lg" />
-        </div>
+        <!-- Main Content Card -->
+        <div class="bg-white rounded-2xl shadow-xl border-2 border-blue-100 overflow-hidden mb-8">
+          <!-- Header Image -->
+          <div class="h-64 md:h-96 overflow-hidden">
+            <img :src="event.imageUrl" :alt="event.title" class="w-full h-full object-cover" />
+          </div>
 
-        <div class="mb-6">
-          <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{{ event.title }}</h1>
-          <p class="text-lg text-gray-600 mb-4">{{ event.details }}</p>
+          <!-- Content -->
+          <div class="p-8 md:p-10">
+            <!-- Title -->
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{{ event.title }}</h1>
+            
+            <!-- Meta Info -->
+            <div class="flex flex-wrap gap-4 mb-6 pb-6 border-b-2 border-blue-100">
+              <div class="flex items-center text-gray-600">
+                <Icon name="lucide:calendar" size="18" class="mr-2 text-blue-600" />
+                <span>{{ event.date }}</span>
+              </div>
+              <div v-if="event.author" class="flex items-center text-gray-600">
+                <Icon name="lucide:user" size="18" class="mr-2 text-blue-600" />
+                <span>{{ event.author }}</span>
+              </div>
+              <div class="flex items-center text-gray-600">
+                <Icon name="lucide:clock" size="18" class="mr-2 text-blue-600" />
+                <span>{{ formatDate(event.publishedAt) }}</span>
+              </div>
+            </div>
 
-          <div class="flex items-center text-sm text-gray-500 space-x-4">
-            <span>{{ event.date }}</span>
-            <span v-if="event.author">Oleh: {{ event.author }}</span>
-            <span>Diterbitkan: {{ formatDate(event.publishedAt) }}</span>
+            <!-- Event Details -->
+            <p class="text-lg text-gray-700 leading-relaxed mb-8 p-4 bg-blue-50 rounded-xl border-l-4 border-blue-600">
+              {{ event.details }}
+            </p>
+
+            <!-- Article Content -->
+            <article class="prose prose-lg max-w-none">
+              <div v-html="renderedContent"></div>
+            </article>
           </div>
         </div>
-      </header>
 
-      <article class="prose prose-lg max-w-none">
-        <div v-html="renderedContent"></div>
-      </article>
-
-      <section id="acara-lainnya" class="mt-12 pt-8 border-t border-gray-200">
-        <h2 class="text-2xl font-bold text-gray-900 mb-6">Acara Lainnya</h2>
-        <div class="flex space-x-6 overflow-x-auto pb-4 scrollbar-hide">
-          <div v-for="otherEvent in otherEvents" :key="otherEvent.id" class="flex-shrink-0 w-64">
-            <EventCard :event="otherEvent" />
+        <!-- Related Events Section -->
+        <section id="acara-lainnya" class="mt-12">
+          <div class="bg-gradient-to-r from-orange-500 to-orange-600 backdrop-blur-2xl shadow-xl rounded-2xl px-10 py-6 border border-orange-200 inline-block mb-8">
+            <h2 class="text-2xl font-bold text-white">Acara Lainnya</h2>
           </div>
-        </div>
-      </section>
-    </div>
+          
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div v-for="otherEvent in otherEvents" :key="otherEvent.id">
+              <EventCard :event="otherEvent" />
+            </div>
+          </div>
+        </section>
+      </div>
 
-    <div v-else class="text-center py-12">
-      <h1 class="text-3xl font-bold text-gray-900 mb-4">Acara Tidak Ditemukan</h1>
-      <p class="text-gray-600 mb-6">Maaf, acara yang Anda cari tidak tersedia.</p>
-      <NuxtLink to="/acara" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
-        Kembali ke Acara
-      </NuxtLink>
+      <!-- Not Found State -->
+      <div v-else class="text-center py-20">
+        <div class="bg-white rounded-2xl shadow-xl border-2 border-blue-100 p-12 max-w-2xl mx-auto">
+          <Icon name="lucide:calendar-x" size="64" class="text-gray-300 mx-auto mb-6" />
+          <h1 class="text-3xl font-bold text-gray-900 mb-4">Acara Tidak Ditemukan</h1>
+          <p class="text-gray-600 mb-8 text-lg">Maaf, acara yang Anda cari tidak tersedia.</p>
+          <NuxtLink 
+            to="/acara" 
+            class="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold shadow-md hover:shadow-lg"
+          >
+            <Icon name="lucide:arrow-left" size="18" />
+            Kembali ke Acara
+          </NuxtLink>
+        </div>
+      </div>
     </div>
   </div>
 </template>

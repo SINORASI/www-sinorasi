@@ -5,8 +5,9 @@ export default defineEventHandler(async (event): Promise<{ data: Extracurricular
   // const response = await $fetch('https://your-api.com/api/extracurriculars');
   
   const query = getQuery(event);
-  const limit = parseInt(query.limit as string) || 10;
+  const limit = parseInt(query.limit as string) || 50;
   const offset = parseInt(query.offset as string) || 0;
+  const category = query.category as string;
 
   // Mock data
   const allExtracurriculars: Extracurricular[] = [
@@ -14,71 +15,224 @@ export default defineEventHandler(async (event): Promise<{ data: Extracurricular
       id: '1',
       slug: 'basket',
       name: 'Basket',
-      description: 'Ekstrakurikuler basket sekolah kami telah berdiri sejak tahun 2019 dan menjadi salah satu wadah pengembangan bakat siswa di bidang olahraga. Dengan fasilitas lapangan yang memadai dan bimbingan pelatih berpengalaman, kami berkomitmen membentuk karakter sportif dan jiwa kompetitif siswa.',
+      category: 'Olahraga',
+      icon: 'lucide:dribbble',
+      description: 'Ekstrakurikuler basket untuk pengembangan keterampilan dan prestasi di bidang olahraga',
       image: '/images/placeholder.jpg',
-      established: '2019',
-      statistics: {
-        members: 50,
-        achievements: 10,
-        years: 5,
-        meetings: 3
-      },
-      registrationInfo: {
-        schedule: 'Senin, Rabu, Jumat',
-        time: '15.30 - 17.30 WIB',
-        location: 'Lapangan Basket Sekolah',
-        fee: 'Rp 150.000/bulan',
-        requirements: [
-          'Siswa aktif kelas 7-11',
-          'Mengisi formulir pendaftaran',
-          'Surat persetujuan orang tua',
-          'Sertifikat kesehatan',
-          'Pas foto 3x4 (2 lembar)'
-        ],
-        contact: [
-          { name: 'Coach Budi', phone: '0812-3456-7890' }
-        ]
-      },
-      activities: []
+      coach: 'Coach Budi Santoso',
+      schedule: 'Senin, Rabu, Jumat',
+      location: 'Lapangan Basket Sekolah',
+      fee: 'Rp 150.000/bulan',
+      memberCount: 50,
+      achievementCount: 10,
+      yearEstablished: 2019,
+      meetingsPerWeek: 3,
+      registrationOpen: true,
+      registrationPeriod: 'Pendaftaran dibuka: 1-31 Juli 2024',
+      contactInfo: 'Coach Budi: 0812-3456-7890',
     },
     {
       id: '2',
       slug: 'paskibra',
       name: 'PASKIBRA',
-      description: 'Pasukan Pengibar Bendera Pusaka yang melatih kedisiplinan, kepemimpinan, dan kecintaan pada tanah air.',
+      category: 'Bela Negara',
+      icon: 'lucide:flag',
+      description: 'Pasukan Pengibar Bendera Pusaka yang melatih kedisiplinan dan kepemimpinan',
       image: '/images/placeholder.jpg',
-      established: '2009',
-      statistics: {
-        members: 50,
-        achievements: 50,
-        years: 15,
-        meetings: 3
-      },
-      registrationInfo: {
-        schedule: 'Selasa, Kamis',
-        time: '15.00 - 17.00 WIB',
-        location: 'Lapangan Upacara',
-        fee: 'Gratis',
-        requirements: [
-          'Siswa aktif kelas 10-11',
-          'Tinggi badan minimal 165cm (putra) / 160cm (putri)',
-          'Mengisi formulir pendaftaran',
-          'Surat persetujuan orang tua',
-          'Sertifikat kesehatan'
-        ],
-        contact: [
-          { name: 'Miftahul', phone: '083839717167' },
-          { name: 'Fauzia', phone: '081234567890' }
-        ]
-      },
-      activities: []
-    }
+      coach: 'Pak Agung Prasetyo',
+      schedule: 'Selasa, Kamis, Sabtu',
+      location: 'Lapangan Upacara',
+      fee: 'Gratis',
+      memberCount: 50,
+      achievementCount: 50,
+      yearEstablished: 2009,
+      meetingsPerWeek: 3,
+      registrationOpen: true,
+      registrationPeriod: 'Pendaftaran dibuka: 1-31 Juli 2024',
+      contactInfo: 'Miftahul: 083839717167',
+    },
+    {
+      id: '3',
+      slug: 'sepak-bola',
+      name: 'Sepak Bola',
+      category: 'Olahraga',
+      icon: 'lucide:football',
+      description: 'Ekstrakurikuler sepak bola untuk mengasah kemampuan bermain sepak bola',
+      image: '/images/placeholder.jpg',
+      coach: 'Coach Ahmad',
+      schedule: 'Rabu, Jumat',
+      location: 'Lapangan Sepak Bola',
+      fee: 'Rp 100.000/bulan',
+      memberCount: 45,
+      achievementCount: 8,
+      yearEstablished: 2015,
+      meetingsPerWeek: 2,
+    },
+    {
+      id: '4',
+      slug: 'volley',
+      name: 'Volley',
+      category: 'Olahraga',
+      icon: 'lucide:volleyball',
+      description: 'Ekstrakurikuler voli untuk meningkatkan keterampilan bermain voli',
+      image: '/images/placeholder.jpg',
+      coach: 'Bu Siti',
+      schedule: 'Senin, Kamis',
+      location: 'Lapangan Voli',
+      fee: 'Rp 100.000/bulan',
+      memberCount: 40,
+      achievementCount: 12,
+      yearEstablished: 2016,
+      meetingsPerWeek: 2,
+    },
+    {
+      id: '5',
+      slug: 'badminton',
+      name: 'Badminton',
+      category: 'Olahraga',
+      icon: 'lucide:zap',
+      description: 'Ekstrakurikuler bulu tangkis untuk mengembangkan teknik dan strategi',
+      image: '/images/placeholder.jpg',
+      coach: 'Pak Rizki',
+      schedule: 'Selasa, Jumat',
+      location: 'Aula Olahraga',
+      fee: 'Rp 120.000/bulan',
+      memberCount: 35,
+      achievementCount: 15,
+      yearEstablished: 2017,
+      meetingsPerWeek: 2,
+    },
+    {
+      id: '6',
+      slug: 'futsal',
+      name: 'Futsal',
+      category: 'Olahraga',
+      icon: 'lucide:circle-dot',
+      description: 'Ekstrakurikuler futsal untuk meningkatkan kemampuan bermain futsal',
+      image: '/images/placeholder.jpg',
+      coach: 'Coach Doni',
+      schedule: 'Rabu, Sabtu',
+      location: 'Lapangan Futsal',
+      fee: 'Rp 100.000/bulan',
+      memberCount: 42,
+      achievementCount: 6,
+      yearEstablished: 2018,
+      meetingsPerWeek: 2,
+    },
+    {
+      id: '7',
+      slug: 'pramuka',
+      name: 'Pramuka',
+      category: 'Kepramukaan',
+      icon: 'lucide:tent',
+      description: 'Gerakan Pramuka untuk membentuk karakter dan keterampilan hidup',
+      image: '/images/placeholder.jpg',
+      coach: 'Kak Andi',
+      schedule: 'Sabtu',
+      location: 'Bumi Perkemahan',
+      fee: 'Rp 50.000/bulan',
+      memberCount: 80,
+      achievementCount: 20,
+      yearEstablished: 2010,
+      meetingsPerWeek: 1,
+    },
+    {
+      id: '8',
+      slug: 'pmr',
+      name: 'PMR',
+      category: 'Kemanusiaan',
+      icon: 'lucide:heart-pulse',
+      description: 'Palang Merah Remaja untuk belajar pertolongan pertama dan kemanusiaan',
+      image: '/images/placeholder.jpg',
+      coach: 'Bu Dewi',
+      schedule: 'Kamis',
+      location: 'Ruang PMR',
+      fee: 'Gratis',
+      memberCount: 30,
+      achievementCount: 10,
+      yearEstablished: 2011,
+      meetingsPerWeek: 1,
+    },
+    {
+      id: '9',
+      slug: 'english-club',
+      name: 'English Club',
+      category: 'Bahasa',
+      icon: 'lucide:messages-square',
+      description: 'Klub Bahasa Inggris untuk meningkatkan kemampuan berbahasa Inggris',
+      image: '/images/placeholder.jpg',
+      coach: 'Miss Sarah',
+      schedule: 'Rabu',
+      location: 'Ruang Multimedia',
+      fee: 'Rp 75.000/bulan',
+      memberCount: 25,
+      achievementCount: 5,
+      yearEstablished: 2019,
+      meetingsPerWeek: 1,
+    },
+    {
+      id: '10',
+      slug: 'tari',
+      name: 'Seni Tari',
+      category: 'Seni',
+      icon: 'lucide:music',
+      description: 'Ekstrakurikuler seni tari tradisional dan modern',
+      image: '/images/placeholder.jpg',
+      coach: 'Bu Ratna',
+      schedule: 'Selasa, Jumat',
+      location: 'Aula Seni',
+      fee: 'Rp 80.000/bulan',
+      memberCount: 28,
+      achievementCount: 12,
+      yearEstablished: 2014,
+      meetingsPerWeek: 2,
+    },
+    {
+      id: '11',
+      slug: 'karawitan',
+      name: 'Karawitan',
+      category: 'Seni',
+      icon: 'lucide:drum',
+      description: 'Ekstrakurikuler seni musik gamelan Jawa',
+      image: '/images/placeholder.jpg',
+      coach: 'Pak Joko',
+      schedule: 'Kamis',
+      location: 'Pendopo',
+      fee: 'Rp 60.000/bulan',
+      memberCount: 20,
+      achievementCount: 8,
+      yearEstablished: 2012,
+      meetingsPerWeek: 1,
+    },
+    {
+      id: '12',
+      slug: 'photography',
+      name: 'Photography',
+      category: 'Teknologi',
+      icon: 'lucide:camera',
+      description: 'Ekstrakurikuler fotografi untuk mengasah kreativitas visual',
+      image: '/images/placeholder.jpg',
+      coach: 'Pak Dimas',
+      schedule: 'Sabtu',
+      location: 'Studio Foto',
+      fee: 'Rp 100.000/bulan',
+      memberCount: 22,
+      achievementCount: 7,
+      yearEstablished: 2020,
+      meetingsPerWeek: 1,
+    },
   ];
 
-  const paginatedData = allExtracurriculars.slice(offset, offset + limit);
+  // Filter by category if specified
+  let filtered = allExtracurriculars;
+  if (category && category !== 'Semua') {
+    filtered = allExtracurriculars.filter(e => e.category === category);
+  }
+
+  const paginatedData = filtered.slice(offset, offset + limit);
 
   return {
     data: paginatedData,
-    total: allExtracurriculars.length
+    total: filtered.length
   };
 });

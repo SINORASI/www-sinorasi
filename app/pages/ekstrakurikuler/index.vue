@@ -1,7 +1,10 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import type { Extracurricular } from '~/models/Extracurricular';
 
 const isDialogOpen = ref(false);
+const searchQuery = ref('');
+const selectedCategory = ref('Semua');
 
 const openDialog = () => {
   isDialogOpen.value = true;
@@ -13,6 +16,52 @@ const closeDialog = () => {
   document.body.style.overflow = '';
 };
 
+// Fetch organizations
+const { data: organizationsResponse } = await useFetch('/api/organizations');
+const organizations = computed(() => organizationsResponse.value?.data || []);
+
+// Fetch extracurriculars
+const { data: extracurricularsResponse, pending, error } = await useFetch('/api/extracurriculars');
+const extracurriculars = computed(() => extracurricularsResponse.value?.data || []);
+
+// Categories
+const categories = computed(() => {
+  const cats = new Set<string>(['Semua']);
+  extracurriculars.value.forEach((extra: any) => {
+    if (extra.category) cats.add(extra.category);
+  });
+  return Array.from(cats);
+});
+
+// Filtered organizations by search
+const filteredOrganizations = computed(() => {
+  if (!searchQuery.value.trim()) return organizations.value;
+  const query = searchQuery.value.toLowerCase();
+  return organizations.value.filter((org: any) => 
+    org.name.toLowerCase().includes(query) || 
+    org.description?.toLowerCase().includes(query)
+  );
+});
+
+// Filtered extracurriculars by category and search
+const filteredExtracurriculars = computed(() => {
+  let filtered = extracurriculars.value;
+  
+  if (selectedCategory.value !== 'Semua') {
+    filtered = filtered.filter((extra: any) => extra.category === selectedCategory.value);
+  }
+  
+  if (searchQuery.value.trim()) {
+    const query = searchQuery.value.toLowerCase();
+    filtered = filtered.filter((extra: any) => 
+      extra.name.toLowerCase().includes(query) ||
+      extra.description?.toLowerCase().includes(query)
+    );
+  }
+  
+  return filtered;
+});
+
 useHead({
   title: 'Ekstrakurikuler - SMKN 2 Singosari',
   meta: [
@@ -23,363 +72,285 @@ useHead({
   ]
 });
 </script>
+
 <template>
-    <section class="h-screen flex items-center justify-start py-30">
-        <div class="flex items-center justify-start w-full h-full overflow-hidden">
-            <div class="-rotate-12 bg-neutral-300 flex items-center justify-center h-full flex-1 p-4">
-                <h1 class="rotate-90 text-6xl font-bold text-transparent whitespace-nowrap" style="-webkit-text-stroke: 1px white;">
-                    Lorem
-                </h1>
+    <div class="min-h-screen bg-gradient-to-b from-white via-blue-50 to-white py-24">
+        <div class="container mx-auto px-4 sm:px-6 py-8">
+            <!-- Header Section -->
+            <div class="flex flex-col items-center mb-12">
+                <div class="bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl p-6 shadow-xl rounded-2xl px-10 py-6 border border-blue-200 mb-4">
+                    <h1 class="text-3xl sm:text-4xl font-bold text-white">Ekstrakurikuler & Organisasi</h1>
+                </div>
+                <p class="text-gray-600 text-center max-w-2xl">Kembangkan bakat dan minatmu di SMK Negeri 2 Singosari</p>
             </div>
-            <div class="-rotate-12 bg-neutral-400 flex items-center justify-center h-full flex-1 p-4">
-                <h1 class="rotate-90 text-6xl font-bold text-transparent whitespace-nowrap" style="-webkit-text-stroke: 1px white;">
-                    Ipsum
-                </h1>
-            </div>
-            <div class="-rotate-12 bg-neutral-500 flex items-center justify-center h-full flex-1 p-4">
-                <h1 class="rotate-90 text-6xl font-bold text-transparent whitespace-nowrap" style="-webkit-text-stroke: 1px white;">
-                    Dolor
-                </h1>
-            </div>
-            <div class="-rotate-12 bg-neutral-600 flex items-center justify-center h-full flex-1 p-4">
-                <h1 class="rotate-90 text-6xl font-bold text-transparent whitespace-nowrap" style="-webkit-text-stroke: 1px white;">
-                    Sit
-                </h1>
-            </div>
-            <div class="-rotate-12 bg-neutral-700 flex items-center justify-center h-full flex-1 p-4">
-                <h1 class="rotate-90 text-6xl font-bold text-transparent whitespace-nowrap" style="-webkit-text-stroke: 1px white;">
-                    Amet
-                </h1>
-            </div>  
-        </div>
-    </section>
 
-    <!-- New section based on the image layout -->
-    <section class="min-h-screen bg-white py-16 px-8">
-        <div class="max-w-4xl mx-auto">
             <!-- Stats Cards -->
-            <div class="flex gap-8 justify-center mb-12">
-                <div class="bg-white rounded-2xl shadow-lg p-8 text-center min-w-60">
-                    <h2 class="text-5xl font-bold text-black mb-2">6</h2>
-                    <p class="text-lg font-semibold text-black">ORGANISASI</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto mb-16">
+                <div class="bg-white rounded-2xl shadow-xl border-2 border-blue-100 p-8 text-center hover:shadow-2xl transition-shadow">
+                    <div class="inline-block p-4 bg-blue-100 rounded-full mb-4">
+                        <Icon name="lucide:users" size="32" class="text-blue-600" />
+                    </div>
+                    <h2 class="text-5xl font-bold text-blue-600 mb-2">{{ organizations.length }}</h2>
+                    <p class="text-lg font-semibold text-gray-700">Organisasi</p>
                 </div>
-                <div class="bg-white rounded-2xl shadow-lg p-8 text-center min-w-60">
-                    <h2 class="text-5xl font-bold text-black mb-2">23</h2>
-                    <p class="text-lg font-semibold text-black">EKSTRAKURIKULER</p>
-                </div>
-            </div>
-
-            <!-- Main Title -->
-            <div class="text-center mb-8">
-                <h1 class="text-4xl md:text-5xl font-bold text-orange-400 mb-4">
-                    ORGANISASI - ORGANISASI
-                </h1>
-                <p class="text-xl text-black font-medium">
-                    Di SMK Negeri 02 Singosari
-                </p>
-            </div>
-
-            <!-- Description -->
-            <div class="text-center mb-12">
-                <p class="text-lg text-black leading-relaxed max-w-2xl mx-auto">
-                    Kembangkan dan asah kemampuan karmu dengan ikut organisasi yang ada di SMK Negeri 02 Singosari !!!
-                </p>
-            </div>
-
-            <!-- FAQ-style Expandable Items -->
-            <div class="space-y-4 mb-16">
-                <div class="bg-white rounded-2xl shadow-md p-6 flex items-center justify-between cursor-pointer hover:shadow-lg transition-shadow">
-                    <span class="text-lg font-semibold text-black">Apa Itu Organisasi?</span>
-                    <button class="text-2xl font-bold text-black">+</button>
-                </div>
-                <div class="bg-white rounded-2xl shadow-md p-6 flex items-center justify-between cursor-pointer hover:shadow-lg transition-shadow">
-                    <span class="text-lg font-semibold text-black">Terus Apa Fungsinya Ikut Organisasi</span>
-                    <button class="text-2xl font-bold text-black">+</button>
-                </div>
-                <div class="bg-white rounded-2xl shadow-md p-6 flex items-center justify-between cursor-pointer hover:shadow-lg transition-shadow">
-                    <span class="text-lg font-semibold text-black">Apa Keuntungan Kalo Ikut Organisasi?</span>
-                    <button class="text-2xl font-bold text-black">+</button>
+                <div class="bg-white rounded-2xl shadow-xl border-2 border-orange-100 p-8 text-center hover:shadow-2xl transition-shadow">
+                    <div class="inline-block p-4 bg-orange-100 rounded-full mb-4">
+                        <Icon name="lucide:trophy" size="32" class="text-orange-600" />
+                    </div>
+                    <h2 class="text-5xl font-bold text-orange-600 mb-2">{{ extracurriculars.length }}</h2>
+                    <p class="text-lg font-semibold text-gray-700">Ekstrakurikuler</p>
                 </div>
             </div>
 
-            <!-- Search Section -->
-            <div class="text-center">
-                <h2 class="text-2xl font-bold text-black mb-6">
-                    Daftar Organisasi Di SMK Negeri 02 Singosari
+            <!-- Organisasi Section -->
+            <section class="mb-20">
+                <div class="text-center mb-10">
+                    <div class="bg-gradient-to-r from-orange-500 to-orange-600 backdrop-blur-2xl p-6 shadow-xl rounded-2xl px-10 py-6 border border-orange-200 inline-block mb-4">
+                        <h2 class="text-3xl font-bold text-white">Organisasi Sekolah</h2>
+                    </div>
+                    <p class="text-gray-600 max-w-2xl mx-auto">
+                        Kembangkan dan asah kemampuanmu dengan ikut organisasi yang ada di SMK Negeri 2 Singosari
+                    </p>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="max-w-md mx-auto mb-10">
+                    <div class="relative">
+                        <Icon name="lucide:search" size="20" class="absolute left-4 top-3.5 text-gray-400" />
+                        <input
+                            v-model="searchQuery"
+                            type="text"
+                            placeholder="Cari Organisasi atau Ekstrakurikuler..."
+                            class="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition"
+                        />
+                    </div>
+                </div>
+
+                <!-- Organisasi Grid -->
+                <div v-if="pending" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                    <div v-for="i in 6" :key="i" class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden animate-pulse">
+                        <div class="h-48 bg-gray-200"></div>
+                        <div class="p-6">
+                            <div class="h-6 bg-gray-200 rounded mb-2"></div>
+                            <div class="h-4 bg-gray-200 rounded w-2/3"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div v-else-if="filteredOrganizations.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                    <NuxtLink
+                        v-for="org in filteredOrganizations"
+                        :key="org.id"
+                        :to="`/organisasi/${org.slug}`"
+                        class="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-2xl hover:border-blue-200 transition-all duration-300 group"
+                    >
+                        <div class="h-48 bg-gradient-to-br from-blue-100 to-blue-50 flex items-center justify-center p-6">
+                            <img :src="org.logo" :alt="`Logo ${org.name}`" class="max-w-full max-h-full object-contain group-hover:scale-110 transition-transform duration-300" />
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors mb-2">{{ org.name }}</h3>
+                            <p class="text-gray-600 text-sm line-clamp-2">{{ org.description }}</p>
+                        </div>
+                    </NuxtLink>
+                </div>
+
+                <div v-else class="bg-white rounded-2xl shadow-xl border-2 border-blue-100 p-12 text-center mb-8">
+                    <Icon name="lucide:search-x" size="64" class="text-gray-300 mx-auto mb-4" />
+                    <h3 class="text-xl font-bold text-gray-700 mb-2">Organisasi Tidak Ditemukan</h3>
+                    <p class="text-gray-500">Coba kata kunci lain atau hapus filter pencarian.</p>
+                </div>
+            </section>
+
+            <!-- Ekstrakurikuler Section -->
+            <section class="mb-20">
+                <div class="text-center mb-10">
+                    <div class="bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl p-6 shadow-xl rounded-2xl px-10 py-6 border border-blue-200 inline-block mb-4">
+                        <h2 class="text-3xl font-bold text-white">Ekstrakurikuler</h2>
+                    </div>
+                    <p class="text-gray-600 max-w-2xl mx-auto mb-8">
+                        Pilih ekstrakurikuler sesuai minat dan bakatmu
+                    </p>
+                </div>
+
+                <!-- Category Filter -->
+                <div class="flex flex-wrap justify-center gap-3 mb-10">
+                    <button
+                        v-for="category in categories"
+                        :key="category"
+                        @click="selectedCategory = category"
+                        :class="[
+                            'px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300 border-2',
+                            selectedCategory === category
+                                ? 'bg-blue-600 text-white border-blue-600'
+                                : 'bg-white text-gray-700 hover:bg-blue-600 hover:text-white border-gray-200 hover:border-blue-600'
+                        ]"
+                    >
+                        {{ category }}
+                    </button>
+                </div>
+
+                <!-- Ekstrakurikuler Grid -->
+                <div v-if="pending" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div v-for="i in 9" :key="i" class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 animate-pulse">
+                        <div class="w-16 h-16 bg-gray-200 rounded-full mx-auto mb-4"></div>
+                        <div class="h-6 bg-gray-200 rounded w-3/4 mx-auto"></div>
+                    </div>
+                </div>
+
+                <div v-else-if="filteredExtracurriculars.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <NuxtLink
+                        v-for="extra in filteredExtracurriculars"
+                        :key="extra.id"
+                        :to="`/ekstrakurikuler/${extra.slug}`"
+                        class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 hover:shadow-2xl hover:border-blue-200 transition-all duration-300 group text-center"
+                    >
+                        <div class="inline-block p-4 bg-blue-100 rounded-full mb-4 group-hover:bg-blue-200 transition-colors">
+                            <Icon :name="extra.icon || 'lucide:activity'" size="32" class="text-blue-600" />
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors mb-2">{{ extra.name }}</h3>
+                        <p v-if="extra.description" class="text-sm text-gray-600 line-clamp-2">{{ extra.description }}</p>
+                        <p v-if="extra.category" class="text-xs text-blue-600 font-semibold mt-2">{{ extra.category }}</p>
+                    </NuxtLink>
+                </div>
+
+                <div v-else class="bg-white rounded-2xl shadow-xl border-2 border-blue-100 p-12 text-center">
+                    <Icon name="lucide:search-x" size="64" class="text-gray-300 mx-auto mb-4" />
+                    <h3 class="text-xl font-bold text-gray-700 mb-2">Ekstrakurikuler Tidak Ditemukan</h3>
+                    <p class="text-gray-500 mb-6">
+                        {{ searchQuery ? 'Coba kata kunci lain atau' : '' }} 
+                        {{ selectedCategory !== 'Semua' ? 'Pilih kategori lain' : 'Belum ada ekstrakurikuler terdaftar' }}
+                    </p>
+                    <button v-if="selectedCategory !== 'Semua' || searchQuery" @click="selectedCategory = 'Semua'; searchQuery = ''" class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-semibold">
+                        Reset Filter
+                    </button>
+                </div>
+            </section>
+
+            <!-- CTA Section -->
+            <section class="bg-white rounded-2xl shadow-xl border-2 border-blue-100 p-8 md:p-12 text-center max-w-3xl mx-auto">
+                <Icon name="lucide:lightbulb" size="48" class="text-orange-500 mx-auto mb-4" />
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4">
+                    Tidak Menemukan Ekstrakurikuler Yang Kamu Inginkan?
                 </h2>
-                <div class="relative max-w-md mx-auto">
-                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                        <Icon name="lucide:search" size="20" class="text-neutral-400" />
-                    </div>
-                    <input
-                        type="text"
-                        placeholder="Cari Organisasi"
-                        class="w-full pl-12 pr-4 py-3 border border-neutral-300 rounded-full text-black placeholder-neutral-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                    />
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- New Ekstrakurikuler section based on the second image -->
-    <section class="min-h-screen bg-white py-16 px-8">
-        <div class="max-w-4xl mx-auto">
-            <!-- Main Title -->
-            <div class="text-center mb-12">
-                <h1 class="text-4xl md:text-5xl font-bold text-black mb-4">
-                    EKSTRAKURIKULER - EKSTRAKURIKULER
-                </h1>
-                <p class="text-xl text-black font-medium">
-                    Di SMK Negeri 02 Singosari
+                <p class="text-lg text-gray-600 mb-6">
+                    Tenang! Kamu bisa membuat komunitas ekstrakurikuler baru di SMK Negeri 2 Singosari
                 </p>
-            </div>
-
-            <!-- FAQ-style Expandable Items for Ekstrakurikuler -->
-            <div class="space-y-4 mb-16">
-                <div class="bg-white rounded-2xl shadow-md p-6 flex items-center justify-between cursor-pointer hover:shadow-lg transition-shadow">
-                    <span class="text-lg font-semibold text-black">Apa Itu Ekstrakurikuler?</span>
-                    <button class="text-2xl font-bold text-black">+</button>
-                </div>
-                <div class="bg-white rounded-2xl shadow-md p-6 flex items-center justify-between cursor-pointer hover:shadow-lg transition-shadow">
-                    <span class="text-lg font-semibold text-black">Terus Apa Fungsinya Ikut Ektrakurikuler?</span>
-                    <button class="text-2xl font-bold text-black">+</button>
-                </div>
-                <div class="bg-white rounded-2xl shadow-md p-6 flex items-center justify-between cursor-pointer hover:shadow-lg transition-shadow">
-                    <span class="text-lg font-semibold text-black">Apa Keuntungan Kalo Ikut Ekstrakurikuler?</span>
-                    <button class="text-2xl font-bold text-black">+</button>
-                </div>
-            </div>
-
-            <!-- Search Section -->
-            <div class="text-center mb-12">
-                <h2 class="text-2xl md:text-3xl font-bold text-black mb-6">
-                    DAFTAR EKSTRAKURIKULER
-                </h2>
-                <p class="text-lg text-black font-medium mb-8">
-                    Di SMK Negeri 02 Singosari
-                </p>
-                <div class="relative max-w-md mx-auto">
-                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                        <Icon name="lucide:search" size="20" class="text-white" />
-                    </div>
-                    <input
-                        type="text"
-                        placeholder="Cari Ekstrakurikuler"
-                        class="w-full pl-12 pr-4 py-3 border border-neutral-300 rounded-full text-black placeholder-white bg-blue-500/20 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-                    />
-                </div>
-            </div>
-
-            <!-- Category Buttons -->
-            <div class="flex flex-wrap justify-center gap-4">
-                <button class="bg-white rounded-full px-6 py-3 text-black font-semibold shadow-md hover:shadow-lg transition-shadow">
-                    Kategori 1
+                <button
+                    @click="openDialog"
+                    class="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors shadow-md hover:shadow-lg"
+                >
+                    Lihat Caranya
+                    <Icon name="lucide:arrow-right" size="18" />
                 </button>
-                <button class="bg-white rounded-full px-6 py-3 text-black font-semibold shadow-md hover:shadow-lg transition-shadow">
-                    Kategori 2
-                </button>
-                <button class="bg-white rounded-full px-6 py-3 text-black font-semibold shadow-md hover:shadow-lg transition-shadow">
-                    Kategori 3
-                </button>
-                <button class="bg-white rounded-full px-6 py-3 text-black font-semibold shadow-md hover:shadow-lg transition-shadow">
-                    Kategori 4
-                </button>
-                <button class="bg-white rounded-full px-6 py-3 text-black font-semibold shadow-md hover:shadow-lg transition-shadow">
-                    Kategori 5
-                </button>
-                <button class="bg-white rounded-full px-6 py-3 text-black font-semibold shadow-md hover:shadow-lg transition-shadow">
-                    Kategori 6
-                </button>
-                <button class="bg-white rounded-full px-6 py-3 text-black font-semibold shadow-md hover:shadow-lg transition-shadow">
-                    Kategori 7
-                </button>
-                <button class="bg-white rounded-full px-6 py-3 text-black font-semibold shadow-md hover:shadow-lg transition-shadow">
-                    Kategori 8
-                </button>
-                <button class="bg-white rounded-full px-6 py-3 text-black font-semibold shadow-md hover:shadow-lg transition-shadow">
-                    Kategori 9
-                </button>
-            </div>
+            </section>
         </div>
-    </section>
 
-    <!-- New cards section with logo hover effect -->
-    <section class="min-h-screen bg-white py-16 px-8">
-        <div class="w-full">
-            <div class="space-y-4">
-                <div v-for="n in 6" :key="n" class="group bg-neutral-100 rounded-lg p-8 cursor-pointer overflow-hidden hover:bg-neutral-200 transition-all duration-300 ease-in-out w-full">
-                    <div class="flex items-center justify-center relative">
-                        <!-- Logo that slides to the left on hover -->
-                        <div class="transform transition-all duration-500 ease-in-out group-hover:-translate-x-20">
-                            <img 
-                                src="/images/logo.webp" 
-                                alt="Logo" 
-                                class="w-16 h-16 object-contain"
-                            />
-                        </div>
-                        
-                        <!-- Text that appears from the right on hover -->
-                        <div class="absolute right-0 opacity-0 transform translate-x-10 transition-all duration-500 ease-in-out group-hover:opacity-100 group-hover:translate-x-0">
-                            <h3 class="text-2xl font-bold text-black">Lorem</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- New section with outline text cards -->
-    <section class="min-h-screen bg-white py-16">
-        <div class="w-full space-y-0">
-            <div v-for="sport in ['BASKET', 'SEPAK BOLA', 'VOLLEY', 'BADMINTON', 'FUTSAL']" :key="sport" class="w-full bg-neutral-100 py-12 border-b border-neutral-300 cursor-pointer hover:bg-neutral-200 transition-colors duration-300">
-                <div class="flex items-center justify-center">
-                    <h2 class="text-8xl md:text-9xl font-bold text-transparent text-center" style="-webkit-text-stroke: 2px #000000;">
-                        {{ sport }}
-                    </h2>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- New call-to-action section -->
-    <section class="h-fit bg-white py-16 px-8">
-        <div class="max-w-4xl mx-auto text-center">
-            <!-- Main Question -->
-            <h2 class="text-2xl md:text-3xl font-medium text-black mb-4">
-                Tidak Menemukan Ekstrakurikuler Yang Kamu Inginkan?
-            </h2>
-            
-            <!-- Highlighted Text -->
-            <h1 class="text-3xl md:text-4xl font-bold text-black mb-6">
-                Tenang Aja!!
-            </h1>
-            
-            <!-- Description -->
-            <p class="text-lg text-black mb-8 leading-relaxed">
-                Di SMK Negeri 2 Singosari, Kamu Bisa Buat Komunitas Ekstrakurikuler Baru Lohhh!!!
-            </p>
-            
-            <!-- Call-to-Action Button -->
-            <button 
-                @click="openDialog"
-                class="bg-white text-black font-semibold px-8 py-3 rounded-full border border-neutral-300 shadow-md hover:shadow-lg transition-all duration-300 hover:bg-neutral-50 flex items-center gap-2 mx-auto"
-            >
-                <span>Lihat Caranya</span>
-                <Icon name="lucide:arrow-right" size="20" />
-            </button>
-        </div>
-    </section>
-
-    <!-- Dialog Modal -->
-    <Teleport to="body">
-        <Transition name="dialog">
-            <div
-                v-if="isDialogOpen"
-                class="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-50 flex items-center justify-center p-4 pt-30"
-                @click.self="closeDialog"
-            >
-                <div class="bg-white rounded-2xl max-w-lg w-full max-h-[80vh] overflow-y-auto mt-8">
-                    <!-- Dialog Header -->
-                    <div class="flex justify-between items-center p-4 border-b">
-                        <h2 class="text-xl font-bold text-black">Cara Membuat Ekstrakurikuler Baru</h2>
-                        <button @click="closeDialog" class="text-neutral-500 hover:text-black">
-                            <Icon name="lucide:x" size="20" />
-                        </button>
-                    </div>
-
-                    <!-- Dialog Content -->
-                    <div class="p-4 space-y-4">
-                        <!-- Step 1 -->
-                        <div class="flex gap-3">
-                            <div class="flex-shrink-0 w-6 h-6 bg-white border-2 border-black rounded-full flex items-center justify-center">
-                                <span class="text-xs font-bold text-black">1</span>
-                            </div>
-                            <div>
-                                <h3 class="font-bold text-black mb-1 text-sm">Jadi Gini Caranya !!</h3>
-                                <p class="text-xs text-black leading-relaxed">
-                                    Caranya gampang banget, dan semua pasti bisa melakukan dengan cara yang mudah pernahkah kalian.
-                                    Dan ada syarat syarat yang harus kamu lakukan sebagai pembuat ekstrakurikuler yang mengurus ekstrakurikuler harus
-                                    berusia minimal 16 tahun, bersekolah disini, lulus tes leadership untuk menjadi ketua ekstrakurikuler tersebut.
-                                </p>
-                            </div>
+        <!-- Dialog Modal -->
+        <Teleport to="body">
+            <Transition name="dialog">
+                <div
+                    v-if="isDialogOpen"
+                    class="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-50 flex items-center justify-center p-4"
+                    @click.self="closeDialog"
+                >
+                    <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border-2 border-blue-100">
+                        <!-- Dialog Header -->
+                        <div class="flex justify-between items-center p-6 border-b border-gray-200 bg-gradient-to-r from-blue-600 to-blue-800 rounded-t-2xl">
+                            <h2 class="text-2xl font-bold text-white">Cara Membuat Ekstrakurikuler Baru</h2>
+                            <button @click="closeDialog" class="text-white hover:text-gray-200 transition-colors">
+                                <Icon name="lucide:x" size="24" />
+                            </button>
                         </div>
 
-                        <!-- Step 2 -->
-                        <div class="flex gap-3">
-                            <div class="flex-shrink-0 w-6 h-6 bg-white border-2 border-black rounded-full flex items-center justify-center">
-                                <span class="text-xs font-bold text-black">2</span>
+                        <!-- Dialog Content -->
+                        <div class="p-6 space-y-6">
+                            <!-- Step 1 -->
+                            <div class="flex gap-4">
+                                <div class="flex-shrink-0 w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
+                                    <span class="text-lg font-bold text-white">1</span>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-gray-800 mb-2 text-lg">Persyaratan</h3>
+                                    <p class="text-gray-600 leading-relaxed">
+                                        Untuk menjadi ketua ekstrakurikuler, kamu harus berusia minimal 16 tahun, bersekolah di SMKN 2 Singosari, dan lulus tes leadership.
+                                    </p>
+                                </div>
                             </div>
-                            <div>
-                                <h3 class="font-bold text-black mb-1 text-sm">Sudah Deh !!</h3>
-                                <p class="text-xs text-black leading-relaxed">
-                                    Dengan hini kamu sudah mempunyai peluang untuk menjadi katu ekstrakurikuler yang akan.
-                                    baru yang kamu bangun sendiri dengan teman teman kalian yang selagi.
-                                </p>
-                            </div>
-                        </div>
 
-                        <!-- Step 3 -->
-                        <div class="flex gap-3">
-                            <div class="flex-shrink-0 w-6 h-6 bg-white border-2 border-black rounded-full flex items-center justify-center">
-                                <span class="text-xs font-bold text-black">3</span>
+                            <!-- Step 2 -->
+                            <div class="flex gap-4">
+                                <div class="flex-shrink-0 w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
+                                    <span class="text-lg font-bold text-white">2</span>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-gray-800 mb-2 text-lg">Proses Pendaftaran</h3>
+                                    <p class="text-gray-600 leading-relaxed">
+                                        Ajukan proposal ekstrakurikuler baru kepada pihak sekolah dengan detail kegiatan dan tujuan yang jelas.
+                                    </p>
+                                </div>
                             </div>
-                            <div>
-                                <h3 class="font-bold text-black mb-1 text-sm">Masih Bingung ?</h3>
-                                <p class="text-xs text-black leading-relaxed mb-3">
-                                    Kalau kalian masih bingung, gimana caranya buat ekstrakurikuler tersebut lengkap cara membuat komunitas ekstrakurikuler
-                                    dengan detail, dan kalau kamu masih bingung silahkan hubungi dibawah ini.
-                                </p>
 
-                                <!-- Contact Cards -->
-                                <div class="grid grid-cols-1 gap-3">
-                                    <!-- Instagram Card -->
-                                    <div class="bg-white border border-neutral-300 rounded-lg p-3">
-                                        <div class="flex items-center gap-2 mb-2">
-                                            <Icon name="lucide:instagram" size="16" class="text-pink-600" />
-                                            <span class="font-semibold text-black text-xs">Instagram</span>
-                                        </div>
-                                        <div class="space-y-1 text-xs">
-                                            <div class="flex justify-between">
-                                                <span class="text-neutral-600">@ Andika</span>
-                                                <span class="text-black">@dika_abid_21</span>
+                            <!-- Step 3 -->
+                            <div class="flex gap-4">
+                                <div class="flex-shrink-0 w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
+                                    <span class="text-lg font-bold text-white">3</span>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-gray-800 mb-2 text-lg">Butuh Bantuan?</h3>
+                                    <p class="text-gray-600 leading-relaxed mb-4">
+                                        Jika masih bingung, silahkan hubungi kontak di bawah ini:
+                                    </p>
+
+                                    <!-- Contact Cards -->
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div class="bg-blue-50 border-2 border-blue-100 rounded-xl p-4">
+                                            <div class="flex items-center gap-2 mb-3">
+                                                <Icon name="lucide:instagram" size="20" class="text-pink-600" />
+                                                <span class="font-semibold text-gray-800">Instagram</span>
                                             </div>
-                                            <div class="flex justify-between">
-                                                <span class="text-neutral-600">@ Dina</span>
-                                                <span class="text-black">@andika_alrizalianty</span>
+                                            <div class="space-y-2 text-sm">
+                                                <p class="text-gray-700">@dika_abid_21</p>
+                                                <p class="text-gray-700">@andika_alrizalianty</p>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <!-- WhatsApp Card -->
-                                    <div class="bg-white border border-neutral-300 rounded-lg p-3">
-                                        <div class="flex items-center gap-2 mb-2">
-                                            <Icon name="lucide:message-circle" size="16" class="text-green-600" />
-                                            <span class="font-semibold text-black text-xs">WhatsApp</span>
-                                        </div>
-                                        <div class="space-y-1 text-xs">
-                                            <div class="flex justify-between">
-                                                <span class="text-neutral-600">@ Andika</span>
-                                                <span class="text-black">085859731672</span>
+                                        <div class="bg-green-50 border-2 border-green-100 rounded-xl p-4">
+                                            <div class="flex items-center gap-2 mb-3">
+                                                <Icon name="lucide:message-circle" size="20" class="text-green-600" />
+                                                <span class="font-semibold text-gray-800">WhatsApp</span>
                                             </div>
-                                            <div class="flex justify-between">
-                                                <span class="text-neutral-600">@ Dina</span>
-                                                <span class="text-black">+62 85845980017</span>
+                                            <div class="space-y-2 text-sm">
+                                                <p class="text-gray-700">085859731672</p>
+                                                <p class="text-gray-700">+62 85845980017</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Dialog Footer -->
-                    <div class="flex justify-center p-4 border-t">
-                        <button @click="closeDialog" class="text-neutral-600 hover:text-black font-medium text-sm">
-                            ← Kembali
-                        </button>
+                        <!-- Dialog Footer -->
+                        <div class="flex justify-center p-6 border-t border-gray-200">
+                            <button @click="closeDialog" class="text-gray-600 hover:text-gray-800 font-semibold inline-flex items-center gap-2">
+                                <Icon name="lucide:arrow-left" size="18" />
+                                Kembali
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                </div>
-            </div>
-        </Transition>
-    </Teleport>
+            </Transition>
+        </Teleport>
+    </div>
 </template>
+
+<style scoped>
+.dialog-enter-active,
+.dialog-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.dialog-enter-from,
+.dialog-leave-to {
+  opacity: 0;
+}
+</style>
