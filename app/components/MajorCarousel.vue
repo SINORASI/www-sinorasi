@@ -16,15 +16,12 @@
             :alt="card.title"
             class="thumbnail"
           />
-          <iframe
+          <!-- YouTube player container -->
+          <div
             v-if="card.videoType === 'youtube'"
-            :ref="el => setVideoRef(card.id, el)"
-            :src="`https://www.youtube.com/embed/${card.videoUrl}?autoplay=1&mute=1&loop=1&playlist=${card.videoUrl}&controls=0&showinfo=0&rel=0&modestbranding=1&start=${card.startTime || 10}&end=${card.endTime || 20}&playbackRate=${card.speed || 0.5}`"
-            class="video-element youtube-iframe"
+            :id="`youtube-player-${card.id}`"
+            class="video-element"
             :class="{ 'video-active': hoveredCard === card.id }"
-            frameborder="0"
-            allow="autoplay; encrypted-media"
-            allowfullscreen
           />
           
           <div 
@@ -63,7 +60,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
+
+// YouTube API type definition
+declare global {
+  interface Window {
+    YT: any;
+    onYouTubeIframeAPIReady: () => void;
+  }
+}
 
 interface VideoCard {
   id: number
@@ -74,15 +79,118 @@ interface VideoCard {
   title: string
   description: string
   slug: string
-  startTime?: number
-  endTime?: number
-  speed?: number
 }
 
 const hoveredCard = ref<number | null>(null)
-const videoRefs = ref<Record<number, HTMLVideoElement>>({})
 const currentSlide = ref(0)
 const cardsPerSlide = 4
+const youtubePlayers = ref<Record<number, any>>({})
+const playersReady = ref<Record<number, boolean>>({})
+const playbackIntervals = ref<Record<number, number>>({})
+
+// Load YouTube API
+let apiLoaded = false
+onMounted(() => {
+  if (!window.YT) {
+    const tag = document.createElement('script')
+    tag.src = 'https://www.youtube.com/iframe_api'
+    const firstScriptTag = document.getElementsByTagName('script')[0]
+    if (firstScriptTag && firstScriptTag.parentNode) {
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag)
+    }
+    
+    window.onYouTubeIframeAPIReady = () => {
+      apiLoaded = true
+      initializePlayers()
+    }
+  } else {
+    apiLoaded = true
+    initializePlayers()
+  }
+})
+
+const initializePlayers = () => {
+  currentSlideCards.value.forEach(card => {
+    if (card.videoType === 'youtube' && !youtubePlayers.value[card.id]) {
+      createPlayer(card.id, card.videoUrl)
+    }
+  })
+}
+
+const createPlayer = (id: number, videoId: string) => {
+  if (!window.YT || !window.YT.Player) return
+  
+  youtubePlayers.value[id] = new window.YT.Player(`youtube-player-${id}`, {
+    videoId: videoId,
+    playerVars: {
+      autoplay: 0,
+      controls: 0,
+      disablekb: 1,
+      fs: 0,
+      modestbranding: 1,
+      rel: 0,
+      showinfo: 0,
+      mute: 1,
+      start: 10
+    },
+    events: {
+      onReady: () => {
+        playersReady.value[id] = true
+      }
+    }
+  })
+}
+
+// Watch for slide changes
+watch(currentSlide, () => {
+  setTimeout(() => {
+    if (apiLoaded) {
+      initializePlayers()
+    }
+  }, 100)
+})
+
+const handleMouseEnter = (id: number) => {
+  hoveredCard.value = id
+  const player = youtubePlayers.value[id]
+  
+  if (player && playersReady.value[id]) {
+    player.seekTo(10, true)
+    player.setPlaybackRate(0.75)
+    player.playVideo()
+    
+    // Clear any existing interval
+    if (playbackIntervals.value[id]) {
+      clearInterval(playbackIntervals.value[id])
+    }
+    
+    // Monitor playback and loop between 10s and 15s
+    playbackIntervals.value[id] = window.setInterval(() => {
+      if (hoveredCard.value === id && player.getCurrentTime) {
+        const currentTime = player.getCurrentTime()
+        if (currentTime >= 15) {
+          player.seekTo(10, true)
+        }
+      }
+    }, 100)
+  }
+}
+
+const handleMouseLeave = (id: number) => {
+  hoveredCard.value = null
+  const player = youtubePlayers.value[id]
+  
+  // Clear interval
+  if (playbackIntervals.value[id]) {
+    clearInterval(playbackIntervals.value[id])
+    delete playbackIntervals.value[id]
+  }
+  
+  if (player && playersReady.value[id]) {
+    player.pauseVideo()
+    player.seekTo(10, true)
+  }
+}
 
 const videoCards: VideoCard[] = [
   {
@@ -93,10 +201,7 @@ const videoCards: VideoCard[] = [
     logo: '/images/majorIcon/rpl.webp',
     title: 'Rekayasa Perangkat Lunak',
     description: 'Mempelajari pemrograman, pengembangan aplikasi, database, dan pembuatan software untuk berbagai platform digital',
-    slug: 'rpl',
-    startTime: 5,
-    endTime: 15,
-    speed: 1
+    slug: 'rpl'
   },
   {
     id: 2,
@@ -106,10 +211,7 @@ const videoCards: VideoCard[] = [
     logo: '/images/majorIcon/tkj.webp',
     title: 'Teknik Komputer dan Jaringan',
     description: 'Fokus pada instalasi, konfigurasi, dan maintenance jaringan komputer, server, serta sistem keamanan IT',
-    slug: 'tkj',
-    startTime: 5,
-    endTime: 15,
-    speed: 1
+    slug: 'tkj'
   },
   {
     id: 3,
@@ -119,10 +221,7 @@ const videoCards: VideoCard[] = [
     logo: '/images/majorIcon/dkv.webp',
     title: 'Desain Komunikasi Visual',
     description: 'Mengembangkan kemampuan desain grafis, branding, ilustrasi, dan komunikasi visual untuk media cetak dan digital',
-    slug: 'dkv',
-    startTime: 5,
-    endTime: 15,
-    speed: 1
+    slug: 'dkv'
   },
   {
     id: 4,
@@ -132,10 +231,7 @@ const videoCards: VideoCard[] = [
     logo: '/images/majorIcon/animasi.webp',
     title: 'Animasi',
     description: 'Mempelajari teknik animasi 2D, 3D, motion graphics, character design, dan produksi konten multimedia',
-    slug: 'animasi',
-    startTime: 5,
-    endTime: 15,
-    speed: 1
+    slug: 'animasi'
   },
   {
     id: 5,
@@ -145,10 +241,7 @@ const videoCards: VideoCard[] = [
     logo: '/images/majorIcon/broadcasting.webp',
     title: 'Broadcasting',
     description: 'Menguasai produksi siaran televisi, radio, videografi, editing video, dan jurnalistik multimedia',
-    slug: 'broadcasting',
-    startTime: 5,
-    endTime: 15,
-    speed: 1
+    slug: 'broadcasting'
   },
   {
     id: 6,
@@ -158,10 +251,7 @@ const videoCards: VideoCard[] = [
     logo: '/images/majorIcon/tei.webp',
     title: 'Teknik Elektronika Industri',
     description: 'Pembelajaran sistem kontrol industri, PLC, robotika, instrumentasi, dan otomasi pabrik modern',
-    slug: 'tei',
-    startTime: 5,
-    endTime: 15,
-    speed: 1
+    slug: 'tei'
   },
   {
     id: 7,
@@ -171,10 +261,7 @@ const videoCards: VideoCard[] = [
     logo: '/images/majorIcon/mekatronika.webp',
     title: 'Mekatronika',
     description: 'Menggabungkan mekanik, elektronik, dan komputer untuk merancang sistem otomasi dan robotika industri',
-    slug: 'mekatronika',
-    startTime: 5,
-    endTime: 15,
-    speed: 1
+    slug: 'mekatronika'
   },
   {
     id: 8,
@@ -184,10 +271,7 @@ const videoCards: VideoCard[] = [
     logo: '/images/majorIcon/tav.webp',
     title: 'Teknik Audio Video',
     description: 'Mempelajari instalasi dan perawatan sistem audio video, sound system, home theater, dan teknologi multimedia',
-    slug: 'tav',
-    startTime: 5,
-    endTime: 15,
-    speed: 1
+    slug: 'tav'
   }
 ]
 
@@ -198,30 +282,6 @@ const currentSlideCards = computed(() => {
   const end = start + cardsPerSlide
   return videoCards.slice(start, end)
 })
-
-const setVideoRef = (id: number, el: any) => {
-  if (el) {
-    videoRefs.value[id] = el as HTMLVideoElement
-  }
-}
-
-const handleMouseEnter = (id: number) => {
-  hoveredCard.value = id
-  const video = videoRefs.value[id]
-  if (video && video.tagName === 'VIDEO') {
-    video.currentTime = 0
-    video.play().catch(err => console.log('Video play failed:', err))
-  }
-}
-
-const handleMouseLeave = (id: number) => {
-  hoveredCard.value = null
-  const video = videoRefs.value[id]
-  if (video && video.tagName === 'VIDEO') {
-    video.pause()
-    video.currentTime = 0
-  }
-}
 
 const nextSlide = () => {
   if (currentSlide.value < totalSlides.value - 1) {
@@ -285,9 +345,9 @@ const navigateToJurusan = (slug: string) => {
   pointer-events: none;
 }
 
-.youtube-iframe {
-  border: none;
-  object-fit: cover;
+.video-element iframe {
+  width: 100%;
+  height: 100%;
 }
 
 .video-active {
@@ -346,6 +406,7 @@ const navigateToJurusan = (slug: string) => {
   opacity: 0.95;
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -399,6 +460,7 @@ const navigateToJurusan = (slug: string) => {
   .description {
     font-size: 0.8rem;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
   }
   
   .content-overlay {

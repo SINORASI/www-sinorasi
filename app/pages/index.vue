@@ -285,6 +285,263 @@ useHead({
         </div>
       </div>
     </section>
+    
+    <!-- School Uniform Section -->
+    <section class="py-20 bg-gradient-to-b from-white via-orange-50 to-white" id="seragam-sekolah">
+      <div class="container mx-auto px-4 md:px-10">
+        <div class="flex flex-col items-center gap-12">
+          <!-- Section Header -->
+          <div class="text-center flex flex-col items-center gap-4">
+            <div class="bg-gradient-to-r from-orange-600 to-orange-800 backdrop-blur-2xl p-6 shadow-xl rounded-2xl px-10 py-6 border border-orange-200">
+              <h2 class="text-3xl font-bold text-white">Seragam Sekolah</h2>
+            </div>
+            <p class="text-gray-600 max-w-2xl text-lg text-center">
+              Tata tertib penggunaan seragam sekolah berdasarkan hari pembelajaran
+            </p>
+          </div>
+
+          <!-- Uniform Cards -->
+          <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 w-full max-w-[1600px]">
+            <!-- Monday - Putih Putih -->
+            <UniformCard
+              :gradeImages="{
+                'X': {
+                  'L': [
+                    '/images/seragam/putih-putih/10-putih-putih-l/DSC04123.webp',
+                    '/images/seragam/putih-putih/10-putih-putih-l/DSC04170.webp',
+                    '/images/seragam/putih-putih/10-putih-putih-l/DSC04177.webp',
+                    '/images/seragam/putih-putih/10-putih-putih-l/DSC04188.webp'
+                  ],
+                  'P': [
+                    '/images/seragam/putih-putih/10-putih-putih-p/10-putih-putih-p-1.webp',
+                    '/images/seragam/putih-putih/10-putih-putih-p/DSC04123.webp',
+                    '/images/seragam/putih-putih/10-putih-putih-p/DSC04200.webp',
+                    '/images/seragam/putih-putih/10-putih-putih-p/DSC04209.webp'
+                  ]
+                },
+                'XI': {
+                  'L': [
+                    '/images/seragam/putih-putih/11-putih-putih-l/11-putih-putih-l-1.webp',
+                    '/images/seragam/putih-putih/11-putih-putih-l/11-putih-putih-l-2.webp',
+                    '/images/seragam/putih-putih/11-putih-putih-l/11-putih-putih-l-3.webp',
+                    '/images/seragam/putih-putih/11-putih-putih-l/11-putih-putih-m.webp'
+                  ],
+                  'P': [
+                    '/images/seragam/putih-putih/11-putih-putih-l/11-putih-putih-l-1.webp',
+                    '/images/seragam/putih-putih/11-putih-putih-l/11-putih-putih-l-2.webp',
+                    '/images/seragam/putih-putih/11-putih-putih-l/11-putih-putih-l-3.webp',
+                    '/images/seragam/putih-putih/11-putih-putih-l/11-putih-putih-m.webp'
+                  ]
+                }
+              }"
+              :almamaterImages="{
+                'X': {
+                  'L': [
+                    '/images/seragam/putih-putih/10-putih-putih-jas-l/DSC04215.webp',
+                    '/images/seragam/putih-putih/10-putih-putih-jas-l/DSC04261.webp',
+                    '/images/seragam/putih-putih/10-putih-putih-jas-l/DSC04269.webp',
+                    '/images/seragam/putih-putih/10-putih-putih-jas-l/DSC04273.webp'
+                  ],
+                  'P': [
+                    '/images/seragam/putih-putih/10-putih-putih-jas-p/DSC04215.webp',
+                    '/images/seragam/putih-putih/10-putih-putih-jas-p/DSC04249.webp',
+                    '/images/seragam/putih-putih/10-putih-putih-jas-p/DSC04256.webp',
+                    '/images/seragam/putih-putih/10-putih-putih-jas-p/DSC04256.webp'
+                  ]
+                },
+                'XI': {
+                  'L': [
+                    '/images/seragam/putih-putih/11-putih-putih-jas-l/DSC04320.webp',
+                    '/images/seragam/putih-putih/11-putih-putih-jas-l/DSC04340.webp',
+                    '/images/seragam/putih-putih/11-putih-putih-jas-l/DSC04341.webp',
+                    '/images/seragam/putih-putih/11-putih-putih-jas-l/DSC04349.webp'
+                  ],
+                  'P': [
+                    '/images/seragam/putih-putih/11-putih-putih-jas-p/DSC04320.webp',
+                    '/images/seragam/putih-putih/11-putih-putih-jas-p/DSC04354.webp',
+                    '/images/seragam/putih-putih/11-putih-putih-jas-p/DSC04356.webp',
+                    '/images/seragam/putih-putih/11-putih-putih-jas-p/DSC04363.webp'
+                  ]
+                }
+              }"
+              day="Senin"
+              dayNumber="Hari 1"
+              uniformType="Putih - Putih"
+              primaryColor="gray"
+            />
+
+            <!-- Tuesday & Wednesday - Putih Abu -->
+            <UniformCard
+              :gradeImages="{
+                'X': {
+                  'L': [
+                    '/images/seragam/putih-abu/10-putih-abu-l/DSC04368.webp',
+                    '/images/seragam/putih-abu/10-putih-abu-l/DSC04388.webp',
+                    '/images/seragam/putih-abu/10-putih-abu-l/DSC04393.webp',
+                    '/images/seragam/putih-abu/10-putih-abu-l/DSC04396.webp'
+                  ],
+                  'P': [
+                    '/images/seragam/putih-abu/10-putih-abu-p/DSC04368.webp',
+                    '/images/seragam/putih-abu/10-putih-abu-p/DSC04404.webp',
+                    '/images/seragam/putih-abu/10-putih-abu-p/DSC04408.webp',
+                    '/images/seragam/putih-abu/10-putih-abu-p/DSC04412.webp'
+                  ]
+                },
+                'XI': {
+                  'L': [
+                    '/images/seragam/putih-abu/11-putih-abu-l/DSC03955.webp',
+                    '/images/seragam/putih-abu/11-putih-abu-l/DSC04067.webp',
+                    '/images/seragam/putih-abu/11-putih-abu-l/DSC04079.webp',
+                    '/images/seragam/putih-abu/11-putih-abu-l/DSC04086.webp'
+                  ],
+                  'P': [
+                    '/images/seragam/putih-abu/11-putih-abu-p/DSC03955.webp',
+                    '/images/seragam/putih-abu/11-putih-abu-p/DSC04033.webp',
+                    '/images/seragam/putih-abu/11-putih-abu-p/DSC04051.webp',
+                    '/images/seragam/putih-abu/11-putih-abu-p/DSC04100.webp'
+                  ]
+                }
+              }"
+              day="Selasa & Rabu"
+              dayNumber="Hari 2-3"
+              uniformType="Putih - Abu"
+              primaryColor="gray"
+            />
+
+            <!-- Thursday - Batik -->
+            <UniformCard
+              :gradeImages="{
+                'X': {
+                  'L': [
+                    '/images/seragam/batik/10-batik-l/DSC04420.webp',
+                    '/images/seragam/batik/10-batik-l/DSC04462.webp',
+                    '/images/seragam/batik/10-batik-l/DSC04466.webp',
+                    '/images/seragam/batik/10-batik-l/DSC04470.webp'
+                  ],
+                  'P': [
+                    '/images/seragam/batik/10-batik-p/DSC04420.webp',
+                    '/images/seragam/batik/10-batik-p/DSC04446.webp',
+                    '/images/seragam/batik/10-batik-p/DSC04448.webp',
+                    '/images/seragam/batik/10-batik-p/DSC04455.webp'
+                  ]
+                },
+                'XI': {
+                  'L': [
+                    '/images/seragam/batik/11-batik-l/DSC04477.webp',
+                    '/images/seragam/batik/11-batik-l/DSC04508.webp',
+                    '/images/seragam/batik/11-batik-l/DSC04512.webp',
+                    '/images/seragam/batik/11-batik-l/DSC04515.webp'
+                  ],
+                  'P': [
+                    '/images/seragam/batik/11-batik-p/DSC04477.webp',
+                    '/images/seragam/batik/11-batik-p/DSC04491.webp',
+                    '/images/seragam/batik/11-batik-p/DSC04495.webp',
+                    '/images/seragam/batik/11-batik-p/DSC04503.webp'
+                  ]
+                }
+              }"
+              day="Kamis"
+              dayNumber="Hari 4"
+              uniformType="Batik"
+              primaryColor="blue"
+            />
+
+            <!-- Friday - Pramuka -->
+            <UniformCard
+              :gradeImages="{
+                'X': {
+                  'L': [
+                    '/images/seragam/pramuka/10-pramuka-l/DSC04526.webp',
+                    '/images/seragam/pramuka/10-pramuka-l/DSC04547.webp',
+                    '/images/seragam/pramuka/10-pramuka-l/DSC04550.webp',
+                    '/images/seragam/pramuka/10-pramuka-l/DSC04555.webp'
+                  ],
+                  'P': [
+                    '/images/seragam/pramuka/10-pramuka-p/DSC04526.webp',
+                    '/images/seragam/pramuka/10-pramuka-p/DSC04562.webp',
+                    '/images/seragam/pramuka/10-pramuka-p/DSC04565.webp',
+                    '/images/seragam/pramuka/10-pramuka-p/DSC04569.webp'
+                  ]
+                },
+                'XI': {
+                  'L': [
+                    '/images/seragam/pramuka/11-pramuka-l/DSC04675.webp',
+                    '/images/seragam/pramuka/11-pramuka-l/DSC04678.webp',
+                    '/images/seragam/pramuka/11-pramuka-l/DSC04688.webp',
+                    '/images/seragam/pramuka/11-pramuka-l/DSC04743.webp'
+                  ],
+                  'P': [
+                    '/images/seragam/pramuka/11-pramuka-p/DSC04743.webp',
+                    '/images/seragam/pramuka/11-pramuka-p/DSC04775.webp',
+                    '/images/seragam/pramuka/11-pramuka-p/DSC04782.webp',
+                    '/images/seragam/pramuka/11-pramuka-p/DSC04791.webp'
+                  ]
+                }
+              }"
+              day="Jumat"
+              dayNumber="Hari 5"
+              uniformType="Pramuka"
+              primaryColor="brown"
+            />
+
+            <!-- Workout Uniform - Any Day -->
+            <UniformCard
+              :gradeImages="{
+                'X': {
+                  'L': [
+                    '/images/seragam/olahraga/10-olahraga-l/DSC04801.webp',
+                    '/images/seragam/olahraga/10-olahraga-l/DSC04842.webp',
+                    '/images/seragam/olahraga/10-olahraga-l/DSC04856.webp',
+                    '/images/seragam/olahraga/10-olahraga-l/DSC04858.webp'
+                  ],
+                  'P': [
+                    '/images/seragam/olahraga/10-olahraga-p/DSC04801.webp',
+                    '/images/seragam/olahraga/10-olahraga-p/DSC04829.webp',
+                    '/images/seragam/olahraga/10-olahraga-p/DSC04867.webp',
+                    '/images/seragam/olahraga/10-olahraga-p/DSC04871.webp'
+                  ]
+                },
+                'XI': {
+                  'L': [
+                    '/images/seragam/olahraga/11-olahraga-l/DSC04578.webp',
+                    '/images/seragam/olahraga/11-olahraga-l/DSC04599.webp',
+                    '/images/seragam/olahraga/11-olahraga-l/DSC04608.webp',
+                    '/images/seragam/olahraga/11-olahraga-l/DSC04614.webp'
+                  ],
+                  'P': [
+                    '/images/seragam/olahraga/11-olahraga-p/DSC04578.webp',
+                    '/images/seragam/olahraga/11-olahraga-p/DSC04615.webp',
+                    '/images/seragam/olahraga/11-olahraga-p/DSC04625.webp',
+                    '/images/seragam/olahraga/11-olahraga-p/DSC04631.webp'
+                  ]
+                }
+              }"
+              day="Seragam Olahraga"
+              dayNumber="Setiap Hari"
+              uniformType="Olahraga"
+              primaryColor="sky"
+            />
+          </div>
+
+          <!-- Additional Info -->
+          <div class="bg-gradient-to-r from-blue-600 to-blue-800 p-6 rounded-2xl max-w-4xl w-full shadow-lg">
+            <div class="flex gap-4">
+              <Icon name="lucide:info" size="24" class="text-white flex-shrink-0 mt-0.5" />
+              <div>
+                <h4 class="font-bold text-white mb-2">Catatan Penting</h4>
+                <ul class="text-sm text-blue-50 space-y-1 list-disc list-inside">
+                  <li>Seragam harus dikenakan dengan rapi dan sesuai ketentuan</li>
+                  <li>Sepatu hitam dengan kaos kaki putih wajib digunakan setiap hari</li>
+                  <li>Atribut sekolah seperti name tag dan badge harus dipasang dengan benar</li>
+                  <li>Rambut harus dipotong rapi sesuai dengan peraturan sekolah</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
     <section class="h-min-screen py-20 bg-gradient-to-b from-white via-blue-50 to-white" id="video-profil">
       <div class="container mx-auto px-4 md:px-10">
         <div class="flex flex-col lg:flex-row items-center justify-center gap-12">
@@ -310,7 +567,7 @@ useHead({
           <!-- Right Side: Title and Description -->
           <div class="lg:w-2/5 w-full max-w-md flex flex-col gap-6 text-center lg:text-left">
             <div class="bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl p-6 shadow-xl rounded-2xl border border-blue-200">
-              <h2 class="text-3xl font-bold text-white">Video Profil Sekolah</h2>
+              <h2 class="text-3xl font-bold text-white">Video Profil</h2>
             </div>
             
             <div class="bg-white shadow-xl rounded-2xl p-8 border-2 border-blue-100">
@@ -332,7 +589,7 @@ useHead({
         <!-- Section Header -->
         <div class="flex flex-col items-center gap-4">
           <div class="bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl p-6 shadow-xl rounded-2xl px-10 py-6 border border-blue-200">
-            <h2 class="text-4xl font-bold text-white">Jejak Sejarah Kami</h2>
+            <h2 class="text-4xl font-bold text-white">Jejak Sejarah</h2>
           </div>
           <p class="text-gray-600 max-w-2xl text-lg">
             Perjalanan panjang SMK Negeri 2 Singosari dalam mengembangkan pendidikan kejuruan berkualitas di Kabupaten Malang.
@@ -427,7 +684,7 @@ useHead({
     </section>
     <section class="h-fit flex items-center flex-col gap-8 py-20" id="Jurusan">
       <div class="bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl p-6 shadow-xl rounded-2xl px-10 py-6 border border-blue-200">
-        <h2 class="text-3xl font-bold text-white">Daftar Jurusan</h2>
+        <h2 class="text-3xl font-bold text-white">Jurusan</h2>
       </div>
       <div class="container flex items-center justify-center mx-auto">
         <MajorCarousel />
@@ -478,7 +735,7 @@ useHead({
     <section class="h-min-screen py-20" id="berita">
       <div class="container mx-auto flex flex-col items-center gap-8">
         <div class="bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl p-6 shadow-xl rounded-2xl px-10 py-6 border border-blue-200">
-          <h2 class="text-3xl font-bold text-white">Berita & Informasi</h2>
+          <h2 class="text-3xl font-bold text-white">Informasi & Berita</h2>
         </div>
         
         <!-- Category Filter -->

@@ -2,6 +2,7 @@
 import type { MajorName } from '~/models/MajorName';
 import type { JobTitle } from '~/models/JobTitle';
 import type { MajorData } from '~/models/MajorData';
+import { majorColorSchemes } from '~/utils/majorColors';
 
 interface ExpandedItems {
   [key: string]: boolean
@@ -17,6 +18,21 @@ const { data: jobTitles } = await useFetch<Record<MajorName, JobTitle[]>>('/api/
 const { data: majorDatas } = await useFetch<Record<MajorName, MajorData>>('/api/majors')
 
 const careers = computed(() => jobTitles.value?.[major] || [])
+
+// Get major color scheme
+const majorColor = computed(() => {
+  return majorColorSchemes[major] || {
+    primary: '#f97316',
+    secondary: '#ea580c',
+    accent: '#FFB366',
+    light: '#FFF3E8',
+    text: '#1f2937',
+    bg: '#ffffff',
+    hoverBg: '#fff7ed',
+    border: '#fed7aa',
+    headerBg: '#fff7ed'
+  };
+});
 
 const toggleExpanded = (id: number): void => {
   items.value = {
@@ -38,11 +54,10 @@ const toggleExpanded = (id: number): void => {
           <!-- Career Button/Header -->
           <button
             @click="toggleExpanded(idx)"
-            :class="[
-              'w-full px-4 sm:px-6 py-4 sm:py-5 flex items-center gap-4 transition-all duration-200',
-              majorDatas?.[major]?.bgColor || 'bg-orange-500',
-              majorDatas?.[major]?.hoverBgColor || 'hover:bg-orange-600',
-            ]"
+            :style="{
+              backgroundColor: majorColor.primary
+            }"
+            class="w-full px-4 sm:px-6 py-4 sm:py-5 flex items-center gap-4 transition-all duration-200 hover:brightness-110"
           >
             <!-- Profile Icon -->
             <div class="flex-shrink-0">
@@ -56,7 +71,7 @@ const toggleExpanded = (id: number): void => {
             </div>
 
             <!-- Job Title -->
-            <span class="flex-1 text-left text-black font-bold text-base sm:text-lg lg:text-xl break-words">
+            <span class="flex-1 text-left text-white font-bold text-base sm:text-lg lg:text-xl break-words">
               {{ career.title }}
             </span>
 

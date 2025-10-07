@@ -3,6 +3,8 @@ import type { MajorName } from "~/models/MajorName";
 export interface MajorColorScheme {
   primary: string;
   secondary: string;
+  accent: string;
+  light: string;
   text: string;
   bg: string;
   hoverBg: string;
@@ -14,6 +16,8 @@ export const majorColorSchemes: Record<MajorName, MajorColorScheme> = {
   rpl: {
     primary: "#F78B21",
     secondary: "#E67E00",
+    accent: "#FFB366",
+    light: "#FFF3E8",
     text: "#F78B21",
     bg: "#F78B21",
     hoverBg: "#E67E00",
@@ -23,6 +27,8 @@ export const majorColorSchemes: Record<MajorName, MajorColorScheme> = {
   tkj: {
     primary: "#FFC911",
     secondary: "#E6B800",
+    accent: "#FFD84D",
+    light: "#FFF9E5",
     text: "#FFC911",
     bg: "#FFC911",
     hoverBg: "#E6B800",
@@ -32,6 +38,8 @@ export const majorColorSchemes: Record<MajorName, MajorColorScheme> = {
   dkv: {
     primary: "#3598F9",
     secondary: "#2E7CE6",
+    accent: "#6BB4FF",
+    light: "#E8F4FF",
     text: "#3598F9",
     bg: "#3598F9",
     hoverBg: "#2E7CE6",
@@ -41,6 +49,8 @@ export const majorColorSchemes: Record<MajorName, MajorColorScheme> = {
   animasi: {
     primary: "#D93F92",
     secondary: "#C73682",
+    accent: "#E86BB4",
+    light: "#FCE9F3",
     text: "#D93F92",
     bg: "#D93F92",
     hoverBg: "#C73682",
@@ -50,6 +60,8 @@ export const majorColorSchemes: Record<MajorName, MajorColorScheme> = {
   broadcasting: {
     primary: "#E14648",
     secondary: "#C93E40",
+    accent: "#ED7275",
+    light: "#FEEBEB",
     text: "#E14648",
     bg: "#E14648",
     hoverBg: "#C93E40",
@@ -59,6 +71,8 @@ export const majorColorSchemes: Record<MajorName, MajorColorScheme> = {
   tei: {
     primary: "#059451",
     secondary: "#047B42",
+    accent: "#3BAA73",
+    light: "#E7F7EF",
     text: "#059451",
     bg: "#059451",
     hoverBg: "#047B42",
@@ -68,6 +82,8 @@ export const majorColorSchemes: Record<MajorName, MajorColorScheme> = {
   mekatronika: {
     primary: "#57A77C",
     secondary: "#4E9670",
+    accent: "#7FC09D",
+    light: "#EDF7F2",
     text: "#57A77C",
     bg: "#57A77C",
     hoverBg: "#4E9670",
@@ -77,6 +93,8 @@ export const majorColorSchemes: Record<MajorName, MajorColorScheme> = {
   tav: {
     primary: "#4FA898",
     secondary: "#469788",
+    accent: "#74BDB1",
+    light: "#ECF6F4",
     text: "#4FA898",
     bg: "#4FA898",
     hoverBg: "#469788",

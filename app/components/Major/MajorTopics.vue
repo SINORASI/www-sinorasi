@@ -2,6 +2,7 @@
 import type { MajorName } from "~/models/MajorName";
 import type { MajorData } from "~/models/MajorData";
 import type { MajorTopic } from "~/models/MajorTopic";
+import { majorColorSchemes } from '~/utils/majorColors';
 
 // Fetch majors data and topics from API
 const { data: majorDatas } = await useFetch<Record<MajorName, MajorData>>('/api/majors');
@@ -18,6 +19,21 @@ const rightOpenOrder = ref<string[]>([]);
 
 const route = useRoute();
 const major = route.params.majorName as MajorName;
+
+// Get major color scheme
+const majorColor = computed(() => {
+  return majorColorSchemes[major] || {
+    primary: '#f97316',
+    secondary: '#ea580c',
+    accent: '#FFB366',
+    light: '#FFF3E8',
+    text: '#1f2937',
+    bg: '#ffffff',
+    hoverBg: '#fff7ed',
+    border: '#fed7aa',
+    headerBg: '#fff7ed'
+  };
+});
 
 // Split topics into two columns dynamically
 const leftColumnTopics = computed(() => {
@@ -90,177 +106,261 @@ const toggleRightExpanded = (id: string): void => {
 </script>
 
 <template>
-  <div class="w-full px-4 sm:px-6 lg:px-8 py-8 sm:py-10 lg:py-12">
-    <div class="max-w-6xl mx-auto">
-      <!-- Header Section -->
-      <div class="mb-8 sm:mb-10">
-        <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 text-center">
-          Apa Saja Yang Dipelajari Di Jurusan {{ majorDatas?.[major]?.nameMajor || 'RPL' }} ?
-        </h2>
-      </div>
-
-      <!-- Two Column Grid -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
-        <!-- Left Column -->
-        <div class="space-y-4">
-          <div 
-            v-for="topic in leftColumnTopics" 
-            :key="topic.id"
-            class="transition-all duration-300"
+  <div class="w-full">
+    <!-- Two Column Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-5 lg:gap-6">
+      <!-- Left Column -->
+      <div class="space-y-4">
+        <div 
+          v-for="(topic, index) in leftColumnTopics" 
+          :key="topic.id"
+          class="transition-all duration-300"
+        >
+          <!-- Collapsed State -->
+          <button
+            v-if="!expandedLeftItems[topic.id]"
+            @click="toggleLeftExpanded(topic.id)"
+            class="w-full group"
           >
-            <!-- Collapsed Button -->
+            <div 
+              class="relative flex items-center justify-between gap-3 px-5 py-4 md:px-6 md:py-5
+                     rounded-xl shadow-md hover:shadow-lg
+                     transition-all duration-300 hover:-translate-y-0.5"
+              :style="`background: ${majorColor.primary}`"
+            >
+              <!-- Title -->
+              <div class="flex-1 text-left min-w-0">
+                <h3 class="text-white font-semibold text-sm md:text-base leading-snug line-clamp-2 pr-2">
+                  {{ topic.title }}
+                </h3>
+              </div>
+
+              <!-- Plus Icon -->
+              <div class="flex-shrink-0">
+                <div 
+                  class="w-8 h-8 md:w-9 md:h-9 rounded-lg bg-white/20 flex items-center justify-center
+                         group-hover:rotate-90 transition-transform duration-300"
+                >
+                  <svg 
+                    class="w-4 h-4 md:w-5 md:h-5 text-white" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </button>
+
+          <!-- Expanded State -->
+          <div
+            v-else
+            class="bg-white rounded-xl shadow-lg overflow-hidden animate-expand"
+          >
+            <!-- Header (Clickable to collapse) -->
             <button
-              v-if="!expandedLeftItems[topic.id]"
               @click="toggleLeftExpanded(topic.id)"
-              :class="[
-                'w-full px-5 py-3.5 flex items-center justify-between rounded-md transition-all duration-200',
-                majorDatas?.[major]?.bgColor || 'bg-orange-500',
-                majorDatas?.[major]?.hoverBgColor || 'hover:bg-orange-600'
-              ]"
+              class="w-full group"
             >
-              <span class="text-black font-bold text-sm sm:text-base uppercase tracking-wide">
-                {{ topic.title }}
-              </span>
-              
-              <!-- Plus Icon -->
-              <div class="w-7 h-7 flex items-center justify-center bg-white rounded flex-shrink-0 ml-3">
-                <svg 
-                  class="w-5 h-5 text-orange-500" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  viewBox="0 0 24 24"
-                >
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" />
-                </svg>
+              <div 
+                class="relative flex items-center justify-between gap-3 px-5 py-4 md:px-6 md:py-5"
+                :style="`background: ${majorColor.primary}`"
+              >
+                <!-- Title -->
+                <div class="flex-1 text-left min-w-0">
+                  <h3 class="text-white font-semibold text-sm md:text-base leading-snug pr-2">
+                    {{ topic.title }}
+                  </h3>
+                </div>
+
+                <!-- Minus Icon -->
+                <div class="flex-shrink-0">
+                  <div 
+                    class="w-8 h-8 md:w-9 md:h-9 rounded-lg bg-white/20 flex items-center justify-center
+                           group-hover:rotate-180 transition-transform duration-300"
+                  >
+                    <svg 
+                      class="w-4 h-4 md:w-5 md:h-5 text-white" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      viewBox="0 0 24 24"
+                    >
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M20 12H4" />
+                    </svg>
+                  </div>
+                </div>
               </div>
             </button>
 
-            <!-- Expanded Card -->
-            <div
-              v-else
-              class="bg-white rounded-md overflow-hidden border border-gray-200"
-            >
-              <!-- Header -->
-              <button
-                @click="toggleLeftExpanded(topic.id)"
-                :class="[
-                  'w-full px-5 py-3.5 flex items-center justify-between transition-all duration-200',
-                  majorDatas?.[major]?.bgColor || 'bg-orange-500',
-                  majorDatas?.[major]?.hoverBgColor || 'hover:bg-orange-600'
-                ]"
-              >
-                <span class="text-black font-bold text-sm sm:text-base uppercase tracking-wide">
-                  {{ topic.title }}
-                </span>
-                
-                <!-- Minus Icon -->
-                <div class="w-7 h-7 flex items-center justify-center bg-white rounded flex-shrink-0 ml-3">
-                  <svg 
-                    class="w-5 h-5 text-orange-500" 
-                    fill="none" 
-                    stroke="currentColor" 
-                    viewBox="0 0 24 24"
-                  >
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M20 12H4" />
-                  </svg>
-                </div>
-              </button>
-
-              <!-- Content -->
-              <div class="p-5 sm:p-6 bg-white">
-                <p class="text-gray-700 text-sm sm:text-base leading-relaxed">
-                  {{ topic.description }}
-                </p>
-              </div>
+            <!-- Content Area with Animation -->
+            <div class="p-4 md:p-5 lg:p-6 animate-slide-down">
+              <p class="text-gray-700 text-sm md:text-base leading-relaxed">
+                {{ topic.description }}
+              </p>
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- Right Column -->
-        <div class="space-y-4">
-          <div 
-            v-for="topic in rightColumnTopics" 
-            :key="topic.id"
-            class="transition-all duration-300"
+      <!-- Right Column -->
+      <div class="space-y-4">
+        <div 
+          v-for="(topic, index) in rightColumnTopics" 
+          :key="topic.id"
+          class="transition-all duration-300"
+        >
+          <!-- Collapsed State -->
+          <button
+            v-if="!expandedRightItems[topic.id]"
+            @click="toggleRightExpanded(topic.id)"
+            class="w-full group"
           >
-            <!-- Collapsed Button -->
-            <button
-              v-if="!expandedRightItems[topic.id]"
-              @click="toggleRightExpanded(topic.id)"
-              :class="[
-                'w-full px-5 py-3.5 flex items-center justify-between rounded-md transition-all duration-200',
-                majorDatas?.[major]?.bgColor || 'bg-orange-500',
-                majorDatas?.[major]?.hoverBgColor || 'hover:bg-orange-600'
-              ]"
+            <div 
+              class="relative flex items-center justify-between gap-3 px-5 py-4 md:px-6 md:py-5
+                     rounded-xl shadow-md hover:shadow-lg
+                     transition-all duration-300 hover:-translate-y-0.5"
+              :style="`background: ${majorColor.primary}`"
             >
-              <span class="text-black font-bold text-sm sm:text-base uppercase tracking-wide">
-                {{ topic.title }}
-              </span>
-              
-              <!-- Plus Icon -->
-              <div class="w-7 h-7 flex items-center justify-center bg-white rounded flex-shrink-0 ml-3">
-                <svg 
-                  class="w-5 h-5 text-orange-500" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  viewBox="0 0 24 24"
-                >
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" />
-                </svg>
-              </div>
-            </button>
-
-            <!-- Expanded Card -->
-            <div
-              v-else
-              class="bg-white rounded-md overflow-hidden border border-gray-200"
-            >
-              <!-- Header -->
-              <button
-                @click="toggleRightExpanded(topic.id)"
-                :class="[
-                  'w-full px-5 py-3.5 flex items-center justify-between transition-all duration-200',
-                  majorDatas?.[major]?.bgColor || 'bg-orange-500',
-                  majorDatas?.[major]?.hoverBgColor || 'hover:bg-orange-600'
-                ]"
-              >
-                <span class="text-black font-bold text-sm sm:text-base uppercase tracking-wide">
+              <!-- Title -->
+              <div class="flex-1 text-left min-w-0">
+                <h3 class="text-white font-semibold text-sm md:text-base leading-snug line-clamp-2 pr-2">
                   {{ topic.title }}
-                </span>
-                
-                <!-- Minus Icon -->
-                <div class="w-7 h-7 flex items-center justify-center bg-white rounded flex-shrink-0 ml-3">
+                </h3>
+              </div>
+
+              <!-- Plus Icon -->
+              <div class="flex-shrink-0">
+                <div 
+                  class="w-8 h-8 md:w-9 md:h-9 rounded-lg bg-white/20 flex items-center justify-center
+                         group-hover:rotate-90 transition-transform duration-300"
+                >
                   <svg 
-                    class="w-5 h-5 text-orange-500" 
+                    class="w-4 h-4 md:w-5 md:h-5 text-white" 
                     fill="none" 
                     stroke="currentColor" 
                     viewBox="0 0 24 24"
                   >
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M20 12H4" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" />
                   </svg>
                 </div>
-              </button>
-
-              <!-- Content -->
-              <div class="p-5 sm:p-6 bg-white">
-                <p class="text-gray-700 text-sm sm:text-base leading-relaxed">
-                  {{ topic.description }}
-                </p>
               </div>
+            </div>
+          </button>
+
+          <!-- Expanded State -->
+          <div
+            v-else
+            class="bg-white rounded-xl shadow-lg overflow-hidden animate-expand"
+          >
+            <!-- Header (Clickable to collapse) -->
+            <button
+              @click="toggleRightExpanded(topic.id)"
+              class="w-full group"
+            >
+              <div 
+                class="relative flex items-center justify-between gap-3 px-5 py-4 md:px-6 md:py-5"
+                :style="`background: ${majorColor.primary}`"
+              >
+                <!-- Title -->
+                <div class="flex-1 text-left min-w-0">
+                  <h3 class="text-white font-semibold text-sm md:text-base leading-snug pr-2">
+                    {{ topic.title }}
+                  </h3>
+                </div>
+
+                <!-- Minus Icon -->
+                <div class="flex-shrink-0">
+                  <div 
+                    class="w-8 h-8 md:w-9 md:h-9 rounded-lg bg-white/20 flex items-center justify-center
+                           group-hover:rotate-180 transition-transform duration-300"
+                  >
+                    <svg 
+                      class="w-4 h-4 md:w-5 md:h-5 text-white" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      viewBox="0 0 24 24"
+                    >
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M20 12H4" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </button>
+
+            <!-- Content Area with Animation -->
+            <div class="p-4 md:p-5 lg:p-6 animate-slide-down">
+              <p class="text-gray-700 text-sm md:text-base leading-relaxed">
+                {{ topic.description }}
+              </p>
             </div>
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- Empty State -->
+    <!-- Empty State -->
+    <div 
+      v-if="leftColumnTopics.length === 0 && rightColumnTopics.length === 0" 
+      class="text-center py-16 md:py-20"
+    >
       <div 
-        v-if="leftColumnTopics.length === 0 && rightColumnTopics.length === 0" 
-        class="text-center py-12"
+        class="w-20 h-20 md:w-24 md:h-24 mx-auto mb-6 rounded-full flex items-center justify-center shadow-lg"
+        :style="`background: ${majorColor.light}`"
       >
-        <p class="text-gray-500 text-base">
-          Belum ada topik pembelajaran untuk jurusan ini.
-        </p>
+        <svg 
+          class="w-10 h-10 md:w-12 md:h-12" 
+          :style="`color: ${majorColor.primary}`"
+          fill="none" 
+          stroke="currentColor" 
+          viewBox="0 0 24 24"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+        </svg>
       </div>
+      <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-2">
+        Belum Ada Materi
+      </h3>
+      <p class="text-gray-600 text-sm md:text-base px-4">
+        Materi pembelajaran untuk jurusan ini akan segera ditambahkan.
+      </p>
     </div>
   </div>
 </template>
+
+<style scoped>
+/* Expand Animation - Card appears smoothly */
+@keyframes expand {
+  0% {
+    opacity: 0;
+    transform: scaleY(0.95) translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: scaleY(1) translateY(0);
+  }
+}
+
+/* Slide Down Animation - Description content slides in */
+@keyframes slideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-expand {
+  animation: expand 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  transform-origin: top;
+}
+
+.animate-slide-down {
+  animation: slideDown 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.1s forwards;
+  opacity: 0;
+}
+</style>

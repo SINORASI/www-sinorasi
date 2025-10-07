@@ -54,7 +54,7 @@ if (!majorDatas.value?.[major]) {
         "
       >
         <img
-          :src="majorDatas[major]?.logo"
+          :src="majorDatas?.[major]?.logo"
           :style="{ width: sizeClass === 'full' ? '60px' : '40px', transition: 'width 0.5s ease-in-out' }"
           alt="Logo Jurusan"
         />
@@ -66,12 +66,12 @@ if (!majorDatas.value?.[major]) {
             }"
             class="font-bold"
           >
-            {{ majorDatas[major]?.short }}
+            {{ majorDatas?.[major]?.short }}
           </h2>
           <p
             :style="{ fontSize: sizeClass === 'full' ? '1rem' : '0.875rem', transition: 'font-size 0.5s ease-in-out' }"
           >
-            {{ majorDatas[major]?.nameMajor }}
+            {{ majorDatas?.[major]?.nameMajor }}
           </p>
         </div>
       </div>
@@ -91,7 +91,7 @@ if (!majorDatas.value?.[major]) {
                 fontSize: sizeClass === 'full' ? '1rem' : '0.875rem',
                 transition: 'font-size 0.5s ease-in-out',
               }"
-              :class="`group-hover:${majorDatas[major]?.textColor} transition-colors duration-300`"
+              :class="`group-hover:${majorDatas?.[major]?.textColor || 'text-gray-900'} transition-colors duration-300`"
             >
               {{ item.title }}
             </p>
@@ -116,7 +116,7 @@ if (!majorDatas.value?.[major]) {
                 class="px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors duration-200"
               >
                 <div class="flex items-center gap-3">
-                  <Icon :name="sub.icon" size="20" :class="majorDatas[major]?.textColor" />
+                  <Icon :name="sub.icon" size="20" :class="majorDatas?.[major]?.textColor || 'text-gray-900'" />
                   <div>
                     <p class="font-medium text-gray-900">{{ sub.title }}</p>
                     <p class="text-sm text-gray-600">{{ sub.desc }}</p>

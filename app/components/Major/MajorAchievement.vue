@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import type { MajorName } from '~/models/MajorName';
+import type { MajorData } from '~/models/MajorData';
+import { majorColorSchemes } from '~/utils/majorColors';
 
 interface Achievement {
   id: number;
@@ -13,13 +15,30 @@ interface Achievement {
 const route = useRoute();
 const major = route.params.majorName as MajorName;
 
+// Fetch achievements and major data
 const { data: achievementsData } = await useFetch<Achievement[]>(`/api/achievements?major=${major}`);
+const { data: majorDatas } = await useFetch<Record<MajorName, MajorData>>('/api/majors');
 
 const currentIndex = ref<number>(0);
 const selectedAchievement = ref<Achievement | null>(null);
 const slideDirection = ref<'left' | 'right' | ''>('');
 
 const achievements = computed(() => achievementsData.value || []);
+
+// Get major color scheme
+const majorColor = computed(() => {
+  return majorColorSchemes[major] || {
+    primary: '#f97316',
+    secondary: '#ea580c',
+    accent: '#FFB366',
+    light: '#FFF3E8',
+    text: '#1f2937',
+    bg: '#ffffff',
+    hoverBg: '#fff7ed',
+    border: '#fed7aa',
+    headerBg: '#fff7ed'
+  };
+});
 
 const currentAchievement = computed(() => {
   if (achievements.value.length === 0) return null;
@@ -40,23 +59,37 @@ const rightAchievement = computed(() => {
   return achievements.value[nextIndex];
 });
 
+const isAnimating = ref(false);
+
 const nextSlide = (): void => {
-  if (achievements.value.length > 0) {
+  if (achievements.value.length > 0 && !isAnimating.value) {
+    isAnimating.value = true;
     slideDirection.value = 'left';
-    currentIndex.value = (currentIndex.value + 1) % achievements.value.length;
+    
+    setTimeout(() => {
+      currentIndex.value = (currentIndex.value + 1) % achievements.value.length;
+    }, 50);
+    
     setTimeout(() => {
       slideDirection.value = '';
-    }, 600);
+      isAnimating.value = false;
+    }, 500);
   }
 };
 
 const previousSlide = (): void => {
-  if (achievements.value.length > 0) {
+  if (achievements.value.length > 0 && !isAnimating.value) {
+    isAnimating.value = true;
     slideDirection.value = 'right';
-    currentIndex.value = (currentIndex.value - 1 + achievements.value.length) % achievements.value.length;
+    
+    setTimeout(() => {
+      currentIndex.value = (currentIndex.value - 1 + achievements.value.length) % achievements.value.length;
+    }, 50);
+    
     setTimeout(() => {
       slideDirection.value = '';
-    }, 600);
+      isAnimating.value = false;
+    }, 500);
   }
 };
 
@@ -70,253 +103,288 @@ const closeModal = (): void => {
 </script>
 
 <template>
-  <div class="achievement-section">
-    <div class="container">
-      <!-- Carousel -->
-      <div class="carousel-container">
+  <div class="w-full">
+    <!-- Carousel Container -->
+    <div class="relative flex flex-col items-center gap-6 md:gap-8 px-2 md:px-4">
+      <!-- Cards Row -->
+      <div class="relative flex items-center justify-center gap-3 md:gap-6 lg:gap-8 w-full">
+        <!-- Previous Button -->
         <button 
-          class="nav-btn prev-btn"
+          class="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 rounded-full shadow-lg
+                 flex items-center justify-center transition-all duration-300 z-10
+                 hover:scale-110 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed"
+          :style="`background: linear-gradient(135deg, ${majorColor.primary}, ${majorColor.accent})`"
           @click.prevent="previousSlide"
           :disabled="achievements.length === 0"
         >
-          <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          <svg class="w-5 h-5 md:w-6 md:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7" />
           </svg>
         </button>
 
-        <!-- Left blur card -->
+        <!-- Left Preview Card (hidden on mobile) -->
         <div 
-          class="blur-card left" 
-          v-if="leftAchievement"
-          :class="{ 'slide-from-left': slideDirection === 'right', 'slide-to-left': slideDirection === 'left' }"
+          v-if="leftAchievement && !isAnimating"
+          class="hidden lg:block flex-shrink-0 w-40 xl:w-48 opacity-30 scale-90 pointer-events-none"
         >
-          <div class="card-image">
-            <div class="avatar-container">
-              <div class="avatar-head"></div>
-              <div class="avatar-body"></div>
-            </div>
-          </div>
-          <div class="card-name">
-            {{ leftAchievement.studentName }}
-          </div>
-        </div>
-
-        <div class="card-wrapper" v-if="currentAchievement">
           <div 
-            class="achievement-card"
-            :class="{ 'slide-from-right': slideDirection === 'left', 'slide-from-left': slideDirection === 'right' }"
-            @click="openModal(currentAchievement)"
+            class="bg-white rounded-xl shadow-lg border-4 overflow-hidden"
+            :style="`border-color: ${majorColor.primary}`"
           >
-            <div class="card-image">
-              <div class="avatar-container">
-                <div class="avatar-head"></div>
-                <div class="avatar-body"></div>
+            <!-- Avatar -->
+            <div class="relative h-44 xl:h-52 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+              <div class="relative">
+                <div 
+                  class="w-12 h-12 rounded-full absolute -top-5 left-1/2 transform -translate-x-1/2"
+                  :style="`background: ${majorColor.light}`"
+                ></div>
+                <div 
+                  class="w-16 h-14 rounded-t-full mt-9"
+                  :style="`background: ${majorColor.light}`"
+                ></div>
               </div>
             </div>
-            <div class="card-name">
-              {{ currentAchievement.studentName }}
+            <!-- Name Badge -->
+            <div 
+              class="px-3 py-2.5 text-center text-white font-bold text-xs truncate"
+              :style="`background: ${majorColor.primary}`"
+            >
+              {{ leftAchievement.studentName }}
             </div>
           </div>
         </div>
 
-        <!-- Right blur card -->
+        <!-- Main Card -->
         <div 
-          class="blur-card right" 
-          v-if="rightAchievement"
-          :class="{ 'slide-from-right': slideDirection === 'left', 'slide-to-right': slideDirection === 'right' }"
+          v-if="currentAchievement"
+          class="flex-shrink-0 w-full max-w-[200px] sm:max-w-[240px] md:max-w-[280px] lg:max-w-[320px] 
+                 cursor-pointer transition-all duration-400"
+          :class="{ 
+            'animate-slide-in-right': slideDirection === 'left', 
+            'animate-slide-in-left': slideDirection === 'right' 
+          }"
+          @click="openModal(currentAchievement)"
         >
-          <div class="card-image">
-            <div class="avatar-container">
-              <div class="avatar-head"></div>
-              <div class="avatar-body"></div>
+          <div 
+            class="bg-white rounded-2xl shadow-2xl border-4 md:border-[5px] overflow-hidden w-full h-full
+                   transform hover:scale-105 hover:shadow-3xl transition-all duration-300 group"
+            :style="`border-color: ${majorColor.primary}`"
+          >
+            <!-- Avatar Section -->
+            <div 
+              class="relative h-56 sm:h-64 md:h-72 lg:h-80
+                     flex items-center justify-center overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200"
+            >
+              <!-- Avatar -->
+              <div class="relative z-10 flex flex-col items-center">
+                <!-- Head -->
+                <div 
+                  class="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28
+                         rounded-full shadow-2xl
+                         transform group-hover:scale-110 transition-transform duration-300"
+                  :style="`background: ${majorColor.light}`"
+                ></div>
+                <!-- Body -->
+                <div 
+                  class="w-20 h-18 sm:w-24 sm:h-20 md:w-28 md:h-24 lg:w-32 lg:h-28
+                         rounded-t-full shadow-xl mt-2 md:mt-3
+                         transform group-hover:scale-105 transition-transform duration-300"
+                  :style="`background: ${majorColor.light}`"
+                ></div>
+              </div>
             </div>
-          </div>
-          <div class="card-name">
-            {{ rightAchievement.studentName }}
+
+            <!-- Name Badge -->
+            <div 
+              class="px-3 py-3 md:px-4 md:py-4 text-center text-white font-bold 
+                     text-sm sm:text-base md:text-lg shadow-inner"
+              :style="`background: ${majorColor.primary}`"
+            >
+              <p class="truncate">{{ currentAchievement.studentName }}</p>
+            </div>
           </div>
         </div>
 
+        <!-- Right Preview Card (hidden on mobile) -->
+        <div 
+          v-if="rightAchievement && !isAnimating"
+          class="hidden lg:block flex-shrink-0 w-40 xl:w-48 opacity-30 scale-90 pointer-events-none"
+        >
+          <div 
+            class="bg-white rounded-xl shadow-lg border-4 overflow-hidden"
+            :style="`border-color: ${majorColor.primary}`"
+          >
+            <!-- Avatar -->
+            <div class="relative h-44 xl:h-52 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+              <div class="relative">
+                <div 
+                  class="w-12 h-12 rounded-full absolute -top-5 left-1/2 transform -translate-x-1/2"
+                  :style="`background: ${majorColor.light}`"
+                ></div>
+                <div 
+                  class="w-16 h-14 rounded-t-full mt-9"
+                  :style="`background: ${majorColor.light}`"
+                ></div>
+              </div>
+            </div>
+            <!-- Name Badge -->
+            <div 
+              class="px-3 py-2.5 text-center text-white font-bold text-xs truncate"
+              :style="`background: ${majorColor.primary}`"
+            >
+              {{ rightAchievement.studentName }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Next Button -->
         <button 
-          class="nav-btn next-btn"
+          class="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 rounded-full shadow-lg
+                 flex items-center justify-center transition-all duration-300 z-10
+                 hover:scale-110 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed"
+          :style="`background: linear-gradient(135deg, ${majorColor.primary}, ${majorColor.accent})`"
           @click.prevent="nextSlide"
           :disabled="achievements.length === 0"
         >
-          <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          <svg class="w-5 h-5 md:w-6 md:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7" />
           </svg>
         </button>
       </div>
 
-      <!-- Title -->
-      <div class="achievement-title" v-if="currentAchievement">
-        {{ currentAchievement.title }}
+      <!-- Achievement Details Below Card -->
+      <div 
+        v-if="currentAchievement"
+        class="w-full max-w-4xl text-center px-4"
+      >
+        <!-- Achievement Title -->
+        <h3 class="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-gray-800 mb-3 md:mb-4 leading-tight">
+          {{ currentAchievement.title }}
+        </h3>
+        
+        <!-- Achievement Description -->
+        <p class="text-xs sm:text-sm md:text-base text-gray-600 leading-relaxed max-w-3xl mx-auto">
+          {{ currentAchievement.description }}
+        </p>
       </div>
+    </div>
 
-      <!-- Modal Content -->
-      <div class="modal-overlay" v-if="selectedAchievement" @click="closeModal">
-        <div class="modal-content" @click.stop>
-          <div class="modal-header">
-            <h3 class="modal-title">{{ selectedAchievement.title }}</h3>
-            <button class="close-btn" @click.prevent="closeModal">
-              <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <!-- Modal for Full Details -->
+    <Teleport to="body">
+      <Transition name="modal">
+        <div 
+          v-if="selectedAchievement" 
+          class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+          @click.self="closeModal"
+        >
+          <div 
+            class="relative bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto
+                   transform transition-all duration-300"
+            @click.stop
+          >
+            <!-- Close Button -->
+            <button 
+              class="absolute top-4 right-4 md:top-6 md:right-6 w-10 h-10 md:w-12 md:h-12 
+                     rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center
+                     transition-all duration-300 hover:scale-110 z-10 shadow-lg"
+              @click="closeModal"
+            >
+              <svg class="w-5 h-5 md:w-6 md:h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
-          </div>
 
-          <div class="modal-body">
-            <div class="modal-card">
-              <div class="card-image">
-                <div class="avatar-container">
-                  <div class="avatar-head"></div>
-                  <div class="avatar-body"></div>
+            <!-- Modal Header -->
+            <div 
+              class="px-6 py-8 md:px-8 md:py-10 text-center text-white rounded-t-3xl"
+              :style="`background: linear-gradient(135deg, ${majorColor.primary}, ${majorColor.secondary})`"
+            >
+              <div class="inline-block mb-4">
+                <div 
+                  class="w-20 h-20 md:w-24 md:h-24 rounded-full bg-white/20 backdrop-blur-sm 
+                         flex items-center justify-center shadow-2xl"
+                >
+                  <svg class="w-10 h-10 md:w-12 md:h-12 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+                    <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm9.707 5.707a1 1 0 00-1.414-1.414L9 12.586l-1.293-1.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                  </svg>
                 </div>
               </div>
-              <div class="card-name">
-                {{ selectedAchievement.studentName }}
+              <h2 class="text-2xl md:text-3xl font-bold mb-2">
+                {{ selectedAchievement.title }}
+              </h2>
+              <div class="inline-block px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-sm text-sm font-semibold">
+                {{ selectedAchievement.year }}
               </div>
             </div>
 
-            <div class="modal-info">
-              <p class="modal-subtitle">{{ selectedAchievement.studentName }} - {{ selectedAchievement.year }}</p>
-              <p class="modal-description">{{ selectedAchievement.description }}</p>
-              <p class="modal-description">{{ selectedAchievement.description }}</p>
+            <!-- Modal Body -->
+            <div class="px-6 py-6 md:px-8 md:py-8">
+              <!-- Student Info -->
+              <div class="mb-6 pb-6 border-b border-gray-200">
+                <div class="flex items-center gap-4">
+                  <div 
+                    class="w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center shadow-lg"
+                    :style="`background: linear-gradient(135deg, ${majorColor.primary}, ${majorColor.secondary})`"
+                  >
+                    <span class="text-2xl md:text-3xl text-white font-bold">
+                      {{ selectedAchievement.studentName.charAt(0) }}
+                    </span>
+                  </div>
+                  <div class="flex-1">
+                    <h3 class="text-lg md:text-xl font-bold text-gray-800">
+                      {{ selectedAchievement.studentName }}
+                    </h3>
+                    <p class="text-sm text-gray-600">
+                      Siswa Berprestasi
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Description -->
+              <div class="mb-6">
+                <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">
+                  Deskripsi Prestasi
+                </h4>
+                <p class="text-gray-700 leading-relaxed">
+                  {{ selectedAchievement.description }}
+                </p>
+              </div>
+
+              <!-- Additional Details -->
+              <div 
+                class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 md:p-6 rounded-2xl"
+                :style="`background: linear-gradient(135deg, ${majorColor.light}20, ${majorColor.accent}10)`"
+              >
+                <div>
+                  <p class="text-xs text-gray-500 uppercase tracking-wide mb-1">Tahun</p>
+                  <p class="text-lg font-bold" :style="`color: ${majorColor.primary}`">
+                    {{ selectedAchievement.year }}
+                  </p>
+                </div>
+                <div>
+                  <p class="text-xs text-gray-500 uppercase tracking-wide mb-1">Kategori</p>
+                  <p class="text-lg font-bold" :style="`color: ${majorColor.primary}`">
+                    Prestasi Akademik
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </Transition>
+    </Teleport>
   </div>
 </template>
 
+
 <style scoped>
-.achievement-section {
-  background: white;
-  padding: 3rem 1.5rem;
-  min-height: 700px;
-}
-
-.container {
-  max-width: 1600px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2.5rem;
-}
-
-/* Carousel */
-.carousel-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 2rem;
-  width: 100%;
-  max-width: 1800px;
-  overflow: hidden;
-  position: relative;
-}
-
-.nav-btn {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  background: #e5e7eb;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  flex-shrink: 0;
-  z-index: 10;
-}
-
-.nav-btn .icon {
-  width: 26px;
-  height: 26px;
-  color: #374151;
-}
-
-.nav-btn:hover:not(:disabled) {
-  background: #d1d5db;
-  transform: scale(1.1);
-}
-
-.nav-btn:active:not(:disabled) {
-  transform: scale(0.95);
-}
-
-.nav-btn:disabled {
-  opacity: 0.3;
-  cursor: not-allowed;
-}
-
-.blur-card {
-  width: 100%;
-  max-width: 450px;
-  background: white;
-  border: 5px solid #f97316;
-  border-radius: 14px;
-  overflow: hidden;
-  opacity: 0.35;
-  filter: blur(2px);
-  transform: scale(0.92);
-  pointer-events: none;
-  flex-shrink: 0;
-  transition: all 0.5s ease;
-}
-
-.blur-card .card-image {
-  height: 520px;
-}
-
-.blur-card .avatar-head {
-  width: 110px;
-  height: 110px;
-}
-
-.blur-card .avatar-body {
-  width: 170px;
-  height: 135px;
-  border-radius: 85px 85px 0 0;
-}
-
-.blur-card .card-name {
-  padding: 1.25rem;
-  font-size: 1.25rem;
-}
-
-.card-wrapper {
-  flex-shrink: 0;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  max-width: 450px;
-}
-
-.achievement-card {
-  width: 100%;
-  max-width: 450px;
-  background: white;
-  border: 5px solid #f97316;
-  border-radius: 14px;
-  overflow: hidden;
-  cursor: pointer;
-  transition: all 0.4s ease;
-  box-shadow: 0 8px 16px -2px rgba(0, 0, 0, 0.12);
-}
-
-.achievement-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.18);
-}
-
-/* Slide Animations */
-@keyframes slideFromRight {
+/* Slide Animations - Smooth and consistent */
+@keyframes slideInRight {
   0% {
     opacity: 0;
-    transform: translateX(120%) scale(0.92);
+    transform: translateX(100%) scale(0.9);
   }
   100% {
     opacity: 1;
@@ -324,10 +392,10 @@ const closeModal = (): void => {
   }
 }
 
-@keyframes slideFromLeft {
+@keyframes slideInLeft {
   0% {
     opacity: 0;
-    transform: translateX(-120%) scale(0.92);
+    transform: translateX(-100%) scale(0.9);
   }
   100% {
     opacity: 1;
@@ -335,443 +403,72 @@ const closeModal = (): void => {
   }
 }
 
-@keyframes slideToLeft {
-  0% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-  100% {
-    opacity: 0;
-    transform: translateX(-120%);
-  }
+.animate-slide-in-right {
+  animation: slideInRight 0.5s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
 }
 
-@keyframes slideToRight {
-  0% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-  100% {
-    opacity: 0;
-    transform: translateX(120%);
-  }
+.animate-slide-in-left {
+  animation: slideInLeft 0.5s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
 }
 
-@keyframes blurSlideFromRight {
-  0% {
-    opacity: 0;
-    transform: translateX(100%) scale(0.92);
-  }
-  100% {
-    opacity: 0.35;
-    transform: translateX(0) scale(0.92);
-  }
+/* Modal Transitions */
+.modal-enter-active,
+.modal-leave-active {
+  transition: opacity 0.3s ease;
 }
 
-@keyframes blurSlideFromLeft {
-  0% {
-    opacity: 0;
-    transform: translateX(-100%) scale(0.92);
-  }
-  100% {
-    opacity: 0.35;
-    transform: translateX(0) scale(0.92);
-  }
+.modal-enter-from,
+.modal-leave-to {
+  opacity: 0;
 }
 
-@keyframes blurSlideToLeft {
-  0% {
-    opacity: 0.35;
-    transform: translateX(0) scale(0.92);
-  }
-  100% {
-    opacity: 0;
-    transform: translateX(-100%) scale(0.92);
-  }
+.modal-enter-active > div,
+.modal-leave-active > div {
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-@keyframes blurSlideToRight {
-  0% {
-    opacity: 0.35;
-    transform: translateX(0) scale(0.92);
-  }
-  100% {
-    opacity: 0;
-    transform: translateX(100%) scale(0.92);
-  }
+.modal-enter-from > div {
+  transform: scale(0.9) translateY(-20px);
+  opacity: 0;
 }
 
-.slide-from-right {
-  animation: slideFromRight 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+.modal-leave-to > div {
+  transform: scale(0.95) translateY(10px);
+  opacity: 0;
 }
 
-.slide-from-left {
-  animation: slideFromLeft 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+/* Custom Scrollbar for Modal */
+.overflow-y-auto::-webkit-scrollbar {
+  width: 8px;
 }
 
-.slide-to-left {
-  animation: slideToLeft 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+.overflow-y-auto::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
 }
 
-.slide-to-right {
-  animation: slideToRight 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
 }
 
-.blur-card.slide-from-right {
-  animation: blurSlideFromRight 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }
 
-.blur-card.slide-from-left {
-  animation: blurSlideFromLeft 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+/* Performance optimizations - ensure smooth animations */
+.animate-slide-in-right,
+.animate-slide-in-left {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
-.blur-card.slide-to-left {
-  animation: blurSlideToLeft 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.blur-card.slide-to-right {
-  animation: blurSlideToRight 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.card-image {
-  background: #e5e7eb;
-  height: 520px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
-.avatar-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.avatar-head {
-  position: absolute;
-  background-color: #9ca3af;
-  border-radius: 50%;
-  width: 110px;
-  height: 110px;
-  top: 33%;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.avatar-body {
-  position: absolute;
-  background-color: #9ca3af;
-  bottom: 25px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 170px;
-  height: 135px;
-  border-radius: 85px 85px 0 0;
-}
-
-.card-name {
-  background: #374151;
-  color: white;
-  padding: 1.25rem;
-  text-align: center;
-  font-size: 1.25rem;
-  font-weight: 600;
-}
-
-/* Title */
-.achievement-title {
-  text-align: center;
-  font-size: 1.375rem;
-  font-weight: 700;
-  color: #1f2937;
-  line-height: 1.6;
-  max-width: 1100px;
-  padding: 0 2rem;
-  margin-top: 0.5rem;
-}
-
-/* Modal */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  padding: 1rem;
-  animation: fadeInOverlay 0.3s ease-out;
-}
-
-@keyframes fadeInOverlay {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.modal-content {
-  background: white;
-  border-radius: 14px;
-  max-width: 950px;
-  width: 100%;
-  max-height: 90vh;
-  overflow-y: auto;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-  animation: modalSlideIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-@keyframes modalSlideIn {
-  from {
-    opacity: 0;
-    transform: translateY(-30px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 1.5rem;
-  padding: 2rem;
-  border-bottom: 2px solid #e5e7eb;
-}
-
-.modal-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #1f2937;
-  line-height: 1.4;
-  flex: 1;
-}
-
-.close-btn {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  background: #f3f4f6;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  transition: all 0.2s ease;
-}
-
-.close-btn .icon {
-  width: 22px;
-  height: 22px;
-  color: #6b7280;
-}
-
-.close-btn:hover {
-  background: #e5e7eb;
-  transform: rotate(90deg);
-}
-
-.close-btn:active {
-  transform: scale(0.95) rotate(90deg);
-}
-
-.modal-body {
-  padding: 2rem;
+/* Ensure container maintains size during transitions */
+.animate-slide-in-right,
+.animate-slide-in-left {
+  min-height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 2rem;
-}
-
-.modal-card {
-  width: 100%;
-  max-width: 450px;
-  background: white;
-  border: 5px solid #f97316;
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 8px 16px -2px rgba(0, 0, 0, 0.12);
-}
-
-.modal-card .card-image {
-  height: 520px;
-}
-
-.modal-info {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-}
-
-.modal-subtitle {
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: #4b5563;
-  text-align: center;
-}
-
-.modal-description {
-  font-size: 1rem;
-  line-height: 1.8;
-  color: #374151;
-  text-align: justify;
-}
-
-/* Responsive */
-@media (max-width: 1024px) {
-  .blur-card,
-  .card-wrapper,
-  .achievement-card,
-  .modal-card {
-    max-width: 360px;
-  }
-
-  .card-image,
-  .blur-card .card-image,
-  .modal-card .card-image {
-    height: 440px;
-  }
-
-  .avatar-head,
-  .blur-card .avatar-head {
-    width: 95px;
-    height: 95px;
-  }
-
-  .avatar-body,
-  .blur-card .avatar-body {
-    width: 145px;
-    height: 115px;
-    border-radius: 72px 72px 0 0;
-  }
-
-  .card-name,
-  .blur-card .card-name {
-    padding: 1.125rem;
-    font-size: 1.125rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .achievement-section {
-    padding: 2.5rem 1rem;
-  }
-
-  .carousel-container {
-    gap: 1rem;
-  }
-
-  .nav-btn {
-    width: 46px;
-    height: 46px;
-  }
-
-  .nav-btn .icon {
-    width: 22px;
-    height: 22px;
-  }
-
-  .blur-card {
-    display: none;
-  }
-
-  .card-wrapper,
-  .achievement-card,
-  .modal-card {
-    max-width: 340px;
-  }
-
-  .card-image,
-  .modal-card .card-image {
-    height: 400px;
-  }
-
-  .avatar-head {
-    width: 85px;
-    height: 85px;
-  }
-
-  .avatar-body {
-    width: 130px;
-    height: 105px;
-    border-radius: 65px 65px 0 0;
-  }
-
-  .card-name {
-    padding: 1rem;
-    font-size: 1.125rem;
-  }
-
-  .achievement-title {
-    font-size: 1.125rem;
-  }
-
-  .modal-header {
-    padding: 1.75rem;
-  }
-
-  .modal-title {
-    font-size: 1.25rem;
-  }
-
-  .modal-body {
-    padding: 1.75rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .carousel-container {
-    gap: 0.75rem;
-  }
-
-  .nav-btn {
-    width: 42px;
-    height: 42px;
-  }
-
-  .card-wrapper,
-  .achievement-card,
-  .modal-card {
-    max-width: 280px;
-  }
-
-  .card-image,
-  .modal-card .card-image {
-    height: 340px;
-  }
-
-  .avatar-head {
-    width: 75px;
-    height: 75px;
-  }
-
-  .avatar-body {
-    width: 120px;
-    height: 95px;
-    border-radius: 60px 60px 0 0;
-  }
-
-  .card-name {
-    padding: 0.875rem;
-    font-size: 1rem;
-  }
-
-  .achievement-title {
-    font-size: 1rem;
-    padding: 0 1rem;
-  }
 }
 </style>

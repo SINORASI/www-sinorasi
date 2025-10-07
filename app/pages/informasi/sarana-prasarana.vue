@@ -16,19 +16,8 @@ useHead({
 
 <template>
   <div class="min-h-screen bg-gradient-to-b from-white via-blue-50 to-white">
-    <!-- Hero Section -->
-    <section class="relative h-[500px] flex items-center justify-center">
-      <div class="absolute inset-0 bg-gray-400"></div>
-      <div class="absolute inset-0 bg-gradient-to-b from-blue-900/50 to-blue-900/70"></div>
-      <div class="relative z-10">
-        <div class="bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl shadow-xl rounded-2xl px-10 py-6 border border-blue-200">
-          <h1 class="text-4xl md:text-5xl font-bold text-white tracking-wide">Sarana Dan Prasarana</h1>
-        </div>
-      </div>
-    </section>
-
     <!-- Content Sections -->
-    <section class="py-20">
+    <section class="py-20 pt-32">
       <div class="container mx-auto px-4 sm:px-6 max-w-6xl">
         <!-- Sarana Section -->
         <div class="mb-12">

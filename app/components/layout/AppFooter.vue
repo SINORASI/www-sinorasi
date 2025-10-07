@@ -32,18 +32,18 @@
             <div class="flex items-start gap-3">
               <Icon name="lucide:map-pin" size="20" class="text-neutral-400 mt-1" />
               <div>
-                <p class="text-sm text-neutral-300">Jl. Raya Singosari No.123</p>
-                <p class="text-sm text-neutral-300">Singosari, Malang</p>
+                <p class="text-sm text-neutral-300">Jl. Perusahaan Raya No.20, Jajar, Tanjungtirto.</p>
+                <p class="text-sm text-neutral-300">Singosari, Kabupaten Malang</p>
                 <p class="text-sm text-neutral-300">Jawa Timur 65153</p>
               </div>
             </div>
             <div class="flex items-center gap-3">
               <Icon name="lucide:phone" size="20" class="text-neutral-400" />
-              <p class="text-sm text-neutral-300">(0341) 123-4567</p>
+              <p class="text-sm text-neutral-300">(0341) 4345127</p>
             </div>
             <div class="flex items-center gap-3">
               <Icon name="lucide:mail" size="20" class="text-neutral-400" />
-              <p class="text-sm text-neutral-300">info@smkn2singosari.sch.id</p>
+              <p class="text-sm text-neutral-300">smkn2.singosari@yahoo.co.id</p>
             </div>
           </div>
         </div>
@@ -51,10 +51,10 @@
         <div class="md:col-span-1">
           <h4 class="text-lg font-semibold mb-4">Ikuti Kami</h4>
           <div class="flex gap-4">
-            <a href="#" class="w-10 h-10 bg-neutral-700 rounded-full flex items-center justify-center hover:bg-pink-600 transition duration-300">
+            <a href="https://instagram.com/smkn2_singosari" class="w-10 h-10 bg-neutral-700 rounded-full flex items-center justify-center hover:bg-pink-600 transition duration-300">
               <Icon name="lucide:instagram" size="20" />
             </a>
-            <a href="#" class="w-10 h-10 bg-neutral-700 rounded-full flex items-center justify-center hover:bg-red-600 transition duration-300">
+            <a href="https://www.youtube.com/channel/UC0B8cIUqCnHMzoTNXxbRhFQ" class="w-10 h-10 bg-neutral-700 rounded-full flex items-center justify-center hover:bg-red-600 transition duration-300">
               <Icon name="lucide:youtube" size="20" />
             </a>
           </div>

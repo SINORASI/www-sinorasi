@@ -1,8 +1,9 @@
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import type { MajorName } from "~/models/MajorName";
 import type { KaproProfile } from "~/models/KaproProfile";
 import type { MajorData } from "~/models/MajorData";
+import { majorColorSchemes } from '~/utils/majorColors';
 
 // Fetch majors data from API
 const { data: majorDatas } = await useFetch<Record<MajorName, MajorData>>('/api/majors');
@@ -32,6 +33,12 @@ const kapros: Record<MajorName, KaproProfile[]> = {
     {
       image: "/images/profile-placeholder.png",
       jabatan: "Kepala Jurusan Program TKJ",
+      kaproName: "Chutman Efendi, S.Pd, Gr",
+      quote: "Jadilah dirimu sendiri selagi dirimu masih mengenali dirimu",
+    },
+    {
+      image: "/images/profile-placeholder.png",
+      jabatan: "Guru Produktif TKJ",
       kaproName: "Gayan Laga, S.Pd",
       quote: "Jadilah dirimu sendiri selagi dirimu masih mengenali dirimu",
     },
@@ -41,18 +48,42 @@ const kapros: Record<MajorName, KaproProfile[]> = {
       kaproName: "Zulfa Rumailah, S.Pd",
       quote: "Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri",
     },
+    {
+      image: "/images/profile-placeholder.png",
+      jabatan: "Guru Produktif TKJ",
+      kaproName: "Imam Syafi'i, S.Pd",
+      quote: "Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri",
+    },
   ],
   dkv: [
     {
       image: "/images/profile-placeholder.png",
       jabatan: "Kepala Jurusan Program DKV",
-      kaproName: "Zoulfikar Ramsanjanie Aqsha, S.Kom",
+      kaproName: "Ivan Satryana, S.Pd",
       quote: "Jadilah dirimu sendiri selagi dirimu masih mengenali dirimu",
     },
     {
       image: "/images/profile-placeholder.png",
       jabatan: "Guru Produktif DKV",
-      kaproName: "Ivan Satryana, S.Pd",
+      kaproName: "Zoulfikar Ramsanjanie Aqsha, S.Kom",
+      quote: "Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri",
+    },
+    {
+      image: "/images/profile-placeholder.png",
+      jabatan: "Guru Produktif DKV",
+      kaproName: "Mira Ayu, S.Pd",
+      quote: "Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri",
+    },
+    {
+      image: "/images/profile-placeholder.png",
+      jabatan: "Guru Produktif DKV",
+      kaproName: "Nurrudin Septiawan, S.Kom",
+      quote: "Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri",
+    },
+    {
+      image: "/images/profile-placeholder.png",
+      jabatan: "Guru Produktif DKV",
+      kaproName: "Aang Noeraries Wahyupidasa, S.Si",
       quote: "Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri",
     },
   ],
@@ -69,6 +100,12 @@ const kapros: Record<MajorName, KaproProfile[]> = {
       kaproName: "Wardatul Maulidiyah, S.Pd",
       quote: "Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri",
     },
+    {
+      image: "/images/profile-placeholder.png",
+      jabatan: "Guru Produktif Animasi",
+      kaproName: "Moh. Khamdan Syaifuddin, A.Md",
+      quote: "Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri",
+    },
   ],
   broadcasting: [
     {
@@ -81,6 +118,12 @@ const kapros: Record<MajorName, KaproProfile[]> = {
       image: "/images/profile-placeholder.png",
       jabatan: "Guru Produktif Broadcasting",
       kaproName: "Sofianasari, S.Sn",
+      quote: "Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri",
+    },
+    {
+      image: "/images/profile-placeholder.png",
+      jabatan: "Guru Produktif Broadcasting",
+      kaproName: "Fauzi Rahmadani, S.Sn",
       quote: "Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri",
     },
   ],
@@ -97,6 +140,18 @@ const kapros: Record<MajorName, KaproProfile[]> = {
       kaproName: "Anjar Afif Afandi, ST, M.Pd",
       quote: "Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri",
     },
+    {
+      image: "/images/profile-placeholder.png",
+      jabatan: "Guru Produktif TEI",
+      kaproName: "Bambang Ishartanto, ST",
+      quote: "Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri",
+    },
+    {
+      image: "/images/profile-placeholder.png",
+      jabatan: "Guru Produktif TEI",
+      kaproName: "Dyah Ayu Komala, ST",
+      quote: "Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri",
+    },
   ],
   mekatronika: [
     {
@@ -109,6 +164,18 @@ const kapros: Record<MajorName, KaproProfile[]> = {
       image: "/images/profile-placeholder.png",
       jabatan: "Guru Produktif Mekatronika",
       kaproName: "Anjar Afif Afandi, ST, M.Pd",
+      quote: "Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri",
+    },
+    {
+      image: "/images/profile-placeholder.png",
+      jabatan: "Guru Produktif TEI",
+      kaproName: "Bambang Ishartanto, ST",
+      quote: "Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri",
+    },
+    {
+      image: "/images/profile-placeholder.png",
+      jabatan: "Guru Produktif TEI",
+      kaproName: "Ewit Irniyah, S.Pd",
       quote: "Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri",
     },
   ],
@@ -125,12 +192,33 @@ const kapros: Record<MajorName, KaproProfile[]> = {
       kaproName: "Drs. H. Ahmad Maksum, M.Pd",
       quote: "Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri",
     },
+    {
+      image: "/images/profile-placeholder.png",
+      jabatan: "Guru Produktif TAV",
+      kaproName: "Yoke Kurnia Dewanto H.H.P, ST",
+      quote: "Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri",
+    },
   ],
 };
 
 const route = useRoute();
 const major = route.params.majorName as MajorName;
 const kapro = kapros[major] || [];
+
+// Get major color scheme
+const majorColor = computed(() => {
+  return majorColorSchemes[major] || {
+    primary: '#f97316',
+    secondary: '#ea580c',
+    accent: '#FFB366',
+    light: '#FFF3E8',
+    text: '#1f2937',
+    bg: '#ffffff',
+    hoverBg: '#fff7ed',
+    border: '#fed7aa',
+    headerBg: '#fff7ed'
+  };
+});
 
 const current = ref(0);
 const direction = ref("next");
@@ -165,39 +253,17 @@ const getTransitionClasses = () => {
 </script>
 
 <template>
-  <div class="w-full max-w-5xl mx-auto px-4 py-6">
-    <div class="bg-white rounded-xl overflow-hidden">
+  <div class="w-full max-w-6xl mx-auto px-4 py-8">
+    <div class="overflow-hidden">
       
       <!-- Grid Layout -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 p-5 lg:p-8">
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 p-6 md:p-8 lg:p-10">
         
-        <!-- Left: Image Section -->
-        <div class="flex flex-col items-center space-y-4">
-          <!-- Position Badge -->
-          <Transition
-            name="fade"
-            mode="out-in"
-            enter-active-class="transition-opacity duration-300"
-            enter-from-class="opacity-0"
-            enter-to-class="opacity-100"
-            leave-active-class="transition-opacity duration-200"
-            leave-from-class="opacity-100"
-            leave-to-class="opacity-0"
-          >
-            <div 
-              :key="current"
-              :class="[
-                'px-5 py-1.5 rounded-full font-bold text-xs sm:text-sm',
-                majorDatas?.[major]?.bgColor || 'bg-orange-500'
-              ]"
-            >
-              {{ kapro[current]?.jabatan }}
-            </div>
-          </Transition>
-
+        <!-- Left: Image Section (2 columns on large screens) -->
+        <div class="lg:col-span-2 flex flex-col items-center justify-center space-y-6">
           <!-- Profile Image -->
-          <div class="relative w-56 sm:w-64 aspect-[3/4]">
-            <div class="absolute inset-0 rounded-lg overflow-hidden shadow-md bg-gray-200">
+          <div class="relative w-full max-w-xs aspect-[3/4]">
+            <div class="absolute inset-0 rounded-2xl overflow-hidden bg-gray-100">
               <Transition
                 name="slide"
                 mode="out-in"
@@ -218,28 +284,49 @@ const getTransitionClasses = () => {
             </div>
           </div>
 
-          <!-- Name -->
-          <Transition
-            name="fade"
-            mode="out-in"
-            enter-active-class="transition-opacity duration-300"
-            enter-from-class="opacity-0"
-            enter-to-class="opacity-100"
-            leave-active-class="transition-opacity duration-200"
-            leave-from-class="opacity-100"
-            leave-to-class="opacity-0"
-          >
-            <h2 :key="current" class="text-lg sm:text-xl font-bold text-gray-900 text-center px-2">
-              {{ kapro[current]?.kaproName }}
-            </h2>
-          </Transition>
+          <!-- Name and Position -->
+          <div class="text-center space-y-2 w-full px-4 min-h-[120px] flex flex-col justify-center">
+            <Transition
+              name="fade"
+              mode="out-in"
+              enter-active-class="transition-opacity duration-300"
+              enter-from-class="opacity-0"
+              enter-to-class="opacity-100"
+              leave-active-class="transition-opacity duration-200"
+              leave-from-class="opacity-100"
+              leave-to-class="opacity-0"
+            >
+              <h2 :key="current" class="text-xl md:text-2xl font-bold text-gray-900 min-h-[60px] flex items-center justify-center">
+                {{ kapro[current]?.kaproName }}
+              </h2>
+            </Transition>
+            
+            <Transition
+              name="fade"
+              mode="out-in"
+              enter-active-class="transition-opacity duration-300 delay-75"
+              enter-from-class="opacity-0"
+              enter-to-class="opacity-100"
+              leave-active-class="transition-opacity duration-200"
+              leave-from-class="opacity-100"
+              leave-to-class="opacity-0"
+            >
+              <p 
+                :key="current"
+                :style="{ color: majorColor.text }"
+                class="text-sm md:text-base font-semibold min-h-[40px] flex items-center justify-center"
+              >
+                {{ kapro[current]?.jabatan }}
+              </p>
+            </Transition>
+          </div>
         </div>
 
-        <!-- Right: Quote Section -->
-        <div class="flex flex-col justify-between min-h-[350px]">
+        <!-- Right: Quote Section (3 columns on large screens) -->
+        <div class="lg:col-span-3 flex flex-col justify-between min-h-[400px] lg:min-h-[500px]">
           
           <!-- Quote -->
-          <div class="flex-1 flex items-center justify-center p-4">
+          <div class="flex-1 flex items-center justify-center p-6 md:p-8">
             <Transition
               name="fade"
               mode="out-in"
@@ -250,79 +337,88 @@ const getTransitionClasses = () => {
               leave-from-class="opacity-100"
               leave-to-class="opacity-0"
             >
-              <div :key="current" class="text-center">
-                <div 
-                  :class="[
-                    'w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-4',
-                    majorDatas?.[major]?.bgColor || 'bg-orange-500'
-                  ]"
-                >
-                  <Icon name="lucide:quote" class="w-5 h-5 text-white" />
+              <div :key="current" class="text-center space-y-6">
+                <!-- Quote Icon -->
+                <div class="flex justify-center">
+                  <div 
+                    :class="[
+                      'w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center',
+                      majorDatas?.[major]?.bgColor || 'bg-orange-500'
+                    ]"
+                  >
+                    <Icon name="lucide:quote" class="w-7 h-7 md:w-8 md:h-8 text-white" />
+                  </div>
                 </div>
-                <p class="text-xl sm:text-2xl font-medium text-gray-800 leading-relaxed">
+
+                <!-- Quote Text -->
+                <p class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 leading-relaxed">
                   {{ kapro[current]?.quote }}
                 </p>
               </div>
             </Transition>
           </div>
 
-          <!-- Navigation -->
-          <div class="space-y-3">
-            <!-- Dots -->
-            <div class="flex justify-center items-center gap-2">
+          <!-- Navigation Controls -->
+          <div class="space-y-6 pt-4">
+            <!-- Progress Dots -->
+            <div class="flex justify-center items-center gap-2 min-h-[16px]">
               <button
                 v-for="(item, idx) in kapro"
                 :key="idx"
                 @click="current = idx"
+                :style="{
+                  backgroundColor: current === idx ? majorColor.primary : undefined
+                }"
                 :class="[
-                  'h-1.5 rounded-full transition-all duration-300',
-                  current === idx ? 'w-10' : 'w-1.5',
+                  'h-2 rounded-full transition-all duration-300',
+                  current === idx ? 'w-12' : 'w-2',
                   current === idx 
-                    ? (majorDatas?.[major]?.bgColor || 'bg-orange-500')
+                    ? ''
                     : 'bg-gray-300 hover:bg-gray-400'
                 ]"
                 :aria-label="`Go to profile ${idx + 1}`"
               ></button>
             </div>
 
-            <!-- Buttons -->
-            <div class="flex items-center justify-between">
+            <!-- Navigation Buttons -->
+            <div class="flex items-center justify-between px-4">
+              <!-- Previous Button -->
               <button
                 @click="prev"
-                :class="[
-                  'flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all duration-300',
-                  'bg-gray-100 hover:bg-gray-200 text-gray-700'
-                ]"
+                :style="{
+                  backgroundColor: majorColor.primary
+                }"
+                class="flex items-center gap-2 px-5 py-3 rounded-xl font-semibold text-white transition-all duration-300 transform hover:-translate-x-1 hover:brightness-110"
                 aria-label="Previous"
               >
-                <Icon name="lucide:chevron-left" class="w-4 h-4" />
-                <span class="text-xs sm:text-sm">Prev</span>
+                <Icon name="lucide:chevron-left" class="w-5 h-5" />
+                <span class="text-sm">Previous</span>
               </button>
 
+              <!-- Counter -->
               <div class="flex items-baseline gap-1">
                 <span 
-                  :class="[
-                    'text-xl font-bold',
-                    majorDatas?.[major]?.textColor || 'text-orange-500'
-                  ]"
+                  :style="{ color: majorColor.text }"
+                  class="text-2xl md:text-3xl font-bold"
                 >
                   {{ String(current + 1).padStart(2, '0') }}
                 </span>
-                <span class="text-base text-gray-400">
+                <span class="text-lg md:text-xl text-gray-400">
                   /{{ String(kapro.length).padStart(2, '0') }}
                 </span>
               </div>
 
+              <!-- Next Button -->
               <button
                 @click="next"
-                :class="[
-                  'flex items-center gap-2 px-4 py-2 rounded-lg font-semibold transition-all duration-300',
-                  'bg-gray-100 hover:bg-gray-200 text-gray-700'
-                ]"
+                :style="{
+                  backgroundColor: majorColor.primary
+                }"
+                class="flex items-center gap-2 px-5 py-3 rounded-xl font-semibold text-white transition-all duration-300 transform hover:translate-x-1 hover:brightness-110"
                 aria-label="Next"
               >
-                <span class="text-xs sm:text-sm">Next</span>
-                <Icon name="lucide:chevron-right" class="w-4 h-4" />
+                <span class="text-sm">Next</span>
+                <Icon name="lucide:chevron-right" class="w-5 h-5" />
               </button>
             </div>
           </div>

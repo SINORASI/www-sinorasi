@@ -6,7 +6,7 @@
         @click="$emit('close')"
       ></div>
 
-      <div class="sidebar-panel relative sm:ml-auto flex h-full w-full sm:w-80 flex-col bg-white shadow-2xl">
+      <div class="sidebar-panel relative sm:ml-auto flex h-full w-full sm:w-96 flex-col bg-white shadow-2xl">
         <div class="flex flex-shrink-0 items-center justify-between gap-3 border-b border-gray-200 p-4">
           <div class="flex-1 min-w-0">
             <h2 class="text-lg font-semibold text-gray-800 truncate">{{ pageTitle }}</h2>
@@ -29,8 +29,49 @@
                 v-model="searchQuery" 
                 class="w-full text-lg text-gray-800 bg-gray-50 border border-gray-200 rounded-lg px-3 py-3 pr-10 outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200" 
               />
-              <Icon name="lucide:search" size="20" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+              <button 
+                v-if="searchQuery.trim()"
+                @click="searchQuery = ''"
+                class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors p-1 hover:bg-gray-200 rounded-full"
+              >
+                <Icon name="lucide:x" size="20" />
+              </button>
+              <Icon 
+                v-else
+                name="lucide:search" 
+                size="20" 
+                class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" 
+              />
             </div>
+            
+            <!-- Home Button for Major Pages -->
+            <NuxtLink v-if="menuItems !== currentMenuItems" to="/" @click="emit('close')" class="mt-3 block">
+              <div class="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg px-4 py-3 hover:from-blue-700 hover:to-blue-800 transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                <div class="flex items-center gap-3">
+                  <Icon name="lucide:home" size="24" class="flex-shrink-0" />
+                  <div class="flex-1">
+                    <p class="font-semibold text-base">Kembali ke Beranda</p>
+                    <p class="text-xs text-blue-100">Halaman utama website</p>
+                  </div>
+                  <Icon name="lucide:arrow-right" size="20" class="flex-shrink-0" />
+                </div>
+              </div>
+            </NuxtLink>
+            
+            <!-- Dark Mode Toggle (Disabled) -->
+            <div class="mt-3 flex items-center justify-between bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 opacity-60 cursor-not-allowed">
+              <div class="flex items-center gap-3">
+                <Icon name="lucide:moon" size="20" class="text-gray-500" />
+                <span class="text-sm font-medium text-gray-600">Mode Gelap</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="text-xs text-gray-500 bg-gray-200 px-2 py-1 rounded">Segera Hadir</span>
+                <div class="relative inline-block w-12 h-6 bg-gray-300 rounded-full">
+                  <div class="absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition-transform"></div>
+                </div>
+              </div>
+            </div>
+            
             <div v-if="searchQuery.trim() && filteredMenuItems.length === 0" class="mt-2 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
               <p class="text-sm text-yellow-700">
                 <Icon name="lucide:info" size="16" class="inline mr-1" />
@@ -322,10 +363,13 @@ const menuItems = [
     title: "Organisasi",
     submenu: [
       { title: "Semua Organisasi", desc: "Daftar lengkap organisasi sekolah", icon: "lucide:users", to: "/organisasi", external: false, tags: ["organisasi", "semua", "daftar"] },
+      { title: "AMBALAN", desc: "Ambalan Pramuka SMKN 2 Singosari", icon: "lucide:shield", to: "/organisasi/ambalan", external: false, tags: ["ambalan", "pramuka", "kepramukaan", "organisasi"] },
+      { title: "LINORASI", desc: "Litbang Inovasi Raih Prestasi", icon: "lucide:lightbulb", to: "/organisasi/linorasi", external: false, tags: ["linorasi", "litbang", "inovasi", "penelitian", "organisasi"] },
+      { title: "BDI", desc: "Badan Dakwah Islam", icon: "lucide:book-open", to: "/organisasi/bdi", external: false, tags: ["bdi", "dakwah", "islam", "rohis", "organisasi"] },
       ...organizationsData.value.map((org: any) => ({
         title: org.name,
         desc: org.description,
-        icon: "lucide:shield",
+        icon: "lucide:users-round",
         to: `/organisasi/${org.slug}`,
         external: false,
         tags: [
@@ -377,6 +421,14 @@ const menuItems = [
         to: "/utilitas/traffic-tracker",
         external: false,
         tags: ["traffic", "tracker", "sekolah", "time"],
+      },
+      {
+        title: "E-Report",
+        desc: "Laporkan kerusakan fasilitas sekolah",
+        icon: "lucide:alert-triangle",
+        to: "/utilitas/e-report",
+        external: false,
+        tags: ["report", "laporan", "kerusakan", "fasilitas", "maintenance", "perbaikan"],
       },
     ],
   },

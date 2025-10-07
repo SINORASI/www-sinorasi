@@ -44,11 +44,6 @@ const openCompanyWebsite = (company: Company) => {
 
 <template>
   <div class="w-full overflow-hidden py-12 bg-white">
-    <div class="text-center mb-10">
-      <h2 class="text-3xl sm:text-4xl font-bold text-gray-900">
-        Bekerja Sama Dengan Industri Berikut
-      </h2>
-    </div>
 
     <div class="relative w-full overflow-hidden">
       <div class="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-white to-transparent z-10"></div>

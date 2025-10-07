@@ -23,8 +23,18 @@ const populateScrollItems = async () => {
   });
 };
 
-onMounted(populateScrollItems);
-watch(route, populateScrollItems);
+onMounted(() => {
+  populateScrollItems();
+});
+
+watch(() => route.path, () => {
+  // Wait for next tick and a bit more for the page to fully render
+  nextTick(() => {
+    setTimeout(() => {
+      populateScrollItems();
+    }, 150);
+  });
+});
 
 onMounted(() => {
   const handleScroll = () => {
