@@ -70,7 +70,7 @@ const getVisibleMembers = (): CarouselMember[] => {
 <template>
   <section class="flex items-center justify-center w-full h-screen bg-neutral-500 py-30">
     <div class="flex items-center justify-around gap-20">
-      <img src="/images/logo.webp" alt="Logo" class="object-contain h-60 w-60" />
+      <img src="/images/logo-smk.webp" alt="Logo" class="object-contain h-60 w-60" />
       <h1 class="text-6xl font-bold text-transparent whitespace-nowrap" style="-webkit-text-stroke: 1px white">
         PASKIBRA
       </h1>
@@ -102,7 +102,7 @@ const getVisibleMembers = (): CarouselMember[] => {
       <div class="flex flex-col items-center gap-12 lg:flex-row">
         <!-- Logo -->
         <div class="flex-shrink-0">
-          <img src="/images/logo.webp" alt="Logo" class="object-contain w-40 h-40 lg:h-60 lg:w-60" />
+          <img src="/images/logo-smk.webp" alt="Logo" class="object-contain w-40 h-40 lg:h-60 lg:w-60" />
         </div>
 
         <!-- Text Content -->
@@ -144,7 +144,7 @@ const getVisibleMembers = (): CarouselMember[] => {
 
         <!-- Center Logo -->
         <div class="flex-shrink-0">
-          <img src="/images/logo.webp" alt="Logo" class="object-contain w-32 h-32" />
+          <img src="/images/logo-smk.webp" alt="Logo" class="object-contain w-32 h-32" />
         </div>
 
         <!-- Right Column -->

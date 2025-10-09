@@ -116,7 +116,7 @@ const submitStory = async () => {
         <div class="p-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl md:p-10">
           <form @submit.prevent="submitStory" class="space-y-6">
             <div>
-              <label for="story" class="flex items-center block mb-3 text-sm font-bold text-gray-800">
+              <label for="story" class="flex items-center mb-3 text-sm font-bold text-gray-800">
                 <Icon name="lucide:message-square" size="18" class="mr-2 text-blue-600" />
                 Cerita Anda
               </label>
@@ -131,7 +131,7 @@ const submitStory = async () => {
             </div>
 
             <div>
-              <label for="tags" class="flex items-center block mb-3 text-sm font-bold text-gray-800">
+              <label for="tags" class="flex items-center mb-3 text-sm font-bold text-gray-800">
                 <Icon name="lucide:tag" size="18" class="mr-2 text-orange-600" />
                 Tag (Opsional)
               </label>

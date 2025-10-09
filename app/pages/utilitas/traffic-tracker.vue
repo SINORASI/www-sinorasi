@@ -172,7 +172,7 @@ useHead({
       <div class="max-w-md mx-auto mb-12">
         <form @submit.prevent="calculateRoute" class="p-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
           <div class="mb-6">
-            <label for="address" class="flex items-center block mb-3 text-sm font-bold text-gray-800">
+            <label for="address" class="flex items-center mb-3 text-sm font-bold text-gray-800">
               <Icon name="lucide:map-pin" size="18" class="mr-2 text-blue-600" />
               Alamat Rumah
             </label>

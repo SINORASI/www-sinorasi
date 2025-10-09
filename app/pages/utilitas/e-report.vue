@@ -181,7 +181,7 @@ const submitReport = async () => {
           <form @submit.prevent="submitReport" class="space-y-6">
             <!-- Category Selection -->
             <div>
-              <label class="flex items-center block mb-3 text-sm font-bold text-gray-800">
+              <label class="flex items-center mb-3 text-sm font-bold text-gray-800">
                 <Icon name="lucide:folder" size="18" class="mr-2 text-orange-600" />
                 Kategori Masalah <span class="ml-1 text-red-500">*</span>
               </label>
@@ -206,7 +206,7 @@ const submitReport = async () => {
 
             <!-- Location -->
             <div>
-              <label for="location" class="flex items-center block mb-3 text-sm font-bold text-gray-800">
+              <label for="location" class="flex items-center mb-3 text-sm font-bold text-gray-800">
                 <Icon name="lucide:map-pin" size="18" class="mr-2 text-orange-600" />
                 Lokasi
               </label>
@@ -221,7 +221,7 @@ const submitReport = async () => {
 
             <!-- Description -->
             <div>
-              <label for="description" class="flex items-center block mb-3 text-sm font-bold text-gray-800">
+              <label for="description" class="flex items-center mb-3 text-sm font-bold text-gray-800">
                 <Icon name="lucide:file-text" size="18" class="mr-2 text-orange-600" />
                 Deskripsi Masalah <span class="ml-1 text-red-500">*</span>
               </label>
@@ -238,7 +238,7 @@ const submitReport = async () => {
 
             <!-- Date (Optional) -->
             <div>
-              <label for="reportDate" class="flex items-center block mb-3 text-sm font-bold text-gray-800">
+              <label for="reportDate" class="flex items-center mb-3 text-sm font-bold text-gray-800">
                 <Icon name="lucide:calendar" size="18" class="mr-2 text-orange-600" />
                 Tanggal Kejadian (Opsional)
               </label>
@@ -253,7 +253,7 @@ const submitReport = async () => {
 
             <!-- Image Upload -->
             <div>
-              <label class="flex items-center block mb-3 text-sm font-bold text-gray-800">
+              <label class="flex items-center mb-3 text-sm font-bold text-gray-800">
                 <Icon name="lucide:image" size="18" class="mr-2 text-orange-600" />
                 Foto (Opsional)
               </label>

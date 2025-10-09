@@ -4,7 +4,7 @@
       <div class="grid grid-cols-1 gap-8 md:grid-cols-4">
         <div class="md:col-span-1">
           <div class="flex items-center gap-4 mb-4">
-            <img src="/images/logo.webp" width="60" alt="Logo SMKN 2 Singosari" class="rounded-full" />
+            <img src="/images/logo-smk.webp" width="60" alt="Logo SMKN 2 Singosari" class="rounded-full" />
             <div>
               <h3 class="text-xl font-bold">SMKN 2 Singosari</h3>
               <p class="text-sm text-neutral-300">Inovasi Raih Prestasi</p>

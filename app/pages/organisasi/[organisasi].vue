@@ -279,16 +279,16 @@ useHead({
                 class="flex items-center justify-center h-48 overflow-hidden bg-gradient-to-br from-blue-100 to-blue-50"
               >
                 <img
-                  v-if="organization.leadership.sekretaris[0].image"
-                  :src="organization.leadership.sekretaris[0].image"
-                  :alt="organization.leadership.sekretaris[0].name"
+                  v-if="organization.leadership.sekretaris![0]!.image"
+                  :src="organization.leadership.sekretaris![0]!.image"
+                  :alt="organization.leadership.sekretaris![0]!.name"
                   class="object-cover w-full h-full"
                 />
                 <div v-else class="w-20 h-20 transition-transform bg-blue-200 rounded-full group-hover:scale-110"></div>
               </div>
               <div class="py-4 text-center text-white bg-gradient-to-r from-blue-600 to-blue-800">
                 <h4 class="text-lg font-bold">SEKRETARIS</h4>
-                <p class="mt-1 text-sm">{{ organization.leadership.sekretaris[0].name }}</p>
+                <p class="mt-1 text-sm">{{ organization.leadership.sekretaris![0]!.name }}</p>
               </div>
             </div>
 
@@ -301,9 +301,9 @@ useHead({
                 class="flex items-center justify-center h-48 overflow-hidden bg-gradient-to-br from-orange-100 to-orange-50"
               >
                 <img
-                  v-if="organization.leadership.ketua[0].image"
-                  :src="organization.leadership.ketua[0].image"
-                  :alt="organization.leadership.ketua[0].name"
+                  v-if="organization.leadership.ketua![0]!.image"
+                  :src="organization.leadership.ketua![0]!.image"
+                  :alt="organization.leadership.ketua![0]!.name"
                   class="object-cover w-full h-full"
                 />
                 <div
@@ -313,9 +313,9 @@ useHead({
               </div>
               <div class="py-4 text-center text-white bg-gradient-to-r from-orange-500 to-orange-600">
                 <h4 class="text-lg font-bold">KETUA & WAKIL</h4>
-                <p class="mt-1 text-sm">{{ organization.leadership.ketua[0].name }}</p>
+                <p class="mt-1 text-sm">{{ organization.leadership.ketua![0]!.name }}</p>
                 <p v-if="organization.leadership.wakil && organization.leadership.wakil.length > 0" class="text-sm">
-                  {{ organization.leadership.wakil[0].name }}
+                  {{ organization.leadership.wakil![0]!.name }}
                 </p>
               </div>
             </div>
@@ -329,16 +329,16 @@ useHead({
                 class="flex items-center justify-center h-48 overflow-hidden bg-gradient-to-br from-blue-100 to-blue-50"
               >
                 <img
-                  v-if="organization.leadership.bendahara[0].image"
-                  :src="organization.leadership.bendahara[0].image"
-                  :alt="organization.leadership.bendahara[0].name"
+                  v-if="organization.leadership.bendahara![0]!.image"
+                  :src="organization.leadership.bendahara![0]!.image"
+                  :alt="organization.leadership.bendahara![0]!.name"
                   class="object-cover w-full h-full"
                 />
                 <div v-else class="w-20 h-20 transition-transform bg-blue-200 rounded-full group-hover:scale-110"></div>
               </div>
               <div class="py-4 text-center text-white bg-gradient-to-r from-blue-600 to-blue-800">
                 <h4 class="text-lg font-bold">BENDAHARA</h4>
-                <p class="mt-1 text-sm">{{ organization.leadership.bendahara[0].name }}</p>
+                <p class="mt-1 text-sm">{{ organization.leadership.bendahara![0]!.name }}</p>
               </div>
             </div>
           </div>
@@ -712,6 +712,7 @@ useHead({
 
 .line-clamp-1 {
   display: -webkit-box;
+  line-clamp: 1;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
@@ -719,6 +720,7 @@ useHead({
 
 .line-clamp-3 {
   display: -webkit-box;
+  line-clamp: 3;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
