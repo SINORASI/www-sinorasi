@@ -64,7 +64,7 @@ onMounted(() => {
     >
       <NuxtLink to="/" class="flex items-center justify-center transition-all duration-500 ease-in-out" :class="(sizeClass === 'full' ? 'gap-5' : 'gap-3')">
         <img
-          :src="'/images/logo.webp'"
+          :src="'/images/logo-smk.webp'"
           :style="{ width: sizeClass === 'full' ? '80px' : '50px', transition: 'width 0.5s ease-in-out' }"
           alt="Logo SMKN 2 Singosari"
         />
@@ -98,7 +98,7 @@ onMounted(() => {
             fontSize: sizeClass === 'full' ? '1rem' : '0.875rem',
             transition: 'font-size 0.5s ease-in-out',
           }"
-          class="cursor-pointer hover:text-blue-600 transition-colors duration-300"
+          class="transition-colors duration-300 cursor-pointer hover:text-blue-600"
         >
           {{ item.label }}
         </button>

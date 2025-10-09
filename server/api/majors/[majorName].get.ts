@@ -4,7 +4,7 @@ import type { MajorData } from '~/models/MajorData';
 // Mock data - same as data.ts
 const majorDatas: Record<MajorName, MajorData> = {
   rpl: {
-    logo: "/images/majorIcon/rpl.webp",
+    logo: "/images/majorIcon/logo-rpl.webp",
     short: "RPL",
     nameMajor: "Rekayasa Perangkat Lunak",
     headerColor: "bg-orange-600/30 backdrop-blur-2xl border-b-orange-400",
@@ -14,7 +14,7 @@ const majorDatas: Record<MajorName, MajorData> = {
     btnColor: "hover:bg-orange-500 hover:border-orange-500",
   },
   tkj: {
-    logo: "/images/majorIcon/tkj.webp",
+    logo: "/images/majorIcon/logo-tkj.webp",
     short: "TKJ",
     nameMajor: "Teknik Komputer Jaringan",
     headerColor: "bg-yellow-600/30 backdrop-blur-2xl border-b-yellow-400",
@@ -24,7 +24,7 @@ const majorDatas: Record<MajorName, MajorData> = {
     btnColor: "hover:bg-yellow-400 hover:border-yellow-400",
   },
   dkv: {
-    logo: "/images/majorIcon/dkv.webp",
+    logo: "/images/majorIcon/logo-dkv.webp",
     short: "DKV",
     nameMajor: "Desain Komunikasi Visual",
     headerColor: "bg-blue-600/30 backdrop-blur-2xl border-b-blue-400",
@@ -34,7 +34,7 @@ const majorDatas: Record<MajorName, MajorData> = {
     btnColor: "hover:bg-blue-600 hover:border-blue-600",
   },
   animasi: {
-    logo: "/images/majorIcon/animasi.webp",
+    logo: "/images/majorIcon/logo-an.webp",
     short: "AN",
     nameMajor: "Animasi",
     headerColor: "bg-pink-600/30 backdrop-blur-2xl border-b-pink-400",
@@ -44,7 +44,7 @@ const majorDatas: Record<MajorName, MajorData> = {
     btnColor: "hover:bg-pink-600 hover:border-pink-600",
   },
   broadcasting: {
-    logo: "/images/majorIcon/broadcasting.webp",
+    logo: "/images/majorIcon/logo-bc.webp",
     short: "BC",
     nameMajor: "Broadcasting",
     headerColor: "bg-red-600/30 backdrop-blur-2xl border-b-red-400",
@@ -54,7 +54,7 @@ const majorDatas: Record<MajorName, MajorData> = {
     btnColor: "hover:bg-red-600 hover:border-red-600",
   },
   tei: {
-    logo: "/images/majorIcon/tei.webp",
+    logo: "/images/majorIcon/logo-tei.webp",
     short: "TEI",
     nameMajor: "Teknik Elektronika Industri",
     headerColor: "bg-green-600/30 backdrop-blur-2xl border-b-green-400",
@@ -64,7 +64,7 @@ const majorDatas: Record<MajorName, MajorData> = {
     btnColor: "hover:bg-green-600 hover:border-green-600",
   },
   mekatronika: {
-    logo: "/images/majorIcon/mekatronika.webp",
+    logo: "/images/majorIcon/logo-mt.webp",
     short: "TMT",
     nameMajor: "Teknik Mekatronika",
     headerColor: "bg-green-800/30 backdrop-blur-2xl border-b-green-400",
@@ -74,7 +74,7 @@ const majorDatas: Record<MajorName, MajorData> = {
     btnColor: "hover:bg-green-800 hover:border-green-800",
   },
   tav: {
-    logo: "/images/majorIcon/tav.webp",
+    logo: "/images/majorIcon/logo-tav.webp",
     short: "TAV",
     nameMajor: "Teknik Audio Video",
     headerColor: "bg-green-400/30 backdrop-blur-2xl border-b-green-400",

@@ -1,6 +1,6 @@
 <template>
-  <div class="container mx-auto px-4 py-8">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+  <div class="container px-4 py-8 mx-auto">
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
       <div
         v-for="card in currentSlideCards"
         :key="card.id"
@@ -198,7 +198,7 @@ const videoCards: VideoCard[] = [
     thumbnail: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800&h=600&fit=crop',
     videoUrl: 'pKI-5JJPol8',
     videoType: 'youtube',
-    logo: '/images/majorIcon/rpl.webp',
+    logo: '/images/majorIcon/logo-rpl.webp',
     title: 'Rekayasa Perangkat Lunak',
     description: 'Mempelajari pemrograman, pengembangan aplikasi, database, dan pembuatan software untuk berbagai platform digital',
     slug: 'rpl'
@@ -208,7 +208,7 @@ const videoCards: VideoCard[] = [
     thumbnail: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&h=600&fit=crop',
     videoUrl: 'GgSUvrHtFKY',
     videoType: 'youtube',
-    logo: '/images/majorIcon/tkj.webp',
+    logo: '/images/majorIcon/logo-tkj.webp',
     title: 'Teknik Komputer dan Jaringan',
     description: 'Fokus pada instalasi, konfigurasi, dan maintenance jaringan komputer, server, serta sistem keamanan IT',
     slug: 'tkj'
@@ -218,7 +218,7 @@ const videoCards: VideoCard[] = [
     thumbnail: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=600&fit=crop',
     videoUrl: 'tlfc46ZCu0c',
     videoType: 'youtube',
-    logo: '/images/majorIcon/dkv.webp',
+    logo: '/images/majorIcon/logo-dkv.webp',
     title: 'Desain Komunikasi Visual',
     description: 'Mengembangkan kemampuan desain grafis, branding, ilustrasi, dan komunikasi visual untuk media cetak dan digital',
     slug: 'dkv'
@@ -228,7 +228,7 @@ const videoCards: VideoCard[] = [
     thumbnail: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop',
     videoUrl: 'o-b0I1IorbU',
     videoType: 'youtube',
-    logo: '/images/majorIcon/animasi.webp',
+    logo: '/images/majorIcon/logo-an.webp',
     title: 'Animasi',
     description: 'Mempelajari teknik animasi 2D, 3D, motion graphics, character design, dan produksi konten multimedia',
     slug: 'animasi'
@@ -238,7 +238,7 @@ const videoCards: VideoCard[] = [
     thumbnail: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&h=600&fit=crop',
     videoUrl: 'Dcvcf2ssyfk',
     videoType: 'youtube',
-    logo: '/images/majorIcon/broadcasting.webp',
+    logo: '/images/majorIcon/logo-bc.webp',
     title: 'Broadcasting',
     description: 'Menguasai produksi siaran televisi, radio, videografi, editing video, dan jurnalistik multimedia',
     slug: 'broadcasting'
@@ -248,7 +248,7 @@ const videoCards: VideoCard[] = [
     thumbnail: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=800&h=600&fit=crop',
     videoUrl: 'xXydNK3sI6I',
     videoType: 'youtube',
-    logo: '/images/majorIcon/tei.webp',
+    logo: '/images/majorIcon/logo-tei.webp',
     title: 'Teknik Elektronika Industri',
     description: 'Pembelajaran sistem kontrol industri, PLC, robotika, instrumentasi, dan otomasi pabrik modern',
     slug: 'tei'
@@ -258,7 +258,7 @@ const videoCards: VideoCard[] = [
     thumbnail: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&h=600&fit=crop',
     videoUrl: 'eBL7a0bNtKo',
     videoType: 'youtube',
-    logo: '/images/majorIcon/mekatronika.webp',
+    logo: '/images/majorIcon/logo-mt.webp',
     title: 'Mekatronika',
     description: 'Menggabungkan mekanik, elektronik, dan komputer untuk merancang sistem otomasi dan robotika industri',
     slug: 'mekatronika'
@@ -268,7 +268,7 @@ const videoCards: VideoCard[] = [
     thumbnail: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&h=600&fit=crop',
     videoUrl: 'ygvL6UDvGv4',
     videoType: 'youtube',
-    logo: '/images/majorIcon/tav.webp',
+    logo: '/images/majorIcon/logo-tav.webp',
     title: 'Teknik Audio Video',
     description: 'Mempelajari instalasi dan perawatan sistem audio video, sound system, home theater, dan teknologi multimedia',
     slug: 'tav'
