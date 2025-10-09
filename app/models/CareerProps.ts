@@ -1,5 +1,5 @@
 export interface CareerProps {
-    image: string;
-    title: string;
-    description: string;
+  image: string;
+  title: string;
+  description: string;
 }

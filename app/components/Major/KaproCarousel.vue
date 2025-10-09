@@ -3,10 +3,10 @@ import { ref, computed } from "vue";
 import type { MajorName } from "~/models/MajorName";
 import type { KaproProfile } from "~/models/KaproProfile";
 import type { MajorData } from "~/models/MajorData";
-import { majorColorSchemes } from '~/utils/majorColors';
+import { majorColorSchemes } from "~/utils/majorColors";
 
 // Fetch majors data from API
-const { data: majorDatas } = await useFetch<Record<MajorName, MajorData>>('/api/majors');
+const { data: majorDatas } = await useFetch<Record<MajorName, MajorData>>("/api/majors");
 
 const kapros: Record<MajorName, KaproProfile[]> = {
   rpl: [
@@ -207,17 +207,19 @@ const kapro = kapros[major] || [];
 
 // Get major color scheme
 const majorColor = computed(() => {
-  return majorColorSchemes[major] || {
-    primary: '#f97316',
-    secondary: '#ea580c',
-    accent: '#FFB366',
-    light: '#FFF3E8',
-    text: '#1f2937',
-    bg: '#ffffff',
-    hoverBg: '#fff7ed',
-    border: '#fed7aa',
-    headerBg: '#fff7ed'
-  };
+  return (
+    majorColorSchemes[major] || {
+      primary: "#f97316",
+      secondary: "#ea580c",
+      accent: "#FFB366",
+      light: "#FFF3E8",
+      text: "#1f2937",
+      bg: "#ffffff",
+      hoverBg: "#fff7ed",
+      border: "#fed7aa",
+      headerBg: "#fff7ed",
+    }
+  );
 });
 
 const current = ref(0);
@@ -253,17 +255,15 @@ const getTransitionClasses = () => {
 </script>
 
 <template>
-  <div class="w-full max-w-6xl mx-auto px-4 py-8">
+  <div class="w-full max-w-6xl px-4 py-8 mx-auto">
     <div class="overflow-hidden">
-      
       <!-- Grid Layout -->
-      <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 p-6 md:p-8 lg:p-10">
-        
+      <div class="grid grid-cols-1 gap-8 p-6 lg:grid-cols-5 md:p-8 lg:p-10">
         <!-- Left: Image Section (2 columns on large screens) -->
-        <div class="lg:col-span-2 flex flex-col items-center justify-center space-y-6">
+        <div class="flex flex-col items-center justify-center space-y-6 lg:col-span-2">
           <!-- Profile Image -->
           <div class="relative w-full max-w-xs aspect-[3/4]">
-            <div class="absolute inset-0 rounded-2xl overflow-hidden bg-gray-100">
+            <div class="absolute inset-0 overflow-hidden bg-gray-100 rounded-2xl">
               <Transition
                 name="slide"
                 mode="out-in"
@@ -278,7 +278,7 @@ const getTransitionClasses = () => {
                   :key="current"
                   :src="kapro[current]?.image"
                   :alt="kapro[current]?.kaproName"
-                  class="w-full h-full object-cover"
+                  class="object-cover w-full h-full"
                 />
               </Transition>
             </div>
@@ -296,11 +296,14 @@ const getTransitionClasses = () => {
               leave-from-class="opacity-100"
               leave-to-class="opacity-0"
             >
-              <h2 :key="current" class="text-xl md:text-2xl font-bold text-gray-900 min-h-[60px] flex items-center justify-center">
+              <h2
+                :key="current"
+                class="text-xl md:text-2xl font-bold text-gray-900 min-h-[60px] flex items-center justify-center"
+              >
                 {{ kapro[current]?.kaproName }}
               </h2>
             </Transition>
-            
+
             <Transition
               name="fade"
               mode="out-in"
@@ -311,7 +314,7 @@ const getTransitionClasses = () => {
               leave-from-class="opacity-100"
               leave-to-class="opacity-0"
             >
-              <p 
+              <p
                 :key="current"
                 :style="{ color: majorColor.text }"
                 class="text-sm md:text-base font-semibold min-h-[40px] flex items-center justify-center"
@@ -324,9 +327,8 @@ const getTransitionClasses = () => {
 
         <!-- Right: Quote Section (3 columns on large screens) -->
         <div class="lg:col-span-3 flex flex-col justify-between min-h-[400px] lg:min-h-[500px]">
-          
           <!-- Quote -->
-          <div class="flex-1 flex items-center justify-center p-6 md:p-8">
+          <div class="flex items-center justify-center flex-1 p-6 md:p-8">
             <Transition
               name="fade"
               mode="out-in"
@@ -337,21 +339,21 @@ const getTransitionClasses = () => {
               leave-from-class="opacity-100"
               leave-to-class="opacity-0"
             >
-              <div :key="current" class="text-center space-y-6">
+              <div :key="current" class="space-y-6 text-center">
                 <!-- Quote Icon -->
                 <div class="flex justify-center">
-                  <div 
+                  <div
                     :class="[
                       'w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center',
-                      majorDatas?.[major]?.bgColor || 'bg-orange-500'
+                      majorDatas?.[major]?.bgColor || 'bg-orange-500',
                     ]"
                   >
-                    <Icon name="lucide:quote" class="w-7 h-7 md:w-8 md:h-8 text-white" />
+                    <Icon name="lucide:quote" class="text-white w-7 h-7 md:w-8 md:h-8" />
                   </div>
                 </div>
 
                 <!-- Quote Text -->
-                <p class="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-800 leading-relaxed">
+                <p class="text-2xl font-bold leading-relaxed text-gray-800 md:text-3xl lg:text-4xl">
                   {{ kapro[current]?.quote }}
                 </p>
               </div>
@@ -359,7 +361,7 @@ const getTransitionClasses = () => {
           </div>
 
           <!-- Navigation Controls -->
-          <div class="space-y-6 pt-4">
+          <div class="pt-4 space-y-6">
             <!-- Progress Dots -->
             <div class="flex justify-center items-center gap-2 min-h-[16px]">
               <button
@@ -367,14 +369,12 @@ const getTransitionClasses = () => {
                 :key="idx"
                 @click="current = idx"
                 :style="{
-                  backgroundColor: current === idx ? majorColor.primary : undefined
+                  backgroundColor: current === idx ? majorColor.primary : undefined,
                 }"
                 :class="[
                   'h-2 rounded-full transition-all duration-300',
                   current === idx ? 'w-12' : 'w-2',
-                  current === idx 
-                    ? ''
-                    : 'bg-gray-300 hover:bg-gray-400'
+                  current === idx ? '' : 'bg-gray-300 hover:bg-gray-400',
                 ]"
                 :aria-label="`Go to profile ${idx + 1}`"
               ></button>
@@ -386,9 +386,9 @@ const getTransitionClasses = () => {
               <button
                 @click="prev"
                 :style="{
-                  backgroundColor: majorColor.primary
+                  backgroundColor: majorColor.primary,
                 }"
-                class="flex items-center gap-2 px-5 py-3 rounded-xl font-semibold text-white transition-all duration-300 transform hover:-translate-x-1 hover:brightness-110"
+                class="flex items-center gap-2 px-5 py-3 font-semibold text-white transition-all duration-300 transform rounded-xl hover:-translate-x-1 hover:brightness-110"
                 aria-label="Previous"
               >
                 <Icon name="lucide:chevron-left" class="w-5 h-5" />
@@ -397,24 +397,19 @@ const getTransitionClasses = () => {
 
               <!-- Counter -->
               <div class="flex items-baseline gap-1">
-                <span 
-                  :style="{ color: majorColor.text }"
-                  class="text-2xl md:text-3xl font-bold"
-                >
-                  {{ String(current + 1).padStart(2, '0') }}
+                <span :style="{ color: majorColor.text }" class="text-2xl font-bold md:text-3xl">
+                  {{ String(current + 1).padStart(2, "0") }}
                 </span>
-                <span class="text-lg md:text-xl text-gray-400">
-                  /{{ String(kapro.length).padStart(2, '0') }}
-                </span>
+                <span class="text-lg text-gray-400 md:text-xl"> /{{ String(kapro.length).padStart(2, "0") }} </span>
               </div>
 
               <!-- Next Button -->
               <button
                 @click="next"
                 :style="{
-                  backgroundColor: majorColor.primary
+                  backgroundColor: majorColor.primary,
                 }"
-                class="flex items-center gap-2 px-5 py-3 rounded-xl font-semibold text-white transition-all duration-300 transform hover:translate-x-1 hover:brightness-110"
+                class="flex items-center gap-2 px-5 py-3 font-semibold text-white transition-all duration-300 transform rounded-xl hover:translate-x-1 hover:brightness-110"
                 aria-label="Next"
               >
                 <span class="text-sm">Next</span>

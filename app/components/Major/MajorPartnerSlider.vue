@@ -43,12 +43,11 @@ const openCompanyWebsite = (company: Company) => {
 </script>
 
 <template>
-  <div class="w-full overflow-hidden py-12 bg-white">
-
+  <div class="w-full py-12 overflow-hidden bg-white">
     <div class="relative w-full overflow-hidden">
-      <div class="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-white to-transparent z-10"></div>
-      <div class="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-white to-transparent z-10"></div>
-      
+      <div class="absolute top-0 bottom-0 left-0 z-10 w-32 bg-gradient-to-r from-white to-transparent"></div>
+      <div class="absolute top-0 bottom-0 right-0 z-10 w-32 bg-gradient-to-l from-white to-transparent"></div>
+
       <div class="py-8">
         <div ref="sliderRef" class="slider-track">
           <div
@@ -61,10 +60,10 @@ const openCompanyWebsite = (company: Company) => {
               <img
                 :src="company.logo"
                 :alt="`${company.name} logo`"
-                class="w-28 sm:w-36 h-20 sm:h-24 object-contain transition-all duration-300"
+                class="object-contain h-20 transition-all duration-300 w-28 sm:w-36 sm:h-24"
               />
             </div>
-            <p class="text-gray-700 mt-3 text-xs sm:text-sm text-center font-semibold">
+            <p class="mt-3 text-xs font-semibold text-center text-gray-700 sm:text-sm">
               {{ company.name }}
             </p>
           </div>

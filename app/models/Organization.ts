@@ -1,4 +1,4 @@
-import type { Activity } from './Activity';
+import type { Activity } from "./Activity";
 
 export interface OrganizationMember {
   id: string;

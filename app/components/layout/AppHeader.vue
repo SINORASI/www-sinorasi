@@ -5,18 +5,18 @@ const headerClass = ref("bg-transparent border-b-transparent");
 const sizeClass = ref("full");
 const isSidebarOpen = ref(false);
 const route = useRoute();
-const scrollItems = ref<Array<{id: string, label: string}>>([]);
+const scrollItems = ref<Array<{ id: string; label: string }>>([]);
 
 const scrollToSection = (id: string) => {
-  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 };
 
 const populateScrollItems = async () => {
   await nextTick();
   scrollItems.value = [];
-  const sections = document.querySelectorAll('section[id]');
-  sections.forEach(section => {
-    const h2 = section.querySelector('h2');
+  const sections = document.querySelectorAll("section[id]");
+  sections.forEach((section) => {
+    const h2 = section.querySelector("h2");
     if (h2) {
       scrollItems.value.push({ id: section.id, label: h2.textContent?.trim() || section.id });
     }
@@ -27,14 +27,17 @@ onMounted(() => {
   populateScrollItems();
 });
 
-watch(() => route.path, () => {
-  // Wait for next tick and a bit more for the page to fully render
-  nextTick(() => {
-    setTimeout(() => {
-      populateScrollItems();
-    }, 150);
-  });
-});
+watch(
+  () => route.path,
+  () => {
+    // Wait for next tick and a bit more for the page to fully render
+    nextTick(() => {
+      setTimeout(() => {
+        populateScrollItems();
+      }, 150);
+    });
+  }
+);
 
 onMounted(() => {
   const handleScroll = () => {
@@ -62,7 +65,11 @@ onMounted(() => {
         ' flex items-center justify-around transition-all duration-500 ease-in-out'
       "
     >
-      <NuxtLink to="/" class="flex items-center justify-center transition-all duration-500 ease-in-out" :class="(sizeClass === 'full' ? 'gap-5' : 'gap-3')">
+      <NuxtLink
+        to="/"
+        class="flex items-center justify-center transition-all duration-500 ease-in-out"
+        :class="sizeClass === 'full' ? 'gap-5' : 'gap-3'"
+      >
         <img
           :src="'/images/logo-smk.webp'"
           :style="{ width: sizeClass === 'full' ? '80px' : '50px', transition: 'width 0.5s ease-in-out' }"

@@ -10,12 +10,7 @@
         @click="navigateToJurusan(card.slug)"
       >
         <div class="video-card">
-          <img
-            v-show="hoveredCard !== card.id"
-            :src="card.thumbnail"
-            :alt="card.title"
-            class="thumbnail"
-          />
+          <img v-show="hoveredCard !== card.id" :src="card.thumbnail" :alt="card.title" class="thumbnail" />
           <!-- YouTube player container -->
           <div
             v-if="card.videoType === 'youtube'"
@@ -23,14 +18,11 @@
             class="video-element"
             :class="{ 'video-active': hoveredCard === card.id }"
           />
-          
-          <div 
-            class="content-overlay"
-            :class="{ 'content-visible': hoveredCard === card.id }"
-          >
+
+          <div class="content-overlay" :class="{ 'content-visible': hoveredCard === card.id }">
             <div class="content-wrapper">
               <div class="logo">
-                <img :src="card.logo" alt="Logo Jurusan" width="60" height="60">
+                <img :src="card.logo" alt="Logo Jurusan" width="60" height="60" />
               </div>
               <h3 class="title">{{ card.title }}</h3>
               <p class="description">{{ card.description }}</p>
@@ -39,28 +31,16 @@
         </div>
       </div>
     </div>
-    
+
     <div class="navigation">
-      <button 
-        class="nav-btn" 
-        @click="prevSlide"
-        :disabled="currentSlide === 0"
-      >
-        ← Kembali
-      </button>
-      <button 
-        class="nav-btn" 
-        @click="nextSlide"
-        :disabled="currentSlide === totalSlides - 1"
-      >
-        Selanjutnya →
-      </button>
+      <button class="nav-btn" @click="prevSlide" :disabled="currentSlide === 0">← Kembali</button>
+      <button class="nav-btn" @click="nextSlide" :disabled="currentSlide === totalSlides - 1">Selanjutnya →</button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, watch } from 'vue'
+import { ref, computed, onMounted, watch } from "vue";
 
 // YouTube API type definition
 declare global {
@@ -71,55 +51,55 @@ declare global {
 }
 
 interface VideoCard {
-  id: number
-  thumbnail: string
-  videoUrl: string
-  videoType: 'file' | 'youtube'
-  logo: string
-  title: string
-  description: string
-  slug: string
+  id: number;
+  thumbnail: string;
+  videoUrl: string;
+  videoType: "file" | "youtube";
+  logo: string;
+  title: string;
+  description: string;
+  slug: string;
 }
 
-const hoveredCard = ref<number | null>(null)
-const currentSlide = ref(0)
-const cardsPerSlide = 4
-const youtubePlayers = ref<Record<number, any>>({})
-const playersReady = ref<Record<number, boolean>>({})
-const playbackIntervals = ref<Record<number, number>>({})
+const hoveredCard = ref<number | null>(null);
+const currentSlide = ref(0);
+const cardsPerSlide = 4;
+const youtubePlayers = ref<Record<number, any>>({});
+const playersReady = ref<Record<number, boolean>>({});
+const playbackIntervals = ref<Record<number, number>>({});
 
 // Load YouTube API
-let apiLoaded = false
+let apiLoaded = false;
 onMounted(() => {
   if (!window.YT) {
-    const tag = document.createElement('script')
-    tag.src = 'https://www.youtube.com/iframe_api'
-    const firstScriptTag = document.getElementsByTagName('script')[0]
+    const tag = document.createElement("script");
+    tag.src = "https://www.youtube.com/iframe_api";
+    const firstScriptTag = document.getElementsByTagName("script")[0];
     if (firstScriptTag && firstScriptTag.parentNode) {
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag)
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
     }
-    
+
     window.onYouTubeIframeAPIReady = () => {
-      apiLoaded = true
-      initializePlayers()
-    }
+      apiLoaded = true;
+      initializePlayers();
+    };
   } else {
-    apiLoaded = true
-    initializePlayers()
+    apiLoaded = true;
+    initializePlayers();
   }
-})
+});
 
 const initializePlayers = () => {
-  currentSlideCards.value.forEach(card => {
-    if (card.videoType === 'youtube' && !youtubePlayers.value[card.id]) {
-      createPlayer(card.id, card.videoUrl)
+  currentSlideCards.value.forEach((card) => {
+    if (card.videoType === "youtube" && !youtubePlayers.value[card.id]) {
+      createPlayer(card.id, card.videoUrl);
     }
-  })
-}
+  });
+};
 
 const createPlayer = (id: number, videoId: string) => {
-  if (!window.YT || !window.YT.Player) return
-  
+  if (!window.YT || !window.YT.Player) return;
+
   youtubePlayers.value[id] = new window.YT.Player(`youtube-player-${id}`, {
     videoId: videoId,
     playerVars: {
@@ -131,173 +111,177 @@ const createPlayer = (id: number, videoId: string) => {
       rel: 0,
       showinfo: 0,
       mute: 1,
-      start: 10
+      start: 10,
     },
     events: {
       onReady: () => {
-        playersReady.value[id] = true
-      }
-    }
-  })
-}
+        playersReady.value[id] = true;
+      },
+    },
+  });
+};
 
 // Watch for slide changes
 watch(currentSlide, () => {
   setTimeout(() => {
     if (apiLoaded) {
-      initializePlayers()
+      initializePlayers();
     }
-  }, 100)
-})
+  }, 100);
+});
 
 const handleMouseEnter = (id: number) => {
-  hoveredCard.value = id
-  const player = youtubePlayers.value[id]
-  
+  hoveredCard.value = id;
+  const player = youtubePlayers.value[id];
+
   if (player && playersReady.value[id]) {
-    player.seekTo(10, true)
-    player.setPlaybackRate(0.75)
-    player.playVideo()
-    
+    player.seekTo(10, true);
+    player.setPlaybackRate(0.75);
+    player.playVideo();
+
     // Clear any existing interval
     if (playbackIntervals.value[id]) {
-      clearInterval(playbackIntervals.value[id])
+      clearInterval(playbackIntervals.value[id]);
     }
-    
+
     // Monitor playback and loop between 10s and 15s
     playbackIntervals.value[id] = window.setInterval(() => {
       if (hoveredCard.value === id && player.getCurrentTime) {
-        const currentTime = player.getCurrentTime()
+        const currentTime = player.getCurrentTime();
         if (currentTime >= 15) {
-          player.seekTo(10, true)
+          player.seekTo(10, true);
         }
       }
-    }, 100)
+    }, 100);
   }
-}
+};
 
 const handleMouseLeave = (id: number) => {
-  hoveredCard.value = null
-  const player = youtubePlayers.value[id]
-  
+  hoveredCard.value = null;
+  const player = youtubePlayers.value[id];
+
   // Clear interval
   if (playbackIntervals.value[id]) {
-    clearInterval(playbackIntervals.value[id])
-    delete playbackIntervals.value[id]
+    clearInterval(playbackIntervals.value[id]);
+    delete playbackIntervals.value[id];
   }
-  
+
   if (player && playersReady.value[id]) {
-    player.pauseVideo()
-    player.seekTo(10, true)
+    player.pauseVideo();
+    player.seekTo(10, true);
   }
-}
+};
 
 const videoCards: VideoCard[] = [
   {
     id: 1,
-    thumbnail: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800&h=600&fit=crop',
-    videoUrl: 'pKI-5JJPol8',
-    videoType: 'youtube',
-    logo: '/images/majorIcon/logo-rpl.webp',
-    title: 'Rekayasa Perangkat Lunak',
-    description: 'Mempelajari pemrograman, pengembangan aplikasi, database, dan pembuatan software untuk berbagai platform digital',
-    slug: 'rpl'
+    thumbnail: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800&h=600&fit=crop",
+    videoUrl: "pKI-5JJPol8",
+    videoType: "youtube",
+    logo: "/images/majorIcon/logo-rpl.webp",
+    title: "Rekayasa Perangkat Lunak",
+    description:
+      "Mempelajari pemrograman, pengembangan aplikasi, database, dan pembuatan software untuk berbagai platform digital",
+    slug: "rpl",
   },
   {
     id: 2,
-    thumbnail: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&h=600&fit=crop',
-    videoUrl: 'GgSUvrHtFKY',
-    videoType: 'youtube',
-    logo: '/images/majorIcon/logo-tkj.webp',
-    title: 'Teknik Komputer dan Jaringan',
-    description: 'Fokus pada instalasi, konfigurasi, dan maintenance jaringan komputer, server, serta sistem keamanan IT',
-    slug: 'tkj'
+    thumbnail: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&h=600&fit=crop",
+    videoUrl: "GgSUvrHtFKY",
+    videoType: "youtube",
+    logo: "/images/majorIcon/logo-tkj.webp",
+    title: "Teknik Komputer dan Jaringan",
+    description:
+      "Fokus pada instalasi, konfigurasi, dan maintenance jaringan komputer, server, serta sistem keamanan IT",
+    slug: "tkj",
   },
   {
     id: 3,
-    thumbnail: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=600&fit=crop',
-    videoUrl: 'tlfc46ZCu0c',
-    videoType: 'youtube',
-    logo: '/images/majorIcon/logo-dkv.webp',
-    title: 'Desain Komunikasi Visual',
-    description: 'Mengembangkan kemampuan desain grafis, branding, ilustrasi, dan komunikasi visual untuk media cetak dan digital',
-    slug: 'dkv'
+    thumbnail: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=600&fit=crop",
+    videoUrl: "tlfc46ZCu0c",
+    videoType: "youtube",
+    logo: "/images/majorIcon/logo-dkv.webp",
+    title: "Desain Komunikasi Visual",
+    description:
+      "Mengembangkan kemampuan desain grafis, branding, ilustrasi, dan komunikasi visual untuk media cetak dan digital",
+    slug: "dkv",
   },
   {
     id: 4,
-    thumbnail: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop',
-    videoUrl: 'o-b0I1IorbU',
-    videoType: 'youtube',
-    logo: '/images/majorIcon/logo-an.webp',
-    title: 'Animasi',
-    description: 'Mempelajari teknik animasi 2D, 3D, motion graphics, character design, dan produksi konten multimedia',
-    slug: 'animasi'
+    thumbnail: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop",
+    videoUrl: "o-b0I1IorbU",
+    videoType: "youtube",
+    logo: "/images/majorIcon/logo-an.webp",
+    title: "Animasi",
+    description: "Mempelajari teknik animasi 2D, 3D, motion graphics, character design, dan produksi konten multimedia",
+    slug: "animasi",
   },
   {
     id: 5,
-    thumbnail: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&h=600&fit=crop',
-    videoUrl: 'Dcvcf2ssyfk',
-    videoType: 'youtube',
-    logo: '/images/majorIcon/logo-bc.webp',
-    title: 'Broadcasting',
-    description: 'Menguasai produksi siaran televisi, radio, videografi, editing video, dan jurnalistik multimedia',
-    slug: 'broadcasting'
+    thumbnail: "https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&h=600&fit=crop",
+    videoUrl: "Dcvcf2ssyfk",
+    videoType: "youtube",
+    logo: "/images/majorIcon/logo-bc.webp",
+    title: "Broadcasting",
+    description: "Menguasai produksi siaran televisi, radio, videografi, editing video, dan jurnalistik multimedia",
+    slug: "broadcasting",
   },
   {
     id: 6,
-    thumbnail: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=800&h=600&fit=crop',
-    videoUrl: 'xXydNK3sI6I',
-    videoType: 'youtube',
-    logo: '/images/majorIcon/logo-tei.webp',
-    title: 'Teknik Elektronika Industri',
-    description: 'Pembelajaran sistem kontrol industri, PLC, robotika, instrumentasi, dan otomasi pabrik modern',
-    slug: 'tei'
+    thumbnail: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=800&h=600&fit=crop",
+    videoUrl: "xXydNK3sI6I",
+    videoType: "youtube",
+    logo: "/images/majorIcon/logo-tei.webp",
+    title: "Teknik Elektronika Industri",
+    description: "Pembelajaran sistem kontrol industri, PLC, robotika, instrumentasi, dan otomasi pabrik modern",
+    slug: "tei",
   },
   {
     id: 7,
-    thumbnail: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&h=600&fit=crop',
-    videoUrl: 'eBL7a0bNtKo',
-    videoType: 'youtube',
-    logo: '/images/majorIcon/logo-mt.webp',
-    title: 'Mekatronika',
-    description: 'Menggabungkan mekanik, elektronik, dan komputer untuk merancang sistem otomasi dan robotika industri',
-    slug: 'mekatronika'
+    thumbnail: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&h=600&fit=crop",
+    videoUrl: "eBL7a0bNtKo",
+    videoType: "youtube",
+    logo: "/images/majorIcon/logo-mt.webp",
+    title: "Mekatronika",
+    description: "Menggabungkan mekanik, elektronik, dan komputer untuk merancang sistem otomasi dan robotika industri",
+    slug: "mekatronika",
   },
   {
     id: 8,
-    thumbnail: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&h=600&fit=crop',
-    videoUrl: 'ygvL6UDvGv4',
-    videoType: 'youtube',
-    logo: '/images/majorIcon/logo-tav.webp',
-    title: 'Teknik Audio Video',
-    description: 'Mempelajari instalasi dan perawatan sistem audio video, sound system, home theater, dan teknologi multimedia',
-    slug: 'tav'
-  }
-]
+    thumbnail: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&h=600&fit=crop",
+    videoUrl: "ygvL6UDvGv4",
+    videoType: "youtube",
+    logo: "/images/majorIcon/logo-tav.webp",
+    title: "Teknik Audio Video",
+    description:
+      "Mempelajari instalasi dan perawatan sistem audio video, sound system, home theater, dan teknologi multimedia",
+    slug: "tav",
+  },
+];
 
-const totalSlides = computed(() => Math.ceil(videoCards.length / cardsPerSlide))
+const totalSlides = computed(() => Math.ceil(videoCards.length / cardsPerSlide));
 
 const currentSlideCards = computed(() => {
-  const start = currentSlide.value * cardsPerSlide
-  const end = start + cardsPerSlide
-  return videoCards.slice(start, end)
-})
+  const start = currentSlide.value * cardsPerSlide;
+  const end = start + cardsPerSlide;
+  return videoCards.slice(start, end);
+});
 
 const nextSlide = () => {
   if (currentSlide.value < totalSlides.value - 1) {
-    currentSlide.value++
+    currentSlide.value++;
   }
-}
+};
 
 const prevSlide = () => {
   if (currentSlide.value > 0) {
-    currentSlide.value--
+    currentSlide.value--;
   }
-}
+};
 
 const navigateToJurusan = (slug: string) => {
-  window.location.href = `/jurusan/${slug}`
-}
+  window.location.href = `/jurusan/${slug}`;
+};
 </script>
 
 <style scoped>
@@ -448,25 +432,25 @@ const navigateToJurusan = (slug: string) => {
   .grid {
     grid-template-columns: 1fr;
   }
-  
+
   .video-card-wrapper {
     height: 240px;
   }
-  
+
   .title {
     font-size: 1.1rem;
   }
-  
+
   .description {
     font-size: 0.8rem;
     -webkit-line-clamp: 2;
     line-clamp: 2;
   }
-  
+
   .content-overlay {
     padding: 16px;
   }
-  
+
   .logo img {
     width: 50px;
     height: 50px;
@@ -477,11 +461,11 @@ const navigateToJurusan = (slug: string) => {
   .video-card-wrapper {
     height: 200px;
   }
-  
+
   .title {
     font-size: 1rem;
   }
-  
+
   .nav-btn {
     font-size: 0.8rem;
     padding: 8px 16px;

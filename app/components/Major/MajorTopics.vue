@@ -2,11 +2,11 @@
 import type { MajorName } from "~/models/MajorName";
 import type { MajorData } from "~/models/MajorData";
 import type { MajorTopic } from "~/models/MajorTopic";
-import { majorColorSchemes } from '~/utils/majorColors';
+import { majorColorSchemes } from "~/utils/majorColors";
 
 // Fetch majors data and topics from API
-const { data: majorDatas } = await useFetch<Record<MajorName, MajorData>>('/api/majors');
-const { data: majorTopics } = await useFetch<Record<MajorName, MajorTopic[]>>('/api/major-topics');
+const { data: majorDatas } = await useFetch<Record<MajorName, MajorData>>("/api/majors");
+const { data: majorTopics } = await useFetch<Record<MajorName, MajorTopic[]>>("/api/major-topics");
 
 interface ExpandedItems {
   [key: string]: boolean;
@@ -22,17 +22,19 @@ const major = route.params.majorName as MajorName;
 
 // Get major color scheme
 const majorColor = computed(() => {
-  return majorColorSchemes[major] || {
-    primary: '#f97316',
-    secondary: '#ea580c',
-    accent: '#FFB366',
-    light: '#FFF3E8',
-    text: '#1f2937',
-    bg: '#ffffff',
-    hoverBg: '#fff7ed',
-    border: '#fed7aa',
-    headerBg: '#fff7ed'
-  };
+  return (
+    majorColorSchemes[major] || {
+      primary: "#f97316",
+      secondary: "#ea580c",
+      accent: "#FFB366",
+      light: "#FFF3E8",
+      text: "#1f2937",
+      bg: "#ffffff",
+      hoverBg: "#fff7ed",
+      border: "#fed7aa",
+      headerBg: "#fff7ed",
+    }
+  );
 });
 
 // Split topics into two columns dynamically
@@ -108,45 +110,29 @@ const toggleRightExpanded = (id: string): void => {
 <template>
   <div class="w-full">
     <!-- Two Column Grid -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-5 lg:gap-6">
+    <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 md:gap-5 lg:gap-6">
       <!-- Left Column -->
       <div class="space-y-4">
-        <div 
-          v-for="(topic, index) in leftColumnTopics" 
-          :key="topic.id"
-          class="transition-all duration-300"
-        >
+        <div v-for="(topic, index) in leftColumnTopics" :key="topic.id" class="transition-all duration-300">
           <!-- Collapsed State -->
-          <button
-            v-if="!expandedLeftItems[topic.id]"
-            @click="toggleLeftExpanded(topic.id)"
-            class="w-full group"
-          >
-            <div 
-              class="relative flex items-center justify-between gap-3 px-5 py-4 md:px-6 md:py-5
-                     rounded-xl shadow-md hover:shadow-lg
-                     transition-all duration-300 hover:-translate-y-0.5"
+          <button v-if="!expandedLeftItems[topic.id]" @click="toggleLeftExpanded(topic.id)" class="w-full group">
+            <div
+              class="relative flex items-center justify-between gap-3 px-5 py-4 md:px-6 md:py-5 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5"
               :style="`background: ${majorColor.primary}`"
             >
               <!-- Title -->
-              <div class="flex-1 text-left min-w-0">
-                <h3 class="text-white font-semibold text-sm md:text-base leading-snug line-clamp-2 pr-2">
+              <div class="flex-1 min-w-0 text-left">
+                <h3 class="pr-2 text-sm font-semibold leading-snug text-white md:text-base line-clamp-2">
                   {{ topic.title }}
                 </h3>
               </div>
 
               <!-- Plus Icon -->
               <div class="flex-shrink-0">
-                <div 
-                  class="w-8 h-8 md:w-9 md:h-9 rounded-lg bg-white/20 flex items-center justify-center
-                         group-hover:rotate-90 transition-transform duration-300"
+                <div
+                  class="flex items-center justify-center w-8 h-8 transition-transform duration-300 rounded-lg md:w-9 md:h-9 bg-white/20 group-hover:rotate-90"
                 >
-                  <svg 
-                    class="w-4 h-4 md:w-5 md:h-5 text-white" 
-                    fill="none" 
-                    stroke="currentColor" 
-                    viewBox="0 0 24 24"
-                  >
+                  <svg class="w-4 h-4 text-white md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" />
                   </svg>
                 </div>
@@ -155,38 +141,26 @@ const toggleRightExpanded = (id: string): void => {
           </button>
 
           <!-- Expanded State -->
-          <div
-            v-else
-            class="bg-white rounded-xl shadow-lg overflow-hidden animate-expand"
-          >
+          <div v-else class="overflow-hidden bg-white shadow-lg rounded-xl animate-expand">
             <!-- Header (Clickable to collapse) -->
-            <button
-              @click="toggleLeftExpanded(topic.id)"
-              class="w-full group"
-            >
-              <div 
+            <button @click="toggleLeftExpanded(topic.id)" class="w-full group">
+              <div
                 class="relative flex items-center justify-between gap-3 px-5 py-4 md:px-6 md:py-5"
                 :style="`background: ${majorColor.primary}`"
               >
                 <!-- Title -->
-                <div class="flex-1 text-left min-w-0">
-                  <h3 class="text-white font-semibold text-sm md:text-base leading-snug pr-2">
+                <div class="flex-1 min-w-0 text-left">
+                  <h3 class="pr-2 text-sm font-semibold leading-snug text-white md:text-base">
                     {{ topic.title }}
                   </h3>
                 </div>
 
                 <!-- Minus Icon -->
                 <div class="flex-shrink-0">
-                  <div 
-                    class="w-8 h-8 md:w-9 md:h-9 rounded-lg bg-white/20 flex items-center justify-center
-                           group-hover:rotate-180 transition-transform duration-300"
+                  <div
+                    class="flex items-center justify-center w-8 h-8 transition-transform duration-300 rounded-lg md:w-9 md:h-9 bg-white/20 group-hover:rotate-180"
                   >
-                    <svg 
-                      class="w-4 h-4 md:w-5 md:h-5 text-white" 
-                      fill="none" 
-                      stroke="currentColor" 
-                      viewBox="0 0 24 24"
-                    >
+                    <svg class="w-4 h-4 text-white md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M20 12H4" />
                     </svg>
                   </div>
@@ -196,7 +170,7 @@ const toggleRightExpanded = (id: string): void => {
 
             <!-- Content Area with Animation -->
             <div class="p-4 md:p-5 lg:p-6 animate-slide-down">
-              <p class="text-gray-700 text-sm md:text-base leading-relaxed">
+              <p class="text-sm leading-relaxed text-gray-700 md:text-base">
                 {{ topic.description }}
               </p>
             </div>
@@ -206,42 +180,26 @@ const toggleRightExpanded = (id: string): void => {
 
       <!-- Right Column -->
       <div class="space-y-4">
-        <div 
-          v-for="(topic, index) in rightColumnTopics" 
-          :key="topic.id"
-          class="transition-all duration-300"
-        >
+        <div v-for="(topic, index) in rightColumnTopics" :key="topic.id" class="transition-all duration-300">
           <!-- Collapsed State -->
-          <button
-            v-if="!expandedRightItems[topic.id]"
-            @click="toggleRightExpanded(topic.id)"
-            class="w-full group"
-          >
-            <div 
-              class="relative flex items-center justify-between gap-3 px-5 py-4 md:px-6 md:py-5
-                     rounded-xl shadow-md hover:shadow-lg
-                     transition-all duration-300 hover:-translate-y-0.5"
+          <button v-if="!expandedRightItems[topic.id]" @click="toggleRightExpanded(topic.id)" class="w-full group">
+            <div
+              class="relative flex items-center justify-between gap-3 px-5 py-4 md:px-6 md:py-5 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5"
               :style="`background: ${majorColor.primary}`"
             >
               <!-- Title -->
-              <div class="flex-1 text-left min-w-0">
-                <h3 class="text-white font-semibold text-sm md:text-base leading-snug line-clamp-2 pr-2">
+              <div class="flex-1 min-w-0 text-left">
+                <h3 class="pr-2 text-sm font-semibold leading-snug text-white md:text-base line-clamp-2">
                   {{ topic.title }}
                 </h3>
               </div>
 
               <!-- Plus Icon -->
               <div class="flex-shrink-0">
-                <div 
-                  class="w-8 h-8 md:w-9 md:h-9 rounded-lg bg-white/20 flex items-center justify-center
-                         group-hover:rotate-90 transition-transform duration-300"
+                <div
+                  class="flex items-center justify-center w-8 h-8 transition-transform duration-300 rounded-lg md:w-9 md:h-9 bg-white/20 group-hover:rotate-90"
                 >
-                  <svg 
-                    class="w-4 h-4 md:w-5 md:h-5 text-white" 
-                    fill="none" 
-                    stroke="currentColor" 
-                    viewBox="0 0 24 24"
-                  >
+                  <svg class="w-4 h-4 text-white md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" />
                   </svg>
                 </div>
@@ -250,38 +208,26 @@ const toggleRightExpanded = (id: string): void => {
           </button>
 
           <!-- Expanded State -->
-          <div
-            v-else
-            class="bg-white rounded-xl shadow-lg overflow-hidden animate-expand"
-          >
+          <div v-else class="overflow-hidden bg-white shadow-lg rounded-xl animate-expand">
             <!-- Header (Clickable to collapse) -->
-            <button
-              @click="toggleRightExpanded(topic.id)"
-              class="w-full group"
-            >
-              <div 
+            <button @click="toggleRightExpanded(topic.id)" class="w-full group">
+              <div
                 class="relative flex items-center justify-between gap-3 px-5 py-4 md:px-6 md:py-5"
                 :style="`background: ${majorColor.primary}`"
               >
                 <!-- Title -->
-                <div class="flex-1 text-left min-w-0">
-                  <h3 class="text-white font-semibold text-sm md:text-base leading-snug pr-2">
+                <div class="flex-1 min-w-0 text-left">
+                  <h3 class="pr-2 text-sm font-semibold leading-snug text-white md:text-base">
                     {{ topic.title }}
                   </h3>
                 </div>
 
                 <!-- Minus Icon -->
                 <div class="flex-shrink-0">
-                  <div 
-                    class="w-8 h-8 md:w-9 md:h-9 rounded-lg bg-white/20 flex items-center justify-center
-                           group-hover:rotate-180 transition-transform duration-300"
+                  <div
+                    class="flex items-center justify-center w-8 h-8 transition-transform duration-300 rounded-lg md:w-9 md:h-9 bg-white/20 group-hover:rotate-180"
                   >
-                    <svg 
-                      class="w-4 h-4 md:w-5 md:h-5 text-white" 
-                      fill="none" 
-                      stroke="currentColor" 
-                      viewBox="0 0 24 24"
-                    >
+                    <svg class="w-4 h-4 text-white md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M20 12H4" />
                     </svg>
                   </div>
@@ -291,7 +237,7 @@ const toggleRightExpanded = (id: string): void => {
 
             <!-- Content Area with Animation -->
             <div class="p-4 md:p-5 lg:p-6 animate-slide-down">
-              <p class="text-gray-700 text-sm md:text-base leading-relaxed">
+              <p class="text-sm leading-relaxed text-gray-700 md:text-base">
                 {{ topic.description }}
               </p>
             </div>
@@ -301,28 +247,28 @@ const toggleRightExpanded = (id: string): void => {
     </div>
 
     <!-- Empty State -->
-    <div 
-      v-if="leftColumnTopics.length === 0 && rightColumnTopics.length === 0" 
-      class="text-center py-16 md:py-20"
-    >
-      <div 
-        class="w-20 h-20 md:w-24 md:h-24 mx-auto mb-6 rounded-full flex items-center justify-center shadow-lg"
+    <div v-if="leftColumnTopics.length === 0 && rightColumnTopics.length === 0" class="py-16 text-center md:py-20">
+      <div
+        class="flex items-center justify-center w-20 h-20 mx-auto mb-6 rounded-full shadow-lg md:w-24 md:h-24"
         :style="`background: ${majorColor.light}`"
       >
-        <svg 
-          class="w-10 h-10 md:w-12 md:h-12" 
+        <svg
+          class="w-10 h-10 md:w-12 md:h-12"
           :style="`color: ${majorColor.primary}`"
-          fill="none" 
-          stroke="currentColor" 
+          fill="none"
+          stroke="currentColor"
           viewBox="0 0 24 24"
         >
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+          />
         </svg>
       </div>
-      <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-2">
-        Belum Ada Materi
-      </h3>
-      <p class="text-gray-600 text-sm md:text-base px-4">
+      <h3 class="mb-2 text-xl font-bold text-gray-800 md:text-2xl">Belum Ada Materi</h3>
+      <p class="px-4 text-sm text-gray-600 md:text-base">
         Materi pembelajaran untuk jurusan ini akan segera ditambahkan.
       </p>
     </div>

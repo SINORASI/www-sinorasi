@@ -1,110 +1,113 @@
 <script setup lang="ts">
-const description = ref('')
-const location = ref('')
-const category = ref('')
-const reportDate = ref('')
-const imageFile = ref<File | null>(null)
-const imagePreview = ref('')
-const isSubmitting = ref(false)
-const showGuidelines = ref(false)
+const description = ref("");
+const location = ref("");
+const category = ref("");
+const reportDate = ref("");
+const imageFile = ref<File | null>(null);
+const imagePreview = ref("");
+const isSubmitting = ref(false);
+const showGuidelines = ref(false);
 
 useHead({
-  title: 'E-Report - Utilitas - SMKN 2 Singosari',
+  title: "E-Report - Utilitas - SMKN 2 Singosari",
   meta: [
     {
-      name: 'description',
-      content: 'Laporkan kerusakan atau masalah fasilitas sekolah melalui E-Report SMK Negeri 2 Singosari.'
-    }
-  ]
+      name: "description",
+      content: "Laporkan kerusakan atau masalah fasilitas sekolah melalui E-Report SMK Negeri 2 Singosari.",
+    },
+  ],
 });
 
 const categories = [
-  { value: 'fasilitas', label: 'Fasilitas Kelas', icon: 'lucide:door-open' },
-  { value: 'listrik', label: 'Listrik & Lampu', icon: 'lucide:zap' },
-  { value: 'sanitasi', label: 'Sanitasi & Toilet', icon: 'lucide:droplet' },
-  { value: 'furniture', label: 'Meja & Kursi', icon: 'lucide:armchair' },
-  { value: 'teknologi', label: 'Komputer & Teknologi', icon: 'lucide:monitor' },
-  { value: 'eksterior', label: 'Bangunan & Eksterior', icon: 'lucide:building' },
-  { value: 'lainnya', label: 'Lainnya', icon: 'lucide:more-horizontal' },
-]
+  { value: "fasilitas", label: "Fasilitas Kelas", icon: "lucide:door-open" },
+  { value: "listrik", label: "Listrik & Lampu", icon: "lucide:zap" },
+  { value: "sanitasi", label: "Sanitasi & Toilet", icon: "lucide:droplet" },
+  { value: "furniture", label: "Meja & Kursi", icon: "lucide:armchair" },
+  { value: "teknologi", label: "Komputer & Teknologi", icon: "lucide:monitor" },
+  { value: "eksterior", label: "Bangunan & Eksterior", icon: "lucide:building" },
+  { value: "lainnya", label: "Lainnya", icon: "lucide:more-horizontal" },
+];
 
 const handleFileChange = (event: Event) => {
-  const target = event.target as HTMLInputElement
-  const file = target.files?.[0]
-  
+  const target = event.target as HTMLInputElement;
+  const file = target.files?.[0];
+
   if (file) {
     // Validate file size (max 5MB)
     if (file.size > 5 * 1024 * 1024) {
-      alert('Ukuran file terlalu besar. Maksimal 5MB.')
-      return
+      alert("Ukuran file terlalu besar. Maksimal 5MB.");
+      return;
     }
-    
+
     // Validate file type
-    if (!file.type.startsWith('image/')) {
-      alert('File harus berupa gambar.')
-      return
+    if (!file.type.startsWith("image/")) {
+      alert("File harus berupa gambar.");
+      return;
     }
-    
-    imageFile.value = file
-    
+
+    imageFile.value = file;
+
     // Create preview
-    const reader = new FileReader()
+    const reader = new FileReader();
     reader.onload = (e) => {
-      imagePreview.value = e.target?.result as string
-    }
-    reader.readAsDataURL(file)
+      imagePreview.value = e.target?.result as string;
+    };
+    reader.readAsDataURL(file);
   }
-}
+};
 
 const removeImage = () => {
-  imageFile.value = null
-  imagePreview.value = ''
-}
+  imageFile.value = null;
+  imagePreview.value = "";
+};
 
 const submitReport = async () => {
   if (!description.value.trim() || !category.value) {
-    alert('Silakan lengkapi deskripsi dan kategori')
-    return
+    alert("Silakan lengkapi deskripsi dan kategori");
+    return;
   }
-  
-  isSubmitting.value = true
-  
+
+  isSubmitting.value = true;
+
   // Simulate API call
-  await new Promise(resolve => setTimeout(resolve, 1500))
-  
-  alert('Laporan berhasil dikirim! Tim maintenance akan segera menindaklanjuti.')
-  
+  await new Promise((resolve) => setTimeout(resolve, 1500));
+
+  alert("Laporan berhasil dikirim! Tim maintenance akan segera menindaklanjuti.");
+
   // Reset form
-  description.value = ''
-  location.value = ''
-  category.value = ''
-  reportDate.value = ''
-  imageFile.value = null
-  imagePreview.value = ''
-  
-  isSubmitting.value = false
-}
+  description.value = "";
+  location.value = "";
+  category.value = "";
+  reportDate.value = "";
+  imageFile.value = null;
+  imagePreview.value = "";
+
+  isSubmitting.value = false;
+};
 </script>
 
 <template>
-  <div class="min-h-screen bg-gradient-to-b from-white via-orange-50 to-white py-24">
-    <div class="container mx-auto px-4 sm:px-6">
+  <div class="min-h-screen py-24 bg-gradient-to-b from-white via-orange-50 to-white">
+    <div class="container px-4 mx-auto sm:px-6">
       <div class="max-w-3xl mx-auto">
         <!-- Header Section -->
-        <div class="text-center mb-12">
-          <div class="bg-gradient-to-r from-orange-600 to-orange-800 backdrop-blur-2xl shadow-xl rounded-2xl px-10 py-6 border border-orange-200 inline-block mb-4">
-            <h1 class="text-3xl md:text-4xl font-bold text-white">E-Report</h1>
+        <div class="mb-12 text-center">
+          <div
+            class="inline-block px-10 py-6 mb-4 border border-orange-200 shadow-xl bg-gradient-to-r from-orange-600 to-orange-800 backdrop-blur-2xl rounded-2xl"
+          >
+            <h1 class="text-3xl font-bold text-white md:text-4xl">E-Report</h1>
           </div>
-          <p class="text-gray-600 text-lg max-w-2xl mx-auto">
-            Laporkan kerusakan atau masalah fasilitas sekolah. Tim maintenance kami akan segera menindaklanjuti laporan Anda.
+          <p class="max-w-2xl mx-auto text-lg text-gray-600">
+            Laporkan kerusakan atau masalah fasilitas sekolah. Tim maintenance kami akan segera menindaklanjuti laporan
+            Anda.
           </p>
         </div>
 
         <!-- Guidelines Button -->
-        <div class="text-center mb-8">
+        <div class="mb-8 text-center">
           <button
             @click="showGuidelines = true"
-            class="bg-white border-2 border-orange-100 hover:border-orange-600 hover:text-orange-600 px-6 py-3 rounded-xl font-semibold shadow-md hover:shadow-lg transition-all flex items-center gap-2 mx-auto"
+            class="flex items-center gap-2 px-6 py-3 mx-auto font-semibold transition-all bg-white border-2 border-orange-100 shadow-md hover:border-orange-600 hover:text-orange-600 rounded-xl hover:shadow-lg"
           >
             <Icon name="lucide:info" size="20" />
             <span>Panduan Pelaporan</span>
@@ -114,14 +117,26 @@ const submitReport = async () => {
         <!-- Guidelines Modal -->
         <Teleport to="body">
           <Transition name="dialog">
-            <div v-if="showGuidelines" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4" @click="showGuidelines = false">
-              <div class="bg-white rounded-2xl max-w-md w-full max-h-[80vh] overflow-y-auto shadow-2xl border-2 border-orange-100" @click.stop>
+            <div
+              v-if="showGuidelines"
+              class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+              @click="showGuidelines = false"
+            >
+              <div
+                class="bg-white rounded-2xl max-w-md w-full max-h-[80vh] overflow-y-auto shadow-2xl border-2 border-orange-100"
+                @click.stop
+              >
                 <div class="p-8">
-                  <div class="flex justify-between items-center mb-6">
-                    <div class="bg-gradient-to-r from-orange-600 to-orange-800 rounded-xl px-6 py-3 border border-orange-200">
+                  <div class="flex items-center justify-between mb-6">
+                    <div
+                      class="px-6 py-3 border border-orange-200 bg-gradient-to-r from-orange-600 to-orange-800 rounded-xl"
+                    >
                       <h3 class="text-lg font-bold text-white">Panduan Pelaporan</h3>
                     </div>
-                    <button @click="showGuidelines = false" class="text-gray-500 hover:text-gray-700 bg-gray-100 rounded-full p-2 hover:bg-gray-200 transition-colors">
+                    <button
+                      @click="showGuidelines = false"
+                      class="p-2 text-gray-500 transition-colors bg-gray-100 rounded-full hover:text-gray-700 hover:bg-gray-200"
+                    >
                       <Icon name="lucide:x" size="24" />
                     </button>
                   </div>
@@ -150,7 +165,7 @@ const submitReport = async () => {
                   <div class="mt-8 text-center">
                     <button
                       @click="showGuidelines = false"
-                      class="bg-orange-600 hover:bg-orange-700 text-white px-8 py-3 rounded-lg transition-colors font-semibold shadow-md hover:shadow-lg"
+                      class="px-8 py-3 font-semibold text-white transition-colors bg-orange-600 rounded-lg shadow-md hover:bg-orange-700 hover:shadow-lg"
                     >
                       Mengerti
                     </button>
@@ -162,16 +177,15 @@ const submitReport = async () => {
         </Teleport>
 
         <!-- Form Section -->
-        <div class="bg-white rounded-2xl shadow-xl border-2 border-orange-100 p-8 md:p-10">
+        <div class="p-8 bg-white border-2 border-orange-100 shadow-xl rounded-2xl md:p-10">
           <form @submit.prevent="submitReport" class="space-y-6">
-            
             <!-- Category Selection -->
             <div>
-              <label class="block text-sm font-bold text-gray-800 mb-3 flex items-center">
+              <label class="flex items-center block mb-3 text-sm font-bold text-gray-800">
                 <Icon name="lucide:folder" size="18" class="mr-2 text-orange-600" />
-                Kategori Masalah <span class="text-red-500 ml-1">*</span>
+                Kategori Masalah <span class="ml-1 text-red-500">*</span>
               </label>
-              <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+              <div class="grid grid-cols-2 gap-3 md:grid-cols-3">
                 <button
                   v-for="cat in categories"
                   :key="cat.value"
@@ -181,7 +195,7 @@ const submitReport = async () => {
                     'flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all',
                     category === cat.value
                       ? 'border-orange-600 bg-orange-50 text-orange-700'
-                      : 'border-gray-200 hover:border-orange-300 text-gray-700'
+                      : 'border-gray-200 hover:border-orange-300 text-gray-700',
                   ]"
                 >
                   <Icon :name="cat.icon" size="24" />
@@ -192,7 +206,7 @@ const submitReport = async () => {
 
             <!-- Location -->
             <div>
-              <label for="location" class="block text-sm font-bold text-gray-800 mb-3 flex items-center">
+              <label for="location" class="flex items-center block mb-3 text-sm font-bold text-gray-800">
                 <Icon name="lucide:map-pin" size="18" class="mr-2 text-orange-600" />
                 Lokasi
               </label>
@@ -200,33 +214,31 @@ const submitReport = async () => {
                 id="location"
                 v-model="location"
                 type="text"
-                class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition"
+                class="w-full px-4 py-3 transition border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
                 placeholder="Contoh: Lab Komputer Lantai 2, Kelas XII RPL 1, Toilet Pria Lantai 1"
               />
             </div>
 
             <!-- Description -->
             <div>
-              <label for="description" class="block text-sm font-bold text-gray-800 mb-3 flex items-center">
+              <label for="description" class="flex items-center block mb-3 text-sm font-bold text-gray-800">
                 <Icon name="lucide:file-text" size="18" class="mr-2 text-orange-600" />
-                Deskripsi Masalah <span class="text-red-500 ml-1">*</span>
+                Deskripsi Masalah <span class="ml-1 text-red-500">*</span>
               </label>
               <textarea
                 id="description"
                 v-model="description"
                 rows="5"
-                class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 resize-vertical transition"
+                class="w-full px-4 py-3 transition border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 resize-vertical"
                 placeholder="Jelaskan masalah secara detail, misalnya: Lampu di ruang kelas tidak menyala, kabel terlihat putus..."
                 required
               ></textarea>
-              <p class="text-xs text-gray-500 mt-2 ml-1">
-                Semakin detail, semakin cepat kami dapat menindaklanjuti
-              </p>
+              <p class="mt-2 ml-1 text-xs text-gray-500">Semakin detail, semakin cepat kami dapat menindaklanjuti</p>
             </div>
 
             <!-- Date (Optional) -->
             <div>
-              <label for="reportDate" class="block text-sm font-bold text-gray-800 mb-3 flex items-center">
+              <label for="reportDate" class="flex items-center block mb-3 text-sm font-bold text-gray-800">
                 <Icon name="lucide:calendar" size="18" class="mr-2 text-orange-600" />
                 Tanggal Kejadian (Opsional)
               </label>
@@ -234,41 +246,40 @@ const submitReport = async () => {
                 id="reportDate"
                 v-model="reportDate"
                 type="date"
-                class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition"
+                class="w-full px-4 py-3 transition border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
               />
-              <p class="text-xs text-gray-500 mt-2 ml-1">
-                Kapan masalah ini pertama kali Anda temukan?
-              </p>
+              <p class="mt-2 ml-1 text-xs text-gray-500">Kapan masalah ini pertama kali Anda temukan?</p>
             </div>
 
             <!-- Image Upload -->
             <div>
-              <label class="block text-sm font-bold text-gray-800 mb-3 flex items-center">
+              <label class="flex items-center block mb-3 text-sm font-bold text-gray-800">
                 <Icon name="lucide:image" size="18" class="mr-2 text-orange-600" />
                 Foto (Opsional)
               </label>
-              
-              <div v-if="!imagePreview" class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-orange-400 transition">
-                <input
-                  type="file"
-                  accept="image/*"
-                  @change="handleFileChange"
-                  class="hidden"
-                  id="imageUpload"
-                />
+
+              <div
+                v-if="!imagePreview"
+                class="p-8 text-center transition border-2 border-gray-300 border-dashed rounded-xl hover:border-orange-400"
+              >
+                <input type="file" accept="image/*" @change="handleFileChange" class="hidden" id="imageUpload" />
                 <label for="imageUpload" class="cursor-pointer">
-                  <Icon name="lucide:upload-cloud" size="48" class="text-gray-400 mx-auto mb-3" />
-                  <p class="text-gray-600 font-medium mb-1">Klik untuk upload foto</p>
+                  <Icon name="lucide:upload-cloud" size="48" class="mx-auto mb-3 text-gray-400" />
+                  <p class="mb-1 font-medium text-gray-600">Klik untuk upload foto</p>
                   <p class="text-xs text-gray-500">PNG, JPG hingga 5MB</p>
                 </label>
               </div>
 
               <div v-else class="relative">
-                <img :src="imagePreview" alt="Preview" class="w-full h-64 object-cover rounded-xl border-2 border-orange-200" />
+                <img
+                  :src="imagePreview"
+                  alt="Preview"
+                  class="object-cover w-full h-64 border-2 border-orange-200 rounded-xl"
+                />
                 <button
                   type="button"
                   @click="removeImage"
-                  class="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white p-2 rounded-full transition-colors shadow-lg"
+                  class="absolute p-2 text-white transition-colors bg-red-500 rounded-full shadow-lg top-2 right-2 hover:bg-red-600"
                 >
                   <Icon name="lucide:x" size="20" />
                 </button>
@@ -279,17 +290,17 @@ const submitReport = async () => {
             <button
               type="submit"
               :disabled="isSubmitting"
-              class="w-full bg-orange-600 hover:bg-orange-700 disabled:bg-orange-400 text-white font-bold py-4 px-4 rounded-xl transition duration-200 flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
+              class="flex items-center justify-center w-full gap-2 px-4 py-4 font-bold text-white transition duration-200 bg-orange-600 shadow-md hover:bg-orange-700 disabled:bg-orange-400 rounded-xl hover:shadow-lg"
             >
               <Icon v-if="isSubmitting" name="lucide:loader-2" class="animate-spin" size="20" />
               <Icon v-else name="lucide:send" size="20" />
-              <span>{{ isSubmitting ? 'Mengirim...' : 'Kirim Laporan' }}</span>
+              <span>{{ isSubmitting ? "Mengirim..." : "Kirim Laporan" }}</span>
             </button>
           </form>
 
           <div class="mt-6 text-center">
-            <div class="bg-gradient-to-r from-orange-600 to-orange-800 rounded-2xl p-4">
-              <p class="text-sm text-white flex items-center justify-center gap-2">
+            <div class="p-4 bg-gradient-to-r from-orange-600 to-orange-800 rounded-2xl">
+              <p class="flex items-center justify-center gap-2 text-sm text-white">
                 <Icon name="lucide:clock" size="18" />
                 Tim maintenance akan merespon dalam 1-2 hari kerja
               </p>
@@ -298,17 +309,17 @@ const submitReport = async () => {
         </div>
 
         <!-- Info Cards -->
-        <div class="mt-8 grid md:grid-cols-2 gap-6">
-          <div class="bg-white rounded-2xl shadow-xl border-2 border-blue-100 p-6">
-            <Icon name="lucide:headphones" size="32" class="text-blue-600 mb-3" />
-            <p class="text-gray-700 font-semibold mb-2">Butuh bantuan darurat?</p>
-            <p class="text-gray-600 text-sm">Hubungi bagian tata usaha: (0341) 123456</p>
+        <div class="grid gap-6 mt-8 md:grid-cols-2">
+          <div class="p-6 bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
+            <Icon name="lucide:headphones" size="32" class="mb-3 text-blue-600" />
+            <p class="mb-2 font-semibold text-gray-700">Butuh bantuan darurat?</p>
+            <p class="text-sm text-gray-600">Hubungi bagian tata usaha: (0341) 123456</p>
           </div>
-          
-          <div class="bg-white rounded-2xl shadow-xl border-2 border-green-100 p-6">
-            <Icon name="lucide:check-circle" size="32" class="text-green-600 mb-3" />
-            <p class="text-gray-700 font-semibold mb-2">Cek Status Laporan</p>
-            <p class="text-gray-600 text-sm">Segera hadir: Fitur tracking laporan Anda</p>
+
+          <div class="p-6 bg-white border-2 border-green-100 shadow-xl rounded-2xl">
+            <Icon name="lucide:check-circle" size="32" class="mb-3 text-green-600" />
+            <p class="mb-2 font-semibold text-gray-700">Cek Status Laporan</p>
+            <p class="text-sm text-gray-600">Segera hadir: Fitur tracking laporan Anda</p>
           </div>
         </div>
       </div>

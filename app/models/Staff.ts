@@ -1,5 +1,5 @@
 export interface Staff {
-    image: string;
-    name: string;
-    position: string;
+  image: string;
+  name: string;
+  position: string;
 }

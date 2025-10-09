@@ -1,18 +1,14 @@
 <template>
   <div
-    class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow cursor-pointer"
+    class="overflow-hidden transition-shadow bg-white rounded-lg shadow-md cursor-pointer hover:shadow-xl"
     @click="$emit('showDetails', teacher)"
   >
     <div class="relative aspect-[3/3]">
-      <img 
-        :src="teacher.image || '/images/placeholder.jpg'" 
-        :alt="teacher.name"
-        class="w-full h-full object-cover"
-      />
-      
-      <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
-        <p class="font-semibold text-white text-center text-sm">
-          {{ teacher.name }}{{ teacher.degree ? ', ' + teacher.degree : '' }}
+      <img :src="teacher.image || '/images/placeholder.jpg'" :alt="teacher.name" class="object-cover w-full h-full" />
+
+      <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/70 to-transparent">
+        <p class="text-sm font-semibold text-center text-white">
+          {{ teacher.name }}{{ teacher.degree ? ", " + teacher.degree : "" }}
         </p>
       </div>
     </div>
@@ -27,5 +23,5 @@ defineProps({
   },
 });
 
-defineEmits(['showDetails']);
+defineEmits(["showDetails"]);
 </script>

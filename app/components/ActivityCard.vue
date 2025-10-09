@@ -1,14 +1,11 @@
 <template>
-    <div class="w-90 h-fit gap-2 flex flex-col p-4 bg-secondary rounded-sm shadow-sm">
-        <img
-            src="/images/placeholder.jpg"
-            class="w-full h-50 rounded-sm" />
-        <h3 class="font-bold text-2xl">Judul Aktivitas</h3>
-        <p class="text-base -mt-2">
-            sedikit deskripsi tentang aktivitas tersebut sedikit deskripsi tentang aktivitas tersebut sedikit deskripsi tentang aktivitas tersebut sedikit 
-        </p>
-        <p class="font-bold text-1xl text-right">
-            10-3-2045
-        </p>
-    </div>
+  <div class="flex flex-col gap-2 p-4 rounded-sm shadow-sm w-90 h-fit bg-secondary">
+    <img src="/images/placeholder.jpg" class="w-full rounded-sm h-50" />
+    <h3 class="text-2xl font-bold">Judul Aktivitas</h3>
+    <p class="-mt-2 text-base">
+      sedikit deskripsi tentang aktivitas tersebut sedikit deskripsi tentang aktivitas tersebut sedikit deskripsi
+      tentang aktivitas tersebut sedikit
+    </p>
+    <p class="font-bold text-right text-1xl">10-3-2045</p>
+  </div>
 </template>
