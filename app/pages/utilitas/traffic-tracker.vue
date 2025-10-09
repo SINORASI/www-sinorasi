@@ -21,6 +21,51 @@ const error = ref("");
 
 const schoolAddress = "SMK Negeri 2 Singosari, Jl. Raya Singosari, Singosari, Malang, Jawa Timur, Indonesia";
 
+const hotspots = [
+  {
+    id: 1,
+    name: "Lampu Merah Karanglo",
+    description: "Persimpangan utama dengan lalu lintas padat pada jam sibuk pagi dan sore.",
+    level: "Tinggi",
+    x: 30,
+    y: 40,
+  },
+  {
+    id: 2,
+    name: "Jl. Raya Singosari",
+    description: "Jalan utama menuju sekolah dengan volume kendaraan tinggi.",
+    level: "Sedang",
+    x: 60,
+    y: 50,
+  },
+  {
+    id: 3,
+    name: "Terminal Arjosari",
+    description: "Area terminal dengan aktivitas transportasi umum yang ramai.",
+    level: "Tinggi",
+    x: 20,
+    y: 70,
+  },
+  {
+    id: 4,
+    name: "Bundaran Singosari",
+    description: "Putaran bundaran dengan potensi kemacetan saat jam sibuk.",
+    level: "Sedang",
+    x: 80,
+    y: 30,
+  },
+];
+
+const selectedHotspot = ref<(typeof hotspots)[0] | null>(null);
+
+const selectHotspot = (hotspot: (typeof hotspots)[0]) => {
+  selectedHotspot.value = hotspot;
+};
+
+const closeHotspot = () => {
+  selectedHotspot.value = null;
+};
+
 const getCurrentLocation = () => {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
@@ -211,6 +256,90 @@ useHead({
           <div class="flex items-start">
             <Icon name="lucide:alert-circle" size="20" class="text-red-600 mr-3 mt-0.5 flex-shrink-0" />
             <p class="text-red-700">{{ error }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Traffic Hotspots Map -->
+      <div class="max-w-6xl mx-auto mb-12">
+        <div class="mb-8 text-center">
+          <div
+            class="inline-block px-10 py-6 border border-orange-200 shadow-xl bg-gradient-to-r from-orange-500 to-orange-600 backdrop-blur-2xl rounded-2xl"
+          >
+            <h2 class="text-2xl font-bold text-white md:text-3xl">Peta Titik Rawan Macet</h2>
+          </div>
+          <p class="max-w-2xl mx-auto mt-4 text-gray-600">
+            Klik pada pin untuk melihat informasi detail tentang area dengan kepadatan lalu lintas tinggi di sekitar SMK
+            Negeri 2 Singosari.
+          </p>
+        </div>
+
+        <div class="relative p-8 bg-white border-2 border-orange-100 shadow-xl rounded-2xl">
+          <!-- Map Background -->
+          <div class="relative overflow-hidden h-96 bg-gradient-to-br from-blue-100 to-green-100 rounded-xl">
+            <!-- Map Image Placeholder -->
+            <img src="/images/background-aula.jpg" alt="Map Background" class="object-cover w-full h-full opacity-30" />
+
+            <!-- Hotspot Pins -->
+            <button
+              v-for="hotspot in hotspots"
+              :key="hotspot.id"
+              @click="selectHotspot(hotspot)"
+              :style="{ left: hotspot.x + '%', top: hotspot.y + '%' }"
+              class="absolute w-8 h-8 transition-all duration-200 transform -translate-x-1/2 -translate-y-1/2 hover:scale-125"
+            >
+              <div class="relative">
+                <div
+                  :class="[
+                    'w-6 h-6 rounded-full border-2 border-white shadow-lg',
+                    hotspot.level === 'Tinggi' ? 'bg-red-500' : 'bg-yellow-500',
+                  ]"
+                ></div>
+                <div
+                  class="absolute w-0 h-0 transform -translate-x-1/2 border-t-4 border-l-2 border-r-2 border-transparent -bottom-1 left-1/2 border-t-white"
+                ></div>
+              </div>
+            </button>
+
+            <!-- Legend -->
+            <div class="absolute p-3 rounded-lg shadow-md top-4 right-4 bg-white/90 backdrop-blur-sm">
+              <h4 class="mb-2 text-sm font-bold text-gray-800">Legenda</h4>
+              <div class="space-y-1">
+                <div class="flex items-center gap-2">
+                  <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                  <span class="text-xs text-gray-600">Tinggi</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                  <span class="text-xs text-gray-600">Sedang</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hotspot Detail Modal -->
+        <div
+          v-if="selectedHotspot"
+          class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
+          @click="closeHotspot"
+        >
+          <div class="max-w-md p-6 bg-white shadow-2xl rounded-2xl" @click.stop>
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-xl font-bold text-gray-800">{{ selectedHotspot.name }}</h3>
+              <span
+                :class="[
+                  'px-3 py-1 rounded-full text-xs font-bold',
+                  selectedHotspot.level === 'Tinggi' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800',
+                ]"
+              >
+                {{ selectedHotspot.level }}
+              </span>
+            </div>
+            <p class="mb-4 text-gray-700">{{ selectedHotspot.description }}</p>
+            <button @click="closeHotspot" class="px-4 py-2 text-white bg-orange-500 rounded-lg hover:bg-orange-600">
+              Tutup
+            </button>
           </div>
         </div>
       </div>

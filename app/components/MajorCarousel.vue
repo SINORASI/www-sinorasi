@@ -301,14 +301,14 @@ const navigateToJurusan = (slug: string) => {
   height: 100%;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.1);
   cursor: pointer;
   transition: transform 0.3s ease;
 }
 
 .video-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 16px rgba(59, 130, 246, 0.2);
 }
 
 .thumbnail,

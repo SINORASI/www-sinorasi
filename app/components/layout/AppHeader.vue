@@ -1,11 +1,21 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, nextTick, watch } from "vue";
 
-const headerClass = ref("bg-transparent border-b-transparent");
-const sizeClass = ref("full");
+const headerClass = ref("bg-white/20 backdrop-blur-[8px] border-b-white/20 shadow-lg shadow-orange-500/10");
+const sizeClass = ref("compact");
 const isSidebarOpen = ref(false);
 const route = useRoute();
 const scrollItems = ref<Array<{ id: string; label: string }>>([]);
+
+// const navItems = [
+//   { label: "Home", href: "/" },
+//   { label: "Profile", href: "/informasi/profile-sekolah" },
+//   { label: "Departments", href: "/jurusan" },
+//   { label: "Facilities", href: "/informasi/sarana-prasarana" },
+//   { label: "Achievements", href: "#achievements" },
+//   { label: "News", href: "/berita" },
+//   { label: "Contact", href: "/informasi/kontak" },
+// ];
 
 const scrollToSection = (id: string) => {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -14,39 +24,85 @@ const scrollToSection = (id: string) => {
 const populateScrollItems = async () => {
   await nextTick();
   scrollItems.value = [];
-  const sections = document.querySelectorAll("section[id]");
-  sections.forEach((section) => {
-    const h2 = section.querySelector("h2");
-    if (h2) {
-      scrollItems.value.push({ id: section.id, label: h2.textContent?.trim() || section.id });
-    }
-  });
+
+  // Add a small delay to ensure DOM is fully rendered
+  await new Promise((resolve) => setTimeout(resolve, 100));
+
+  // Check if we're on the home page
+  if (route.path === "/") {
+    // Use custom short labels for home page sections
+    const homeSections = [
+      { id: "profil-sekolah", label: "Profil" },
+      { id: "sambutan", label: "Sambutan" },
+      { id: "prestasi", label: "Prestasi" },
+      { id: "seragam-sekolah", label: "Seragam" },
+      { id: "jejak-sejarah", label: "Sejarah" },
+      { id: "jurusan", label: "Jurusan" },
+      { id: "berita", label: "Berita" },
+      { id: "faq", label: "FAQ" },
+    ];
+
+    // Verify sections exist on the page
+    homeSections.forEach((section) => {
+      if (document.getElementById(section.id)) {
+        scrollItems.value.push(section);
+      }
+    });
+  } else {
+    // For other pages, use dynamic section reading
+    const sections = document.querySelectorAll("section[id]");
+    sections.forEach((section) => {
+      const h2 = section.querySelector("h2");
+      if (h2) {
+        scrollItems.value.push({ id: section.id, label: h2.textContent?.trim() || section.id });
+      }
+    });
+  }
 };
 
 onMounted(() => {
   populateScrollItems();
+
+  // Retry once more after a longer delay to ensure DOM is fully loaded
+  setTimeout(() => {
+    if (scrollItems.value.length === 0) {
+      populateScrollItems();
+    }
+  }, 500);
 });
 
 watch(
   () => route.path,
   () => {
-    // Wait for next tick and a bit more for the page to fully render
+    // Wait for next tick and longer delay for the page to fully render
     nextTick(() => {
       setTimeout(() => {
         populateScrollItems();
-      }, 150);
+      }, 300);
     });
   }
 );
 
 onMounted(() => {
   const handleScroll = () => {
-    if (window.scrollY > window.innerHeight) {
-      headerClass.value = "bg-neutral-600/30 backdrop-blur-2xl border-b-neutral-400";
+    // On home page, keep navbar compact size throughout
+    if (route.path === "/") {
+      if (window.scrollY > window.innerHeight) {
+        headerClass.value = "bg-white/30 backdrop-blur-[12px] border-b-white/30 shadow-lg shadow-orange-500/20";
+      } else {
+        headerClass.value = "bg-white/20 backdrop-blur-[8px] border-b-white/20 shadow-lg shadow-orange-500/10";
+      }
+      // Keep sizeClass as "compact" throughout home page
       sizeClass.value = "compact";
     } else {
-      headerClass.value = "bg-transparent border-b-transparent";
-      sizeClass.value = "full";
+      // For other pages, use dynamic sizing
+      if (window.scrollY > window.innerHeight) {
+        headerClass.value = "bg-white/30 backdrop-blur-[12px] border-b-white/30 shadow-lg shadow-orange-500/20";
+        sizeClass.value = "compact";
+      } else {
+        headerClass.value = "bg-white/20 backdrop-blur-[8px] border-b-white/20 shadow-lg shadow-orange-500/10";
+        sizeClass.value = "full";
+      }
     }
   };
   window.addEventListener("scroll", handleScroll);
@@ -58,7 +114,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <header :class="['z-100 border-b-1 fixed top-0 left-0 right-0 transition-all duration-500 ease-in-out', headerClass]">
+  <header
+    :class="['z-[999] border-b-1 fixed top-0 left-0 right-0 transition-all duration-500 ease-in-out', headerClass]"
+  >
     <div
       :class="
         (sizeClass === 'full' ? 'p-4 gap-6' : 'p-3 gap-4') +
@@ -105,9 +163,12 @@ onMounted(() => {
             fontSize: sizeClass === 'full' ? '1rem' : '0.875rem',
             transition: 'font-size 0.5s ease-in-out',
           }"
-          class="transition-colors duration-300 cursor-pointer hover:text-blue-600"
+          class="relative transition-colors duration-300 cursor-pointer hover:text-blue-600 group"
         >
           {{ item.label }}
+          <span
+            class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-500 transition-all duration-300 group-hover:w-full"
+          ></span>
         </button>
       </div>
       <div class="transition-all duration-500 ease-in-out">

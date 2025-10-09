@@ -101,7 +101,7 @@ useHead({
         </div>
 
         <!-- Facilities Grid -->
-        <div class="max-w-6xl mx-auto space-y-6">
+        <div class="max-w-6xl gap-6 mx-auto space-y-6">
           <div
             v-for="index in 3"
             :key="index"

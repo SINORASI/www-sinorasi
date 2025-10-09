@@ -11,3 +11,136 @@ body {
   width: 100%;
   max-width: 100%;
 }
+
+/* Visual & Shadow Rules */
+/* Tinted shadows - no black shadows */
+.shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.1), 0 4px 6px -2px rgba(59, 130, 246, 0.05);
+}
+
+.shadow-xl {
+  box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.1), 0 10px 10px -5px rgba(59, 130, 246, 0.04);
+}
+
+.shadow-2xl {
+  box-shadow: 0 25px 50px -12px rgba(59, 130, 246, 0.25);
+}
+
+/* Orange tinted shadows for specific elements */
+.shadow-orange {
+  box-shadow: 0 10px 15px -3px rgba(249, 115, 22, 0.1), 0 4px 6px -2px rgba(249, 115, 22, 0.05);
+}
+
+.shadow-orange-lg {
+  box-shadow: 0 20px 25px -5px rgba(249, 115, 22, 0.1), 0 10px 10px -5px rgba(249, 115, 22, 0.04);
+}
+
+/* Hover glassmorphism effect - reduced to 30-35% opacity */
+.hover\:bg-white\/20:hover {
+  background-color: rgba(255, 255, 255, 0.32);
+}
+
+/* Department hover overlays - dynamic based on majorColors.primary */
+.major-overlay {
+  transition: background-color 0.3s ease;
+}
+
+/* Accessibility - prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .animate-pulse {
+    animation: none;
+  }
+
+  .animate-bounce {
+    animation: none;
+  }
+
+  .animate-spin {
+    animation: none;
+  }
+}
+
+/* Custom scrollbar with tinted colors */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(59, 130, 246, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(59, 130, 246, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(59, 130, 246, 0.5);
+}
+
+/* Layout Specific Styles */
+.default-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.major-layout {
+  background: none !important;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.major-layout .bg-primary,
+.default-layout .bg-primary {
+  background: none !important;
+}
+
+/* Major layout flexbox structure */
+.major-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.major-layout > div:first-of-type {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.major-layout footer {
+  margin-top: auto;
+  flex-shrink: 0;
+}
+
+/* Ensure footer stays at bottom */
+footer {
+  position: relative !important;
+  z-index: 1 !important;
+  margin-top: auto;
+}
+
+/* Ensure proper z-index stacking */
+header {
+  z-index: 999 !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+}
+
+footer {
+  z-index: 1 !important;
+  position: relative !important;
+}

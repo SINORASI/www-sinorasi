@@ -56,18 +56,8 @@ useHead({
   <main class="overflow-x-hidden">
     <!-- Hero Section - Matching Reference Image -->
     <section id="tentang-jurusan" class="relative flex items-center justify-center min-h-screen overflow-hidden">
-      <!-- Background with diagonal split design -->
-      <div class="absolute inset-0">
-        <!-- Black side (left) -->
-        <div class="absolute inset-0 bg-black" style="clip-path: polygon(0 0, 45% 0, 60% 100%, 0 100%)"></div>
-
-        <!-- Colored side (right) -->
-        <div
-          class="absolute inset-0"
-          :style="`background: ${majorColor.primary}`"
-          style="clip-path: polygon(45% 0, 100% 0, 100% 100%, 60% 100%)"
-        ></div>
-      </div>
+      <!-- Background with gradient -->
+      <div class="absolute inset-0" :style="`background: ${majorColor.gradient}`"></div>
 
       <!-- Content -->
       <div class="relative z-10 flex items-center w-full h-full min-h-screen">
@@ -294,11 +284,7 @@ useHead({
     </section>
 
     <!-- Minigame Section -->
-    <section
-      id="minigame"
-      class="min-h-screen py-16 md:py-24"
-      :style="`background: linear-gradient(135deg, ${majorColor.primary}10, ${majorColor.accent}10)`"
-    >
+    <section id="minigame" class="min-h-screen py-16 md:py-24">
       <div class="container flex flex-col items-center justify-center gap-8 px-4 mx-auto md:gap-12">
         <!-- Section Header -->
         <div class="space-y-4 text-center">

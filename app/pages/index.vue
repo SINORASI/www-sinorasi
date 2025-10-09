@@ -202,56 +202,118 @@ useHead({
       >
         <div class="w-full h-full bg-gradient-to-t from-black/65 to-transparent"></div>
       </div>
-      <div class="z-50 flex flex-col items-center gap-6 md:flex-row md:gap-12">
-        <div class="flex flex-col max-w-sm gap-2 text-center text-white md:gap-4 md:max-w-md md:text-left">
-          <h1 class="text-2xl font-bold md:text-4xl lg:text-5xl">INORASI</h1>
-          <p class="text-sm font-semibold md:text-lg lg:text-xl">Inovasi Raih Prestasi</p>
-          <p class="text-xs leading-relaxed md:text-base">
-            SMK Negeri 2 Singosari - Tempat di mana inovasi bertemu dengan prestasi. Kami berkomitmen untuk membentuk
-            generasi muda yang siap menghadapi tantangan masa depan melalui pendidikan kejuruan berkualitas.
-          </p>
-          <div
-            class="flex flex-col items-center justify-center gap-2 mt-2 sm:flex-row md:gap-3 md:mt-3 md:justify-start"
+      <div class="z-50 flex flex-col items-center max-w-4xl gap-8 text-center text-white">
+        <h1 class="text-3xl font-bold transition-all duration-700 ease-out md:text-5xl lg:text-6xl">INORASI</h1>
+        <p class="text-lg font-semibold transition-all duration-700 ease-out md:text-xl lg:text-2xl">
+          Inovasi Raih Prestasi
+        </p>
+        <p class="max-w-2xl text-sm leading-relaxed transition-all duration-700 ease-out md:text-lg">
+          SMK Negeri 2 Singosari - Tempat di mana inovasi bertemu dengan prestasi. Kami berkomitmen untuk membentuk
+          generasi muda yang siap menghadapi tantangan masa depan melalui pendidikan kejuruan berkualitas.
+        </p>
+        <div class="flex flex-col items-center gap-4 mt-4 sm:flex-row">
+          <a
+            href="#information"
+            class="flex items-center gap-2 px-6 py-3 text-sm font-semibold text-white transition-all duration-300 bg-blue-600 rounded-lg hover:bg-blue-700"
           >
-            <a
-              href="#information"
-              class="flex items-center gap-2 px-3 py-2 text-xs font-semibold text-white transition bg-blue-600 rounded-lg w-fit hover:bg-blue-700 md:px-5 md:py-2 md:text-sm"
-            >
-              Pelajari Lebih Dalam
-              <Icon name="lucide:book-open" size="14" />
-            </a>
-            <a
-              href="#berita"
-              class="flex items-center gap-2 px-3 py-2 text-xs font-semibold text-white transition border-2 border-white rounded-lg w-fit hover:bg-white hover:text-black md:px-5 md:py-2 md:text-sm"
-            >
-              Berita Terbaru
-              <Icon name="lucide:newspaper" size="14" />
-            </a>
-          </div>
-          <div class="flex justify-center gap-3 mt-3 md:gap-10 md:mt-4 md:justify-start">
-            <div class="flex flex-col items-center justify-center">
-              <div class="text-base font-bold md:text-2xl">{{ jurusanCount }}</div>
-              <div class="text-xs md:text-lg">Jurusan</div>
-            </div>
-            <div class="flex flex-col items-center justify-center">
-              <div class="text-base font-bold md:text-2xl">{{ siswaCount }}+</div>
-              <div class="text-xs md:text-lg">Siswa</div>
-            </div>
-            <div class="flex flex-col items-center justify-center">
-              <div class="text-base font-bold md:text-2xl">{{ prestasiCount }}+</div>
-              <div class="text-xs md:text-lg">Prestasi</div>
-            </div>
-          </div>
+            Pelajari Lebih Dalam
+            <Icon name="lucide:book-open" size="16" />
+          </a>
+          <a
+            href="#berita"
+            class="flex items-center gap-2 px-6 py-3 text-sm font-semibold text-white transition-all duration-300 border-2 border-white rounded-lg hover:bg-white hover:text-black @media (prefers-reduced-motion: reduce) { transition: none; }"
+          >
+            Berita Terbaru
+            <Icon name="lucide:newspaper" size="16" />
+          </a>
         </div>
-        <div class="flex items-center justify-center mt-4 ml-0 md:ml-30 md:mt-0">
-          <img
-            src="/images/seragam/putih-putih/11-putih-putih-jas-l/DSC04320.webp"
-            class="h-50 md:h-160 drop-shadow-lg"
-          />
+        <div class="flex justify-center gap-8 mt-6">
+          <div class="flex flex-col items-center">
+            <div class="text-xl font-bold transition-all duration-700 ease-out md:text-3xl">{{ jurusanCount }}</div>
+            <div class="text-sm transition-all duration-700 ease-out md:text-lg">Jurusan</div>
+          </div>
+          <div class="flex flex-col items-center">
+            <div class="text-xl font-bold transition-all duration-700 ease-out md:text-3xl">{{ siswaCount }}+</div>
+            <div class="text-sm transition-all duration-700 ease-out md:text-lg">Siswa</div>
+          </div>
+          <div class="flex flex-col items-center">
+            <div class="text-xl font-bold transition-all duration-700 ease-out md:text-3xl">{{ prestasiCount }}+</div>
+            <div class="text-sm transition-all duration-700 ease-out md:text-lg">Prestasi</div>
+          </div>
         </div>
       </div>
     </section>
-    <section id="information" class="py-20 bg-gradient-to-b from-white via-blue-50 to-white">
+
+    <section id="profil-sekolah" class="py-20 h-min-screen bg-gradient-to-b from-white via-blue-50 to-white">
+      <div class="container px-4 mx-auto md:px-10">
+        <div class="flex flex-col gap-12 lg:flex-row lg:items-center">
+          <!-- Drone Image -->
+          <div class="w-full lg:w-1/2">
+            <div class="relative group">
+              <div
+                class="relative overflow-hidden transition-all duration-500 transform border-4 border-white shadow-2xl rounded-2xl group-hover:scale-105 group-hover:shadow-3xl"
+              >
+                <img
+                  src="/images/background-aula.jpg"
+                  alt="Drone view of SMK Negeri 2 Singosari"
+                  class="object-cover w-full h-auto"
+                />
+                <div
+                  class="absolute inset-0 transition-opacity duration-500 opacity-0 bg-gradient-to-t from-blue-900/50 to-transparent group-hover:opacity-100"
+                ></div>
+              </div>
+              <div
+                class="absolute w-32 h-32 rounded-full -bottom-4 -left-4 bg-gradient-to-br from-orange-500 to-orange-700 opacity-20 blur-2xl -z-10"
+              ></div>
+            </div>
+          </div>
+
+          <!-- School Facts and Intro -->
+          <div class="flex flex-col w-full gap-6 lg:w-1/2">
+            <div
+              class="p-6 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
+            >
+              <h2 class="text-3xl font-bold text-center text-white lg:text-left">Tentang SMK Negeri 2 Singosari</h2>
+            </div>
+
+            <div class="p-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
+              <div class="space-y-6">
+                <p class="leading-relaxed text-gray-600">
+                  SMK Negeri 2 Singosari adalah lembaga pendidikan kejuruan yang berkomitmen untuk menghasilkan lulusan
+                  yang kompeten, inovatif, dan siap menghadapi tantangan dunia kerja modern.
+                </p>
+
+                <div class="grid grid-cols-2 gap-4">
+                  <div class="p-4 text-center rounded-lg bg-blue-50">
+                    <div class="text-2xl font-bold text-blue-600">{{ jurusanCount }}</div>
+                    <div class="text-sm text-gray-600">Program Keahlian</div>
+                  </div>
+                  <div class="p-4 text-center rounded-lg bg-orange-50">
+                    <div class="text-2xl font-bold text-orange-600">{{ siswaCount }}+</div>
+                    <div class="text-sm text-gray-600">Siswa Aktif</div>
+                  </div>
+                  <div class="p-4 text-center rounded-lg bg-green-50">
+                    <div class="text-2xl font-bold text-green-600">{{ prestasiCount }}+</div>
+                    <div class="text-sm text-gray-600">Prestasi</div>
+                  </div>
+                  <div class="p-4 text-center rounded-lg bg-purple-50">
+                    <div class="text-2xl font-bold text-purple-600">2007</div>
+                    <div class="text-sm text-gray-600">Tahun Berdiri</div>
+                  </div>
+                </div>
+
+                <p class="leading-relaxed text-gray-600">
+                  Dengan fasilitas modern dan tenaga pengajar profesional, kami terus berinovasi dalam metode
+                  pembelajaran untuk mencapai visi "Inovasi Raih Prestasi".
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sambutan" class="py-20 bg-gradient-to-b from-white via-blue-50 to-white">
       <div class="container px-4 mx-auto md:px-10">
         <div class="flex flex-col items-center justify-center gap-12 lg:flex-row">
           <!-- Photo Card -->
@@ -268,16 +330,17 @@ useHead({
                   class="w-full h-auto"
                 />
                 <div
-                  class="absolute inset-0 transition-opacity duration-500 opacity-0 bg-gradient-to-t from-blue-900/50 to-transparent group-hover:opacity-100"
+                  class="absolute inset-0 transition-opacity duration-500 bg-gradient-to-t from-blue-900/70 to-transparent"
                 ></div>
+                <!-- Name overlay at bottom -->
+                <div class="absolute bottom-0 left-0 right-0 p-4">
+                  <p class="text-xl font-bold text-center text-white">Sumijah S.Pd M.Si</p>
+                  <p class="text-sm text-center text-white/90">Kepala Sekolah SMKN 2 Singosari</p>
+                </div>
               </div>
               <div
                 class="absolute w-32 h-32 rounded-full -bottom-4 -left-4 bg-gradient-to-br from-orange-500 to-orange-700 opacity-20 blur-2xl -z-10"
               ></div>
-            </div>
-            <div class="px-6 py-5 mt-6 text-center bg-white border border-gray-100 shadow-lg rounded-2xl">
-              <p class="text-xl font-bold text-gray-800">Sumijah S.Pd M.Si</p>
-              <p class="mt-1 text-sm text-gray-600">Kepala Sekolah SMKN 2 Singosari</p>
             </div>
           </div>
 
@@ -311,25 +374,76 @@ useHead({
       </div>
     </section>
 
+    <!-- Achievement Carousel Section -->
+    <section id="prestasi" class="py-20 bg-gradient-to-b from-white via-blue-50 to-white">
+      <div class="container flex flex-col items-center gap-8 mx-auto">
+        <!-- Achievement Carousel -->
+        <div
+          class="relative flex flex-col w-full gap-6 p-8 mx-auto bg-white border-2 border-blue-100 shadow-xl max-w-7xl rounded-2xl"
+        >
+          <div class="overflow-hidden">
+            <div
+              class="flex transition-transform duration-500 ease-in-out"
+              :style="{ transform: `translateX(-${currentAchievement * 100}%)` }"
+            >
+              <div v-for="(achievement, index) in achievements" :key="index" class="flex-shrink-0 w-full">
+                <div class="flex flex-col items-center gap-8 md:flex-row">
+                  <img
+                    :src="achievement.image"
+                    class="object-cover w-full rounded-lg shadow-md md:w-1/2 h-[32rem]"
+                    alt="Achievement"
+                  />
+                  <div class="flex flex-col gap-4 text-center md:text-left md:w-1/2 md:pr-5">
+                    <h3 class="text-2xl font-bold text-gray-800">{{ achievement.title }}</h3>
+                    <p class="leading-relaxed text-gray-600">{{ achievement.description }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="border-t border-gray-200"></div>
+
+          <div class="flex items-center justify-between">
+            <div class="flex gap-4">
+              <button
+                @click="prevAchievement"
+                class="flex items-center justify-center p-3 transition bg-gray-100 border border-gray-200 rounded-full shadow-md cursor-pointer hover:bg-blue-600 hover:text-white hover:scale-110"
+              >
+                <Icon name="lucide:chevron-left" size="20" />
+              </button>
+              <button
+                @click="nextAchievement"
+                class="flex items-center justify-center p-3 transition bg-gray-100 border border-gray-200 rounded-full shadow-md cursor-pointer hover:bg-blue-600 hover:text-white hover:scale-110"
+              >
+                <Icon name="lucide:chevron-right" size="20" />
+              </button>
+            </div>
+            <div class="font-bold text-gray-700">
+              <span class="text-2xl text-blue-600">{{ String(currentAchievement + 1).padStart(2, "0") }}</span>
+              <span class="mx-1 text-gray-400">/</span>
+              <span class="text-lg">{{ String(achievements.length).padStart(2, "0") }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- School Uniform Section -->
-    <section class="py-20 bg-gradient-to-b from-white via-orange-50 to-white" id="seragam-sekolah">
+    <section id="seragam-sekolah" class="py-20 bg-gradient-to-b from-white via-gray-50 to-white">
       <div class="container px-4 mx-auto md:px-10">
         <div class="flex flex-col items-center gap-12">
           <!-- Section Header -->
           <div class="flex flex-col items-center gap-4 text-center">
-            <div
-              class="p-6 px-10 py-6 border border-orange-200 shadow-xl bg-gradient-to-r from-orange-600 to-orange-800 backdrop-blur-2xl rounded-2xl"
-            >
-              <h2 class="text-3xl font-bold text-white">Seragam Sekolah</h2>
+            <div class="p-6 px-10 py-6 bg-white border border-orange-300 shadow-xl backdrop-blur-2xl rounded-2xl">
+              <h2 class="text-3xl font-bold text-orange-600">Seragam Sekolah</h2>
             </div>
-            <p class="max-w-2xl text-lg text-center text-gray-600">
-              Tata tertib penggunaan seragam sekolah berdasarkan hari pembelajaran
-            </p>
+            <p class="max-w-2xl text-lg text-center text-white">Koleksi seragam sekolah SMK Negeri 2 Singosari</p>
           </div>
 
           <!-- Uniform Cards -->
           <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 w-full max-w-[1600px]">
-            <!-- Monday - Putih Putih -->
+            <!-- Putih Putih -->
             <UniformCard
               :gradeImages="{
                 X: {
@@ -391,13 +505,13 @@ useHead({
                   ],
                 },
               }"
-              day="Senin"
-              dayNumber="Hari 1"
+              day="Putih Putih"
+              dayNumber=""
               uniformType="Putih - Putih"
               primaryColor="gray"
             />
 
-            <!-- Tuesday & Wednesday - Putih Abu -->
+            <!-- Putih Abu -->
             <UniformCard
               :gradeImages="{
                 X: {
@@ -429,13 +543,13 @@ useHead({
                   ],
                 },
               }"
-              day="Selasa & Rabu"
-              dayNumber="Hari 2-3"
+              day="Putih Abu"
+              dayNumber=""
               uniformType="Putih - Abu"
               primaryColor="gray"
             />
 
-            <!-- Thursday - Batik -->
+            <!-- Batik -->
             <UniformCard
               :gradeImages="{
                 X: {
@@ -467,13 +581,13 @@ useHead({
                   ],
                 },
               }"
-              day="Kamis"
-              dayNumber="Hari 4"
+              day="Batik"
+              dayNumber=""
               uniformType="Batik"
               primaryColor="blue"
             />
 
-            <!-- Friday - Pramuka -->
+            <!-- Pramuka -->
             <UniformCard
               :gradeImages="{
                 X: {
@@ -505,13 +619,13 @@ useHead({
                   ],
                 },
               }"
-              day="Jumat"
-              dayNumber="Hari 5"
+              day="Pramuka"
+              dayNumber=""
               uniformType="Pramuka"
               primaryColor="brown"
             />
 
-            <!-- Workout Uniform - Any Day -->
+            <!-- Olahraga -->
             <UniformCard
               :gradeImages="{
                 X: {
@@ -543,20 +657,20 @@ useHead({
                   ],
                 },
               }"
-              day="Seragam Olahraga"
-              dayNumber="Setiap Hari"
+              day="Olahraga"
+              dayNumber=""
               uniformType="Olahraga"
               primaryColor="sky"
             />
           </div>
 
           <!-- Additional Info -->
-          <div class="w-full max-w-4xl p-6 shadow-lg bg-gradient-to-r from-blue-600 to-blue-800 rounded-2xl">
+          <div class="w-full max-w-4xl p-6 bg-white shadow-lg rounded-2xl">
             <div class="flex gap-4">
-              <Icon name="lucide:info" size="24" class="text-white flex-shrink-0 mt-0.5" />
+              <Icon name="lucide:info" size="24" class="text-orange-600 flex-shrink-0 mt-0.5" />
               <div>
-                <h4 class="mb-2 font-bold text-white">Catatan Penting</h4>
-                <ul class="space-y-1 text-sm list-disc list-inside text-blue-50">
+                <h4 class="mb-2 font-bold text-gray-800">Catatan Penting</h4>
+                <ul class="space-y-1 text-sm text-gray-600 list-disc list-inside">
                   <li>Seragam harus dikenakan dengan rapi dan sesuai ketentuan</li>
                   <li>Sepatu hitam dengan kaos kaki putih wajib digunakan setiap hari</li>
                   <li>Atribut sekolah seperti name tag dan badge harus dipasang dengan benar</li>
@@ -569,48 +683,6 @@ useHead({
       </div>
     </section>
 
-    <section class="py-20 h-min-screen bg-gradient-to-b from-white via-blue-50 to-white" id="video-profil">
-      <div class="container px-4 mx-auto md:px-10">
-        <div class="flex flex-col items-center justify-center gap-12 lg:flex-row">
-          <!-- Left Side: Video Player -->
-          <div class="w-full lg:w-3/5">
-            <div class="relative overflow-hidden border-4 border-white shadow-2xl rounded-2xl group">
-              <ScriptYouTubePlayer video-id="Kks6HnhPzVQ" class="aspect-video">
-                <template #placeholder="{ placeholder }">
-                  <div class="relative w-full aspect-video">
-                    <img :src="'/images/placeholder.jpg'" alt="Video Placeholder" class="object-cover w-full h-full" />
-                    <div class="absolute inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm">
-                      <div
-                        class="p-5 transition-transform duration-300 rounded-full shadow-xl bg-white/90 group-hover:scale-110"
-                      >
-                        <Icon name="lucide:play" size="40" class="text-blue-600" />
-                      </div>
-                    </div>
-                  </div>
-                </template>
-              </ScriptYouTubePlayer>
-            </div>
-          </div>
-
-          <!-- Right Side: Title and Description -->
-          <div class="flex flex-col w-full max-w-md gap-6 text-center lg:w-2/5 lg:text-left">
-            <div
-              class="p-6 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
-            >
-              <h2 class="text-3xl font-bold text-white">Video Profil</h2>
-            </div>
-
-            <div class="p-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
-              <h3 class="mb-3 text-xl font-semibold text-gray-800">Mengenal SMKN 2 Singosari Lebih Dekat</h3>
-              <p class="leading-relaxed text-gray-600">
-                Tonton video profil kami untuk melihat fasilitas, program keahlian, dan prestasi yang telah diraih oleh
-                SMKN 2 Singosari.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
     <section
       id="jejak-sejarah"
       class="py-20 overflow-hidden h-min-screen bg-gradient-to-b from-white via-blue-50 to-white"
@@ -763,7 +835,7 @@ useHead({
         </div>
       </div>
     </section>
-    <section class="flex flex-col items-center gap-8 py-20 h-fit" id="Jurusan">
+    <section id="jurusan" class="flex flex-col items-center gap-8 py-20 h-fit">
       <div
         class="p-6 px-10 py-6 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
       >
@@ -773,62 +845,8 @@ useHead({
         <MajorCarousel />
       </div>
     </section>
-    <section class="py-20 bg-gradient-to-b from-white via-blue-50 to-white">
-      <div class="container flex flex-col items-center gap-8 mx-auto">
-        <div
-          class="p-6 px-10 py-6 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
-        >
-          <h2 class="text-3xl font-bold text-white">Prestasi Terbaru</h2>
-        </div>
 
-        <!-- Achievement Carousel -->
-        <div
-          class="relative flex flex-col w-full max-w-4xl gap-6 p-8 mx-auto bg-white border-2 border-blue-100 shadow-xl rounded-2xl"
-        >
-          <div class="overflow-hidden">
-            <div
-              class="flex transition-transform duration-500 ease-in-out"
-              :style="{ transform: `translateX(-${currentAchievement * 100}%)` }"
-            >
-              <div v-for="(achievement, index) in achievements" :key="index" class="flex-shrink-0 w-full">
-                <div class="flex flex-col items-center gap-8 md:flex-row">
-                  <img :src="achievement.image" class="w-full rounded-lg shadow-md md:w-1/3" alt="Achievement" />
-                  <div class="flex flex-col gap-4 text-center md:text-left">
-                    <h3 class="text-2xl font-bold text-gray-800">{{ achievement.title }}</h3>
-                    <p class="leading-relaxed text-gray-600">{{ achievement.description }}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="border-t border-gray-200"></div>
-
-          <div class="flex items-center justify-between">
-            <div class="flex gap-4">
-              <button
-                @click="prevAchievement"
-                class="flex items-center justify-center p-3 transition bg-gray-100 border border-gray-200 rounded-full shadow-md cursor-pointer hover:bg-blue-600 hover:text-white hover:scale-110"
-              >
-                <Icon name="lucide:chevron-left" size="20" />
-              </button>
-              <button
-                @click="nextAchievement"
-                class="flex items-center justify-center p-3 transition bg-gray-100 border border-gray-200 rounded-full shadow-md cursor-pointer hover:bg-blue-600 hover:text-white hover:scale-110"
-              >
-                <Icon name="lucide:chevron-right" size="20" />
-              </button>
-            </div>
-            <div class="font-bold text-gray-700">
-              <span class="text-2xl text-blue-600">{{ String(currentAchievement + 1).padStart(2, "0") }}</span>
-              <span class="mx-1 text-gray-400">/</span>
-              <span class="text-lg">{{ String(achievements.length).padStart(2, "0") }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section class="py-20 h-min-screen" id="berita">
+    <section id="berita" class="py-20 h-min-screen">
       <div class="container flex flex-col items-center gap-8 mx-auto">
         <div
           class="p-6 px-10 py-6 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
@@ -905,11 +923,17 @@ useHead({
         </div>
       </div>
     </section>
-    <FAQSection />
+    <section id="faq">
+      <FAQSection />
+    </section>
   </main>
 </template>
 
 <style scoped>
+:root {
+  --model-uniform-height: 300px;
+}
+
 /* Desktop Timeline Styles */
 .timeline-container {
   position: relative;
@@ -965,14 +989,14 @@ useHead({
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.15);
   border: 5px solid white;
   transition: all 0.3s ease;
 }
 
 .timeline-item:hover .timeline-marker-inner {
   transform: scale(1.15) rotate(5deg);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 12px 32px rgba(59, 130, 246, 0.2);
 }
 
 .timeline-connector {

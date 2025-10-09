@@ -10,7 +10,19 @@ export interface MajorColorScheme {
   hoverBg: string;
   border: string;
   headerBg: string;
+  gradient: string;
 }
+
+export const majorColors: Record<MajorName, { primary: string; secondary: string; gradient: string }> = {
+  rpl: { primary: "#F78B21", secondary: "#E67E00", gradient: "linear-gradient(135deg, #F78B21, #E67E00)" },
+  tkj: { primary: "#FFC911", secondary: "#E6B800", gradient: "linear-gradient(135deg, #FFC911, #E6B800)" },
+  dkv: { primary: "#3598F9", secondary: "#2E7CE6", gradient: "linear-gradient(135deg, #3598F9, #2E7CE6)" },
+  animasi: { primary: "#D93F92", secondary: "#C73682", gradient: "linear-gradient(135deg, #D93F92, #C73682)" },
+  broadcasting: { primary: "#E14648", secondary: "#C93E40", gradient: "linear-gradient(135deg, #E14648, #C93E40)" },
+  tei: { primary: "#059451", secondary: "#047B42", gradient: "linear-gradient(135deg, #059451, #047B42)" },
+  mekatronika: { primary: "#57A77C", secondary: "#4E9670", gradient: "linear-gradient(135deg, #57A77C, #4E9670)" },
+  tav: { primary: "#4FA898", secondary: "#469788", gradient: "linear-gradient(135deg, #4FA898, #469788)" },
+};
 
 export const majorColorSchemes: Record<MajorName, MajorColorScheme> = {
   rpl: {
@@ -23,6 +35,7 @@ export const majorColorSchemes: Record<MajorName, MajorColorScheme> = {
     hoverBg: "#E67E00",
     border: "#F78B21",
     headerBg: "rgba(247, 139, 33, 0.3)",
+    gradient: "linear-gradient(135deg, #F78B21, #E67E00)",
   },
   tkj: {
     primary: "#FFC911",
@@ -34,6 +47,7 @@ export const majorColorSchemes: Record<MajorName, MajorColorScheme> = {
     hoverBg: "#E6B800",
     border: "#FFC911",
     headerBg: "rgba(255, 201, 17, 0.3)",
+    gradient: "linear-gradient(135deg, #FFC911, #E6B800)",
   },
   dkv: {
     primary: "#3598F9",
@@ -45,6 +59,7 @@ export const majorColorSchemes: Record<MajorName, MajorColorScheme> = {
     hoverBg: "#2E7CE6",
     border: "#3598F9",
     headerBg: "rgba(53, 152, 249, 0.3)",
+    gradient: "linear-gradient(135deg, #3598F9, #2E7CE6)",
   },
   animasi: {
     primary: "#D93F92",
@@ -56,6 +71,7 @@ export const majorColorSchemes: Record<MajorName, MajorColorScheme> = {
     hoverBg: "#C73682",
     border: "#D93F92",
     headerBg: "rgba(217, 63, 146, 0.3)",
+    gradient: "linear-gradient(135deg, #D93F92, #C73682)",
   },
   broadcasting: {
     primary: "#E14648",
@@ -67,6 +83,7 @@ export const majorColorSchemes: Record<MajorName, MajorColorScheme> = {
     hoverBg: "#C93E40",
     border: "#E14648",
     headerBg: "rgba(225, 70, 72, 0.3)",
+    gradient: "linear-gradient(135deg, #E14648, #C93E40)",
   },
   tei: {
     primary: "#059451",
@@ -78,6 +95,7 @@ export const majorColorSchemes: Record<MajorName, MajorColorScheme> = {
     hoverBg: "#047B42",
     border: "#059451",
     headerBg: "rgba(5, 148, 81, 0.3)",
+    gradient: "linear-gradient(135deg, #059451, #047B42)",
   },
   mekatronika: {
     primary: "#57A77C",
@@ -89,6 +107,7 @@ export const majorColorSchemes: Record<MajorName, MajorColorScheme> = {
     hoverBg: "#4E9670",
     border: "#57A77C",
     headerBg: "rgba(87, 167, 124, 0.3)",
+    gradient: "linear-gradient(135deg, #57A77C, #4E9670)",
   },
   tav: {
     primary: "#4FA898",
@@ -100,6 +119,7 @@ export const majorColorSchemes: Record<MajorName, MajorColorScheme> = {
     hoverBg: "#469788",
     border: "#4FA898",
     headerBg: "rgba(79, 168, 152, 0.3)",
+    gradient: "linear-gradient(135deg, #4FA898, #469788)",
   },
 };
 

@@ -4,7 +4,7 @@ import { ref } from "vue";
 const currentSlide = ref(0);
 
 const nextSlide = () => {
-  if (currentSlide.value < 3) {
+  if (currentSlide.value < 2) {
     currentSlide.value++;
   }
 };
@@ -44,43 +44,46 @@ useHead({
           <p class="text-lg text-gray-600">SMK Negeri 2 Singosari</p>
         </div>
 
-        <div class="max-w-5xl mx-auto">
-          <!-- Principal Photo -->
-          <div class="flex justify-center mb-10">
-            <div class="p-6 bg-white border-2 border-blue-100 shadow-xl rounded-2xl w-fit">
-              <img src="/images/kepsek.webp" alt="Kepala Sekolah" class="w-64 rounded-xl md:w-80" />
+        <div class="mx-auto max-w-7xl">
+          <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
+            <!-- Principal Photo and Quote -->
+            <div class="flex flex-col items-center">
+              <div class="p-6 mb-6 bg-white border-2 border-blue-100 shadow-xl rounded-2xl w-fit">
+                <img src="/images/kepsek.webp" alt="Kepala Sekolah" class="w-64 rounded-xl md:w-80" />
+              </div>
+              <div class="max-w-md p-6 border-2 border-blue-100 shadow-xl bg-blue-50 rounded-2xl">
+                <blockquote class="italic text-center text-gray-700">
+                  "Pendidikan adalah kunci untuk membuka pintu masa depan yang lebih baik. Mari bersama-sama membangun
+                  generasi yang unggul dan berkarakter."
+                </blockquote>
+                <cite class="block mt-4 text-sm font-semibold text-blue-600">- Sumijah S.Pd M.Si</cite>
+              </div>
             </div>
-          </div>
 
-          <!-- Welcome Message -->
-          <div
-            class="p-8 space-y-6 leading-relaxed text-gray-700 bg-white border-2 border-blue-100 shadow-xl rounded-2xl md:p-12"
-          >
-            <p class="text-xl font-bold text-blue-800">Assalamualaikum Warahmatullahi Wabarakatuh</p>
+            <!-- Welcome Message -->
+            <div class="flex items-center">
+              <div
+                class="w-full p-8 space-y-6 leading-relaxed text-gray-700 bg-white border-2 border-blue-100 shadow-xl rounded-2xl md:p-12"
+              >
+                <p class="text-xl font-bold text-blue-800">Assalamualaikum Warahmatullahi Wabarakatuh</p>
 
-            <p class="text-justify">
-              Puji syukur kepada Alloh SWT, Tuhan Yang Maha Esa yang telah memberikan rahmat dan anugerahNya sehingga
-              website SMK Negeri 2 Singosari ini dapat terbit. Salah satu tujuan dari website ini adalah untuk menjawab
-              akan setiap kebutuhan informasi dengan memanfaatkan sarana teknologi informasi yang ada. Kami sadar
-              sepenuhnya dalam rangka memajukan pendidikan di era berkembangnya Teknologi Informasi yang begitu pesat,
-              sangat diperlukan berbagai sarana prasarana yang kondusif, kebutuhan berbagai informasi siswa, guru,
-              orangtua maupun masyarakat, sehingga kami berusaha mewujudkan hal tersebut semaksimal mungkin. Semoga
-              dengan adanya website ini dapat membantu dan bermanfaat, terutama informasi yang berhubungan dengan
-              pendidikan, ilmu pengetahuan dan informasi seputar SMK Negeri 2 Singosari.
-            </p>
+                <p class="text-justify">
+                  Puji syukur kepada Alloh SWT, Tuhan Yang Maha Esa yang telah memberikan rahmat dan anugerahNya
+                  sehingga website SMK Negeri 2 Singosari ini dapat terbit. Salah satu tujuan dari website ini adalah
+                  untuk menjawab akan setiap kebutuhan informasi dengan memanfaatkan sarana teknologi informasi yang
+                  ada.
+                </p>
 
-            <p class="text-justify">
-              Besar harapan kami, sarana ini dapat memberi manfaat bagi semua pihak yang ada dilingkup pendidikan dan
-              pemerhati pendidikan secara khusus bagi SMK Negeri 2 Singosari.
-            </p>
+                <p class="text-justify">
+                  Kami sadar sepenuhnya dalam rangka memajukan pendidikan di era berkembangnya Teknologi Informasi yang
+                  begitu pesat, sangat diperlukan berbagai sarana prasarana yang kondusif, kebutuhan berbagai informasi
+                  siswa, guru, orangtua maupun masyarakat, sehingga kami berusaha mewujudkan hal tersebut semaksimal
+                  mungkin.
+                </p>
 
-            <p class="text-justify">
-              Akhirnya kami mengharapkan masukan dari berbagai pihak untuk website ini agar kami terus belajar dan
-              meng-update diri, sehingga tampilan, isi dan mutu website akan terus berkembang dan lebih baik nantinya.
-              Terima kasih atas kerjasamanya, maju terus untuk mencapai SMK Negeri 2 Singosari yang lebih baik lagi.
-            </p>
-
-            <p class="text-xl font-bold text-blue-800">Wassalamualaikum Warahmatullahi Wabarakatuh</p>
+                <p class="text-xl font-bold text-blue-800">Wassalamualaikum Warahmatullahi Wabarakatuh</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -104,62 +107,25 @@ useHead({
 
       <!-- Carousel Container -->
       <div class="relative">
-        <div
-          class="relative overflow-hidden"
-          :style="{ height: currentSlide === 0 ? '320px' : '720px' }"
-          style="transition: height 0.6s ease-in-out"
-        >
-          <!-- Slide 1: Original Three Images -->
+        <div class="relative overflow-hidden" :style="{ height: '720px' }" style="transition: height 0.6s ease-in-out">
+          <!-- Slide 1: Video Profil -->
           <Transition name="slide">
-            <div v-show="currentSlide === 0" class="absolute inset-0 w-full">
-              <div class="w-full h-full">
-                <div class="grid h-full md:grid-cols-3">
-                  <!-- Video Profil -->
-                  <div class="cursor-pointer group">
-                    <div class="relative overflow-hidden h-80">
-                      <img
-                        src="/images/logo-smk.webp"
-                        class="absolute inset-0 object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
-                      />
-                      <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
-                      <div class="absolute inset-0 flex flex-col justify-end p-6">
-                        <h3 class="mb-1 text-2xl font-bold text-white">Video Profil</h3>
-                        <p class="mb-3 text-sm text-white/90">SMK Negeri 02 Singosari</p>
-                        <p class="text-xs leading-relaxed text-white/80">
-                          Lorem ipsum alergi makan nasi, kalo makan nasi nanti sakit perul telu mual dan muntah, muntah
-                          kalo udah muntah yaa berarti udah gak fit dan sakit
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Center Image (no text) -->
-                  <div class="cursor-pointer group">
-                    <div class="relative overflow-hidden h-80">
-                      <img
-                        src="/images/background-aula.jpg"
-                        class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
-                      />
-                      <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
-                    </div>
-                  </div>
-
-                  <!-- Fasilitas Sekolah -->
-                  <div class="cursor-pointer group">
-                    <div class="relative overflow-hidden h-80">
-                      <img
-                        src="/images/background-aula.jpg"
-                        class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
-                      />
-                      <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
-                      <div class="absolute inset-0 flex flex-col justify-end p-6">
-                        <h3 class="mb-1 text-2xl font-bold text-white">Fasilitas Sekolah</h3>
-                        <p class="mb-3 text-sm text-white/90">SMK Negeri 02 Singosari</p>
-                        <p class="text-xs leading-relaxed text-white/80">
-                          Lorem ipsum alergi makan nasi, kalo makan nasi nanti sakit perul telu mual dan muntah, muntah
-                          kalo udah muntah yaa berarti udah gak fit dan sakit
-                        </p>
-                      </div>
+            <div
+              v-show="currentSlide === 0"
+              class="absolute inset-0 flex items-center justify-center w-full h-full bg-black"
+            >
+              <div class="flex items-center justify-center w-full h-full px-4 py-8 max-w-7xl">
+                <div class="relative w-full aspect-video">
+                  <img
+                    src="/images/placeholder.jpg"
+                    alt="Video Profil Placeholder"
+                    class="object-cover w-full h-full rounded-2xl"
+                  />
+                  <div class="absolute inset-0 flex items-center justify-center bg-black/50 rounded-2xl">
+                    <div class="text-center text-white">
+                      <Icon name="lucide:play-circle" size="64" class="mb-4" />
+                      <h3 class="text-xl font-bold">Video Profil Sekolah</h3>
+                      <p class="text-sm opacity-90">Coming Soon</p>
                     </div>
                   </div>
                 </div>
@@ -167,94 +133,24 @@ useHead({
             </div>
           </Transition>
 
-          <!-- Slide 2: Video Profil Sekolah -->
+          <!-- Slide 2: Mars SMKN -->
           <Transition name="slide">
             <div
               v-show="currentSlide === 1"
               class="absolute inset-0 flex items-center justify-center w-full h-full bg-black"
             >
               <div class="flex items-center justify-center w-full h-full px-4 py-8 max-w-7xl">
-                <div class="w-full aspect-video">
-                  <ScriptYouTubePlayer video-id="Kks6HnhPzVQ" class="w-full h-full overflow-hidden rounded-2xl">
-                    <template #placeholder="{ placeholder }">
-                      <div class="relative w-full h-full overflow-hidden bg-gray-900 rounded-2xl">
-                        <div class="absolute inset-0 flex items-center justify-center">
-                          <div
-                            class="p-6 transition-transform duration-300 rounded-full cursor-pointer bg-white/90 hover:scale-110"
-                          >
-                            <Icon name="lucide:play" size="48" class="text-orange-600" />
-                          </div>
-                        </div>
-                        <div class="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/80 to-transparent">
-                          <h3 class="mb-2 text-2xl font-bold text-white md:text-3xl">Video Profil Sekolah</h3>
-                          <p class="text-lg text-white/90">SMK Negeri 02 Singosari</p>
-                        </div>
-                      </div>
-                    </template>
-                  </ScriptYouTubePlayer>
-                </div>
-              </div>
-            </div>
-          </Transition>
-
-          <!-- Slide 3: Location & Maps Combined -->
-          <Transition name="slide">
-            <div v-show="currentSlide === 2" class="absolute inset-0 w-full h-full">
-              <div class="grid h-full md:grid-cols-2">
-                <!-- Left: Maps/Image -->
-                <div class="relative h-full">
-                  <img src="/images/background-aula.jpg" class="object-cover w-full h-full" />
-                  <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
-                  <div class="absolute top-8 left-8">
-                    <div class="flex items-center gap-2 px-4 py-2 rounded-lg bg-orange-500/90 backdrop-blur-sm">
-                      <Icon name="lucide:map-pin" size="24" class="text-white" />
-                      <span class="font-bold text-white">Maps Lokasi</span>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Right: Location Info -->
-                <div class="relative h-full bg-gradient-to-br from-orange-600 to-orange-800">
-                  <div class="absolute inset-0 flex flex-col justify-center p-12">
-                    <div class="mb-6">
-                      <Icon name="lucide:map-pin" size="56" class="mb-4 text-white/80" />
-                      <h3 class="mb-4 text-4xl font-bold text-white md:text-5xl">Lokasi Sekolah</h3>
-                      <p class="mb-8 text-xl text-white/90">SMK Negeri 02 Singosari</p>
-                    </div>
-
-                    <div class="space-y-6 text-white">
-                      <div class="flex items-start gap-4">
-                        <Icon name="lucide:map-pin" size="28" class="flex-shrink-0 mt-1" />
-                        <div>
-                          <p class="mb-1 text-lg font-semibold">Alamat</p>
-                          <p class="text-base text-white/90">
-                            Jl. Raya Mondoroko No.1, Singosari, Kabupaten Malang, Jawa Timur 65153
-                          </p>
-                        </div>
-                      </div>
-
-                      <div class="flex items-start gap-4">
-                        <Icon name="lucide:phone" size="28" class="flex-shrink-0 mt-1" />
-                        <div>
-                          <p class="mb-1 text-lg font-semibold">Telepon</p>
-                          <p class="text-base text-white/90">(0341) 458380</p>
-                        </div>
-                      </div>
-
-                      <div class="flex items-start gap-4">
-                        <Icon name="lucide:mail" size="28" class="flex-shrink-0 mt-1" />
-                        <div>
-                          <p class="mb-1 text-lg font-semibold">Email</p>
-                          <p class="text-base text-white/90">info@smkn2singosari.sch.id</p>
-                        </div>
-                      </div>
-
-                      <button
-                        class="inline-flex items-center gap-2 px-6 py-3 mt-6 font-semibold text-orange-600 transition-colors bg-white rounded-lg hover:bg-orange-50"
-                      >
-                        <Icon name="lucide:external-link" size="20" />
-                        Buka di Google Maps
-                      </button>
+                <div class="relative w-full aspect-video">
+                  <img
+                    src="/images/placeholder.jpg"
+                    alt="Mars SMKN Placeholder"
+                    class="object-cover w-full h-full rounded-2xl"
+                  />
+                  <div class="absolute inset-0 flex items-center justify-center bg-black/50 rounded-2xl">
+                    <div class="text-center text-white">
+                      <Icon name="lucide:music" size="64" class="mb-4" />
+                      <h3 class="text-xl font-bold">Mars SMK Negeri 2 Singosari</h3>
+                      <p class="text-sm opacity-90">Coming Soon</p>
                     </div>
                   </div>
                 </div>
@@ -262,58 +158,61 @@ useHead({
             </div>
           </Transition>
 
-          <!-- Slide 4: Mars SMKN -->
+          <!-- Slide 3: Maps -->
           <Transition name="slide">
             <div
-              v-show="currentSlide === 3"
+              v-show="currentSlide === 2"
               class="absolute inset-0 flex items-center justify-center w-full h-full bg-black"
             >
               <div class="flex items-center justify-center w-full h-full px-4 py-8 max-w-7xl">
-                <div class="w-full aspect-video">
-                  <ScriptYouTubePlayer video-id="Kks6HnhPzVQ" class="w-full h-full overflow-hidden rounded-2xl">
-                    <template #placeholder="{ placeholder }">
-                      <div class="relative w-full h-full overflow-hidden bg-gray-900 rounded-2xl">
-                        <div class="absolute inset-0 flex items-center justify-center">
-                          <div
-                            class="p-6 transition-transform duration-300 rounded-full cursor-pointer bg-white/90 hover:scale-110"
-                          >
-                            <Icon name="lucide:play" size="48" class="text-green-600" />
-                          </div>
-                        </div>
-                        <div class="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/80 to-transparent">
-                          <h3 class="mb-2 text-2xl font-bold text-white md:text-3xl">Mars SMKN 2 Singosari</h3>
-                          <p class="text-lg text-white/90">SMK Negeri 02 Singosari</p>
-                        </div>
-                      </div>
-                    </template>
-                  </ScriptYouTubePlayer>
+                <div class="relative w-full aspect-video">
+                  <img
+                    src="/images/background-aula.jpg"
+                    alt="Maps Placeholder"
+                    class="object-cover w-full h-full rounded-2xl"
+                  />
+                  <div class="absolute inset-0 flex items-center justify-center bg-black/50 rounded-2xl">
+                    <div class="text-center text-white">
+                      <Icon name="lucide:map-pin" size="64" class="mb-4" />
+                      <h3 class="text-xl font-bold">Lokasi & Peta Sekolah</h3>
+                      <p class="text-sm opacity-90">Interactive Map Coming Soon</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </Transition>
         </div>
-
-        <!-- Navigation Arrows -->
-        <button
-          v-show="currentSlide > 0"
-          @click="prevSlide"
-          class="absolute z-20 p-3 text-gray-800 transition-all duration-200 -translate-y-1/2 rounded-full shadow-xl left-4 top-1/2 bg-white/90 hover:bg-white hover:scale-110"
-        >
-          <Icon name="lucide:chevron-left" size="24" />
-        </button>
-        <button
-          v-show="currentSlide < 3"
-          @click="nextSlide"
-          class="absolute z-20 p-3 text-gray-800 transition-all duration-200 -translate-y-1/2 rounded-full shadow-xl right-4 top-1/2 bg-white/90 hover:bg-white hover:scale-110"
-        >
-          <Icon name="lucide:chevron-right" size="24" />
-        </button>
       </div>
+
+      <!-- Navigation Arrows - Always Visible -->
+      <button
+        @click="prevSlide"
+        :class="[
+          'absolute z-20 p-3 text-gray-800 transition-all duration-200 -translate-y-1/2 rounded-full shadow-xl left-4 top-1/2',
+          currentSlide === 0
+            ? 'bg-gray-400 cursor-not-allowed'
+            : 'bg-white/90 hover:bg-white hover:scale-110 cursor-pointer',
+        ]"
+      >
+        <Icon name="lucide:chevron-left" size="24" />
+      </button>
+      <button
+        @click="nextSlide"
+        :class="[
+          'absolute z-20 p-3 text-gray-800 transition-all duration-200 -translate-y-1/2 rounded-full shadow-xl right-4 top-1/2',
+          currentSlide === 2
+            ? 'bg-gray-400 cursor-not-allowed'
+            : 'bg-white/90 hover:bg-white hover:scale-110 cursor-pointer',
+        ]"
+      >
+        <Icon name="lucide:chevron-right" size="24" />
+      </button>
 
       <!-- Slide Indicators -->
       <div class="flex justify-center gap-3 mt-8">
         <button
-          v-for="index in 4"
+          v-for="index in 3"
           :key="index"
           @click="goToSlide(index - 1)"
           :class="[
