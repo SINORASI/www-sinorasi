@@ -233,8 +233,8 @@ useHead({
             </div>
           </div>
         </div>
-        <div class="flex items-center justify-center mt-4 md:mt-0">
-          <img src="/images/logo.webp" class="w-32 h-32 md:w-56 md:h-56 lg:w-64 lg:h-64 drop-shadow-lg" />
+        <div class="flex items-center justify-center mt-4 ml-0 md:ml-30 md:mt-0">
+          <img src="/images/seragam/putih-putih/11-putih-putih-jas-l/DSC04320.webp" class="h-50 md:h-160 drop-shadow-lg" />
         </div>
       </div>
     </section>
