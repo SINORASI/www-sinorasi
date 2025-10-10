@@ -28,7 +28,12 @@ const populateScrollItems = async () => {
   // Add a small delay to ensure DOM is fully rendered
   await new Promise((resolve) => setTimeout(resolve, 100));
 
-  // Check if we're on the home page
+  // Exclude scroll items on major pages
+  if (route.path.startsWith("/jurusan/")) {
+    return;
+  }
+
+  // Only show scroll items on the home page
   if (route.path === "/") {
     // Use custom short labels for home page sections
     const homeSections = [
@@ -46,15 +51,6 @@ const populateScrollItems = async () => {
     homeSections.forEach((section) => {
       if (document.getElementById(section.id)) {
         scrollItems.value.push(section);
-      }
-    });
-  } else {
-    // For other pages, use dynamic section reading
-    const sections = document.querySelectorAll("section[id]");
-    sections.forEach((section) => {
-      const h2 = section.querySelector("h2");
-      if (h2) {
-        scrollItems.value.push({ id: section.id, label: h2.textContent?.trim() || section.id });
       }
     });
   }
@@ -78,38 +74,15 @@ watch(
     nextTick(() => {
       setTimeout(() => {
         populateScrollItems();
-      }, 300);
+      }, 500);
     });
   }
 );
 
 onMounted(() => {
-  const handleScroll = () => {
-    // On home page, keep navbar compact size throughout
-    if (route.path === "/") {
-      if (window.scrollY > window.innerHeight) {
-        headerClass.value = "bg-white/30 backdrop-blur-[12px] border-b-white/30 shadow-lg shadow-orange-500/20";
-      } else {
-        headerClass.value = "bg-white/20 backdrop-blur-[8px] border-b-white/20 shadow-lg shadow-orange-500/10";
-      }
-      // Keep sizeClass as "compact" throughout home page
-      sizeClass.value = "compact";
-    } else {
-      // For other pages, use dynamic sizing
-      if (window.scrollY > window.innerHeight) {
-        headerClass.value = "bg-white/30 backdrop-blur-[12px] border-b-white/30 shadow-lg shadow-orange-500/20";
-        sizeClass.value = "compact";
-      } else {
-        headerClass.value = "bg-white/20 backdrop-blur-[8px] border-b-white/20 shadow-lg shadow-orange-500/10";
-        sizeClass.value = "full";
-      }
-    }
-  };
-  window.addEventListener("scroll", handleScroll);
-  handleScroll();
-  onUnmounted(() => {
-    window.removeEventListener("scroll", handleScroll);
-  });
+  // Apply consistent glassmorphism effect on all pages
+  headerClass.value = "bg-white/20 backdrop-blur-[8px] border-b-white/20 shadow-lg shadow-orange-500/10";
+  sizeClass.value = "compact";
 });
 </script>
 
@@ -152,7 +125,7 @@ onMounted(() => {
         </div>
       </NuxtLink>
       <div
-        v-if="scrollItems.length > 0"
+        v-if="scrollItems.length > 0 && route.path === '/'"
         :class="(sizeClass === 'full' ? 'gap-5' : 'gap-4') + ' hidden md:flex transition-all duration-500 ease-in-out'"
       >
         <button

@@ -1,6 +1,6 @@
 <template>
   <transition name="sidebar">
-    <div v-if="isOpen" class="fixed inset-0 z-[100] flex">
+    <div v-if="isOpen" class="fixed inset-0 z-[9000] flex">
       <div class="fixed inset-0 sidebar-backdrop bg-black/50 backdrop-blur-sm" @click="$emit('close')"></div>
 
       <div class="relative flex flex-col w-full h-full bg-white shadow-2xl sidebar-panel sm:ml-auto sm:w-96">

@@ -45,25 +45,25 @@ useHead({
         </div>
 
         <div class="mx-auto max-w-7xl">
-          <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
+          <div class="flex flex-col gap-8">
             <!-- Principal Photo and Quote -->
-            <div class="flex flex-col items-center">
-              <div class="p-6 mb-6 bg-white border-2 border-blue-100 shadow-xl rounded-2xl w-fit">
+            <div class="flex flex-col items-center lg:flex-row lg:items-start lg:justify-center lg:gap-8">
+              <div class="p-6 bg-white border-2 border-blue-100 shadow-xl rounded-2xl w-fit">
                 <img src="/images/kepsek.webp" alt="Kepala Sekolah" class="w-64 rounded-xl md:w-80" />
               </div>
-              <div class="max-w-md p-6 border-2 border-blue-100 shadow-xl bg-blue-50 rounded-2xl">
-                <blockquote class="italic text-center text-gray-700">
+              <div class="max-w-md p-6 mt-6 border-2 border-blue-100 shadow-xl bg-blue-50 rounded-2xl lg:mt-0">
+                <blockquote class="italic text-center text-gray-700 lg:text-left">
                   "Pendidikan adalah kunci untuk membuka pintu masa depan yang lebih baik. Mari bersama-sama membangun
                   generasi yang unggul dan berkarakter."
                 </blockquote>
-                <cite class="block mt-4 text-sm font-semibold text-blue-600">- Sumijah S.Pd M.Si</cite>
+                <cite class="block mt-4 text-sm font-semibold text-center text-blue-600 lg:text-left">- Sumijah S.Pd M.Si</cite>
               </div>
             </div>
 
             <!-- Welcome Message -->
-            <div class="flex items-center">
+            <div class="flex items-center justify-center">
               <div
-                class="w-full p-8 space-y-6 leading-relaxed text-gray-700 bg-white border-2 border-blue-100 shadow-xl rounded-2xl md:p-12"
+                class="w-full max-w-4xl p-8 space-y-6 leading-relaxed text-gray-700 bg-white border-2 border-blue-100 shadow-xl rounded-2xl md:p-12"
               >
                 <p class="text-xl font-bold text-blue-800">Assalamualaikum Warahmatullahi Wabarakatuh</p>
 

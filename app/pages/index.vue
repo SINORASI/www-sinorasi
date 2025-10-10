@@ -195,12 +195,13 @@ useHead({
 </script>
 
 <template>
-  <main class="flex flex-col gap-20">
-    <section class="flex items-center justify-center min-h-screen px-4 pt-24 pb-10 md:pt-20">
+  <main class="flex flex-col gap-52">
+    <section class="flex items-center justify-center h-[75vh] px-4 pt-24 pb-10 md:pt-20">
       <div
-        class="absolute bg-blend-darken bg-[url(/images/background-aula.jpg)] w-full h-full bg-cover bg-top top-0 left-0 right-0 bottom-0"
+        class="absolute bg-blend-overlay bg-[url(/images/bg-aula.webp)] w-full h-[85vh] bg-cover top-0 left-0 right-0"
       >
         <div class="w-full h-full bg-gradient-to-t from-black/65 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-transparent via-gray-200 via-gray-100 via-gray-50 to-white"></div>
       </div>
       <div class="z-50 flex flex-col items-center max-w-4xl gap-8 text-center text-white">
         <h1 class="text-3xl font-bold transition-all duration-700 ease-out md:text-5xl lg:text-6xl">INORASI</h1>
@@ -254,7 +255,7 @@ useHead({
                 class="relative overflow-hidden transition-all duration-500 transform border-4 border-white shadow-2xl rounded-2xl group-hover:scale-105 group-hover:shadow-3xl"
               >
                 <img
-                  src="/images/background-aula.jpg"
+                  src="/images/aula-drone.webp"
                   alt="Drone view of SMK Negeri 2 Singosari"
                   class="object-cover w-full h-auto"
                 />
@@ -316,6 +317,33 @@ useHead({
     <section id="sambutan" class="py-20 bg-gradient-to-b from-white via-blue-50 to-white">
       <div class="container px-4 mx-auto md:px-10">
         <div class="flex flex-col items-center justify-center gap-12 lg:flex-row">
+          
+          <!-- Content Area -->
+          <div class="flex flex-col w-full max-w-3xl gap-6 lg:w-3/5">
+            <div
+              class="p-6 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
+            >
+              <h2 class="text-3xl font-bold text-center text-white lg:text-left">Sambutan Kepala Sekolah</h2>
+            </div>
+
+            <div class="p-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
+              <h3 class="mb-4 text-2xl font-bold text-gray-800">Assalamu'alaikum Wr. Wb.</h3>
+              <div class="space-y-4 leading-relaxed text-gray-600">
+                <p>
+                  Puji syukur kepada Allah SWT atas terbitnya website SMK Negeri 2 Singosari untuk menjawab kebutuhan
+                  informasi melalui teknologi informasi. Dalam memajukan pendidikan di era teknologi yang pesat,
+                  diperlukan sarana prasarana kondusif dan informasi bagi siswa, guru, orangtua maupun masyarakat.
+                </p>
+                <p>
+                  Besar harapan kami sarana ini memberi manfaat bagi semua pihak di lingkup pendidikan khususnya SMK
+                  Negeri 2 Singosari. Kami mengharapkan masukan dari berbagai pihak agar terus belajar dan meng-update
+                  sehingga tampilan, isi dan mutu website berkembang lebih baik. Terima kasih atas kerjasamanya, maju
+                  terus SMK Negeri 2 Singosari.
+                </p>
+                <p class="italic">Wassalamu'alaikum wr.wb.</p>
+              </div>
+            </div>
+          </div>
           <!-- Photo Card -->
           <div class="w-full max-w-md lg:w-2/5">
             <div class="relative group">
@@ -341,33 +369,6 @@ useHead({
               <div
                 class="absolute w-32 h-32 rounded-full -bottom-4 -left-4 bg-gradient-to-br from-orange-500 to-orange-700 opacity-20 blur-2xl -z-10"
               ></div>
-            </div>
-          </div>
-
-          <!-- Content Area -->
-          <div class="flex flex-col w-full max-w-3xl gap-6 lg:w-3/5">
-            <div
-              class="p-6 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
-            >
-              <h2 class="text-3xl font-bold text-center text-white lg:text-left">Sambutan Kepala Sekolah</h2>
-            </div>
-
-            <div class="p-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
-              <h3 class="mb-4 text-2xl font-bold text-gray-800">Assalamu'alaikum Wr. Wb.</h3>
-              <div class="space-y-4 leading-relaxed text-gray-600">
-                <p>
-                  Puji syukur kepada Allah SWT atas terbitnya website SMK Negeri 2 Singosari untuk menjawab kebutuhan
-                  informasi melalui teknologi informasi. Dalam memajukan pendidikan di era teknologi yang pesat,
-                  diperlukan sarana prasarana kondusif dan informasi bagi siswa, guru, orangtua maupun masyarakat.
-                </p>
-                <p>
-                  Besar harapan kami sarana ini memberi manfaat bagi semua pihak di lingkup pendidikan khususnya SMK
-                  Negeri 2 Singosari. Kami mengharapkan masukan dari berbagai pihak agar terus belajar dan meng-update
-                  sehingga tampilan, isi dan mutu website berkembang lebih baik. Terima kasih atas kerjasamanya, maju
-                  terus SMK Negeri 2 Singosari.
-                </p>
-                <p class="italic">Wassalamu'alaikum wr.wb.</p>
-              </div>
             </div>
           </div>
         </div>
