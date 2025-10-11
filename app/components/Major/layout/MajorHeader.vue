@@ -5,14 +5,14 @@ import type { MajorData } from "~/models/MajorData";
 import MobileSidebar from "~/components/MobileSidebar.vue";
 
 const route = useRoute();
-const major = route.params.majorName as MajorName;
+const major = (route.params.majorName as MajorName) || (route.path.split("/").pop() as MajorName);
 
 // Fetch major data and menus from API
-const { data: majorDatas } = await useFetch<Record<MajorName, MajorData>>('/api/majors')
-const { data: majorMenus } = await useFetch('/api/majors/menus')
+const { data: majorDatas } = await useFetch<Record<MajorName, MajorData>>("/api/majors");
+const { data: majorMenus } = await useFetch("/api/majors/menus");
 
-const headerClass = ref("bg-transparent border-b-transparent");
-const sizeClass = ref("full");
+const headerClass = ref("bg-white/20 backdrop-blur-[8px] border-b-white/20 shadow-lg shadow-orange-500/10");
+const sizeClass = ref("compact");
 const isOpen = ref(false);
 
 const menuItems = computed(() => majorMenus.value?.[major] || []);
@@ -20,11 +20,12 @@ const menuItems = computed(() => majorMenus.value?.[major] || []);
 onMounted(() => {
   const handleScroll = () => {
     if (window.scrollY > window.innerHeight) {
-      headerClass.value = `${majorDatas.value?.[major]?.headerColor}`;
+      // Keep glassmorphism but maybe adjust opacity or something
+      headerClass.value = "bg-white/30 backdrop-blur-[8px] border-b-white/30 shadow-lg shadow-orange-500/10";
       sizeClass.value = "compact";
     } else {
-      headerClass.value = "bg-transparent border-b-transparent";
-      sizeClass.value = "full";
+      headerClass.value = "bg-white/20 backdrop-blur-[8px] border-b-white/20 shadow-lg shadow-orange-500/10";
+      sizeClass.value = "compact";
     }
   };
   window.addEventListener("scroll", handleScroll);
@@ -95,7 +96,7 @@ if (!majorDatas.value?.[major]) {
             >
               {{ item.title }}
             </p>
-            <span class="group-hover:rotate-180 transition-transform duration-500 ease-in-out inline-flex items-center">
+            <span class="inline-flex items-center transition-transform duration-500 ease-in-out group-hover:rotate-180">
               <Icon
                 name="lucide:chevron-down"
                 :size="sizeClass === 'full' ? 20 : 16"
@@ -107,13 +108,13 @@ if (!majorDatas.value?.[major]) {
             </span>
           </div>
           <div
-            class="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 border border-gray-200"
+            class="absolute left-0 z-50 invisible w-64 mt-2 transition-all duration-300 bg-white border border-gray-200 rounded-lg shadow-xl opacity-0 top-full group-hover:opacity-100 group-hover:visible"
           >
             <div class="py-2">
               <div
                 v-for="(sub, subIndex) in item.submenu"
                 :key="subIndex"
-                class="px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors duration-200"
+                class="px-4 py-3 transition-colors duration-200 cursor-pointer hover:bg-gray-50"
               >
                 <div class="flex items-center gap-3">
                   <Icon :name="sub.icon" size="20" :class="majorDatas?.[major]?.textColor || 'text-gray-900'" />

@@ -4,6 +4,10 @@ import type { MajorData } from "~/models/MajorData";
 import type { MajorTopic } from "~/models/MajorTopic";
 import { majorColorSchemes } from "~/utils/majorColors";
 
+const props = defineProps<{
+  major?: MajorName;
+}>();
+
 // Fetch majors data and topics from API
 const { data: majorDatas } = await useFetch<Record<MajorName, MajorData>>("/api/majors");
 const { data: majorTopics } = await useFetch<Record<MajorName, MajorTopic[]>>("/api/major-topics");
@@ -18,7 +22,7 @@ const leftOpenOrder = ref<string[]>([]);
 const rightOpenOrder = ref<string[]>([]);
 
 const route = useRoute();
-const major = route.params.majorName as MajorName;
+const major = props.major || (route.params.majorName as MajorName);
 
 // Get major color scheme
 const majorColor = computed(() => {

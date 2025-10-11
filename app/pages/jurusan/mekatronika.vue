@@ -12,8 +12,7 @@ definePageMeta({
   layout: "major",
 });
 
-const route = useRoute();
-const major = route.params.majorName as MajorName;
+const major: MajorName = "mekatronika";
 
 // Fetch majors data from API
 const { data: majorDatas } = await useFetch<Record<MajorName, MajorData>>("/api/majors");
@@ -110,7 +109,7 @@ useHead({
                       <div
                         class="px-3 py-2 text-xs font-bold text-white transform bg-green-500 rounded-lg shadow-lg lg:text-sm lg:px-4 lg:py-3 rotate-6"
                       >
-                        &lt;/&gt;
+                        CODE
                       </div>
                     </div>
                   </div>

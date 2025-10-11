@@ -2,6 +2,10 @@
 import { ref, computed, onMounted } from "vue";
 import type { MajorName } from "~/models/MajorName";
 
+const props = defineProps<{
+  major?: MajorName;
+}>();
+
 interface Company {
   id: number;
   name: string;
@@ -10,7 +14,7 @@ interface Company {
 }
 
 const route = useRoute();
-const major = route.params.majorName as MajorName;
+const major = props.major || (route.params.majorName as MajorName);
 
 // Fetch partners data from API
 const { data: partnersData } = await useFetch<Company[]>(`/api/partners/${major}`);

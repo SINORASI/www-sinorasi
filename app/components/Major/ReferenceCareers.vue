@@ -4,6 +4,10 @@ import type { JobTitle } from "~/models/JobTitle";
 import type { MajorData } from "~/models/MajorData";
 import { majorColorSchemes } from "~/utils/majorColors";
 
+const props = defineProps<{
+  major?: MajorName;
+}>();
+
 interface ExpandedItems {
   [key: string]: boolean;
 }
@@ -11,7 +15,7 @@ interface ExpandedItems {
 const items = ref<ExpandedItems>({});
 
 const route = useRoute();
-const major = route.params.majorName as MajorName;
+const major = props.major || (route.params.majorName as MajorName);
 
 // Fetch job titles and major data from API
 const { data: jobTitles } = await useFetch<Record<MajorName, JobTitle[]>>("/api/job-titles");

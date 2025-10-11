@@ -4,6 +4,10 @@ import type { MajorName } from "~/models/MajorName";
 import type { MajorData } from "~/models/MajorData";
 import { majorColorSchemes } from "~/utils/majorColors";
 
+const props = defineProps<{
+  major?: MajorName;
+}>();
+
 interface Achievement {
   id: number;
   title: string;
@@ -13,7 +17,7 @@ interface Achievement {
 }
 
 const route = useRoute();
-const major = route.params.majorName as MajorName;
+const major = props.major || (route.params.majorName as MajorName);
 
 // Fetch achievements and major data
 const { data: achievementsData } = await useFetch<Achievement[]>(`/api/achievements?major=${major}`);

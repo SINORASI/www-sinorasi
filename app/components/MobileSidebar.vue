@@ -276,7 +276,7 @@ const pageTitle = computed(() => {
 
   // Handle dynamic routes
   if (path.startsWith("/jurusan/")) {
-    const majorName = route.params.majorName as string;
+    const majorName = (route.params.majorName as string) || (path.split("/").pop() as string);
     const majorMap: Record<string, string> = {
       rpl: "Rekayasa Perangkat Lunak",
       tkj: "Teknik Komputer Jaringan",
@@ -333,7 +333,7 @@ const pageSubtitle = computed(() => {
 
   // Handle dynamic routes
   if (path.startsWith("/jurusan/")) {
-    const majorName = route.params.majorName as string;
+    const majorName = (route.params.majorName as string) || (path.split("/").pop() as string);
     const majorMap: Record<string, string> = {
       rpl: "Rekayasa Perangkat Lunak",
       tkj: "Teknik Komputer Jaringan",

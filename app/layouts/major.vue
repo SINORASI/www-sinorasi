@@ -5,8 +5,19 @@ import type { MajorName } from "~/models/MajorName";
 import { majorColorSchemes } from "~/utils/majorColors";
 
 const route = useRoute();
-const major = route.params.majorName as MajorName;
-const majorColor = majorColorSchemes[major];
+const major = (route.params.majorName as MajorName) || (route.path.split("/").pop() as MajorName);
+const majorColor = majorColorSchemes[major] || {
+  primary: "#667eea",
+  secondary: "#764ba2",
+  accent: "#9f7aea",
+  light: "#f3f4f6",
+  text: "#667eea",
+  bg: "#667eea",
+  hoverBg: "#764ba2",
+  border: "#667eea",
+  headerBg: "rgba(102, 126, 234, 0.3)",
+  gradient: "linear-gradient(135deg, #667eea, #764ba2)",
+};
 </script>
 
 <template>
