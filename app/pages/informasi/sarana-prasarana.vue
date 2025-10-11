@@ -109,7 +109,7 @@ useHead({
           >
             <div class="relative h-80">
               <img
-                src="/images/background-aula.jpg"
+                src="/images/bg-aula.webp"
                 :alt="`Fasilitas ${index}`"
                 class="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
               />

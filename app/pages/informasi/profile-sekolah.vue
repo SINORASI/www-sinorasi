@@ -167,7 +167,7 @@ useHead({
               <div class="flex items-center justify-center w-full h-full px-4 py-8 max-w-7xl">
                 <div class="relative w-full aspect-video">
                   <img
-                    src="/images/background-aula.jpg"
+                    src="/images/bg-aula.webp"
                     alt="Maps Placeholder"
                     class="object-cover w-full h-full rounded-2xl"
                   />

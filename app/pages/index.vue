@@ -196,50 +196,58 @@ useHead({
 
 <template>
   <main class="flex flex-col gap-52">
-    <section class="flex items-center justify-center h-[75vh] px-4 pt-24 pb-10 md:pt-20">
-      <div
-        class="absolute bg-blend-overlay bg-[url(/images/bg-aula.webp)] w-full h-[85vh] bg-cover top-0 left-0 right-0"
-      >
-        <div class="w-full h-full bg-gradient-to-t from-black/65 to-transparent"></div>
-        <div class="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-transparent via-gray-200 via-gray-100 via-gray-50 to-white"></div>
-      </div>
-      <div class="z-50 flex flex-col items-center max-w-4xl gap-8 text-center text-white">
-        <h1 class="text-3xl font-bold transition-all duration-700 ease-out md:text-5xl lg:text-6xl">INORASI</h1>
-        <p class="text-lg font-semibold transition-all duration-700 ease-out md:text-xl lg:text-2xl">
-          Inovasi Raih Prestasi
-        </p>
-        <p class="max-w-2xl text-sm leading-relaxed transition-all duration-700 ease-out md:text-lg">
-          SMK Negeri 2 Singosari - Tempat di mana inovasi bertemu dengan prestasi. Kami berkomitmen untuk membentuk
-          generasi muda yang siap menghadapi tantangan masa depan melalui pendidikan kejuruan berkualitas.
-        </p>
-        <div class="flex flex-col items-center gap-4 mt-4 sm:flex-row">
-          <a
-            href="#information"
-            class="flex items-center gap-2 px-6 py-3 text-sm font-semibold text-white transition-all duration-300 bg-blue-600 rounded-lg hover:bg-blue-700"
-          >
-            Pelajari Lebih Dalam
-            <Icon name="lucide:book-open" size="16" />
-          </a>
-          <a
-            href="#berita"
-            class="flex items-center gap-2 px-6 py-3 text-sm font-semibold text-white transition-all duration-300 border-2 border-white rounded-lg hover:bg-white hover:text-black @media (prefers-reduced-motion: reduce) { transition: none; }"
-          >
-            Berita Terbaru
-            <Icon name="lucide:newspaper" size="16" />
-          </a>
+    <section class="flex items-center justify-center min-h-screen px-4 pt-24 pb-10 md:pt-20 bg-gradient-to-b from-blue-50 to-white">
+      <div class="container flex flex-col items-center max-w-5xl mx-auto gap-18 lg:flex-row">
+        <!-- Student Photo on Left -->
+        <div class="flex flex-col justify-center w-full lg:w-1/3">
+          <div class="relative group">
+            <img
+              src="/images/seragam/putih-putih/10-putih-putih-l/DSC04123.webp"
+              alt="Student"
+              class="object-cover transition-transform duration-300 rounded-lg shadow-lg w-150 h-150 group-hover:scale-105"
+            />
+          </div>
         </div>
-        <div class="flex justify-center gap-8 mt-6">
-          <div class="flex flex-col items-center">
-            <div class="text-xl font-bold transition-all duration-700 ease-out md:text-3xl">{{ jurusanCount }}</div>
-            <div class="text-sm transition-all duration-700 ease-out md:text-lg">Jurusan</div>
+
+        <!-- Content on Right -->
+        <div class="flex flex-col items-center w-full gap-8 text-center text-black lg:w-2/3 lg:items-start lg:text-left">
+          <h1 class="text-3xl font-black transition-all duration-700 ease-out md:text-5xl lg:text-6xl">INORASI</h1>
+          <p class="text-lg font-semibold transition-all duration-700 ease-out md:text-xl lg:text-2xl">
+            Inovasi Raih Prestasi
+          </p>
+          <p class="max-w-2xl text-sm leading-relaxed transition-all duration-700 ease-out md:text-lg">
+            SMK Negeri 2 Singosari - Tempat di mana inovasi bertemu dengan prestasi. Kami berkomitmen untuk membentuk
+            generasi muda yang siap menghadapi tantangan masa depan melalui pendidikan kejuruan berkualitas.
+          </p>
+          <div class="flex flex-col items-center gap-4 mt-4 sm:flex-row">
+            <a
+              href="#information"
+              class="flex items-center gap-2 px-6 py-3 text-sm font-semibold text-white transition-all duration-300 bg-blue-600 rounded-lg hover:bg-blue-700"
+            >
+              Pelajari Lebih Dalam
+              <Icon name="lucide:book-open" size="16" />
+            </a>
+            <a
+              href="#berita"
+              class="flex items-center gap-2 px-6 py-3 text-sm font-semibold text-blue-600 transition-all duration-300 border-2 border-blue-600 rounded-lg hover:bg-blue-600 hover:text-white"
+            >
+              Berita Terbaru
+              <Icon name="lucide:newspaper" size="16" />
+            </a>
           </div>
-          <div class="flex flex-col items-center">
-            <div class="text-xl font-bold transition-all duration-700 ease-out md:text-3xl">{{ siswaCount }}+</div>
-            <div class="text-sm transition-all duration-700 ease-out md:text-lg">Siswa</div>
-          </div>
-          <div class="flex flex-col items-center">
-            <div class="text-xl font-bold transition-all duration-700 ease-out md:text-3xl">{{ prestasiCount }}+</div>
-            <div class="text-sm transition-all duration-700 ease-out md:text-lg">Prestasi</div>
+          <div class="flex justify-center w-full gap-8 mt-6 lg:justify-start">
+            <div class="flex flex-col items-center">
+              <div class="text-xl font-bold transition-all duration-700 ease-out md:text-3xl">{{ jurusanCount }}</div>
+              <div class="text-sm transition-all duration-700 ease-out md:text-lg">Jurusan</div>
+            </div>
+            <div class="flex flex-col items-center">
+              <div class="text-xl font-bold transition-all duration-700 ease-out md:text-3xl">{{ siswaCount }}+</div>
+              <div class="text-sm transition-all duration-700 ease-out md:text-lg">Siswa</div>
+            </div>
+            <div class="flex flex-col items-center">
+              <div class="text-xl font-bold transition-all duration-700 ease-out md:text-3xl">{{ prestasiCount }}+</div>
+              <div class="text-sm transition-all duration-700 ease-out md:text-lg">Prestasi</div>
+            </div>
           </div>
         </div>
       </div>
@@ -346,7 +354,7 @@ useHead({
           </div>
           <!-- Photo Card -->
           <div class="w-full max-w-md lg:w-2/5">
-            <div class="relative group">
+            <div class="relative max-w-xs group">
               <div
                 class="relative overflow-hidden transition-all duration-500 transform border-4 border-white shadow-2xl rounded-2xl group-hover:scale-105 group-hover:shadow-3xl"
               >
@@ -380,7 +388,7 @@ useHead({
       <div class="container flex flex-col items-center gap-8 mx-auto">
         <!-- Achievement Carousel -->
         <div
-          class="relative flex flex-col w-full gap-6 p-8 mx-auto bg-white border-2 border-blue-100 shadow-xl max-w-7xl rounded-2xl"
+          class="relative flex flex-col w-full max-w-5xl gap-6 p-8 mx-auto bg-white border-2 border-blue-100 shadow-xl rounded-2xl"
         >
           <div class="overflow-hidden">
             <div
@@ -391,7 +399,7 @@ useHead({
                 <div class="flex flex-col items-center gap-8 md:flex-row">
                   <img
                     :src="achievement.image"
-                    class="object-cover w-full rounded-lg shadow-md md:w-1/2 h-[32rem]"
+                    class="object-cover w-full rounded-lg shadow-md h-80 md:w-1/3"
                     alt="Achievement"
                   />
                   <div class="flex flex-col gap-4 text-center md:text-left md:w-1/2 md:pr-5">

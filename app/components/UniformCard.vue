@@ -220,7 +220,7 @@ watch([selectedGrade, selectedGender, useAlmamater], () => {
 const startAutoSlide = () => {
   intervalId = setInterval(() => {
     currentImageIndex.value = (currentImageIndex.value + 1) % currentImages.value.length;
-  }, 3000);
+  }, 4000);
 };
 
 const stopAutoSlide = () => {

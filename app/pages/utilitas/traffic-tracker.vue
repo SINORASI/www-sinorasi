@@ -278,7 +278,7 @@ useHead({
           <!-- Map Background -->
           <div class="relative overflow-hidden h-96 bg-gradient-to-br from-blue-100 to-green-100 rounded-xl">
             <!-- Map Image Placeholder -->
-            <img src="/images/background-aula.jpg" alt="Map Background" class="object-cover w-full h-full opacity-30" />
+            <img src="/images/bg-aula.webp" alt="Map Background" class="object-cover w-full h-full opacity-30" />
 
             <!-- Hotspot Pins -->
             <button
