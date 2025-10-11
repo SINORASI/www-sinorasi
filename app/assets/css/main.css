@@ -46,7 +46,7 @@ body {
 }
 
 /* Accessibility - prefers-reduced-motion */
-@media (prefers-reduced-motion: reduce) {
+/* @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
@@ -67,7 +67,7 @@ body {
   .animate-spin {
     animation: none;
   }
-}
+} */
 
 /* Custom scrollbar with tinted colors */
 ::-webkit-scrollbar {
