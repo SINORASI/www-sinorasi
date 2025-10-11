@@ -7,7 +7,10 @@
     ]"
   >
     <!-- Image Carousel - 4:5 aspect ratio like Instagram -->
-    <div :class="['relative overflow-hidden aspect-[4/5]', bgGradientClass]">
+    <div class="relative overflow-hidden aspect-[4/5]">
+      <!-- Background Gradient -->
+      <div :class="['absolute inset-0', bgGradientClass]"></div>
+
       <!-- Carousel Images -->
       <div class="relative w-full h-full">
         <TransitionGroup name="slide-fade">
@@ -19,7 +22,7 @@
             :alt="`Seragam ${uniformType} Kelas ${selectedGrade} ${
               selectedGender === 'L' ? 'Laki-laki' : 'Perempuan'
             } - ${index + 1}`"
-            class="absolute inset-5 w-[calc(100%-2.5rem)] h-[calc(100%-2.5rem)] object-contain rounded-lg"
+            class="absolute inset-5 w-[calc(100%-2.5rem)] h-[calc(100%-2.5rem)] object-contain rounded-lg z-10"
           />
         </TransitionGroup>
       </div>

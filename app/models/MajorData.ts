@@ -7,4 +7,7 @@ export interface MajorData {
   hoverBgColor: string;
   textColor: string;
   btnColor: string;
+  description: string;
+  prerequisites: string[];
+  relatedCourses: string[];
 }
