@@ -119,11 +119,11 @@ const submitReport = async () => {
           <Transition name="dialog">
             <div
               v-if="showGuidelines"
-              class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+              class="fixed inset-0 z-50 flex items-center justify-center p-4 transition-opacity duration-300 ease-in-out opacity-0 bg-black/50 backdrop-blur-sm"
               @click="showGuidelines = false"
             >
               <div
-                class="bg-white rounded-2xl max-w-md w-full max-h-[80vh] overflow-y-auto shadow-2xl border-2 border-orange-100"
+                class="bg-white rounded-2xl max-w-md w-full max-h-[80vh] overflow-y-auto shadow-2xl border-2 border-orange-100 transition-transform duration-300 ease-in-out scale-90"
                 @click.stop
               >
                 <div class="p-8">
@@ -327,24 +327,3 @@ const submitReport = async () => {
   </div>
 </template>
 
-<style scoped>
-.dialog-enter-active,
-.dialog-leave-active {
-  transition: opacity 0.3s ease;
-}
-
-.dialog-enter-from,
-.dialog-leave-to {
-  opacity: 0;
-}
-
-.dialog-enter-active > div,
-.dialog-leave-active > div {
-  transition: transform 0.3s ease;
-}
-
-.dialog-enter-from > div,
-.dialog-leave-to > div {
-  transform: scale(0.9);
-}
-</style>

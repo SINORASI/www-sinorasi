@@ -53,7 +53,7 @@ useHead({
 </script>
 
 <template>
-  <main class="overflow-x-hidden">
+  <main class="overflow-x-hidden scroll-smooth">
     <!-- Hero Section - Matching Reference Image -->
     <section id="tentang-jurusan" class="relative flex items-center justify-center min-h-screen overflow-hidden">
       <!-- Background with gradient -->
@@ -418,42 +418,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
-}
-
-.animate-float {
-  animation: float 3s ease-in-out infinite;
-}
-
-/* Smooth scrolling for all sections */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
-}
-</style>

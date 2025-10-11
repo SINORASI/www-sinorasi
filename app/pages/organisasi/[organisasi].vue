@@ -536,7 +536,7 @@ useHead({
 
     <!-- Members Dialog -->
     <Teleport to="body">
-      <Transition name="dialog">
+      <Transition enter-active-class="transition-opacity duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]" leave-active-class="transition-opacity duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]" enter-from-class="opacity-0" leave-to-class="opacity-0">
         <div
           v-if="showMembersDialog && organization"
           class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50"
@@ -591,7 +591,7 @@ useHead({
 
     <!-- Section Detail Dialog -->
     <Teleport to="body">
-      <Transition name="dialog">
+      <Transition enter-active-class="transition-opacity duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]" leave-active-class="transition-opacity duration-300 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]" enter-from-class="opacity-0" leave-to-class="opacity-0">
         <div
           v-if="showSeksiBidangDialog && selectedSection"
           class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50"
@@ -699,30 +699,3 @@ useHead({
   </div>
 </template>
 
-<style scoped>
-.dialog-enter-active,
-.dialog-leave-active {
-  transition: opacity 0.3s ease;
-}
-
-.dialog-enter-from,
-.dialog-leave-to {
-  opacity: 0;
-}
-
-.line-clamp-1 {
-  display: -webkit-box;
-  line-clamp: 1;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.line-clamp-3 {
-  display: -webkit-box;
-  line-clamp: 3;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-</style>

@@ -53,18 +53,18 @@ const openCompanyWebsite = (company: Company) => {
       <div class="absolute top-0 bottom-0 right-0 z-10 w-32 bg-gradient-to-l from-white to-transparent"></div>
 
       <div class="py-8">
-        <div ref="sliderRef" class="slider-track">
+        <div ref="sliderRef" class="flex gap-12 slider-track w-max">
           <div
             v-for="(company, index) in duplicatedCompanies"
             :key="`${company.id}-${index}`"
-            class="slide-item"
+            class="flex flex-col items-center transition-transform duration-300 slide-item shrink-0"
             @click="openCompanyWebsite(company)"
           >
-            <div class="company-card">
+            <div class="company-card p-6 rounded-[1rem] transition-all duration-300 cursor-pointer hover:-translate-y-1">
               <img
                 :src="company.logo"
                 :alt="`${company.name} logo`"
-                class="object-contain h-20 transition-all duration-300 w-28 sm:w-36 sm:h-24"
+                class="object-contain h-20 transition-all duration-300 w-28 sm:w-36 sm:h-24 grayscale hover:grayscale-0"
               />
             </div>
             <p class="mt-3 text-xs font-semibold text-center text-gray-700 sm:text-sm">
@@ -79,41 +79,11 @@ const openCompanyWebsite = (company: Company) => {
 
 <style scoped>
 .slider-track {
-  display: flex;
-  gap: 3rem;
-  width: max-content;
   animation: scroll-left var(--animation-duration, 30s) linear infinite;
 }
 
 .slider-track:hover {
   animation-play-state: paused;
-}
-
-.slide-item {
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transition: transform 0.3s ease;
-}
-
-.company-card {
-  padding: 1.5rem;
-  border-radius: 1rem;
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.company-card:hover {
-  transform: translateY(-4px);
-}
-
-.company-card img {
-  filter: grayscale(100%);
-}
-
-.company-card:hover img {
-  filter: grayscale(0%);
 }
 
 @keyframes scroll-left {

@@ -112,7 +112,7 @@ useHead({
           <Transition name="slide">
             <div
               v-show="currentSlide === 0"
-              class="absolute inset-0 flex items-center justify-center w-full h-full bg-black"
+              class="absolute inset-0 flex items-center justify-center w-full h-full bg-black transition-all duration-[0.6s] ease-in-out"
             >
               <div class="flex items-center justify-center w-full h-full px-4 py-8 max-w-7xl">
                 <div class="relative w-full aspect-video">
@@ -137,7 +137,7 @@ useHead({
           <Transition name="slide">
             <div
               v-show="currentSlide === 1"
-              class="absolute inset-0 flex items-center justify-center w-full h-full bg-black"
+              class="absolute inset-0 flex items-center justify-center w-full h-full bg-black transition-all duration-[0.6s] ease-in-out"
             >
               <div class="flex items-center justify-center w-full h-full px-4 py-8 max-w-7xl">
                 <div class="relative w-full aspect-video">
@@ -162,7 +162,7 @@ useHead({
           <Transition name="slide">
             <div
               v-show="currentSlide === 2"
-              class="absolute inset-0 flex items-center justify-center w-full h-full bg-black"
+              class="absolute inset-0 flex items-center justify-center w-full h-full bg-black transition-all duration-[0.6s] ease-in-out"
             >
               <div class="flex items-center justify-center w-full h-full px-4 py-8 max-w-7xl">
                 <div class="relative w-full aspect-video">
@@ -315,20 +315,3 @@ useHead({
     </section>
   </div>
 </template>
-
-<style scoped>
-.slide-enter-active,
-.slide-leave-active {
-  transition: all 0.6s ease-in-out;
-}
-
-.slide-enter-from {
-  opacity: 0;
-  transform: translateX(100%);
-}
-
-.slide-leave-to {
-  opacity: 0;
-  transform: translateX(-100%);
-}
-</style>

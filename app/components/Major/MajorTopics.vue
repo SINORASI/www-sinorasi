@@ -279,38 +279,3 @@ const toggleRightExpanded = (id: string): void => {
   </div>
 </template>
 
-<style scoped>
-/* Expand Animation - Card appears smoothly */
-@keyframes expand {
-  0% {
-    opacity: 0;
-    transform: scaleY(0.95) translateY(-10px);
-  }
-  100% {
-    opacity: 1;
-    transform: scaleY(1) translateY(0);
-  }
-}
-
-/* Slide Down Animation - Description content slides in */
-@keyframes slideDown {
-  0% {
-    opacity: 0;
-    transform: translateY(-15px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-expand {
-  animation: expand 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-  transform-origin: top;
-}
-
-.animate-slide-down {
-  animation: slideDown 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.1s forwards;
-  opacity: 0;
-}
-</style>

@@ -137,9 +137,9 @@ const renderedContent = computed(() => {
 
   let content = news.value.content;
 
-  content = content.replace(/^### (.*$)/gim, '<h3 class="mt-6 mb-3 text-xl font-semibold">$1</h3>');
-  content = content.replace(/^## (.*$)/gim, '<h2 class="mt-8 mb-4 text-2xl font-semibold">$1</h2>');
-  content = content.replace(/^# (.*$)/gim, '<h1 class="mt-8 mb-4 text-3xl font-bold">$1</h1>');
+  content = content.replace(/^### (.*$)/gim, '<h3 class="mt-6 mb-3 text-xl font-semibold text-gray-800">$1</h3>');
+  content = content.replace(/^## (.*$)/gim, '<h2 class="mt-8 mb-4 text-2xl font-semibold text-gray-800">$1</h2>');
+  content = content.replace(/^# (.*$)/gim, '<h1 class="mt-8 mb-4 text-3xl font-bold text-gray-800">$1</h1>');
 
   content = content.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
   content = content.replace(/\*(.*?)\*/g, "<em>$1</em>");
@@ -149,16 +149,16 @@ const renderedContent = computed(() => {
     '<a href="$2" class="text-blue-600 underline hover:text-blue-800">$1</a>'
   );
 
-  content = content.replace(/^\d+\. (.*$)/gim, '<li class="ml-4">$1</li>');
+  content = content.replace(/^\d+\. (.*$)/gim, '<li class="mb-2 ml-4">$1</li>');
   content = content.replace(/(<li.*<\/li>\n?)+/g, (match) => {
     if (match.includes("list-decimal")) return match;
-    return '<ol class="mb-4 list-decimal list-inside">' + match + "</ol>";
+    return '<ol class="mb-4 text-gray-600 list-decimal list-inside">' + match + "</ol>";
   });
 
-  content = content.replace(/^\- (.*$)/gim, '<li class="ml-4">$1</li>');
+  content = content.replace(/^\- (.*$)/gim, '<li class="mb-2 ml-4">$1</li>');
   content = content.replace(/(<li.*<\/li>\n?)+/g, (match) => {
     if (match.includes("list-disc") || match.includes("list-decimal")) return match;
-    return '<ul class="mb-4 list-disc list-inside">' + match + "</ul>";
+    return '<ul class="mb-4 text-gray-600 list-disc list-inside">' + match + "</ul>";
   });
 
   content = content.replace(
@@ -180,7 +180,7 @@ const renderedContent = computed(() => {
       ) {
         return paragraph;
       }
-      return '<p class="mb-4">' + paragraph.replace(/\n/g, "<br>") + "</p>";
+      return '<p class="mb-4 text-gray-600 leading-[1.7]">' + paragraph.replace(/\n/g, "<br>") + "</p>";
     })
     .join("");
 
@@ -210,32 +210,3 @@ useHead({
 });
 </script>
 
-<style scoped>
-.prose :deep(h1),
-.prose :deep(h2),
-.prose :deep(h3) {
-  color: #1f2937;
-}
-
-.prose :deep(p) {
-  color: #4b5563;
-  line-height: 1.7;
-}
-
-.prose :deep(ul) {
-  color: #4b5563;
-}
-
-.prose :deep(li) {
-  margin-bottom: 0.5rem;
-}
-
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
-</style>

@@ -130,7 +130,3 @@ const toggleFAQ = (index: number) => {
     </div>
   </section>
 </template>
-
-<style scoped>
-/* Custom styles if needed */
-</style>

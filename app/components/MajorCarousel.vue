@@ -1,45 +1,45 @@
 <template>
-  <div class="container px-4 py-8 mx-auto">
-    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+  <div class="max-w-[1400px] xl:max-w-[1600px] px-4 py-8 mx-auto">
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:gap-8 lg:gap-4">
       <div
         v-for="card in currentSlideCards"
         :key="card.id"
-        class="video-card-wrapper"
+        class="relative w-full aspect-video"
         @mouseenter="handleMouseEnter(card.id)"
         @mouseleave="handleMouseLeave(card.id)"
         @touchstart="handleTouchStart(card.id)"
         @touchend="handleTouchEnd(card.id)"
         @click="navigateToJurusan(card.slug)"
       >
-        <div class="video-card">
-          <img v-show="hoveredCard !== card.id" :src="card.thumbnail" :alt="card.title" class="thumbnail" />
+        <div class="relative w-full h-full rounded-xl overflow-hidden shadow-[0_4px_6px_rgba(59,130,246,0.1)] cursor-pointer transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:shadow-[0_8px_16px_rgba(59,130,246,0.2)]">
+          <img v-show="hoveredCard !== card.id" :src="card.thumbnail" :alt="card.title" class="absolute object-cover object-center w-full h-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" />
           <!-- YouTube player container -->
           <div
             v-if="card.videoType === 'youtube'"
             :id="`youtube-player-${card.id}`"
-            class="video-element"
-            :class="{ 'video-active': hoveredCard === card.id }"
+            class="absolute object-cover object-center w-full h-full transition-opacity duration-300 ease-in-out -translate-x-1/2 -translate-y-1/2 opacity-0 pointer-events-none top-1/2 left-1/2"
+            :class="{ 'opacity-100': hoveredCard === card.id }"
           />
 
           <!-- Logo and title positioned above overlay - fade on hover -->
-          <div :class="['card-header', { 'card-header-hidden': hoveredCard === card.id }]">
-            <div class="card-header-content">
-              <div class="card-logo">
-                <img :src="card.logo" alt="Logo Jurusan" width="32" height="32" />
+          <div :class="['absolute top-3 left-3 right-3 z-10 opacity-100 transition-opacity duration-300 ease-in-out md:top-2.5 md:left-2.5 md:right-2.5 sm:top-2 sm:left-2 sm:right-2', { 'opacity-0': hoveredCard === card.id }]">
+            <div class="flex items-center gap-2 bg-black/70 backdrop-blur-md p-2 rounded-lg shadow-[0_2px_8px_rgba(0,0,0,0.3)] md:p-1.5 md:px-2.5 md:gap-1.5 sm:p-1.25 sm:px-2 sm:gap-1.25">
+              <div class="flex-shrink-0">
+                <img :src="card.logo" alt="Logo Jurusan" class="w-8 h-8 object-contain drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)] md:w-7 md:h-7 sm:w-6 sm:h-6" />
               </div>
-              <h4 class="card-title">{{ card.title }}</h4>
+              <h4 class="text-white text-sm font-semibold text-shadow-[0_1px_2px_rgba(0,0,0,0.7)] m-0 leading-tight line-clamp-1 overflow-hidden md:text-xs sm:text-xs">{{ card.title }}</h4>
             </div>
           </div>
 
-          <div class="content-overlay" :class="{ 'content-visible': hoveredCard === card.id }">
-            <div class="content-wrapper">
-              <div class="content-left">
-                <h3 class="title">{{ card.title }}</h3>
-                <p class="description">{{ card.description }}</p>
-                <button @click.stop="navigateToJurusan(card.slug)" class="learn-more-btn">Pelajari Lebih</button>
+          <div :class="['absolute bottom-0 left-0 right-0 h-[30%] bg-gradient-to-t from-black/90 via-black/70 to-transparent backdrop-blur-xl px-4 pb-4 translate-y-full transition-transform duration-500 ease-out opacity-0 flex items-end md:p-4 md:h-[35%] sm:h-[30%]', { 'translate-y-0 opacity-100': hoveredCard === card.id }]">
+            <div class="flex items-start justify-between text-white md:flex-col md:items-center md:gap-3 sm:flex-col sm:items-center sm:gap-2">
+              <div class="flex-1 mr-4 md:mr-0 md:text-center sm:mr-0 sm:text-center">
+                <h3 class="text-lg font-bold leading-tight md:text-lg sm:text-base">{{ card.title }}</h3>
+                <p class="overflow-hidden text-sm leading-relaxed opacity-95 line-clamp-1 md:text-xs md:line-clamp-2">{{ card.description }}</p>
+                <button @click.stop="navigateToJurusan(card.slug)" class="bg-white/20 text-white border border-white/30 px-4 py-2 rounded-md text-sm font-medium cursor-pointer transition-all duration-200 mt-2 hover:bg-white/30 hover:border-white/50 hover:-translate-y-0.5">Pelajari Lebih</button>
               </div>
-              <div class="logo">
-                <img :src="card.logo" alt="Logo Jurusan" width="60" height="60" />
+              <div class="block">
+                <img :src="card.logo" alt="Logo Jurusan" class="w-[60px] h-[60px] object-contain md:w-[50px] md:h-[50px]" />
               </div>
             </div>
           </div>
@@ -47,10 +47,10 @@
       </div>
     </div>
 
-    <div class="navigation">
-      <button class="nav-btn" @click="prevSlide" :disabled="currentSlide === 0">← Kembali</button>
-      <button class="nav-btn view-all-btn" @click="navigateToMajorsList">Lihat Selengkapnya</button>
-      <button class="nav-btn" @click="nextSlide" :disabled="currentSlide === totalSlides - 1">Selanjutnya →</button>
+    <div class="flex flex-wrap justify-center gap-4 mt-12 xl:mt-14 lg:mt-10">
+      <button class="px-6 py-2.5 bg-[#146fee] text-white border-none rounded-lg text-sm font-medium cursor-pointer transition-all duration-200 w-[150px] hover:not(:disabled):bg-[#5c91e7] hover:not(:disabled):-translate-y-0.5 disabled:bg-gray-500 disabled:cursor-not-allowed disabled:opacity-50 xl:w-[180px] sm:text-xs sm:px-4 sm:py-2" @click="prevSlide" :disabled="currentSlide === 0">← Kembali</button>
+      <button class="px-6 py-2.5 bg-[#146fee] text-white border-none rounded-lg text-sm font-medium cursor-pointer transition-all duration-200 w-[150px] hover:not(:disabled):bg-[#5c91e7] hover:not(:disabled):-translate-y-0.5 disabled:bg-gray-500 disabled:cursor-not-allowed disabled:opacity-50 xl:w-[180px] sm:text-xs sm:px-4 sm:py-2 bg-blue-600 px-[26px] py-3 w-[200px] font-semibold text-[0.9rem] hover:not(:disabled):bg-blue-700 hover:not(:disabled):-translate-y-0.5 hover:not(:disabled):shadow-[0_4px_12px_rgba(37,99,235,0.3)] xl:w-[220px]" @click="navigateToMajorsList">Lihat Selengkapnya</button>
+      <button class="px-6 py-2.5 bg-[#146fee] text-white border-none rounded-lg text-sm font-medium cursor-pointer transition-all duration-200 w-[150px] hover:not(:disabled):bg-[#5c91e7] hover:not(:disabled):-translate-y-0.5 disabled:bg-gray-500 disabled:cursor-not-allowed disabled:opacity-50 xl:w-[180px] sm:text-xs sm:px-4 sm:py-2" @click="nextSlide" :disabled="currentSlide === totalSlides - 1">Selanjutnya →</button>
     </div>
   </div>
 </template>
@@ -362,391 +362,3 @@ const navigateToMajorsList = () => {
 };
 </script>
 
-<style scoped>
-.container {
-  max-width: 1400px;
-}
-
-.video-card-wrapper {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-}
-
-.video-card {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.1);
-  cursor: pointer;
-  transition: transform 0.3s ease;
-}
-
-.video-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 16px rgba(59, 130, 246, 0.2);
-}
-
-.thumbnail,
-.video-element {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-}
-
-.video-element {
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-}
-
-.video-element iframe {
-  width: 100%;
-  height: 100%;
-}
-
-.video-active {
-  opacity: 1;
-}
-
-.card-header {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  right: 12px;
-  z-index: 2;
-  opacity: 1;
-  transition: opacity 0.3s ease;
-}
-
-.card-header-hidden {
-  opacity: 0;
-}
-
-.card-header-content {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  padding: 8px 12px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-}
-
-.card-logo {
-  flex-shrink: 0;
-}
-
-.card-logo img {
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
-  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
-}
-
-.card-title {
-  color: white;
-  font-size: 0.9rem;
-  font-weight: 600;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
-  margin: 0;
-  line-height: 1.2;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.content-overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 30%;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.7) 50%, transparent 100%);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  padding: 0px 16px 16px 16px;
-  transform: translateY(100%);
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  opacity: 0;
-  display: flex;
-  align-items: flex-end;
-}
-
-.content-visible {
-  transform: translateY(0);
-  opacity: 1;
-}
-
-.content-wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  color: white;
-}
-
-.content-left {
-  flex: 1;
-  margin-right: 16px;
-}
-
-.logo {
-  display: block;
-}
-
-.logo img {
-  width: 60px;
-  height: 60px;
-  object-fit: contain;
-}
-
-.title {
-  font-size: 1.15rem;
-  font-weight: 700;
-  line-height: 1.3;
-}
-
-.description {
-  font-size: 0.875rem;
-  line-height: 1.5;
-  opacity: 0.95;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.navigation {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-  margin-top: 48px;
-  flex-wrap: wrap;
-}
-
-.nav-btn {
-  padding: 10px 24px;
-  background: #146fee;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-  width: 150px;
-}
-
-.nav-btn:hover:not(:disabled) {
-  background: #5c91e7;
-  transform: translateY(-2px);
-}
-
-.nav-btn:disabled {
-  background: #6b7280;
-  cursor: not-allowed;
-  opacity: 0.5;
-}
-
-.view-all-btn {
-  background: #2563eb !important;
-  padding: 12px 26px !important;
-  width: 200px !important;
-  font-weight: 600 !important;
-  font-size: 0.9rem !important;
-}
-
-.view-all-btn:hover:not(:disabled) {
-  background: #1d4ed8 !important;
-  transform: translateY(-2px) !important;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3) !important;
-}
-
-.learn-more-btn {
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-  margin-top: 8px;
-}
-
-.learn-more-btn:hover {
-  background: rgba(255, 255, 255, 0.3);
-  border-color: rgba(255, 255, 255, 0.5);
-  transform: translateY(-1px);
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
-
-  .video-card-wrapper {
-    aspect-ratio: 16 / 9;
-  }
-
-  .title {
-    font-size: 1.1rem;
-  }
-
-  .description {
-    font-size: 0.8rem;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-  }
-
-  .content-overlay {
-    padding: 16px;
-  }
-
-  .content-wrapper {
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .content-left {
-    margin-right: 0;
-    text-align: center;
-  }
-
-  .logo img {
-    width: 50px;
-    height: 50px;
-  }
-
-  .card-header {
-    top: 10px;
-    left: 10px;
-    right: 10px;
-  }
-
-  .card-header-content {
-    padding: 6px 10px;
-    gap: 6px;
-  }
-
-  .card-logo img {
-    width: 28px;
-    height: 28px;
-  }
-
-  .card-title {
-    font-size: 0.8rem;
-  }
-
-  .thumbnail-overlay {
-    height: 35px;
-  }
-}
-
-@media (max-width: 640px) {
-  .video-card-wrapper {
-    aspect-ratio: 16 / 9;
-  }
-
-  .title {
-    font-size: 1rem;
-  }
-
-  .content-wrapper {
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .content-left {
-    margin-right: 0;
-    text-align: center;
-  }
-
-  .card-header {
-    top: 8px;
-    left: 8px;
-    right: 8px;
-  }
-
-  .card-header-content {
-    padding: 5px 8px;
-    gap: 5px;
-  }
-
-  .card-logo img {
-    width: 24px;
-    height: 24px;
-  }
-
-  .card-title {
-    font-size: 0.75rem;
-  }
-
-  .thumbnail-overlay {
-    height: 30px;
-  }
-
-  .nav-btn {
-    font-size: 0.8rem;
-    padding: 8px 16px;
-  }
-}
-
-/* Tablet: 768px - 1024px */
-@media (min-width: 768px) and (max-width: 1024px) {
-  .grid {
-    gap: 1rem;
-  }
-
-  .video-card-wrapper {
-    /* Tablet specific adjustments for spacing */
-  }
-
-  .navigation {
-    margin-top: 40px;
-  }
-}
-
-/* Desktop: >1024px */
-@media (min-width: 1024px) {
-  .container {
-    max-width: 1600px;
-  }
-
-  .grid {
-    gap: 2rem;
-  }
-
-  .video-card {
-    /* Prevent distortion with larger screens */
-  }
-
-  .navigation {
-    margin-top: 56px;
-  }
-
-  .nav-btn {
-    width: 180px;
-  }
-
-  .view-all-btn {
-    width: 220px !important;
-  }
-}
-</style>

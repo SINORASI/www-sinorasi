@@ -1,9 +1,9 @@
-<template>
-  <transition name="sidebar">
+2<template>
+  <transition name="sidebar" class="transition-all duration-300 ease-in-out">
     <div v-if="isOpen" class="fixed inset-0 z-[9000] flex">
-      <div class="fixed inset-0 sidebar-backdrop bg-black/50 backdrop-blur-sm" @click="$emit('close')"></div>
+      <div class="fixed inset-0 transition-opacity duration-300 ease-in-out bg-black/50 backdrop-blur-sm" @click="$emit('close')"></div>
 
-      <div class="relative flex flex-col w-full h-full bg-white shadow-2xl sidebar-panel sm:ml-auto sm:w-96">
+      <div class="relative flex flex-col w-full h-full transition-transform duration-300 ease-in-out bg-white shadow-2xl sm:ml-auto sm:w-96">
         <div class="flex items-center justify-between flex-shrink-0 gap-3 p-4 border-b border-gray-200">
           <div class="flex-1 min-w-0">
             <h2 class="text-lg font-semibold text-gray-800 truncate">{{ pageTitle }}</h2>
@@ -912,34 +912,3 @@ const toggleSection = (title: string) => {
 };
 </script>
 
-<style scoped>
-.sidebar-enter-active,
-.sidebar-leave-active {
-  transition: all 0.3s ease-in-out;
-}
-
-.sidebar-enter-from,
-.sidebar-leave-to {
-  opacity: 0;
-}
-
-.sidebar-enter-active .sidebar-panel,
-.sidebar-leave-active .sidebar-panel {
-  transition: transform 0.3s ease-in-out;
-}
-
-.sidebar-enter-from .sidebar-panel,
-.sidebar-leave-to .sidebar-panel {
-  transform: translateX(100%);
-}
-
-.sidebar-enter-active .sidebar-backdrop,
-.sidebar-leave-active .sidebar-backdrop {
-  transition: opacity 0.3s ease-in-out;
-}
-
-.sidebar-enter-from .sidebar-backdrop,
-.sidebar-leave-to .sidebar-backdrop {
-  opacity: 0;
-}
-</style>

@@ -249,7 +249,7 @@ const filteredPartners = computed(() => {
 
   <!-- Fullscreen Dialog -->
   <Teleport to="body">
-    <Transition name="dialog">
+    <Transition name="dialog" class="transition-opacity duration-300 ease-in-out">
       <div
         v-if="showDialog && selectedPartner"
         class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50"
@@ -370,14 +370,3 @@ const filteredPartners = computed(() => {
   </Teleport>
 </template>
 
-<style scoped>
-.dialog-enter-active,
-.dialog-leave-active {
-  transition: opacity 0.3s ease;
-}
-
-.dialog-enter-from,
-.dialog-leave-to {
-  opacity: 0;
-}
-</style>

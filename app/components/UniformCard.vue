@@ -13,7 +13,12 @@
 
       <!-- Carousel Images -->
       <div class="relative w-full h-full">
-        <TransitionGroup name="slide-fade">
+        <TransitionGroup
+          enter-active-class="transition-all duration-600 ease-[cubic-bezier(0.25,0.1,0.25,1)]"
+          leave-active-class="transition-all duration-600 ease-[cubic-bezier(0.25,0.1,0.25,1)]"
+          enter-from-class="opacity-0 translate-x-[30px]"
+          leave-to-class="opacity-0 -translate-x-[30px]"
+        >
           <img
             v-for="(image, index) in currentImages"
             v-show="index === currentImageIndex"
@@ -47,7 +52,12 @@
         </button>
 
         <!-- Popup Menu -->
-        <Transition name="menu-fade">
+        <Transition
+          enter-active-class="transition-all duration-200 ease-out"
+          leave-active-class="transition-all duration-150 ease-in"
+          enter-from-class="opacity-0 -translate-y-[10px] scale-[0.95]"
+          leave-to-class="opacity-0 -translate-y-[10px] scale-[0.95]"
+        >
           <div
             v-if="isMenuOpen"
             class="absolute top-full left-0 mt-2 backdrop-blur-xl bg-white/95 border border-white/50 rounded-xl shadow-2xl overflow-hidden min-w-[200px]"
@@ -313,40 +323,3 @@ const tabBorderClass = computed(() => {
 });
 </script>
 
-<style scoped>
-.slide-fade-enter-active {
-  transition: all 0.6s ease;
-}
-
-.slide-fade-leave-active {
-  transition: all 0.6s ease;
-}
-
-.slide-fade-enter-from {
-  opacity: 0;
-  transform: translateX(30px);
-}
-
-.slide-fade-leave-to {
-  opacity: 0;
-  transform: translateX(-30px);
-}
-
-.menu-fade-enter-active {
-  transition: all 0.2s ease-out;
-}
-
-.menu-fade-leave-active {
-  transition: all 0.15s ease-in;
-}
-
-.menu-fade-enter-from {
-  opacity: 0;
-  transform: translateY(-10px) scale(0.95);
-}
-
-.menu-fade-leave-to {
-  opacity: 0;
-  transform: translateY(-10px) scale(0.95);
-}
-</style>

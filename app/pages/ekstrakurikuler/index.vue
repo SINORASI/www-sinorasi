@@ -280,7 +280,7 @@ useHead({
 
     <!-- Dialog Modal -->
     <Teleport to="body">
-      <Transition name="dialog">
+      <Transition enter-active-class="transition-opacity duration-300" enter-from-class="opacity-0" leave-active-class="transition-opacity duration-300" leave-to-class="opacity-0">
         <div
           v-if="isDialogOpen"
           class="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto bg-black bg-opacity-50"
@@ -385,14 +385,3 @@ useHead({
   </div>
 </template>
 
-<style scoped>
-.dialog-enter-active,
-.dialog-leave-active {
-  transition: opacity 0.3s ease;
-}
-
-.dialog-enter-from,
-.dialog-leave-to {
-  opacity: 0;
-}
-</style>

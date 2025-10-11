@@ -71,7 +71,7 @@ const getVisibleMembers = (): CarouselMember[] => {
   <section class="flex items-center justify-center w-full h-screen bg-neutral-500 py-30">
     <div class="flex items-center justify-around gap-20">
       <img src="/images/logo-smk.webp" alt="Logo" class="object-contain h-60 w-60" />
-      <h1 class="text-6xl font-bold text-transparent whitespace-nowrap" style="-webkit-text-stroke: 1px white">
+      <h1 class="text-6xl font-bold text-transparent whitespace-nowrap [-webkit-text-stroke:1px_white]">
         PASKIBRA
       </h1>
     </div>
@@ -431,7 +431,7 @@ const getVisibleMembers = (): CarouselMember[] => {
 
   <!-- Full Screen Members Dialog -->
   <Teleport to="body">
-    <Transition name="fade">
+    <Transition name="fade" class="[&_.fade-enter-active]:transition-opacity [&_.fade-enter-active]:duration-300 [&_.fade-enter-active]:ease-in-out [&_.fade-leave-active]:transition-opacity [&_.fade-leave-active]:duration-300 [&_.fade-leave-active]:ease-in-out [&_.fade-enter-from]:opacity-0 [&_.fade-leave-to]:opacity-0">
       <div v-if="showMembersDialog" class="fixed inset-0 z-50 overflow-y-auto bg-white">
         <!-- Close Button -->
         <button
@@ -617,7 +617,7 @@ const getVisibleMembers = (): CarouselMember[] => {
 
   <!-- Seksi Bidang Detail Dialog -->
   <Teleport to="body">
-    <Transition name="fade">
+    <Transition name="fade" class="[&_.fade-enter-active]:transition-opacity [&_.fade-enter-active]:duration-300 [&_.fade-enter-active]:ease-in-out [&_.fade-leave-active]:transition-opacity [&_.fade-leave-active]:duration-300 [&_.fade-leave-active]:ease-in-out [&_.fade-enter-from]:opacity-0 [&_.fade-leave-to]:opacity-0">
       <div v-if="showSeksiBidangDialog" class="fixed inset-0 z-50 overflow-y-auto bg-white">
         <!-- Close Button -->
         <button
@@ -777,14 +777,3 @@ const getVisibleMembers = (): CarouselMember[] => {
   </Teleport>
 </template>
 
-<style scoped>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-</style>

@@ -766,18 +766,17 @@ useHead({
         </div>
 
         <!-- Desktop Timeline -->
-        <div v-else class="timeline-container">
-          <div class="timeline-line-gradient"></div>
+        <div v-else class="relative max-w-[900px] mx-auto py-12">
+          <div class="absolute left-1/2 top-0 bottom-0 w-1 bg-[linear-gradient(to_bottom,transparent_0%_10%,#3b82f6_10%_50%,#2563eb_50%_90%,#3b82f6_90%_100%,transparent)] -translate-x-1/2 rounded-sm shadow-[0_0_20px_rgba(59,130,246,0.3)]"></div>
 
           <div
             v-for="(item, index) in timelineItems"
             :key="index"
-            class="timeline-item"
-            :class="index % 2 === 0 ? 'left' : 'right'"
+            class="relative clear-both mb-16 group"
           >
             <!-- Content Card -->
             <div
-              class="p-8 transition-all duration-300 bg-white border-2 border-blue-100 shadow-xl timeline-content rounded-2xl hover:border-blue-300 hover:shadow-2xl hover:scale-105 group"
+              :class="['p-8 transition-all duration-300 bg-white border-2 border-blue-100 shadow-xl rounded-2xl hover:border-blue-300 hover:shadow-2xl hover:scale-105 group', index % 2 === 0 ? 'text-right mr-12 w-[42%] float-left' : 'text-left ml-12 w-[42%] float-right']"
             >
               <div
                 :class="[
@@ -804,10 +803,10 @@ useHead({
             </div>
 
             <!-- Marker Icon -->
-            <div class="timeline-marker-enhanced">
+            <div class="absolute z-10 -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2">
               <div
                 :class="[
-                  'timeline-marker-inner',
+                  'w-16 h-16 rounded-full flex items-center justify-center shadow-[0_8px_24px_rgba(59,130,246,0.15)] border-[5px] border-white transition-all duration-300 ease-in-out group-hover:scale-110 group-hover:rotate-[5deg] group-hover:shadow-[0_12px_32px_rgba(59,130,246,0.2)]',
                   index % 2 === 0
                     ? 'bg-gradient-to-br from-blue-500 to-blue-700'
                     : 'bg-gradient-to-br from-orange-500 to-orange-700',
@@ -819,7 +818,7 @@ useHead({
 
             <!-- Connector Line -->
             <div
-              :class="['timeline-connector', index % 2 === 0 ? 'timeline-connector-left' : 'timeline-connector-right']"
+              :class="['absolute top-1/2 w-[60px] h-[3px] -translate-y-1/2', index % 2 === 0 ? 'right-1/2 mr-8 bg-[linear-gradient(to_right,transparent,#3b82f6)]' : 'left-1/2 ml-8 bg-[linear-gradient(to_left,transparent,#3b82f6)]']"
             ></div>
           </div>
         </div>
@@ -938,109 +937,3 @@ useHead({
   </main>
 </template>
 
-<style scoped>
-:root {
-  --model-uniform-height: 300px;
-}
-
-/* Desktop Timeline Styles */
-.timeline-container {
-  position: relative;
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 3rem 0;
-}
-
-.timeline-line-gradient {
-  position: absolute;
-  left: 50%;
-  top: 0;
-  bottom: 0;
-  width: 4px;
-  background: linear-gradient(to bottom, transparent, #3b82f6 10%, #2563eb 50%, #3b82f6 90%, transparent);
-  transform: translateX(-50%);
-  border-radius: 2px;
-  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
-}
-
-.timeline-item {
-  position: relative;
-  margin-bottom: 4rem;
-  clear: both;
-}
-
-.timeline-item.left .timeline-content {
-  text-align: right;
-  margin-right: 3rem;
-  width: 42%;
-  float: left;
-}
-
-.timeline-item.right .timeline-content {
-  text-align: left;
-  margin-left: 3rem;
-  width: 42%;
-  float: right;
-}
-
-.timeline-marker-enhanced {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 10;
-}
-
-.timeline-marker-inner {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 8px 24px rgba(59, 130, 246, 0.15);
-  border: 5px solid white;
-  transition: all 0.3s ease;
-}
-
-.timeline-item:hover .timeline-marker-inner {
-  transform: scale(1.15) rotate(5deg);
-  box-shadow: 0 12px 32px rgba(59, 130, 246, 0.2);
-}
-
-.timeline-connector {
-  position: absolute;
-  top: 50%;
-  width: 60px;
-  height: 3px;
-  background: linear-gradient(to right, transparent, #3b82f6);
-  transform: translateY(-50%);
-}
-
-.timeline-connector-left {
-  right: 50%;
-  margin-right: 32px;
-}
-
-.timeline-connector-right {
-  left: 50%;
-  margin-left: 32px;
-  background: linear-gradient(to left, transparent, #3b82f6);
-}
-
-/* Animations */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.timeline-item {
-  animation: fadeInUp 0.6s ease-out;
-}
-</style>

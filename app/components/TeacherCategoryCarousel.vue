@@ -57,7 +57,7 @@
     <!-- Full Screen Dialog -->
     <Teleport to="body">
       <Transition name="dialog">
-        <div v-if="isDialogOpen" class="fixed inset-0 z-50 overflow-y-auto bg-white" @click.self="closeDialog">
+        <div v-if="isDialogOpen" class="fixed inset-0 z-50 overflow-y-auto transition-opacity duration-300 bg-white" @click.self="closeDialog">
           <div class="min-h-screen p-8 py-30">
             <!-- Header -->
             <div class="mx-auto mb-8 max-w-7xl">
@@ -213,18 +213,3 @@ const closeDialog = () => {
 };
 </script>
 
-<style scoped>
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
-
-.dialog-enter-active,
-.dialog-leave-active {
-  transition: opacity 0.3s ease;
-}
-
-.dialog-enter-from,
-.dialog-leave-to {
-  opacity: 0;
-}
-</style>
