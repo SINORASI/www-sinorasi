@@ -60,7 +60,7 @@ const toggleExpanded = (id: number): void => {
             </div>
 
             <!-- Job Title -->
-            <span class="flex-1 text-lg font-bold text-left text-white break-words md:text-xl lg:text-2xl">
+            <span class="flex-1 text-lg font-semibold text-left text-white break-words md:text-xl lg:text-2xl">
               {{ career.title }}
             </span>
 
@@ -82,14 +82,14 @@ const toggleExpanded = (id: number): void => {
           <!-- Dropdown Content -->
           <div
             v-if="career.description"
-            :style="`background-color: ${majorColor.bg}`"
+            :style="`background-color: ${majorColor.light}`"
             :class="[
               'transition-all duration-300 ease-in-out overflow-hidden',
               items[idx] ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0',
             ]"
           >
             <div class="px-4 py-4 border-t border-gray-200 md:px-5 md:py-5 lg:px-6 lg:py-6">
-              <p class="text-base leading-relaxed text-white break-words whitespace-pre-line md:text-lg lg:text-xl">
+              <p class="text-base leading-relaxed text-gray-700 break-words whitespace-pre-line md:text-lg lg:text-xl">
                 {{ career.description }}
               </p>
             </div>

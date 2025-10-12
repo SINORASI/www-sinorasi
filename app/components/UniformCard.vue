@@ -322,4 +322,3 @@ const tabBorderClass = computed(() => {
   return borderColors[props.primaryColor];
 });
 </script>
-

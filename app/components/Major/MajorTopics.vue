@@ -26,6 +26,15 @@ const major = props.major || (route.params.majorName as MajorName);
 
 const majorColor = computed(() => majorColorSchemes[major]);
 
+const hexToRgb = (hex: string) => {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return { r, g, b };
+};
+
+const majorColorRgb = computed(() => hexToRgb(majorColor.value.primary));
+
 // Split topics into two columns dynamically
 const leftColumnTopics = computed(() => {
   const topics = majorTopics.value?.[major] || [];
@@ -130,7 +139,7 @@ const toggleRightExpanded = (id: string): void => {
           </button>
 
           <!-- Expanded State -->
-          <div v-else class="overflow-hidden shadow-lg rounded-xl animate-expand" :style="`background-color: ${majorColor.bg}`">
+          <div v-else class="overflow-hidden border shadow-lg rounded-xl animate-expand backdrop-blur-xl border-white/20" :style="`background: rgba(${majorColorRgb.r}, ${majorColorRgb.g}, ${majorColorRgb.b}, 0.2);`">
             <!-- Header (Clickable to collapse) -->
             <button @click="toggleLeftExpanded(topic.id)" class="w-full group">
               <div
@@ -158,7 +167,7 @@ const toggleRightExpanded = (id: string): void => {
             </button>
 
             <!-- Content Area with Animation -->
-            <div class="p-4 md:p-5 lg:p-6 animate-slide-down">
+            <div class="p-4 md:p-5 lg:p-6 animate-slide-down" >
               <p class="text-sm leading-relaxed text-gray-700 md:text-base">
                 {{ topic.description }}
               </p>
@@ -197,7 +206,7 @@ const toggleRightExpanded = (id: string): void => {
           </button>
 
           <!-- Expanded State -->
-          <div v-else class="overflow-hidden shadow-lg rounded-xl animate-expand" :style="`background-color: ${majorColor.bg}`">
+          <div v-else class="overflow-hidden border shadow-lg rounded-xl animate-expand backdrop-blur-xl border-white/20" :style="`background: rgba(${majorColorRgb.r}, ${majorColorRgb.g}, ${majorColorRgb.b}, 0.2);`">
             <!-- Header (Clickable to collapse) -->
             <button @click="toggleRightExpanded(topic.id)" class="w-full group">
               <div

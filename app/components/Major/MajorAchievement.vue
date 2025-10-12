@@ -31,19 +31,7 @@ const achievements = computed(() => achievementsData.value || []);
 
 // Get major color scheme
 const majorColor = computed(() => {
-  return (
-    majorColorSchemes[major] || {
-      primary: "#f97316",
-      secondary: "#ea580c",
-      accent: "#FFB366",
-      light: "#FFF3E8",
-      text: "#1f2937",
-      bg: "#ffffff",
-      hoverBg: "#fff7ed",
-      border: "#fed7aa",
-      headerBg: "#fff7ed",
-    }
-  );
+  return majorColorSchemes[major];
 });
 
 const currentAchievement = computed(() => {
@@ -360,4 +348,3 @@ const closeModal = (): void => {
     </Teleport>
   </div>
 </template>
-
