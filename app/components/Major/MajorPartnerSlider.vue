@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
 import type { MajorName } from "~/models/MajorName";
+import { majorColorSchemes } from "~/utils/majorColors";
 
 const props = defineProps<{
-  major?: MajorName;
+  major: MajorName;
 }>();
 
 interface Company {
@@ -14,7 +15,9 @@ interface Company {
 }
 
 const route = useRoute();
-const major = props.major || (route.params.majorName as MajorName);
+const major = props.major;
+
+const majorColor = computed(() => majorColorSchemes[major]);
 
 // Fetch partners data from API
 const { data: partnersData } = await useFetch<Company[]>(`/api/partners/${major}`);
@@ -47,10 +50,10 @@ const openCompanyWebsite = (company: Company) => {
 </script>
 
 <template>
-  <div class="w-full py-12 overflow-hidden bg-white">
+  <div class="w-full py-12 overflow-hidden">
     <div class="relative w-full overflow-hidden">
-      <div class="absolute top-0 bottom-0 left-0 z-10 w-32 bg-gradient-to-r from-white to-transparent"></div>
-      <div class="absolute top-0 bottom-0 right-0 z-10 w-32 bg-gradient-to-l from-white to-transparent"></div>
+      <div class="absolute top-0 bottom-0 left-0 z-10 w-32"></div>
+      <div class="absolute top-0 bottom-0 right-0 z-10 w-32"></div>
 
       <div class="py-8">
         <div ref="sliderRef" class="flex gap-12 slider-track w-max">

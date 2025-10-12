@@ -21,16 +21,16 @@ const { data: majorDatas } = await useFetch<Record<MajorName, MajorData>>("/api/
 const majorColor = computed(
   () =>
     majorColorSchemes[major] || {
-      primary: "#667eea",
-      secondary: "#764ba2",
-      accent: "#9f7aea",
-      light: "#f3f4f6",
-      text: "#667eea",
-      bg: "#667eea",
-      hoverBg: "#764ba2",
-      border: "#667eea",
-      headerBg: "rgba(102, 126, 234, 0.3)",
-      gradient: "linear-gradient(135deg, #667eea, #764ba2)",
+      primary: "#3598F9",
+      secondary: "#2E7CE6",
+      accent: "#6BB4FF",
+      light: "#E8F4FF",
+      text: "#3598F9",
+      bg: "#3598F9",
+      hoverBg: "#2E7CE6",
+      border: "#3598F9",
+      headerBg: "rgba(53, 152, 249, 0.3)",
+      gradient: "linear-gradient(135deg, #3598F9, #2E7CE6)",
     }
 );
 
@@ -68,8 +68,8 @@ useHead({
               <!-- School Logo -->
               <div class="w-full max-w-md lg:max-w-lg">
                 <img
-                  src="/images/logo-smk.webp"
-                  alt="SMKN 2 Singosari Logo"
+                  src="/images/majorIcon/logo-dkv.webp"
+                  alt="DKV Logo"
                   class="object-contain w-full h-auto drop-shadow-2xl"
                 />
               </div>

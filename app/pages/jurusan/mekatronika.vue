@@ -21,16 +21,16 @@ const { data: majorDatas } = await useFetch<Record<MajorName, MajorData>>("/api/
 const majorColor = computed(
   () =>
     majorColorSchemes[major] || {
-      primary: "#667eea",
-      secondary: "#764ba2",
-      accent: "#9f7aea",
-      light: "#f3f4f6",
-      text: "#667eea",
-      bg: "#667eea",
-      hoverBg: "#764ba2",
-      border: "#667eea",
-      headerBg: "rgba(102, 126, 234, 0.3)",
-      gradient: "linear-gradient(135deg, #667eea, #764ba2)",
+      primary: "#57A77C",
+      secondary: "#4E9670",
+      accent: "#7FC09D",
+      light: "#EDF7F2",
+      text: "#57A77C",
+      bg: "#57A77C",
+      hoverBg: "#4E9670",
+      border: "#57A77C",
+      headerBg: "rgba(87, 167, 124, 0.3)",
+      gradient: "linear-gradient(135deg, #57A77C, #4E9670)"
     }
 );
 
@@ -53,7 +53,7 @@ useHead({
 </script>
 
 <template>
-  <main class="overflow-x-hidden">
+  <main class="overflow-x-hidden scroll-smooth">
     <!-- Hero Section - Matching Reference Image -->
     <section id="tentang-jurusan" class="relative flex items-center justify-center min-h-screen overflow-hidden">
       <!-- Background with gradient -->
@@ -68,8 +68,8 @@ useHead({
               <!-- School Logo -->
               <div class="w-full max-w-md lg:max-w-lg">
                 <img
-                  src="/images/logo-smk.webp"
-                  alt="SMKN 2 Singosari Logo"
+                  src="/images/majorIcon/logo-mt.webp"
+                  alt="Mekatronika Logo"
                   class="object-contain w-full h-auto drop-shadow-2xl"
                 />
               </div>

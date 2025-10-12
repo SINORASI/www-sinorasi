@@ -1,6 +1,6 @@
 export interface JobTitle {
   id: string;
-  image: string;
+  icon: string;
   title: string;
   description: string;
 }

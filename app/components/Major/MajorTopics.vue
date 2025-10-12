@@ -24,22 +24,7 @@ const rightOpenOrder = ref<string[]>([]);
 const route = useRoute();
 const major = props.major || (route.params.majorName as MajorName);
 
-// Get major color scheme
-const majorColor = computed(() => {
-  return (
-    majorColorSchemes[major] || {
-      primary: "#f97316",
-      secondary: "#ea580c",
-      accent: "#FFB366",
-      light: "#FFF3E8",
-      text: "#1f2937",
-      bg: "#ffffff",
-      hoverBg: "#fff7ed",
-      border: "#fed7aa",
-      headerBg: "#fff7ed",
-    }
-  );
-});
+const majorColor = computed(() => majorColorSchemes[major]);
 
 // Split topics into two columns dynamically
 const leftColumnTopics = computed(() => {
@@ -145,7 +130,7 @@ const toggleRightExpanded = (id: string): void => {
           </button>
 
           <!-- Expanded State -->
-          <div v-else class="overflow-hidden bg-white shadow-lg rounded-xl animate-expand">
+          <div v-else class="overflow-hidden shadow-lg rounded-xl animate-expand" :style="`background-color: ${majorColor.bg}`">
             <!-- Header (Clickable to collapse) -->
             <button @click="toggleLeftExpanded(topic.id)" class="w-full group">
               <div
@@ -212,7 +197,7 @@ const toggleRightExpanded = (id: string): void => {
           </button>
 
           <!-- Expanded State -->
-          <div v-else class="overflow-hidden bg-white shadow-lg rounded-xl animate-expand">
+          <div v-else class="overflow-hidden shadow-lg rounded-xl animate-expand" :style="`background-color: ${majorColor.bg}`">
             <!-- Header (Clickable to collapse) -->
             <button @click="toggleRightExpanded(topic.id)" class="w-full group">
               <div

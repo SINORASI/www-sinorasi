@@ -267,7 +267,7 @@ const getTransitionClasses = () => {
         <div class="flex flex-col items-center justify-center space-y-6 lg:col-span-2">
           <!-- Profile Image -->
           <div class="relative w-full max-w-xs aspect-[3/4]">
-            <div class="absolute inset-0 overflow-hidden bg-gray-100 rounded-2xl">
+            <div class="absolute inset-0 overflow-hidden rounded-2xl" :style="{ backgroundColor: majorColor.light }">
               <Transition
                 name="slide"
                 mode="out-in"
@@ -347,10 +347,8 @@ const getTransitionClasses = () => {
                 <!-- Quote Icon -->
                 <div class="flex justify-center">
                   <div
-                    :class="[
-                      'w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center',
-                      majorDatas?.[major]?.bgColor || 'bg-orange-500',
-                    ]"
+                    class="flex items-center justify-center rounded-full w-14 h-14 md:w-16 md:h-16"
+                    :style="{ backgroundColor: majorColor.bg }"
                   >
                     <Icon name="lucide:quote" class="text-white w-7 h-7 md:w-8 md:h-8" />
                   </div>

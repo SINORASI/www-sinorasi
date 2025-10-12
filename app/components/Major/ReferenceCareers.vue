@@ -23,22 +23,7 @@ const { data: majorDatas } = await useFetch<Record<MajorName, MajorData>>("/api/
 
 const careers = computed(() => jobTitles.value?.[major] || []);
 
-// Get major color scheme
-const majorColor = computed(() => {
-  return (
-    majorColorSchemes[major] || {
-      primary: "#f97316",
-      secondary: "#ea580c",
-      accent: "#FFB366",
-      light: "#FFF3E8",
-      text: "#1f2937",
-      bg: "#ffffff",
-      hoverBg: "#fff7ed",
-      border: "#fed7aa",
-      headerBg: "#fff7ed",
-    }
-  );
-});
+const majorColor = computed(() => majorColorSchemes[major]);
 
 const toggleExpanded = (id: number): void => {
   items.value = {
@@ -49,9 +34,9 @@ const toggleExpanded = (id: number): void => {
 </script>
 
 <template>
-  <div class="w-full px-4 py-6 sm:px-6 lg:px-8">
-    <div class="max-w-2xl mx-auto">
-      <div class="space-y-3 sm:space-y-4">
+  <div class="w-full">
+    <div class="mx-auto max-w-7xl">
+      <div class="space-y-4 md:space-y-6">
         <div
           v-for="(career, idx) in careers"
           :key="idx"
@@ -63,23 +48,19 @@ const toggleExpanded = (id: number): void => {
             :style="{
               backgroundColor: majorColor.primary,
             }"
-            class="flex items-center w-full gap-4 px-4 py-4 transition-all duration-200 sm:px-6 sm:py-5 hover:brightness-110"
+            class="flex items-center w-full gap-3 px-4 py-4 transition-all duration-200 md:gap-4 md:px-5 md:py-5 lg:px-6 lg:py-5 hover:brightness-110"
           >
             <!-- Profile Icon -->
             <div class="flex-shrink-0">
               <div
-                class="flex items-center justify-center w-12 h-12 overflow-hidden rounded-full sm:w-14 sm:h-14 bg-white/90"
+                class="flex items-center justify-center overflow-hidden md:h-12 md:w-12 lg:h-16 lg:w-16 xl:h-16 xl:w-16"
               >
-                <img
-                  :src="career.image || '/images/profile-placeholder.png'"
-                  :alt="`${career.title} icon`"
-                  class="object-cover w-full h-full"
-                />
+                <Icon :name="`lucide:${career.icon}`" class="text-white" size="28" />
               </div>
             </div>
 
             <!-- Job Title -->
-            <span class="flex-1 text-base font-bold text-left text-white break-words sm:text-lg lg:text-xl">
+            <span class="flex-1 text-lg font-bold text-left text-white break-words md:text-xl lg:text-2xl">
               {{ career.title }}
             </span>
 
@@ -101,13 +82,14 @@ const toggleExpanded = (id: number): void => {
           <!-- Dropdown Content -->
           <div
             v-if="career.description"
+            :style="`background-color: ${majorColor.bg}`"
             :class="[
-              'transition-all duration-300 ease-in-out overflow-hidden bg-white',
+              'transition-all duration-300 ease-in-out overflow-hidden',
               items[idx] ? 'max-h-[1000px] opacity-100' : 'max-h-0 opacity-0',
             ]"
           >
-            <div class="px-4 py-4 border-t border-gray-200 sm:px-6 sm:py-5">
-              <p class="text-sm leading-relaxed text-gray-700 break-words whitespace-pre-line sm:text-base">
+            <div class="px-4 py-4 border-t border-gray-200 md:px-5 md:py-5 lg:px-6 lg:py-6">
+              <p class="text-base leading-relaxed text-white break-words whitespace-pre-line md:text-lg lg:text-xl">
                 {{ career.description }}
               </p>
             </div>
