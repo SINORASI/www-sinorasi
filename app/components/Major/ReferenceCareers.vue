@@ -55,7 +55,7 @@ const toggleExpanded = (id: number): void => {
               <div
                 class="flex items-center justify-center overflow-hidden md:h-12 md:w-12 lg:h-16 lg:w-16 xl:h-16 xl:w-16"
               >
-                <Icon :name="`lucide:${career.icon}`" class="text-white" size="28" />
+                <Icon :name="`lucide:${career.icon}`" class="text-white" size="30" />
               </div>
             </div>
 

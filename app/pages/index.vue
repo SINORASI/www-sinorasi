@@ -279,11 +279,9 @@ useHead({
 
           <!-- School Facts and Intro -->
           <div class="flex flex-col w-full gap-6 lg:w-1/2">
-            <div
-              class="p-6 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
-            >
-              <h2 class="text-3xl font-bold text-center text-white lg:text-left">Tentang SMK Negeri 2 Singosari</h2>
-            </div>
+            <span class="px-6 py-3 text-base font-bold tracking-widest text-center uppercase rounded-full md:text-lg" style="background: #eff6ff; color: #1d4ed8">
+              Tentang SMK Negeri 2 Singosari
+            </span>
 
             <div class="p-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
               <div class="space-y-6">
@@ -328,11 +326,9 @@ useHead({
           
           <!-- Content Area -->
           <div class="flex flex-col w-full max-w-3xl gap-6 lg:w-3/5">
-            <div
-              class="p-6 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
-            >
-              <h2 class="text-3xl font-bold text-center text-white lg:text-left">Sambutan Kepala Sekolah</h2>
-            </div>
+            <span class="px-6 py-3 text-base font-bold tracking-widest text-center uppercase rounded-full md:text-lg" style="background: #eff6ff; color: #1d4ed8">
+              Sambutan Kepala Sekolah
+            </span>
 
             <div class="p-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
               <h3 class="mb-4 text-2xl font-bold text-gray-800">Assalamu'alaikum Wr. Wb.</h3>
@@ -444,9 +440,9 @@ useHead({
         <div class="flex flex-col items-center gap-12">
           <!-- Section Header -->
           <div class="flex flex-col items-center gap-4 text-center">
-            <div class="p-6 px-10 py-6 bg-white border border-orange-300 shadow-xl backdrop-blur-2xl rounded-2xl">
-              <h2 class="text-3xl font-bold text-orange-600">Seragam Sekolah</h2>
-            </div>
+            <span class="px-6 py-3 text-base font-bold tracking-widest text-center uppercase rounded-full md:text-lg" style="background: #eff6ff; color: #1d4ed8">
+              Seragam Sekolah
+            </span>
             <p class="max-w-2xl text-lg text-center text-white">Koleksi seragam sekolah SMK Negeri 2 Singosari</p>
           </div>
 
@@ -703,11 +699,9 @@ useHead({
 
         <!-- Section Header -->
         <div class="flex flex-col items-center gap-4">
-          <div
-            class="p-6 px-10 py-6 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
-          >
-            <h2 class="text-4xl font-bold text-white">Jejak Sejarah</h2>
-          </div>
+          <span class="px-6 py-3 text-base font-bold tracking-widest text-center uppercase rounded-full md:text-lg" style="background: #eff6ff; color: #1d4ed8">
+            Jejak Sejarah
+          </span>
           <p class="max-w-2xl text-lg text-gray-600">
             Perjalanan panjang SMK Negeri 2 Singosari dalam mengembangkan pendidikan kejuruan berkualitas di Kabupaten
             Malang.
@@ -751,7 +745,7 @@ useHead({
             >
               <div
                 :class="[
-                  'inline-block px-4 py-2 rounded-full mb-4 font-bold text-lg',
+                  'inline-block px-6 py-3 rounded-full mb-4 font-bold text-lg',
                   index % 2 === 0
                     ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white'
                     : 'bg-gradient-to-r from-orange-500 to-orange-600 text-white',
@@ -780,7 +774,7 @@ useHead({
             >
               <div
                 :class="[
-                  'inline-block px-4 py-2 rounded-full mb-4 font-bold text-lg shadow-md',
+                  'inline-block px-6 py-3 rounded-full mb-4 font-bold text-lg shadow-md',
                   index % 2 === 0
                     ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white'
                     : 'bg-gradient-to-r from-orange-500 to-orange-600 text-white',
@@ -844,11 +838,9 @@ useHead({
       </div>
     </section>
     <section id="jurusan" class="flex flex-col items-center gap-8 py-20 h-fit">
-      <div
-        class="p-6 px-10 py-6 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
-      >
-        <h2 class="text-3xl font-bold text-white">Jurusan</h2>
-      </div>
+      <span class="px-6 py-3 text-base font-bold tracking-widest text-center uppercase rounded-full md:text-lg" style="background: #eff6ff; color: #1d4ed8">
+        Jurusan
+      </span>
       <div class="container flex items-center justify-center mx-auto">
         <MajorCarousel />
       </div>
@@ -856,11 +848,9 @@ useHead({
 
     <section id="berita" class="py-20 h-min-screen">
       <div class="container flex flex-col items-center gap-8 mx-auto">
-        <div
-          class="p-6 px-10 py-6 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
-        >
-          <h2 class="text-3xl font-bold text-white">Informasi & Berita</h2>
-        </div>
+        <span class="px-6 py-3 text-base font-bold tracking-widest text-center uppercase rounded-full md:text-lg" style="background: #eff6ff; color: #1d4ed8">
+          Informasi & Berita
+        </span>
 
         <!-- Category Filter -->
         <div class="flex flex-wrap justify-center gap-3">
@@ -869,7 +859,7 @@ useHead({
             :key="category"
             @click="filterByCategory(category)"
             :class="[
-              'font-semibold px-4 py-2 rounded-full transition-all duration-300 text-sm',
+              'font-semibold px-6 py-3 rounded-full transition-all duration-300 text-sm',
               selectedCategory === category
                 ? 'bg-blue-600 text-white shadow-md'
                 : 'bg-white text-gray-700 hover:bg-blue-50 border border-gray-200',
