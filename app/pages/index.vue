@@ -513,6 +513,7 @@ useHead({
               day="Putih Putih"
               dayNumber=""
               uniformType="Putih - Putih"
+              uniformDay="Senin"
               primaryColor="gray"
             />
 
@@ -551,6 +552,7 @@ useHead({
               day="Putih Abu"
               dayNumber=""
               uniformType="Putih - Abu"
+              uniformDay="Selasa"
               primaryColor="gray"
             />
 
@@ -589,6 +591,7 @@ useHead({
               day="Batik"
               dayNumber=""
               uniformType="Batik"
+              uniformDay="Rabu"
               primaryColor="blue"
             />
 
@@ -627,6 +630,7 @@ useHead({
               day="Pramuka"
               dayNumber=""
               uniformType="Pramuka"
+              uniformDay="Kamis"
               primaryColor="brown"
             />
 
@@ -665,6 +669,7 @@ useHead({
               day="Olahraga"
               dayNumber=""
               uniformType="Olahraga"
+              uniformDay="Jumat"
               primaryColor="sky"
             />
           </div>

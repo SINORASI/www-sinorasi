@@ -2,6 +2,7 @@
 import { ref } from "vue";
 
 const currentSlide = ref(0);
+const isVisionMissionExpanded = ref(false);
 
 const nextSlide = () => {
   if (currentSlide.value < 2) {
@@ -17,6 +18,10 @@ const prevSlide = () => {
 
 const goToSlide = (index: number) => {
   currentSlide.value = index;
+};
+
+const toggleVisionMission = () => {
+  isVisionMissionExpanded.value = !isVisionMissionExpanded.value;
 };
 
 useHead({
@@ -88,6 +93,82 @@ useHead({
         </div>
       </div>
     </section>
+
+        <!-- Vision Mission Section -->
+        <section class="py-20">
+          <div class="container px-4 mx-auto sm:px-6">
+            <div class="max-w-5xl mx-auto">
+              <!-- Collapsed Header -->
+              <button v-if="!isVisionMissionExpanded" @click="toggleVisionMission" class="w-full group">
+                <div class="p-8 transition-all duration-300 bg-white border-2 border-orange-100 shadow-xl rounded-2xl md:p-10 hover:border-orange-300 hover:shadow-2xl">
+                  <div class="flex items-center justify-between">
+                    <div>
+                      <h2 class="mb-2 text-3xl font-bold text-gray-800">Visi Dan Misi</h2>
+                      <p class="text-gray-600">SMK Negeri 02 Singosari</p>
+                    </div>
+                    <div class="flex items-center justify-center w-12 h-12 transition-transform duration-300 bg-orange-100 rounded-full group-hover:rotate-90 hover:bg-orange-600 hover:text-white">
+                      <Icon name="lucide:plus" size="24" />
+                    </div>
+                  </div>
+                </div>
+              </button>
+   
+              <!-- Expanded Content -->
+              <div v-else class="overflow-hidden border-2 border-orange-100 shadow-xl rounded-2xl animate-expand backdrop-blur-xl bg-white/95">
+                <!-- Header (Clickable to collapse) -->
+                <button @click="toggleVisionMission" class="w-full group">
+                  <div class="p-8 md:p-10">
+                    <div class="flex items-center justify-between">
+                      <div>
+                        <h2 class="mb-2 text-3xl font-bold text-gray-800">Visi Dan Misi</h2>
+                        <p class="text-gray-600">SMK Negeri 02 Singosari</p>
+                      </div>
+                      <div class="flex items-center justify-center w-12 h-12 transition-transform duration-300 bg-orange-100 rounded-full group-hover:rotate-180 hover:bg-orange-600 hover:text-white">
+                        <Icon name="lucide:minus" size="24" />
+                      </div>
+                    </div>
+                  </div>
+                </button>
+   
+                <!-- Content Area with Animation -->
+                <div class="px-8 pb-8 md:px-10 md:pb-10 animate-slide-down">
+                  <div class="grid gap-6 md:grid-cols-2">
+                    <div class="p-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
+                      <div class="inline-block p-4 mb-4 bg-blue-100 rounded-full">
+                        <Icon name="lucide:eye" size="32" class="text-blue-600" />
+                      </div>
+                      <h3 class="mb-4 text-2xl font-bold text-gray-800">Visi</h3>
+                      <p class="leading-relaxed text-gray-700">
+                        Menjadi SMK unggulan yang menghasilkan lulusan berkarakter, kompeten, dan berdaya saing global.
+                      </p>
+                    </div>
+   
+                    <div class="p-8 bg-white border-2 border-orange-100 shadow-xl rounded-2xl">
+                      <div class="inline-block p-4 mb-4 bg-orange-100 rounded-full">
+                        <Icon name="lucide:target" size="32" class="text-orange-600" />
+                      </div>
+                      <h3 class="mb-4 text-2xl font-bold text-gray-800">Misi</h3>
+                      <ul class="space-y-3 text-gray-700">
+                        <li class="flex items-start">
+                          <Icon name="lucide:check-circle" size="20" class="text-orange-600 mr-2 mt-0.5 flex-shrink-0" />
+                          <span>Menyelenggarakan pendidikan berkualitas</span>
+                        </li>
+                        <li class="flex items-start">
+                          <Icon name="lucide:check-circle" size="20" class="text-orange-600 mr-2 mt-0.5 flex-shrink-0" />
+                          <span>Mengembangkan kompetensi siswa</span>
+                        </li>
+                        <li class="flex items-start">
+                          <Icon name="lucide:check-circle" size="20" class="text-orange-600 mr-2 mt-0.5 flex-shrink-0" />
+                          <span>Membentuk karakter unggul</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
     <!-- Video Profile Section - Carousel -->
     <section class="relative py-20">
@@ -254,60 +335,6 @@ useHead({
                   <Icon name="lucide:arrow-right" class="ml-2 transition-transform group-hover:translate-x-1" />
                 </button>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Vision Mission Section -->
-    <section class="py-20">
-      <div class="container px-4 mx-auto sm:px-6">
-        <div class="max-w-5xl mx-auto">
-          <div class="p-8 mb-8 bg-white border-2 border-orange-100 shadow-xl rounded-2xl md:p-10">
-            <div class="flex items-center justify-between">
-              <div>
-                <h2 class="mb-2 text-3xl font-bold text-gray-800">Visi Dan Misi</h2>
-                <p class="text-gray-600">SMK Negeri 02 Singosari</p>
-              </div>
-              <button
-                class="flex items-center justify-center w-12 h-12 transition-colors bg-orange-100 rounded-full hover:bg-orange-600 hover:text-white"
-              >
-                <Icon name="lucide:plus" size="24" />
-              </button>
-            </div>
-          </div>
-
-          <div class="grid gap-6 md:grid-cols-2">
-            <div class="p-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
-              <div class="inline-block p-4 mb-4 bg-blue-100 rounded-full">
-                <Icon name="lucide:eye" size="32" class="text-blue-600" />
-              </div>
-              <h3 class="mb-4 text-2xl font-bold text-gray-800">Visi</h3>
-              <p class="leading-relaxed text-gray-700">
-                Menjadi SMK unggulan yang menghasilkan lulusan berkarakter, kompeten, dan berdaya saing global.
-              </p>
-            </div>
-
-            <div class="p-8 bg-white border-2 border-orange-100 shadow-xl rounded-2xl">
-              <div class="inline-block p-4 mb-4 bg-orange-100 rounded-full">
-                <Icon name="lucide:target" size="32" class="text-orange-600" />
-              </div>
-              <h3 class="mb-4 text-2xl font-bold text-gray-800">Misi</h3>
-              <ul class="space-y-3 text-gray-700">
-                <li class="flex items-start">
-                  <Icon name="lucide:check-circle" size="20" class="text-orange-600 mr-2 mt-0.5 flex-shrink-0" />
-                  <span>Menyelenggarakan pendidikan berkualitas</span>
-                </li>
-                <li class="flex items-start">
-                  <Icon name="lucide:check-circle" size="20" class="text-orange-600 mr-2 mt-0.5 flex-shrink-0" />
-                  <span>Mengembangkan kompetensi siswa</span>
-                </li>
-                <li class="flex items-start">
-                  <Icon name="lucide:check-circle" size="20" class="text-orange-600 mr-2 mt-0.5 flex-shrink-0" />
-                  <span>Membentuk karakter unggul</span>
-                </li>
-              </ul>
             </div>
           </div>
         </div>

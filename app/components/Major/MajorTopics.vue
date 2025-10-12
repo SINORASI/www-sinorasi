@@ -168,7 +168,7 @@ const toggleRightExpanded = (id: string): void => {
 
             <!-- Content Area with Animation -->
             <div class="p-4 md:p-5 lg:p-6 animate-slide-down" >
-              <p class="text-sm leading-relaxed text-gray-700 md:text-base">
+              <p class="text-sm leading-relaxed text-justify text-gray-700 md:text-base">
                 {{ topic.description }}
               </p>
             </div>
@@ -235,7 +235,7 @@ const toggleRightExpanded = (id: string): void => {
 
             <!-- Content Area with Animation -->
             <div class="p-4 md:p-5 lg:p-6 animate-slide-down">
-              <p class="text-sm leading-relaxed text-gray-700 md:text-base">
+              <p class="text-sm leading-relaxed text-justify text-gray-700 md:text-base">
                 {{ topic.description }}
               </p>
             </div>

@@ -89,7 +89,7 @@ const toggleExpanded = (id: number): void => {
             ]"
           >
             <div class="px-4 py-4 border-t border-gray-200 md:px-5 md:py-5 lg:px-6 lg:py-6">
-              <p class="text-base leading-relaxed text-gray-700 break-words whitespace-pre-line md:text-lg lg:text-xl">
+              <p class="text-base leading-relaxed text-justify text-gray-700 break-words whitespace-pre-line md:text-lg lg:text-xl">
                 {{ career.description }}
               </p>
             </div>

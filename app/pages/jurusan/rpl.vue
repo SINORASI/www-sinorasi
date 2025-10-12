@@ -4,6 +4,7 @@ import type { MajorName } from "~/models/MajorName";
 import type { MajorData } from "~/models/MajorData";
 import ReferenceCareers from "~/components/Major/ReferenceCareers.vue";
 import MajorTopics from "~/components/Major/MajorTopics.vue";
+import MajorTools from "~/components/Major/MajorTools.vue";
 import MajorPartnerSlider from "~/components/Major/MajorPartnerSlider.vue";
 import MajorAchievement from "~/components/Major/MajorAchievement.vue";
 import { majorColorSchemes } from "~/utils/majorColors";
@@ -209,6 +210,9 @@ useHead({
         </div>
       </div>
     </section>
+
+    <!-- Tools Section -->
+    <MajorTools :major="major" />
 
     <!-- Kesempatan Kerja Section -->
     <section id="kesempatan-kerja" class="relative min-h-screen py-16 overflow-hidden bg-white md:py-24">

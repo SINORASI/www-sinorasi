@@ -151,6 +151,7 @@
 
       <!-- Day Name -->
       <div class="absolute bottom-4 left-4">
+        <p class="text-sm font-medium text-white/90 drop-shadow-md">{{ uniformDay }}</p>
         <h3 class="text-2xl font-bold text-white drop-shadow-lg">{{ day }}</h3>
       </div>
 
@@ -198,6 +199,7 @@ interface Props {
   day: string;
   dayNumber: string;
   uniformType: string;
+  uniformDay: string;
   primaryColor: "blue" | "gray" | "amber" | "green" | "brown" | "sky";
 }
 
