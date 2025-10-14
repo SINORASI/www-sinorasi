@@ -1,8 +1,13 @@
 <script setup lang="ts">
-const username = ref("");
-const password = ref("");
-const isSubmitting = ref(false);
-const showGuidelines = ref(false);
+import { loginSchema, type LoginForm } from '~/utils/schema'
+
+const formData = ref<LoginForm>({
+  username: '',
+  password: ''
+})
+const errors = ref<Partial<LoginForm>>({})
+const isSubmitting = ref(false)
+const showGuidelines = ref(false)
 
 useHead({
   title: "Login - SMKN 2 Singosari",
@@ -15,24 +20,35 @@ useHead({
 });
 
 const submitLogin = async () => {
-  if (!username.value.trim() || !password.value.trim()) {
-    alert("Silakan lengkapi username dan password");
-    return;
+  // Validate form
+  const result = loginSchema.safeParse(formData.value)
+
+  if (!result.success) {
+    errors.value = result.error.flatten().fieldErrors as Partial<LoginForm>
+    return
   }
 
-  isSubmitting.value = true;
+  // Clear errors
+  errors.value = {}
+  isSubmitting.value = true
 
-  // Simulate API call
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+  try {
+    // Simulate API call
+    await new Promise((resolve) => setTimeout(resolve, 1000))
 
-  alert("Login berhasil!");
+    alert("Login berhasil!")
 
-  // Reset form
-  username.value = "";
-  password.value = "";
-
-  isSubmitting.value = false;
-};
+    // Reset form
+    formData.value = {
+      username: '',
+      password: ''
+    }
+  } catch (error) {
+    alert("Terjadi kesalahan saat login")
+  } finally {
+    isSubmitting.value = false
+  }
+}
 </script>
 
 <template>
@@ -128,12 +144,18 @@ const submitLogin = async () => {
               </label>
               <input
                 id="username"
-                v-model="username"
+                v-model="formData.username"
                 type="text"
-                class="w-full px-4 py-3 transition border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                :class="[
+                  'w-full px-4 py-3 transition border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
+                  errors.username ? 'border-red-500' : 'border-gray-200'
+                ]"
                 placeholder="Masukkan username Anda"
                 required
               />
+              <p v-if="errors.username" class="mt-1 text-sm text-red-600">
+                {{ errors.username[0] }}
+              </p>
             </div>
 
             <div>
@@ -143,12 +165,18 @@ const submitLogin = async () => {
               </label>
               <input
                 id="password"
-                v-model="password"
+                v-model="formData.password"
                 type="password"
-                class="w-full px-4 py-3 transition border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                :class="[
+                  'w-full px-4 py-3 transition border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
+                  errors.password ? 'border-red-500' : 'border-gray-200'
+                ]"
                 placeholder="Masukkan password Anda"
                 required
               />
+              <p v-if="errors.password" class="mt-1 text-sm text-red-600">
+                {{ errors.password[0] }}
+              </p>
             </div>
 
             <button

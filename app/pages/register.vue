@@ -1,10 +1,15 @@
 <script setup lang="ts">
-const username = ref("");
-const email = ref("");
-const password = ref("");
-const confirmPassword = ref("");
-const isSubmitting = ref(false);
-const showGuidelines = ref(false);
+import { registerSchema, type RegisterForm } from '~/utils/schema'
+
+const formData = ref<RegisterForm>({
+  username: '',
+  email: '',
+  password: '',
+  confirmPassword: ''
+})
+const errors = ref<Partial<RegisterForm>>({})
+const isSubmitting = ref(false)
+const showGuidelines = ref(false)
 
 useHead({
   title: "Register - SMKN 2 Singosari",
@@ -17,38 +22,37 @@ useHead({
 });
 
 const submitRegister = async () => {
-  if (!username.value.trim() || !email.value.trim() || !password.value.trim()) {
-    alert("Silakan lengkapi semua field");
-    return;
+  // Validate form
+  const result = registerSchema.safeParse(formData.value)
+
+  if (!result.success) {
+    errors.value = result.error.flatten().fieldErrors as Partial<RegisterForm>
+    return
   }
 
-  if (password.value !== confirmPassword.value) {
-    alert("Password dan konfirmasi password tidak cocok");
-    return;
+  // Clear errors
+  errors.value = {}
+  isSubmitting.value = true
+
+  try {
+    // Simulate API call
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+
+    alert("Pendaftaran berhasil! Silakan login dengan akun Anda.")
+
+    // Reset form
+    formData.value = {
+      username: '',
+      email: '',
+      password: '',
+      confirmPassword: ''
+    }
+  } catch (error) {
+    alert("Terjadi kesalahan saat pendaftaran")
+  } finally {
+    isSubmitting.value = false
   }
-
-  // Basic email validation
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email.value)) {
-    alert("Format email tidak valid");
-    return;
-  }
-
-  isSubmitting.value = true;
-
-  // Simulate API call
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-
-  alert("Pendaftaran berhasil! Silakan login dengan akun Anda.");
-
-  // Reset form
-  username.value = "";
-  email.value = "";
-  password.value = "";
-  confirmPassword.value = "";
-
-  isSubmitting.value = false;
-};
+}
 </script>
 
 <template>
@@ -144,12 +148,18 @@ const submitRegister = async () => {
               </label>
               <input
                 id="username"
-                v-model="username"
+                v-model="formData.username"
                 type="text"
-                class="w-full px-4 py-3 transition border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                :class="[
+                  'w-full px-4 py-3 transition border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500',
+                  errors.username ? 'border-red-500' : 'border-gray-200'
+                ]"
                 placeholder="Masukkan username Anda"
                 required
               />
+              <p v-if="errors.username" class="mt-1 text-sm text-red-600">
+                {{ errors.username[0] }}
+              </p>
             </div>
 
             <div>
@@ -159,12 +169,18 @@ const submitRegister = async () => {
               </label>
               <input
                 id="email"
-                v-model="email"
+                v-model="formData.email"
                 type="email"
-                class="w-full px-4 py-3 transition border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                :class="[
+                  'w-full px-4 py-3 transition border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500',
+                  errors.email ? 'border-red-500' : 'border-gray-200'
+                ]"
                 placeholder="Masukkan email Anda"
                 required
               />
+              <p v-if="errors.email" class="mt-1 text-sm text-red-600">
+                {{ errors.email[0] }}
+              </p>
             </div>
 
             <div>
@@ -174,13 +190,19 @@ const submitRegister = async () => {
               </label>
               <input
                 id="password"
-                v-model="password"
+                v-model="formData.password"
                 type="password"
-                class="w-full px-4 py-3 transition border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                :class="[
+                  'w-full px-4 py-3 transition border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500',
+                  errors.password ? 'border-red-500' : 'border-gray-200'
+                ]"
                 placeholder="Masukkan password Anda"
                 required
               />
               <p class="mt-2 ml-1 text-xs text-gray-500">Minimal 8 karakter dengan kombinasi huruf dan angka</p>
+              <p v-if="errors.password" class="mt-1 text-sm text-red-600">
+                {{ errors.password[0] }}
+              </p>
             </div>
 
             <div>
@@ -190,12 +212,18 @@ const submitRegister = async () => {
               </label>
               <input
                 id="confirmPassword"
-                v-model="confirmPassword"
+                v-model="formData.confirmPassword"
                 type="password"
-                class="w-full px-4 py-3 transition border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                :class="[
+                  'w-full px-4 py-3 transition border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500',
+                  errors.confirmPassword ? 'border-red-500' : 'border-gray-200'
+                ]"
                 placeholder="Konfirmasi password Anda"
                 required
               />
+              <p v-if="errors.confirmPassword" class="mt-1 text-sm text-red-600">
+                {{ errors.confirmPassword[0] }}
+              </p>
             </div>
 
             <button

@@ -88,6 +88,53 @@
               </div>
             </NuxtLink>
 
+            <!-- Language Switcher -->
+            <div class="relative mt-3">
+              <button
+                @click="showLanguageMenu = !showLanguageMenu"
+                class="flex items-center justify-between w-full px-4 py-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+              >
+                <div class="flex items-center gap-3">
+                  <Icon name="lucide:languages" size="20" class="text-gray-600" />
+                  <span class="text-sm font-medium text-gray-700">
+                    {{ languages.find(lang => lang.code === currentLanguage)?.flag }}
+                    {{ languages.find(lang => lang.code === currentLanguage)?.name }}
+                  </span>
+                </div>
+                <Icon
+                  name="lucide:chevron-down"
+                  size="16"
+                  class="text-gray-500 transition-transform"
+                  :class="{ 'rotate-180': showLanguageMenu }"
+                />
+              </button>
+
+              <!-- Language Menu Dropdown -->
+              <Transition name="dropdown">
+                <div
+                  v-if="showLanguageMenu"
+                  class="absolute top-full left-0 right-0 z-10 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg"
+                >
+                  <div
+                    v-for="lang in languages"
+                    :key="lang.code"
+                    @click="switchLanguage(lang.code)"
+                    class="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-gray-50 transition-colors"
+                    :class="{ 'bg-blue-50 border-blue-200': lang.code === currentLanguage }"
+                  >
+                    <span class="text-lg">{{ lang.flag }}</span>
+                    <span class="text-sm font-medium text-gray-700">{{ lang.name }}</span>
+                    <Icon
+                      v-if="lang.code === currentLanguage"
+                      name="lucide:check"
+                      size="16"
+                      class="ml-auto text-blue-600"
+                    />
+                  </div>
+                </div>
+              </Transition>
+            </div>
+
             <!-- Dark Mode Toggle (Disabled) -->
             <div
               class="flex items-center justify-between px-4 py-3 mt-3 border border-gray-200 rounded-lg cursor-not-allowed bg-gray-50 opacity-60"
@@ -238,11 +285,38 @@
   </transition>
 </template>
 
+<style scoped>
+.dropdown-enter-active,
+.dropdown-leave-active {
+  transition: all 0.2s ease;
+}
+
+.dropdown-enter-from,
+.dropdown-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+</style>
+
 <script setup lang="ts">
 import { ref, computed, watch } from "vue";
 import { majorColorSchemes } from "~/utils/majorColors";
 import type { MajorName } from "~/models/MajorName";
 import type { News } from "~/models/News";
+
+const currentLanguage = ref('id')
+const showLanguageMenu = ref(false)
+
+const languages = [
+  { code: 'id', name: 'Bahasa Indonesia', flag: '🇮🇩' },
+  { code: 'en', name: 'English', flag: '🇺🇸' }
+]
+
+const switchLanguage = (langCode: string) => {
+  currentLanguage.value = langCode
+  showLanguageMenu.value = false
+  // TODO: Implement actual language switching logic
+}
 
 // Get current route for dynamic title
 const route = useRoute();
