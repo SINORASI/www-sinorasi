@@ -483,6 +483,14 @@ const menuItems = [
         external: false,
         tags: ["home", "beranda"],
       },
+      {
+        title: "Dashboard",
+        desc: "Dashboard pengguna",
+        icon: "lucide:layout-dashboard",
+        to: "/dashboard",
+        external: false,
+        tags: ["dashboard", "profil", "user"],
+      },
     ],
   },
   {
