@@ -3,16 +3,34 @@ import MajorHeader from "~/components/Major/layout/MajorHeader.vue";
 import AppFooter from "~/components/layout/AppFooter.vue";
 import type { MajorName } from "~/models/MajorName";
 import { majorColorSchemes } from "~/utils/majorColors";
+import { watch, ref, computed } from "vue";
 
 const route = useRoute();
 const major = (route.params.majorName as MajorName) || (route.path.split("/").pop() as MajorName);
 const majorColor = majorColorSchemes[major];
+
+const isTransitioning = ref(false);
+
+watch(route, (newRoute, oldRoute) => {
+  if (oldRoute && newRoute.path !== oldRoute.path) {
+    isTransitioning.value = true;
+    setTimeout(() => isTransitioning.value = false, 400);
+  }
+});
+
+const backgroundStyle = computed(() => {
+  if (isTransitioning.value) {
+    return 'background: transparent';
+  }
+  return `background: linear-gradient(135deg, ${majorColor.primary}08, ${majorColor.accent}08)`;
+});
 </script>
 
 <template>
   <div
     class="flex flex-col min-h-screen major-layout"
-    :style="`background: linear-gradient(135deg, ${majorColor.primary}08, ${majorColor.accent}08)`"
+    :class="{ transitioning: isTransitioning }"
+    :style="backgroundStyle"
   >
     <MajorHeader />
     <div class="flex-1">
@@ -21,3 +39,9 @@ const majorColor = majorColorSchemes[major];
     <AppFooter :bg-color="majorColor.primary" class="mt-auto" />
   </div>
 </template>
+
+<style scoped>
+.major-layout.transitioning {
+  background: transparent !important;
+}
+</style>

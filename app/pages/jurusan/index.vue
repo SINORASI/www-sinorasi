@@ -18,20 +18,21 @@ useHead({
 </script>
 
 <template>
-  <main class="min-h-screen py-16 bg-gray-50">
+  <main class="min-h-screen py-36 bg-gray-50">
     <div class="container px-4 mx-auto">
       <!-- Header Section -->
       <div class="mb-12 text-center">
         <div class="inline-block">
-          <span class="px-4 py-2 text-sm font-bold tracking-widest text-gray-700 uppercase bg-gray-200 rounded-full md:text-base">
+          <span
+            class="px-4 py-2 text-sm font-bold tracking-widest text-gray-700 uppercase bg-gray-200 rounded-full md:text-base"
+          >
             Program Keahlian
           </span>
         </div>
-        <h1 class="mt-4 text-3xl font-extrabold text-gray-800 md:text-5xl">
-          Semua Jurusan SMKN 2 Singosari
-        </h1>
+        <h1 class="mt-4 text-3xl font-extrabold text-gray-800 md:text-5xl">Semua Jurusan SMKN 2 Singosari</h1>
         <p class="max-w-2xl mx-auto mt-4 text-sm text-gray-600 md:text-lg">
-          Jelajahi berbagai program keahlian yang tersedia di SMK Negeri 2 Singosari. Temukan jurusan yang sesuai dengan minat dan bakat Anda.
+          Jelajahi berbagai program keahlian yang tersedia di SMK Negeri 2 Singosari. Temukan jurusan yang sesuai dengan
+          minat dan bakat Anda.
         </p>
       </div>
 
@@ -44,11 +45,7 @@ useHead({
         >
           <!-- Major Logo -->
           <div class="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full">
-            <img
-              :src="majorData.logo"
-              :alt="`${majorData.short} Logo`"
-              class="object-contain w-10 h-10"
-            />
+            <img :src="majorData.logo" :alt="`${majorData.short} Logo`" class="object-contain w-10 h-10" />
           </div>
 
           <!-- Major Title -->
@@ -92,7 +89,7 @@ useHead({
       <!-- Back to Home Button -->
       <div class="mt-12 text-center">
         <NuxtLink
-          to="/"
+          to="/#jurusan"
           class="inline-flex items-center gap-2 px-8 py-4 font-semibold text-white transition-all duration-300 bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 hover:shadow-lg hover:-translate-y-0.5"
         >
           <Icon name="lucide:arrow-left" size="18" />

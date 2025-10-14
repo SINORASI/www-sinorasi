@@ -93,6 +93,24 @@ const timelineItems = [
   },
 ];
 
+const clickedMarkers = ref([false, false, false, false, false]);
+const showAllIcons = ref(false);
+
+const toggleMarker = (index: number) => {
+  if (index === 0 && !showAllIcons.value) {
+    // First click on first marker: show all icons and show first card
+    showAllIcons.value = true;
+    clickedMarkers.value = [true, false, false, false, false];
+  } else if (index === 0 && showAllIcons.value) {
+    // Second click on first marker: hide all icons except first, hide all cards
+    showAllIcons.value = false;
+    clickedMarkers.value = [false, false, false, false, false];
+  } else {
+    // Toggle the specific marker
+    clickedMarkers.value[index] = !clickedMarkers.value[index];
+  }
+};
+
 // Achievement carousel data
 const achievements = [
   {
@@ -188,7 +206,7 @@ useHead({
     {
       name: "description",
       content:
-        "SMK Negeri 2 Singosari - SINORASI (Inovasi Raih Prestasi). Tempat di mana inovasi bertemu dengan prestasi melalui pendidikan kejuruan berkualitas.",
+        "SMK Negeri 2 Singosari - INORASI (Inovasi Raih Prestasi). Tempat di mana inovasi bertemu dengan prestasi melalui pendidikan kejuruan berkualitas.",
     },
   ],
 });
@@ -211,7 +229,7 @@ useHead({
 
         <!-- Content on Right -->
         <div class="flex flex-col items-center w-full gap-8 text-center text-black lg:w-2/3 lg:items-start lg:text-left">
-          <h1 class="text-3xl font-black transition-all duration-700 ease-out md:text-5xl lg:text-6xl">INORASI</h1>
+          <h1 class="text-3xl font-extrabold transition-all duration-700 ease-out md:text-4xl lg:text-5xl">SMK NEGERI 2 SINGOSARI</h1>
           <p class="text-lg font-semibold transition-all duration-700 ease-out md:text-xl lg:text-2xl">
             Inovasi Raih Prestasi
           </p>
@@ -552,7 +570,7 @@ useHead({
               day="Putih Abu"
               dayNumber=""
               uniformType="Putih - Abu"
-              uniformDay="Selasa"
+              uniformDay="Selasa & Rabu"
               primaryColor="gray"
             />
 
@@ -591,7 +609,7 @@ useHead({
               day="Batik"
               dayNumber=""
               uniformType="Batik"
-              uniformDay="Rabu"
+              uniformDay="Kamis"
               primaryColor="blue"
             />
 
@@ -630,7 +648,7 @@ useHead({
               day="Pramuka"
               dayNumber=""
               uniformType="Pramuka"
-              uniformDay="Kamis"
+              uniformDay="Jum'at"
               primaryColor="brown"
             />
 
@@ -669,7 +687,7 @@ useHead({
               day="Olahraga"
               dayNumber=""
               uniformType="Olahraga"
-              uniformDay="Jumat"
+              uniformDay="Sesuai Jadwal"
               primaryColor="sky"
             />
           </div>
@@ -730,22 +748,31 @@ useHead({
           <div
             v-for="(item, index) in timelineItems"
             :key="index"
-            class="relative flex flex-col items-center w-full max-w-md mb-16 group"
+            class="relative flex flex-col items-center w-full max-w-md mb-24 group"
+            :class="{ 'opacity-0': !showAllIcons && index > 0 }"
+            :style="{ transition: 'opacity 0.5s ease-in-out' }"
           >
             <!-- Connecting Line -->
             <div
+              v-if="showAllIcons || index === 0"
               class="absolute top-0 w-1 h-8 transform -translate-x-1/2 left-1/2 bg-gradient-to-b from-transparent to-blue-600"
             ></div>
 
             <!-- Icon Circle -->
             <div
-              class="z-20 flex items-center justify-center w-16 h-16 mb-6 transition-transform duration-300 border-4 border-white rounded-full shadow-xl bg-gradient-to-br from-blue-500 to-blue-700 group-hover:scale-110"
+              v-if="showAllIcons || index === 0"
+              :class="[
+                'z-20 flex items-center justify-center w-16 h-16 mb-6 transition-all duration-300 border-4 border-white rounded-full shadow-xl cursor-pointer bg-gradient-to-br from-blue-500 to-blue-700 group-hover:scale-110',
+                clickedMarkers[index] ? 'ring-4 ring-yellow-400' : ''
+              ]"
+              @click="toggleMarker(index)"
             >
               <Icon :name="item.icon" size="28" class="text-white" />
             </div>
 
             <!-- Content Card -->
             <div
+              v-if="clickedMarkers[index]"
               class="w-full p-6 text-center transition-all duration-300 bg-white border-2 border-blue-100 shadow-xl rounded-2xl hover:border-blue-300 hover:shadow-2xl hover:-translate-y-1"
             >
               <div
@@ -759,27 +786,30 @@ useHead({
                 {{ item.year }}
               </div>
               <h3 class="mb-3 text-xl font-bold text-gray-800">{{ item.title }}</h3>
-              <p class="text-sm leading-relaxed text-gray-600">{{ item.description }}</p>
+              <p class="text-sm leading-relaxed text-justify text-gray-600">{{ item.description }}</p>
             </div>
           </div>
         </div>
 
         <!-- Desktop Timeline -->
-        <div v-else class="relative max-w-[900px] mx-auto py-12">
-          <div class="absolute left-1/2 top-0 bottom-0 w-1 bg-[linear-gradient(to_bottom,transparent_0%_10%,#3b82f6_10%_50%,#2563eb_50%_90%,#3b82f6_90%_100%,transparent)] -translate-x-1/2 rounded-sm shadow-[0_0_20px_rgba(59,130,246,0.3)]"></div>
+        <div v-else class="relative max-w-[1200px] mx-auto py-12">
+          <div class="absolute left-1/2 top-0 bottom-0 w-1 bg-[linear-gradient(to_bottom,transparent_0%_0%,#3b82f6_10%_50%,#2563eb_50%_90%,#3b82f6_90%_95%,transparent)] -translate-x-1/2 rounded-sm shadow-[0_0_20px_rgba(59,130,246,0.3)] z-10"></div>
 
           <div
             v-for="(item, index) in timelineItems"
             :key="index"
-            class="relative clear-both mb-16 group"
+            class="relative clear-both mb-24 group"
+            :class="{ 'opacity-0': !showAllIcons && index > 0 }"
+            :style="{ transition: 'opacity 0.5s ease-in-out' }"
           >
             <!-- Content Card -->
             <div
-              :class="['p-8 transition-all duration-300 bg-white border-2 border-blue-100 shadow-xl rounded-2xl hover:border-blue-300 hover:shadow-2xl hover:scale-105 group', index % 2 === 0 ? 'text-right mr-12 w-[42%] float-left' : 'text-left ml-12 w-[42%] float-right']"
+              v-if="clickedMarkers[index]"
+              :class="['p-8 transition-all duration-500 bg-white/80 backdrop-blur-lg border border-white/30 shadow-2xl rounded-2xl hover:border-white/50 hover:shadow-3xl hover:scale-105 hover:-translate-y-2 group h-[300px] w-[42%] z-20 flex flex-col justify-center items-center text-center', index % 2 === 0 ? 'mr-12 float-left' : 'ml-12 float-right']"
             >
               <div
                 :class="[
-                  'inline-block px-6 py-3 rounded-full mb-4 font-bold text-lg shadow-md',
+                  'inline-block px-6 py-3 rounded-full mb-4 font-bold text-lg shadow-lg',
                   index % 2 === 0
                     ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white'
                     : 'bg-gradient-to-r from-orange-500 to-orange-600 text-white',
@@ -787,7 +817,8 @@ useHead({
               >
                 {{ item.year }}
               </div>
-              <h3 class="mb-3 text-2xl font-bold text-gray-800 transition-colors group-hover:text-blue-600">
+              <h3 :class="['mb-3 text-2xl font-bold text-gray-800 transition-colors',
+                index % 2 === 0 ? 'group-hover:text-blue-600' : 'group-hover:text-orange-600']">
                 {{ item.title }}
               </h3>
               <p class="leading-relaxed text-gray-600">{{ item.description }}</p>
@@ -802,14 +833,15 @@ useHead({
             </div>
 
             <!-- Marker Icon -->
-            <div class="absolute z-10 -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2">
+            <div v-if="showAllIcons || index === 0" class="absolute z-40 -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2">
               <div
                 :class="[
-                  'w-16 h-16 rounded-full flex items-center justify-center shadow-[0_8px_24px_rgba(59,130,246,0.15)] border-[5px] border-white transition-all duration-300 ease-in-out group-hover:scale-110 group-hover:rotate-[5deg] group-hover:shadow-[0_12px_32px_rgba(59,130,246,0.2)]',
+                  'w-16 h-16 rounded-full flex items-center justify-center shadow-[0_8px_24px_rgba(59,130,246,0.15)] border-[5px] border-white/80 backdrop-blur-sm transition-all duration-500 ease-in-out group-hover:scale-115 group-hover:rotate-[10deg] group-hover:shadow-[0_16px_40px_rgba(59,130,246,0.3)] cursor-pointer',
                   index % 2 === 0
                     ? 'bg-gradient-to-br from-blue-500 to-blue-700'
                     : 'bg-gradient-to-br from-orange-500 to-orange-700',
-                ]"
+                  clickedMarkers[index]]"
+                @click="toggleMarker(index)"
               >
                 <Icon :name="item.icon" size="28" class="text-white" />
               </div>
@@ -817,7 +849,8 @@ useHead({
 
             <!-- Connector Line -->
             <div
-              :class="['absolute top-1/2 w-[60px] h-[3px] -translate-y-1/2', index % 2 === 0 ? 'right-1/2 mr-8 bg-[linear-gradient(to_right,transparent,#3b82f6)]' : 'left-1/2 ml-8 bg-[linear-gradient(to_left,transparent,#3b82f6)]']"
+              v-if="clickedMarkers[index]"
+              :class="['absolute top-1/2 w-[60px] h-[3px] -translate-y-1/2 z-1 transition-all duration-500 ease-in-out group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.6)] group-hover:h-[4px]', index % 2 === 0 ? 'right-1/2 mr-8 bg-gradient-to-r from-transparent via-blue-500 to-blue-600 rounded-full' : 'left-1/2 ml-8 bg-gradient-to-l from-transparent via-blue-500 to-blue-600 rounded-full']"
             ></div>
           </div>
         </div>

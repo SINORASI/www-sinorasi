@@ -27,7 +27,7 @@
             :alt="`Seragam ${uniformType} Kelas ${selectedGrade} ${
               selectedGender === 'L' ? 'Laki-laki' : 'Perempuan'
             } - ${index + 1}`"
-            class="absolute inset-5 w-[calc(100%-2.5rem)] h-[calc(100%-2.5rem)] object-contain rounded-lg z-10"
+            class="absolute inset-5 w-[calc(100%-2.5rem)] h-[calc(100%-2.5rem)] object-contain rounded-lg z-50"
           />
         </TransitionGroup>
       </div>
@@ -36,7 +36,7 @@
       <div :class="['absolute inset-0', gradientOverlayClass]"></div>
 
       <!-- Floating Menu Button - Glassmorphism -->
-      <div class="absolute z-10 top-4 left-4">
+      <div class="absolute z-60 top-4 left-4">
         <button
           @click="isMenuOpen = !isMenuOpen"
           :class="[
@@ -145,18 +145,18 @@
       </div>
 
       <!-- Day Number Badge -->
-      <div class="absolute z-10 px-3 py-1 rounded-full top-4 right-4 bg-white/90 backdrop-blur-sm">
+      <div class="absolute px-3 py-1 rounded-full z-60 top-4 right-4 bg-white/90 backdrop-blur-sm">
         <span :class="['text-xs font-semibold', badgeTextClass]">{{ dayNumber }}</span>
       </div>
 
       <!-- Day Name -->
-      <div class="absolute bottom-4 left-4">
+      <div class="absolute z-60 bottom-4 left-4">
         <p class="text-sm font-medium text-white/90 drop-shadow-md">{{ uniformDay }}</p>
         <h3 class="text-2xl font-bold text-white drop-shadow-lg">{{ day }}</h3>
       </div>
 
       <!-- Carousel Indicators -->
-      <div class="absolute bottom-4 right-4 flex gap-1.5">
+      <div class="absolute z-60 bottom-4 right-4 flex gap-1.5">
         <button
           v-for="(_, index) in currentImages"
           :key="index"

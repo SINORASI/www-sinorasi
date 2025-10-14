@@ -41,8 +41,6 @@
               <div class="logo">
                 <img :src="card.logo" alt="Logo Jurusan" width="60" height="60" />
               </div>
-
-
             </div>
           </div>
         </div>
@@ -95,8 +93,7 @@ const videoCards: VideoCard[] = [
     videoType: "youtube",
     logo: "/images/majorIcon/logo-rpl.webp",
     title: "Rekayasa Perangkat Lunak",
-    description:
-      "Pemrograman, aplikasi, database, dan software untuk platform digital",
+    description: "Pemrograman, aplikasi, database, dan software untuk platform digital",
     slug: "rpl",
     startTime: 63,
   },
@@ -107,8 +104,7 @@ const videoCards: VideoCard[] = [
     videoType: "youtube",
     logo: "/images/majorIcon/logo-tkj.webp",
     title: "Teknik Komputer dan Jaringan",
-    description:
-      "Instalasi, konfigurasi, dan maintenance jaringan komputer, server, dan keamanan IT",
+    description: "Instalasi, konfigurasi, dan maintenance jaringan komputer, server, dan keamanan IT",
     slug: "tkj",
     startTime: 33,
   },
@@ -119,8 +115,7 @@ const videoCards: VideoCard[] = [
     videoType: "youtube",
     logo: "/images/majorIcon/logo-dkv.webp",
     title: "Desain Komunikasi Visual",
-    description:
-      "Desain grafis, branding, ilustrasi, dan komunikasi visual untuk media cetak dan digital",
+    description: "Desain grafis, branding, ilustrasi, dan komunikasi visual untuk media cetak dan digital",
     slug: "dkv",
     startTime: 11,
   },
@@ -175,8 +170,7 @@ const videoCards: VideoCard[] = [
     videoType: "youtube",
     logo: "/images/majorIcon/logo-tav.webp",
     title: "Teknik Audio Video",
-    description:
-      "Instalasi dan perawatan sistem audio video, sound system, home theater, dan multimedia",
+    description: "Instalasi dan perawatan sistem audio video, sound system, home theater, dan multimedia",
     slug: "tav",
     startTime: 14,
   },
@@ -230,9 +224,9 @@ const createPlayer = (id: number, videoId: string) => {
     events: {
       onReady: (event: any) => {
         playersReady.value[id] = true;
-        event.target.setPlaybackQuality('hd720');
-        event.target.getIframe().style.width = '100%';
-        event.target.getIframe().style.height = '100%';
+        event.target.setPlaybackQuality("hd720");
+        event.target.getIframe().style.width = "100%";
+        event.target.getIframe().style.height = "100%";
       },
     },
   });
@@ -250,7 +244,7 @@ watch(currentSlide, () => {
 const handleMouseEnter = (id: number) => {
   hoveredCard.value = id;
   const player = youtubePlayers.value[id];
-  const card = videoCards.find(c => c.id === id);
+  const card = videoCards.find((c) => c.id === id);
 
   if (player && playersReady.value[id] && card) {
     player.seekTo(card.startTime, true);
@@ -277,7 +271,7 @@ const handleMouseEnter = (id: number) => {
 const handleMouseLeave = (id: number) => {
   hoveredCard.value = null;
   const player = youtubePlayers.value[id];
-  const card = videoCards.find(c => c.id === id);
+  const card = videoCards.find((c) => c.id === id);
 
   // Clear interval
   if (playbackIntervals.value[id]) {
@@ -294,7 +288,7 @@ const handleMouseLeave = (id: number) => {
 const handleTouchStart = (id: number) => {
   hoveredCard.value = id;
   const player = youtubePlayers.value[id];
-  const card = videoCards.find(c => c.id === id);
+  const card = videoCards.find((c) => c.id === id);
 
   if (player && playersReady.value[id] && card) {
     player.seekTo(card.startTime, true);
@@ -321,7 +315,7 @@ const handleTouchStart = (id: number) => {
 const handleTouchEnd = (id: number) => {
   hoveredCard.value = null;
   const player = youtubePlayers.value[id];
-  const card = videoCards.find(c => c.id === id);
+  const card = videoCards.find((c) => c.id === id);
 
   // Clear interval
   if (playbackIntervals.value[id]) {
@@ -472,18 +466,15 @@ const navigateToMajorsList = () => {
 .content-overlay {
   position: absolute;
   bottom: 0;
-  left: 0;
-  right: 0;
   height: 30%;
+  width: 100%;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.7) 50%, transparent 100%);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  padding: 0px 16px 16px 16px;
+  padding: 16px 16px 16px 16px;
   transform: translateY(100%);
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   opacity: 0;
-  display: flex;
-  align-items: flex-end;
 }
 
 .content-visible {
@@ -494,7 +485,7 @@ const navigateToMajorsList = () => {
 .content-wrapper {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   color: white;
 }
 
@@ -505,7 +496,6 @@ const navigateToMajorsList = () => {
 
 .logo {
   display: block;
-
 }
 
 .logo img {
@@ -517,14 +507,12 @@ const navigateToMajorsList = () => {
 .title {
   font-size: 1.15rem;
   font-weight: 700;
-
   line-height: 1.3;
 }
 
 .description {
   font-size: 0.875rem;
   line-height: 1.5;
-
   opacity: 0.95;
   display: -webkit-box;
   -webkit-line-clamp: 1;

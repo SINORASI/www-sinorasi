@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 * {
-  font-family: Montserrat;
+  font-family: Nunito, sans-serif;
   scroll-behavior: smooth;
 }
 
