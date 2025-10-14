@@ -18,28 +18,59 @@
         </div>
 
         <div class="flex-1 p-4 overflow-y-auto">
-          <div class="relative mb-4">
-            <div class="relative">
-              <input
-                type="text"
-                placeholder="Cari halaman, berita, jurusan, atau ekstrakurikuler..."
-                v-model="searchQuery"
-                class="w-full px-3 py-3 pr-10 text-lg text-gray-800 transition-all duration-200 border border-gray-200 rounded-lg outline-none bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-              <button
-                v-if="searchQuery.trim()"
-                @click="searchQuery = ''"
-                class="absolute p-1 text-gray-400 transition-colors transform -translate-y-1/2 rounded-full right-3 top-1/2 hover:text-gray-600 hover:bg-gray-200"
-              >
-                <Icon name="lucide:x" size="20" />
-              </button>
-              <Icon
-                v-else
-                name="lucide:search"
-                size="20"
-                class="absolute text-gray-400 transform -translate-y-1/2 pointer-events-none right-3 top-1/2"
-              />
-            </div>
+           <!-- Profile Section -->
+           <div class="mb-6">
+             <div class="p-4 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl shadow-lg">
+               <div class="flex items-center gap-3 mb-3">
+                 <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+                   <Icon name="lucide:user" size="20" class="text-white" />
+                 </div>
+                 <div>
+                   <p class="text-white font-semibold">Selamat Datang</p>
+                   <p class="text-blue-100 text-sm">Silakan masuk untuk akses penuh</p>
+                 </div>
+               </div>
+               <div class="flex gap-2">
+                 <NuxtLink
+                   to="/login"
+                   @click="$emit('close')"
+                   class="flex-1 bg-white text-blue-600 font-semibold py-2 px-4 rounded-lg text-center hover:bg-blue-50 transition-colors"
+                 >
+                   Masuk
+                 </NuxtLink>
+                 <NuxtLink
+                   to="/register"
+                   @click="$emit('close')"
+                   class="flex-1 bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg text-center border-2 border-white hover:bg-blue-700 transition-colors"
+                 >
+                   Registrasi
+                 </NuxtLink>
+               </div>
+             </div>
+           </div>
+
+           <div class="relative mb-4">
+             <div class="relative">
+               <input
+                 type="text"
+                 placeholder="Cari halaman, berita, jurusan, atau ekstrakurikuler..."
+                 v-model="searchQuery"
+                 class="w-full px-3 py-3 pr-10 text-lg text-gray-800 transition-all duration-200 border border-gray-200 rounded-lg outline-none bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+               />
+               <button
+                 v-if="searchQuery.trim()"
+                 @click="searchQuery = ''"
+                 class="absolute p-1 text-gray-400 transition-colors transform -translate-y-1/2 rounded-full right-3 top-1/2 hover:text-gray-600 hover:bg-gray-200"
+               >
+                 <Icon name="lucide:x" size="20" />
+               </button>
+               <Icon
+                 v-else
+                 name="lucide:search"
+                 size="20"
+                 class="absolute text-gray-400 transform -translate-y-1/2 pointer-events-none right-3 top-1/2"
+               />
+             </div>
 
             <!-- Home Button for Major Pages -->
             <NuxtLink v-if="menuItems !== currentMenuItems" to="/" @click="emit('close')" class="block mt-3">
