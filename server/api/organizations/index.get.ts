@@ -132,6 +132,281 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
       },
       sections: [],
       activities: []
+    },
+    {
+      id: '3',
+      slug: 'pramuka',
+      name: 'Pramuka',
+      logo: '/images/logo.webp',
+      description: 'Gerakan Pramuka adalah organisasi pendidikan nonformal yang bertujuan membentuk karakter siswa melalui kegiatan kepramukaan yang menyenangkan dan mendidik.',
+      history: 'Pramuka di SMK Negeri 2 Singosari telah lama menjadi bagian dari kegiatan ekstrakurikuler yang membantu siswa mengembangkan keterampilan survival, kepemimpinan, dan jiwa sosial.',
+      established: '2010',
+      statistics: {
+        members: 60,
+        programs: 40,
+        years: 14,
+        meetings: 4
+      },
+      contactInfo: {
+        instagram: [
+          { label: 'Pramuka SMK 2 SGS', handle: '@pramuka_smkn2' },
+          { label: 'SMKn 2 SGS', handle: '@smkn2_singosari' }
+        ],
+        whatsapp: [
+          { label: 'Ketua Pramuka', number: '081234567891' },
+          { label: 'Pembina', number: '089876543211' }
+        ],
+        socialMedia: [
+          { platform: 'instagram', handle: 'pramuka_smkn2' }
+        ]
+      },
+      leadership: {
+        sekretaris: [
+          { id: 's2', name: 'Sekretaris Pramuka', image: '/images/profile-placeholder.png', position: 'Sekretaris' }
+        ],
+        ketua: [
+          { id: 'k2', name: 'Ketua Pramuka', image: '/images/profile-placeholder.png', position: 'Ketua' }
+        ],
+        wakil: [
+          { id: 'w2', name: 'Wakil Ketua Pramuka', image: '/images/profile-placeholder.png', position: 'Wakil Ketua' }
+        ],
+        bendahara: [
+          { id: 'b2', name: 'Bendahara Pramuka', image: '/images/profile-placeholder.png', position: 'Bendahara' }
+        ]
+      },
+      sections: [
+        {
+          id: 'seksi-pramuka-1',
+          name: 'SEKSI KEPRAMUKAN',
+          image: '/images/profile-placeholder.png',
+          visi: 'Membentuk generasi muda yang tangguh dan berakhlak mulia',
+          misi: 'Mengembangkan keterampilan kepramukaan melalui kegiatan rutin dan program edukasi',
+          tasks: 'Mengorganisir kegiatan jambore, latihan survival, dan pendidikan karakter',
+          programs: [
+            'Latihan dasar kepramukaan',
+            'Kegiatan jambore',
+            'Pelatihan survival',
+            'Pendidikan lingkungan',
+            'Kegiatan sosial'
+          ],
+          members: [
+            { id: 'm6', name: 'Pembina Pramuka', image: '/images/profile-placeholder.png', position: 'Pembina' },
+            { id: 'm7', name: 'Anggota 1', image: '/images/profile-placeholder.png', position: 'Anggota' },
+            { id: 'm8', name: 'Anggota 2', image: '/images/profile-placeholder.png', position: 'Anggota' }
+          ]
+        }
+      ],
+      activities: [
+        {
+          id: 'a5',
+          image: '/images/placeholder.jpg',
+          title: 'Jambore Pramuka',
+          description: 'Kegiatan jambore tahunan yang melibatkan berbagai kegiatan kepramukaan dan pendidikan karakter.',
+          date: '2024-08-15'
+        },
+        {
+          id: 'a6',
+          image: '/images/placeholder.jpg',
+          title: 'Latihan Survival',
+          description: 'Pelatihan keterampilan survival di alam terbuka untuk membentuk mental yang tangguh.',
+          date: '2024-09-20'
+        }
+      ],
+      recruitmentPoster: '/images/placeholder.jpg',
+      recruitmentPeriod: '1-15 Agustus 2024'
+    },
+    {
+      id: '4',
+      slug: 'futsal-club',
+      name: 'Futsal Club',
+      logo: '/images/logo.webp',
+      description: 'Klub futsal sekolah yang fokus pada pengembangan kemampuan olahraga dan sportivitas siswa melalui latihan rutin dan kompetisi.',
+      history: 'Futsal Club didirikan untuk memberikan wadah bagi siswa yang memiliki minat di bidang olahraga futsal dan membangun semangat kebersamaan.',
+      established: '2012',
+      statistics: {
+        members: 35,
+        programs: 25,
+        years: 12,
+        meetings: 5
+      },
+      contactInfo: {
+        instagram: [
+          { label: 'Futsal SMK 2 SGS', handle: '@futsal_smkn2' }
+        ],
+        whatsapp: [
+          { label: 'Kapten Futsal', number: '081234567892' }
+        ],
+        socialMedia: [
+          { platform: 'instagram', handle: 'futsal_smkn2' }
+        ]
+      },
+      leadership: {
+        ketua: [
+          { id: 'k3', name: 'Kapten Futsal', image: '/images/profile-placeholder.png', position: 'Kapten' }
+        ],
+        wakil: [
+          { id: 'w3', name: 'Wakil Kapten', image: '/images/profile-placeholder.png', position: 'Wakil Kapten' }
+        ]
+      },
+      sections: [],
+      activities: [
+        {
+          id: 'a7',
+          image: '/images/placeholder.jpg',
+          title: 'Turnamen Futsal',
+          description: 'Kompetisi futsal antar sekolah yang diikuti oleh tim futsal SMK Negeri 2 Singosari.',
+          date: '2024-10-05'
+        }
+      ],
+      recruitmentPoster: '/images/placeholder.jpg',
+      recruitmentPeriod: '1-30 September 2024'
+    },
+    {
+      id: '5',
+      slug: 'english-club',
+      name: 'English Club',
+      logo: '/images/logo.webp',
+      description: 'Klub bahasa Inggris yang bertujuan meningkatkan kemampuan berbahasa Inggris siswa melalui berbagai kegiatan edukasi dan hiburan.',
+      history: 'English Club dibentuk untuk mendukung program bilingual sekolah dan membantu siswa menguasai bahasa internasional.',
+      established: '2015',
+      statistics: {
+        members: 45,
+        programs: 20,
+        years: 9,
+        meetings: 3
+      },
+      contactInfo: {
+        instagram: [
+          { label: 'English Club SMK 2', handle: '@englishclub_smkn2' }
+        ],
+        whatsapp: [
+          { label: 'Koordinator English', number: '081234567893' }
+        ],
+        socialMedia: [
+          { platform: 'instagram', handle: 'englishclub_smkn2' }
+        ]
+      },
+      leadership: {
+        ketua: [
+          { id: 'k4', name: 'Ketua English Club', image: '/images/profile-placeholder.png', position: 'Ketua' }
+        ],
+        sekretaris: [
+          { id: 's3', name: 'Sekretaris English', image: '/images/profile-placeholder.png', position: 'Sekretaris' }
+        ]
+      },
+      sections: [
+        {
+          id: 'seksi-english-1',
+          name: 'SEKSI SPEAKING',
+          image: '/images/profile-placeholder.png',
+          visi: 'Menjadi pusat pengembangan kemampuan speaking bahasa Inggris',
+          misi: 'Melaksanakan kegiatan speaking club dan debat bahasa Inggris',
+          tasks: 'Mengorganisir public speaking, debate competition, dan English conversation',
+          programs: [
+            'Public speaking training',
+            'English debate',
+            'Conversation club',
+            'English movie night',
+            'Writing workshop'
+          ],
+          members: [
+            { id: 'm9', name: 'Koordinator Speaking', image: '/images/profile-placeholder.png', position: 'Koordinator' },
+            { id: 'm10', name: 'Anggota Speaking', image: '/images/profile-placeholder.png', position: 'Anggota' }
+          ]
+        }
+      ],
+      activities: [
+        {
+          id: 'a8',
+          image: '/images/placeholder.jpg',
+          title: 'English Debate Competition',
+          description: 'Kompetisi debat bahasa Inggris antar siswa untuk meningkatkan kemampuan berargumentasi.',
+          date: '2024-11-10'
+        },
+        {
+          id: 'a9',
+          image: '/images/placeholder.jpg',
+          title: 'Public Speaking Workshop',
+          description: 'Workshop public speaking yang melatih kepercayaan diri dan kemampuan presentasi.',
+          date: '2024-12-01'
+        }
+      ],
+      recruitmentPoster: '/images/placeholder.jpg',
+      recruitmentPeriod: '15 Oktober - 15 November 2024'
+    },
+    {
+      id: '6',
+      slug: 'robotics-club',
+      name: 'Robotics Club',
+      logo: '/images/logo.webp',
+      description: 'Klub robotika yang fokus pada pengembangan inovasi teknologi melalui pembuatan dan pemrograman robot untuk kompetisi dan proyek edukasi.',
+      history: 'Robotics Club didirikan untuk menyalurkan minat siswa di bidang teknologi dan STEM, khususnya di jurusan RPL dan TKJ.',
+      established: '2018',
+      statistics: {
+        members: 25,
+        programs: 15,
+        years: 6,
+        meetings: 4
+      },
+      contactInfo: {
+        instagram: [
+          { label: 'Robotics SMK 2 SGS', handle: '@robotics_smkn2' }
+        ],
+        whatsapp: [
+          { label: 'Ketua Robotics', number: '081234567894' }
+        ],
+        socialMedia: [
+          { platform: 'instagram', handle: 'robotics_smkn2' },
+          { platform: 'youtube', handle: 'Robotics SMK Negeri 2 Singosari' }
+        ]
+      },
+      leadership: {
+        ketua: [
+          { id: 'k5', name: 'Ketua Robotics Club', image: '/images/profile-placeholder.png', position: 'Ketua' }
+        ],
+        wakil: [
+          { id: 'w4', name: 'Wakil Ketua Robotics', image: '/images/profile-placeholder.png', position: 'Wakil Ketua' }
+        ]
+      },
+      sections: [
+        {
+          id: 'seksi-robotics-1',
+          name: 'SEKSI PEMROGRAMAN',
+          image: '/images/profile-placeholder.png',
+          visi: 'Menjadi pusat inovasi robotika dan pemrograman',
+          misi: 'Mengembangkan robot untuk kompetisi dan proyek edukasi',
+          tasks: 'Membuat robot untuk kontes robot, workshop Arduino, dan proyek IoT',
+          programs: [
+            'Robot contest preparation',
+            'Arduino workshop',
+            'IoT project development',
+            '3D printing training',
+            'AI and machine learning introduction'
+          ],
+          members: [
+            { id: 'm11', name: 'Programmer Lead', image: '/images/profile-placeholder.png', position: 'Lead Programmer' },
+            { id: 'm12', name: 'Hardware Specialist', image: '/images/profile-placeholder.png', position: 'Hardware Specialist' }
+          ]
+        }
+      ],
+      activities: [
+        {
+          id: 'a10',
+          image: '/images/placeholder.jpg',
+          title: 'Robot Contest',
+          description: 'Kompetisi robot yang dibuat oleh anggota klub untuk berbagai kategori perlombaan.',
+          date: '2025-01-15'
+        },
+        {
+          id: 'a11',
+          image: '/images/placeholder.jpg',
+          title: 'Arduino Workshop',
+          description: 'Workshop pembuatan proyek sederhana menggunakan Arduino dan sensor.',
+          date: '2024-12-20'
+        }
+      ],
+      recruitmentPoster: '/images/placeholder.jpg',
+      recruitmentPeriod: '1-31 Desember 2024'
     }
   ];
 

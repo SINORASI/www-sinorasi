@@ -4,11 +4,11 @@ const props = defineProps<{
   bgColor?: string;
 }>();
 
-const isColoredBackground = computed(() => !!props.bgColor && props.bgColor !== "#1f2937");
+const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "#1f2937");
 </script>
 
 <template>
-  <footer class="py-12 mt-16 text-white" :style="`background-color: ${bgColor || '#1f2937'}`">
+  <footer class="py-12 mt-16 text-white" :style="`background: ${bgColor || 'linear-gradient(135deg, #3598F9, #2E7CE6)'}`">
     <div class="container px-6 mx-auto">
       <div class="grid grid-cols-1 gap-8 md:grid-cols-4">
         <div class="md:col-span-1">

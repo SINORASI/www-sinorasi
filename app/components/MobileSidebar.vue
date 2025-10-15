@@ -1,9 +1,15 @@
-2<template>
+2
+<template>
   <transition name="sidebar" class="transition-all duration-300 ease-in-out">
     <div v-if="isOpen" class="fixed inset-0 z-[9000] flex">
-      <div class="fixed inset-0 transition-opacity duration-300 ease-in-out bg-black/50 backdrop-blur-sm" @click="$emit('close')"></div>
+      <div
+        class="fixed inset-0 transition-opacity duration-300 ease-in-out bg-black/50 backdrop-blur-sm"
+        @click="$emit('close')"
+      ></div>
 
-      <div class="relative flex flex-col w-full h-full transition-transform duration-300 ease-in-out bg-white shadow-2xl sm:ml-auto sm:w-96">
+      <div
+        class="relative flex flex-col w-full h-full transition-transform duration-300 ease-in-out bg-white shadow-2xl sm:ml-auto sm:w-96"
+      >
         <div class="flex items-center justify-between flex-shrink-0 gap-3 p-4 border-b border-gray-200">
           <div class="flex-1 min-w-0">
             <h2 class="text-lg font-semibold text-gray-800 truncate">{{ pageTitle }}</h2>
@@ -18,59 +24,59 @@
         </div>
 
         <div class="flex-1 p-4 overflow-y-auto">
-           <!-- Profile Section -->
-           <div class="mb-6">
-             <div class="p-4 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl shadow-lg">
-               <div class="flex items-center gap-3 mb-3">
-                 <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
-                   <Icon name="lucide:user" size="20" class="text-white" />
-                 </div>
-                 <div>
-                   <p class="text-white font-semibold">Selamat Datang</p>
-                   <p class="text-blue-100 text-sm">Silakan masuk untuk akses penuh</p>
-                 </div>
-               </div>
-               <div class="flex gap-2">
-                 <NuxtLink
-                   to="/login"
-                   @click="$emit('close')"
-                   class="flex-1 bg-white text-blue-600 font-semibold py-2 px-4 rounded-lg text-center hover:bg-blue-50 transition-colors"
-                 >
-                   Masuk
-                 </NuxtLink>
-                 <NuxtLink
-                   to="/register"
-                   @click="$emit('close')"
-                   class="flex-1 bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg text-center border-2 border-white hover:bg-blue-700 transition-colors"
-                 >
-                   Registrasi
-                 </NuxtLink>
-               </div>
-             </div>
-           </div>
+          <!-- Profile Section -->
+          <div class="mb-6">
+            <div class="p-4 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl shadow-lg">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+                  <Icon name="lucide:user" size="20" class="text-white" />
+                </div>
+                <div>
+                  <p class="text-white font-semibold">Selamat Datang</p>
+                  <p class="text-blue-100 text-sm">Silakan masuk untuk akses penuh</p>
+                </div>
+              </div>
+              <div class="flex gap-2">
+                <NuxtLink
+                  to="/login"
+                  @click="$emit('close')"
+                  class="flex-1 bg-white text-blue-600 font-semibold py-2 px-4 rounded-lg text-center hover:bg-blue-50 transition-colors"
+                >
+                  Masuk
+                </NuxtLink>
+                <NuxtLink
+                  to="/register"
+                  @click="$emit('close')"
+                  class="flex-1 bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg text-center border-2 border-white hover:bg-blue-700 transition-colors"
+                >
+                  Registrasi
+                </NuxtLink>
+              </div>
+            </div>
+          </div>
 
-           <div class="relative mb-4">
-             <div class="relative">
-               <input
-                 type="text"
-                 placeholder="Cari halaman, berita, jurusan, atau ekstrakurikuler..."
-                 v-model="searchQuery"
-                 class="w-full px-3 py-3 pr-10 text-lg text-gray-800 transition-all duration-200 border border-gray-200 rounded-lg outline-none bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-               />
-               <button
-                 v-if="searchQuery.trim()"
-                 @click="searchQuery = ''"
-                 class="absolute p-1 text-gray-400 transition-colors transform -translate-y-1/2 rounded-full right-3 top-1/2 hover:text-gray-600 hover:bg-gray-200"
-               >
-                 <Icon name="lucide:x" size="20" />
-               </button>
-               <Icon
-                 v-else
-                 name="lucide:search"
-                 size="20"
-                 class="absolute text-gray-400 transform -translate-y-1/2 pointer-events-none right-3 top-1/2"
-               />
-             </div>
+          <div class="relative mb-4">
+            <div class="relative">
+              <input
+                type="text"
+                placeholder="Cari halaman, berita, jurusan, atau ekstrakurikuler..."
+                v-model="searchQuery"
+                class="w-full px-3 py-3 pr-10 text-lg text-gray-800 transition-all duration-200 border border-gray-200 rounded-lg outline-none bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+              <button
+                v-if="searchQuery.trim()"
+                @click="searchQuery = ''"
+                class="absolute p-1 text-gray-400 transition-colors transform -translate-y-1/2 rounded-full right-3 top-1/2 hover:text-gray-600 hover:bg-gray-200"
+              >
+                <Icon name="lucide:x" size="20" />
+              </button>
+              <Icon
+                v-else
+                name="lucide:search"
+                size="20"
+                class="absolute text-gray-400 transform -translate-y-1/2 pointer-events-none right-3 top-1/2"
+              />
+            </div>
 
             <!-- Home Button for Major Pages -->
             <NuxtLink v-if="menuItems !== currentMenuItems" to="/" @click="emit('close')" class="block mt-3">
@@ -97,8 +103,8 @@
                 <div class="flex items-center gap-3">
                   <Icon name="lucide:languages" size="20" class="text-gray-600" />
                   <span class="text-sm font-medium text-gray-700">
-                    {{ languages.find(lang => lang.code === currentLanguage)?.flag }}
-                    {{ languages.find(lang => lang.code === currentLanguage)?.name }}
+                    {{ languages.find((lang) => lang.code === currentLanguage)?.flag }}
+                    {{ languages.find((lang) => lang.code === currentLanguage)?.name }}
                   </span>
                 </div>
                 <Icon
@@ -304,19 +310,19 @@ import { majorColorSchemes } from "~/utils/majorColors";
 import type { MajorName } from "~/models/MajorName";
 import type { News } from "~/models/News";
 
-const currentLanguage = ref('id')
-const showLanguageMenu = ref(false)
+const currentLanguage = ref("id");
+const showLanguageMenu = ref(false);
 
 const languages = [
-  { code: 'id', name: 'Bahasa Indonesia', flag: '🇮🇩' },
-  { code: 'en', name: 'English', flag: '🇺🇸' }
-]
+  { code: "id", name: "Bahasa Indonesia", flag: "🇮🇩" },
+  { code: "en", name: "English", flag: "🇺🇸" },
+];
 
 const switchLanguage = (langCode: string) => {
-  currentLanguage.value = langCode
-  showLanguageMenu.value = false
+  currentLanguage.value = langCode;
+  showLanguageMenu.value = false;
   // TODO: Implement actual language switching logic
-}
+};
 
 // Get current route for dynamic title
 const route = useRoute();
@@ -603,20 +609,12 @@ const menuItems = [
         tags: ["berita", "news"],
       },
       {
-        title: "Organisasi",
-        desc: "Semua organisasi sekolah",
-        icon: "lucide:person-standing",
-        to: "/organisasi",
-        external: false,
-        tags: ["organisasi", "organization", "semua"],
-      },
-      {
-        title: "Extracurricular",
-        desc: "Ekstrakurikuler yang ada di sekolah",
-        icon: "lucide:workflow",
+        title: "Organisasi & Ekstrakurikuler",
+        desc: "Organisasi dan kegiatan ekstrakurikuler sekolah",
+        icon: "lucide:users",
         to: "/ekstrakurikuler/",
         external: false,
-        tags: ["ekstrakurikuler", "extracurricular", "extra"],
+        tags: ["organisasi", "organization", "ekstrakurikuler", "extracurricular", "extra"],
       },
       {
         title: "Events",
@@ -1024,4 +1022,3 @@ const toggleSection = (title: string) => {
   openSections.value[title] = !(openSections.value[title] ?? false);
 };
 </script>
-
