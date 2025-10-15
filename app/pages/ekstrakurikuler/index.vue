@@ -16,10 +16,6 @@ const closeDialog = () => {
   document.body.style.overflow = "";
 };
 
-// Fetch organizations
-const { data: organizationsResponse } = await useFetch("/api/organizations");
-const organizations = computed(() => organizationsResponse.value?.data || []);
-
 // Fetch extracurriculars
 const { data: extracurricularsResponse, pending, error } = await useFetch("/api/extracurriculars");
 const extracurriculars = computed(() => extracurricularsResponse.value?.data || []);
@@ -31,15 +27,6 @@ const categories = computed(() => {
     if (extra.category) cats.add(extra.category);
   });
   return Array.from(cats);
-});
-
-// Filtered organizations by search
-const filteredOrganizations = computed(() => {
-  if (!searchQuery.value.trim()) return organizations.value;
-  const query = searchQuery.value.toLowerCase();
-  return organizations.value.filter(
-    (org: any) => org.name.toLowerCase().includes(query) || org.description?.toLowerCase().includes(query)
-  );
 });
 
 // Filtered extracurriculars by category and search
@@ -72,172 +59,257 @@ useHead({
 </script>
 
 <template>
-  <div class="min-h-screen py-24 bg-gradient-to-b from-white via-blue-50 to-white">
-    <div class="container px-4 py-8 mx-auto sm:px-6">
+  <div class="min-h-screen py-24 bg-gradient-to-br from-white via-orange-50 to-gray-50 relative overflow-hidden">
+    <!-- Animated Background Elements -->
+    <div class="absolute inset-0">
+      <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-orange-400/10 via-orange-400/10 to-pink-400/10 animate-gradient-shift"></div>
+      <div class="absolute top-20 left-10 w-72 h-72 bg-orange-300/20 rounded-full blur-3xl animate-float"></div>
+      <div class="absolute top-40 right-20 w-96 h-96 bg-orange-300/20 rounded-full blur-3xl animate-float" style="animation-delay: -2s;"></div>
+      <div class="absolute bottom-20 left-1/4 w-80 h-80 bg-pink-300/20 rounded-full blur-3xl animate-float" style="animation-delay: -4s;"></div>
+      <div class="absolute bottom-40 right-10 w-64 h-64 bg-orange-300/20 rounded-full blur-3xl animate-float" style="animation-delay: -6s;"></div>
+    </div>
+
+    <!-- Floating Geometric Shapes -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="absolute top-20 left-20 w-4 h-4 bg-gray-600/20 rotate-45 animate-bounce-in" style="animation-delay: 0.5s;"></div>
+      <div class="absolute top-40 right-40 w-6 h-6 border-2 border-gray-500/30 rounded-full animate-bounce-in" style="animation-delay: 1s;"></div>
+      <div class="absolute bottom-60 left-40 w-3 h-3 bg-gray-600/20 rotate-12 animate-bounce-in" style="animation-delay: 1.5s;"></div>
+      <div class="absolute bottom-40 right-60 w-5 h-5 border-2 border-gray-500/30 rounded-lg animate-bounce-in" style="animation-delay: 2s;"></div>
+      <div class="absolute top-60 right-20 w-2 h-2 bg-gray-600/20 rounded-full animate-bounce-in" style="animation-delay: 2.5s;"></div>
+    </div>
+
+    <div class="container px-4 py-8 mx-auto sm:px-6 relative z-10">
       <!-- Header Section -->
-      <div class="flex flex-col items-center mb-12">
-        <div
-          class="p-6 px-10 py-6 mb-4 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
-        >
-          <h1 class="text-3xl font-bold text-white sm:text-4xl">Ekstrakurikuler & Organisasi</h1>
+      <div class="flex flex-col items-center mb-20 animate-fade-in-up">
+        <div class="relative group mb-8">
+          <!-- Main Title with Light Effect -->
+          <div class="relative">
+            <h1 class="text-5xl sm:text-6xl lg:text-7xl text-center font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-600 via-orange-600 to-orange-600 animate-gradient-shift drop-shadow-2xl">
+              EKSTRAKURIKULER
+            </h1>
+            <!-- Light Glow Effect -->
+            <div class="absolute inset-0 text-5xl sm:text-6xl text-center lg:text-7xl font-black text-orange-400 blur-sm opacity-50 animate-pulse">
+              EKSTRAKURIKULER
+            </div>
+            <!-- Animated Border -->
+            <div class="absolute -inset-4 border-2 border-orange-400/50 rounded-3xl animate-pulse-glow"></div>
+          </div>
+
+          <!-- Subtitle -->
+          <div class="mt-6 relative">
+            <p class="text-xl sm:text-2xl text-gray-800 font-light tracking-wide animate-slide-in-left text-center max-w-4xl leading-relaxed">
+              Temukan passionmu dan kembangkan potensimu melalui berbagai kegiatan ekstrakurikuler yang menantang dan inspiratif
+            </p>
+            <!-- Decorative Lines -->
+            <div class="flex justify-center items-center gap-6 mt-6">
+              <div class="w-20 h-px bg-gradient-to-r from-transparent to-orange-400 animate-shimmer"></div>
+              <div class="w-3 h-3 bg-orange-400 rounded-full animate-pulse"></div>
+              <div class="w-20 h-px bg-gradient-to-l from-transparent to-orange-400 animate-shimmer"></div>
+            </div>
+          </div>
         </div>
-        <p class="max-w-2xl text-center text-gray-600">Kembangkan bakat dan minatmu di SMK Negeri 2 Singosari</p>
       </div>
 
       <!-- Stats Cards -->
-      <div class="grid max-w-3xl grid-cols-1 gap-6 mx-auto mb-16 md:grid-cols-2">
-        <div
-          class="p-8 text-center transition-shadow bg-white border-2 border-blue-100 shadow-xl rounded-2xl hover:shadow-2xl"
-        >
-          <div class="inline-block p-4 mb-4 bg-blue-100 rounded-full">
-            <Icon name="lucide:users" size="32" class="text-blue-600" />
+      <div class="grid max-w-5xl grid-cols-1 gap-8 mx-auto mb-24 md:grid-cols-2">
+        <div class="relative group">
+          <!-- Light Card Design -->
+          <div class="bg-gradient-to-br from-white/90 to-gray-50/90 backdrop-blur-xl border border-orange-200/50 rounded-2xl p-8 text-center hover-lift stagger-1 animate-scale-in overflow-hidden shadow-lg">
+            <!-- Animated Border -->
+            <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-orange-400/10 via-orange-400/10 to-orange-400/10 animate-gradient-shift"></div>
+            <div class="absolute inset-[1px] bg-gradient-to-br from-white to-gray-50 rounded-2xl"></div>
+
+            <!-- Content -->
+            <div class="relative z-10">
+              <!-- Icon with Glow -->
+              <div class="inline-block p-6 mb-6 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl shadow-2xl animate-bounce-in relative">
+                <Icon name="lucide:trophy" size="40" class="text-white animate-pulse" />
+                <div class="absolute inset-0 bg-orange-400/20 rounded-2xl blur-xl animate-pulse-glow"></div>
+              </div>
+
+              <!-- Number with Counter Effect -->
+              <div class="mb-4">
+                <h2 class="text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-orange-600 animate-gradient-shift drop-shadow-lg">
+                  {{ extracurriculars.length }}
+                </h2>
+                <!-- Digital Counter Effect -->
+                <div class="flex justify-center gap-1 mt-2">
+                  <div class="w-2 h-2 bg-orange-400 rounded-full animate-pulse"></div>
+                  <div class="w-2 h-2 bg-orange-400 rounded-full animate-pulse" style="animation-delay: 0.2s;"></div>
+                  <div class="w-2 h-2 bg-orange-400 rounded-full animate-pulse" style="animation-delay: 0.4s;"></div>
+                </div>
+              </div>
+
+              <p class="text-xl font-bold text-gray-800 mb-4 tracking-wider">EKSTRAKURIKULER</p>
+              <div class="w-24 h-px bg-gradient-to-r from-transparent via-orange-400 to-transparent mx-auto animate-shimmer"></div>
+            </div>
+
+            <!-- Hover Particles -->
+            <div class="absolute top-4 right-4 w-2 h-2 bg-orange-400 rounded-full opacity-0 group-hover:opacity-100 animate-ping"></div>
+            <div class="absolute bottom-4 left-4 w-1 h-1 bg-orange-400 rounded-full opacity-0 group-hover:opacity-100 animate-ping" style="animation-delay: 0.5s;"></div>
           </div>
-          <h2 class="mb-2 text-5xl font-bold text-blue-600">{{ organizations.length }}</h2>
-          <p class="text-lg font-semibold text-gray-700">Organisasi</p>
         </div>
-        <div
-          class="p-8 text-center transition-shadow bg-white border-2 border-orange-100 shadow-xl rounded-2xl hover:shadow-2xl"
-        >
-          <div class="inline-block p-4 mb-4 bg-orange-100 rounded-full">
-            <Icon name="lucide:trophy" size="32" class="text-orange-600" />
+
+        <div class="relative group">
+          <!-- Light Card Design -->
+          <div class="bg-gradient-to-br from-white/90 to-gray-50/90 backdrop-blur-xl border border-orange-200/50 rounded-2xl p-8 text-center hover-lift stagger-2 animate-scale-in overflow-hidden shadow-lg">
+            <!-- Animated Border -->
+            <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-orange-400/10 via-pink-400/10 to-orange-400/10 animate-gradient-shift"></div>
+            <div class="absolute inset-[1px] bg-gradient-to-br from-white to-gray-50 rounded-2xl"></div>
+
+            <!-- Content -->
+            <div class="relative z-10">
+              <!-- Icon with Glow -->
+              <div class="inline-block p-6 mb-6 bg-gradient-to-br from-orange-500 to-pink-600 rounded-2xl shadow-2xl animate-bounce-in relative">
+                <Icon name="lucide:activity" size="40" class="text-white animate-pulse" />
+                <div class="absolute inset-0 bg-orange-400/20 rounded-2xl blur-xl animate-pulse-glow"></div>
+              </div>
+
+              <!-- Number with Counter Effect -->
+              <div class="mb-4">
+                <h2 class="text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-pink-600 animate-gradient-shift drop-shadow-lg">
+                  {{ extracurriculars.length }}
+                </h2>
+                <!-- Digital Counter Effect -->
+                <div class="flex justify-center gap-1 mt-2">
+                  <div class="w-2 h-2 bg-orange-400 rounded-full animate-pulse"></div>
+                  <div class="w-2 h-2 bg-pink-400 rounded-full animate-pulse" style="animation-delay: 0.2s;"></div>
+                  <div class="w-2 h-2 bg-orange-400 rounded-full animate-pulse" style="animation-delay: 0.4s;"></div>
+                </div>
+              </div>
+
+              <p class="text-xl font-bold text-gray-800 mb-4 tracking-wider">AKTIVITAS</p>
+              <div class="w-24 h-px bg-gradient-to-r from-transparent via-orange-400 to-transparent mx-auto animate-shimmer"></div>
+            </div>
+
+            <!-- Hover Particles -->
+            <div class="absolute top-4 right-4 w-2 h-2 bg-orange-400 rounded-full opacity-0 group-hover:opacity-100 animate-ping"></div>
+            <div class="absolute bottom-4 left-4 w-1 h-1 bg-pink-400 rounded-full opacity-0 group-hover:opacity-100 animate-ping" style="animation-delay: 0.5s;"></div>
           </div>
-          <h2 class="mb-2 text-5xl font-bold text-orange-600">{{ extracurriculars.length }}</h2>
-          <p class="text-lg font-semibold text-gray-700">Ekstrakurikuler</p>
         </div>
       </div>
 
-      <!-- Organisasi Section -->
-      <section class="mb-20">
-        <div class="mb-10 text-center">
-          <div
-            class="inline-block p-6 px-10 py-6 mb-4 border border-orange-200 shadow-xl bg-gradient-to-r from-orange-500 to-orange-600 backdrop-blur-2xl rounded-2xl"
-          >
-            <h2 class="text-3xl font-bold text-white">Organisasi Sekolah</h2>
-          </div>
-          <p class="max-w-2xl mx-auto text-gray-600">
-            Kembangkan dan asah kemampuanmu dengan ikut organisasi yang ada di SMK Negeri 2 Singosari
-          </p>
-        </div>
-
-        <!-- Search Bar -->
-        <div class="max-w-md mx-auto mb-10">
-          <div class="relative">
-            <Icon name="lucide:search" size="20" class="absolute left-4 top-3.5 text-gray-400" />
-            <input
-              v-model="searchQuery"
-              type="text"
-              placeholder="Cari Organisasi atau Ekstrakurikuler..."
-              class="w-full py-3 pl-12 pr-4 transition border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            />
-          </div>
-        </div>
-
-        <!-- Organisasi Grid -->
-        <div v-if="pending" class="grid grid-cols-1 gap-6 mb-8 md:grid-cols-2 lg:grid-cols-3">
-          <div
-            v-for="i in 6"
-            :key="i"
-            class="overflow-hidden bg-white border border-gray-100 shadow-lg rounded-2xl animate-pulse"
-          >
-            <div class="h-48 bg-gray-200"></div>
-            <div class="p-6">
-              <div class="h-6 mb-2 bg-gray-200 rounded"></div>
-              <div class="w-2/3 h-4 bg-gray-200 rounded"></div>
-            </div>
-          </div>
-        </div>
-
-        <div
-          v-else-if="filteredOrganizations.length > 0"
-          class="grid grid-cols-1 gap-6 mb-8 md:grid-cols-2 lg:grid-cols-3"
-        >
-          <NuxtLink
-            v-for="org in filteredOrganizations"
-            :key="org.id"
-            :to="`/organisasi/${org.slug}`"
-            class="overflow-hidden transition-all duration-300 bg-white border border-gray-100 shadow-lg rounded-2xl hover:shadow-2xl hover:border-blue-200 group"
-          >
-            <div class="flex items-center justify-center h-48 p-6 bg-gradient-to-br from-blue-100 to-blue-50">
-              <img
-                :src="org.logo"
-                :alt="`Logo ${org.name}`"
-                class="object-contain max-w-full max-h-full transition-transform duration-300 group-hover:scale-110"
-              />
-            </div>
-            <div class="p-6">
-              <h3 class="mb-2 text-xl font-bold text-gray-800 transition-colors group-hover:text-blue-600">
-                {{ org.name }}
-              </h3>
-              <p class="text-sm text-gray-600 line-clamp-2">{{ org.description }}</p>
-            </div>
-          </NuxtLink>
-        </div>
-
-        <div v-else class="p-12 mb-8 text-center bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
-          <Icon name="lucide:search-x" size="64" class="mx-auto mb-4 text-gray-300" />
-          <h3 class="mb-2 text-xl font-bold text-gray-700">Organisasi Tidak Ditemukan</h3>
-          <p class="text-gray-500">Coba kata kunci lain atau hapus filter pencarian.</p>
-        </div>
-      </section>
 
       <!-- Ekstrakurikuler Section -->
-      <section class="mb-20">
-        <div class="mb-10 text-center">
-          <div
-            class="inline-block p-6 px-10 py-6 mb-4 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
-          >
-            <h2 class="text-3xl font-bold text-white">Ekstrakurikuler</h2>
+      <section class="mb-24 animate-fade-in-on-scroll">
+        <div class="mb-16 text-center">
+          <!-- Section Title with Light Style -->
+          <div class="relative mb-8">
+            <h2 class="text-4xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-600 via-orange-600 to-orange-600 animate-gradient-shift">
+              PILIH EKSTRAKURIKULER
+            </h2>
+            <!-- Light Underline -->
+            <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-gradient-to-r from-orange-400 to-orange-600 rounded-full animate-shimmer"></div>
+            <!-- Glow Effect -->
+            <div class="absolute inset-0 text-4xl sm:text-5xl font-black text-orange-400/30 blur-lg animate-pulse">
+              PILIH EKSTRAKURIKULER
+            </div>
           </div>
-          <p class="max-w-2xl mx-auto mb-8 text-gray-600">Pilih ekstrakurikuler sesuai minat dan bakatmu</p>
+
+          <p class="max-w-4xl mx-auto text-gray-700 text-lg sm:text-xl leading-relaxed animate-slide-in-right font-light">
+            Temukan kegiatan yang sesuai dengan passion dan minatmu. Setiap ekstrakurikuler dirancang untuk mengembangkan skill dan karaktermu secara maksimal
+          </p>
+
+          <!-- Decorative Elements -->
+          <div class="flex justify-center items-center gap-8 mt-8">
+            <div class="w-12 h-px bg-gradient-to-r from-transparent to-orange-400 animate-shimmer"></div>
+            <div class="w-4 h-4 border-2 border-orange-400 rotate-45 animate-spin"></div>
+            <div class="w-12 h-px bg-gradient-to-l from-transparent to-orange-400 animate-shimmer"></div>
+          </div>
         </div>
 
         <!-- Category Filter -->
-        <div class="flex flex-wrap justify-center gap-3 mb-10">
+        <div class="flex flex-wrap justify-center gap-4 mb-16">
           <button
             v-for="category in categories"
             :key="category"
             @click="selectedCategory = category"
             :class="[
-              'px-5 py-2 rounded-full text-sm font-semibold transition-all duration-300 border-2',
+              'px-8 py-4 rounded-xl text-sm font-bold tracking-wider transition-all duration-500 border-2 hover-lift animate-scale-in relative overflow-hidden',
               selectedCategory === category
-                ? 'bg-blue-600 text-white border-blue-600'
-                : 'bg-white text-gray-700 hover:bg-blue-600 hover:text-white border-gray-200 hover:border-blue-600',
+                ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white border-orange-400 shadow-2xl animate-pulse-glow'
+                : 'bg-white/80 backdrop-blur-sm text-gray-700 hover:text-gray-900 border-gray-300/50 hover:border-orange-400 hover:from-orange-500/20 hover:to-orange-500/20',
             ]"
           >
-            {{ category }}
+            <!-- Button Glow Effect -->
+            <span class="relative z-10">{{ category }}</span>
+            <div v-if="selectedCategory === category" class="absolute inset-0 bg-gradient-to-r from-orange-400/20 to-orange-400/20 animate-gradient-shift"></div>
+            <!-- Hover Particles -->
+            <div class="absolute top-2 right-2 w-1 h-1 bg-orange-400 rounded-full opacity-0 group-hover:opacity-100 animate-ping"></div>
           </button>
         </div>
 
         <!-- Ekstrakurikuler Grid -->
-        <div v-if="pending" class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          <div v-for="i in 9" :key="i" class="p-6 bg-white border border-gray-100 shadow-lg rounded-2xl animate-pulse">
-            <div class="w-16 h-16 mx-auto mb-4 bg-gray-200 rounded-full"></div>
-            <div class="w-3/4 h-6 mx-auto bg-gray-200 rounded"></div>
-          </div>
-        </div>
+        <div v-if="pending" class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+           <div v-for="i in 9" :key="i" class="bg-white/80 backdrop-blur-xl border border-gray-200/50 p-8 text-center rounded-2xl animate-pulse shadow-lg">
+             <div class="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-gray-200 to-gray-300 rounded-2xl"></div>
+             <div class="w-4/5 h-8 mx-auto mb-4 bg-gradient-to-r from-gray-200 to-gray-300 rounded-lg"></div>
+             <div class="w-3/5 h-4 mx-auto bg-gradient-to-r from-gray-200 to-gray-300 rounded"></div>
+           </div>
+         </div>
 
-        <div
-          v-else-if="filteredExtracurriculars.length > 0"
-          class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
-        >
-          <NuxtLink
-            v-for="extra in filteredExtracurriculars"
-            :key="extra.id"
-            :to="`/ekstrakurikuler/${extra.slug}`"
-            class="p-6 text-center transition-all duration-300 bg-white border border-gray-100 shadow-lg rounded-2xl hover:shadow-2xl hover:border-blue-200 group"
-          >
-            <div class="inline-block p-4 mb-4 transition-colors bg-blue-100 rounded-full group-hover:bg-blue-200">
-              <Icon :name="extra.icon || 'lucide:activity'" size="32" class="text-blue-600" />
-            </div>
-            <h3 class="mb-2 text-xl font-bold text-gray-800 transition-colors group-hover:text-blue-600">
-              {{ extra.name }}
-            </h3>
-            <p v-if="extra.description" class="text-sm text-gray-600 line-clamp-2">{{ extra.description }}</p>
-            <p v-if="extra.category" class="mt-2 text-xs font-semibold text-blue-600">{{ extra.category }}</p>
-          </NuxtLink>
-        </div>
+         <div
+           v-else-if="filteredExtracurriculars.length > 0"
+           class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"
+         >
+           <NuxtLink
+             v-for="(extra, index) in filteredExtracurriculars"
+             :key="extra.id"
+             :to="`/ekstrakurikuler/${extra.slug}`"
+             :class="[
+               'bg-white/80 backdrop-blur-xl border border-gray-200/50 hover:border-orange-400/50 p-8 text-center rounded-2xl hover-lift group animate-scale-in transition-all duration-500 overflow-hidden relative shadow-lg',
+               `stagger-${(index % 6) + 1}`,
+             ]"
+           >
+             <!-- Card Background Glow -->
+             <div class="absolute inset-0 bg-gradient-to-br from-orange-500/5 to-orange-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
-        <div v-else class="p-12 text-center bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
+             <!-- Icon Container -->
+             <div class="relative mb-6">
+               <div class="inline-block p-6 bg-gradient-to-br from-gray-200 to-gray-300 rounded-2xl group-hover:from-orange-500 group-hover:to-orange-600 transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 shadow-xl">
+                 <Icon
+                   :name="extra.icon || 'lucide:activity'"
+                   size="40"
+                   class="text-gray-700 group-hover:text-white transition-colors duration-300"
+                 />
+                 <!-- Icon Glow Effect -->
+                 <div class="absolute inset-0 bg-orange-400/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+               </div>
+               <!-- Floating Particles -->
+               <div class="absolute -top-1 -right-1 w-3 h-3 bg-orange-400 rounded-full opacity-0 group-hover:opacity-100 animate-ping"></div>
+               <div class="absolute -bottom-1 -left-1 w-2 h-2 bg-orange-400 rounded-full opacity-0 group-hover:opacity-100 animate-ping" style="animation-delay: 0.2s;"></div>
+             </div>
+
+             <!-- Title -->
+             <h3 class="mb-4 text-xl font-bold text-gray-800 group-hover:text-orange-600 transition-colors duration-300">
+               {{ extra.name }}
+             </h3>
+
+             <!-- Description -->
+             <p v-if="extra.description" class="text-sm text-gray-600 line-clamp-2 leading-relaxed mb-4 group-hover:text-gray-800 transition-colors duration-300">
+               {{ extra.description }}
+             </p>
+
+             <!-- Category Badge -->
+             <div v-if="extra.category" class="inline-block px-4 py-2 text-xs font-bold bg-gradient-to-r from-orange-500/20 to-orange-500/20 text-orange-600 border border-orange-400/30 rounded-full mb-4 group-hover:from-orange-500/30 group-hover:to-orange-500/30 transition-all duration-300">
+               {{ extra.category }}
+             </div>
+
+             <!-- Arrow Indicator -->
+             <div class="flex items-center justify-center">
+               <Icon
+                 name="lucide:arrow-right"
+                 size="20"
+                 class="text-orange-400 opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:translate-x-2"
+               />
+             </div>
+
+             <!-- Animated Border -->
+             <div class="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-orange-400/50 transition-all duration-500"></div>
+           </NuxtLink>
+         </div>
+
+        <div v-else class="p-12 text-center bg-white border-2 border-orange-100 shadow-xl rounded-2xl">
           <Icon name="lucide:search-x" size="64" class="mx-auto mb-4 text-gray-300" />
           <h3 class="mb-2 text-xl font-bold text-gray-700">Ekstrakurikuler Tidak Ditemukan</h3>
           <p class="mb-6 text-gray-500">
@@ -250,7 +322,7 @@ useHead({
               selectedCategory = 'Semua';
               searchQuery = '';
             "
-            class="px-6 py-3 font-semibold text-white transition bg-blue-600 rounded-lg hover:bg-blue-700"
+            class="px-6 py-3 font-semibold text-white transition bg-orange-600 rounded-lg hover:bg-orange-700"
           >
             Reset Filter
           </button>
@@ -258,40 +330,81 @@ useHead({
       </section>
 
       <!-- CTA Section -->
-      <section
-        class="max-w-3xl p-8 mx-auto text-center bg-white border-2 border-blue-100 shadow-xl rounded-2xl md:p-12"
-      >
-        <Icon name="lucide:lightbulb" size="48" class="mx-auto mb-4 text-orange-500" />
-        <h2 class="mb-4 text-2xl font-bold text-gray-800 md:text-3xl">
-          Tidak Menemukan Ekstrakurikuler Yang Kamu Inginkan?
-        </h2>
-        <p class="mb-6 text-lg text-gray-600">
-          Tenang! Kamu bisa membuat komunitas ekstrakurikuler baru di SMK Negeri 2 Singosari
-        </p>
-        <button
-          @click="openDialog"
-          class="inline-flex items-center gap-2 px-6 py-3 font-semibold text-white transition-colors bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 hover:shadow-lg"
-        >
-          Lihat Caranya
-          <Icon name="lucide:arrow-right" size="18" />
-        </button>
+      <section class="max-w-5xl p-12 mx-auto text-center animate-fade-in-on-scroll relative">
+        <!-- Light CTA Card -->
+        <div class="bg-gradient-to-br from-white/90 to-gray-50/90 backdrop-blur-xl border border-orange-200/50 rounded-3xl p-12 hover-lift overflow-hidden relative group shadow-xl">
+          <!-- Animated Background -->
+          <div class="absolute inset-0 bg-gradient-to-r from-orange-400/10 via-orange-400/10 to-orange-400/10 animate-gradient-shift"></div>
+
+          <!-- Floating Elements -->
+          <div class="absolute top-6 left-6 w-3 h-3 bg-orange-400 rounded-full animate-float opacity-60"></div>
+          <div class="absolute top-8 right-8 w-2 h-2 bg-orange-400 rounded-full animate-float opacity-60" style="animation-delay: -1s;"></div>
+          <div class="absolute bottom-6 left-8 w-1 h-1 bg-orange-400 rounded-full animate-float opacity-60" style="animation-delay: -2s;"></div>
+
+          <div class="relative z-10">
+            <!-- Icon with Glow -->
+            <div class="inline-block p-8 mb-8 bg-gradient-to-br from-orange-500 to-orange-600 rounded-3xl shadow-2xl animate-bounce-in relative">
+              <Icon name="lucide:lightbulb" size="56" class="text-white animate-pulse" />
+              <!-- Glow Effect -->
+              <div class="absolute inset-0 bg-orange-400/30 rounded-3xl blur-2xl animate-pulse-glow"></div>
+            </div>
+
+            <!-- Title -->
+            <h2 class="mb-8 text-4xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-600 via-orange-600 to-orange-600 animate-gradient-shift">
+              BUAT EKSTRAKURIKULER BARU
+            </h2>
+
+            <!-- Description -->
+            <p class="mb-10 text-xl text-gray-700 leading-relaxed max-w-3xl mx-auto">
+              Tidak menemukan ekstrakurikuler yang sesuai dengan passionmu? Jadilah pionir dan buat komunitas baru yang akan menginspirasi teman-teman lainnya!
+            </p>
+
+            <!-- CTA Button -->
+            <button
+              @click="openDialog"
+              class="inline-flex items-center gap-4 px-10 py-5 font-bold text-white transition-all duration-500 bg-gradient-to-r from-orange-500 via-orange-600 to-orange-600 rounded-2xl shadow-2xl hover:shadow-3xl hover:scale-105 animate-pulse-glow relative overflow-hidden group/btn"
+            >
+              <!-- Button Glow -->
+              <div class="absolute inset-0 bg-gradient-to-r from-orange-400 to-orange-400 opacity-0 group-hover/btn:opacity-20 transition-opacity duration-300"></div>
+
+              <span class="relative z-10 text-lg tracking-wider">MULAI SEKARANG</span>
+              <Icon
+                name="lucide:arrow-right"
+                size="24"
+                class="relative z-10 transition-transform duration-300 group-hover/btn:translate-x-2"
+              />
+
+              <!-- Button Particles -->
+              <div class="absolute top-3 right-3 w-1 h-1 bg-white rounded-full opacity-0 group-hover/btn:opacity-100 animate-ping"></div>
+              <div class="absolute bottom-3 left-3 w-1 h-1 bg-white rounded-full opacity-0 group-hover/btn:opacity-100 animate-ping" style="animation-delay: 0.2s;"></div>
+            </button>
+
+            <!-- Decorative Border -->
+            <div class="absolute inset-0 rounded-3xl border-2 border-transparent group-hover:border-orange-400/50 transition-all duration-500"></div>
+          </div>
+        </div>
       </section>
     </div>
 
     <!-- Dialog Modal -->
     <Teleport to="body">
-      <Transition enter-active-class="transition-opacity duration-300" enter-from-class="opacity-0" leave-active-class="transition-opacity duration-300" leave-to-class="opacity-0">
+      <Transition
+        enter-active-class="transition-opacity duration-300"
+        enter-from-class="opacity-0"
+        leave-active-class="transition-opacity duration-300"
+        leave-to-class="opacity-0"
+      >
         <div
           v-if="isDialogOpen"
           class="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto bg-black bg-opacity-50"
           @click.self="closeDialog"
         >
           <div
-            class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border-2 border-blue-100"
+            class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border-2 border-orange-100"
           >
             <!-- Dialog Header -->
             <div
-              class="flex items-center justify-between p-6 border-b border-gray-200 bg-gradient-to-r from-blue-600 to-blue-800 rounded-t-2xl"
+              class="flex items-center justify-between p-6 border-b border-gray-200 bg-gradient-to-r from-orange-600 to-orange-800 rounded-t-2xl"
             >
               <h2 class="text-2xl font-bold text-white">Cara Membuat Ekstrakurikuler Baru</h2>
               <button @click="closeDialog" class="text-white transition-colors hover:text-gray-200">
@@ -303,7 +416,7 @@ useHead({
             <div class="p-6 space-y-6">
               <!-- Step 1 -->
               <div class="flex gap-4">
-                <div class="flex items-center justify-center flex-shrink-0 w-10 h-10 bg-blue-600 rounded-full">
+                <div class="flex items-center justify-center flex-shrink-0 w-10 h-10 bg-orange-600 rounded-full">
                   <span class="text-lg font-bold text-white">1</span>
                 </div>
                 <div>
@@ -317,7 +430,7 @@ useHead({
 
               <!-- Step 2 -->
               <div class="flex gap-4">
-                <div class="flex items-center justify-center flex-shrink-0 w-10 h-10 bg-blue-600 rounded-full">
+                <div class="flex items-center justify-center flex-shrink-0 w-10 h-10 bg-orange-600 rounded-full">
                   <span class="text-lg font-bold text-white">2</span>
                 </div>
                 <div>
@@ -331,7 +444,7 @@ useHead({
 
               <!-- Step 3 -->
               <div class="flex gap-4">
-                <div class="flex items-center justify-center flex-shrink-0 w-10 h-10 bg-blue-600 rounded-full">
+                <div class="flex items-center justify-center flex-shrink-0 w-10 h-10 bg-orange-600 rounded-full">
                   <span class="text-lg font-bold text-white">3</span>
                 </div>
                 <div>
@@ -342,7 +455,7 @@ useHead({
 
                   <!-- Contact Cards -->
                   <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-                    <div class="p-4 border-2 border-blue-100 bg-blue-50 rounded-xl">
+                    <div class="p-4 border-2 border-orange-100 bg-orange-50 rounded-xl">
                       <div class="flex items-center gap-2 mb-3">
                         <Icon name="lucide:instagram" size="20" class="text-pink-600" />
                         <span class="font-semibold text-gray-800">Instagram</span>
@@ -384,4 +497,3 @@ useHead({
     </Teleport>
   </div>
 </template>
-

@@ -668,35 +668,16 @@ const menuItems = [
     ],
   },
   {
-    title: "Berita",
-    submenu: [
-      {
-        title: "Semua Berita",
-        desc: "Daftar lengkap berita sekolah",
-        icon: "lucide:newspaper",
-        to: "/berita",
-        external: false,
-        tags: ["berita", "news", "semua", "daftar"],
-      },
-      ...newsData.value.slice(0, 8).map((news: News) => ({
-        title: news.title,
-        desc: news.subtitle,
-        icon: "lucide:file-text",
-        to: `/berita/${news.slug}`,
-        external: false,
-        tags: [
-          "berita",
-          "news",
-          ...news.tags.map((tag: string) => tag.toLowerCase()),
-          ...news.title.toLowerCase().split(" "),
-          ...news.subtitle.toLowerCase().split(" "),
-        ].filter((tag: string) => tag.length > 2),
-      })),
-    ],
-  },
-  {
     title: "Ekstrakurikuler",
     submenu: [
+      {
+        title: "Semua Ekstrakurikuler",
+        desc: "Daftar lengkap ekstrakurikuler",
+        icon: "lucide:workflow",
+        to: "/ekstrakurikuler/",
+        external: false,
+        tags: ["ekstrakurikuler", "extracurricular", "extra", "semua", "daftar"],
+      },
       {
         title: "Voli",
         desc: "Ekstrakurikuler Bola Voli",
@@ -721,14 +702,33 @@ const menuItems = [
         external: false,
         tags: ["catur", "chess", "strategi", "permainan"],
       },
+    ],
+  },
+  {
+    title: "Berita",
+    submenu: [
       {
-        title: "Semua Ekstrakurikuler",
-        desc: "Daftar lengkap ekstrakurikuler",
-        icon: "lucide:workflow",
-        to: "/ekstrakurikuler/",
+        title: "Semua Berita",
+        desc: "Daftar lengkap berita sekolah",
+        icon: "lucide:newspaper",
+        to: "/berita",
         external: false,
-        tags: ["ekstrakurikuler", "extracurricular", "extra", "semua", "daftar"],
+        tags: ["berita", "news", "semua", "daftar"],
       },
+      ...newsData.value.slice(0, 8).map((news: News) => ({
+        title: news.title,
+        desc: news.subtitle,
+        icon: "lucide:file-text",
+        to: `/berita/${news.slug}`,
+        external: false,
+        tags: [
+          "berita",
+          "news",
+          ...news.tags.map((tag: string) => tag.toLowerCase()),
+          ...news.title.toLowerCase().split(" "),
+          ...news.subtitle.toLowerCase().split(" "),
+        ].filter((tag: string) => tag.length > 2),
+      })),
     ],
   },
   {
