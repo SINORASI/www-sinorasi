@@ -313,7 +313,7 @@ import type { News } from "~/models/News";
 const currentLanguage = ref("id");
 const showLanguageMenu = ref(false);
 
-const languages = [
+const languages: { code: string; name: string; flag: string }[] = [
   { code: 'id', name: 'Bahasa Indonesia', flag: '🇮🇩' },
   { code: 'en', name: 'English', flag: '🇺🇸' }
 ]
