@@ -2,31 +2,31 @@
 import type { Organization } from '~/models/Organization'
 
 const organization: Organization = {
-  id: '5',
-  slug: 'bdi',
-  name: 'BDI',
-  nickname: 'Badan Dakwah Islam',
-  logo: '/images/organisasi/bdi.png',
-  logoDescription: 'Logo BDI SMKN 2 Singosari menampilkan elemen islami dengan bulan sabit dan bintang yang melambangkan nilai-nilai keislaman dan spiritualitas.',
-  description: 'Badan Dakwah Islam yang fokus pada pengembangan spiritual dan kegiatan keagamaan.',
-  history: 'BDI didirikan untuk memperkuat nilai-nilai keislaman di lingkungan sekolah. Dengan berbagai program keagamaan, BDI telah berhasil menciptakan lingkungan yang kondusif untuk pengembangan spiritual siswa.',
-  established: '2008',
+  id: '3',
+  slug: 'pmr',
+  name: 'PMR',
+  nickname: 'Palang Merah Remaja',
+  logo: '/images/organisasi/PMR.png',
+  logoDescription: 'Logo PMR SMKN 2 Singosari menampilkan lambang Palang Merah dengan elemen remaja yang melambangkan semangat kemanusiaan dan kepedulian sosial.',
+  description: 'Palang Merah Remaja yang fokus pada kegiatan kemanusiaan dan pertolongan pertama.',
+  history: 'PMR telah berperan aktif dalam kegiatan sosial dan kesehatan siswa. Dengan semangat kemanusiaan, PMR SMKN 2 Singosari terus memberikan pelayanan kesehatan dan bantuan sosial kepada masyarakat sekitar sekolah.',
+  established: '2005',
   statistics: {
-    members: 35,
-    programs: 18,
-    years: 16,
-    meetings: 40
+    members: 28,
+    programs: 15,
+    years: 19,
+    meetings: 36
   },
   leadership: {
     ketua: [{
-      id: '11',
-      name: 'Ahmad Fauzi',
+      id: '7',
+      name: 'Fajar Nugroho',
       image: '/images/profile-placeholder.png',
-      position: 'Ketua BDI'
+      position: 'Ketua PMR'
     }],
     sekretaris: [{
-      id: '12',
-      name: 'Nur Hasanah',
+      id: '8',
+      name: 'Lina Kusuma',
       image: '/images/profile-placeholder.png',
       position: 'Sekretaris'
     }]
@@ -34,32 +34,32 @@ const organization: Organization = {
   sections: [
     {
       id: '1',
-      name: 'Tim Dakwah',
+      name: 'Tim Kesehatan',
       image: '/images/placeholder.jpg',
-      visi: 'Menjadi pusat pengembangan spiritual siswa muslim',
-      misi: 'Menyelenggarakan kegiatan keagamaan dan pengembangan karakter',
-      tasks: 'Pengajian rutin, kajian islam, kegiatan sosial keagamaan',
-      programs: ['Pengajian Rutin', 'Kajian Islam', 'Bakti Sosial', 'Ramadhan Program'],
+      visi: 'Menjadi garda terdepan dalam pelayanan kesehatan siswa',
+      misi: 'Memberikan pertolongan pertama dan edukasi kesehatan',
+      tasks: 'Pertolongan pertama, penyuluhan kesehatan, donor darah',
+      programs: ['UKS Sekolah', 'Donor Darah', 'Penyuluhan Kesehatan'],
       members: [
-        { id: '11', name: 'Ahmad Fauzi', image: '/images/profile-placeholder.png', position: 'Ketua' },
-        { id: '12', name: 'Nur Hasanah', image: '/images/profile-placeholder.png', position: 'Sekretaris' }
+        { id: '7', name: 'Fajar Nugroho', image: '/images/profile-placeholder.png', position: 'Ketua' },
+        { id: '8', name: 'Lina Kusuma', image: '/images/profile-placeholder.png', position: 'Sekretaris' }
       ]
     }
   ],
   activities: [
     {
-      id: 'bdi1',
+      id: 'pmr1',
       image: '/images/placeholder.jpg',
-      title: 'Pengajian Rutin Mingguan',
-      description: 'Kegiatan pengajian yang diadakan setiap hari Jumat untuk membahas materi keislaman.',
-      date: '2024-09-13'
+      title: 'Donor Darah Rutin',
+      description: 'Kegiatan donor darah yang diselenggarakan setiap bulan untuk membantu masyarakat.',
+      date: '2024-08-20'
     },
     {
-      id: 'bdi2',
+      id: 'pmr2',
       image: '/images/placeholder.jpg',
-      title: 'Bakti Sosial Ramadhan',
-      description: 'Program bakti sosial selama bulan Ramadhan untuk membantu masyarakat sekitar.',
-      date: '2024-03-15'
+      title: 'Pelatihan Pertolongan Pertama',
+      description: 'Pelatihan keterampilan pertolongan pertama untuk anggota PMR.',
+      date: '2024-09-10'
     }
   ],
   photos: [
@@ -69,7 +69,7 @@ const organization: Organization = {
     '/images/placeholder.jpg'
   ],
   recruitmentPoster: '/images/placeholder.jpg',
-  recruitmentPeriod: '1-15 Oktober 2024'
+  recruitmentPeriod: '1-15 September 2024'
 }
 
 useHead({

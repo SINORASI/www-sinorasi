@@ -12,7 +12,7 @@ export default defineEventHandler(async (event): Promise<Organization | null> =>
       id: '1',
       slug: 'osis',
       name: 'OSIS',
-      logo: '/images/placeholder.jpg',
+      logo: '/images/organisasi/osis.png',
       description: 'Organisasi Siswa Intra Sekolah yang menjadi wadah bagi siswa untuk mengembangkan potensi dan kreativitas.',
       history: 'Didirikan sejak tahun 2000, OSIS telah menjadi pilar utama dalam kegiatan siswa. OSIS SMKN 2 Singosari telah berhasil menyelenggarakan berbagai kegiatan yang bermanfaat bagi siswa, mulai dari kegiatan akademik hingga kegiatan sosial. Dengan semangat kebersamaan dan kreativitas, OSIS terus berkembang dan memberikan kontribusi positif bagi sekolah.',
       established: '2000',
@@ -77,54 +77,6 @@ export default defineEventHandler(async (event): Promise<Organization | null> =>
           members: [
             { id: '3', name: 'Budi Santoso', image: '/images/profile-placeholder.png', position: 'Koordinator' },
             { id: '4', name: 'Maya Sari', image: '/images/profile-placeholder.png', position: 'Anggota' }
-          ]
-        }
-      ],
-      activities: []
-    },
-    'paskibra': {
-      id: '2',
-      slug: 'paskibra',
-      name: 'PASKIBRA',
-      logo: '/images/placeholder.jpg',
-      description: 'Pasukan Pengibar Bendera yang bertugas dalam upacara bendera dan kegiatan kepramukaan.',
-      history: 'PASKIBRA didirikan untuk menjaga tradisi upacara dan membentuk karakter siswa. Dengan disiplin dan dedikasi tinggi, PASKIBRA SMKN 2 Singosari telah menjadi contoh bagi sekolah lain dalam menjalankan upacara bendera yang khidmat dan bermakna.',
-      established: '2010',
-      statistics: {
-        members: 32,
-        programs: 8,
-        years: 14,
-        meetings: 24
-      },
-      contactInfo: {
-        instagram: [{ label: 'Instagram', handle: '@paskibra_smkn2' }]
-      },
-      leadership: {
-        ketua: [{
-          id: '5',
-          name: 'Rizki Pratama',
-          image: '/images/profile-placeholder.png',
-          position: 'Komandan PASKIBRA'
-        }],
-        wakil: [{
-          id: '6',
-          name: 'Dina Amelia',
-          image: '/images/profile-placeholder.png',
-          position: 'Wakil Komandan'
-        }]
-      },
-      sections: [
-        {
-          id: '1',
-          name: 'Tim Upacara',
-          image: '/images/placeholder.jpg',
-          visi: 'Menjadi tim upacara yang profesional dan bermartabat',
-          misi: 'Melaksanakan upacara bendera dengan baik dan benar',
-          tasks: 'Pelatihan upacara, pengibaran bendera',
-          programs: ['Upacara Bendera Harian', 'Pelatihan Paskibra', 'Kompetisi Paskibra'],
-          members: [
-            { id: '5', name: 'Rizki Pratama', image: '/images/profile-placeholder.png', position: 'Komandan' },
-            { id: '6', name: 'Dina Amelia', image: '/images/profile-placeholder.png', position: 'Anggota' }
           ]
         }
       ],

@@ -81,58 +81,10 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
       activities: []
     },
     {
-      id: '2',
-      slug: 'paskibra',
-      name: 'PASKIBRA',
-      logo: '/images/placeholder.jpg',
-      description: 'Pasukan Pengibar Bendera yang bertugas dalam upacara bendera dan kegiatan kepramukaan.',
-      history: 'PASKIBRA didirikan untuk menjaga tradisi upacara dan membentuk karakter siswa. Dengan disiplin dan dedikasi tinggi, PASKIBRA SMKN 2 Singosari telah menjadi contoh bagi sekolah lain dalam menjalankan upacara bendera yang khidmat dan bermakna.',
-      established: '2010',
-      statistics: {
-        members: 32,
-        programs: 8,
-        years: 14,
-        meetings: 24
-      },
-      contactInfo: {
-        instagram: [{ label: 'Instagram', handle: '@paskibra_smkn2' }]
-      },
-      leadership: {
-        ketua: [{
-          id: '5',
-          name: 'Rizki Pratama',
-          image: '/images/profile-placeholder.png',
-          position: 'Komandan PASKIBRA'
-        }],
-        wakil: [{
-          id: '6',
-          name: 'Dina Amelia',
-          image: '/images/profile-placeholder.png',
-          position: 'Wakil Komandan'
-        }]
-      },
-      sections: [
-        {
-          id: '1',
-          name: 'Tim Upacara',
-          image: '/images/placeholder.jpg',
-          visi: 'Menjadi tim upacara yang profesional dan bermartabat',
-          misi: 'Melaksanakan upacara bendera dengan baik dan benar',
-          tasks: 'Pelatihan upacara, pengibaran bendera',
-          programs: ['Upacara Bendera Harian', 'Pelatihan Paskibra', 'Kompetisi Paskibra'],
-          members: [
-            { id: '5', name: 'Rizki Pratama', image: '/images/profile-placeholder.png', position: 'Komandan' },
-            { id: '6', name: 'Dina Amelia', image: '/images/profile-placeholder.png', position: 'Anggota' }
-          ]
-        }
-      ],
-      activities: []
-    },
-    {
       id: '3',
       slug: 'pmr',
       name: 'PMR',
-      logo: '/images/placeholder.jpg',
+      logo: '/images/organisasi/PMR.png',
       description: 'Palang Merah Remaja yang fokus pada kegiatan kemanusiaan dan pertolongan pertama.',
       history: 'PMR telah berperan aktif dalam kegiatan sosial dan kesehatan siswa. Dengan semangat kemanusiaan, PMR SMKN 2 Singosari terus memberikan pelayanan kesehatan dan bantuan sosial kepada masyarakat sekitar sekolah.',
       established: '2005',
@@ -177,7 +129,7 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
       id: '4',
       slug: 'linorasi',
       name: 'LINORASI',
-      logo: '/images/placeholder.jpg',
+      logo: '/images/organisasi/LINORASI.png',
       description: 'Litbang Inovasi Raih Prestasi yang fokus pada pengembangan inovasi dan prestasi siswa.',
       history: 'LINORASI didirikan untuk mendorong inovasi dan pencapaian prestasi siswa. Melalui berbagai program inovatif, LINORASI telah berhasil membawa nama sekolah ke tingkat yang lebih tinggi dalam berbagai kompetisi dan ajang prestasi.',
       established: '2018',
@@ -222,7 +174,7 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
       id: '5',
       slug: 'bdi',
       name: 'BDI',
-      logo: '/images/placeholder.jpg',
+      logo: '/images/organisasi/bdi.png',
       description: 'Badan Dakwah Islam yang fokus pada pengembangan spiritual dan kegiatan keagamaan.',
       history: 'BDI didirikan untuk memperkuat nilai-nilai keislaman di lingkungan sekolah. Dengan berbagai program keagamaan, BDI telah berhasil menciptakan lingkungan yang kondusif untuk pengembangan spiritual siswa.',
       established: '2008',
@@ -267,7 +219,7 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
       id: '6',
       slug: 'ambalan',
       name: 'AMBALAN',
-      logo: '/images/logo.webp',
+      logo: '/images/organisasi/ambalan.png',
       description: 'AMBALAN (Ambalan Pramuka) adalah organisasi pendidikan nonformal yang bertujuan membentuk karakter siswa melalui kegiatan kepramukaan yang menyenangkan dan mendidik.',
       history: 'AMBALAN di SMK Negeri 2 Singosari telah lama menjadi bagian dari kegiatan ekstrakurikuler yang membantu siswa mengembangkan keterampilan survival, kepemimpinan, dan jiwa sosial.',
       established: '2010',

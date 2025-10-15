@@ -65,50 +65,6 @@ export default defineEventHandler(async (event): Promise<Extracurricular | null>
           date: '5 Juni 2024'
         }
       ]
-    },
-    {
-      id: '2',
-      slug: 'paskibra',
-      name: 'PASKIBRA',
-      category: 'Bela Negara',
-      icon: 'lucide:flag',
-      description: 'Pasukan Pengibar Bendera Pusaka yang melatih kedisiplinan dan kepemimpinan',
-      fullDescription: '<p>Pasukan Pengibar Bendera Pusaka (PASKIBRA) SMKN 2 Singosari adalah unit ekstrakurikuler yang berfokus pada pembentukan karakter disiplin, tanggung jawab, dan jiwa kepemimpinan.</p><p>Sejak berdiri tahun 2009, PASKIBRA kami telah menorehkan berbagai prestasi di tingkat kota dan provinsi. Anggota PASKIBRA dilatih dalam PBB (Peraturan Baris-Berbaris), upacara bendera, dan pengibaran bendera dengan standar militer.</p>',
-      image: '/images/placeholder.jpg',
-      coach: 'Pak Agung Prasetyo',
-      schedule: 'Selasa, Kamis, Sabtu - 15:00-17:00 WIB',
-      location: 'Lapangan Upacara',
-      fee: 'Gratis',
-      memberCount: 50,
-      achievementCount: 50,
-      yearEstablished: 2009,
-      meetingsPerWeek: 3,
-      registrationOpen: true,
-      registrationPeriod: 'Pendaftaran dibuka: 1-31 Juli 2024',
-      contactInfo: 'Miftahul: 083839717167',
-      requirements: [
-        'Siswa aktif kelas 10-11',
-        'Tinggi badan minimal 165cm (putra) / 160cm (putri)',
-        'Mengisi formulir pendaftaran',
-        'Surat persetujuan orang tua',
-        'Sertifikat kesehatan'
-      ],
-      activities: [
-        {
-          id: '1',
-          image: '/images/placeholder.jpg',
-          title: 'Juara Umum Lomba PBB Tingkat Kota',
-          description: 'PASKIBRA berhasil meraih juara umum dalam lomba PBB tingkat kota yang diikuti 50 sekolah',
-          date: '17 Agustus 2024'
-        },
-        {
-          id: '2',
-          image: '/images/placeholder.jpg',
-          title: 'Pelatihan Kepemimpinan',
-          description: 'Workshop kepemimpinan dan team building untuk meningkatkan kekompakan tim',
-          date: '12 September 2024'
-        }
-      ]
     }
   ];
 

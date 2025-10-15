@@ -1,42 +1,505 @@
 <script setup lang="ts">
+import type { Organization } from '~/models/Organization'
+
+const organization: Organization = {
+  id: '6',
+  slug: 'ambalan',
+  name: 'AMBALAN',
+  nickname: 'Ambalan Pramuka',
+  logo: '/images/organisasi/ambalan.png',
+  logoDescription: 'Logo AMBALAN SMKN 2 Singosari menampilkan elemen pramuka dengan api unggun dan simbol kepanduan yang melambangkan semangat kebersamaan dan petualangan.',
+  description: 'AMBALAN (Ambalan Pramuka) adalah organisasi pendidikan nonformal yang bertujuan membentuk karakter siswa melalui kegiatan kepramukaan yang menyenangkan dan mendidik.',
+  history: 'AMBALAN di SMK Negeri 2 Singosari telah lama menjadi bagian dari kegiatan ekstrakurikuler yang membantu siswa mengembangkan keterampilan survival, kepemimpinan, dan jiwa sosial.',
+  established: '2010',
+  statistics: {
+    members: 60,
+    programs: 40,
+    years: 14,
+    meetings: 4
+  },
+  contactInfo: {
+    instagram: [
+      { label: 'AMBALAN SMK 2 SGS', handle: '@ambalan_smkn2' },
+      { label: 'SMKn 2 SGS', handle: '@smkn2_singosari' }
+    ],
+    whatsapp: [
+      { label: 'Ketua AMBALAN', number: '081234567891' },
+      { label: 'Pembina', number: '089876543211' }
+    ],
+    socialMedia: [
+      { platform: 'instagram', handle: 'ambalan_smkn2' }
+    ]
+  },
+  leadership: {
+    sekretaris: [
+      { id: 's2', name: 'Sekretaris AMBALAN', image: '/images/profile-placeholder.png', position: 'Sekretaris' }
+    ],
+    ketua: [
+      { id: 'k2', name: 'Ketua AMBALAN', image: '/images/profile-placeholder.png', position: 'Ketua' }
+    ],
+    wakil: [
+      { id: 'w2', name: 'Wakil Ketua AMBALAN', image: '/images/profile-placeholder.png', position: 'Wakil Ketua' }
+    ],
+    bendahara: [
+      { id: 'b2', name: 'Bendahara AMBALAN', image: '/images/profile-placeholder.png', position: 'Bendahara' }
+    ]
+  },
+  sections: [
+    {
+      id: 'seksi-ambalan-1',
+      name: 'SEKSI KEPRAMUKAN',
+      image: '/images/profile-placeholder.png',
+      visi: 'Membentuk generasi muda yang tangguh dan berakhlak mulia',
+      misi: 'Mengembangkan keterampilan kepramukaan melalui kegiatan rutin dan program edukasi',
+      tasks: 'Mengorganisir kegiatan jambore, latihan survival, dan pendidikan karakter',
+      programs: [
+        'Latihan dasar kepramukaan',
+        'Kegiatan jambore',
+        'Pelatihan survival',
+        'Pendidikan lingkungan',
+        'Kegiatan sosial'
+      ],
+      members: [
+        { id: 'm6', name: 'Pembina AMBALAN', image: '/images/profile-placeholder.png', position: 'Pembina' },
+        { id: 'm7', name: 'Anggota 1', image: '/images/profile-placeholder.png', position: 'Anggota' },
+        { id: 'm8', name: 'Anggota 2', image: '/images/profile-placeholder.png', position: 'Anggota' }
+      ]
+    }
+  ],
+  activities: [
+    {
+      id: 'a5',
+      image: '/images/placeholder.jpg',
+      title: 'Jambore AMBALAN',
+      description: 'Kegiatan jambore tahunan yang melibatkan berbagai kegiatan kepramukaan dan pendidikan karakter.',
+      date: '2024-08-15'
+    },
+    {
+      id: 'a6',
+      image: '/images/placeholder.jpg',
+      title: 'Latihan Survival',
+      description: 'Pelatihan keterampilan survival di alam terbuka untuk membentuk mental yang tangguh.',
+      date: '2024-09-20'
+    }
+  ],
+  photos: [
+    '/images/placeholder.jpg',
+    '/images/placeholder.jpg',
+    '/images/placeholder.jpg',
+    '/images/placeholder.jpg'
+  ],
+  recruitmentPoster: '/images/placeholder.jpg',
+  recruitmentPeriod: '1-15 Agustus 2024'
+}
+
 useHead({
-  title: "AMBALAN - Organisasi - SMKN 2 Singosari",
+  title: `${organization.name} - Organisasi - SMKN 2 Singosari`,
   meta: [
     {
       name: "description",
-      content:
-        "AMBALAN (Ambalan Pramuka) SMK Negeri 2 Singosari - Informasi lengkap tentang organisasi pramuka sekolah.",
+      content: organization.description,
     },
   ],
 });
+
+const activeTab = ref('overview')
 </script>
 
 <template>
-  <div class="min-h-screen py-24 bg-gradient-to-b from-white via-green-50 to-white">
+  <div class="min-h-screen py-24 bg-gradient-to-b from-white via-blue-50 to-white">
     <div class="container px-4 mx-auto sm:px-6">
       <div class="max-w-6xl mx-auto">
-        <!-- Header Section -->
-        <div class="mb-12 text-center">
-          <div
-            class="inline-block px-10 py-6 mb-4 border border-green-200 shadow-xl bg-gradient-to-r from-green-600 to-green-800 backdrop-blur-2xl rounded-2xl"
-          >
-            <h1 class="text-3xl font-bold text-white md:text-4xl">AMBALAN</h1>
+        <!-- Header -->
+        <div class="mb-8">
+          <div class="flex flex-col gap-6 md:flex-row md:items-center">
+            <img
+              :src="organization.logo"
+              :alt="organization.name"
+              class="object-cover w-24 h-24 rounded-2xl border-4 border-blue-200 shadow-lg md:w-32 md:h-32 bg-transparent"
+            />
+            <div class="flex-1">
+              <h1 class="text-3xl font-bold text-gray-800 md:text-4xl">{{ organization.name }}</h1>
+              <p class="text-lg font-semibold text-blue-600">{{ organization.nickname }}</p>
+              <p class="mt-2 text-lg text-gray-600">{{ organization.description }}</p>
+              <div class="flex flex-wrap items-center gap-4 mt-4">
+                <div class="flex items-center gap-2">
+                  <Icon name="lucide:calendar" size="18" class="text-blue-600" />
+                  <span class="text-sm text-gray-600">Didirikan {{ organization.established }}</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <Icon name="lucide:users" size="18" class="text-blue-600" />
+                  <span class="text-sm text-gray-600">{{ organization.statistics.members }} Anggota</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <Icon name="lucide:target" size="18" class="text-blue-600" />
+                  <span class="text-sm text-gray-600">{{ organization.statistics.programs }} Program</span>
+                </div>
+              </div>
+            </div>
           </div>
-          <p class="max-w-2xl mx-auto text-lg text-gray-600">Ambalan Pramuka SMK Negeri 2 Singosari</p>
         </div>
 
-        <!-- Content Will Be Added Later -->
-        <div class="p-8 text-center bg-white border-2 border-green-100 shadow-xl rounded-2xl md:p-10">
-          <Icon name="lucide:construction" size="64" class="mx-auto mb-4 text-green-600" />
-          <h3 class="mb-3 text-2xl font-bold text-gray-800">Konten Segera Hadir</h3>
-          <p class="mb-6 text-gray-600">Informasi lengkap tentang AMBALAN akan segera ditambahkan.</p>
-          <NuxtLink
-            to="/organisasi"
-            class="inline-flex items-center gap-2 px-6 py-3 font-semibold text-white transition-colors duration-200 bg-green-600 rounded-lg shadow-md hover:bg-green-700 hover:shadow-lg"
+        <!-- Tab Navigation -->
+        <div class="mb-8">
+          <div class="flex border-b border-gray-200">
+            <button
+              v-for="tab in [
+                { id: 'overview', label: 'Ringkasan', icon: 'lucide:home' },
+                { id: 'photos', label: 'Galeri', icon: 'lucide:image' },
+                { id: 'leadership', label: 'Pengurus', icon: 'lucide:crown' },
+                { id: 'sections', label: 'Bidang', icon: 'lucide:grid-3x3' },
+                { id: 'activities', label: 'Kegiatan', icon: 'lucide:activity' },
+                { id: 'contact', label: 'Kontak', icon: 'lucide:phone' }
+              ]"
+              :key="tab.id"
+              @click="activeTab = tab.id"
+              :class="[
+                'flex items-center gap-2 px-6 py-3 font-semibold transition-colors border-b-2',
+                activeTab === tab.id
+                  ? 'border-blue-600 text-blue-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700'
+              ]"
+            >
+              <Icon :name="tab.icon" size="18" />
+              {{ tab.label }}
+            </button>
+          </div>
+        </div>
+
+        <!-- Overview Tab -->
+        <div v-if="activeTab === 'overview'" class="space-y-8">
+          <!-- Logo Description -->
+          <div class="p-6 bg-white border-2 border-blue-100 shadow-xl rounded-2xl md:p-8">
+            <h2 class="mb-4 text-2xl font-bold text-gray-800">Deskripsi Logo</h2>
+            <p class="text-gray-600 leading-relaxed">{{ organization.logoDescription }}</p>
+          </div>
+
+          <!-- History Section -->
+          <div class="p-6 bg-white border-2 border-blue-100 shadow-xl rounded-2xl md:p-8">
+            <h2 class="mb-4 text-2xl font-bold text-gray-800">Sejarah</h2>
+            <p class="text-gray-600 leading-relaxed">{{ organization.history }}</p>
+          </div>
+
+          <!-- Statistics Grid -->
+          <div class="grid grid-cols-2 gap-6 md:grid-cols-4">
+            <div class="p-6 text-center bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
+              <Icon name="lucide:users" size="32" class="mx-auto mb-3 text-blue-600" />
+              <p class="text-3xl font-bold text-blue-600">{{ organization.statistics.members }}</p>
+              <p class="text-sm text-gray-600">Anggota Aktif</p>
+            </div>
+            <div class="p-6 text-center bg-white border-2 border-green-100 shadow-xl rounded-2xl">
+              <Icon name="lucide:target" size="32" class="mx-auto mb-3 text-green-600" />
+              <p class="text-3xl font-bold text-green-600">{{ organization.statistics.programs }}</p>
+              <p class="text-sm text-gray-600">Program</p>
+            </div>
+            <div class="p-6 text-center bg-white border-2 border-purple-100 shadow-xl rounded-2xl">
+              <Icon name="lucide:clock" size="32" class="mx-auto mb-3 text-purple-600" />
+              <p class="text-3xl font-bold text-purple-600">{{ organization.statistics.years }}</p>
+              <p class="text-sm text-gray-600">Tahun Berdiri</p>
+            </div>
+            <div class="p-6 text-center bg-white border-2 border-orange-100 shadow-xl rounded-2xl">
+              <Icon name="lucide:calendar" size="32" class="mx-auto mb-3 text-orange-600" />
+              <p class="text-3xl font-bold text-orange-600">{{ organization.statistics.meetings }}</p>
+              <p class="text-sm text-gray-600">Rapat Rutin</p>
+            </div>
+          </div>
+
+          <!-- Recruitment Poster -->
+          <div class="p-6 bg-white border-2 border-blue-100 shadow-xl rounded-2xl md:p-8">
+            <h2 class="mb-4 text-2xl font-bold text-gray-800">Poster Pendaftaran</h2>
+            <div class="text-center">
+              <img
+                :src="organization.recruitmentPoster"
+                :alt="`Poster Pendaftaran ${organization.name}`"
+                class="max-w-md mx-auto rounded-xl shadow-lg"
+              />
+              <p class="mt-4 text-gray-600">Periode Pendaftaran: {{ organization.recruitmentPeriod }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Photos Tab -->
+        <div v-if="activeTab === 'photos'" class="space-y-6">
+          <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div
+              v-for="(photo, index) in organization.photos"
+              :key="index"
+              class="overflow-hidden bg-white border-2 border-gray-100 shadow-xl rounded-2xl"
+            >
+              <img
+                :src="photo"
+                :alt="`Foto ${organization.name} ${index + 1}`"
+                class="object-cover w-full h-48 transition-transform duration-300 hover:scale-105"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Leadership Tab -->
+        <div v-if="activeTab === 'leadership'" class="space-y-6">
+          <div class="grid gap-6 md:grid-cols-2">
+            <!-- Ketua -->
+            <div
+              v-for="leader in organization.leadership.ketua"
+              :key="leader.id"
+              class="p-6 bg-white border-2 border-yellow-100 shadow-xl rounded-2xl"
+            >
+              <div class="flex items-center gap-4 mb-4">
+                <img
+                  :src="leader.image"
+                  :alt="leader.name"
+                  class="object-cover w-16 h-16 rounded-full border-4 border-yellow-200"
+                />
+                <div>
+                  <h3 class="text-lg font-bold text-gray-800">{{ leader.name }}</h3>
+                  <p class="text-yellow-600 font-semibold">{{ leader.position }}</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Wakil Ketua -->
+            <div
+              v-for="leader in organization.leadership.wakil"
+              :key="leader.id"
+              class="p-6 bg-white border-2 border-blue-100 shadow-xl rounded-2xl"
+            >
+              <div class="flex items-center gap-4 mb-4">
+                <img
+                  :src="leader.image"
+                  :alt="leader.name"
+                  class="object-cover w-16 h-16 rounded-full border-4 border-blue-200"
+                />
+                <div>
+                  <h3 class="text-lg font-bold text-gray-800">{{ leader.name }}</h3>
+                  <p class="text-blue-600 font-semibold">{{ leader.position }}</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sekretaris -->
+            <div
+              v-for="leader in organization.leadership.sekretaris"
+              :key="leader.id"
+              class="p-6 bg-white border-2 border-green-100 shadow-xl rounded-2xl"
+            >
+              <div class="flex items-center gap-4 mb-4">
+                <img
+                  :src="leader.image"
+                  :alt="leader.name"
+                  class="object-cover w-16 h-16 rounded-full border-4 border-green-200"
+                />
+                <div>
+                  <h3 class="text-lg font-bold text-gray-800">{{ leader.name }}</h3>
+                  <p class="text-green-600 font-semibold">{{ leader.position }}</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bendahara -->
+            <div
+              v-for="leader in organization.leadership.bendahara"
+              :key="leader.id"
+              class="p-6 bg-white border-2 border-purple-100 shadow-xl rounded-2xl"
+            >
+              <div class="flex items-center gap-4 mb-4">
+                <img
+                  :src="leader.image"
+                  :alt="leader.name"
+                  class="object-cover w-16 h-16 rounded-full border-4 border-purple-200"
+                />
+                <div>
+                  <h3 class="text-lg font-bold text-gray-800">{{ leader.name }}</h3>
+                  <p class="text-purple-600 font-semibold">{{ leader.position }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sections Tab -->
+        <div v-if="activeTab === 'sections'" class="space-y-6">
+          <div
+            v-for="section in organization.sections"
+            :key="section.id"
+            class="p-6 bg-white border-2 border-gray-100 shadow-xl rounded-2xl md:p-8"
           >
-            <Icon name="lucide:arrow-left" size="18" />
-            Kembali ke Daftar Organisasi
-          </NuxtLink>
+            <div class="flex flex-col gap-6 md:flex-row">
+              <img
+                :src="section.image"
+                :alt="section.name"
+                class="object-cover w-full h-48 rounded-xl md:w-48 md:h-48 flex-shrink-0"
+              />
+              <div class="flex-1">
+                <h3 class="mb-3 text-xl font-bold text-gray-800">{{ section.name }}</h3>
+
+                <div class="mb-4">
+                  <h4 class="font-semibold text-gray-700 mb-2">Visi:</h4>
+                  <p class="text-gray-600">{{ section.visi }}</p>
+                </div>
+
+                <div class="mb-4">
+                  <h4 class="font-semibold text-gray-700 mb-2">Misi:</h4>
+                  <p class="text-gray-600">{{ section.misi }}</p>
+                </div>
+
+                <div class="mb-4">
+                  <h4 class="font-semibold text-gray-700 mb-2">Tugas:</h4>
+                  <p class="text-gray-600">{{ section.tasks }}</p>
+                </div>
+
+                <div class="mb-4">
+                  <h4 class="font-semibold text-gray-700 mb-2">Program Unggulan:</h4>
+                  <div class="flex flex-wrap gap-2">
+                    <span
+                      v-for="program in section.programs"
+                      :key="program"
+                      class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm"
+                    >
+                      {{ program }}
+                    </span>
+                  </div>
+                </div>
+
+                <div>
+                  <h4 class="font-semibold text-gray-700 mb-3">Anggota:</h4>
+                  <div class="grid gap-3 md:grid-cols-2">
+                    <div
+                      v-for="member in section.members"
+                      :key="member.id"
+                      class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg"
+                    >
+                      <img
+                        :src="member.image"
+                        :alt="member.name"
+                        class="w-10 h-10 rounded-full border-2 border-gray-200"
+                      />
+                      <div>
+                        <p class="font-semibold text-gray-800">{{ member.name }}</p>
+                        <p class="text-sm text-gray-600">{{ member.position }}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Activities Tab -->
+        <div v-if="activeTab === 'activities'" class="space-y-6">
+          <div class="grid gap-6 md:grid-cols-2">
+            <div
+              v-for="activity in organization.activities"
+              :key="activity.id"
+              class="overflow-hidden bg-white border-2 border-gray-100 shadow-xl rounded-2xl"
+            >
+              <img
+                :src="activity.image"
+                :alt="activity.title"
+                class="object-cover w-full h-48"
+              />
+              <div class="p-6">
+                <h3 class="mb-2 text-xl font-bold text-gray-800">{{ activity.title }}</h3>
+                <p class="mb-4 text-gray-600">{{ activity.description }}</p>
+                <div class="flex items-center gap-2 text-sm text-gray-500">
+                  <Icon name="lucide:calendar" size="16" />
+                  <span>{{ activity.date }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Tab -->
+        <div v-if="activeTab === 'contact'" class="space-y-6">
+          <div class="grid gap-6 md:grid-cols-2">
+            <!-- Instagram -->
+            <div
+              v-if="organization.contactInfo?.instagram?.length"
+              class="p-6 bg-white border-2 border-pink-100 shadow-xl rounded-2xl"
+            >
+              <div class="flex items-center gap-4 mb-4">
+                <div class="flex items-center justify-center w-12 h-12 bg-pink-100 rounded-xl">
+                  <Icon name="lucide:instagram" size="24" class="text-pink-600" />
+                </div>
+                <div>
+                  <h3 class="text-lg font-bold text-gray-800">Instagram</h3>
+                  <p class="text-gray-600">Ikuti kegiatan kami</p>
+                </div>
+              </div>
+              <div class="space-y-2">
+                <a
+                  v-for="ig in organization.contactInfo.instagram"
+                  :key="ig.handle"
+                  :href="`https://instagram.com/${ig.handle.replace('@', '')}`"
+                  target="_blank"
+                  class="flex items-center gap-2 p-3 bg-pink-50 rounded-lg hover:bg-pink-100 transition-colors"
+                >
+                  <Icon name="lucide:external-link" size="16" class="text-pink-600" />
+                  <span class="font-semibold text-pink-700">{{ ig.handle }}</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- WhatsApp -->
+            <div
+              v-if="organization.contactInfo?.whatsapp?.length"
+              class="p-6 bg-white border-2 border-green-100 shadow-xl rounded-2xl"
+            >
+              <div class="flex items-center gap-4 mb-4">
+                <div class="flex items-center justify-center w-12 h-12 bg-green-100 rounded-xl">
+                  <Icon name="lucide:message-circle" size="24" class="text-green-600" />
+                </div>
+                <div>
+                  <h3 class="text-lg font-bold text-gray-800">WhatsApp</h3>
+                  <p class="text-gray-600">Hubungi kami langsung</p>
+                </div>
+              </div>
+              <div class="space-y-2">
+                <a
+                  v-for="wa in organization.contactInfo.whatsapp"
+                  :key="wa.number"
+                  :href="`https://wa.me/${wa.number.replace('+', '')}`"
+                  target="_blank"
+                  class="flex items-center gap-2 p-3 bg-green-50 rounded-lg hover:bg-green-100 transition-colors"
+                >
+                  <Icon name="lucide:phone" size="16" class="text-green-600" />
+                  <span class="font-semibold text-green-700">{{ wa.number }}</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- Social Media -->
+            <div
+              v-if="organization.contactInfo?.socialMedia?.length"
+              class="p-6 bg-white border-2 border-red-100 shadow-xl rounded-2xl md:col-span-2"
+            >
+              <div class="flex items-center gap-4 mb-4">
+                <div class="flex items-center justify-center w-12 h-12 bg-red-100 rounded-xl">
+                  <Icon name="lucide:globe" size="24" class="text-red-600" />
+                </div>
+                <div>
+                  <h3 class="text-lg font-bold text-gray-800">Media Sosial Lainnya</h3>
+                  <p class="text-gray-600">Temukan kami di platform lainnya</p>
+                </div>
+              </div>
+              <div class="grid gap-3 md:grid-cols-2">
+                <a
+                  v-for="social in organization.contactInfo.socialMedia"
+                  :key="social.platform"
+                  :href="social.platform === 'youtube' ? `https://youtube.com/${social.handle}` : `https://${social.platform}.com/${social.handle}`"
+                  target="_blank"
+                  class="flex items-center gap-3 p-3 bg-red-50 rounded-lg hover:bg-red-100 transition-colors"
+                >
+                  <Icon :name="`lucide:${social.platform === 'youtube' ? 'youtube' : 'globe'}`" size="20" class="text-red-600" />
+                  <div>
+                    <p class="font-semibold text-red-700 capitalize">{{ social.platform }}</p>
+                    <p class="text-sm text-red-600">{{ social.handle }}</p>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

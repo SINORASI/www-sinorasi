@@ -375,8 +375,8 @@ body {
 /* Layout Specific Styles */
 .default-layout {
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
 }
 
 .major-layout {
