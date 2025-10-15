@@ -32,10 +32,10 @@ const utilityFeatures = [
     color: 'blue'
   },
   {
-    title: 'E-Report',
-    description: 'Laporkan kerusakan fasilitas sekolah',
+    title: 'SI Sarana',
+    description: 'Sistem Informasi Sarana Prasarana sekolah',
     icon: 'lucide:alert-triangle',
-    href: '/utilitas/e-report',
+    href: '/utilitas/si-sarana',
     color: 'orange'
   },
   {

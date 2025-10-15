@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { eReportSchema, validateEReport, type EReportForm } from '~/utils/schema'
+import { siSaranaSchema, validateSiSarana, type SiSaranaForm } from '~/utils/schema'
 
-const formData = ref<EReportForm>({
+const formData = ref<SiSaranaForm>({
   category: '',
   title: '',
   description: '',
@@ -17,11 +17,11 @@ const isSubmitting = ref(false)
 const showGuidelines = ref(false)
 
 useHead({
-  title: "E-Report - Utilitas - SMKN 2 Singosari",
+  title: "SI Sarana - Utilitas - SMKN 2 Singosari",
   meta: [
     {
       name: "description",
-      content: "Laporkan kerusakan atau masalah fasilitas sekolah melalui E-Report SMK Negeri 2 Singosari.",
+      content: "Laporkan kerusakan atau masalah fasilitas sekolah melalui SI Sarana SMK Negeri 2 Singosari.",
     },
   ],
 });
@@ -80,7 +80,7 @@ const removeAttachment = (index: number) => {
 };
 
 const validateForm = () => {
-  const result = validateEReport(formData.value)
+  const result = validateSiSarana(formData.value)
   if (!result.success) {
     errors.value = {}
     result.error.issues.forEach((error) => {
@@ -100,8 +100,11 @@ const submitReport = async () => {
   isSubmitting.value = true
 
   try {
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500))
+    // TODO: Replace with actual API call to /api/si-sarana
+    const response = await $fetch('/api/si-sarana', {
+      method: 'POST',
+      body: formData.value
+    })
 
     alert("Laporan berhasil dikirim! Tim maintenance akan segera menindaklanjuti.")
 
@@ -134,10 +137,10 @@ const submitReport = async () => {
           <div
             class="inline-block px-10 py-6 mb-4 border border-orange-200 shadow-xl bg-gradient-to-r from-orange-600 to-orange-800 backdrop-blur-2xl rounded-2xl"
           >
-            <h1 class="text-3xl font-bold text-white md:text-4xl">E-Report</h1>
+            <h1 class="text-3xl font-bold text-white md:text-4xl">SI Sarana</h1>
           </div>
           <p class="max-w-2xl mx-auto text-lg text-gray-600">
-            Laporkan kerusakan atau masalah fasilitas sekolah. Tim maintenance kami akan segera menindaklanjuti laporan
+            Sistem Informasi Sarana dan Prasarana sekolah. Laporkan kerusakan atau masalah fasilitas sekolah. Tim maintenance kami akan segera menindaklanjuti laporan
             Anda.
           </p>
         </div>
