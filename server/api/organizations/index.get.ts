@@ -264,12 +264,12 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
       activities: []
     },
     {
-      id: '3',
-      slug: 'pramuka',
-      name: 'Pramuka',
+      id: '6',
+      slug: 'ambalan',
+      name: 'AMBALAN',
       logo: '/images/logo.webp',
-      description: 'Gerakan Pramuka adalah organisasi pendidikan nonformal yang bertujuan membentuk karakter siswa melalui kegiatan kepramukaan yang menyenangkan dan mendidik.',
-      history: 'Pramuka di SMK Negeri 2 Singosari telah lama menjadi bagian dari kegiatan ekstrakurikuler yang membantu siswa mengembangkan keterampilan survival, kepemimpinan, dan jiwa sosial.',
+      description: 'AMBALAN (Ambalan Pramuka) adalah organisasi pendidikan nonformal yang bertujuan membentuk karakter siswa melalui kegiatan kepramukaan yang menyenangkan dan mendidik.',
+      history: 'AMBALAN di SMK Negeri 2 Singosari telah lama menjadi bagian dari kegiatan ekstrakurikuler yang membantu siswa mengembangkan keterampilan survival, kepemimpinan, dan jiwa sosial.',
       established: '2010',
       statistics: {
         members: 60,
@@ -279,34 +279,34 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
       },
       contactInfo: {
         instagram: [
-          { label: 'Pramuka SMK 2 SGS', handle: '@pramuka_smkn2' },
+          { label: 'AMBALAN SMK 2 SGS', handle: '@ambalan_smkn2' },
           { label: 'SMKn 2 SGS', handle: '@smkn2_singosari' }
         ],
         whatsapp: [
-          { label: 'Ketua Pramuka', number: '081234567891' },
+          { label: 'Ketua AMBALAN', number: '081234567891' },
           { label: 'Pembina', number: '089876543211' }
         ],
         socialMedia: [
-          { platform: 'instagram', handle: 'pramuka_smkn2' }
+          { platform: 'instagram', handle: 'ambalan_smkn2' }
         ]
       },
       leadership: {
         sekretaris: [
-          { id: 's2', name: 'Sekretaris Pramuka', image: '/images/profile-placeholder.png', position: 'Sekretaris' }
+          { id: 's2', name: 'Sekretaris AMBALAN', image: '/images/profile-placeholder.png', position: 'Sekretaris' }
         ],
         ketua: [
-          { id: 'k2', name: 'Ketua Pramuka', image: '/images/profile-placeholder.png', position: 'Ketua' }
+          { id: 'k2', name: 'Ketua AMBALAN', image: '/images/profile-placeholder.png', position: 'Ketua' }
         ],
         wakil: [
-          { id: 'w2', name: 'Wakil Ketua Pramuka', image: '/images/profile-placeholder.png', position: 'Wakil Ketua' }
+          { id: 'w2', name: 'Wakil Ketua AMBALAN', image: '/images/profile-placeholder.png', position: 'Wakil Ketua' }
         ],
         bendahara: [
-          { id: 'b2', name: 'Bendahara Pramuka', image: '/images/profile-placeholder.png', position: 'Bendahara' }
+          { id: 'b2', name: 'Bendahara AMBALAN', image: '/images/profile-placeholder.png', position: 'Bendahara' }
         ]
       },
       sections: [
         {
-          id: 'seksi-pramuka-1',
+          id: 'seksi-ambalan-1',
           name: 'SEKSI KEPRAMUKAN',
           image: '/images/profile-placeholder.png',
           visi: 'Membentuk generasi muda yang tangguh dan berakhlak mulia',
@@ -320,7 +320,7 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
             'Kegiatan sosial'
           ],
           members: [
-            { id: 'm6', name: 'Pembina Pramuka', image: '/images/profile-placeholder.png', position: 'Pembina' },
+            { id: 'm6', name: 'Pembina AMBALAN', image: '/images/profile-placeholder.png', position: 'Pembina' },
             { id: 'm7', name: 'Anggota 1', image: '/images/profile-placeholder.png', position: 'Anggota' },
             { id: 'm8', name: 'Anggota 2', image: '/images/profile-placeholder.png', position: 'Anggota' }
           ]
@@ -330,7 +330,7 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
         {
           id: 'a5',
           image: '/images/placeholder.jpg',
-          title: 'Jambore Pramuka',
+          title: 'Jambore AMBALAN',
           description: 'Kegiatan jambore tahunan yang melibatkan berbagai kegiatan kepramukaan dan pendidikan karakter.',
           date: '2024-08-15'
         },

@@ -171,10 +171,6 @@ export const anonymousBKSchema = z.object({
     .string()
     .min(1, 'Kategori wajib dipilih'),
 
-  isAnonymous: z
-    .boolean()
-    .default(true),
-
   contactMethod: z
     .enum(['none', 'email', 'phone'])
     .default('none'),
@@ -195,8 +191,8 @@ export const anonymousBKSchema = z.object({
 
 export type AnonymousBKForm = z.infer<typeof anonymousBKSchema>
 
-// E-Report Form Schema
-export const eReportSchema = z.object({
+// SI Sarana Form Schema
+export const siSaranaSchema = z.object({
   category: z
     .string()
     .min(1, 'Kategori wajib dipilih'),
@@ -255,7 +251,7 @@ export const eReportSchema = z.object({
     }),
 })
 
-export type EReportForm = z.infer<typeof eReportSchema>
+export type SiSaranaForm = z.infer<typeof siSaranaSchema>
 
 // Traffic Tracker Form Schema
 export const trafficTrackerSchema = z.object({
@@ -293,8 +289,8 @@ export const validateAnonymousBK = (data: unknown) => {
   return anonymousBKSchema.safeParse(data)
 }
 
-export const validateEReport = (data: unknown) => {
-  return eReportSchema.safeParse(data)
+export const validateSiSarana = (data: unknown) => {
+  return siSaranaSchema.safeParse(data)
 }
 
 export const validateTrafficTracker = (data: unknown) => {

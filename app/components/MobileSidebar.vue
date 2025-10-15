@@ -384,6 +384,7 @@ const pageTitle = computed(() => {
   if (path === "/informasi/kontak") return "Kontak Kami";
   if (path === "/utilitas/anonymous-bk") return "Anonymous BK";
   if (path === "/utilitas/traffic-tracker") return "Traffic Tracker";
+  if (path === "/utilitas/si-sarana") return "SI Sarana";
 
   // Handle dynamic routes
   if (path.startsWith("/jurusan/")) {
@@ -441,6 +442,7 @@ const pageSubtitle = computed(() => {
   if (path === "/informasi/kontak") return "Hubungi kami";
   if (path === "/utilitas/anonymous-bk") return "Konsultasi anonim";
   if (path === "/utilitas/traffic-tracker") return "Cek waktu perjalanan";
+  if (path === "/utilitas/si-sarana") return "Sistem Informasi Sarana Prasarana";
 
   // Handle dynamic routes
   if (path.startsWith("/jurusan/")) {
@@ -637,22 +639,24 @@ const menuItems = [
         external: false,
         tags: ["organisasi", "semua", "daftar"],
       },
-      ...organizationsData.value.map((org: any) => ({
-        title: org.name,
-        desc: org.description,
-        icon: "lucide:users-round",
-        to: `/organisasi/${org.slug}`,
-        external: false,
-        tags: [
-          "organisasi",
-          org.name.toLowerCase(),
-          ...org.name.toLowerCase().split(" "),
-          ...(org.description
-            ?.toLowerCase()
-            .split(" ")
-            .filter((word: string) => word.length > 3) || []),
-        ],
-      })),
+      ...organizationsData.value
+        .filter((org: any) => !['futsal-club', 'english-club'].includes(org.slug))
+        .map((org: any) => ({
+          title: org.name,
+          desc: org.description,
+          icon: "lucide:users-round",
+          to: `/organisasi/${org.slug}`,
+          external: false,
+          tags: [
+            "organisasi",
+            org.name.toLowerCase(),
+            ...org.name.toLowerCase().split(" "),
+            ...(org.description
+              ?.toLowerCase()
+              .split(" ")
+              .filter((word: string) => word.length > 3) || []),
+          ],
+        })),
     ],
   },
   {
@@ -739,12 +743,12 @@ const menuItems = [
         tags: ["traffic", "tracker", "sekolah", "time"],
       },
       {
-        title: "E-Report",
-        desc: "Laporkan kerusakan fasilitas sekolah",
+        title: "SI Sarana",
+        desc: "Sistem Informasi Sarana Prasarana sekolah",
         icon: "lucide:alert-triangle",
-        to: "/utilitas/e-report",
+        to: "/utilitas/si-sarana",
         external: false,
-        tags: ["report", "laporan", "kerusakan", "fasilitas", "maintenance", "perbaikan"],
+        tags: ["si", "sarana", "prasarana", "report", "laporan", "kerusakan", "fasilitas", "maintenance", "perbaikan"],
       },
     ],
   },

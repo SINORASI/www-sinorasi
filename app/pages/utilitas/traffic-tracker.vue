@@ -10,6 +10,24 @@ interface TrafficResults {
   bestTime: string;
   tips: string;
   recommendation: string;
+  analytics: {
+    proximity: {
+      distanceToSchool: string;
+      estimatedArrival: string;
+      timeToSchool: string;
+    };
+    timeAnalytics: {
+      currentCongestion: string;
+      peakHours: string[];
+      recommendedDeparture: string;
+      alternativeRoutes: number;
+    };
+    usefulInfo: {
+      fuelEstimate: string;
+      carbonFootprint: string;
+      safetyRating: string;
+    };
+  };
 }
 
 const config = useRuntimeConfig();
@@ -30,50 +48,6 @@ const loading = ref(false);
 const error = ref("");
 const validationErrors = ref<Record<string, string>>({});
 
-const hotspots = [
-  {
-    id: 1,
-    name: "Lampu Merah Karanglo",
-    description: "Persimpangan utama dengan lalu lintas padat pada jam sibuk pagi dan sore.",
-    level: "Tinggi",
-    x: 30,
-    y: 40,
-  },
-  {
-    id: 2,
-    name: "Jl. Raya Singosari",
-    description: "Jalan utama menuju sekolah dengan volume kendaraan tinggi.",
-    level: "Sedang",
-    x: 60,
-    y: 50,
-  },
-  {
-    id: 3,
-    name: "Terminal Arjosari",
-    description: "Area terminal dengan aktivitas transportasi umum yang ramai.",
-    level: "Tinggi",
-    x: 20,
-    y: 70,
-  },
-  {
-    id: 4,
-    name: "Bundaran Singosari",
-    description: "Putaran bundaran dengan potensi kemacetan saat jam sibuk.",
-    level: "Sedang",
-    x: 80,
-    y: 30,
-  },
-];
-
-const selectedHotspot = ref<(typeof hotspots)[0] | null>(null);
-
-const selectHotspot = (hotspot: (typeof hotspots)[0]) => {
-  selectedHotspot.value = hotspot;
-};
-
-const closeHotspot = () => {
-  selectedHotspot.value = null;
-};
 
 const getCurrentLocation = () => {
   if (navigator.geolocation) {
@@ -139,70 +113,17 @@ const calculateRoute = async () => {
   // Clear validation errors
   validationErrors.value = {};
 
-  if (!apiKey) {
-    error.value = "API Key Google Maps tidak dikonfigurasi.";
-    return;
-  }
-
   loading.value = true;
   error.value = "";
   results.value = null;
 
   try {
-    // Geocode origin address to lat,lng
-    const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-      form.value.origin
-    )}&key=${apiKey}`;
-    const geocodeResponse = await fetch(geocodeUrl);
-    const geocodeData = await geocodeResponse.json();
+    const response = await $fetch('/api/traffic-tracker', {
+      method: 'POST',
+      body: form.value
+    });
 
-    if (geocodeData.status !== "OK") {
-      throw new Error("Alamat tidak ditemukan.");
-    }
-
-    const origin = geocodeData.results[0].geometry.location;
-
-    // Geocode school address
-    const schoolGeocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-      schoolAddress
-    )}&key=${apiKey}`;
-    const schoolGeocodeResponse = await fetch(schoolGeocodeUrl);
-    const schoolGeocodeData = await schoolGeocodeResponse.json();
-
-    if (schoolGeocodeData.status !== "OK") {
-      throw new Error("Alamat sekolah tidak ditemukan.");
-    }
-
-    const destination = schoolGeocodeData.results[0].geometry.location;
-
-    // Get directions
-    const directionsUrl = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin.lat},${origin.lng}&destination=${destination.lat},${destination.lng}&mode=driving&departure_time=now&key=${apiKey}`;
-    const directionsResponse = await fetch(directionsUrl);
-    const directionsData = await directionsResponse.json();
-
-    if (directionsData.status !== "OK") {
-      throw new Error("Tidak dapat menghitung rute.");
-    }
-
-    const route = directionsData.routes[0];
-    const leg = route.legs[0];
-
-    const duration = leg.duration_in_traffic ? leg.duration_in_traffic.text : leg.duration.text;
-    const distance = leg.distance.text;
-    const traffic = getTrafficStatus(leg.duration_in_traffic?.value || leg.duration.value, leg.duration.value);
-    const routeSummary = route.summary;
-    const bestTime = getBestTime();
-    const tips = getTips(traffic, duration);
-
-    results.value = {
-      time: duration,
-      distance,
-      traffic,
-      route: routeSummary,
-      bestTime,
-      tips,
-      recommendation: getRecommendation(duration, traffic),
-    };
+    results.value = response;
   } catch (err: any) {
     error.value = err.message || "Terjadi kesalahan saat menghitung rute.";
   } finally {
@@ -287,89 +208,6 @@ useHead({
         </div>
       </div>
 
-      <!-- Traffic Hotspots Map -->
-      <div class="max-w-6xl mx-auto mb-12">
-        <div class="mb-8 text-center">
-          <div
-            class="inline-block px-10 py-6 border border-orange-200 shadow-xl bg-gradient-to-r from-orange-500 to-orange-600 backdrop-blur-2xl rounded-2xl"
-          >
-            <h2 class="text-2xl font-bold text-white md:text-3xl">Peta Titik Rawan Macet</h2>
-          </div>
-          <p class="max-w-2xl mx-auto mt-4 text-gray-600">
-            Klik pada pin untuk melihat informasi detail tentang area dengan kepadatan lalu lintas tinggi di sekitar SMK
-            Negeri 2 Singosari.
-          </p>
-        </div>
-
-        <div class="relative p-8 bg-white border-2 border-orange-100 shadow-xl rounded-2xl">
-          <!-- Map Background -->
-          <div class="relative overflow-hidden h-96 bg-gradient-to-br from-blue-100 to-green-100 rounded-xl">
-            <!-- Map Image Placeholder -->
-            <img src="/images/bg-aula.webp" alt="Map Background" class="object-cover w-full h-full opacity-30" />
-
-            <!-- Hotspot Pins -->
-            <button
-              v-for="hotspot in hotspots"
-              :key="hotspot.id"
-              @click="selectHotspot(hotspot)"
-              :style="{ left: hotspot.x + '%', top: hotspot.y + '%' }"
-              class="absolute w-8 h-8 transition-all duration-200 transform -translate-x-1/2 -translate-y-1/2 hover:scale-125"
-            >
-              <div class="relative">
-                <div
-                  :class="[
-                    'w-6 h-6 rounded-full border-2 border-white shadow-lg',
-                    hotspot.level === 'Tinggi' ? 'bg-red-500' : 'bg-yellow-500',
-                  ]"
-                ></div>
-                <div
-                  class="absolute w-0 h-0 transform -translate-x-1/2 border-t-4 border-l-2 border-r-2 border-transparent -bottom-1 left-1/2 border-t-white"
-                ></div>
-              </div>
-            </button>
-
-            <!-- Legend -->
-            <div class="absolute p-3 rounded-lg shadow-md top-4 right-4 bg-white/90 backdrop-blur-sm">
-              <h4 class="mb-2 text-sm font-bold text-gray-800">Legenda</h4>
-              <div class="space-y-1">
-                <div class="flex items-center gap-2">
-                  <div class="w-3 h-3 bg-red-500 rounded-full"></div>
-                  <span class="text-xs text-gray-600">Tinggi</span>
-                </div>
-                <div class="flex items-center gap-2">
-                  <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                  <span class="text-xs text-gray-600">Sedang</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Hotspot Detail Modal -->
-        <div
-          v-if="selectedHotspot"
-          class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
-          @click="closeHotspot"
-        >
-          <div class="max-w-md p-6 bg-white shadow-2xl rounded-2xl" @click.stop>
-            <div class="flex items-center justify-between mb-4">
-              <h3 class="text-xl font-bold text-gray-800">{{ selectedHotspot.name }}</h3>
-              <span
-                :class="[
-                  'px-3 py-1 rounded-full text-xs font-bold',
-                  selectedHotspot.level === 'Tinggi' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800',
-                ]"
-              >
-                {{ selectedHotspot.level }}
-              </span>
-            </div>
-            <p class="mb-4 text-gray-700">{{ selectedHotspot.description }}</p>
-            <button @click="closeHotspot" class="px-4 py-2 text-white bg-orange-500 rounded-lg hover:bg-orange-600">
-              Tutup
-            </button>
-          </div>
-        </div>
-      </div>
 
       <!-- Results Section -->
       <div v-if="results" class="max-w-6xl mx-auto">
@@ -439,6 +277,110 @@ useHead({
           >
             {{ results.recommendation }}
           </p>
+        </div>
+
+        <!-- Proximity & Time Analytics -->
+        <div class="grid grid-cols-1 gap-6 mb-8 md:grid-cols-2">
+          <div class="p-8 bg-white border-2 border-green-100 shadow-xl rounded-2xl">
+            <div
+              class="inline-block px-6 py-3 mb-6 border border-green-200 bg-gradient-to-r from-green-600 to-green-700 rounded-xl"
+            >
+              <h3 class="text-xl font-bold text-white">Proximity Analytics</h3>
+            </div>
+            <ul class="space-y-4 text-gray-700">
+              <li class="flex items-start gap-3 p-4 border-l-4 border-green-600 bg-green-50 rounded-xl">
+                <Icon name="lucide:map-pin" size="20" class="text-green-600 mt-0.5 flex-shrink-0" />
+                <div>
+                  <span class="font-semibold">Jarak ke sekolah:</span>
+                  <p class="mt-1 text-gray-600">{{ results.analytics.proximity.distanceToSchool }}</p>
+                </div>
+              </li>
+              <li class="flex items-start gap-3 p-4 border-l-4 border-green-600 bg-green-50 rounded-xl">
+                <Icon name="lucide:clock" size="20" class="text-green-600 mt-0.5 flex-shrink-0" />
+                <div>
+                  <span class="font-semibold">Estimasi tiba:</span>
+                  <p class="mt-1 text-gray-600">{{ results.analytics.proximity.estimatedArrival }}</p>
+                </div>
+              </li>
+              <li class="flex items-start gap-3 p-4 border-l-4 border-green-600 bg-green-50 rounded-xl">
+                <Icon name="lucide:route" size="20" class="text-green-600 mt-0.5 flex-shrink-0" />
+                <div>
+                  <span class="font-semibold">Waktu tempuh:</span>
+                  <p class="mt-1 text-gray-600">{{ results.analytics.proximity.timeToSchool }}</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="p-8 bg-white border-2 border-purple-100 shadow-xl rounded-2xl">
+            <div
+              class="inline-block px-6 py-3 mb-6 border border-purple-200 bg-gradient-to-r from-purple-600 to-purple-700 rounded-xl"
+            >
+              <h3 class="text-xl font-bold text-white">Time Analytics</h3>
+            </div>
+            <ul class="space-y-4 text-gray-700">
+              <li class="flex items-start gap-3 p-4 border-l-4 border-purple-600 bg-purple-50 rounded-xl">
+                <Icon name="lucide:traffic-cone" size="20" class="text-purple-600 mt-0.5 flex-shrink-0" />
+                <div>
+                  <span class="font-semibold">Kepadatan saat ini:</span>
+                  <p class="mt-1 text-gray-600">{{ results.analytics.timeAnalytics.currentCongestion }}</p>
+                </div>
+              </li>
+              <li class="flex items-start gap-3 p-4 border-l-4 border-purple-600 bg-purple-50 rounded-xl">
+                <Icon name="lucide:alarm-clock" size="20" class="text-purple-600 mt-0.5 flex-shrink-0" />
+                <div>
+                  <span class="font-semibold">Jam sibuk:</span>
+                  <p class="mt-1 text-gray-600">{{ results.analytics.timeAnalytics.peakHours.join(', ') }}</p>
+                </div>
+              </li>
+              <li class="flex items-start gap-3 p-4 border-l-4 border-purple-600 bg-purple-50 rounded-xl">
+                <Icon name="lucide:calendar-check" size="20" class="text-purple-600 mt-0.5 flex-shrink-0" />
+                <div>
+                  <span class="font-semibold">Rekomendasi keberangkatan:</span>
+                  <p class="mt-1 text-gray-600">{{ results.analytics.timeAnalytics.recommendedDeparture }}</p>
+                </div>
+              </li>
+              <li class="flex items-start gap-3 p-4 border-l-4 border-purple-600 bg-purple-50 rounded-xl">
+                <Icon name="lucide:git-branch" size="20" class="text-purple-600 mt-0.5 flex-shrink-0" />
+                <div>
+                  <span class="font-semibold">Rute alternatif:</span>
+                  <p class="mt-1 text-gray-600">{{ results.analytics.timeAnalytics.alternativeRoutes }} tersedia</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Useful Information -->
+        <div class="p-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
+          <div
+            class="inline-block px-6 py-3 mb-6 border border-blue-200 bg-gradient-to-r from-blue-600 to-blue-800 rounded-xl"
+          >
+            <h3 class="text-xl font-bold text-white">Informasi Berguna</h3>
+          </div>
+          <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+            <div class="p-4 border-l-4 border-blue-600 bg-blue-50 rounded-xl">
+              <div class="flex items-center gap-3 mb-2">
+                <Icon name="lucide:fuel" size="20" class="text-blue-600" />
+                <span class="font-semibold">Estimasi BBM</span>
+              </div>
+              <p class="text-gray-600">{{ results.analytics.usefulInfo.fuelEstimate }}</p>
+            </div>
+            <div class="p-4 border-l-4 border-green-600 bg-green-50 rounded-xl">
+              <div class="flex items-center gap-3 mb-2">
+                <Icon name="lucide:leaf" size="20" class="text-green-600" />
+                <span class="font-semibold">Carbon Footprint</span>
+              </div>
+              <p class="text-gray-600">{{ results.analytics.usefulInfo.carbonFootprint }}</p>
+            </div>
+            <div class="p-4 border-l-4 border-orange-600 bg-orange-50 rounded-xl">
+              <div class="flex items-center gap-3 mb-2">
+                <Icon name="lucide:shield-check" size="20" class="text-orange-600" />
+                <span class="font-semibold">Safety Rating</span>
+              </div>
+              <p class="text-gray-600">{{ results.analytics.usefulInfo.safetyRating }}</p>
+            </div>
+          </div>
         </div>
 
         <!-- Additional Information Card -->

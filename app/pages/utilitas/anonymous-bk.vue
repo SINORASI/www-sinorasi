@@ -4,7 +4,6 @@ import { anonymousBKSchema, validateAnonymousBK, type AnonymousBKForm } from '~/
 const formData = ref<AnonymousBKForm>({
   story: '',
   category: '',
-  isAnonymous: true,
   contactMethod: 'none',
   contactInfo: ''
 })
@@ -35,23 +34,45 @@ const validateForm = () => {
   return true
 }
 
+// Enhanced error handling for Zod validation errors
+const handleValidationErrors = (issues: any[]) => {
+  errors.value = {}
+  issues.forEach((issue) => {
+    const field = issue.path[0] as string
+    errors.value[field] = issue.message
+  })
+}
+
 const submitStory = async () => {
   if (!validateForm()) {
     return
   }
   isSubmitting.value = true
   try {
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-    alert("Cerita berhasil dikirim secara anonim!")
-    formData.value = {
-      story: '',
-      category: '',
-      isAnonymous: true,
-      contactMethod: 'none',
-      contactInfo: ''
+    const response = await $fetch('/api/anonymous-bk', {
+      method: 'POST',
+      body: formData.value
+    })
+
+    if (response.success) {
+      alert("Cerita berhasil dikirim secara anonim!")
+      formData.value = {
+        story: '',
+        category: '',
+        contactMethod: 'none',
+        contactInfo: ''
+      }
+      errors.value = {}
+    } else {
+      throw new Error('Submission failed')
     }
-  } catch (error) {
-    alert("Terjadi kesalahan saat mengirim cerita. Silakan coba lagi.")
+  } catch (error: any) {
+    if (error.statusCode === 400 && error.data) {
+      // Handle Zod validation errors
+      handleValidationErrors(error.data)
+    } else {
+      alert("Terjadi kesalahan saat mengirim cerita. Silakan coba lagi.")
+    }
   } finally {
     isSubmitting.value = false
   }
@@ -180,32 +201,6 @@ const submitStory = async () => {
               <p v-if="errors.category" class="mt-1 text-sm text-red-600">{{ errors.category }}</p>
             </div>
 
-            <div>
-              <label class="flex items-center mb-3 text-sm font-bold text-gray-800">
-                <Icon name="lucide:user-check" size="18" class="mr-2 text-green-600" />
-                Anonimitas
-              </label>
-              <div class="flex items-center space-x-4">
-                <label class="flex items-center">
-                  <input
-                    v-model="formData.isAnonymous"
-                    type="radio"
-                    :value="true"
-                    class="mr-2 text-blue-600 focus:ring-blue-500"
-                  />
-                  <span class="text-sm text-gray-700">Anonim</span>
-                </label>
-                <label class="flex items-center">
-                  <input
-                    v-model="formData.isAnonymous"
-                    type="radio"
-                    :value="false"
-                    class="mr-2 text-blue-600 focus:ring-blue-500"
-                  />
-                  <span class="text-sm text-gray-700">Tidak Anonim</span>
-                </label>
-              </div>
-            </div>
 
             <div>
               <label for="contactMethod" class="flex items-center mb-3 text-sm font-bold text-gray-800">
@@ -241,7 +236,7 @@ const submitStory = async () => {
             <button
               type="submit"
               :disabled="isSubmitting"
-              class="flex items-center justify-center w-full gap-2 px-4 py-4 font-bold text-white transition duration-200 bg-blue-600 shadow-md hover:bg-blue-700 disabled:bg-blue-400 rounded-xl hover:shadow-lg"
+              class="flex items-center justify-center w-full gap-2 px-4 py-4 font-bold text-white transition duration-200 bg-blue-600 shadow-md hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed rounded-xl hover:shadow-lg"
             >
               <Icon v-if="isSubmitting" name="lucide:loader-2" class="animate-spin" size="20" />
               <Icon v-else name="lucide:send" size="20" />
