@@ -91,7 +91,7 @@ useHead({
     </section>
 
     <!-- Wakil Kepala Sekolah Section -->
-    <section class="py-10 pb-20">
+    <section class="py-10">
       <div class="container max-w-6xl px-4 mx-auto sm:px-6">
         <div class="p-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl md:p-12">
           <div class="mb-10 text-center">
@@ -99,6 +99,108 @@ useHead({
               class="inline-block px-8 py-6 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
             >
               <h2 class="text-xl font-bold text-white md:text-2xl">Wakil Kepala Sekolah Bagian Kesiswaan</h2>
+            </div>
+          </div>
+
+          <div class="flex flex-col items-center justify-center gap-6 mb-8 md:flex-row">
+            <div class="w-48 md:w-56">
+              <img src="/images/placeholder.jpg" alt="Profile Guru" class="w-full shadow-lg rounded-xl" />
+            </div>
+            <div class="w-64 md:w-80">
+              <img src="/images/placeholder.jpg" alt="Profile Guru" class="w-full shadow-lg rounded-xl" />
+            </div>
+            <div class="w-48 md:w-56">
+              <img src="/images/placeholder.jpg" alt="Profile Guru" class="w-full shadow-lg rounded-xl" />
+            </div>
+          </div>
+
+          <div class="max-w-2xl mx-auto">
+            <p class="leading-relaxed text-center text-gray-700">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis, quo iure possimus dolorum eum nihil
+              saepe architecto natus, porro quae nam impedit libero iste id? Enim aliquid illo voluptatibus. Eaque.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Wakil Kepala Sekolah Bagian Kurikulum Section -->
+    <section class="py-10">
+      <div class="container max-w-6xl px-4 mx-auto sm:px-6">
+        <div class="p-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl md:p-12">
+          <div class="mb-10 text-center">
+            <div
+              class="inline-block px-8 py-6 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
+            >
+              <h2 class="text-xl font-bold text-white md:text-2xl">Wakil Kepala Sekolah Bagian Kurikulum</h2>
+            </div>
+          </div>
+
+          <div class="flex flex-col items-center justify-center gap-6 mb-8 md:flex-row">
+            <div class="w-48 md:w-56">
+              <img src="/images/placeholder.jpg" alt="Profile Guru" class="w-full shadow-lg rounded-xl" />
+            </div>
+            <div class="w-64 md:w-80">
+              <img src="/images/placeholder.jpg" alt="Profile Guru" class="w-full shadow-lg rounded-xl" />
+            </div>
+            <div class="w-48 md:w-56">
+              <img src="/images/placeholder.jpg" alt="Profile Guru" class="w-full shadow-lg rounded-xl" />
+            </div>
+          </div>
+
+          <div class="max-w-2xl mx-auto">
+            <p class="leading-relaxed text-center text-gray-700">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis, quo iure possimus dolorum eum nihil
+              saepe architecto natus, porro quae nam impedit libero iste id? Enim aliquid illo voluptatibus. Eaque.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Wakil Kepala Sekolah Bagian Sarpras Section -->
+    <section class="py-10">
+      <div class="container max-w-6xl px-4 mx-auto sm:px-6">
+        <div class="p-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl md:p-12">
+          <div class="mb-10 text-center">
+            <div
+              class="inline-block px-8 py-6 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
+            >
+              <h2 class="text-xl font-bold text-white md:text-2xl">Wakil Kepala Sekolah Bagian Sarpras</h2>
+            </div>
+          </div>
+
+          <div class="flex flex-col items-center justify-center gap-6 mb-8 md:flex-row">
+            <div class="w-48 md:w-56">
+              <img src="/images/placeholder.jpg" alt="Profile Guru" class="w-full shadow-lg rounded-xl" />
+            </div>
+            <div class="w-64 md:w-80">
+              <img src="/images/placeholder.jpg" alt="Profile Guru" class="w-full shadow-lg rounded-xl" />
+            </div>
+            <div class="w-48 md:w-56">
+              <img src="/images/placeholder.jpg" alt="Profile Guru" class="w-full shadow-lg rounded-xl" />
+            </div>
+          </div>
+
+          <div class="max-w-2xl mx-auto">
+            <p class="leading-relaxed text-center text-gray-700">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis, quo iure possimus dolorum eum nihil
+              saepe architecto natus, porro quae nam impedit libero iste id? Enim aliquid illo voluptatibus. Eaque.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Wakil Kepala Sekolah Bagian Humas Section -->
+    <section class="py-10 pb-20">
+      <div class="container max-w-6xl px-4 mx-auto sm:px-6">
+        <div class="p-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl md:p-12">
+          <div class="mb-10 text-center">
+            <div
+              class="inline-block px-8 py-6 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
+            >
+              <h2 class="text-xl font-bold text-white md:text-2xl">Wakil Kepala Sekolah Bagian Humas</h2>
             </div>
           </div>
 

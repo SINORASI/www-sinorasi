@@ -626,6 +626,14 @@ const menuItems = [
         external: false,
         tags: ["events", "acara"],
       },
+      {
+        title: "Mitra Industri",
+        desc: "Kerjasama dengan industri",
+        icon: "lucide:building",
+        to: "/informasi/mitra-industri",
+        external: false,
+        tags: ["mitra", "industri", "kerjasama", "partnership"],
+      },
     ],
   },
   {
