@@ -103,8 +103,8 @@
                 <div class="flex items-center gap-3">
                   <Icon name="lucide:languages" size="20" class="text-gray-600" />
                   <span class="text-sm font-medium text-gray-700">
-                    {{ languages.find((lang) => lang.code === currentLanguage)?.flag }}
-                    {{ languages.find((lang) => lang.code === currentLanguage)?.name }}
+                    {{ languages.find((lang: { code: any; }) => lang.code === currentLanguage)?.flag }}
+                    {{ languages.find((lang: { code: any; }) => lang.code === currentLanguage)?.name }}
                   </span>
                 </div>
                 <Icon
@@ -173,7 +173,7 @@
             >
               <p class="text-xs text-green-700">
                 <Icon name="lucide:check-circle" size="14" class="inline mr-1" />
-                Ditemukan {{ filteredMenuItems.reduce((total, section) => total + section.submenu.length, 0) }} hasil
+                Ditemukan {{ filteredMenuItems.reduce((total: number, section: any) => total + section.submenu.length, 0) }} hasil
               </p>
             </div>
           </div>
@@ -314,9 +314,9 @@ const currentLanguage = ref("id");
 const showLanguageMenu = ref(false);
 
 const languages = [
-  { code: "id", name: "Bahasa Indonesia", flag: "🇮🇩" },
-  { code: "en", name: "English", flag: "🇺🇸" },
-];
+  { code: 'id', name: 'Bahasa Indonesia', flag: '🇮🇩' },
+  { code: 'en', name: 'English', flag: '🇺🇸' }
+]
 
 const switchLanguage = (langCode: string) => {
   currentLanguage.value = langCode;
@@ -636,30 +636,6 @@ const menuItems = [
         to: "/organisasi",
         external: false,
         tags: ["organisasi", "semua", "daftar"],
-      },
-      {
-        title: "AMBALAN",
-        desc: "Ambalan Pramuka SMKN 2 Singosari",
-        icon: "lucide:shield",
-        to: "/organisasi/ambalan",
-        external: false,
-        tags: ["ambalan", "pramuka", "kepramukaan", "organisasi"],
-      },
-      {
-        title: "LINORASI",
-        desc: "Litbang Inovasi Raih Prestasi",
-        icon: "lucide:lightbulb",
-        to: "/organisasi/linorasi",
-        external: false,
-        tags: ["linorasi", "litbang", "inovasi", "penelitian", "organisasi"],
-      },
-      {
-        title: "BDI",
-        desc: "Badan Dakwah Islam",
-        icon: "lucide:book-open",
-        to: "/organisasi/bdi",
-        external: false,
-        tags: ["bdi", "dakwah", "islam", "rohis", "organisasi"],
       },
       ...organizationsData.value.map((org: any) => ({
         title: org.name,

@@ -239,7 +239,7 @@ useHead({
           </p>
           <div class="flex flex-col items-center gap-4 mt-4 sm:flex-row">
             <a
-              href="#information"
+              href="#profil-sekolah"
               class="flex items-center gap-2 px-6 py-3 text-sm font-semibold text-white transition-all duration-300 bg-blue-600 rounded-lg hover:bg-blue-700"
             >
               Pelajari Lebih Dalam

@@ -1,12 +1,20 @@
 <script setup lang="ts">
-const description = ref("");
-const location = ref("");
-const category = ref("");
-const reportDate = ref("");
-const imageFile = ref<File | null>(null);
-const imagePreview = ref("");
-const isSubmitting = ref(false);
-const showGuidelines = ref(false);
+import { eReportSchema, validateEReport, type EReportForm } from '~/utils/schema'
+
+const formData = ref<EReportForm>({
+  category: '',
+  title: '',
+  description: '',
+  location: '',
+  urgency: 'medium',
+  reporterName: '',
+  reporterContact: '',
+  attachments: []
+})
+
+const errors = ref<Record<string, string>>({})
+const isSubmitting = ref(false)
+const showGuidelines = ref(false)
 
 useHead({
   title: "E-Report - Utilitas - SMKN 2 Singosari",
@@ -28,62 +36,93 @@ const categories = [
   { value: "lainnya", label: "Lainnya", icon: "lucide:more-horizontal" },
 ];
 
+const urgencyLevels = [
+  { value: 'low', label: 'Rendah', color: 'bg-green-100 text-green-800' },
+  { value: 'medium', label: 'Sedang', color: 'bg-yellow-100 text-yellow-800' },
+  { value: 'high', label: 'Tinggi', color: 'bg-orange-100 text-orange-800' },
+  { value: 'critical', label: 'Kritis', color: 'bg-red-100 text-red-800' },
+];
+
 const handleFileChange = (event: Event) => {
   const target = event.target as HTMLInputElement;
-  const file = target.files?.[0];
+  const files = Array.from(target.files || []);
 
-  if (file) {
-    // Validate file size (max 5MB)
-    if (file.size > 5 * 1024 * 1024) {
-      alert("Ukuran file terlalu besar. Maksimal 5MB.");
+  if (files.length > 0) {
+    // Check total files limit
+    if ((formData.value.attachments?.length || 0) + files.length > 5) {
+      alert("Maksimal 5 file yang dapat diupload.");
       return;
     }
 
-    // Validate file type
-    if (!file.type.startsWith("image/")) {
-      alert("File harus berupa gambar.");
-      return;
+    // Validate each file
+    for (const file of files) {
+      // Validate file size (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        alert(`Ukuran file ${file.name} terlalu besar. Maksimal 5MB.`);
+        return;
+      }
+
+      // Validate file type
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'application/pdf'];
+      if (!allowedTypes.includes(file.type)) {
+        alert(`Tipe file ${file.name} tidak didukung. Gunakan JPG, PNG, GIF, atau PDF.`);
+        return;
+      }
     }
 
-    imageFile.value = file;
-
-    // Create preview
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      imagePreview.value = e.target?.result as string;
-    };
-    reader.readAsDataURL(file);
+    // Add files to attachments
+    formData.value.attachments = [...(formData.value.attachments || []), ...files];
   }
 };
 
-const removeImage = () => {
-  imageFile.value = null;
-  imagePreview.value = "";
+const removeAttachment = (index: number) => {
+  formData.value.attachments = formData.value.attachments?.filter((_, i) => i !== index) || [];
 };
+
+const validateForm = () => {
+  const result = validateEReport(formData.value)
+  if (!result.success) {
+    errors.value = {}
+    result.error.issues.forEach((error) => {
+      errors.value[error.path[0] as string] = error.message
+    })
+    return false
+  }
+  errors.value = {}
+  return true
+}
 
 const submitReport = async () => {
-  if (!description.value.trim() || !category.value) {
-    alert("Silakan lengkapi deskripsi dan kategori");
-    return;
+  if (!validateForm()) {
+    return
   }
 
-  isSubmitting.value = true;
+  isSubmitting.value = true
 
-  // Simulate API call
-  await new Promise((resolve) => setTimeout(resolve, 1500));
+  try {
+    // Simulate API call
+    await new Promise((resolve) => setTimeout(resolve, 1500))
 
-  alert("Laporan berhasil dikirim! Tim maintenance akan segera menindaklanjuti.");
+    alert("Laporan berhasil dikirim! Tim maintenance akan segera menindaklanjuti.")
 
-  // Reset form
-  description.value = "";
-  location.value = "";
-  category.value = "";
-  reportDate.value = "";
-  imageFile.value = null;
-  imagePreview.value = "";
-
-  isSubmitting.value = false;
-};
+    // Reset form
+    formData.value = {
+      category: '',
+      title: '',
+      description: '',
+      location: '',
+      urgency: 'medium',
+      reporterName: '',
+      reporterContact: '',
+      attachments: []
+    }
+    errors.value = {}
+  } catch (error) {
+    alert("Terjadi kesalahan saat mengirim laporan. Silakan coba lagi.")
+  } finally {
+    isSubmitting.value = false
+  }
+}
 </script>
 
 <template>
@@ -190,10 +229,10 @@ const submitReport = async () => {
                   v-for="cat in categories"
                   :key="cat.value"
                   type="button"
-                  @click="category = cat.value"
+                  @click="formData.category = cat.value"
                   :class="[
                     'flex flex-col items-center gap-2 p-4 rounded-xl border-2 transition-all',
-                    category === cat.value
+                    formData.category === cat.value
                       ? 'border-orange-600 bg-orange-50 text-orange-700'
                       : 'border-gray-200 hover:border-orange-300 text-gray-700',
                   ]"
@@ -202,21 +241,39 @@ const submitReport = async () => {
                   <span class="text-xs font-medium text-center">{{ cat.label }}</span>
                 </button>
               </div>
+              <p v-if="errors.category" class="mt-2 text-sm text-red-600">{{ errors.category }}</p>
+            </div>
+
+            <!-- Title -->
+            <div>
+              <label for="title" class="flex items-center mb-3 text-sm font-bold text-gray-800">
+                <Icon name="lucide:file-text" size="18" class="mr-2 text-orange-600" />
+                Judul Laporan <span class="ml-1 text-red-500">*</span>
+              </label>
+              <input
+                id="title"
+                v-model="formData.title"
+                type="text"
+                class="w-full px-4 py-3 transition border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                placeholder="Contoh: Lampu ruang kelas XII RPL 1 tidak menyala"
+              />
+              <p v-if="errors.title" class="mt-2 text-sm text-red-600">{{ errors.title }}</p>
             </div>
 
             <!-- Location -->
             <div>
               <label for="location" class="flex items-center mb-3 text-sm font-bold text-gray-800">
                 <Icon name="lucide:map-pin" size="18" class="mr-2 text-orange-600" />
-                Lokasi
+                Lokasi <span class="ml-1 text-red-500">*</span>
               </label>
               <input
                 id="location"
-                v-model="location"
+                v-model="formData.location"
                 type="text"
                 class="w-full px-4 py-3 transition border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
                 placeholder="Contoh: Lab Komputer Lantai 2, Kelas XII RPL 1, Toilet Pria Lantai 1"
               />
+              <p v-if="errors.location" class="mt-2 text-sm text-red-600">{{ errors.location }}</p>
             </div>
 
             <!-- Description -->
@@ -227,63 +284,126 @@ const submitReport = async () => {
               </label>
               <textarea
                 id="description"
-                v-model="description"
+                v-model="formData.description"
                 rows="5"
                 class="w-full px-4 py-3 transition border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 resize-vertical"
                 placeholder="Jelaskan masalah secara detail, misalnya: Lampu di ruang kelas tidak menyala, kabel terlihat putus..."
-                required
               ></textarea>
+              <p v-if="errors.description" class="mt-2 text-sm text-red-600">{{ errors.description }}</p>
               <p class="mt-2 ml-1 text-xs text-gray-500">Semakin detail, semakin cepat kami dapat menindaklanjuti</p>
             </div>
 
-            <!-- Date (Optional) -->
-            <div>
-              <label for="reportDate" class="flex items-center mb-3 text-sm font-bold text-gray-800">
-                <Icon name="lucide:calendar" size="18" class="mr-2 text-orange-600" />
-                Tanggal Kejadian (Opsional)
-              </label>
-              <input
-                id="reportDate"
-                v-model="reportDate"
-                type="date"
-                class="w-full px-4 py-3 transition border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-              />
-              <p class="mt-2 ml-1 text-xs text-gray-500">Kapan masalah ini pertama kali Anda temukan?</p>
-            </div>
-
-            <!-- Image Upload -->
+            <!-- Urgency Level -->
             <div>
               <label class="flex items-center mb-3 text-sm font-bold text-gray-800">
-                <Icon name="lucide:image" size="18" class="mr-2 text-orange-600" />
-                Foto (Opsional)
+                <Icon name="lucide:alert-triangle" size="18" class="mr-2 text-orange-600" />
+                Tingkat Urgensi
+              </label>
+              <div class="grid grid-cols-2 gap-3 md:grid-cols-4">
+                <button
+                  v-for="level in urgencyLevels"
+                  :key="level.value"
+                  type="button"
+                  @click="formData.urgency = level.value"
+                  :class="[
+                    'flex flex-col items-center gap-2 p-3 rounded-xl border-2 transition-all',
+                    formData.urgency === level.value
+                      ? 'border-orange-600 bg-orange-50 text-orange-700'
+                      : 'border-gray-200 hover:border-orange-300 text-gray-700',
+                  ]"
+                >
+                  <span :class="['px-2 py-1 text-xs font-medium rounded-full', level.color]">{{ level.label }}</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Reporter Information -->
+            <div class="grid gap-4 md:grid-cols-2">
+              <div>
+                <label for="reporterName" class="flex items-center mb-3 text-sm font-bold text-gray-800">
+                  <Icon name="lucide:user" size="18" class="mr-2 text-orange-600" />
+                  Nama Pelapor (Opsional)
+                </label>
+                <input
+                  id="reporterName"
+                  v-model="formData.reporterName"
+                  type="text"
+                  class="w-full px-4 py-3 transition border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                  placeholder="Nama lengkap Anda"
+                />
+                <p v-if="errors.reporterName" class="mt-2 text-sm text-red-600">{{ errors.reporterName }}</p>
+              </div>
+
+              <div>
+                <label for="reporterContact" class="flex items-center mb-3 text-sm font-bold text-gray-800">
+                  <Icon name="lucide:phone" size="18" class="mr-2 text-orange-600" />
+                  Kontak (Opsional)
+                </label>
+                <input
+                  id="reporterContact"
+                  v-model="formData.reporterContact"
+                  type="text"
+                  class="w-full px-4 py-3 transition border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                  placeholder="Email atau nomor telepon"
+                />
+                <p v-if="errors.reporterContact" class="mt-2 text-sm text-red-600">{{ errors.reporterContact }}</p>
+              </div>
+            </div>
+
+            <!-- File Upload -->
+            <div>
+              <label class="flex items-center mb-3 text-sm font-bold text-gray-800">
+                <Icon name="lucide:paperclip" size="18" class="mr-2 text-orange-600" />
+                Lampiran (Opsional)
               </label>
 
               <div
-                v-if="!imagePreview"
+                v-if="!formData.attachments || formData.attachments.length === 0"
                 class="p-8 text-center transition border-2 border-gray-300 border-dashed rounded-xl hover:border-orange-400"
               >
-                <input type="file" accept="image/*" @change="handleFileChange" class="hidden" id="imageUpload" />
-                <label for="imageUpload" class="cursor-pointer">
+                <input type="file" accept="image/*,.pdf" multiple @change="handleFileChange" class="hidden" id="fileUpload" />
+                <label for="fileUpload" class="cursor-pointer">
                   <Icon name="lucide:upload-cloud" size="48" class="mx-auto mb-3 text-gray-400" />
-                  <p class="mb-1 font-medium text-gray-600">Klik untuk upload foto</p>
-                  <p class="text-xs text-gray-500">PNG, JPG hingga 5MB</p>
+                  <p class="mb-1 font-medium text-gray-600">Klik untuk upload file</p>
+                  <p class="text-xs text-gray-500">JPG, PNG, GIF, PDF hingga 5MB (maks 5 file)</p>
                 </label>
               </div>
 
-              <div v-else class="relative">
-                <img
-                  :src="imagePreview"
-                  alt="Preview"
-                  class="object-cover w-full h-64 border-2 border-orange-200 rounded-xl"
-                />
-                <button
-                  type="button"
-                  @click="removeImage"
-                  class="absolute p-2 text-white transition-colors bg-red-500 rounded-full shadow-lg top-2 right-2 hover:bg-red-600"
+              <div v-else class="space-y-3">
+                <div
+                  v-for="(file, index) in formData.attachments"
+                  :key="index"
+                  class="flex items-center justify-between p-3 bg-gray-50 border border-gray-200 rounded-xl"
                 >
-                  <Icon name="lucide:x" size="20" />
-                </button>
+                  <div class="flex items-center gap-3">
+                    <Icon
+                      :name="file.type.startsWith('image/') ? 'lucide:image' : 'lucide:file-text'"
+                      size="24"
+                      class="text-gray-600"
+                    />
+                    <div>
+                      <p class="text-sm font-medium text-gray-800">{{ file.name }}</p>
+                      <p class="text-xs text-gray-500">{{ (file.size / 1024 / 1024).toFixed(2) }} MB</p>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    @click="removeAttachment(index)"
+                    class="p-2 text-red-500 transition-colors bg-red-50 rounded-full hover:bg-red-100"
+                  >
+                    <Icon name="lucide:x" size="16" />
+                  </button>
+                </div>
+
+                <div v-if="formData.attachments && formData.attachments.length < 5" class="text-center">
+                  <input type="file" accept="image/*,.pdf" multiple @change="handleFileChange" class="hidden" id="additionalFileUpload" />
+                  <label for="additionalFileUpload" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-orange-600 transition-colors bg-orange-50 rounded-lg cursor-pointer hover:bg-orange-100">
+                    <Icon name="lucide:plus" size="16" />
+                    Tambah file
+                  </label>
+                </div>
               </div>
+              <p v-if="errors.attachments" class="mt-2 text-sm text-red-600">{{ errors.attachments }}</p>
             </div>
 
             <!-- Submit Button -->
