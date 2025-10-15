@@ -42,22 +42,6 @@ export default defineEventHandler(async (event): Promise<{ data: Activity[], tot
       description: 'Sesi pembelajaran mendalam tentang taktik dan strategi permainan basket modern yang dipimpin langsung oleh mantan pemain profesional',
       date: '2024-06-05',
       extracurricular: 'basket'
-    },
-    {
-      id: '5',
-      image: '/images/placeholder.jpg',
-      title: 'Latihan Rutin Paskibra',
-      description: 'Kegiatan latihan baris berbaris dan pelatihan kedisiplinan untuk anggota Paskibra',
-      date: '2024-07-01',
-      extracurricular: 'paskibra'
-    },
-    {
-      id: '6',
-      image: '/images/placeholder.jpg',
-      title: 'Upacara Bendera',
-      description: 'Bertugas sebagai pasukan pengibar bendera pada upacara kemerdekaan RI',
-      date: '2024-08-17',
-      extracurricular: 'paskibra'
     }
   ];
 

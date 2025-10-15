@@ -1,47 +1,37 @@
-FROM node:22-alpine AS builder
+# Use an official Bun runtime as a parent image
+FROM oven/bun:1 as builder
 
+# Set the working directory
 WORKDIR /app
 
-COPY package.json bun.lock* package-lock.json* yarn.lock* pnpm-lock.yaml* ./
+# Copy package.json and bun.lockb
+COPY package.json bun.lock ./
 
-RUN npm install
+# Install dependencies
+RUN bun install
 
+# Copy the rest of the application
 COPY . .
 
-RUN npm run build
+# Build the Nuxt.js application
+RUN bun run build
 
-FROM node:22-alpine
+# Use a slim image for the final stage
+FROM oven/bun:1-slim as runner
 
-RUN npm install -g pm2
-
+# Set the working directory
 WORKDIR /app
 
-COPY package.json bun.lock* package-lock.json* yarn.lock* pnpm-lock.yaml* ./
+# Copy the build output from the builder stage
+COPY --from=builder /app/.output ./.output
 
-RUN npm install --omit=dev && \
-    npm cache clean --force
-
-COPY --from=builder /app/.output /app/.output
-COPY --from=builder /app/public /app/public
-
-RUN echo 'module.exports = { \
-  apps: [{ \
-    name: "nuxt-app", \
-    script: ".output/server/index.mjs", \
-    instances: "max", \
-    exec_mode: "cluster", \
-    env: { \
-      NODE_ENV: "production", \
-      PORT: 3000, \
-      HOST: "0.0.0.0" \
-    } \
-  }] \
-}' > ecosystem.config.cjs
-
+# Expose the port the app runs on
 EXPOSE 3000
 
+# Set environment variables
 ENV NODE_ENV=production
 ENV HOST=0.0.0.0
 ENV PORT=3000
 
-CMD ["pm2-runtime", "start", "ecosystem.config.cjs"]
+# Start the application
+CMD [ "bun", ".output/server/index.mjs" ]

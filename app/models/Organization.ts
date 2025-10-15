@@ -22,7 +22,9 @@ export interface Organization {
   id: string;
   slug: string;
   name: string;
+  nickname?: string;
   logo: string;
+  logoDescription?: string;
   description: string;
   history?: string;
   established?: string;
@@ -45,6 +47,7 @@ export interface Organization {
   };
   sections: OrganizationSection[];
   activities: Activity[];
+  photos?: string[];
   recruitmentPoster?: string;
   recruitmentPeriod?: string;
 }

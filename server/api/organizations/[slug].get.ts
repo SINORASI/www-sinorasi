@@ -82,54 +82,6 @@ export default defineEventHandler(async (event): Promise<Organization | null> =>
       ],
       activities: []
     },
-    'paskibra': {
-      id: '2',
-      slug: 'paskibra',
-      name: 'PASKIBRA',
-      logo: '/images/placeholder.jpg',
-      description: 'Pasukan Pengibar Bendera yang bertugas dalam upacara bendera dan kegiatan kepramukaan.',
-      history: 'PASKIBRA didirikan untuk menjaga tradisi upacara dan membentuk karakter siswa. Dengan disiplin dan dedikasi tinggi, PASKIBRA SMKN 2 Singosari telah menjadi contoh bagi sekolah lain dalam menjalankan upacara bendera yang khidmat dan bermakna.',
-      established: '2010',
-      statistics: {
-        members: 32,
-        programs: 8,
-        years: 14,
-        meetings: 24
-      },
-      contactInfo: {
-        instagram: [{ label: 'Instagram', handle: '@paskibra_smkn2' }]
-      },
-      leadership: {
-        ketua: [{
-          id: '5',
-          name: 'Rizki Pratama',
-          image: '/images/profile-placeholder.png',
-          position: 'Komandan PASKIBRA'
-        }],
-        wakil: [{
-          id: '6',
-          name: 'Dina Amelia',
-          image: '/images/profile-placeholder.png',
-          position: 'Wakil Komandan'
-        }]
-      },
-      sections: [
-        {
-          id: '1',
-          name: 'Tim Upacara',
-          image: '/images/placeholder.jpg',
-          visi: 'Menjadi tim upacara yang profesional dan bermartabat',
-          misi: 'Melaksanakan upacara bendera dengan baik dan benar',
-          tasks: 'Pelatihan upacara, pengibaran bendera',
-          programs: ['Upacara Bendera Harian', 'Pelatihan Paskibra', 'Kompetisi Paskibra'],
-          members: [
-            { id: '5', name: 'Rizki Pratama', image: '/images/profile-placeholder.png', position: 'Komandan' },
-            { id: '6', name: 'Dina Amelia', image: '/images/profile-placeholder.png', position: 'Anggota' }
-          ]
-        }
-      ],
-      activities: []
-    },
     'pmr': {
       id: '3',
       slug: 'pmr',

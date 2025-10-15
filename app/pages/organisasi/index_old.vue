@@ -72,7 +72,7 @@ const getVisibleMembers = (): CarouselMember[] => {
     <div class="flex items-center justify-around gap-20">
       <img src="/images/logo-smk.webp" alt="Logo" class="object-contain h-60 w-60" />
       <h1 class="text-6xl font-bold text-transparent whitespace-nowrap [-webkit-text-stroke:1px_white]">
-        PASKIBRA
+        
       </h1>
     </div>
   </section>
@@ -107,7 +107,7 @@ const getVisibleMembers = (): CarouselMember[] => {
 
         <!-- Text Content -->
         <div class="flex-1 text-center lg:text-left">
-          <h1 class="mb-6 text-4xl font-bold text-gray-800 lg:text-6xl">Apa Itu PASKIBRA?</h1>
+          <h1 class="mb-6 text-4xl font-bold text-gray-800 lg:text-6xl">Apa Itu ?</h1>
           <p class="mb-8 text-lg leading-relaxed text-gray-700">
             Caranya gampang banget, kamu cuman perlu ngumpulin temen temen yang minat ekstrakurikulernya sama sepertimu,
             untuk membuat komunitas ekstrakurikuler baru baru, minimal kamu membutuhkan 10 orang atau lebih. setelah itu
@@ -118,7 +118,7 @@ const getVisibleMembers = (): CarouselMember[] => {
           </p>
 
           <div class="pl-6 border-l-4 border-blue-500">
-            <h2 class="mb-2 text-2xl font-bold text-gray-800">Arti Logo Organisasi Paskibra</h2>
+            <h2 class="mb-2 text-2xl font-bold text-gray-800">Arti Logo Organisasi</h2>
             <p class="text-lg text-gray-600">SMK Negeri 02 Singosari</p>
           </div>
         </div>
@@ -171,7 +171,7 @@ const getVisibleMembers = (): CarouselMember[] => {
     <div class="container max-w-6xl px-8 mx-auto">
       <!-- Section Header -->
       <div class="mb-16 text-center">
-        <h2 class="mb-4 text-4xl font-bold text-gray-800">Sejarah Organisasi PASKIBRA?</h2>
+        <h2 class="mb-4 text-4xl font-bold text-gray-800">Sejarah Organisasi ?</h2>
         <p class="mb-2 text-gray-600">SMK Negeri 02 Singosari</p>
         <p class="max-w-4xl mx-auto leading-relaxed text-gray-700">
           Caranya gampang banget, kamu cuman perlu ngumpulin temen temen yang minat ekstrakurikulernya sama sepertimu,
@@ -185,7 +185,7 @@ const getVisibleMembers = (): CarouselMember[] => {
 
       <!-- Organizational Structure -->
       <div class="mb-12 text-center">
-        <h3 class="mb-2 text-3xl font-bold text-gray-800">STRUKTUR ORGANISASI PASKIBRA</h3>
+        <h3 class="mb-2 text-3xl font-bold text-gray-800">STRUKTUR ORGANISASI </h3>
         <p class="text-gray-600">SMK Negeri 02 Singosari</p>
       </div>
 
@@ -236,7 +236,7 @@ const getVisibleMembers = (): CarouselMember[] => {
     <div class="container max-w-6xl px-8 mx-auto">
       <!-- Section Header -->
       <div class="mb-12">
-        <h2 class="mb-2 text-4xl font-bold text-gray-800">Kegiatan Terbaru Dari Paskibra</h2>
+        <h2 class="mb-2 text-4xl font-bold text-gray-800">Kegiatan Terbaru Dari</h2>
         <p class="text-gray-600">SMK Negeri 02 Singosari</p>
       </div>
 
@@ -252,7 +252,7 @@ const getVisibleMembers = (): CarouselMember[] => {
           <div class="p-4">
             <h3 class="mb-2 font-bold text-gray-800">Judul Aktivitas</h3>
             <p class="mb-3 text-sm leading-relaxed text-gray-600">
-              cadet dpenengs dimasa aktivitas terhadiat walker aktivitasunt tentang aktivitas terhadiat walker
+              
               dipetiengu tentang aktivitas terhadiat walker...
             </p>
             <div class="text-right">
@@ -271,7 +271,7 @@ const getVisibleMembers = (): CarouselMember[] => {
           <div class="p-4">
             <h3 class="mb-2 font-bold text-gray-800">Judul Aktivitas</h3>
             <p class="mb-3 text-sm leading-relaxed text-gray-600">
-              cadet dpenengs dimasa aktivitas terhadiat walker aktivitasunt tentang aktivitas terhadiat walker
+              
               dipetiengu tentang aktivitas terhadiat walker...
             </p>
             <div class="text-right">
@@ -290,7 +290,7 @@ const getVisibleMembers = (): CarouselMember[] => {
           <div class="p-4">
             <h3 class="mb-2 font-bold text-gray-800">Judul Aktivitas</h3>
             <p class="mb-3 text-sm leading-relaxed text-gray-600">
-              cadet dpenengs dimasa aktivitas terhadiat walker aktivitasunt tentang aktivitas terhadiat walker
+              
               dipetiengu tentang aktivitas terhadiat walker...
             </p>
             <div class="text-right">
@@ -309,7 +309,7 @@ const getVisibleMembers = (): CarouselMember[] => {
           <div class="p-4">
             <h3 class="mb-2 font-bold text-gray-800">Judul Aktivitas</h3>
             <p class="mb-3 text-sm leading-relaxed text-gray-600">
-              cadet dpenengs dimasa aktivitas terhadiat walker aktivitasunt tentang aktivitas terhadiat walker
+              
               dipetiengu tentang aktivitas terhadiat walker...
             </p>
             <div class="text-right">
@@ -326,7 +326,7 @@ const getVisibleMembers = (): CarouselMember[] => {
     <div class="container max-w-6xl px-8 mx-auto">
       <!-- Section Header -->
       <div class="mb-12 text-center">
-        <h2 class="mb-2 text-4xl font-bold text-gray-800">INFORMASI PENDAFTARAN PASKIBRA</h2>
+        <h2 class="mb-2 text-4xl font-bold text-gray-800">INFORMASI PENDAFTARAN </h2>
         <p class="text-gray-600">SMK Negeri 02 Singosari</p>
       </div>
 
@@ -679,10 +679,7 @@ const getVisibleMembers = (): CarouselMember[] => {
             <div>
               <h3 class="mb-4 text-2xl font-bold text-gray-800">Visi</h3>
               <p class="leading-relaxed text-gray-700">
-                claret dipajakan tentang area dui gyaru bidang terhadiat, sambattakan "tyaru berbeda indirektical di
-                anak negeri Di Gunopun berubaha mengabartakan insalam mengpositin neperoleh yang 90 guhi area, pancat
-                dui di guhi bidang terhadiat, sambattakan "tyaru berbeda indirektical indalam di anak Di Gunopun
-                berubaha mengan berubaha mengabar mengal mengpositin di gunopun berubaha mengulapaka
+                
               </p>
             </div>
 
@@ -690,10 +687,7 @@ const getVisibleMembers = (): CarouselMember[] => {
             <div>
               <h3 class="mb-4 text-2xl font-bold text-gray-800">Misi</h3>
               <p class="leading-relaxed text-gray-700">
-                claret dipajakan tentang area dui gyaru bidang terhadiat, sambattakan "tyaru berbeda indirektical di
-                anak negeri Di Gunopun berubaha mengabartakan insalam mengpositin neperoleh yang 90 guhi area, pancat
-                dui di guhi bidang terhadiat, sambattakan "tyaru berbeda indirektical indalam di anak Di Gunopun
-                berubaha mengan berubaha mengabar mengal mengpositin di gunopun berubaha mengulapaka
+                
               </p>
             </div>
 
@@ -701,10 +695,7 @@ const getVisibleMembers = (): CarouselMember[] => {
             <div>
               <h3 class="mb-4 text-2xl font-bold text-gray-800">Tugas dari Ketua</h3>
               <p class="mb-4 leading-relaxed text-gray-700">
-                claret dipajakan tentang area dui gyaru bidang terhadiat, sambattakan "tyaru berbeda indirektical di
-                anak negeri Di Gunopun berubaha mengabartakan insalam mengpositin neperoleh yang 90 guhi area, pancat
-                dui di guhi bidang terhadiat, sambattakan "tyaru berbeda indirektical indalam di anak Di Gunopun
-                berubaha mengan berubaha mengabar mengal mengpositin di gunopun berubaha mengulapaka
+                
               </p>
             </div>
 
@@ -716,7 +707,7 @@ const getVisibleMembers = (): CarouselMember[] => {
                 <!-- Left Column -->
                 <div class="space-y-3">
                   <div class="p-4 bg-white border border-gray-300 rounded-lg">
-                    <p class="text-sm text-gray-700">• claret dipajakan tentang asal dui guatu bidang terhadiat</p>
+                    <p class="text-sm text-gray-700">• </p>
                   </div>
                   <div class="p-4 bg-white border border-gray-300 rounded-lg">
                     <p class="text-sm text-gray-700">
@@ -725,7 +716,7 @@ const getVisibleMembers = (): CarouselMember[] => {
                     </p>
                   </div>
                   <div class="p-4 bg-white border border-gray-300 rounded-lg">
-                    <p class="text-sm text-gray-700">• claret dipajakan tentang asal dui guatu bidang terhadiat</p>
+                    <p class="text-sm text-gray-700">• </p>
                   </div>
                 </div>
 
@@ -738,19 +729,13 @@ const getVisibleMembers = (): CarouselMember[] => {
                     </p>
                   </div>
                   <div class="p-4 bg-white border border-gray-300 rounded-lg">
-                    <p class="text-sm text-gray-700">• claret dipajakan tentang asal dui guatu bidang terhadiat</p>
+                    <p class="text-sm text-gray-700">• </p>
                   </div>
                 </div>
               </div>
 
               <p class="leading-relaxed text-gray-700">
-                claret dipajakan tentang area dui gyaru bidang terhadiat, sambattakan "tyaru berbeda indirektical di
-                anak negeri Di Gunopun berubaha mengabartakan insalam mengpositin neperoleh yang 90 guhi area, pancat
-                dui di guhi bidang terhadiat, sambattakan "tyaru berbeda indirektical indalam berubaha insalam dui di
-                guhi bidang terhadiat, sambattakan "tyaru berbeda indirektical di anak Di Gunopun berubaha mengan dui di
-                guhi bidang terhadiat area "tyaru berbeda indirektical indalam di anak Di Gunopun berubaha mengan
-                berubaha mengabar mengpositin di gunopun berubaha mengulapaka berubaha insalam dui di guhi bidang
-                terhadiat, Gunopun berubaha mengulapaka
+                
               </p>
 
               <!-- Navigation Buttons -->

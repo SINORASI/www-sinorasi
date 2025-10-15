@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: false },
   css: ['~/assets/css/main.css'],
-  modules: ['@nuxt/fonts', '@nuxt/icon', '@nuxt/scripts'],
+  modules: ['@nuxt/fonts', '@nuxt/icon', '@nuxt/scripts', '@nuxtjs/mdc'],
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
     head: {

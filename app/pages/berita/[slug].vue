@@ -46,7 +46,9 @@
 
         <!-- Article Content -->
         <article class="p-8 mb-12 bg-white border-2 border-blue-100 shadow-xl rounded-2xl md:p-12">
-          <div class="prose prose-lg max-w-none" v-html="renderedContent"></div>
+          <div class="prose prose-lg max-w-none">
+            <MDC :value="news.content" />
+          </div>
         </article>
 
         <!-- Related News -->
@@ -112,49 +114,6 @@ const relatedNews = computed(() => {
   return allNewsResponse.value.data.filter((n: News) => n.id !== news.value!.id).slice(0, 4)
 })
 
-const renderedContent = computed(() => {
-  if (!news.value) return ''
-
-  let content = news.value.content
-
-  content = content.replace(/^### (.*$)/gim, '<h3 class="mt-6 mb-3 text-xl font-semibold">$1</h3>')
-  content = content.replace(/^## (.*$)/gim, '<h2 class="mt-8 mb-4 text-2xl font-semibold">$1</h2>')
-  content = content.replace(/^# (.*$)/gim, '<h1 class="mt-8 mb-4 text-3xl font-bold">$1</h1>')
-
-  content = content.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-  content = content.replace(/\*(.*?)\*/g, '<em>$1</em>')
-
-  content = content.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-blue-600 underline hover:text-blue-800">$1</a>')
-
-  content = content.replace(/^\d+\. (.*$)/gim, '<li class="ml-4">$1</li>')
-  content = content.replace(/(<li.*<\/li>\n?)+/g, (match) => {
-    if (match.includes('list-decimal')) return match
-    return '<ol class="mb-4 list-decimal list-inside">' + match + '</ol>'
-  })
-
-  content = content.replace(/^\- (.*$)/gim, '<li class="ml-4">$1</li>')
-  content = content.replace(/(<li.*<\/li>\n?)+/g, (match) => {
-    if (match.includes('list-disc') || match.includes('list-decimal')) return match
-    return '<ul class="mb-4 list-disc list-inside">' + match + '</ul>'
-  })
-
-  content = content.replace(/```([\s\S]*?)```/g, '<pre class="p-4 mb-4 overflow-x-auto bg-gray-100 rounded-lg"><code>$1</code></pre>')
-
-  content = content.replace(/`([^`]+)`/g, '<code class="px-2 py-1 text-sm bg-gray-100 rounded">$1</code>')
-
-  content = content.split('\n\n').map(paragraph => {
-    if (paragraph.trim() === '') return ''
-    if (paragraph.includes('<h') || paragraph.includes('<ul') || paragraph.includes('<ol') || paragraph.includes('<pre')) {
-      return paragraph
-    }
-    return '<p class="mb-4">' + paragraph.replace(/\n/g, '<br>') + '</p>'
-  }).join('')
-
-  content = content.replace(/<p class="mb-4"><\/p>/g, '')
-  content = content.replace(/<p class="mb-4"><br><\/p>/g, '')
-
-  return content
-})
 
 const formatDate = (dateString: string) => {
   const date = new Date(dateString)

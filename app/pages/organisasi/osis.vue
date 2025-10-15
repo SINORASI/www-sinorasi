@@ -2,64 +2,93 @@
 import type { Organization } from '~/models/Organization'
 
 const organization: Organization = {
-  id: '5',
-  slug: 'bdi',
-  name: 'BDI',
-  nickname: 'Badan Dakwah Islam',
-  logo: '/images/organisasi/bdi.png',
-  logoDescription: 'Logo BDI SMKN 2 Singosari menampilkan elemen islami dengan bulan sabit dan bintang yang melambangkan nilai-nilai keislaman dan spiritualitas.',
-  description: 'Badan Dakwah Islam yang fokus pada pengembangan spiritual dan kegiatan keagamaan.',
-  history: 'BDI didirikan untuk memperkuat nilai-nilai keislaman di lingkungan sekolah. Dengan berbagai program keagamaan, BDI telah berhasil menciptakan lingkungan yang kondusif untuk pengembangan spiritual siswa.',
-  established: '2008',
+  id: '1',
+  slug: 'osis',
+  name: 'OSIS',
+  nickname: 'Organisasi Siswa Intra Sekolah',
+  logo: '/images/placeholder.jpg',
+  logoDescription: 'Logo OSIS SMKN 2 Singosari menampilkan lambang sekolah dengan elemen siswa yang melambangkan semangat kebersamaan dan prestasi.',
+  description: 'Organisasi Siswa Intra Sekolah yang menjadi wadah bagi siswa untuk mengembangkan potensi dan kreativitas.',
+  history: 'Didirikan sejak tahun 2000, OSIS telah menjadi pilar utama dalam kegiatan siswa. OSIS SMKN 2 Singosari telah berhasil menyelenggarakan berbagai kegiatan yang bermanfaat bagi siswa, mulai dari kegiatan akademik hingga kegiatan sosial. Dengan semangat kebersamaan dan kreativitas, OSIS terus berkembang dan memberikan kontribusi positif bagi sekolah.',
+  established: '2000',
   statistics: {
-    members: 35,
-    programs: 18,
-    years: 16,
-    meetings: 40
+    members: 45,
+    programs: 12,
+    years: 24,
+    meetings: 48
+  },
+  contactInfo: {
+    instagram: [{ label: 'Instagram', handle: '@osis_smkn2' }],
+    whatsapp: [{ label: 'WhatsApp', number: '+6281234567890' }]
   },
   leadership: {
     ketua: [{
-      id: '11',
-      name: 'Ahmad Fauzi',
+      id: '1',
+      name: 'Ahmad Rahman',
       image: '/images/profile-placeholder.png',
-      position: 'Ketua BDI'
+      position: 'Ketua OSIS'
+    }],
+    wakil: [{
+      id: '2',
+      name: 'Siti Nurhaliza',
+      image: '/images/profile-placeholder.png',
+      position: 'Wakil Ketua OSIS'
     }],
     sekretaris: [{
-      id: '12',
-      name: 'Nur Hasanah',
+      id: '3',
+      name: 'Budi Santoso',
       image: '/images/profile-placeholder.png',
       position: 'Sekretaris'
+    }],
+    bendahara: [{
+      id: '4',
+      name: 'Maya Sari',
+      image: '/images/profile-placeholder.png',
+      position: 'Bendahara'
     }]
   },
   sections: [
     {
       id: '1',
-      name: 'Tim Dakwah',
+      name: 'Bidang Akademik',
       image: '/images/placeholder.jpg',
-      visi: 'Menjadi pusat pengembangan spiritual siswa muslim',
-      misi: 'Menyelenggarakan kegiatan keagamaan dan pengembangan karakter',
-      tasks: 'Pengajian rutin, kajian islam, kegiatan sosial keagamaan',
-      programs: ['Pengajian Rutin', 'Kajian Islam', 'Bakti Sosial', 'Ramadhan Program'],
+      visi: 'Meningkatkan prestasi akademik siswa melalui berbagai program pembelajaran',
+      misi: 'Menyelenggarakan bimbingan belajar, workshop akademik, dan kompetisi ilmiah',
+      tasks: 'Koordinasi program akademik, pembinaan siswa berprestasi',
+      programs: ['Bimbingan Belajar Gratis', 'Workshop Matematika', 'Lomba Cerdas Cermat'],
       members: [
-        { id: '11', name: 'Ahmad Fauzi', image: '/images/profile-placeholder.png', position: 'Ketua' },
-        { id: '12', name: 'Nur Hasanah', image: '/images/profile-placeholder.png', position: 'Sekretaris' }
+        { id: '1', name: 'Ahmad Rahman', image: '/images/profile-placeholder.png', position: 'Koordinator' },
+        { id: '2', name: 'Siti Nurhaliza', image: '/images/profile-placeholder.png', position: 'Anggota' }
+      ]
+    },
+    {
+      id: '2',
+      name: 'Bidang Olahraga',
+      image: '/images/placeholder.jpg',
+      visi: 'Mengembangkan bakat olahraga siswa dan meningkatkan kesehatan',
+      misi: 'Menyelenggarakan turnamen olahraga dan kegiatan kesehatan',
+      tasks: 'Pengorganisasian event olahraga, pembinaan atlet siswa',
+      programs: ['Turnamen Basket', 'Senam Pagi', 'Marathon Sekolah'],
+      members: [
+        { id: '3', name: 'Budi Santoso', image: '/images/profile-placeholder.png', position: 'Koordinator' },
+        { id: '4', name: 'Maya Sari', image: '/images/profile-placeholder.png', position: 'Anggota' }
       ]
     }
   ],
   activities: [
     {
-      id: 'bdi1',
+      id: 'a1',
       image: '/images/placeholder.jpg',
-      title: 'Pengajian Rutin Mingguan',
-      description: 'Kegiatan pengajian yang diadakan setiap hari Jumat untuk membahas materi keislaman.',
-      date: '2024-09-13'
+      title: 'Rapat OSIS Bulanan',
+      description: 'Rapat koordinasi bulanan untuk membahas program kerja OSIS.',
+      date: '2024-09-15'
     },
     {
-      id: 'bdi2',
+      id: 'a2',
       image: '/images/placeholder.jpg',
-      title: 'Bakti Sosial Ramadhan',
-      description: 'Program bakti sosial selama bulan Ramadhan untuk membantu masyarakat sekitar.',
-      date: '2024-03-15'
+      title: 'Lomba Cerdas Cermat',
+      description: 'Kompetisi akademik antar kelas yang diselenggarakan oleh bidang akademik.',
+      date: '2024-10-20'
     }
   ],
   photos: [
@@ -69,7 +98,7 @@ const organization: Organization = {
     '/images/placeholder.jpg'
   ],
   recruitmentPoster: '/images/placeholder.jpg',
-  recruitmentPeriod: '1-15 Oktober 2024'
+  recruitmentPeriod: '15-30 September 2024'
 }
 
 useHead({
@@ -237,6 +266,25 @@ const activeTab = ref('overview')
               </div>
             </div>
 
+            <!-- Wakil Ketua -->
+            <div
+              v-for="leader in organization.leadership.wakil"
+              :key="leader.id"
+              class="p-6 bg-white border-2 border-blue-100 shadow-xl rounded-2xl"
+            >
+              <div class="flex items-center gap-4 mb-4">
+                <img
+                  :src="leader.image"
+                  :alt="leader.name"
+                  class="object-cover w-16 h-16 rounded-full border-4 border-blue-200"
+                />
+                <div>
+                  <h3 class="text-lg font-bold text-gray-800">{{ leader.name }}</h3>
+                  <p class="text-blue-600 font-semibold">{{ leader.position }}</p>
+                </div>
+              </div>
+            </div>
+
             <!-- Sekretaris -->
             <div
               v-for="leader in organization.leadership.sekretaris"
@@ -252,6 +300,25 @@ const activeTab = ref('overview')
                 <div>
                   <h3 class="text-lg font-bold text-gray-800">{{ leader.name }}</h3>
                   <p class="text-green-600 font-semibold">{{ leader.position }}</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bendahara -->
+            <div
+              v-for="leader in organization.leadership.bendahara"
+              :key="leader.id"
+              class="p-6 bg-white border-2 border-purple-100 shadow-xl rounded-2xl"
+            >
+              <div class="flex items-center gap-4 mb-4">
+                <img
+                  :src="leader.image"
+                  :alt="leader.name"
+                  class="object-cover w-16 h-16 rounded-full border-4 border-purple-200"
+                />
+                <div>
+                  <h3 class="text-lg font-bold text-gray-800">{{ leader.name }}</h3>
+                  <p class="text-purple-600 font-semibold">{{ leader.position }}</p>
                 </div>
               </div>
             </div>
@@ -354,10 +421,62 @@ const activeTab = ref('overview')
 
         <!-- Contact Tab -->
         <div v-if="activeTab === 'contact'" class="space-y-6">
-          <div class="p-12 text-center bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
-            <Icon name="lucide:phone" size="64" class="mx-auto mb-4 text-gray-300" />
-            <h3 class="mb-2 text-xl font-bold text-gray-700">Kontak Belum Tersedia</h3>
-            <p class="text-gray-500">Informasi kontak akan segera ditambahkan.</p>
+          <div class="grid gap-6 md:grid-cols-2">
+            <!-- Instagram -->
+            <div
+              v-if="organization.contactInfo?.instagram?.length"
+              class="p-6 bg-white border-2 border-pink-100 shadow-xl rounded-2xl"
+            >
+              <div class="flex items-center gap-4 mb-4">
+                <div class="flex items-center justify-center w-12 h-12 bg-pink-100 rounded-xl">
+                  <Icon name="lucide:instagram" size="24" class="text-pink-600" />
+                </div>
+                <div>
+                  <h3 class="text-lg font-bold text-gray-800">Instagram</h3>
+                  <p class="text-gray-600">Ikuti kegiatan kami</p>
+                </div>
+              </div>
+              <div class="space-y-2">
+                <a
+                  v-for="ig in organization.contactInfo.instagram"
+                  :key="ig.handle"
+                  :href="`https://instagram.com/${ig.handle.replace('@', '')}`"
+                  target="_blank"
+                  class="flex items-center gap-2 p-3 bg-pink-50 rounded-lg hover:bg-pink-100 transition-colors"
+                >
+                  <Icon name="lucide:external-link" size="16" class="text-pink-600" />
+                  <span class="font-semibold text-pink-700">{{ ig.handle }}</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- WhatsApp -->
+            <div
+              v-if="organization.contactInfo?.whatsapp?.length"
+              class="p-6 bg-white border-2 border-green-100 shadow-xl rounded-2xl"
+            >
+              <div class="flex items-center gap-4 mb-4">
+                <div class="flex items-center justify-center w-12 h-12 bg-green-100 rounded-xl">
+                  <Icon name="lucide:message-circle" size="24" class="text-green-600" />
+                </div>
+                <div>
+                  <h3 class="text-lg font-bold text-gray-800">WhatsApp</h3>
+                  <p class="text-gray-600">Hubungi kami langsung</p>
+                </div>
+              </div>
+              <div class="space-y-2">
+                <a
+                  v-for="wa in organization.contactInfo.whatsapp"
+                  :key="wa.number"
+                  :href="`https://wa.me/${wa.number.replace('+', '')}`"
+                  target="_blank"
+                  class="flex items-center gap-2 p-3 bg-green-50 rounded-lg hover:bg-green-100 transition-colors"
+                >
+                  <Icon name="lucide:phone" size="16" class="text-green-600" />
+                  <span class="font-semibold text-green-700">{{ wa.number }}</span>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </div>

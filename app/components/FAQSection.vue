@@ -45,7 +45,7 @@ const faqItems = ref<FAQItem[]>([
   {
     question: "Apakah ada ekstrakurikuler di sekolah?",
     answer:
-      "SMK Negeri 2 Singosari menyediakan berbagai kegiatan ekstrakurikuler untuk mengembangkan bakat dan minat siswa, seperti OSIS, Paskibra, Pramuka, PMR, olahraga (basket, futsal, voli), seni (musik, tari, teater), dan berbagai klub teknologi sesuai dengan bidang keahlian.",
+      "SMK Negeri 2 Singosari menyediakan berbagai kegiatan ekstrakurikuler untuk mengembangkan bakat dan minat siswa, seperti OSIS, Pramuka, PMR, olahraga (basket, futsal, voli), seni (musik, tari, teater), dan berbagai klub teknologi sesuai dengan bidang keahlian.",
     isOpen: false,
   },
   {

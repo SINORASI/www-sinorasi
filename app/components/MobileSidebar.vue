@@ -640,7 +640,7 @@ const menuItems = [
         tags: ["organisasi", "semua", "daftar"],
       },
       ...organizationsData.value
-        .filter((org: any) => !['futsal-club', 'english-club'].includes(org.slug))
+        .filter((org: any) => !['futsal-club', 'english-club', 'paskibra'].includes(org.slug))
         .map((org: any) => ({
           title: org.name,
           desc: org.description,

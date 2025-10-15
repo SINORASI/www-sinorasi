@@ -51,40 +51,6 @@ const organizations = ref<Organization[]>([
     activities: []
   },
   {
-    id: '2',
-    slug: 'paskibra',
-    name: 'PASKIBRA SMKN 2 Singosari',
-    logo: '/images/placeholder.jpg',
-    description: 'Pasukan Pengibar Bendera yang bertugas dalam upacara bendera dan kegiatan kepramukaan.',
-    history: 'PASKIBRA didirikan untuk menjaga tradisi upacara dan membentuk karakter siswa.',
-    established: '2010',
-    contactInfo: {
-      instagram: [{ label: 'Instagram', handle: '@paskibra_smkn2' }]
-    },
-    statistics: {
-      members: 32,
-      programs: 8,
-      years: 14,
-      meetings: 24
-    },
-    leadership: {
-      ketua: [{
-        id: '5',
-        name: 'Rizki Pratama',
-        image: '/images/profile-placeholder.png',
-        position: 'Komandan PASKIBRA'
-      }],
-      wakil: [{
-        id: '6',
-        name: 'Dina Amelia',
-        image: '/images/profile-placeholder.png',
-        position: 'Wakil Komandan'
-      }]
-    },
-    sections: [],
-    activities: []
-  },
-  {
     id: '3',
     slug: 'pmr',
     name: 'PMR SMKN 2 Singosari',
