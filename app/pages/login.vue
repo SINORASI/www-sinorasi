@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { loginSchema, type LoginForm } from '~/utils/schema'
 
+type FormErrors<T> = Partial<Record<keyof T, string[]>>
+
 const formData = ref<LoginForm>({
   username: '',
   password: ''
 })
-const errors = ref<Partial<LoginForm>>({})
+const errors = ref<FormErrors<LoginForm>>({})
 const isSubmitting = ref(false)
 const showGuidelines = ref(false)
 
@@ -24,7 +26,7 @@ const submitLogin = async () => {
   const result = loginSchema.safeParse(formData.value)
 
   if (!result.success) {
-    errors.value = result.error.flatten().fieldErrors as Partial<LoginForm>
+    errors.value = result.error.flatten().fieldErrors
     return
   }
 
@@ -154,7 +156,7 @@ const submitLogin = async () => {
                 required
               />
               <p v-if="errors.username" class="mt-1 text-sm text-red-600">
-                {{ errors.username[0] }}
+                {{ errors.username.join(', ') }}
               </p>
             </div>
 
@@ -175,7 +177,7 @@ const submitLogin = async () => {
                 required
               />
               <p v-if="errors.password" class="mt-1 text-sm text-red-600">
-                {{ errors.password[0] }}
+                {{ errors.password.join(', ') }}
               </p>
             </div>
 

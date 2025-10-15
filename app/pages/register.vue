@@ -7,7 +7,7 @@ const formData = ref<RegisterForm>({
   password: '',
   confirmPassword: ''
 })
-const errors = ref<Partial<RegisterForm>>({})
+const errors = ref<Record<string, string[]>>({})
 const isSubmitting = ref(false)
 const showGuidelines = ref(false)
 
@@ -26,7 +26,7 @@ const submitRegister = async () => {
   const result = registerSchema.safeParse(formData.value)
 
   if (!result.success) {
-    errors.value = result.error.flatten().fieldErrors as Partial<RegisterForm>
+    errors.value = result.error.flatten().fieldErrors
     return
   }
 
@@ -158,7 +158,7 @@ const submitRegister = async () => {
                 required
               />
               <p v-if="errors.username" class="mt-1 text-sm text-red-600">
-                {{ errors.username[0] }}
+                {{ errors.username.join(', ') }}
               </p>
             </div>
 
@@ -179,7 +179,7 @@ const submitRegister = async () => {
                 required
               />
               <p v-if="errors.email" class="mt-1 text-sm text-red-600">
-                {{ errors.email[0] }}
+                {{ errors.email.join(', ') }}
               </p>
             </div>
 
@@ -201,7 +201,7 @@ const submitRegister = async () => {
               />
               <p class="mt-2 ml-1 text-xs text-gray-500">Minimal 8 karakter dengan kombinasi huruf dan angka</p>
               <p v-if="errors.password" class="mt-1 text-sm text-red-600">
-                {{ errors.password[0] }}
+                {{ errors.password.join(', ') }}
               </p>
             </div>
 
@@ -222,7 +222,7 @@ const submitRegister = async () => {
                 required
               />
               <p v-if="errors.confirmPassword" class="mt-1 text-sm text-red-600">
-                {{ errors.confirmPassword[0] }}
+                {{ errors.confirmPassword.join(', ') }}
               </p>
             </div>
 

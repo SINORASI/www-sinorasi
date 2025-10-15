@@ -12,7 +12,7 @@ const formData = ref<ProfileForm>({
   confirmNewPassword: ''
 })
 
-const errors = ref<Partial<ProfileForm>>({})
+const errors = ref<Record<string, string[]>>({})
 const isSubmitting = ref(false)
 const activeTab = ref('profile')
 const showGuidelines = ref(false)
@@ -37,7 +37,7 @@ const submitProfile = async () => {
   const result = profileSchema.safeParse(formData.value)
 
   if (!result.success) {
-    errors.value = result.error.flatten().fieldErrors as Partial<ProfileForm>
+    errors.value = result.error.flatten().fieldErrors
     return
   }
 
@@ -140,6 +140,7 @@ const submitProfile = async () => {
                     ]"
                     placeholder="Masukkan nama lengkap Anda"
                     required
+                    @input="errors.name = undefined"
                   />
                   <p v-if="errors.name" class="mt-1 text-sm text-red-600">
                     {{ errors.name[0] }}
@@ -161,6 +162,7 @@ const submitProfile = async () => {
                     ]"
                     placeholder="Masukkan username Anda"
                     required
+                    @input="errors.username = undefined"
                   />
                   <p v-if="errors.username" class="mt-1 text-sm text-red-600">
                     {{ errors.username[0] }}
@@ -182,6 +184,7 @@ const submitProfile = async () => {
                     ]"
                     placeholder="Masukkan email Anda"
                     required
+                    @input="errors.email = undefined"
                   />
                   <p v-if="errors.email" class="mt-1 text-sm text-red-600">
                     {{ errors.email[0] }}
@@ -199,6 +202,7 @@ const submitProfile = async () => {
                     type="tel"
                     class="w-full px-4 py-3 transition border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                     placeholder="Masukkan nomor telepon Anda"
+                    @input="errors.phone = undefined"
                   />
                 </div>
               </div>
@@ -214,6 +218,7 @@ const submitProfile = async () => {
                   rows="4"
                   class="w-full px-4 py-3 transition border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-vertical"
                   placeholder="Ceritakan sedikit tentang diri Anda..."
+                  @input="errors.bio = undefined"
                 ></textarea>
               </div>
 
@@ -248,7 +253,7 @@ const submitProfile = async () => {
               <div>
                 <label for="currentPassword" class="flex items-center mb-3 text-sm font-bold text-gray-800">
                   <Icon name="lucide:lock" size="18" class="mr-2 text-orange-600" />
-                  Password Saat Ini <span class="ml-1 text-red-500">*</span>
+                  Password Saat Ini
                 </label>
                 <input
                   id="currentPassword"
@@ -259,7 +264,7 @@ const submitProfile = async () => {
                     errors.currentPassword ? 'border-red-500' : 'border-gray-200'
                   ]"
                   placeholder="Masukkan password saat ini"
-                  required
+                  @input="errors.currentPassword = undefined"
                 />
                 <p v-if="errors.currentPassword" class="mt-1 text-sm text-red-600">
                   {{ errors.currentPassword[0] }}
@@ -269,7 +274,7 @@ const submitProfile = async () => {
               <div>
                 <label for="newPassword" class="flex items-center mb-3 text-sm font-bold text-gray-800">
                   <Icon name="lucide:lock" size="18" class="mr-2 text-orange-600" />
-                  Password Baru <span class="ml-1 text-red-500">*</span>
+                  Password Baru
                 </label>
                 <input
                   id="newPassword"
@@ -280,7 +285,7 @@ const submitProfile = async () => {
                     errors.newPassword ? 'border-red-500' : 'border-gray-200'
                   ]"
                   placeholder="Masukkan password baru"
-                  required
+                  @input="errors.newPassword = undefined"
                 />
                 <p class="mt-2 ml-1 text-xs text-gray-500">Minimal 8 karakter dengan kombinasi huruf dan angka</p>
                 <p v-if="errors.newPassword" class="mt-1 text-sm text-red-600">
@@ -291,7 +296,7 @@ const submitProfile = async () => {
               <div>
                 <label for="confirmNewPassword" class="flex items-center mb-3 text-sm font-bold text-gray-800">
                   <Icon name="lucide:lock-check" size="18" class="mr-2 text-orange-600" />
-                  Konfirmasi Password Baru <span class="ml-1 text-red-500">*</span>
+                  Konfirmasi Password Baru
                 </label>
                 <input
                   id="confirmNewPassword"
@@ -302,7 +307,7 @@ const submitProfile = async () => {
                     errors.confirmNewPassword ? 'border-red-500' : 'border-gray-200'
                   ]"
                   placeholder="Konfirmasi password baru"
-                  required
+                  @input="errors.confirmNewPassword = undefined"
                 />
                 <p v-if="errors.confirmNewPassword" class="mt-1 text-sm text-red-600">
                   {{ errors.confirmNewPassword[0] }}

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { trafficTrackerSchema, type TrafficTrackerForm } from "~/utils/schema";
 
 interface TrafficResults {
   time: string;
@@ -14,12 +15,20 @@ interface TrafficResults {
 const config = useRuntimeConfig();
 const apiKey = config.public.googleMapsApiKey;
 
-const homeAddress = ref("");
+const schoolAddress = "SMK Negeri 2 Singosari, Jl. Raya Singosari, Singosari, Malang, Jawa Timur, Indonesia";
+
+const form = ref<TrafficTrackerForm>({
+  origin: "",
+  destination: schoolAddress,
+  travelMode: "driving",
+  avoidTolls: false,
+  avoidHighways: false,
+});
+
 const results = ref<TrafficResults | null>(null);
 const loading = ref(false);
 const error = ref("");
-
-const schoolAddress = "SMK Negeri 2 Singosari, Jl. Raya Singosari, Singosari, Malang, Jawa Timur, Indonesia";
+const validationErrors = ref<Record<string, string>>({});
 
 const hotspots = [
   {
@@ -72,7 +81,7 @@ const getCurrentLocation = () => {
       (position) => {
         const lat = position.coords.latitude;
         const lng = position.coords.longitude;
-        homeAddress.value = `${lat},${lng}`;
+        form.value.origin = `${lat},${lng}`;
       },
       (err) => {
         error.value = "Tidak dapat mendapatkan lokasi saat ini. Pastikan izin lokasi diaktifkan.";
@@ -115,6 +124,21 @@ const getRecommendation = (duration: string, traffic: string) => {
 };
 
 const calculateRoute = async () => {
+  // Validate form
+  const validation = trafficTrackerSchema.safeParse(form.value);
+  if (!validation.success) {
+    validationErrors.value = {};
+    validation.error.issues.forEach((err) => {
+      if (err.path[0]) {
+        validationErrors.value[err.path[0] as string] = err.message;
+      }
+    });
+    return;
+  }
+
+  // Clear validation errors
+  validationErrors.value = {};
+
   if (!apiKey) {
     error.value = "API Key Google Maps tidak dikonfigurasi.";
     return;
@@ -125,9 +149,9 @@ const calculateRoute = async () => {
   results.value = null;
 
   try {
-    // Geocode home address to lat,lng
+    // Geocode origin address to lat,lng
     const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-      homeAddress.value
+      form.value.origin
     )}&key=${apiKey}`;
     const geocodeResponse = await fetch(geocodeUrl);
     const geocodeData = await geocodeResponse.json();
@@ -222,13 +246,16 @@ useHead({
               Alamat Rumah
             </label>
             <input
-              v-model="homeAddress"
+              v-model="form.origin"
               type="text"
               id="address"
               placeholder="Masukkan alamat lengkap"
               class="w-full px-4 py-3 transition border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               required
             />
+            <div v-if="validationErrors.origin" class="mt-2 text-sm text-red-600">
+              {{ validationErrors.origin }}
+            </div>
           </div>
           <div class="mb-6">
             <button

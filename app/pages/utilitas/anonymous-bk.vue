@@ -1,8 +1,16 @@
 <script setup lang="ts">
-const story = ref("");
-const tags = ref("");
-const isSubmitting = ref(false);
-const showGuidelines = ref(false);
+import { anonymousBKSchema, validateAnonymousBK, type AnonymousBKForm } from '~/utils/schema'
+
+const formData = ref<AnonymousBKForm>({
+  story: '',
+  category: '',
+  isAnonymous: true,
+  contactMethod: 'none',
+  contactInfo: ''
+})
+const errors = ref<Record<string, string>>({})
+const isSubmitting = ref(false)
+const showGuidelines = ref(false)
 
 useHead({
   title: "Anonymous BK - Utilitas - SMKN 2 Singosari",
@@ -14,18 +22,40 @@ useHead({
   ],
 });
 
-const submitStory = async () => {
-  if (!story.value.trim()) {
-    alert("Silakan masukkan cerita Anda");
-    return;
+const validateForm = () => {
+  const result = validateAnonymousBK(formData.value)
+  if (!result.success) {
+    errors.value = {}
+    result.error.issues.forEach((error) => {
+      errors.value[error.path[0] as string] = error.message
+    })
+    return false
   }
-  isSubmitting.value = true;
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-  alert("Cerita berhasil dikirim secara anonim!");
-  story.value = "";
-  tags.value = "";
-  isSubmitting.value = false;
-};
+  errors.value = {}
+  return true
+}
+
+const submitStory = async () => {
+  if (!validateForm()) {
+    return
+  }
+  isSubmitting.value = true
+  try {
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+    alert("Cerita berhasil dikirim secara anonim!")
+    formData.value = {
+      story: '',
+      category: '',
+      isAnonymous: true,
+      contactMethod: 'none',
+      contactInfo: ''
+    }
+  } catch (error) {
+    alert("Terjadi kesalahan saat mengirim cerita. Silakan coba lagi.")
+  } finally {
+    isSubmitting.value = false
+  }
+}
 </script>
 
 <template>
@@ -122,29 +152,90 @@ const submitStory = async () => {
               </label>
               <textarea
                 id="story"
-                v-model="story"
+                v-model="formData.story"
                 rows="6"
                 class="w-full px-4 py-3 transition border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-vertical"
                 placeholder="Ceritakan apa yang ada di pikiran Anda..."
-                required
               ></textarea>
+              <p v-if="errors.story" class="mt-1 text-sm text-red-600">{{ errors.story }}</p>
             </div>
 
             <div>
-              <label for="tags" class="flex items-center mb-3 text-sm font-bold text-gray-800">
-                <Icon name="lucide:tag" size="18" class="mr-2 text-orange-600" />
-                Tag (Opsional)
+              <label for="category" class="flex items-center mb-3 text-sm font-bold text-gray-800">
+                <Icon name="lucide:list" size="18" class="mr-2 text-orange-600" />
+                Kategori
+              </label>
+              <select
+                id="category"
+                v-model="formData.category"
+                class="w-full px-4 py-3 transition border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              >
+                <option value="">Pilih kategori</option>
+                <option value="bullying">Bullying</option>
+                <option value="stress">Stres</option>
+                <option value="friendship">Persahabatan</option>
+                <option value="advice">Nasihat</option>
+                <option value="other">Lainnya</option>
+              </select>
+              <p v-if="errors.category" class="mt-1 text-sm text-red-600">{{ errors.category }}</p>
+            </div>
+
+            <div>
+              <label class="flex items-center mb-3 text-sm font-bold text-gray-800">
+                <Icon name="lucide:user-check" size="18" class="mr-2 text-green-600" />
+                Anonimitas
+              </label>
+              <div class="flex items-center space-x-4">
+                <label class="flex items-center">
+                  <input
+                    v-model="formData.isAnonymous"
+                    type="radio"
+                    :value="true"
+                    class="mr-2 text-blue-600 focus:ring-blue-500"
+                  />
+                  <span class="text-sm text-gray-700">Anonim</span>
+                </label>
+                <label class="flex items-center">
+                  <input
+                    v-model="formData.isAnonymous"
+                    type="radio"
+                    :value="false"
+                    class="mr-2 text-blue-600 focus:ring-blue-500"
+                  />
+                  <span class="text-sm text-gray-700">Tidak Anonim</span>
+                </label>
+              </div>
+            </div>
+
+            <div>
+              <label for="contactMethod" class="flex items-center mb-3 text-sm font-bold text-gray-800">
+                <Icon name="lucide:phone" size="18" class="mr-2 text-purple-600" />
+                Metode Kontak (Opsional)
+              </label>
+              <select
+                id="contactMethod"
+                v-model="formData.contactMethod"
+                class="w-full px-4 py-3 transition border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              >
+                <option value="none">Tidak ada</option>
+                <option value="email">Email</option>
+                <option value="phone">Telepon</option>
+              </select>
+            </div>
+
+            <div v-if="formData.contactMethod !== 'none'">
+              <label for="contactInfo" class="flex items-center mb-3 text-sm font-bold text-gray-800">
+                <Icon name="lucide:mail" size="18" class="mr-2 text-purple-600" />
+                Informasi Kontak
               </label>
               <input
-                id="tags"
-                v-model="tags"
+                id="contactInfo"
+                v-model="formData.contactInfo"
                 type="text"
                 class="w-full px-4 py-3 transition border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="contoh: bullying, stres, persahabatan, nasihat"
+                :placeholder="formData.contactMethod === 'email' ? 'Masukkan email Anda' : 'Masukkan nomor telepon Anda'"
               />
-              <p class="mt-2 ml-1 text-xs text-gray-500">
-                Pisahkan beberapa tag dengan koma untuk membantu mengkategorikan cerita Anda
-              </p>
+              <p v-if="errors.contactInfo" class="mt-1 text-sm text-red-600">{{ errors.contactInfo }}</p>
             </div>
 
             <button
