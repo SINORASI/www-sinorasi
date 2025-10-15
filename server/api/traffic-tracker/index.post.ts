@@ -1,4 +1,22 @@
-import type { TrafficTrackerForm } from '~/utils/schema';
+import { trafficTrackerSchema, type TrafficTrackerForm } from '~/utils/schema';
+
+interface Coordinate {
+  lat: number;
+  lng: number;
+}
+
+interface RouteRequest {
+  origin: Coordinate;
+  destination: Coordinate;
+  profile: "driving" | "walking" | "cycling" | "transit";
+  preferences?: RoutePreferences;
+  time?: Date;
+}
+
+interface RoutePreferences {
+  avoidTolls?: boolean;
+  avoidHighways?: boolean;
+}
 
 interface TrafficResults {
   time: string;
@@ -31,70 +49,61 @@ interface TrafficResults {
 export default defineEventHandler(async (event): Promise<TrafficResults> => {
   const body = await readBody(event) as TrafficTrackerForm;
   const config = useRuntimeConfig();
-  const apiKey = config.public.googleMapsApiKey;
 
-  if (!apiKey) {
+  // Validate input using Zod schema
+  const validation = trafficTrackerSchema.safeParse(body);
+  if (!validation.success) {
     throw createError({
-      statusCode: 500,
-      statusMessage: 'Google Maps API key not configured'
+      statusCode: 400,
+      statusMessage: 'Invalid input data',
+      data: validation.error.issues
     });
   }
+
+  // OSRM configuration - using public OSRM demo server for now
+  const osrmBaseUrl = config.public?.osrmBaseUrl || 'https://router.project-osrm.org';
 
   const schoolAddress = "SMK Negeri 2 Singosari, Jl. Raya Singosari, Singosari, Malang, Jawa Timur, Indonesia";
 
   try {
-    // Geocode origin address
-    const geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(body.origin)}&key=${apiKey}`;
-    const geocodeResponse = await fetch(geocodeUrl);
-    const geocodeData = await geocodeResponse.json();
-
-    if (geocodeData.status !== "OK") {
+    // Geocode origin address using Nominatim (OSM geocoding)
+    const originCoords = await geocodeAddress(body.origin);
+    if (!originCoords) {
       throw createError({
         statusCode: 400,
-        statusMessage: 'Origin address not found'
+        statusMessage: 'Origin address not found. Please check the address and try again.'
       });
     }
 
-    const origin = geocodeData.results[0].geometry.location;
-
-    // Geocode school address
-    const schoolGeocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(schoolAddress)}&key=${apiKey}`;
-    const schoolGeocodeResponse = await fetch(schoolGeocodeUrl);
-    const schoolGeocodeData = await schoolGeocodeResponse.json();
-
-    if (schoolGeocodeData.status !== "OK") {
+    // Geocode school address using Nominatim
+    const destinationCoords = await geocodeAddress(schoolAddress);
+    if (!destinationCoords) {
       throw createError({
         statusCode: 500,
-        statusMessage: 'School address not found'
+        statusMessage: 'School address geocoding failed. Please contact support.'
       });
     }
 
-    const destination = schoolGeocodeData.results[0].geometry.location;
+    // Get route from OSRM
+    const routeData = await getOSRMRoute(originCoords, destinationCoords, body.travelMode);
 
-    // Get directions
-    const directionsUrl = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin.lat},${origin.lng}&destination=${destination.lat},${destination.lng}&mode=${body.travelMode}&departure_time=now&alternatives=true&key=${apiKey}`;
-    const directionsResponse = await fetch(directionsUrl);
-    const directionsData = await directionsResponse.json();
-
-    if (directionsData.status !== "OK") {
+    if (!routeData || routeData.routes.length === 0) {
       throw createError({
         statusCode: 400,
-        statusMessage: 'Unable to calculate route'
+        statusMessage: 'Unable to calculate route. The routing service may be temporarily unavailable.'
       });
     }
 
-    const route = directionsData.routes[0];
-    const leg = route.legs[0];
-
-    const duration = leg.duration_in_traffic ? leg.duration_in_traffic.text : leg.duration.text;
-    const distance = leg.distance.text;
-    const traffic = getTrafficStatus(leg.duration_in_traffic?.value || leg.duration.value, leg.duration.value);
-    const routeSummary = route.summary;
+    const route = routeData.routes[0];
+    const duration = formatDuration(route.duration);
+    const distance = formatDistance(route.distance);
+    const traffic = getTrafficStatus(route.duration, route.duration); // Basic implementation
+    const routeSummary = `Route via ${route.legs[0]?.summary || 'main roads'}`;
     const bestTime = getBestTime();
     const tips = getTips(traffic, duration);
     const recommendation = getRecommendation(duration, traffic);
 
-    // Enhanced analytics
+    // Enhanced analytics with OSRM data
     const analytics = {
       proximity: {
         distanceToSchool: distance,
@@ -105,7 +114,7 @@ export default defineEventHandler(async (event): Promise<TrafficResults> => {
         currentCongestion: traffic,
         peakHours: ['07:00-09:00', '16:00-18:00'],
         recommendedDeparture: getRecommendedDeparture(),
-        alternativeRoutes: directionsData.routes.length
+        alternativeRoutes: routeData.routes.length
       },
       usefulInfo: {
         fuelEstimate: calculateFuelEstimate(distance),
@@ -125,12 +134,110 @@ export default defineEventHandler(async (event): Promise<TrafficResults> => {
       analytics
     };
   } catch (error: any) {
+    console.error('Traffic tracker error:', error);
+
+    // Enhanced error handling with specific messages
+    if (error.statusCode) {
+      throw error; // Re-throw custom errors
+    }
+
+    // Handle network/geocoding errors
+    if (error.message?.includes('fetch')) {
+      throw createError({
+        statusCode: 503,
+        statusMessage: 'External service temporarily unavailable. Please try again later.'
+      });
+    }
+
+    // Handle JSON parsing errors
+    if (error.message?.includes('JSON')) {
+      throw createError({
+        statusCode: 502,
+        statusMessage: 'Invalid response from routing service. Please try again.'
+      });
+    }
+
+    // Generic fallback
     throw createError({
       statusCode: 500,
-      statusMessage: error.message || 'Error calculating traffic'
+      statusMessage: 'An unexpected error occurred while calculating your route. Please try again.'
     });
   }
 });
+
+// Geocode address using Nominatim (OpenStreetMap)
+async function geocodeAddress(address: string): Promise<Coordinate | null> {
+  try {
+    const nominatimUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}&limit=1&countrycodes=id`;
+    const response = await fetch(nominatimUrl, {
+      headers: {
+        'User-Agent': 'SMKN2-Singosari-Traffic-Tracker/1.0'
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error('Geocoding service unavailable');
+    }
+
+    const data = await response.json();
+
+    if (data.length === 0) {
+      return null;
+    }
+
+    return {
+      lat: parseFloat(data[0].lat),
+      lng: parseFloat(data[0].lon)
+    };
+  } catch (error) {
+    console.error('Geocoding error:', error);
+    return null;
+  }
+}
+
+// Get route from OSRM
+async function getOSRMRoute(origin: Coordinate, destination: Coordinate, travelMode: string) {
+  try {
+    // Map travel modes to OSRM profiles
+    const profileMap: { [key: string]: string } = {
+      'driving': 'driving',
+      'walking': 'walking',
+      'cycling': 'cycling',
+      'transit': 'driving' // fallback to driving for transit
+    };
+
+    const profile = profileMap[travelMode] || 'driving';
+    const osrmUrl = `https://router.project-osrm.org/route/v1/${profile}/${origin.lng},${origin.lat};${destination.lng},${destination.lat}?overview=full&alternatives=true&steps=true`;
+
+    const response = await fetch(osrmUrl);
+
+    if (!response.ok) {
+      throw new Error('Routing service unavailable');
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('OSRM routing error:', error);
+    throw error;
+  }
+}
+
+// Format duration from seconds to human readable
+function formatDuration(seconds: number): string {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+
+  if (hours > 0) {
+    return `${hours} jam ${minutes} menit`;
+  }
+  return `${minutes} menit`;
+}
+
+// Format distance from meters to human readable
+function formatDistance(meters: number): string {
+  const km = meters / 1000;
+  return `${km.toFixed(1)} km`;
+}
 
 function getTrafficStatus(trafficDuration: number, normalDuration: number): string {
   const ratio = trafficDuration / normalDuration;

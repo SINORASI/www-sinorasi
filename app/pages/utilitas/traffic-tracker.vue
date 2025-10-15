@@ -30,8 +30,28 @@ interface TrafficResults {
   };
 }
 
-const config = useRuntimeConfig();
-const apiKey = config.public.googleMapsApiKey;
+interface TrafficIncident {
+  location: {
+    lat: number;
+    lng: number;
+  };
+  speed: number;
+  congestion: "low" | "medium" | "high" | "severe";
+  timestamp: string;
+  source: "sensor" | "crowd" | "historical";
+  type?: "accident" | "construction" | "traffic_jam" | "road_closure" | "flooding" | "other";
+  severity?: "low" | "medium" | "high" | "critical";
+}
+
+interface TrafficReportForm {
+  type: "accident" | "construction" | "traffic_jam" | "road_closure" | "flooding" | "other";
+  severity: "low" | "medium" | "high" | "critical";
+  description: string;
+  location?: {
+    lat: number;
+    lng: number;
+  };
+}
 
 const schoolAddress = "SMK Negeri 2 Singosari, Jl. Raya Singosari, Singosari, Malang, Jawa Timur, Indonesia";
 
@@ -43,10 +63,28 @@ const form = ref<TrafficTrackerForm>({
   avoidHighways: false,
 });
 
+const reportForm = ref<TrafficReportForm>({
+  type: "traffic_jam",
+  severity: "medium",
+  description: "",
+  location: undefined
+});
+
 const results = ref<TrafficResults | null>(null);
+const currentTraffic = ref<{
+  incidents: TrafficIncident[];
+  congestionLevel: "low" | "medium" | "high" | "severe";
+  lastUpdated: string;
+} | null>(null);
 const loading = ref(false);
+const trafficLoading = ref(false);
+const reportLoading = ref(false);
 const error = ref("");
+const reportError = ref("");
+const reportSuccess = ref("");
 const validationErrors = ref<Record<string, string>>({});
+const showReportForm = ref(false);
+const showTrafficIncidents = ref(false);
 
 
 const getCurrentLocation = () => {
@@ -56,6 +94,8 @@ const getCurrentLocation = () => {
         const lat = position.coords.latitude;
         const lng = position.coords.longitude;
         form.value.origin = `${lat},${lng}`;
+        // Also set for traffic reporting
+        reportForm.value.location = { lat, lng };
       },
       (err) => {
         error.value = "Tidak dapat mendapatkan lokasi saat ini. Pastikan izin lokasi diaktifkan.";
@@ -63,6 +103,98 @@ const getCurrentLocation = () => {
     );
   } else {
     error.value = "Geolokasi tidak didukung oleh browser ini.";
+  }
+};
+
+const fetchCurrentTraffic = async () => {
+  if (!reportForm.value.location) {
+    await getCurrentLocation();
+    // Wait a bit for location to be set
+    await new Promise(resolve => setTimeout(resolve, 1000));
+  }
+
+  if (!reportForm.value.location) {
+    reportError.value = "Tidak dapat mendapatkan lokasi untuk melihat kondisi lalu lintas.";
+    return;
+  }
+
+  trafficLoading.value = true;
+  reportError.value = "";
+
+  try {
+    const response = await $fetch('/api/traffic-tracker/current', {
+      method: 'GET',
+      query: {
+        lat: reportForm.value.location.lat,
+        lng: reportForm.value.location.lng,
+        radius: 10
+      }
+    });
+
+    currentTraffic.value = response;
+    showTrafficIncidents.value = true;
+  } catch (err: any) {
+    reportError.value = err.message || "Gagal mengambil data lalu lintas terkini.";
+  } finally {
+    trafficLoading.value = false;
+  }
+};
+
+const submitTrafficReport = async () => {
+  if (!reportForm.value.location) {
+    reportError.value = "Lokasi diperlukan untuk melaporkan kondisi lalu lintas.";
+    return;
+  }
+
+  reportLoading.value = true;
+  reportError.value = "";
+  reportSuccess.value = "";
+
+  try {
+    const response = await $fetch('/api/traffic-tracker/report', {
+      method: 'POST',
+      body: {
+        location: reportForm.value.location,
+        type: reportForm.value.type,
+        severity: reportForm.value.severity,
+        description: reportForm.value.description,
+        timestamp: new Date().toISOString()
+      }
+    });
+
+    reportSuccess.value = response.message;
+    // Reset form
+    reportForm.value = {
+      type: "traffic_jam",
+      severity: "medium",
+      description: "",
+      location: reportForm.value.location
+    };
+  } catch (err: any) {
+    reportError.value = err.message || "Gagal mengirim laporan lalu lintas.";
+  } finally {
+    reportLoading.value = false;
+  }
+};
+
+const getIncidentIcon = (type?: string) => {
+  switch (type) {
+    case 'accident': return 'lucide:car-crash';
+    case 'construction': return 'lucide:construction';
+    case 'traffic_jam': return 'lucide:traffic-cone';
+    case 'road_closure': return 'lucide:road-closed';
+    case 'flooding': return 'lucide:cloud-rain';
+    default: return 'lucide:alert-triangle';
+  }
+};
+
+const getSeverityColor = (severity?: string) => {
+  switch (severity) {
+    case 'low': return 'text-yellow-600 bg-yellow-50';
+    case 'medium': return 'text-orange-600 bg-orange-50';
+    case 'high': return 'text-red-600 bg-red-50';
+    case 'critical': return 'text-red-800 bg-red-100';
+    default: return 'text-gray-600 bg-gray-50';
   }
 };
 
@@ -204,6 +336,140 @@ useHead({
           <div class="flex items-start">
             <Icon name="lucide:alert-circle" size="20" class="text-red-600 mr-3 mt-0.5 flex-shrink-0" />
             <p class="text-red-700">{{ error }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Crowd-sourced Features Section -->
+      <div class="max-w-4xl mx-auto mb-12">
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+          <!-- Traffic Report Form -->
+          <div class="p-6 bg-white border-2 border-orange-100 shadow-xl rounded-2xl">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-lg font-bold text-gray-800">Laporkan Kondisi Lalu Lintas</h3>
+              <button
+                @click="showReportForm = !showReportForm"
+                class="px-3 py-1 text-sm font-semibold text-orange-600 bg-orange-100 rounded-lg hover:bg-orange-200"
+              >
+                {{ showReportForm ? 'Tutup' : 'Buka' }}
+              </button>
+            </div>
+
+            <div v-if="showReportForm" class="space-y-4">
+              <div>
+                <label class="block mb-2 text-sm font-semibold text-gray-700">Jenis Kondisi</label>
+                <select
+                  v-model="reportForm.type"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                >
+                  <option value="traffic_jam">Macet Lalu Lintas</option>
+                  <option value="accident">Kecelakaan</option>
+                  <option value="construction">Konstruksi/Pembangunan</option>
+                  <option value="road_closure">Jalan Ditutup</option>
+                  <option value="flooding">Banjir</option>
+                  <option value="other">Lainnya</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block mb-2 text-sm font-semibold text-gray-700">Tingkat Keparahan</label>
+                <select
+                  v-model="reportForm.severity"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                >
+                  <option value="low">Rendah</option>
+                  <option value="medium">Sedang</option>
+                  <option value="high">Tinggi</option>
+                  <option value="critical">Kritis</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block mb-2 text-sm font-semibold text-gray-700">Deskripsi</label>
+                <textarea
+                  v-model="reportForm.description"
+                  placeholder="Jelaskan kondisi lalu lintas secara detail..."
+                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                  rows="3"
+                ></textarea>
+              </div>
+
+              <button
+                @click="submitTrafficReport"
+                :disabled="reportLoading || !reportForm.description.trim()"
+                class="flex items-center justify-center w-full gap-2 px-4 py-2 font-semibold text-white transition-all bg-orange-600 rounded-lg hover:bg-orange-700 disabled:bg-orange-400"
+              >
+                <Icon v-if="reportLoading" name="lucide:loader-2" class="animate-spin" size="16" />
+                <Icon v-else name="lucide:send" size="16" />
+                Kirim Laporan
+              </button>
+
+              <div v-if="reportSuccess" class="p-3 text-sm text-green-700 bg-green-50 border border-green-200 rounded-lg">
+                {{ reportSuccess }}
+              </div>
+
+              <div v-if="reportError" class="p-3 text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg">
+                {{ reportError }}
+              </div>
+            </div>
+          </div>
+
+          <!-- Current Traffic Incidents -->
+          <div class="p-6 bg-white border-2 border-green-100 shadow-xl rounded-2xl">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-lg font-bold text-gray-800">Kondisi Lalu Lintas Terkini</h3>
+              <button
+                @click="fetchCurrentTraffic"
+                :disabled="trafficLoading"
+                class="flex items-center gap-2 px-3 py-1 text-sm font-semibold text-green-600 bg-green-100 rounded-lg hover:bg-green-200 disabled:opacity-50"
+              >
+                <Icon v-if="trafficLoading" name="lucide:loader-2" class="animate-spin" size="14" />
+                <Icon v-else name="lucide:refresh-cw" size="14" />
+                Perbarui
+              </button>
+            </div>
+
+            <div v-if="currentTraffic" class="space-y-3">
+              <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                <span class="font-semibold">Tingkat Kemacetan:</span>
+                <span :class="getSeverityColor(currentTraffic.congestionLevel)" class="px-2 py-1 text-sm font-bold rounded">
+                  {{ currentTraffic.congestionLevel.toUpperCase() }}
+                </span>
+              </div>
+
+              <div class="text-sm text-gray-600">
+                Terakhir diperbarui: {{ new Date(currentTraffic.lastUpdated).toLocaleString('id-ID') }}
+              </div>
+
+              <div v-if="currentTraffic.incidents.length > 0" class="space-y-2">
+                <h4 class="font-semibold text-gray-700">Insiden Terkini:</h4>
+                <div v-for="incident in currentTraffic.incidents" :key="incident.timestamp" class="p-3 border border-gray-200 rounded-lg">
+                  <div class="flex items-start gap-3">
+                    <Icon :name="getIncidentIcon(incident.type)" :class="getSeverityColor(incident.severity)" size="20" />
+                    <div class="flex-1">
+                      <div class="flex items-center justify-between">
+                        <span class="font-semibold capitalize">{{ incident.type?.replace('_', ' ') }}</span>
+                        <span :class="getSeverityColor(incident.severity)" class="px-2 py-1 text-xs font-bold rounded">
+                          {{ incident.severity?.toUpperCase() }}
+                        </span>
+                      </div>
+                      <p class="text-sm text-gray-600 mt-1">{{ incident.congestion }} congestion</p>
+                      <p class="text-xs text-gray-500 mt-1">
+                        {{ new Date(incident.timestamp).toLocaleString('id-ID') }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div v-else class="text-center text-gray-500 py-4">
+                Tidak ada insiden lalu lintas yang dilaporkan di area ini.
+              </div>
+            </div>
+
+            <div v-else class="text-center text-gray-500 py-8">
+              Klik "Perbarui" untuk melihat kondisi lalu lintas terkini.
+            </div>
           </div>
         </div>
       </div>
@@ -413,6 +679,30 @@ useHead({
               </div>
             </li>
           </ul>
+        </div>
+
+        <!-- Open Source Attribution -->
+        <div class="p-6 bg-gray-50 border-2 border-gray-200 shadow-xl rounded-2xl">
+          <div class="text-center">
+            <h4 class="text-lg font-bold text-gray-800 mb-2">Dukungan Teknologi Open Source</h4>
+            <p class="text-sm text-gray-600 mb-4">
+              Sistem ini menggunakan teknologi open source untuk memberikan layanan navigasi yang bebas biaya dan dapat diandalkan.
+            </p>
+            <div class="flex justify-center gap-4 text-xs text-gray-500">
+              <span class="flex items-center gap-1">
+                <Icon name="lucide:globe" size="14" />
+                OpenStreetMap
+              </span>
+              <span class="flex items-center gap-1">
+                <Icon name="lucide:route" size="14" />
+                OSRM
+              </span>
+              <span class="flex items-center gap-1">
+                <Icon name="lucide:users" size="14" />
+                Crowd-sourced Data
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
