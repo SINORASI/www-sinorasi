@@ -103,6 +103,24 @@ body {
   animation: fade-in-up 1s ease-out;
 }
 
+/* Dialog modal transitions */
+.dialog-enter-active,
+.dialog-leave-active {
+  transition: all 0.3s ease-out;
+}
+
+.dialog-enter-from,
+.dialog-leave-to {
+  opacity: 0;
+  transition: all 0.3s ease-out;
+}
+
+.dialog-enter-to,
+.dialog-leave-from {
+  opacity: 1;
+  transition: all 0.3s ease-out;
+}
+
 .shadow-3xl {
   box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.25);
 }
