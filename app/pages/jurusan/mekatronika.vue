@@ -423,3 +423,25 @@ export default {
 };
 </script>
 
+<style scoped>
+/* Custom green scrollbar for Mekatronika page */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #edf7f2;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #57a77c, #4e9670);
+  border-radius: 6px;
+  border: 2px solid #edf7f2;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #4e9670, #45855f);
+}
+</style>
+

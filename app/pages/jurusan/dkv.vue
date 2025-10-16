@@ -422,3 +422,25 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+/* Custom blue scrollbar for DKV page */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #e8f4ff;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #3598f9, #2e7ce6);
+  border-radius: 6px;
+  border: 2px solid #e8f4ff;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #2e7ce6, #1d4ed8);
+}
+</style>

@@ -422,3 +422,25 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+/* Custom green scrollbar for TEI page */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #e7f7ef;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #059451, #047b42);
+  border-radius: 6px;
+  border: 2px solid #e7f7ef;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #047b42, #036e39);
+}
+</style>

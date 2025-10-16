@@ -1,4 +1,9 @@
 <script setup lang="ts">
+definePageMeta({ layout: false });
+
+import AppHeader from "~/components/layout/AppHeader.vue";
+import AppFooter from "~/components/layout/AppFooter.vue";
+
 const selectedFilter = ref("ALL");
 const showDialog = ref(false);
 const selectedPartner = ref<any>(null);
@@ -173,7 +178,9 @@ const filteredPartners = computed(() => {
 </script>
 
 <template>
-  <div class="min-h-screen py-24 bg-gradient-to-br from-gray-50 via-white to-gray-100">
+  <div class="default-layout">
+    <AppHeader />
+    <div class="min-h-screen py-24 bg-gradient-to-br from-gray-50 via-white to-gray-100">
     <div class="container px-4 mx-auto sm:px-6">
       <div class="max-w-7xl mx-auto bg-white shadow-2xl shadow-gray-300/20 rounded-3xl overflow-hidden border border-gray-200 animate-fade-in">
         <!-- Page Header -->
@@ -311,7 +318,9 @@ const filteredPartners = computed(() => {
         </div>
       </div>
     </div>
-  </div>
+     </div>
+     <AppFooter bgColor="linear-gradient(135deg, #fb923c, #f97316)" />
+   </div>
 
   <!-- Fullscreen Dialog -->
   <Teleport to="body">
@@ -567,6 +576,26 @@ const filteredPartners = computed(() => {
 
 .shadow-professional-lg {
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Custom orange scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fef3c7;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #fb923c, #f97316);
+  border-radius: 6px;
+  border: 2px solid #fef3c7;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #ea580c, #dc2626);
 }
 </style>
 

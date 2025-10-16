@@ -422,3 +422,25 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+/* Custom pink scrollbar for Animasi page */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fce9f3;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #d93f92, #c73682);
+  border-radius: 6px;
+  border: 2px solid #fce9f3;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #c73682, #b02d73);
+}
+</style>

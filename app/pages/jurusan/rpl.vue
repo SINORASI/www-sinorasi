@@ -423,3 +423,25 @@ export default {
 };
 </script>
 
+<style scoped>
+/* Custom orange scrollbar for RPL page */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fff3e8;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #f78b21, #e67e00);
+  border-radius: 6px;
+  border: 2px solid #fff3e8;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #e67e00, #cc7200);
+}
+</style>
+

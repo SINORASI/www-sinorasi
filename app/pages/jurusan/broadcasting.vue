@@ -423,3 +423,23 @@ export default {
 };
 </script>
 
+<style scoped>
+/* Custom red scrollbar for Broadcasting page */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #feebef;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #e14648, #c93e40);
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #c93e40, #b33638);
+}
+</style>
+

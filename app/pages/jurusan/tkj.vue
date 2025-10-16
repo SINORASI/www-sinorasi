@@ -422,3 +422,25 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+/* Custom yellow scrollbar for TKJ page */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fff9e5;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #ffc911, #e6b800);
+  border-radius: 6px;
+  border: 2px solid #fff9e5;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #e6b800, #cca300);
+}
+</style>

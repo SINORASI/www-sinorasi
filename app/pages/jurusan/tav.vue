@@ -423,3 +423,25 @@ export default {
 };
 </script>
 
+<style scoped>
+/* Custom teal scrollbar for TAV page */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #ecf6f4;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #4fa898, #469788);
+  border-radius: 6px;
+  border: 2px solid #ecf6f4;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #469788, #3e8a7a);
+}
+</style>
+

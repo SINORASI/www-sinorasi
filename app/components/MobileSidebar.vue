@@ -611,14 +611,6 @@ const menuItems = [
         tags: ["berita", "news"],
       },
       {
-        title: "Organisasi & Ekstrakurikuler",
-        desc: "Organisasi dan kegiatan ekstrakurikuler sekolah",
-        icon: "lucide:users",
-        to: "/ekstrakurikuler/",
-        external: false,
-        tags: ["organisasi", "organization", "ekstrakurikuler", "extracurricular", "extra"],
-      },
-      {
         title: "Events",
         desc: "Acara yang sedang/akan berlansung di sekolah",
         icon: "lucide:hand-metal",

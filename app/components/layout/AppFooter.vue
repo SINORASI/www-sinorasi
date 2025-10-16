@@ -8,7 +8,7 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
 </script>
 
 <template>
-  <footer class="py-12 mt-16 text-white" :style="`background: ${bgColor || 'linear-gradient(135deg, #3598F9, #2E7CE6)'}`">
+  <footer class="pt-8 pb-2 mt-16  text-white" :style="`background: ${bgColor || 'linear-gradient(135deg, #3598F9, #2E7CE6)'}`">
     <div class="container px-6 mx-auto">
       <div class="grid grid-cols-1 gap-8 md:grid-cols-4">
         <div class="md:col-span-1">
@@ -87,44 +87,46 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
           </ul>
         </div>
 
-        <div class="md:col-span-1">
-          <h4 :class="['mb-4 text-lg font-semibold', isColoredBackground ? 'text-white' : 'text-white']">
-            Kontak Kami
-          </h4>
-          <div class="space-y-3">
-            <div class="flex items-start gap-3">
-              <Icon
-                :name="'lucide:map-pin'"
-                :size="20"
-                :class="['mt-1', isColoredBackground ? 'text-white/60' : 'text-neutral-400']"
-              />
-              <div>
-                <p :class="['text-sm', isColoredBackground ? 'text-white/80' : 'text-neutral-300']">
-                  Jl. Perusahaan Raya No.20, Jajar, Tanjungtirto.
-                </p>
-                <p :class="['text-sm', isColoredBackground ? 'text-white/80' : 'text-neutral-300']">
-                  Singosari, Kabupaten Malang
-                </p>
-                <p :class="['text-sm', isColoredBackground ? 'text-white/80' : 'text-neutral-300']">Jawa Timur 65153</p>
+        <div class="flex am flex-col">
+          <div class="md:col-span-1">
+            <h4 :class="['mb-4 text-lg font-semibold', isColoredBackground ? 'text-white' : 'text-white']">
+              Kontak Kami
+            </h4>
+            <div class="space-y-3">
+              <div class="flex items-start gap-3">
+                <Icon
+                  :name="'lucide:map-pin'"
+                  :size="20"
+                  :class="['mt-1', isColoredBackground ? 'text-white/60' : 'text-neutral-400']"
+                />
+                <div>
+                  <p :class="['text-sm', isColoredBackground ? 'text-white/80' : 'text-neutral-300']">
+                    Jl. Perusahaan Raya No.20, Jajar, Tanjungtirto.
+                  </p>
+                  <p :class="['text-sm', isColoredBackground ? 'text-white/80' : 'text-neutral-300']">
+                    Singosari, Kabupaten Malang
+                  </p>
+                  <p :class="['text-sm', isColoredBackground ? 'text-white/80' : 'text-neutral-300']">Jawa Timur 65153</p>
+                </div>
               </div>
-            </div>
-            <div class="flex items-center gap-3">
-              <Icon
-                :name="'lucide:phone'"
-                :size="20"
-                :class="[isColoredBackground ? 'text-white/60' : 'text-neutral-400']"
-              />
-              <p :class="['text-sm', isColoredBackground ? 'text-white/80' : 'text-neutral-300']">(0341) 4345127</p>
-            </div>
-            <div class="flex items-center gap-3">
-              <Icon
-                :name="'lucide:mail'"
-                :size="20"
-                :class="[isColoredBackground ? 'text-white/60' : 'text-neutral-400']"
-              />
-              <p :class="['text-sm', isColoredBackground ? 'text-white/80' : 'text-neutral-300']">
-                smkn2.singosari@yahoo.co.id
-              </p>
+              <div class="flex items-center gap-3">
+                <Icon
+                  :name="'lucide:phone'"
+                  :size="20"
+                  :class="[isColoredBackground ? 'text-white/60' : 'text-neutral-400']"
+                />
+                <p :class="['text-sm', isColoredBackground ? 'text-white/80' : 'text-neutral-300']">(0341) 4345127</p>
+              </div>
+              <div class="flex items-center gap-3">
+                <Icon
+                  :name="'lucide:mail'"
+                  :size="20"
+                  :class="[isColoredBackground ? 'text-white/60' : 'text-neutral-400']"
+                />
+                <p :class="['text-sm', isColoredBackground ? 'text-white/80' : 'text-neutral-300']">
+                  smkn2.singosari@yahoo.co.id
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -177,7 +179,7 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
       <div :class="['pt-8 mt-8 border-t', isColoredBackground ? 'border-white/30' : 'border-neutral-700']">
         <div class="grid grid-cols-2 gap-8 md:grid-cols-5">
           <div>
-            <h5 :class="['mb-3 text-sm font-semibold', isColoredBackground ? 'text-white' : 'text-neutral-300']">
+            <h5 :class="['mb-3 text-lg font-semibold', isColoredBackground ? 'text-white' : 'text-neutral-300']">
               Program Studi
             </h5>
             <ul class="space-y-1">
@@ -185,7 +187,7 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
                 <NuxtLink
                   :to="'/jurusan/tkj'"
                   :class="[
-                    'text-xs transition duration-300',
+                    'text-sm transition duration-300',
                     isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
                   ]"
                   >Teknik Komputer Jaringan</NuxtLink
@@ -195,7 +197,7 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
                 <NuxtLink
                   :to="'/jurusan/rpl'"
                   :class="[
-                    'text-xs transition duration-300',
+                    'text-sm transition duration-300',
                     isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
                   ]"
                   >Rekayasa Perangkat Lunak</NuxtLink
@@ -205,7 +207,7 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
                 <NuxtLink
                   :to="'/jurusan/dkv'"
                   :class="[
-                    'text-xs transition duration-300',
+                    'text-sm transition duration-300',
                     isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
                   ]"
                   >Desain Komunikasi Visual</NuxtLink
@@ -215,7 +217,7 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
                 <NuxtLink
                   :to="'/jurusan/tei'"
                   :class="[
-                    'text-xs transition duration-300',
+                    'text-sm transition duration-300',
                     isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
                   ]"
                   >Teknik Elektronika Industri</NuxtLink
@@ -225,7 +227,7 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
                 <NuxtLink
                   :to="'/jurusan/mekatronika'"
                   :class="[
-                    'text-xs transition duration-300',
+                    'text-sm transition duration-300',
                     isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
                   ]"
                   >Teknik Mekatronika</NuxtLink
@@ -235,7 +237,7 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
                 <NuxtLink
                   :to="'/jurusan/broadcasting'"
                   :class="[
-                    'text-xs transition duration-300',
+                    'text-sm transition duration-300',
                     isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
                   ]"
                   >Broadcasting</NuxtLink
@@ -245,7 +247,7 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
                 <NuxtLink
                   :to="'/jurusan/animasi'"
                   :class="[
-                    'text-xs transition duration-300',
+                    'text-sm transition duration-300',
                     isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
                   ]"
                   >Animasi</NuxtLink
@@ -255,7 +257,7 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
                 <NuxtLink
                   :to="'/jurusan/tav'"
                   :class="[
-                    'text-xs transition duration-300',
+                    'text-sm transition duration-300',
                     isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
                   ]"
                   >Teknik Audio Video</NuxtLink
@@ -264,7 +266,7 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
             </ul>
           </div>
           <div>
-            <h5 :class="['mb-3 text-sm font-semibold', isColoredBackground ? 'text-white' : 'text-neutral-300']">
+            <h5 :class="['mb-3 text-lg font-semibold', isColoredBackground ? 'text-white' : 'text-neutral-300']">
               Fasilitas
             </h5>
             <ul class="space-y-1">
@@ -272,7 +274,7 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
                 <NuxtLink
                   :to="'/informasi/sarana-prasarana'"
                   :class="[
-                    'text-xs transition duration-300',
+                    'text-sm transition duration-300',
                     isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
                   ]"
                   >Sarana Prasarana</NuxtLink
@@ -281,7 +283,7 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
             </ul>
           </div>
           <div>
-            <h5 :class="['mb-3 text-sm font-semibold', isColoredBackground ? 'text-white' : 'text-neutral-300']">
+            <h5 :class="['mb-3 text-lg font-semibold', isColoredBackground ? 'text-white' : 'text-neutral-300']">
               Informasi
             </h5>
             <ul class="space-y-1">
@@ -289,7 +291,7 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
                 <NuxtLink
                   :to="'/berita'"
                   :class="[
-                    'text-xs transition duration-300',
+                    'text-sm transition duration-300',
                     isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
                   ]"
                   >Berita</NuxtLink
@@ -299,7 +301,7 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
                 <NuxtLink
                   :to="'/organisasi'"
                   :class="[
-                    'text-xs transition duration-300',
+                    'text-sm transition duration-300',
                     isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
                   ]"
                   >Organisasi</NuxtLink
@@ -309,7 +311,7 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
                 <NuxtLink
                   :to="'/informasi/struktur-organisasi'"
                   :class="[
-                    'text-xs transition duration-300',
+                    'text-sm transition duration-300',
                     isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
                   ]"
                   >Struktur Organisasi</NuxtLink
@@ -319,7 +321,7 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
                 <NuxtLink
                   :to="'/informasi/guru'"
                   :class="[
-                    'text-xs transition duration-300',
+                    'text-sm transition duration-300',
                     isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
                   ]"
                   >Guru</NuxtLink
@@ -329,7 +331,7 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
                 <NuxtLink
                   :to="'/informasi/kontak'"
                   :class="[
-                    'text-xs transition duration-300',
+                    'text-sm transition duration-300',
                     isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
                   ]"
                   >Kontak</NuxtLink
@@ -339,7 +341,7 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
                 <NuxtLink
                   :to="'/ekstrakurikuler'"
                   :class="[
-                    'text-xs transition duration-300',
+                    'text-sm transition duration-300',
                     isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
                   ]"
                   >Ekstrakurikuler</NuxtLink
@@ -349,7 +351,7 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
                 <NuxtLink
                   :to="'/acara'"
                   :class="[
-                    'text-xs transition duration-300',
+                    'text-sm transition duration-300',
                     isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
                   ]"
                   >Acara</NuxtLink
@@ -358,7 +360,7 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
             </ul>
           </div>
           <div>
-            <h5 :class="['mb-3 text-sm font-semibold', isColoredBackground ? 'text-white' : 'text-neutral-300']">
+            <h5 :class="['mb-3 text-lg font-semibold', isColoredBackground ? 'text-white' : 'text-neutral-300']">
               Utilitas
             </h5>
             <ul class="space-y-1">
@@ -366,7 +368,7 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
                 <NuxtLink
                   :to="'/utilitas/anonymous-bk'"
                   :class="[
-                    'text-xs transition duration-300',
+                    'text-sm transition duration-300',
                     isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
                   ]"
                   >Anonymous BK</NuxtLink
@@ -376,7 +378,7 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
                 <NuxtLink
                   :to="'/utilitas/traffic-tracker'"
                   :class="[
-                    'text-xs transition duration-300',
+                    'text-sm transition duration-300',
                     isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
                   ]"
                   >Traffic Tracker</NuxtLink
@@ -385,7 +387,7 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
             </ul>
           </div>
           <div>
-            <h5 :class="['mb-3 text-sm font-semibold', isColoredBackground ? 'text-white' : 'text-neutral-300']">
+            <h5 :class="['mb-3 text-lg font-semibold', isColoredBackground ? 'text-white' : 'text-neutral-300']">
               Layanan
             </h5>
             <ul class="space-y-1">
@@ -394,7 +396,7 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
                   href="https://www.kemdikbud.go.id"
                   target="_blank"
                   :class="[
-                    'text-xs transition duration-300',
+                    'text-sm transition duration-300',
                     isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
                   ]"
                   >Kementerian Pendidikan dan Kebudayaan</a
@@ -405,7 +407,7 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
                   href="https://www.disdik.jatimprov.go.id"
                   target="_blank"
                   :class="[
-                    'text-xs transition duration-300',
+                    'text-sm transition duration-300',
                     isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
                   ]"
                   >Dinas Pendidikan Jawa Timur</a
@@ -416,7 +418,7 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
                   href="https://www.malangkab.go.id"
                   target="_blank"
                   :class="[
-                    'text-xs transition duration-300',
+                    'text-sm transition duration-300',
                     isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
                   ]"
                   >Pemerintah Kabupaten Malang</a
@@ -427,7 +429,14 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
         </div>
       </div>
 
-      <div :class="['pt-8 mt-8 text-center border-t', isColoredBackground ? 'border-white/30' : 'border-neutral-700']">
+      <div :class="['pt-4 mt-4 border-t', isColoredBackground ? 'border-white/30' : 'border-neutral-700']">
+        <div class="text-center">
+          <h5 :class="['mb-1 text-lg font-semibold', isColoredBackground ? 'text-white' : 'text-neutral-300']">Didukung Oleh</h5>
+          <img src="/images/Logo-Jagoan-Hosting-Komdigi-Maspion-IT-Garuda-Spark.png" alt="Sponsor Logos" class="mx-auto h-16 mb-1" />
+        </div>
+      </div>
+
+      <div class="pt-4 text-center">
         <p :class="['text-sm', isColoredBackground ? 'text-white/60' : 'text-neutral-400']">
           &copy; 2025 SMK Negeri 2 Singosari. All rights reserved.
         </p>

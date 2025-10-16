@@ -38,8 +38,8 @@ useHead({
 <template>
   <div class="min-h-screen bg-gradient-to-b from-white via-blue-50 to-white">
     <!-- Welcome Section -->
-    <section class="py-20 pt-32">
-      <div class="container px-4 mx-auto sm:px-6">
+    <section class="py-32">
+      <div class="container w-max-[1200px] px-4 mx-auto sm:px-6">
         <div class="mb-12 text-center">
           <div
             class="inline-block px-10 py-6 mb-4 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
@@ -49,15 +49,15 @@ useHead({
           <p class="text-lg text-gray-600">SMK Negeri 2 Singosari</p>
         </div>
 
-        <div class="mx-auto max-w-7xl">
+        <div class="mx-auto">
           <div class="flex flex-col gap-8">
             <!-- Principal Photo and Quote -->
-            <div class="flex flex-col items-center lg:flex-row lg:items-start lg:justify-center lg:gap-8">
+            <div class="flex flex-col items-center justify-center lg:flex-row lg:items-center lg:gap-8">
               <div class="p-6 bg-white border-2 border-blue-100 shadow-xl rounded-2xl w-fit">
                 <img src="/images/kepsek.webp" alt="Kepala Sekolah" class="w-64 rounded-xl md:w-80" />
               </div>
-              <div class="max-w-md p-6 mt-6 border-2 border-blue-100 shadow-xl bg-blue-50 rounded-2xl lg:mt-0">
-                <blockquote class="italic text-center text-gray-700 lg:text-left">
+              <div class="max-w-xl mx-5 p-6 mt-6 border-2 border-blue-100 shadow-xl bg-blue-50 rounded-2xl lg:mt-0">
+                <blockquote class="italic text-center text-2xl text-gray-700 lg:text-left">
                   "Pendidikan adalah kunci untuk membuka pintu masa depan yang lebih baik. Mari bersama-sama membangun
                   generasi yang unggul dan berkarakter."
                 </blockquote>
@@ -68,7 +68,7 @@ useHead({
             <!-- Welcome Message -->
             <div class="flex items-center justify-center">
               <div
-                class="w-full max-w-4xl p-8 space-y-6 leading-relaxed text-gray-700 bg-white border-2 border-blue-100 shadow-xl rounded-2xl md:p-12"
+                class="w-full max-w-5xl p-8 space-y-6 leading-relaxed text-gray-700 bg-white border-2 border-blue-100 shadow-xl rounded-2xl md:p-12"
               >
                 <p class="text-xl font-bold text-blue-800">Assalamualaikum Warahmatullahi Wabarakatuh</p>
 
