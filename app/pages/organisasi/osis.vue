@@ -6,7 +6,7 @@ const organization: Organization = {
   slug: 'osis',
   name: 'OSIS',
   nickname: 'Organisasi Siswa Intra Sekolah',
-  logo: '/images/organisasi/osis.png',
+  logo: '/images/organisasi/OSIS.webp',
   logoDescription: 'Logo OSIS SMKN 2 Singosari menampilkan lambang sekolah dengan elemen siswa yang melambangkan semangat kebersamaan dan prestasi.',
   description: 'Organisasi Siswa Intra Sekolah yang menjadi wadah bagi siswa untuk mengembangkan potensi dan kreativitas.',
   history: 'Didirikan sejak tahun 2000, OSIS telah menjadi pilar utama dalam kegiatan siswa. OSIS SMKN 2 Singosari telah berhasil menyelenggarakan berbagai kegiatan yang bermanfaat bagi siswa, mulai dari kegiatan akademik hingga kegiatan sosial. Dengan semangat kebersamaan dan kreativitas, OSIS terus berkembang dan memberikan kontribusi positif bagi sekolah.',

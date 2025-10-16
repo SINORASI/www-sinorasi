@@ -68,7 +68,10 @@ const organizations = computed(() => organizationsResponse.value?.data || []);
             <img
               :src="org.logo"
               :alt="`Logo ${org.name}`"
-              class="object-contain w-32 h-32 transition-transform duration-300 group-hover:scale-110 drop-shadow-lg bg-transparent"
+              :class="[
+                'object-contain transition-transform duration-300 group-hover:scale-110 drop-shadow-lg bg-transparent',
+                org.slug === 'pmr' ? 'w-80 h-40' : 'w-40 h-40'
+              ]"
             />
           </div>
 

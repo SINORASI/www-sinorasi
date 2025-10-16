@@ -6,7 +6,7 @@ const organization: Organization = {
   slug: 'bdi',
   name: 'BDI',
   nickname: 'Badan Dakwah Islam',
-  logo: '/images/organisasi/bdi.png',
+  logo: '/images/organisasi/BDI.webp',
   logoDescription: 'Logo BDI SMKN 2 Singosari menampilkan elemen islami dengan bulan sabit dan bintang yang melambangkan nilai-nilai keislaman dan spiritualitas.',
   description: 'Badan Dakwah Islam yang fokus pada pengembangan spiritual dan kegiatan keagamaan.',
   history: 'BDI didirikan untuk memperkuat nilai-nilai keislaman di lingkungan sekolah. Dengan berbagai program keagamaan, BDI telah berhasil menciptakan lingkungan yang kondusif untuk pengembangan spiritual siswa.',

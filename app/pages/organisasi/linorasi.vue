@@ -6,7 +6,7 @@ const organization: Organization = {
   slug: 'linorasi',
   name: 'LINORASI',
   nickname: 'Litbang Inovasi Raih Prestasi',
-  logo: '/images/organisasi/LINORASI.png',
+  logo: '/images/organisasi/LINORASI.webp',
   logoDescription: 'Logo LINORASI SMKN 2 Singosari menampilkan elemen inovasi dan prestasi dengan simbol roket yang melambangkan kemajuan dan pencapaian tinggi.',
   description: 'Litbang Inovasi Raih Prestasi yang fokus pada pengembangan inovasi dan prestasi siswa.',
   history: 'LINORASI didirikan untuk mendorong inovasi dan pencapaian prestasi siswa. Melalui berbagai program inovatif, LINORASI telah berhasil membawa nama sekolah ke tingkat yang lebih tinggi dalam berbagai kompetisi dan ajang prestasi.',

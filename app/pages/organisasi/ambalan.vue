@@ -6,7 +6,7 @@ const organization: Organization = {
   slug: 'ambalan',
   name: 'AMBALAN',
   nickname: 'Ambalan Pramuka',
-  logo: '/images/organisasi/ambalan.png',
+  logo: '/images/organisasi/AMBALAN.webp',
   logoDescription: 'Logo AMBALAN SMKN 2 Singosari menampilkan elemen pramuka dengan api unggun dan simbol kepanduan yang melambangkan semangat kebersamaan dan petualangan.',
   description: 'AMBALAN (Ambalan Pramuka) adalah organisasi pendidikan nonformal yang bertujuan membentuk karakter siswa melalui kegiatan kepramukaan yang menyenangkan dan mendidik.',
   history: 'AMBALAN di SMK Negeri 2 Singosari telah lama menjadi bagian dari kegiatan ekstrakurikuler yang membantu siswa mengembangkan keterampilan survival, kepemimpinan, dan jiwa sosial.',

@@ -6,7 +6,7 @@ const organization: Organization = {
   slug: 'pmr',
   name: 'PMR',
   nickname: 'Palang Merah Remaja',
-  logo: '/images/organisasi/PMR.png',
+  logo: '/images/organisasi/PMR.webp',
   logoDescription: 'Logo PMR SMKN 2 Singosari menampilkan lambang Palang Merah dengan elemen remaja yang melambangkan semangat kemanusiaan dan kepedulian sosial.',
   description: 'Palang Merah Remaja yang fokus pada kegiatan kemanusiaan dan pertolongan pertama.',
   history: 'PMR telah berperan aktif dalam kegiatan sosial dan kesehatan siswa. Dengan semangat kemanusiaan, PMR SMKN 2 Singosari terus memberikan pelayanan kesehatan dan bantuan sosial kepada masyarakat sekitar sekolah.',
@@ -95,7 +95,7 @@ const activeTab = ref('overview')
             <img
               :src="organization.logo"
               :alt="organization.name"
-              class="object-cover w-24 h-24 rounded-2xl border-4 border-blue-200 shadow-lg md:w-32 md:h-32 bg-transparent"
+              class="object-contain w-24 h-24 rounded-2xl border-4 border-blue-200 shadow-lg md:w-32 md:h-32 bg-transparent"
             />
             <div class="flex-1">
               <h1 class="text-3xl font-bold text-gray-800 md:text-4xl">{{ organization.name }}</h1>
