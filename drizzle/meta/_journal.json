@@ -1,5 +1,20 @@
 {
   "version": "7",
   "dialect": "postgresql",
-  "entries": []
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1760616776506,
+      "tag": "0000_pale_network",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1760616792799,
+      "tag": "0001_yielding_riptide",
+      "breakpoints": true
+    }
+  ]
 }

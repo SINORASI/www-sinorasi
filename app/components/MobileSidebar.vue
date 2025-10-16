@@ -1,4 +1,3 @@
-2
 <template>
   <transition name="sidebar" class="transition-all duration-300 ease-in-out">
     <div v-if="isOpen" class="fixed inset-0 z-[9000] flex">
@@ -32,11 +31,11 @@
                   <Icon name="lucide:user" size="20" class="text-white" />
                 </div>
                 <div>
-                  <p class="text-white font-semibold">Selamat Datang</p>
-                  <p class="text-blue-100 text-sm">Silakan masuk untuk akses penuh</p>
+                  <p class="text-white font-semibold">{{ session?.user ? `Hi, ${session.user.name || 'User'}` : 'Selamat Datang' }}</p>
+                  <p class="text-blue-100 text-sm">{{ session?.user ? 'Selamat datang kembali!' : 'Silakan masuk untuk akses penuh' }}</p>
                 </div>
               </div>
-              <div class="flex gap-2">
+              <div class="flex gap-2" v-if="!session?.user">
                 <NuxtLink
                   to="/login"
                   @click="$emit('close')"
@@ -51,6 +50,21 @@
                 >
                   Registrasi
                 </NuxtLink>
+              </div>
+              <div class="flex gap-2" v-else>
+                <NuxtLink
+                  to="/dashboard"
+                  @click="$emit('close')"
+                  class="flex-1 bg-white text-blue-600 font-semibold py-2 px-4 rounded-lg text-center hover:bg-blue-50 transition-colors"
+                >
+                  Dashboard
+                </NuxtLink>
+                <button
+                  @click="handleLogout"
+                  class="flex-1 bg-red-600 text-white font-semibold py-2 px-4 rounded-lg text-center border-2 border-white hover:bg-red-700 transition-colors"
+                >
+                  Keluar
+                </button>
               </div>
             </div>
           </div>
@@ -309,6 +323,7 @@ import { ref, computed, watch } from "vue";
 import { majorColorSchemes } from "~/utils/majorColors";
 import type { MajorName } from "~/models/MajorName";
 import type { News } from "~/models/News";
+import { authClient } from '~/lib/auth-client'
 
 const currentLanguage = ref("id");
 const showLanguageMenu = ref(false);
@@ -347,10 +362,27 @@ const organizationsData = computed(() => {
   return response?.data || [];
 });
 
+// Get session data
+const { data: session } = await authClient.getSession()
+
 // Define emit function
 const emit = defineEmits<{
   close: [];
 }>();
+
+// Handle logout
+const handleLogout = async () => {
+  try {
+    await authClient.signOut()
+    emit('close')
+    await navigateTo('/')
+  } catch (error) {
+    console.log("Logout error:", error)
+    // Force navigation even if signOut fails
+    emit('close')
+    await navigateTo('/')
+  }
+}
 
 // Watch for route changes and auto-close sidebar
 watch(

@@ -2,12 +2,11 @@ import { z } from 'zod'
 
 // Login Schema
 export const loginSchema = z.object({
-  username: z
+  email: z
     .string()
-    .min(1, 'Username wajib diisi')
-    .min(3, 'Username minimal 3 karakter')
-    .max(50, 'Username maksimal 50 karakter')
-    .regex(/^[a-zA-Z0-9_]+$/, 'Username hanya boleh berisi huruf, angka, dan underscore'),
+    .min(1, 'Email wajib diisi')
+    .email('Format email tidak valid')
+    .max(100, 'Email maksimal 100 karakter'),
 
   password: z
     .string()

@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { loginSchema, type LoginForm } from '~/utils/schema'
+import { authClient } from '~/lib/auth-client'
 
 type FormErrors<T> = Partial<Record<keyof T, string[]>>
 
 const formData = ref<LoginForm>({
-  username: '',
+  email: '',
   password: ''
 })
 const errors = ref<FormErrors<LoginForm>>({})
@@ -35,14 +36,23 @@ const submitLogin = async () => {
   isSubmitting.value = true
 
   try {
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000))
+    const { data, error } = await authClient.signIn.email({
+      email: formData.value.email,
+      password: formData.value.password,
+    })
 
-    alert("Login berhasil!")
+    if (error) {
+      console.log("Login error:", error)
+      alert("Login gagal: " + (error.message || error.code || "Terjadi kesalahan yang tidak diketahui"))
+      return
+    }
+
+    // Success - redirect to dashboard
+    await navigateTo('/dashboard')
 
     // Reset form
     formData.value = {
-      username: '',
+      email: '',
       password: ''
     }
   } catch (error) {
@@ -140,23 +150,23 @@ const submitLogin = async () => {
         <div class="p-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl md:p-10">
           <form @submit.prevent="submitLogin" class="space-y-6">
             <div>
-              <label for="username" class="flex items-center mb-3 text-sm font-bold text-gray-800">
-                <Icon name="lucide:user" size="18" class="mr-2 text-blue-600" />
-                Username
+              <label for="email" class="flex items-center mb-3 text-sm font-bold text-gray-800">
+                <Icon name="lucide:mail" size="18" class="mr-2 text-blue-600" />
+                Email
               </label>
               <input
-                id="username"
-                v-model="formData.username"
-                type="text"
+                id="email"
+                v-model="formData.email"
+                type="email"
                 :class="[
                   'w-full px-4 py-3 transition border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
-                  errors.username ? 'border-red-500' : 'border-gray-200'
+                  errors.email ? 'border-red-500' : 'border-gray-200'
                 ]"
-                placeholder="Masukkan username Anda"
+                placeholder="Masukkan email Anda"
                 required
               />
-              <p v-if="errors.username" class="mt-1 text-sm text-red-600">
-                {{ errors.username.join(', ') }}
+              <p v-if="errors.email" class="mt-1 text-sm text-red-600">
+                {{ errors.email.join(', ') }}
               </p>
             </div>
 
