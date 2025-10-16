@@ -1,15 +1,32 @@
 <script setup lang="ts">
-// Mock user data - in real app this would come from auth/store
-const user = ref({
-  name: 'Ahmad Rahman',
-  username: 'ahmadrah',
-  email: 'ahmad.rahman@smkn2-singosari.sch.id',
-  role: 'Siswa',
-  class: 'XII RPL 1',
+import { authClient } from '~/lib/auth-client'
+
+// Get session data reactively
+const session = await authClient.getSession()
+
+// User data from session
+const user = {
+  name: session.data?.user?.name || 'User',
+  username: session.data?.user?.name || 'user', // Using name as username for now
+  email: session.data?.user?.email || '',
+  role: 'Siswa', // Default role, can be extended later
+  class: 'XII RPL 1', // Default class, can be extended later
   avatar: '/images/profile-placeholder.png',
-  joinDate: '2023-08-15',
+  joinDate: session.data?.user?.createdAt ? new Date(session.data.user.createdAt).toISOString().split('T')[0] : '2023-08-15',
   lastLogin: new Date().toISOString().split('T')[0]
-})
+}
+
+// Handle logout
+const handleLogout = async () => {
+  try {
+    await authClient.signOut()
+    await navigateTo('/')
+  } catch (error) {
+    console.log("Logout error:", error)
+    // Force navigation even if signOut fails
+    await navigateTo('/')
+  }
+}
 
 const searchQuery = ref('')
 
@@ -99,7 +116,7 @@ const formatDate = (dateString: string) => {
               <div class="flex flex-col gap-2 mt-4 md:flex-row md:gap-6">
                 <div class="flex items-center gap-2">
                   <Icon name="lucide:calendar" size="18" class="text-gray-500" />
-                  <span class="text-sm text-gray-500">Bergabung: {{ formatDate(user.joinDate) }}</span>
+                  <span class="text-sm text-gray-500">Bergabung: {{ formatDate(user.joinDate || '') }}</span>
                 </div>
                 <div class="flex items-center gap-2">
                   <Icon name="lucide:clock" size="18" class="text-gray-500" />
@@ -114,8 +131,11 @@ const formatDate = (dateString: string) => {
               >
                 Edit Profil
               </NuxtLink>
-              <button class="px-4 py-2 text-sm font-semibold text-gray-600 transition-colors bg-gray-100 rounded-lg hover:bg-gray-200">
-                Pengaturan
+              <button
+                @click="handleLogout"
+                class="px-4 py-2 text-sm font-semibold text-red-600 transition-colors bg-red-100 rounded-lg hover:bg-red-200"
+              >
+                Keluar
               </button>
             </div>
           </div>

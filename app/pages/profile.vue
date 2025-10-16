@@ -1,21 +1,28 @@
 <script setup lang="ts">
 import { profileSchema, type ProfileForm } from '~/utils/schema'
+import { authClient } from '~/lib/auth-client'
+
+let session = await authClient.getSession()
 
 const formData = ref<ProfileForm>({
-  name: 'Ahmad Rahman',
-  username: 'ahmadrah',
-  email: 'ahmad.rahman@smkn2-singosari.sch.id',
-  phone: '',
-  bio: '',
+  name: session?.data?.user?.name || '',
+  username: session?.data?.user?.name || '', // Using name as username for now
+  email: session?.data?.user?.email || '',
+  phone: (session?.data?.user as any)?.phone || '',
+  bio: (session?.data?.user as any)?.bio || '',
   currentPassword: '',
   newPassword: '',
   confirmNewPassword: ''
 })
 
-const errors = ref<Record<string, string[]>>({})
+const errors = ref<Record<string, string[] | undefined>>({})
 const isSubmitting = ref(false)
 const activeTab = ref('profile')
 const showGuidelines = ref(false)
+
+const selectedFile = ref<File | null>(null)
+const previewUrl = ref<string | null>(null)
+const isUploading = ref(false)
 
 useHead({
   title: "Edit Profil - SMKN 2 Singosari",
@@ -46,10 +53,33 @@ const submitProfile = async () => {
   isSubmitting.value = true
 
   try {
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000))
+    // Update user profile using better-auth
+    const { data, error } = await authClient.updateUser({
+      name: formData.value.name,
+      phone: formData.value.phone,
+      bio: formData.value.bio,
+    } as any)
+
+    // For now, we'll handle custom fields separately since Better Auth doesn't support them directly
+    // In a real implementation, you might need to create a custom API endpoint or use Better Auth plugins
+
+    if (error) {
+      console.log("Profile update error:", error)
+      alert("Gagal memperbarui profil: " + (error.message || error.code || "Terjadi kesalahan yang tidak diketahui"))
+      return
+    }
 
     alert("Profil berhasil diperbarui!")
+
+    // Refresh session to get updated data
+    session = await authClient.getSession()
+
+    // Update form data with new session data
+    formData.value.name = session?.data?.user?.name || ''
+    formData.value.username = session?.data?.user?.name || ''
+    formData.value.email = session?.data?.user?.email || ''
+    formData.value.phone = (session?.data?.user as any)?.phone || ''
+    formData.value.bio = (session?.data?.user as any)?.bio || ''
 
     // Reset password fields
     formData.value.currentPassword = ''
@@ -59,6 +89,102 @@ const submitProfile = async () => {
     alert("Terjadi kesalahan saat memperbarui profil")
   } finally {
     isSubmitting.value = false
+  }
+}
+
+// Handle file selection
+const handleFileSelect = (event: Event) => {
+  const target = event.target as HTMLInputElement
+  const file = target.files?.[0]
+
+  if (file) {
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      alert('Please select an image file')
+      return
+    }
+
+    // Validate file size (5MB limit)
+    if (file.size > 5 * 1024 * 1024) {
+      alert('File size must be less than 5MB')
+      return
+    }
+
+    selectedFile.value = file
+
+    // Create preview URL
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      previewUrl.value = e.target?.result as string
+    }
+    reader.readAsDataURL(file)
+  }
+}
+
+// Handle photo upload
+const uploadPhoto = async () => {
+  if (!selectedFile.value) return
+
+  isUploading.value = true
+
+  try {
+    // Upload file to server
+    const uploadFormData = new FormData()
+    uploadFormData.append('file', selectedFile.value)
+
+    const response = await $fetch('/api/upload', {
+      method: 'POST',
+      body: uploadFormData
+    }) as { success: boolean; url: string; filename: string }
+
+    // Update user profile with new image URL
+    console.log("Attempting to update user with image URL:", response.url)
+    const { data, error } = await authClient.updateUser({
+      image: response.url
+    })
+
+    if (error) {
+      console.log("Photo upload error:", error)
+      console.log("Error details:", JSON.stringify(error, null, 2))
+      alert("Gagal mengupload foto: " + (error.message || error.code || "Terjadi kesalahan yang tidak diketahui"))
+      return
+    }
+
+    console.log("Photo upload success:", data)
+
+    alert("Foto profil berhasil diperbarui!")
+
+    // Refresh session to get updated data
+    session = await authClient.getSession()
+
+    // Update form data with new session data
+    formData.value.name = session?.data?.user?.name || ''
+    formData.value.username = session?.data?.user?.name || ''
+    formData.value.email = session?.data?.user?.email || ''
+    formData.value.phone = (session?.data?.user as any)?.phone || ''
+    formData.value.bio = (session?.data?.user as any)?.bio || ''
+
+    // Clear file selection and preview URL after successful upload
+    selectedFile.value = null
+    previewUrl.value = null
+
+  } catch (error) {
+    console.log("Upload error:", error)
+    alert("Terjadi kesalahan saat mengupload foto")
+  } finally {
+    isUploading.value = false
+  }
+}
+
+// Handle logout
+const handleLogout = async () => {
+  try {
+    await authClient.signOut()
+    await navigateTo('/')
+  } catch (error) {
+    console.log("Logout error:", error)
+    // Force navigation even if signOut fails
+    await navigateTo('/')
   }
 }
 </script>
@@ -100,7 +226,7 @@ const submitProfile = async () => {
             <h3 class="mb-6 text-xl font-bold text-gray-800">Foto Profil</h3>
             <div class="flex items-center gap-6">
               <img
-                src="/images/profile-placeholder.png"
+                :src="previewUrl || session?.data?.user?.image || '/images/profile-placeholder.png'"
                 alt="Profile"
                 class="object-cover w-24 h-24 border-4 border-blue-200 rounded-full shadow-lg md:w-32 md:h-32"
               />
@@ -108,8 +234,27 @@ const submitProfile = async () => {
                 <h4 class="mb-2 text-lg font-semibold text-gray-800">Foto Profil</h4>
                 <p class="mb-4 text-gray-600">Upload foto profil baru. Format yang didukung: JPG, PNG, maksimal 5MB.</p>
                 <div class="flex gap-3">
-                  <button class="px-4 py-2 text-sm font-semibold text-blue-600 transition-colors bg-blue-100 rounded-lg hover:bg-blue-200">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    @change="handleFileSelect"
+                    class="hidden"
+                    id="photo-upload"
+                  />
+                  <label
+                    for="photo-upload"
+                    class="px-4 py-2 text-sm font-semibold text-blue-600 transition-colors bg-blue-100 rounded-lg hover:bg-blue-200 cursor-pointer"
+                  >
                     Upload Foto Baru
+                  </label>
+                  <button
+                    v-if="selectedFile"
+                    @click="uploadPhoto"
+                    :disabled="isUploading"
+                    class="px-4 py-2 text-sm font-semibold text-green-600 transition-colors bg-green-100 rounded-lg hover:bg-green-200 disabled:opacity-50"
+                  >
+                    <Icon v-if="isUploading" name="lucide:loader-2" class="animate-spin" size="16" />
+                    <span v-else>{{ isUploading ? "Mengupload..." : "Simpan Foto" }}</span>
                   </button>
                   <button class="px-4 py-2 text-sm font-semibold text-red-600 transition-colors bg-red-100 rounded-lg hover:bg-red-200">
                     Hapus Foto
@@ -232,12 +377,12 @@ const submitProfile = async () => {
                   <Icon v-else name="lucide:save" size="20" />
                   <span>{{ isSubmitting ? "Menyimpan..." : "Simpan Perubahan" }}</span>
                 </button>
-                <NuxtLink
-                  to="/dashboard"
-                  class="px-6 py-3 font-semibold text-gray-600 transition-colors bg-gray-100 rounded-xl hover:bg-gray-200"
+                <button
+                  @click="handleLogout"
+                  class="px-6 py-3 font-semibold text-red-600 transition-colors bg-red-100 rounded-xl hover:bg-red-200"
                 >
-                  Batal
-                </NuxtLink>
+                  Keluar
+                </button>
               </div>
             </form>
           </div>
