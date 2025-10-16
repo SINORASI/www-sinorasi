@@ -1,23 +1,24 @@
-# Use an official Bun runtime as a parent image
-FROM oven/bun:1 as builder
+# Use an official Node.js runtime as a parent image
+FROM node:18-alpine as builder
 
 # Set the working directory
 WORKDIR /app
 
-# Copy package.json and bun.lockb
-COPY package.json bun.lock ./
+# Copy package.json and package-lock.json (if available)
+COPY package.json ./
+COPY package-lock.json* ./
 
 # Install dependencies
-RUN bun install
+RUN npm install
 
 # Copy the rest of the application
 COPY . .
 
 # Build the Nuxt.js application
-RUN bun run build
+RUN npm run build
 
 # Use a slim image for the final stage
-FROM oven/bun:1-slim as runner
+FROM node:18-alpine as runner
 
 # Set the working directory
 WORKDIR /app
@@ -34,4 +35,4 @@ ENV HOST=0.0.0.0
 ENV PORT=3000
 
 # Start the application
-CMD [ "bun", ".output/server/index.mjs" ]
+CMD [ "node", ".output/server/index.mjs" ]
