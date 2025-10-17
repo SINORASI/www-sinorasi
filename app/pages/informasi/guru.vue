@@ -284,7 +284,7 @@ const teacherCategories = ref([
       {
         "id": "pns-33",
         "name": "WIWIN WINANGSIH",
-        "degree": "",
+        "degree": "S.Pd., M.Pd.",
         "image": "/images/guru/Foto - foto pns/Wiwin/wiwin 2.jpg",
         "university": "",
         "quote": "Tidak keberhasilan tanpa perjuangan, kegagalan adalah hal biasa bangkit terus semangat untuk berjuang"
@@ -292,7 +292,7 @@ const teacherCategories = ref([
       {
         "id": "pns-34",
         "name": "ZULKIFLI ABDILLAH",
-        "degree": "",
+        "degree": "S.Kom",
         "image": "/images/guru/Foto - foto pns/Zulkifli/zulkfli 2.jpg",
         "university": "",
         "quote": "Keberhasilan dan kesuksesan tidak akan mungkin didapat tanpa usaha keras dan tak kenal lelah"
