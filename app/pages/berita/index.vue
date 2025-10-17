@@ -14,6 +14,7 @@ const searchQuery = ref("");
 const selectedTags = ref<string[]>([]);
 const currentPage = ref(1);
 const itemsPerPage = 9;
+const showAllTags = ref(false);
 
 // Fetch all unique tags from news data
 const { data: allNewsResponse } = await useFetch("/api/news", {
@@ -38,6 +39,14 @@ const availableTags = computed(() => {
 
   // Convert to array and sort alphabetically
   return Array.from(tagSet).sort();
+});
+
+// Display tags (limited or all)
+const displayTags = computed(() => {
+  if (showAllTags.value) {
+    return availableTags.value;
+  }
+  return availableTags.value.slice(0, 10);
 });
 
 // Computed offset for pagination
@@ -158,7 +167,7 @@ const formatDate = (dateString: string) => {
           <h3 class="mb-4 text-sm font-semibold text-gray-700">Filter berdasarkan kategori:</h3>
           <div class="flex flex-wrap gap-3">
             <button
-              v-for="tag in availableTags"
+              v-for="tag in displayTags"
               :key="tag"
               @click="handleTagFilter(tag)"
               :class="[
@@ -169,6 +178,14 @@ const formatDate = (dateString: string) => {
               ]"
             >
               {{ tag }}
+            </button>
+            <button
+              v-if="availableTags.length > 10"
+              @click="showAllTags = !showAllTags"
+              class="px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 bg-gray-100 text-gray-700 hover:bg-gray-200 border-2 border-gray-200"
+            >
+              <Icon :name="showAllTags ? 'lucide:chevron-up' : 'lucide:chevron-down'" size="16" class="inline mr-1" />
+              {{ showAllTags ? 'Tampilkan Lebih Sedikit' : `Tampilkan ${availableTags.length - 10} Lagi` }}
             </button>
           </div>
         </div>
