@@ -23,15 +23,15 @@
       "comingSoon": "Fitur akun akan segera kembali"
     },
     "sections": {
-      "beranda": "Beranda",
-      "tentangkami": "Tentang Kami",
-      "konsentrasikeahlian": "Konsentrasi Keahlian",
-      "informasi": "Informasi",
-      "organisasi": "Organisasi",
-      "ekstrakurikuler": "Ekstrakurikuler",
-      "berita": "Berita",
-      "utilitas": "Utilitas",
-      "layanan": "Layanan"
+      "Beranda": "Beranda",
+      "Tentang Kami": "Tentang Kami",
+      "Konsentrasi Keahlian": "Konsentrasi Keahlian",
+      "Informasi": "Informasi",
+      "Organisasi": "Organisasi",
+      "Ekstrakurikuler": "Ekstrakurikuler",
+      "Berita": "Berita",
+      "Utilitas": "Utilitas",
+      "Layanan": "Layanan"
     },
     "matches": {
       "perfect": "Perfect match",

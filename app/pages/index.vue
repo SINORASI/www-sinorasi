@@ -173,6 +173,13 @@ const prevAchievement = () => {
   currentAchievement.value = (currentAchievement.value - 1 + len) % len;
 };
 
+// Hero image carousel
+const heroImages = ref([
+  '/images/seragam/putih-putih/10-putih-putih-jas-l/DSC04215.webp',
+  '/images/seragam/putih-putih/11-putih-putih-jas-l/DSC04320.webp'
+]);
+const currentHeroImage = ref(0);
+
 const animateCounter = (counterRef: { value: number }, target: number, duration: number): void => {
   const startTime = performance.now();
   const startValue = 0;
@@ -222,9 +229,15 @@ onMounted(() => {
   };
   window.addEventListener("scroll", handleScroll);
 
+  // Hero image carousel interval
+  const heroInterval = setInterval(() => {
+    currentHeroImage.value = (currentHeroImage.value + 1) % heroImages.value.length;
+  }, 5000);
+
   onUnmounted(() => {
     window.removeEventListener("resize", checkMobile);
     window.removeEventListener("scroll", handleScroll);
+    clearInterval(heroInterval);
   });
 });
 
@@ -256,9 +269,12 @@ useHead({
         <div class="flex flex-col justify-center items-center w-full lg:w-1/3">
           <div class="relative group">
             <img
-              src="/images/seragam/putih-putih/10-putih-putih-l/DSC04123.webp"
+              v-for="(image, index) in heroImages"
+              :key="index"
+              :src="image"
               alt="Student"
-              class="object-cover transition-transform duration-300 rounded-lg shadow-lg w-60 md:w-150 h-100 md:h-150 group-hover:scale-105"
+              class="absolute object-cover transition-all duration-1000 rounded-lg shadow-lg w-60 md:w-150 h-100 md:h-150 group-hover:scale-105"
+              :class="{ 'opacity-100': index === currentHeroImage, 'opacity-0': index !== currentHeroImage }"
             />
           </div>
         </div>

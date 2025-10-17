@@ -79,7 +79,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(47, 127, 255, 0.817);
+  background: rgba(47, 127, 255, 0.31);
   border-radius: 4px;
 }
 
