@@ -26,6 +26,8 @@ export interface Organization {
   logo: string;
   logoDescription?: string;
   description: string;
+  vision?: string;
+  mission?: string;
   history?: string;
   established?: string;
   contactInfo?: {
