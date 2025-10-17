@@ -8,7 +8,7 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
 </script>
 
 <template>
-  <footer class="pt-8 pb-2 mt-16  text-white" :style="`background: ${bgColor || 'linear-gradient(135deg, #3598F9, #2E7CE6)'}`">
+  <footer :key="$route.fullPath" class="pt-8 pb-2 mt-16  text-white" :style="`background: ${bgColor || 'linear-gradient(135deg, #3598F9, #2E7CE6)'}`">
     <div class="container px-6 mx-auto">
       <div class="grid grid-cols-1 gap-8 md:grid-cols-4">
         <div class="md:col-span-1">
