@@ -233,9 +233,9 @@ useHead({
 
         <!-- Content on Right -->
         <div class="flex flex-col items-center w-full gap-8 text-center text-black lg:w-2/3 lg:items-start lg:text-left">
-          <h1 class="text-3xl font-extrabold transition-all duration-700 ease-out md:text-4xl lg:text-5xl">SMK NEGERI 2 SINGOSARI</h1>
+          <h1 class="text-3xl font-extrabold transition-all duration-700 ease-out md:text-4xl lg:text-5xl">Inovasi Raih Prestasi</h1>
           <p class="text-lg font-semibold transition-all duration-700 ease-out md:text-xl lg:text-2xl">
-            Inovasi Raih Prestasi
+            SMKN 2 Singosari
           </p>
           <p class="max-w-2xl text-sm leading-relaxed transition-all duration-700 ease-out md:text-lg">
             SMK Negeri 2 Singosari - Tempat di mana inovasi bertemu dengan prestasi. Kami berkomitmen untuk membentuk

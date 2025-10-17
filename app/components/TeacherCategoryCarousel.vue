@@ -5,17 +5,17 @@
     </div>
 
     <!-- Carousel View -->
-    <div class="relative w-full px-16 max-w-7xl">
+    <div class="relative w-full px-4 md:px-16 max-w-7xl">
       <button
         @click="scrollLeft"
         :disabled="!canScrollLeft"
-        class="absolute left-0 z-10 p-3 transition-all -translate-y-1/2 rounded-full shadow-lg top-1/2 bg-white/90 hover:bg-white hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed"
+        class="absolute left-0 z-10 p-2 md:p-3 transition-all -translate-y-1/2 rounded-full shadow-lg top-1/2 bg-white/90 hover:bg-white hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        <Icon name="lucide:chevron-left" size="32" class="text-neutral-700" />
+        <Icon name="lucide:chevron-left" size="24 md:32" class="text-neutral-700" />
       </button>
 
-      <div class="flex items-center justify-center gap-6 px-4">
-        <div v-for="teacher in visibleTeachers" :key="teacher.id" class="flex-shrink-0 w-64">
+      <div class="flex items-center justify-center gap-3 md:gap-6 px-2 md:px-4">
+        <div v-for="teacher in visibleTeachers" :key="teacher.id" class="flex-shrink-0 w-48 md:w-64">
           <TeacherCard
             :teacher="teacher"
             @show-details="(teacher) => $emit('open-modal', teacher, teachers, title)"
@@ -26,9 +26,9 @@
       <button
         @click="scrollRight"
         :disabled="!canScrollRight"
-        class="absolute right-0 z-10 p-3 transition-all -translate-y-1/2 rounded-full shadow-lg top-1/2 bg-white/90 hover:bg-white hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed"
+        class="absolute right-0 z-10 p-2 md:p-3 transition-all -translate-y-1/2 rounded-full shadow-lg top-1/2 bg-white/90 hover:bg-white hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        <Icon name="lucide:chevron-right" size="32" class="text-neutral-700" />
+        <Icon name="lucide:chevron-right" size="24 md:32" class="text-neutral-700" />
       </button>
     </div>
 
@@ -43,10 +43,10 @@
     <div class="flex justify-end w-full px-4 mt-6 max-w-7xl">
       <button
         @click="openDialog"
-        class="flex items-center gap-1 font-semibold underline transition-colors text-neutral-600 hover:text-neutral-800"
+        class="flex items-center gap-1 font-semibold underline transition-colors text-neutral-600 hover:text-neutral-800 text-sm md:text-base"
       >
         <span>Lihat Selengkapnya</span>
-        <Icon name="lucide:arrow-right" size="18" />
+        <Icon name="lucide:arrow-right" size="16 md:18" />
       </button>
     </div>
 
@@ -56,22 +56,22 @@
         <div v-if="isDialogOpen" class="fixed inset-0 z-50 overflow-y-auto transition-opacity duration-300 bg-white" @click.self="closeDialog">
           <div class="min-h-screen p-8 py-30">
             <!-- Header -->
-            <div class="mx-auto mb-8 max-w-7xl">
+            <div class="mx-auto mb-8 max-w-7xl px-4">
               <div class="flex items-center justify-between mb-6">
-                <h2 class="text-3xl font-bold md:text-4xl text-neutral-800">{{ title }}</h2>
+                <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-neutral-800">{{ title }}</h2>
                 <button @click="closeDialog" class="p-2 transition-colors rounded-full hover:bg-neutral-100">
-                  <Icon name="lucide:x" size="32" class="text-neutral-700" />
+                  <Icon name="lucide:x" size="24 md:32" class="text-neutral-700" />
                 </button>
               </div>
-              <p v-if="description" class="text-lg leading-relaxed text-neutral-700">
+              <p v-if="description" class="text-base md:text-lg leading-relaxed text-neutral-700">
                 {{ description }}
               </p>
             </div>
 
             <!-- All Teachers Grid -->
-            <div class="mx-auto mb-12 max-w-7xl">
-              <h3 class="mb-6 text-2xl font-bold text-neutral-800">Daftar Guru</h3>
-              <div class="grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+            <div class="mx-auto mb-12 max-w-7xl px-4">
+              <h3 class="mb-6 text-xl md:text-2xl font-bold text-neutral-800">Daftar Guru</h3>
+              <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
                 <div v-for="teacher in teachers" :key="teacher.id" class="w-full">
                   <TeacherCard
                     :teacher="teacher"
@@ -82,24 +82,24 @@
             </div>
 
             <!-- Materials Section -->
-            <div v-if="materialsByClass && materialsByClass.length > 0" class="mx-auto mb-12 max-w-7xl">
-              <h3 class="mb-8 text-2xl font-bold text-center text-neutral-800">Materi Yang Diajarkan</h3>
+            <div v-if="materialsByClass && materialsByClass.length > 0" class="mx-auto mb-12 max-w-7xl px-4">
+              <h3 class="mb-8 text-xl md:text-2xl font-bold text-center text-neutral-800">Materi Yang Diajarkan</h3>
 
-              <div class="space-y-8">
+              <div class="space-y-6 md:space-y-8">
                 <div v-for="classData in materialsByClass" :key="classData.className" class="space-y-4">
                   <!-- Class Name -->
                   <div class="flex justify-center">
-                    <div class="px-8 py-3 text-lg font-bold text-white rounded-lg bg-neutral-800">
+                    <div class="px-4 md:px-8 py-2 md:py-3 text-base md:text-lg font-bold text-white rounded-lg bg-neutral-800">
                       {{ classData.className }}
                     </div>
                   </div>
 
                   <!-- Materials Grid -->
-                  <div class="grid grid-cols-2 gap-4 md:grid-cols-3">
+                  <div class="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
                     <div
                       v-for="(material, index) in classData.materials"
                       :key="index"
-                      class="px-6 py-3 font-medium text-center rounded-lg bg-neutral-200 text-neutral-800"
+                      class="px-4 md:px-6 py-2 md:py-3 font-medium text-center rounded-lg bg-neutral-200 text-neutral-800 text-sm md:text-base"
                     >
                       {{ material }}
                     </div>
@@ -108,45 +108,45 @@
               </div>
 
               <!-- Navigation Buttons -->
-              <div class="flex justify-center gap-4 mt-8">
+              <div class="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 mt-6 md:mt-8">
                 <button
-                  class="flex items-center gap-2 px-6 py-2 font-semibold transition-colors rounded-lg bg-neutral-300 hover:bg-neutral-400 text-neutral-800"
+                  class="flex items-center justify-center gap-2 px-4 md:px-6 py-2 font-semibold transition-colors rounded-lg bg-neutral-300 hover:bg-neutral-400 text-neutral-800 text-sm md:text-base"
                 >
-                  <Icon name="lucide:arrow-left" size="18" />
+                  <Icon name="lucide:arrow-left" size="16 md:18" />
                   Sebelumnya
                 </button>
                 <button
-                  class="flex items-center gap-2 px-6 py-2 font-semibold transition-colors rounded-lg bg-neutral-300 hover:bg-neutral-400 text-neutral-800"
+                  class="flex items-center justify-center gap-2 px-4 md:px-6 py-2 font-semibold transition-colors rounded-lg bg-neutral-300 hover:bg-neutral-400 text-neutral-800 text-sm md:text-base"
                 >
                   Selanjutnya
-                  <Icon name="lucide:arrow-right" size="18" />
+                  <Icon name="lucide:arrow-right" size="16 md:18" />
                 </button>
               </div>
             </div>
 
             <!-- Teaching Focus Section -->
-            <div v-if="teachingFocus" class="mx-auto mb-12 max-w-7xl">
-              <div class="p-8 rounded-lg bg-neutral-100">
-                <h3 class="flex items-center gap-2 mb-4 text-2xl font-bold text-neutral-800">
-                  <Icon name="lucide:target" size="28" class="text-blue-600" />
+            <div v-if="teachingFocus" class="mx-auto mb-12 max-w-7xl px-4">
+              <div class="p-4 md:p-8 rounded-lg bg-neutral-100">
+                <h3 class="flex items-center gap-2 mb-4 text-xl md:text-2xl font-bold text-neutral-800">
+                  <Icon name="lucide:target" size="24 md:28" class="text-blue-600" />
                   Fokus Pembelajaran
                 </h3>
-                <p class="text-lg leading-relaxed text-neutral-700">{{ teachingFocus }}</p>
+                <p class="text-base md:text-lg leading-relaxed text-neutral-700">{{ teachingFocus }}</p>
               </div>
             </div>
 
             <!-- Classes Section -->
-            <div v-if="classes && classes.length > 0" class="mx-auto mb-12 max-w-7xl">
-              <div class="p-8 rounded-lg bg-neutral-100">
-                <h3 class="flex items-center gap-2 mb-4 text-2xl font-bold text-neutral-800">
-                  <Icon name="lucide:school" size="28" class="text-green-600" />
+            <div v-if="classes && classes.length > 0" class="mx-auto mb-12 max-w-7xl px-4">
+              <div class="p-4 md:p-8 rounded-lg bg-neutral-100">
+                <h3 class="flex items-center gap-2 mb-4 text-xl md:text-2xl font-bold text-neutral-800">
+                  <Icon name="lucide:school" size="24 md:28" class="text-green-600" />
                   Kelas yang Diajar
                 </h3>
-                <div class="flex flex-wrap gap-3">
+                <div class="flex flex-wrap gap-2 md:gap-3">
                   <span
                     v-for="cls in classes"
                     :key="cls"
-                    class="px-5 py-2 text-base font-semibold text-green-800 bg-green-100 rounded-full"
+                    class="px-3 md:px-5 py-1 md:py-2 text-sm md:text-base font-semibold text-green-800 bg-green-100 rounded-full"
                   >
                     {{ cls }}
                   </span>
@@ -180,11 +180,17 @@ defineEmits(["open-modal"]);
 const carouselContainer = ref(null);
 const isDialogOpen = ref(false);
 const currentIndex = ref(0);
-const visibleCount = 4;
 
-const visibleTeachers = computed(() => props.teachers.slice(currentIndex.value, currentIndex.value + visibleCount));
+const visibleCount = computed(() => {
+  if (process.client) {
+    return window.innerWidth < 768 ? 1 : window.innerWidth < 1024 ? 2 : 4;
+  }
+  return 4; // Default for SSR
+});
+
+const visibleTeachers = computed(() => props.teachers.slice(currentIndex.value, currentIndex.value + visibleCount.value));
 const canScrollLeft = computed(() => currentIndex.value > 0);
-const canScrollRight = computed(() => currentIndex.value + visibleCount < props.teachers.length);
+const canScrollRight = computed(() => currentIndex.value + visibleCount.value < props.teachers.length);
 
 const scrollLeft = () => {
   if (canScrollLeft.value) {

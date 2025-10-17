@@ -1,21 +1,21 @@
 <template>
   <section class="relative w-full py-30 h-screen" style="background-image: url('/images/guru/foto-guru-bersama.jpeg'); background-size: cover; background-position: bottom;">
-    <div class="absolute bottom-0 left-0 right-0 flex justify-around w-full p-4 bg-neutral-200 h-fit">
+    <div class="absolute bottom-0 left-0 right-0 flex flex-col md:flex-row justify-around items-center w-full p-4 bg-neutral-200 h-fit gap-4 md:gap-0">
       <div class="flex flex-col items-center justify-center">
-        <h1 class="text-4xl font-bold">56+</h1>
-        <p class="text-base">Guru Pengajar</p>
+        <h1 class="text-2xl md:text-4xl font-bold">56+</h1>
+        <p class="text-sm md:text-base">Guru Pengajar</p>
       </div>
       <div class="flex flex-col items-center justify-center">
-        <h1 class="text-4xl font-bold">14+</h1>
-        <p class="text-base">Karyawan</p>
+        <h1 class="text-2xl md:text-4xl font-bold">14+</h1>
+        <p class="text-sm md:text-base">Karyawan</p>
       </div>
       <div class="flex flex-col items-center justify-center">
-        <h1 class="text-4xl font-bold">12+</h1>
-        <p class="text-base">Staff</p>
+        <h1 class="text-2xl md:text-4xl font-bold">12+</h1>
+        <p class="text-sm md:text-base">Staff</p>
       </div>
       <div class="flex flex-col items-center justify-center">
-        <h1 class="text-4xl font-bold">80+</h1>
-        <p class="text-base">Lainnya</p>
+        <h1 class="text-2xl md:text-4xl font-bold">80+</h1>
+        <p class="text-sm md:text-base">Lainnya</p>
       </div>
     </div>
   </section>
