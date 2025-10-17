@@ -64,7 +64,7 @@ const toggleFAQ = (index: number) => {
 </script>
 
 <template>
-  <section class="py-20" id="faq">
+  <section id="faq">
     <div class="container px-4 mx-auto md:px-10">
       <div class="flex flex-col items-center gap-8">
         <!-- Section Header -->
