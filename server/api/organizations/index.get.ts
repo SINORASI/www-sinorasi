@@ -11,7 +11,21 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
       slug: 'osis',
       name: 'OSIS',
       logo: '/images/organisasi/OSIS.webp',
-      description: 'Organisasi Siswa Intra Sekolah yang menjadi wadah bagi siswa untuk mengembangkan potensi dan kreativitas.',
+      description: 'OSIS, atau Organisasi Siswa Intra Sekolah, adalah organisasi yang ada di tingkat sekolah menengah pertama (SMP sederajat) dan sekolah menengah atas (SMA/K sederajat) di Indonesia. Anggotanya adalah siswa-siswi di sekolah tersebut. OSIS bertugas sebagai wadah untuk kegiatan siswa, mewakili aspirasi mereka, dan membantu kelancaran kegiatan sekolah.',
+      logoDescriptions: {
+        maknaSimbol: [
+          'Buku Terbuka: Simbol menuntut ilmu pengetahuan dan teknologi.',
+          'Pena: Melambangkan kreativitas, inovasi, dan perjuangan siswa untuk meraih cita-cita.',
+          'Obor: Simbol semangat yang tidak pernah padam untuk menerangi jalan menuju masa depan.',
+          'Tiga Bintang: Mewakili kecerdasan, karakter, dan keterampilan sebagai pilar utama dalam membangun pribadi yang unggul.',
+          'Padi: Melambangkan kerendahan hati, kesabaran, dan rasa syukur.',
+          'Pita: Menyimbolkan persatuan dan solidaritas seluruh siswa.',
+          'Perisai: Melambangkan pelindung nilai-nilai luhur dan integritas siswa.'
+        ],
+        maknaWarna: [
+          'Emas: Melambangkan kejayaan, kemuliaan, dan harapan yang tinggi. Warna ini merepresentasikan siswa OSIS sebagai generasi unggul yang bercita-cita meraih prestasi gemilang.'
+        ]
+      },
       history: 'Didirikan sejak tahun 2000, OSIS telah menjadi pilar utama dalam kegiatan siswa. OSIS SMKN 2 Singosari telah berhasil menyelenggarakan berbagai kegiatan yang bermanfaat bagi siswa, mulai dari kegiatan akademik hingga kegiatan sosial. Dengan semangat kebersamaan dan kreativitas, OSIS terus berkembang dan memberikan kontribusi positif bagi sekolah.',
       established: '2008',
       statistics: {
@@ -21,10 +35,10 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
         meetings: 48
       },
       contactInfo: {
-        instagram: [{ label: 'Instagram', handle: 'https://www.instagram.com/osis.stemdasi?igsh=dnVnM2tyNGs1djF4' }],
-        whatsapp: [{ label: 'WhatsApp', number: '+6281234567890' }],
+        instagram: [{ label: 'Instagram', handle: 'osis.stemdasi' }],
+        whatsapp: [{ label: 'WhatsApp', number: '081234567890' }],
         socialMedia: [
-          { platform: 'tiktok', handle: 'https://www.tiktok.com/@askaraanagatastemdasi?lang=id-ID&is_from_webapp=1&sender_device=mobile&sender_web_id=7552483889404364306' }
+          { platform: 'tiktok', handle: '@askaraanagatastemdasi' }
         ]
       },
       leadership: {
@@ -219,7 +233,18 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
       slug: 'pmr',
       name: 'PMR',
       logo: '/images/organisasi/PMR.webp',
-      description: 'Palang Merah Remaja yang fokus pada kegiatan kemanusiaan dan pertolongan pertama.',
+      description: 'PMR adalah singkatan dari Palang Merah Remaja, sebuah organisasi kepemudaan dan kemanusia. Organisasi ini bertujuan untuk menanamkan prinsip-prinsip Palang Merah, mengembangkan keterampilan sosial dan kemanusiaan, serta melatih anggota untuk menjadi relawan PMI di masa depan.',
+      logoDescriptions: {
+        maknaSimbol: [
+          'Bunga Berkelopak Lima: Melambangkan lima prinsip dasar gerakan Palang Merah dan Bulan Sabit Merah Internasional: Kemanusiaan, Kesamaan, Kenetralan, Kemandirian, Kesukarelaan, Kesatuan, Kesemestaan.',
+          'Palang Merah di Tengah: Merupakan simbol Palang Merah Internasional yang melambangkan pertolongan tanpa pamrih, netral, dan universal.',
+          'Tulisan "PMR": Menunjukkan identitas sebagai bagian dari Palang Merah Remaja di sekolah atau instansi tertentu.'
+        ],
+        maknaWarna: [
+          'Putih (pada bunga): Menggambarkan kesucian dan ketulusan hati anggota PMR dalam menolong sesama.',
+          'Merah (pada palang): Memiliki arti keberanian dan semangat kemanusiaan.'
+        ]
+      },
       vision: 'Menumbuhkan jiwa peduli kemanusiaan dan semangat tolong-menolong di kalangan anggota PMR untuk mewujudkan generasi yang berempati, tangguh, dan siap membantu sesama.',
       mission: 'Mengembangkan rasa empati dan kepedulian sosial, meningkatkan keterampilan pertolongan pertama, menumbuhkan semangat kerja sama, melaksanakan kegiatan sosial, dan menjadi teladan dalam sikap saling menolong.',
       history: 'PMR telah berperan aktif dalam kegiatan sosial dan kesehatan siswa. Dengan semangat kemanusiaan, PMR SMKN 2 Singosari terus memberikan pelayanan kesehatan dan bantuan sosial kepada masyarakat sekitar sekolah.',
@@ -231,7 +256,7 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
         meetings: 36
       },
       contactInfo: {
-        instagram: [{ label: 'Instagram', handle: 'https://www.instagram.com/pmr_smkn2sgs?igsh=MTlpeGJubDlqNmlmNQ==' }]
+        instagram: [{ label: 'Instagram', handle: 'pmr_smkn2sgs' }]
       },
       leadership: {
         ketua: [{
@@ -380,7 +405,21 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
       slug: 'linorasi',
       name: 'LINORASI',
       logo: '/images/organisasi/LINORASI.webp',
-      description: 'Litbang Inovasi Raih Prestasi yang fokus pada pengembangan inovasi dan prestasi siswa.',
+      description: 'LINORASI merupakan salah satu wadah mengembangkan inovasi dan kreasi siswa SMK Negeri 2 Singosari, serta memberikan kesempatan untuk menjalin kerjasama dengan berbagai pihak.',
+      logoDescriptions: {
+        maknaSimbol: [
+          '- Tulisan "Literasi": Merupakan penegasan bahwa logo ini adalah milik literasi sekolah SMK Negeri 2 Singosari.',
+          '- Burung Terbang: Melambangkan kebebasan murid dalam berkarya dan menuangkan ide-ide positif.',
+          '- Buku: Menggambarkan jendela ilmu sebagai sumber pengetahuan untuk menemukan ide dan inovasi.',
+          '- Daun: Melambangkan kontribusi guru dalam memberikan pengetahuan kepada murid.'
+        ],
+        maknaWarna: [
+          '- Oranye: Merupakan simbol percaya diri dan kemampuan bersosialisasi.',
+          '- Biru: Merupakan lambang profesionalisme, kekuatan, ketenangan, serta mampu merangsang kemampuan berkomunikasi dan berekspresi.'
+        ]
+      },
+      vision: 'Mewujudkan generasi yang cerdas, kreatif, ahli dalam menulis dan berkarya, serta mampu menghadapi persaingan global dan menciptakan murid yang berkarakter.',
+      mission: 'Melestarikan budaya literasi, meningkatkan kreativitas murid dalam menulis, dan mewujudkan ekskul yang menenangkan dan mencerdaskan serta membentuk karakter murid.',
       history: 'LINORASI didirikan untuk mendorong inovasi dan pencapaian prestasi siswa. Melalui berbagai program inovatif, LINORASI telah berhasil membawa nama sekolah ke tingkat yang lebih tinggi dalam berbagai kompetisi dan ajang prestasi.',
       established: '2022',
       statistics: {
@@ -390,7 +429,7 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
         meetings: 30
       },
       contactInfo: {
-        instagram: [{ label: 'Instagram', handle: 'https://www.instagram.com/linorasi22?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==' }]
+        instagram: [{ label: 'Instagram', handle: 'linorasi22' }]
       },
       leadership: {
         ketua: [{
@@ -481,14 +520,34 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
         { id: 'linorasi-act-3', image: '/images/placeholder.jpg', title: 'Seminar Penelitian', description: 'Seminar tentang metode penelitian dan penyelidikan ilmiah.', date: '2024-12-25' }
       ],
       recruitmentPoster: '/images/organisasi/poster/LINORASI.webp',
-      recruitmentPeriod: '1-15 November 2024'
+      recruitmentPeriod: '2024-2025'
     },
     {
       id: '4',
       slug: 'bdi',
       name: 'BDI',
       logo: '/images/organisasi/BDI.webp',
-      description: 'Badan Dakwah Islam yang fokus pada pengembangan spiritual dan kegiatan keagamaan.',
+      description: 'BDI (Badan Dakwah Islam) adalah organisasi keislaman di lingkungan sekolah yang bergerak dalam kegiatan dakwah, pembinaan keagamaan, dan pengembangan karakter Islami bagi siswa-siswi.',
+      logoDescriptions: {
+        maknaSimbol: [
+          '- Segitiga: Melambangkan semangat dalam meneladani sunnah Rasulullah SAW.',
+          '- Lingkaran: Mewakili kekompakan dan rasa saling memahami antar anggota BDI.',
+          '- Bintang Besar: Melambangkan Nabi Muhammad SAW sebagai suri teladan utama.',
+          '- Empat Bintang di Samping: Melambangkan Khulafaur Rasyidin.',
+          '- Empat Bintang di Bawah: Melambangkan empat imam besar mazhab: Imam Hanafi, Imam Maliki, Imam Syafi\'i, dan Imam Hambali.',
+          '- Buku dan Pena: Simbol bahwa anggota BDI bersungguh-sungguh dalam menuntut ilmu agama maupun umum.',
+          '- Garuda: Mengandung makna bahwa BDI menjunjung tinggi nilai-nilai Pancasila dan cinta tanah air.',
+          '- Garis Hijau Melengkung: Menggambarkan kesiapan BDI dalam menyelenggarakan dan mengembangkan kegiatan keislaman di sekolah.',
+          '- Teks "ROIS AAM": Menunjukkan peran anggota BDI sebagai pemimpin dan teladan dalam hal keagamaan.'
+        ],
+        maknaWarna: [
+          '- Hijau: Melambangkan kejayaan dan kesuburan.',
+          '- Putih: Melambangkan kesucian, ketulusan, dan niat yang bersih.',
+          '- Kuning: Melambangkan keceriaan, semangat, dan optimisme.'
+        ]
+      },
+      vision: 'Menjadi organisasi pelajar yang membimbing siswa-siswi menuju pribadi yang beriman, berakhlak mulia, dan cinta Islam, melalui dakwah yang membumi, menyenangkan, dan membangun.',
+      mission: 'Menyediakan ruang pembinaan keislaman yang ramah, menghadirkan kegiatan dakwah yang kreatif dan inspiratif, membantu siswa dalam membentuk karakter Islami, mendampingi siswa dalam mengenal dan mencintai ajaran Islam, dan mengajak siswa-siswi berkontribusi positif di sekolah dan masyarakat.',
       history: 'BDI didirikan untuk memperkuat nilai-nilai keislaman di lingkungan sekolah. Dengan berbagai program keagamaan, BDI telah berhasil menciptakan lingkungan yang kondusif untuk pengembangan spiritual siswa.',
       established: '2008',
       statistics: {
@@ -546,7 +605,10 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
           tasks: 'Pengorganisasian tahlil, istighosah, pembinaan spiritual',
           programs: ['Tahlil Rutin', 'Istighosah', 'Pembinaan Rohani'],
           members: [
-            { id: '17', name: 'Muhammad Alvin Nur Roihan', image: '/images/profile-placeholder.png', position: 'Koordinator' }
+            { id: '17', name: 'Muhammad Alvin Nur Roihan', image: '/images/profile-placeholder.png', position: 'Koordinator' },
+            { id: '21', name: 'Ananda Achmad Furqon', image: '/images/profile-placeholder.png', position: 'Anggota' },
+            { id: '22', name: 'Muhammad Saikhu Malek', image: '/images/profile-placeholder.png', position: 'Anggota' },
+            { id: '23', name: 'Sherina Najwa Novianti', image: '/images/profile-placeholder.png', position: 'Anggota' }
           ]
         },
         {
@@ -558,7 +620,10 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
           tasks: 'Pengorganisasian amal jum\'at, kegiatan sosial, bakti sosial',
           programs: ['Amal Jum\'at', 'Bakti Sosial', 'Kegiatan Sosial'],
           members: [
-            { id: '18', name: 'Muhammad Arif Muzaky Hilmi', image: '/images/profile-placeholder.png', position: 'Koordinator' }
+            { id: '18', name: 'Muhammad Arif Muzaky Hilmi', image: '/images/profile-placeholder.png', position: 'Koordinator' },
+            { id: '24', name: 'Densel Starina', image: '/images/profile-placeholder.png', position: 'Anggota' },
+            { id: '25', name: 'Ayu Wulandari', image: '/images/profile-placeholder.png', position: 'Anggota' },
+            { id: '26', name: 'Irfan Hamid', image: '/images/profile-placeholder.png', position: 'Anggota' }
           ]
         },
         {
@@ -570,7 +635,10 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
           tasks: 'Pengorganisasian tadarus pagi, pembinaan membaca Al-Qur\'an',
           programs: ['Tadarus Pagi', 'Pembinaan Al-Qur\'an', 'Kegiatan Rohani'],
           members: [
-            { id: '19', name: 'Azizi Haikal An Nur', image: '/images/profile-placeholder.png', position: 'Koordinator' }
+            { id: '19', name: 'Azizi Haikal An Nur', image: '/images/profile-placeholder.png', position: 'Koordinator' },
+            { id: '27', name: 'M Deva Prasetyo', image: '/images/profile-placeholder.png', position: 'Anggota' },
+            { id: '28', name: 'Moch Alief Zainudin Nasrullah', image: '/images/profile-placeholder.png', position: 'Anggota' },
+            { id: '29', name: 'Moh Agung Asraf Annabil', image: '/images/profile-placeholder.png', position: 'Anggota' }
           ]
         },
         {
@@ -582,7 +650,10 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
           tasks: 'Pengorganisasian banjari, latihan seni islami, pertunjukan',
           programs: ['Banjari', 'Seni Islami', 'Pertunjukan Seni'],
           members: [
-            { id: '20', name: 'M. Nizar Fadillah', image: '/images/profile-placeholder.png', position: 'Koordinator' }
+            { id: '20', name: 'M. Nizar Fadillah', image: '/images/profile-placeholder.png', position: 'Koordinator' },
+            { id: '30', name: 'Saidatul Aliyah', image: '/images/profile-placeholder.png', position: 'Anggota' },
+            { id: '31', name: 'M. Chamim Bayhaqi', image: '/images/profile-placeholder.png', position: 'Anggota' },
+            { id: '32', name: 'Denis Arya Chandra', image: '/images/profile-placeholder.png', position: 'Anggota' }
           ]
         }
       ],
@@ -590,14 +661,33 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
         { id: 'bdi-act-1', image: '/images/placeholder.jpg', title: 'Peringatan Maulid Nabi Muhammad di SMK Negeri 2 Singosari', description: 'Peringatan Maulid Nabi Muhammad di SMK Negeri 2 Singosari.', date: '2025-09-04' }
       ],
       recruitmentPoster: '/images/organisasi/poster/BDI.webp',
-      recruitmentPeriod: '1-15 December 2024'
+      recruitmentPeriod: '2025 - 2026'
     },
     {
       id: '5',
       slug: 'ambalan',
       name: 'AMBALAN',
       logo: '/images/organisasi/AMBALAN.webp',
-      description: 'AMBALAN (Ambalan Pramuka) adalah organisasi pendidikan nonformal yang bertujuan membentuk karakter siswa melalui kegiatan kepramukaan yang menyenangkan dan mendidik.',
+      description: 'Ambalan Siliwangi–Srikandi (S4AC) adalah organisasi kepramukaan di SMKN 2 Singosari yang pertama kali diresmikan pada tanggal 2 November 2009. Ambalan ini menjadi wadah pengembangan diri bagi siswa berusia 16–20 tahun, khususnya Pramuka Penegak. Nama Siliwangi diambil untuk putra, melambangkan pribadi tegas, berwibawa, dan bijaksana, sementara nama Srikandi untuk putri mencerminkan sosok tangguh, gagah, dan tidak mudah menyerah, meski menghadapi berbagai tantangan.',
+      logoDescriptions: {
+        maknaSimbol: [
+          '- Bentuk Segi Lima: Menggambarkan Pancasila.',
+          '- Tulisan Siliwangi-Srikandi: Siliwangi bermakna kesiapan untuk menjadi pemimpin, sementara Srikandi bermakna kemampuan untuk mengeluarkan segala potensi demi kebaikan.',
+          '- Nomor 26177 – 26178: Merupakan nomor gugus depan.',
+          '- Padi dan Kapas: Melambangkan kemakmuran serta kebutuhan sandang dan pangan.',
+          '- Kujang: Senjata khas Sunda yang melambangkan kekuatan dan keberanian.',
+          '- Busur dan Anak Panah: Melambangkan bahwa anggota Pramuka memiliki tujuan mulia dalam setiap kegiatannya.',
+          '- Api: Memiliki makna semangat yang terus berkobar dan keyakinan yang tidak pernah padam.',
+          '- WOSM (World Organization of the Scout Movement): Merupakan lambang kepanduan sedunia.',
+          '- Tunas Kelapa: Bermakna bahwa anggota Pramuka dapat hidup di mana saja dan bermanfaat bagi masyarakat.'
+        ],
+        maknaWarna: [
+          '- Biru Tua: Terinspirasi dari laut, melambangkan ketangguhan dan kepercayaan.',
+          '- Biru Muda: Terinspirasi dari langit, melambangkan harapan yang setinggi langit.'
+        ]
+      },
+      vision: 'Memiliki kepribadian yang beriman, bertakwa, berakhlak mulia, berjiwa patriotik, taat hukum, disiplin, menjunjung tinggi nilai-nilai luhur bangsa, berkecakapan hidup, sehat jasmani, dan rohani serta memiliki rasa toleransi. Menjadi warga negara yang berjiwa Pancasila, setia dan patuh kepada Negara Kesatuan Republik Indonesia serta menjadi masyarakat yang baik dan berguna.',
+      mission: 'Menumbuhkan tunas bangsa yang berkarakter, menyelenggarakan pendidikan kepramukaan, dan mampu membina serta mengisi kemerdekaan.',
       history: 'AMBALAN di SMK Negeri 2 Singosari telah lama menjadi bagian dari kegiatan ekstrakurikuler yang membantu siswa mengembangkan keterampilan survival, kepemimpinan, dan jiwa sosial.',
       established: '2009',
       statistics: {
@@ -608,15 +698,15 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
       },
       contactInfo: {
         instagram: [
-          { label: 'S4AC Scout', handle: '@s4acscout.official' }
+          { label: 'S4AC Scout', handle: 's4acscout.official' }
         ],
         whatsapp: [
-          { label: 'Ketua AMBALAN', number: '081234567891' },
+          { label: 'Pradana', number: '08990409149' },
           { label: 'Pembina', number: '089876543211' }
         ],
         socialMedia: [
-          { platform: 'tiktok', handle: 's4ac.stemdasi' },
-          { platform: 'youtube', handle: 's4acsmkn2singosari43' }
+          { platform: 'tiktok', handle: '@s4ac.stemdasi' },
+          { platform: 'youtube', handle: '@s4acsmkn2singosari43?' }
         ]
       },
       leadership: {
@@ -723,7 +813,7 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
         }
       ],
       recruitmentPoster: '/images/organisasi/poster/AMBALAN.webp',
-      recruitmentPeriod: '1-15 Agustus 2024'
+      recruitmentPeriod: '2025/2026'
     },
   ];
 

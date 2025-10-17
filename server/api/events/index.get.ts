@@ -27,6 +27,7 @@ Ini adalah deskripsi lengkap dari event ini. Event ini akan diadakan di lokasi y
 Untuk informasi lebih lanjut, hubungi panitia event.`,
     publishedAt: "2024-09-01",
     author: "Tim Event SMKN 1 Sinorasi",
+    organizationSlug: "osis",
   },
   {
     id: "2",
@@ -60,6 +61,7 @@ Community Tech Meetup adalah acara pertemuan komunitas teknologi yang diadakan o
 Email: event@smkn1sinorasi.sch.id`,
     publishedAt: "2024-09-15",
     author: "Tim Event SMKN 1 Sinorasi",
+    organizationSlug: "osis",
   },
   {
     id: "3",
@@ -96,6 +98,7 @@ Tim Developer dari Jurusan RPL SMKN 1 Sinorasi
 WhatsApp: +62 812-3456-7890`,
     publishedAt: "2024-09-20",
     author: "Tim Event SMKN 1 Sinorasi",
+    organizationSlug: "osis",
   },
 ];
 

@@ -8,4 +8,5 @@ export interface Event {
   content: string; // Markdown content
   publishedAt: string;
   author?: string;
+  organizationSlug?: string;
 }

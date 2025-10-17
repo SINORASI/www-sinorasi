@@ -25,6 +25,12 @@ export interface Organization {
   nickname?: string;
   logo: string;
   logoDescription?: string;
+  logoDescriptions?: {
+    maknaSimbol: string[];
+    maknaWarna: string[];
+  };
+  maknaSimbol?: string[];
+  maknaWarna?: string[];
   description: string;
   vision?: string;
   mission?: string;
