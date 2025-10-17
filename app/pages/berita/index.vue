@@ -11,22 +11,34 @@ useHead({
 
 // State management
 const searchQuery = ref("");
-const selectedTag = ref("");
+const selectedTags = ref<string[]>([]);
 const currentPage = ref(1);
 const itemsPerPage = 9;
 
-// Available tags (can be fetched from API or derived from news data)
-const availableTags = ref<string[]>([
-  "Pengumuman",
-  "Program Baru",
-  "Prestasi",
-  "Robotik",
-  "Kompetisi",
-  "Kerjasama",
-  "Industri",
-  "Magang",
-  "Tahun Ajaran",
-]);
+// Fetch all unique tags from news data
+const { data: allNewsResponse } = await useFetch("/api/news", {
+  query: { limit: 1000 }, // Fetch a large number to get all tags
+});
+
+// Available tags derived from all news data
+const availableTags = computed(() => {
+  const allNews = allNewsResponse.value?.data || [];
+  const tagSet = new Set<string>();
+
+  allNews.forEach((news: any) => {
+    if (news.tags && Array.isArray(news.tags)) {
+      news.tags.forEach((tag: string) => {
+        // Only include tags that are meaningful (not too short, not numbers only)
+        if (tag.length > 2 && !/^\d+$/.test(tag)) {
+          tagSet.add(tag);
+        }
+      });
+    }
+  });
+
+  // Convert to array and sort alphabetically
+  return Array.from(tagSet).sort();
+});
 
 // Computed offset for pagination
 const offset = computed(() => (currentPage.value - 1) * itemsPerPage);
@@ -38,13 +50,13 @@ const {
   error,
   refresh,
 } = await useFetch("/api/news", {
-  query: {
-    search: searchQuery,
-    tag: selectedTag,
+  query: computed(() => ({
+    search: searchQuery.value,
+    tags: selectedTags.value.join(','),
     limit: itemsPerPage,
-    offset: offset,
-  },
-  watch: [searchQuery, selectedTag, offset],
+    offset: offset.value,
+  })),
+  watch: [searchQuery, selectedTags, offset],
 });
 
 // Computed properties
@@ -60,17 +72,18 @@ const handleSearch = (query: string) => {
 };
 
 const handleTagFilter = (tag: string) => {
-  if (selectedTag.value === tag) {
-    selectedTag.value = ""; // Clear filter if same tag clicked
+  const index = selectedTags.value.indexOf(tag);
+  if (index > -1) {
+    selectedTags.value.splice(index, 1); // Remove tag if already selected
   } else {
-    selectedTag.value = tag;
+    selectedTags.value.push(tag); // Add tag if not selected
   }
   currentPage.value = 1; // Reset to first page on new filter
 };
 
 const clearFilters = () => {
   searchQuery.value = "";
-  selectedTag.value = "";
+  selectedTags.value = [];
   currentPage.value = 1;
 };
 
@@ -150,7 +163,7 @@ const formatDate = (dateString: string) => {
               @click="handleTagFilter(tag)"
               :class="[
                 'px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300',
-                selectedTag === tag
+                selectedTags.includes(tag)
                   ? 'bg-blue-600 text-white shadow-md'
                   : 'bg-white text-gray-700 hover:bg-blue-50 border-2 border-gray-200',
               ]"
@@ -161,7 +174,7 @@ const formatDate = (dateString: string) => {
         </div>
 
         <!-- Active Filters Display -->
-        <div v-if="searchQuery || selectedTag" class="flex flex-wrap items-center gap-2 pt-4 border-t border-gray-200">
+        <div v-if="searchQuery || selectedTags.length > 0" class="flex flex-wrap items-center gap-2 pt-4 border-t border-gray-200">
           <span class="text-sm font-medium text-gray-600">Filter aktif:</span>
           <span
             v-if="searchQuery"
@@ -174,12 +187,13 @@ const formatDate = (dateString: string) => {
             </button>
           </span>
           <span
-            v-if="selectedTag"
+            v-for="tag in selectedTags"
+            :key="tag"
             class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-orange-800 bg-orange-100 rounded-full"
           >
             <Icon name="lucide:tag" size="14" />
-            {{ selectedTag }}
-            <button @click="selectedTag = ''" class="ml-1 hover:text-orange-900">
+            {{ tag }}
+            <button @click="handleTagFilter(tag)" class="ml-1 hover:text-orange-900">
               <Icon name="lucide:x" size="14" />
             </button>
           </span>

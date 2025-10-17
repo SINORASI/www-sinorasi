@@ -5,7 +5,7 @@ import { desc, sql, like, or, and } from 'drizzle-orm';
 export default defineEventHandler(async (event) => {
   // Get query parameters for filtering
   const query = getQuery(event);
-  const { tag, search, limit = 10, offset = 0 } = query;
+  const { tag, tags, search, limit = 10, offset = 0 } = query;
 
   try {
     // Build where conditions
@@ -14,6 +14,17 @@ export default defineEventHandler(async (event) => {
     // Filter by tag (search in JSON array)
     if (tag && typeof tag === 'string') {
       whereConditions.push(sql`${news.tags}::text ILIKE ${`%${tag}%`}`);
+    }
+
+    // Filter by multiple tags (comma-separated)
+    if (tags && typeof tags === 'string') {
+      const tagArray = tags.split(',').filter(t => t.trim());
+      if (tagArray.length > 0) {
+        const tagConditions = tagArray.map(tag =>
+          sql`EXISTS (SELECT 1 FROM jsonb_array_elements_text(${news.tags}) AS tag WHERE tag ILIKE ${`%${tag.trim()}%`})`
+        );
+        whereConditions.push(and(...tagConditions));
+      }
     }
 
     // Search in title and content
