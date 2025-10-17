@@ -108,51 +108,17 @@
               </div>
             </NuxtLink>
 
-            <!-- Language Switcher -->
-            <div class="relative mt-3">
-              <button
-                @click="showLanguageMenu = !showLanguageMenu"
-                class="flex items-center justify-between w-full px-4 py-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
-              >
-                <div class="flex items-center gap-3">
-                  <Icon name="lucide:languages" size="20" class="text-gray-600" />
-                  <span class="text-sm font-medium text-gray-700">
-                    {{ languages.find((lang: { code: any; }) => lang.code === currentLanguage)?.flag }}
-                    {{ languages.find((lang: { code: any; }) => lang.code === currentLanguage)?.name }}
-                  </span>
-                </div>
-                <Icon
-                  name="lucide:chevron-down"
-                  size="16"
-                  class="text-gray-500 transition-transform"
-                  :class="{ 'rotate-180': showLanguageMenu }"
-                />
-              </button>
-
-              <!-- Language Menu Dropdown -->
-              <Transition name="dropdown">
-                <div
-                  v-if="showLanguageMenu"
-                  class="absolute top-full left-0 right-0 z-10 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg"
-                >
-                  <div
-                    v-for="lang in languages"
-                    :key="lang.code"
-                    @click="switchLanguage(lang.code)"
-                    class="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-gray-50 transition-colors"
-                    :class="{ 'bg-blue-50 border-blue-200': lang.code === currentLanguage }"
-                  >
-                    <span class="text-lg">{{ lang.flag }}</span>
-                    <span class="text-sm font-medium text-gray-700">{{ lang.name }}</span>
-                    <Icon
-                      v-if="lang.code === currentLanguage"
-                      name="lucide:check"
-                      size="16"
-                      class="ml-auto text-blue-600"
-                    />
-                  </div>
-                </div>
-              </Transition>
+            <!-- Language Switcher (Disabled) -->
+            <div
+              class="flex items-center justify-between px-4 py-3 mt-3 border border-gray-200 rounded-lg cursor-not-allowed bg-gray-50 opacity-60"
+            >
+              <div class="flex items-center gap-3">
+                <Icon name="lucide:languages" size="20" class="text-gray-500" />
+                <span class="text-sm font-medium text-gray-600">Bahasa Indonesia</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-1 text-xs text-gray-500 bg-gray-200 rounded">Segera Hadir</span>
+              </div>
             </div>
 
             <!-- Dark Mode Toggle (Disabled) -->
@@ -262,7 +228,7 @@
                       :name="sub.icon"
                       size="18"
                       class="mt-0.5 flex-shrink-0"
-                      :style="{ color: item.title === 'Jurusan' ? getIconColor(sub.title) : '#000000' }"
+                      :style="{ color: item.title === 'Konsentrasi Keahlian' ? getIconColor(sub.title) : '#000000' }"
                     />
                     <div class="flex-1">
                       <div class="flex items-center gap-2">
@@ -563,7 +529,7 @@ const menuItems = [
     ],
   },
   {
-    title: "Jurusan",
+    title: "Konsentrasi Keahlian",
     submenu: [
       {
         title: "RPL",

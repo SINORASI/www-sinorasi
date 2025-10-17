@@ -3,6 +3,8 @@ definePageMeta({ layout: false });
 
 import AppHeader from "~/components/layout/AppHeader.vue";
 import AppFooter from "~/components/layout/AppFooter.vue";
+import MajorPartnerSlider from "~/components/Major/MajorPartnerSlider.vue";
+import type { MajorName } from "~/models/MajorName";
 
 const selectedFilter = ref("ALL");
 const showDialog = ref(false);
@@ -165,11 +167,20 @@ const filteredPartners = computed(() => {
           </div>
         </div>
 
+        <!-- Partners Slider -->
+        <div class="px-8 py-16 bg-gradient-to-b from-white to-slate-50">
+          <div class="mb-8 text-center">
+            <h2 class="mb-4 text-2xl font-bold text-gray-800">Partner Slider</h2>
+            <p class="text-gray-600">Our industry partners</p>
+          </div>
+          <MajorPartnerSlider :major="'tkj'" />
+        </div>
+
         <!-- Filter Navigation Bar - Disabled -->
         <!-- <div class="px-8 py-8 bg-white border-b border-gray-200">
           <div class="mb-4 text-center">
-            <h2 class="text-xl font-bold text-gray-800">Filter Berdasarkan Jurusan</h2>
-            <p class="text-sm text-gray-600">Pilih jurusan untuk melihat mitra industri terkait</p>
+            <h2 class="text-xl font-bold text-gray-800">Filter Berdasarkan Konsentrasi Keahlian</h2>
+            <p class="text-sm text-gray-600">Pilih konsentrasi keahlian untuk melihat mitra industri terkait</p>
           </div>
           <div class="flex flex-wrap justify-center gap-3">
             <button
@@ -189,50 +200,6 @@ const filteredPartners = computed(() => {
           </div>
         </div> -->
 
-        <!-- Main Content Grid -->
-        <div class="px-8 py-16 bg-gradient-to-b from-white to-slate-50">
-          <div class="mb-8 text-center">
-            <h2 class="mb-4 text-2xl font-bold text-gray-800">Daftar Mitra Industri</h2>
-            <p class="text-gray-600">Klik pada kartu perusahaan untuk melihat detail kemitraan</p>
-          </div>
-          <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            <div
-              v-for="(partner, index) in filteredPartners"
-              :key="partner.id"
-              @click="openDialog(partner)"
-              class="group relative p-6 transition-all duration-500 bg-white border border-gray-200 shadow-lg rounded-2xl hover:shadow-2xl hover:shadow-slate-500/20 hover:-translate-y-1 hover:border-orange-300 cursor-pointer overflow-hidden animate-slide-in-up"
-              :style="{ animationDelay: `${index * 0.1}s` }"
-            >
-              <!-- Subtle gradient overlay on hover -->
-              <div class="absolute inset-0 bg-gradient-to-br from-orange-50/50 to-slate-50/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-              <!-- Company Logo Container -->
-              <div class="relative mb-4 overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl aspect-video group-hover:shadow-md transition-all duration-500 border border-gray-100">
-                <img :src="partner.logo" :alt="partner.name" class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105" />
-                <div class="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                <!-- Major badge -->
-                <div class="absolute top-3 right-3 px-2 py-1 bg-slate-700/90 backdrop-blur-sm rounded-lg text-xs font-semibold text-white">
-                  {{ partner.major }}
-                </div>
-              </div>
-
-              <!-- Company Information -->
-              <div class="relative z-10">
-                <h3 class="mb-2 text-lg font-bold text-gray-900 group-hover:text-slate-700 transition-colors duration-300 line-clamp-2">
-                  {{ partner.name }}
-                </h3>
-                <p class="text-sm leading-relaxed text-gray-600 group-hover:text-gray-700 transition-colors duration-300 line-clamp-3">
-                  {{ partner.description }}
-                </p>
-                <!-- View Details Indicator -->
-                <div class="mt-4 flex items-center justify-center text-orange-600 font-semibold text-sm opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 bg-orange-50/50 rounded-lg py-2">
-                  <Icon name="lucide:eye" size="16" class="mr-2" />
-                  <span>Lihat Detail Kemitraan</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
      </div>

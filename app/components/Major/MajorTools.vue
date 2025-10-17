@@ -77,49 +77,49 @@ const toolsData = {
   animasi: [
     {
       name: "Blender",
-      icon: "logos:blender",
+      icon: "simple-icons:blender",
       description: "Software 3D modeling, animasi, dan rendering",
     },
     {
       name: "Adobe After Effects",
-      icon: "logos:adobe-after-effects",
+      icon: "lucide:film",
       description: "Software untuk motion graphics dan efek visual",
     },
     {
       name: "Autodesk Maya",
-      icon: "logos:maya",
+      icon: "lucide:box",
       description: "Software 3D modeling dan animasi profesional",
     },
     {
       name: "Cinema 4D",
-      icon: "logos:cinema4d",
+      icon: "lucide:video",
       description: "Software 3D modeling dan animasi untuk film dan TV",
     },
     {
       name: "Toon Boom Harmony",
-      icon: "logos:toon-boom",
+      icon: "lucide:palette",
       description: "Software animasi 2D untuk produksi kartun",
     },
     {
       name: "ZBrush",
-      icon: "logos:zbrush",
+      icon: "lucide:brush",
       description: "Software sculpting digital untuk karakter dan model 3D",
     },
   ],
   tkj: [
     {
       name: "Cisco Packet Tracer",
-      icon: "logos:cisco",
+      icon: "lucide:network",
       description: "Simulator jaringan untuk latihan konfigurasi Cisco",
     },
     {
       name: "Wireshark",
-      icon: "logos:wireshark",
+      icon: "lucide:search",
       description: "Analisis paket jaringan untuk troubleshooting",
     },
     {
       name: "Router Cisco",
-      icon: "logos:cisco",
+      icon: "lucide:server",
       description: "Perangkat routing untuk menghubungkan jaringan",
     },
     {
@@ -193,8 +193,8 @@ const toolsData = {
     },
     {
       name: "CAD Software (AutoCAD)",
-      icon: "logos:autocad",
-      description: "Software desain assisten untuk model mekanik",
+      icon: "lucide:compass",
+      description: "Software desain asisten untuk model mekanik",
     },
     {
       name: "Servo Motor",
@@ -295,7 +295,7 @@ const tools = computed(() => toolsData[props.major] || []);
           Alat dan Peralatan
         </h2>
         <p class="max-w-2xl mx-auto text-sm text-gray-600 md:text-lg">
-          Berbagai tools dan equipment yang digunakan dalam pembelajaran jurusan {{ major }}
+          Berbagai tools dan equipment yang digunakan dalam pembelajaran konsentrasi keahlian {{ major }}
         </p>
       </div>
 

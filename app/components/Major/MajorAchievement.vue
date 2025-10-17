@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
+import { Motion } from "motion-v";
 import type { MajorName } from "~/models/MajorName";
 import type { MajorData } from "~/models/MajorData";
 import { majorColorSchemes } from "~/utils/majorColors";
@@ -148,44 +149,66 @@ const closeModal = (): void => {
         <!-- Main Card -->
         <div
           v-if="currentAchievement"
-          class="flex-shrink-0 w-full max-w-[200px] sm:max-w-[240px] md:max-w-[280px] lg:max-w-[320px] cursor-pointer transition-all duration-600"
-          :class="{
-            'animate-slide-in-right': slideDirection === 'left',
-            'animate-slide-in-left': slideDirection === 'right',
-          }"
+          class="flex-shrink-0 w-full max-w-[200px] sm:max-w-[240px] md:max-w-[280px] lg:max-w-[320px] cursor-pointer"
           @click="openModal(currentAchievement)"
         >
-          <div
-            class="bg-white rounded-2xl shadow-2xl border-4 md:border-[5px] overflow-hidden w-full h-full transform hover:scale-105 hover:shadow-3xl transition-all duration-300 group"
-            :style="`border-color: ${majorColor.primary}`"
+          <Motion
+            :key="currentAchievement.id"
+            :initial="{ opacity: 0, scale: 0.8, x: slideDirection === 'left' ? 100 : slideDirection === 'right' ? -100 : 0 }"
+            :animate="{ opacity: 1, scale: 1, x: 0 }"
+            :transition="{ duration: 0.6, ease: 'easeOut' }"
+            class="w-full h-full"
           >
-            <!-- Avatar Section -->
             <div
-              class="relative flex items-center justify-center h-56 overflow-hidden sm:h-64 md:h-72 lg:h-80 bg-gradient-to-br from-gray-100 to-gray-200"
+              class="bg-white rounded-2xl shadow-2xl border-4 md:border-[5px] overflow-hidden w-full h-full transform hover:scale-105 hover:shadow-3xl transition-all duration-300 group"
+              :style="`border-color: ${majorColor.primary}`"
             >
-              <!-- Avatar -->
-              <div class="relative z-10 flex flex-col items-center">
-                <!-- Head -->
-                <div
-                  class="w-16 h-16 transition-transform duration-300 transform rounded-full shadow-2xl sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 group-hover:scale-110"
-                  :style="`background: ${majorColor.light}`"
-                ></div>
-                <!-- Body -->
-                <div
-                  class="w-20 mt-2 transition-transform duration-300 transform rounded-t-full shadow-xl h-18 sm:w-24 sm:h-20 md:w-28 md:h-24 lg:w-32 lg:h-28 md:mt-3 group-hover:scale-105"
-                  :style="`background: ${majorColor.light}`"
-                ></div>
+              <!-- Avatar Section -->
+              <div
+                class="relative flex items-center justify-center h-56 overflow-hidden sm:h-64 md:h-72 lg:h-80 bg-gradient-to-br from-gray-100 to-gray-200"
+              >
+                <!-- Avatar -->
+                <div class="relative z-10 flex flex-col items-center">
+                  <!-- Head -->
+                  <Motion
+                    :initial="{ y: 20, opacity: 0 }"
+                    :animate="{ y: 0, opacity: 1 }"
+                    :transition="{ delay: 0.2, duration: 0.5 }"
+                  >
+                    <div
+                      class="w-16 h-16 transition-transform duration-300 transform rounded-full shadow-2xl sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 group-hover:scale-110"
+                      :style="`background: ${majorColor.light}`"
+                    ></div>
+                  </Motion>
+                  <!-- Body -->
+                  <Motion
+                    :initial="{ y: 30, opacity: 0 }"
+                    :animate="{ y: 0, opacity: 1 }"
+                    :transition="{ delay: 0.4, duration: 0.5 }"
+                  >
+                    <div
+                      class="w-20 mt-2 transition-transform duration-300 transform rounded-t-full shadow-xl h-18 sm:w-24 sm:h-20 md:w-28 md:h-24 lg:w-32 lg:h-28 md:mt-3 group-hover:scale-105"
+                      :style="`background: ${majorColor.light}`"
+                    ></div>
+                  </Motion>
+                </div>
               </div>
-            </div>
 
-            <!-- Name Badge -->
-            <div
-              class="px-3 py-3 text-sm font-bold text-center text-white shadow-inner md:px-4 md:py-4 sm:text-base md:text-lg"
-              :style="`background: ${majorColor.primary}`"
-            >
-              <p class="truncate">{{ currentAchievement.studentName }}</p>
+              <!-- Name Badge -->
+              <Motion
+                :initial="{ y: 20, opacity: 0 }"
+                :animate="{ y: 0, opacity: 1 }"
+                :transition="{ delay: 0.6, duration: 0.5 }"
+              >
+                <div
+                  class="px-3 py-3 text-sm font-bold text-center text-white shadow-inner md:px-4 md:py-4 sm:text-base md:text-lg"
+                  :style="`background: ${majorColor.primary}`"
+                >
+                  <p class="truncate">{{ currentAchievement.studentName }}</p>
+                </div>
+              </Motion>
             </div>
-          </div>
+          </Motion>
         </div>
 
         <!-- Right Preview Card (hidden on mobile) -->
@@ -233,17 +256,36 @@ const closeModal = (): void => {
       </div>
 
       <!-- Achievement Details Below Card -->
-      <div v-if="currentAchievement" class="w-full max-w-4xl px-4 text-center">
+      <Motion
+        v-if="currentAchievement"
+        :key="`details-${currentAchievement.id}`"
+        :initial="{ opacity: 0, y: 30 }"
+        :animate="{ opacity: 1, y: 0 }"
+        :transition="{ delay: 0.3, duration: 0.6 }"
+        class="w-full max-w-4xl px-4 text-center"
+      >
         <!-- Achievement Title -->
-        <h3 class="mb-3 text-base font-bold leading-tight text-gray-800 sm:text-lg md:text-xl lg:text-2xl md:mb-4">
-          {{ currentAchievement.title }}
-        </h3>
+        <Motion
+          :initial="{ opacity: 0, y: 20 }"
+          :animate="{ opacity: 1, y: 0 }"
+          :transition="{ delay: 0.5, duration: 0.5 }"
+        >
+          <h3 class="mb-3 text-base font-bold leading-tight text-gray-800 sm:text-lg md:text-xl lg:text-2xl md:mb-4">
+            {{ currentAchievement.title }}
+          </h3>
+        </Motion>
 
         <!-- Achievement Description -->
-        <p class="max-w-3xl mx-auto text-xs leading-relaxed text-gray-600 sm:text-sm md:text-base">
-          {{ currentAchievement.description }}
-        </p>
-      </div>
+        <Motion
+          :initial="{ opacity: 0, y: 20 }"
+          :animate="{ opacity: 1, y: 0 }"
+          :transition="{ delay: 0.7, duration: 0.5 }"
+        >
+          <p class="max-w-3xl mx-auto text-xs leading-relaxed text-gray-600 sm:text-sm md:text-base">
+            {{ currentAchievement.description }}
+          </p>
+        </Motion>
+      </Motion>
     </div>
 
     <!-- Modal for Full Details -->
@@ -350,41 +392,4 @@ const closeModal = (): void => {
 </template>
 
 <style scoped>
-@keyframes slide-in-right {
-  0% {
-    opacity: 0;
-    transform: translateX(100%) scale(0.8);
-  }
-  50% {
-    opacity: 0.5;
-    transform: translateX(0%) scale(0.9);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0%) scale(1);
-  }
-}
-
-@keyframes slide-in-left {
-  0% {
-    opacity: 0;
-    transform: translateX(-100%) scale(0.8);
-  }
-  50% {
-    opacity: 0.5;
-    transform: translateX(0%) scale(0.9);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(0%) scale(1);
-  }
-}
-
-.animate-slide-in-right {
-  animation: slide-in-right 0.6s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
-}
-
-.animate-slide-in-left {
-  animation: slide-in-left 0.6s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
-}
 </style>

@@ -171,7 +171,6 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
             <p :class="['text-xs', isColoredBackground ? 'text-white/70' : 'text-neutral-300']">
               Senin - Jumat: 07:00 - 15:00
             </p>
-            <p :class="['text-xs', isColoredBackground ? 'text-white/70' : 'text-neutral-300']">Sabtu: 08:00 - 12:00</p>
           </div>
         </div>
       </div>
@@ -180,19 +179,9 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
         <div class="grid grid-cols-2 gap-8 md:grid-cols-5">
           <div>
             <h5 :class="['mb-3 text-lg font-semibold', isColoredBackground ? 'text-white' : 'text-neutral-300']">
-              Program Studi
+              Konsentrasi Keahlian
             </h5>
             <ul class="space-y-1">
-              <li>
-                <NuxtLink
-                  :to="'/jurusan/tkj'"
-                  :class="[
-                    'text-sm transition duration-300',
-                    isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
-                  ]"
-                  >Teknik Komputer Jaringan</NuxtLink
-                >
-              </li>
               <li>
                 <NuxtLink
                   :to="'/jurusan/rpl'"
@@ -200,7 +189,17 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
                     'text-sm transition duration-300',
                     isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
                   ]"
-                  >Rekayasa Perangkat Lunak</NuxtLink
+                  >RPL</NuxtLink
+                >
+              </li>
+              <li>
+                <NuxtLink
+                  :to="'/jurusan/tkj'"
+                  :class="[
+                    'text-sm transition duration-300',
+                    isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
+                  ]"
+                  >TKJ</NuxtLink
                 >
               </li>
               <li>
@@ -210,7 +209,7 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
                     'text-sm transition duration-300',
                     isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
                   ]"
-                  >Desain Komunikasi Visual</NuxtLink
+                  >DKV</NuxtLink
                 >
               </li>
               <li>
@@ -220,7 +219,7 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
                     'text-sm transition duration-300',
                     isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
                   ]"
-                  >Teknik Elektronika Industri</NuxtLink
+                  >EI</NuxtLink
                 >
               </li>
               <li>
@@ -230,7 +229,7 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
                     'text-sm transition duration-300',
                     isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
                   ]"
-                  >Teknik Mekatronika</NuxtLink
+                  >MT</NuxtLink
                 >
               </li>
               <li>
@@ -240,7 +239,7 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
                     'text-sm transition duration-300',
                     isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
                   ]"
-                  >Broadcasting</NuxtLink
+                  >BC</NuxtLink
                 >
               </li>
               <li>
@@ -260,7 +259,7 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
                     'text-sm transition duration-300',
                     isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
                   ]"
-                  >Teknik Audio Video</NuxtLink
+                  >AV</NuxtLink
                 >
               </li>
             </ul>
@@ -299,22 +298,12 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
               </li>
               <li>
                 <NuxtLink
-                  :to="'/organisasi'"
+                  :to="'/acara'"
                   :class="[
                     'text-sm transition duration-300',
                     isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
                   ]"
-                  >Organisasi</NuxtLink
-                >
-              </li>
-              <li>
-                <NuxtLink
-                  :to="'/informasi/struktur-organisasi'"
-                  :class="[
-                    'text-sm transition duration-300',
-                    isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
-                  ]"
-                  >Struktur Organisasi</NuxtLink
+                  >Events</NuxtLink
                 >
               </li>
               <li>
@@ -324,37 +313,17 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
                     'text-sm transition duration-300',
                     isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
                   ]"
-                  >Guru</NuxtLink
+                  >Data Guru</NuxtLink
                 >
               </li>
               <li>
                 <NuxtLink
-                  :to="'/informasi/kontak'"
+                  :to="'/informasi/mitra-industri'"
                   :class="[
                     'text-sm transition duration-300',
                     isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
                   ]"
-                  >Kontak</NuxtLink
-                >
-              </li>
-              <li>
-                <NuxtLink
-                  :to="'/ekstrakurikuler'"
-                  :class="[
-                    'text-sm transition duration-300',
-                    isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
-                  ]"
-                  >Ekstrakurikuler</NuxtLink
-                >
-              </li>
-              <li>
-                <NuxtLink
-                  :to="'/acara'"
-                  :class="[
-                    'text-sm transition duration-300',
-                    isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
-                  ]"
-                  >Acara</NuxtLink
+                  >Mitra Industri</NuxtLink
                 >
               </li>
             </ul>
@@ -384,6 +353,16 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
                   >Traffic Tracker</NuxtLink
                 >
               </li>
+              <li>
+                <NuxtLink
+                  :to="'/utilitas/si-sarana'"
+                  :class="[
+                    'text-sm transition duration-300',
+                    isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
+                  ]"
+                  >SI Sarana</NuxtLink
+                >
+              </li>
             </ul>
           </div>
           <div>
@@ -391,6 +370,83 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
               Layanan
             </h5>
             <ul class="space-y-1">
+              <li>
+                <a
+                  href="http://dapodik.smkn2-singosari.sch.id/"
+                  target="_blank"
+                  :class="[
+                    'text-sm transition duration-300',
+                    isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
+                  ]"
+                  >E-Dapodik</a
+                >
+              </li>
+              <li>
+                <a
+                  href="http://perpus.smkn2-singosari.sch.id/"
+                  target="_blank"
+                  :class="[
+                    'text-sm transition duration-300',
+                    isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
+                  ]"
+                  >E-Perpustakaan</a
+                >
+              </li>
+              <li>
+                <a
+                  href="http://prakerin.smkn2-singosari.sch.id/"
+                  target="_blank"
+                  :class="[
+                    'text-sm transition duration-300',
+                    isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
+                  ]"
+                  >E-Prakerin</a
+                >
+              </li>
+              <li>
+                <a
+                  href="http://eraportbaru.smkn2-singosari.sch.id/"
+                  target="_blank"
+                  :class="[
+                    'text-sm transition duration-300',
+                    isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
+                  ]"
+                  >E-Raport</a
+                >
+              </li>
+              <li>
+                <a
+                  href="http://bkk.smkn2-singosari.sch.id"
+                  target="_blank"
+                  :class="[
+                    'text-sm transition duration-300',
+                    isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
+                  ]"
+                  >E-BKK</a
+                >
+              </li>
+              <li>
+                <a
+                  href="http://cloud.smkn2-singosari.sch.id/"
+                  target="_blank"
+                  :class="[
+                    'text-sm transition duration-300',
+                    isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
+                  ]"
+                  >E-DataCenter</a
+                >
+              </li>
+              <li>
+                <a
+                  href="http://kelulusan.smkn2-singosari.sch.id/"
+                  target="_blank"
+                  :class="[
+                    'text-sm transition duration-300',
+                    isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
+                  ]"
+                  >E-Kelulusan</a
+                >
+              </li>
               <li>
                 <a
                   href="https://www.kemdikbud.go.id"

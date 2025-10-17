@@ -15,7 +15,7 @@ const faqItems = ref<FAQItem[]>([
   {
     question: "Jurusan apa saja yang tersedia di SMK Negeri 2 Singosari?",
     answer:
-      "SMK Negeri 2 Singosari memiliki 8 jurusan unggulan yaitu: Rekayasa Perangkat Lunak (RPL), Teknik Komputer dan Jaringan (TKJ), Teknik Audio Video (TAV), Teknik Elektronika Industri (TEI), Desain Komunikasi Visual (DKV), Animasi, Broadcasting, dan Teknik Mekatronika.",
+      "SMK Negeri 2 Singosari memiliki 8 konsentrasi keahlian unggulan yaitu: Rekayasa Perangkat Lunak (RPL), Teknik Komputer dan Jaringan (TKJ), Teknik Audio Video (TAV), Teknik Elektronika Industri (TEI), Desain Komunikasi Visual (DKV), Animasi, Broadcasting, dan Teknik Mekatronika.",
     isOpen: false,
   },
   {
@@ -27,7 +27,7 @@ const faqItems = ref<FAQItem[]>([
   {
     question: "Apa saja fasilitas yang tersedia di sekolah?",
     answer:
-      "SMK Negeri 2 Singosari dilengkapi dengan berbagai fasilitas modern seperti laboratorium komputer, workshop praktik, perpustakaan, aula, lapangan olahraga, kantin, mushola, dan ruang kelas ber-AC. Setiap jurusan juga memiliki laboratorium khusus sesuai dengan bidang keahliannya.",
+      "SMK Negeri 2 Singosari dilengkapi dengan berbagai fasilitas modern seperti laboratorium komputer, workshop praktik, perpustakaan, aula, lapangan olahraga, kantin, mushola, dan ruang kelas ber-AC. Setiap konsentrasi keahlian juga memiliki laboratorium khusus sesuai dengan bidang keahliannya.",
     isOpen: false,
   },
   {

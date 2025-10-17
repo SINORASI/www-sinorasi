@@ -98,7 +98,7 @@ const toggleExpanded = (id: number): void => {
 
         <!-- Empty State -->
         <div v-if="careers.length === 0" class="py-12 text-center">
-          <p class="text-base text-gray-500 sm:text-lg">Tidak ada data karir tersedia untuk jurusan ini.</p>
+          <p class="text-base text-gray-500 sm:text-lg">Tidak ada data karir tersedia untuk konsentrasi keahlian ini.</p>
         </div>
       </div>
     </div>

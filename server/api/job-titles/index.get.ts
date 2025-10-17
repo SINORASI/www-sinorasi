@@ -102,7 +102,7 @@ const JobTitles: Record<MajorName, JobTitle[]> = {
   animasi: [
     {
       id: "1",
-      icon: "cube",
+      icon: "box",
       title: "3D Animator",
       description: "3D Animator adalah profesional yang menciptakan animasi tiga dimensi untuk film, permainan, dan visual effects. Tanggung jawab utama: modeling, rigging, animating, rendering. Keterampilan yang diperlukan: Maya, Blender, 3ds Max, motion capture. Prospek karir: di industri film, game, VFX; potensi untuk lead animator; gaji tinggi.",
     },

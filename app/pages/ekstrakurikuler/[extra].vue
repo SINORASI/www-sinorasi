@@ -166,13 +166,6 @@ useHead({
                 <p class="text-gray-600">{{ extra.location }}</p>
               </div>
             </div>
-            <div v-if="extra.fee" class="flex items-start">
-              <Icon name="lucide:wallet" size="20" class="text-orange-600 mr-3 mt-0.5" />
-              <div>
-                <p class="font-semibold text-gray-700">Biaya</p>
-                <p class="font-bold text-orange-600">{{ extra.fee }}</p>
-              </div>
-            </div>
           </div>
         </div>
 

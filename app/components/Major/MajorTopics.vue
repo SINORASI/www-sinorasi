@@ -267,7 +267,7 @@ const toggleRightExpanded = (id: string): void => {
       </div>
       <h3 class="mb-2 text-xl font-bold text-gray-800 md:text-2xl">Belum Ada Materi</h3>
       <p class="px-4 text-sm text-gray-600 md:text-base">
-        Materi pembelajaran untuk jurusan ini akan segera ditambahkan.
+        Materi pembelajaran untuk konsentrasi keahlian ini akan segera ditambahkan.
       </p>
     </div>
   </div>

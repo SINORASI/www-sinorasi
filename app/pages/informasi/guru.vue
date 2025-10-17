@@ -663,7 +663,7 @@ const teacherCategories = ref([
   {
     "title": "Kapro",
     "pagination": "01/08",
-    "description": "Kepala Program Keahlian yang memimpin jurusan-jurusan di SMK Negeri 02 Singosari.",
+    "description": "Kepala Program Keahlian yang memimpin konsentrasi keahlian di SMK Negeri 02 Singosari.",
     "classes": [],
     "materialsByClass": [],
     "teachingFocus": "Berperan aktif dalam mendukung visi misi SMK Negeri 02 Singosari.",

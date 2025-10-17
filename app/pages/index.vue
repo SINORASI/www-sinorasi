@@ -260,7 +260,7 @@ useHead({
           <div class="flex justify-center w-full gap-8 mt-6 lg:justify-start">
             <div class="flex flex-col items-center">
               <div class="text-xl font-bold transition-all duration-700 ease-out md:text-3xl">{{ jurusanCount }}</div>
-              <div class="text-sm transition-all duration-700 ease-out md:text-lg">Jurusan</div>
+              <div class="text-sm transition-all duration-700 ease-out md:text-lg">Konsentrasi Keahlian</div>
             </div>
             <div class="flex flex-col items-center">
               <div class="text-xl font-bold transition-all duration-700 ease-out md:text-3xl">{{ siswaCount }}+</div>
@@ -315,7 +315,7 @@ useHead({
                 <div class="grid grid-cols-2 gap-4">
                   <div class="p-4 text-center rounded-lg bg-blue-50">
                     <div class="text-2xl font-bold text-blue-600">{{ jurusanCount }}</div>
-                    <div class="text-sm text-gray-600">Program Keahlian</div>
+                    <div class="text-sm text-gray-600">Konsentrasi Keahlian</div>
                   </div>
                   <div class="p-4 text-center rounded-lg bg-orange-50">
                     <div class="text-2xl font-bold text-orange-600">{{ siswaCount }}+</div>
