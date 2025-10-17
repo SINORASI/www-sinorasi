@@ -65,115 +65,32 @@ const goToImage = (index: number) => {
   currentImageIndex.value = index;
 };
 
-// Sample partner data
-const partners = [
-  {
-    id: 1,
-    name: "PT. Raiyan Gaming Sugiliwanto",
-    description:
-      "ini berita tentang deskripsi dari industri ini, tapi dalam sedkit dan ini narti atau diakhir dengan kata berikut si Lihat Selengkapnya...",
-    fullDescription:
-      "UBIG adalah suatu pt blalalallala kejuruan rekayasa perangkat lunak kelabapazi dengan indonesia ini sejak tahun 2000 dan lebih dari 100++ siswa siswi yang sudah menjalani pkl dan bahkan nketenrima di dalam industri tersebutkolaborasi dengan industri ini sejak tahun 2000 dan lebih dari 100++ siswa siswi yang sudah menjalani pkl dan bahkan nketenrima di dalam industri tersebutkolaborasi dengan",
-    logo: "/images/placeholder.jpg",
-    images: ["/images/logo.webp", "/images/logo.webp", "/images/logo.webp"],
-    major: "RPL",
-  },
-  {
-    id: 2,
-    name: "PT. Raiyan Gaming Sugiliwanto",
-    description:
-      "ini berita tentang deskripsi dari industri ini, tapi dalam sedkit dan ini narti atau diakhir dengan kata berikut si Lihat Selengkapnya...",
-    fullDescription:
-      "UBIG adalah suatu pt blalalallala kejuruan rekayasa perangkat lunak kelabapazi dengan indonesia ini sejak tahun 2000 dan lebih dari 100++ siswa siswi yang sudah menjalani pkl dan bahkan nketenrima di dalam industri tersebutkolaborasi dengan industri ini sejak tahun 2000 dan lebih dari 100++ siswa siswi yang sudah menjalani pkl dan bahkan nketenrima di dalam industri tersebutkolaborasi dengan",
-    logo: "/images/placeholder.jpg",
-    images: ["/images/logo.webp", "/images/logo.webp", "/images/logo.webp"],
-    major: "DKV",
-  },
-  {
-    id: 3,
-    name: "PT. Raiyan Gaming Sugiliwanto",
-    description:
-      "ini berita tentang deskripsi dari industri ini, tapi dalam sedkit dan ini narti atau diakhir dengan kata berikut si Lihat Selengkapnya...",
-    fullDescription:
-      "UBIG adalah suatu pt blalalallala kejuruan rekayasa perangkat lunak kelabapazi dengan indonesia ini sejak tahun 2000 dan lebih dari 100++ siswa siswi yang sudah menjalani pkl dan bahkan nketenrima di dalam industri tersebutkolaborasi dengan industri ini sejak tahun 2000 dan lebih dari 100++ siswa siswi yang sudah menjalani pkl dan bahkan nketenrima di dalam industri tersebutkolaborasi dengan",
-    logo: "/images/placeholder.jpg",
-    images: ["/images/logo.webp", "/images/logo.webp", "/images/logo.webp"],
-    major: "TKJ",
-  },
-  {
-    id: 4,
-    name: "PT. Raiyan Gaming Sugiliwanto",
-    description:
-      "ini berita tentang deskripsi dari industri ini, tapi dalam sedkit dan ini narti atau diakhir dengan kata berikut si Lihat Selengkapnya...",
-    fullDescription:
-      "UBIG adalah suatu pt blalalallala kejuruan rekayasa perangkat lunak kelabapazi dengan indonesia ini sejak tahun 2000 dan lebih dari 100++ siswa siswi yang sudah menjalani pkl dan bahkan nketenrima di dalam industri tersebutkolaborasi dengan industri ini sejak tahun 2000 dan lebih dari 100++ siswa siswi yang sudah menjalani pkl dan bahkan nketenrima di dalam industri tersebutkolaborasi dengan",
-    logo: "/images/placeholder.jpg",
-    images: ["/images/logo.webp", "/images/logo.webp", "/images/logo.webp"],
-    major: "RPL",
-  },
-  {
-    id: 5,
-    name: "PT. Raiyan Gaming Sugiliwanto",
-    description:
-      "ini berita tentang deskripsi dari industri ini, tapi dalam sedkit dan ini narti atau diakhir dengan kata berikut si Lihat Selengkapnya...",
-    fullDescription:
-      "UBIG adalah suatu pt blalalallala kejuruan rekayasa perangkat lunak kelabapazi dengan indonesia ini sejak tahun 2000 dan lebih dari 100++ siswa siswi yang sudah menjalani pkl dan bahkan nketenrima di dalam industri tersebutkolaborasi dengan industri ini sejak tahun 2000 dan lebih dari 100++ siswa siswi yang sudah menjalani pkl dan bahkan nketenrima di dalam industri tersebutkolaborasi dengan",
-    logo: "/images/placeholder.jpg",
-    images: ["/images/logo.webp", "/images/logo.webp", "/images/logo.webp"],
-    major: "TMT",
-  },
-  {
-    id: 6,
-    name: "PT. Raiyan Gaming Sugiliwanto",
-    description:
-      "ini berita tentang deskripsi dari industri ini, tapi dalam sedkit dan ini narti atau diakhir dengan kata berikut si Lihat Selengkapnya...",
-    fullDescription:
-      "UBIG adalah suatu pt blalalallala kejuruan rekayasa perangkat lunak kelabapazi dengan indonesia ini sejak tahun 2000 dan lebih dari 100++ siswa siswi yang sudah menjalani pkl dan bahkan nketenrima di dalam industri tersebutkolaborasi dengan industri ini sejak tahun 2000 dan lebih dari 100++ siswa siswi yang sudah menjalani pkl dan bahkan nketenrima di dalam industri tersebutkolaborasi dengan",
-    logo: "/images/placeholder.jpg",
-    images: ["/images/logo.webp", "/images/logo.webp", "/images/logo.webp"],
-    major: "TAV",
-  },
-  {
-    id: 7,
-    name: "PT. Raiyan Gaming Sugiliwanto",
-    description:
-      "ini berita tentang deskripsi dari industri ini, tapi dalam sedkit dan ini narti atau diakhir dengan kata berikut si Lihat Selengkapnya...",
-    fullDescription:
-      "UBIG adalah suatu pt blalalallala kejuruan rekayasa perangkat lunak kelabapazi dengan indonesia ini sejak tahun 2000 dan lebih dari 100++ siswa siswi yang sudah menjalani pkl dan bahkan nketenrima di dalam industri tersebutkolaborasi dengan industri ini sejak tahun 2000 dan lebih dari 100++ siswa siswi yang sudah menjalani pkl dan bahkan nketenrima di dalam industri tersebutkolaborasi dengan",
-    logo: "/images/placeholder.jpg",
-    images: ["/images/logo.webp", "/images/logo.webp", "/images/logo.webp"],
-    major: "TEI",
-  },
-  {
-    id: 8,
-    name: "PT. Raiyan Gaming Sugiliwanto",
-    description:
-      "ini berita tentang deskripsi dari industri ini, tapi dalam sedkit dan ini narti atau diakhir dengan kata berikut si Lihat Selengkapnya...",
-    fullDescription:
-      "UBIG adalah suatu pt blalalallala kejuruan rekayasa perangkat lunak kelabapazi dengan indonesia ini sejak tahun 2000 dan lebih dari 100++ siswa siswi yang sudah menjalani pkl dan bahkan nketenrima di dalam industri tersebutkolaborasi dengan industri ini sejak tahun 2000 dan lebih dari 100++ siswa siswi yang sudah menjalani pkl dan bahkan nketenrima di dalam industri tersebutkolaborasi dengan",
-    logo: "/images/placeholder.jpg",
-    images: ["/images/logo.webp", "/images/logo.webp", "/images/logo.webp"],
-    major: "BC",
-  },
-  {
-    id: 9,
-    name: "PT. Raiyan Gaming Sugiliwanto",
-    description:
-      "ini berita tentang deskripsi dari industri ini, tapi dalam sedkit dan ini narti atau diakhir dengan kata berikut si Lihat Selengkapnya...",
-    fullDescription:
-      "UBIG adalah suatu pt blalalallala kejuruan rekayasa perangkat lunak kelabapazi dengan indonesia ini sejak tahun 2000 dan lebih dari 100++ siswa siswi yang sudah menjalani pkl dan bahkan nketenrima di dalam industri tersebutkolaborasi dengan industri ini sejak tahun 2000 dan lebih dari 100++ siswa siswi yang sudah menjalani pkl dan bahkan nketenrima di dalam industri tersebutkolaborasi dengan",
-    logo: "/images/placeholder.jpg",
-    images: ["/images/logo.webp", "/images/logo.webp", "/images/logo.webp"],
-    major: "AN",
-  },
-];
+// Load business partners data from JSON
+const { data: businessPartnersData } = await useFetch('/images/industri/business_partners.json');
+
+// Transform business partners data to match the expected format
+const partners = computed(() => {
+  const data = businessPartnersData.value as any;
+  if (!data?.business_partners) return [];
+
+  return data.business_partners.map((partner: any, index: number) => ({
+    id: index + 1,
+    name: partner.business_name,
+    description: `Mitra industri ${partner.business_name} yang telah berkolaborasi dengan SMK Negeri 2 Singosari dalam program pengembangan keterampilan siswa.`,
+    fullDescription: `Perusahaan ${partner.business_name} telah menjadi mitra strategis SMK Negeri 2 Singosari dalam program pengembangan sumber daya manusia. Melalui kerjasama ini, siswa mendapatkan kesempatan untuk praktik kerja lapangan, magang, dan pengembangan kompetensi yang sesuai dengan kebutuhan industri modern.`,
+    logo: partner.images.length > 0 ? `/images/industri/${partner.images[0].path}` : "/images/placeholder.jpg",
+    images: partner.images.map((img: any) => `/images/industri/${img.path}`),
+    major: "ALL", // Default to ALL, can be customized based on business type
+  }));
+});
 
 // Computed property to filter partners based on selected filter
 const filteredPartners = computed(() => {
+  if (!partners.value) return [];
   if (selectedFilter.value === "ALL") {
-    return partners;
+    return partners.value;
   }
-  return partners.filter((partner) => partner.major === selectedFilter.value);
+  return partners.value.filter((partner: any) => partner.major === selectedFilter.value);
 });
 </script>
 
@@ -248,8 +165,8 @@ const filteredPartners = computed(() => {
           </div>
         </div>
 
-        <!-- Filter Navigation Bar -->
-        <div class="px-8 py-8 bg-white border-b border-gray-200">
+        <!-- Filter Navigation Bar - Disabled -->
+        <!-- <div class="px-8 py-8 bg-white border-b border-gray-200">
           <div class="mb-4 text-center">
             <h2 class="text-xl font-bold text-gray-800">Filter Berdasarkan Jurusan</h2>
             <p class="text-sm text-gray-600">Pilih jurusan untuk melihat mitra industri terkait</p>
@@ -270,7 +187,7 @@ const filteredPartners = computed(() => {
               {{ filter.label }}
             </button>
           </div>
-        </div>
+        </div> -->
 
         <!-- Main Content Grid -->
         <div class="px-8 py-16 bg-gradient-to-b from-white to-slate-50">

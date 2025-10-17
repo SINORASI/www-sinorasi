@@ -62,12 +62,12 @@ const nextSlide = (): void => {
 
     setTimeout(() => {
       currentIndex.value = (currentIndex.value + 1) % achievements.value.length;
-    }, 50);
+    }, 150);
 
     setTimeout(() => {
       slideDirection.value = "";
       isAnimating.value = false;
-    }, 500);
+    }, 600);
   }
 };
 
@@ -78,12 +78,12 @@ const previousSlide = (): void => {
 
     setTimeout(() => {
       currentIndex.value = (currentIndex.value - 1 + achievements.value.length) % achievements.value.length;
-    }, 50);
+    }, 150);
 
     setTimeout(() => {
       slideDirection.value = "";
       isAnimating.value = false;
-    }, 500);
+    }, 600);
   }
 };
 
@@ -148,7 +148,7 @@ const closeModal = (): void => {
         <!-- Main Card -->
         <div
           v-if="currentAchievement"
-          class="flex-shrink-0 w-full max-w-[200px] sm:max-w-[240px] md:max-w-[280px] lg:max-w-[320px] cursor-pointer transition-all duration-400"
+          class="flex-shrink-0 w-full max-w-[200px] sm:max-w-[240px] md:max-w-[280px] lg:max-w-[320px] cursor-pointer transition-all duration-600"
           :class="{
             'animate-slide-in-right': slideDirection === 'left',
             'animate-slide-in-left': slideDirection === 'right',
@@ -348,3 +348,43 @@ const closeModal = (): void => {
     </Teleport>
   </div>
 </template>
+
+<style scoped>
+@keyframes slide-in-right {
+  0% {
+    opacity: 0;
+    transform: translateX(100%) scale(0.8);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateX(0%) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0%) scale(1);
+  }
+}
+
+@keyframes slide-in-left {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%) scale(0.8);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateX(0%) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0%) scale(1);
+  }
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.6s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left 0.6s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+</style>
