@@ -175,8 +175,8 @@ const prevAchievement = () => {
 
 // Hero image carousel
 const heroImages = ref([
-  '/images/seragam/putih-putih/10-putih-putih-jas-l/DSC04215.webp',
-  '/images/seragam/putih-putih/11-putih-putih-jas-l/DSC04320.webp'
+  "/images/seragam/putih-putih/10-putih-putih-jas-l/DSC04215.webp",
+  "/images/seragam/putih-putih/11-putih-putih-jas-l/DSC04320.webp",
 ]);
 const currentHeroImage = ref(0);
 
@@ -269,12 +269,9 @@ useHead({
         <div class="flex flex-col justify-center items-center w-full lg:w-1/3">
           <div class="relative group">
             <img
-              v-for="(image, index) in heroImages"
-              :key="index"
-              :src="image"
+              src="/images/seragam/putih-putih/10-putih-putih-l/DSC04123.webp"
               alt="Student"
-              class="absolute object-cover transition-all duration-1000 rounded-lg shadow-lg w-60 md:w-150 h-100 md:h-150 group-hover:scale-105"
-              :class="{ 'opacity-100': index === currentHeroImage, 'opacity-0': index !== currentHeroImage }"
+              class="object-cover transition-transform duration-300 rounded-lg shadow-lg w-60 md:w-150 h-100 md:h-150 group-hover:scale-105"
             />
           </div>
         </div>
@@ -399,7 +396,7 @@ useHead({
       </div>
     </section>
 
-    <section id="sambutan" class=" bg-gradient-to-b from-white via-blue-50 to-white">
+    <section id="sambutan" class="bg-gradient-to-b from-white via-blue-50 to-white">
       <div class="container px-4 mx-auto md:px-10">
         <div class="flex flex-col items-center justify-center gap-12 lg:flex-row">
           <!-- Content Area -->
