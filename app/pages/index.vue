@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { News } from "~/models/News";
+import { majorColorSchemes } from "~/utils/majorColors";
 
 definePageMeta({
   layout: "default",
@@ -14,8 +15,8 @@ interface CounterProps {
 
 const props = withDefaults(defineProps<CounterProps>(), {
   jurusanTarget: 8,
-  siswaTarget: 1000,
-  prestasiTarget: 50,
+  siswaTarget: 1200,
+  prestasiTarget: 200,
   duration: 2000,
 });
 
@@ -96,31 +97,43 @@ const timelineItems = [
 const clickedMarkers = ref([false, false, false, false, false]);
 const showAllIcons = ref(false);
 
+// Major color scheme
+const majorColor = computed(() => majorColorSchemes["rpl"]);
+
 const toggleMarker = (index: number) => {
   if (index === 0 && !showAllIcons.value) {
-    // First click on first marker: show all icons and show first card
+    // First click on first marker: show all icons and show all cards
     showAllIcons.value = true;
-    clickedMarkers.value = [true, false, false, false, false];
+    clickedMarkers.value = [true, true, true, true, true];
   } else if (index === 0 && showAllIcons.value) {
     // Second click on first marker: hide all icons except first, hide all cards
     showAllIcons.value = false;
     clickedMarkers.value = [false, false, false, false, false];
   } else {
-    // Toggle the specific marker
-    clickedMarkers.value[index] = !clickedMarkers.value[index];
+    // For other markers: if first click (card not shown), show all cards; else toggle off
+    if (!clickedMarkers.value[index]) {
+      // First click: show all cards
+      clickedMarkers.value = [true, true, true, true, true];
+    } else {
+      // Subsequent click: toggle off this card
+      clickedMarkers.value[index] = false;
+    }
   }
 };
 
 // Achievement carousel data - filtered from news data
 const achievements = computed(() => {
-  const achievementTags = ['prestasi', 'juara', 'emas', 'perak', 'perunggu', 'lks', 'lomba'];
+  const achievementTags = ["prestasi", "juara", "emas", "perak", "perunggu", "lks", "lomba"];
   const filtered = newsData.value
-    .filter(news => news.tags.some(tag => achievementTags.includes(tag.toLowerCase())))
+    .filter((news) => news.tags.some((tag) => achievementTags.includes(tag.toLowerCase())))
     .slice(0, 5)
-    .map(news => ({
+    .map((news) => ({
       image: news.thumbnail || "/images/placeholder.jpg",
       title: news.title,
-      description: news.content ? news.content.replace(/<[^>]*>/g, '').slice(0, Math.floor(news.content.replace(/<[^>]*>/g, '').length / 2)) + "..." : news.subtitle,
+      description: news.content
+        ? news.content.replace(/<[^>]*>/g, "").slice(0, Math.floor(news.content.replace(/<[^>]*>/g, "").length / 2)) +
+          "..."
+        : news.subtitle,
       slug: news.slug,
     }));
 
@@ -218,15 +231,17 @@ useHead({
 
 <template>
   <main class="flex flex-col gap-52">
-    <section class="flex items-center justify-center min-h-screen px-4 pt-24 pb-10 md:pt-20 bg-gradient-to-b from-blue-50 to-white">
-      <div class="container flex flex-col items-center max-w-5xl mx-auto gap-18 lg:flex-row">
+    <section
+      class="flex items-center justify-center min-h-screen px-4 pt-24 pb-10 md:pt-20 bg-gradient-to-b from-blue-50 to-white"
+    >
+      <div class="container flex flex-col justify-center items-center max-w-5xl mx-auto gap-18 lg:flex-row">
         <!-- Student Photo on Left -->
-        <div class="flex flex-col justify-center w-full lg:w-1/3">
+        <div class="flex flex-col justify-center items-center w-full lg:w-1/3">
           <div class="relative group">
             <img
               src="/images/seragam/putih-putih/10-putih-putih-l/DSC04123.webp"
               alt="Student"
-              class="object-cover transition-transform duration-300 rounded-lg shadow-lg w-150 h-150 group-hover:scale-105"
+              class="object-cover transition-transform duration-300 rounded-lg shadow-lg w-60 md:w-150 h-100 md:h-150 group-hover:scale-105"
             />
           </div>
         </div>
@@ -301,9 +316,14 @@ useHead({
 
           <!-- School Facts and Intro -->
           <div class="flex flex-col w-full gap-6 lg:w-1/2">
-            <span class="px-6 py-3 text-base font-bold tracking-widest text-center uppercase rounded-full md:text-lg" style="background: #eff6ff; color: #1d4ed8">
-              Tentang SMK Negeri 2 Singosari
-            </span>
+            <div class="inline-block">
+              <span
+                class="px-2 py-3 flex justify-center items-center text-lg font-bold tracking-widest uppercase rounded-full md:text-xl"
+                :style="`background: #1d4ed8; color: white`"
+              >
+                Tentang SMK Negeri 2 Singosari
+              </span>
+            </div>
 
             <div class="p-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
               <div class="space-y-6">
@@ -345,12 +365,16 @@ useHead({
     <section id="sambutan" class="py-20 bg-gradient-to-b from-white via-blue-50 to-white">
       <div class="container px-4 mx-auto md:px-10">
         <div class="flex flex-col items-center justify-center gap-12 lg:flex-row">
-          
           <!-- Content Area -->
           <div class="flex flex-col w-full max-w-3xl gap-6 lg:w-3/5">
-            <span class="px-6 py-3 text-base font-bold tracking-widest text-center uppercase rounded-full md:text-lg" style="background: #eff6ff; color: #1d4ed8">
-              Sambutan Kepala Sekolah
-            </span>
+            <div class="inline-block">
+              <span
+                class="px-2 py-3 flex justify-center items-center text-lg font-bold tracking-widest uppercase rounded-full md:text-xl"
+                :style="`background: #1d4ed8; color: white`"
+              >
+                Sambutan Kepala Sekolah
+              </span>
+            </div>
 
             <div class="p-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
               <h3 class="mb-4 text-2xl font-bold text-gray-800">Assalamu'alaikum Wr. Wb.</h3>
@@ -371,7 +395,7 @@ useHead({
             </div>
           </div>
           <!-- Photo Card -->
-          <div class="w-full max-w-md lg:w-2/5">
+          <div class="w-full max-w-xl lg:w-1/5">
             <div class="relative max-w-xs group">
               <div
                 class="relative overflow-hidden transition-all duration-500 transform border-4 border-white shadow-2xl rounded-2xl group-hover:scale-105 group-hover:shadow-3xl"
@@ -423,7 +447,9 @@ useHead({
                     />
                     <div class="flex flex-col gap-4 text-center md:text-left md:w-1/2 md:pr-5 md:justify-center">
                       <h3 class="text-xl md:text-2xl font-bold text-gray-800">{{ achievement.title }}</h3>
-                      <p class="leading-relaxed text-gray-600 text-sm md:text-base line-clamp-4">{{ achievement.description }}</p>
+                      <p class="leading-relaxed text-gray-600 text-sm md:text-base line-clamp-4">
+                        {{ achievement.description }}
+                      </p>
                     </div>
                   </div>
                 </NuxtLink>
@@ -435,7 +461,9 @@ useHead({
                   />
                   <div class="flex flex-col gap-4 text-center md:text-left md:w-1/2 md:pr-5 md:justify-center">
                     <h3 class="text-xl md:text-2xl font-bold text-gray-800">{{ achievement.title }}</h3>
-                    <p class="leading-relaxed text-gray-600 text-sm md:text-base line-clamp-4">{{ achievement.description }}</p>
+                    <p class="leading-relaxed text-gray-600 text-sm md:text-base line-clamp-4">
+                      {{ achievement.description }}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -475,7 +503,10 @@ useHead({
         <div class="flex flex-col items-center gap-12">
           <!-- Section Header -->
           <div class="flex flex-col items-center gap-4 text-center">
-            <span class="px-6 py-3 text-base font-bold tracking-widest text-center uppercase rounded-full md:text-lg" style="background: #eff6ff; color: #1d4ed8">
+            <span
+              class="px-8 py-3 text-xl font-bold tracking-widest text-center uppercase rounded-full md:text-2xl"
+              style="background: #eff6ff; color: #1d4ed8"
+            >
               Seragam Sekolah
             </span>
             <p class="max-w-2xl text-lg text-center text-white">Koleksi seragam sekolah SMK Negeri 2 Singosari</p>
@@ -483,6 +514,45 @@ useHead({
 
           <!-- Uniform Cards -->
           <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 w-full max-w-[1600px]">
+            <!-- Alma Mater -->
+            <UniformCard
+              :gradeImages="{
+                X: {
+                  L: [
+                    '/images/seragam/putih-putih/10-putih-putih-jas-l/DSC04215.webp',
+                    '/images/seragam/putih-putih/10-putih-putih-jas-l/DSC04261.webp',
+                    '/images/seragam/putih-putih/10-putih-putih-jas-l/DSC04269.webp',
+                    '/images/seragam/putih-putih/10-putih-putih-jas-l/DSC04273.webp',
+                  ],
+                  P: [
+                    '/images/seragam/putih-putih/10-putih-putih-jas-p/DSC04215.webp',
+                    '/images/seragam/putih-putih/10-putih-putih-jas-p/DSC04249.webp',
+                    '/images/seragam/putih-putih/10-putih-putih-jas-p/DSC04256.webp',
+                    '/images/seragam/putih-putih/10-putih-putih-jas-p/DSC04256.webp',
+                  ],
+                },
+                XI: {
+                  L: [
+                    '/images/seragam/putih-putih/11-putih-putih-jas-l/DSC04320.webp',
+                    '/images/seragam/putih-putih/11-putih-putih-jas-l/DSC04340.webp',
+                    '/images/seragam/putih-putih/11-putih-putih-jas-l/DSC04341.webp',
+                    '/images/seragam/putih-putih/11-putih-putih-jas-l/DSC04349.webp',
+                  ],
+                  P: [
+                    '/images/seragam/putih-putih/11-putih-putih-jas-p/DSC04320.webp',
+                    '/images/seragam/putih-putih/11-putih-putih-jas-p/DSC04354.webp',
+                    '/images/seragam/putih-putih/11-putih-putih-jas-p/DSC04356.webp',
+                    '/images/seragam/putih-putih/11-putih-putih-jas-p/DSC04363.webp',
+                  ],
+                },
+              }"
+              day="Almamater (Jas)"
+              dayNumber=""
+              uniformType="Almamater (Jas)"
+              uniformDay="Senin"
+              primaryColor="sky"
+            />
+
             <!-- Putih Putih -->
             <UniformCard
               :gradeImages="{
@@ -512,36 +582,6 @@ useHead({
                     '/images/seragam/putih-putih/11-putih-putih-l/11-putih-putih-l-2.webp',
                     '/images/seragam/putih-putih/11-putih-putih-l/11-putih-putih-l-3.webp',
                     '/images/seragam/putih-putih/11-putih-putih-l/11-putih-putih-m.webp',
-                  ],
-                },
-              }"
-              :almamaterImages="{
-                X: {
-                  L: [
-                    '/images/seragam/putih-putih/10-putih-putih-jas-l/DSC04215.webp',
-                    '/images/seragam/putih-putih/10-putih-putih-jas-l/DSC04261.webp',
-                    '/images/seragam/putih-putih/10-putih-putih-jas-l/DSC04269.webp',
-                    '/images/seragam/putih-putih/10-putih-putih-jas-l/DSC04273.webp',
-                  ],
-                  P: [
-                    '/images/seragam/putih-putih/10-putih-putih-jas-p/DSC04215.webp',
-                    '/images/seragam/putih-putih/10-putih-putih-jas-p/DSC04249.webp',
-                    '/images/seragam/putih-putih/10-putih-putih-jas-p/DSC04256.webp',
-                    '/images/seragam/putih-putih/10-putih-putih-jas-p/DSC04256.webp',
-                  ],
-                },
-                XI: {
-                  L: [
-                    '/images/seragam/putih-putih/11-putih-putih-jas-l/DSC04320.webp',
-                    '/images/seragam/putih-putih/11-putih-putih-jas-l/DSC04340.webp',
-                    '/images/seragam/putih-putih/11-putih-putih-jas-l/DSC04341.webp',
-                    '/images/seragam/putih-putih/11-putih-putih-jas-l/DSC04349.webp',
-                  ],
-                  P: [
-                    '/images/seragam/putih-putih/11-putih-putih-jas-p/DSC04320.webp',
-                    '/images/seragam/putih-putih/11-putih-putih-jas-p/DSC04354.webp',
-                    '/images/seragam/putih-putih/11-putih-putih-jas-p/DSC04356.webp',
-                    '/images/seragam/putih-putih/11-putih-putih-jas-p/DSC04363.webp',
                   ],
                 },
               }"
@@ -739,10 +779,15 @@ useHead({
 
         <!-- Section Header -->
         <div class="flex flex-col items-center gap-4">
-          <span class="px-6 py-3 text-base font-bold tracking-widest text-center uppercase rounded-full md:text-lg" style="background: #eff6ff; color: #1d4ed8">
-            Jejak Sejarah
-          </span>
-          <p class="max-w-2xl text-lg text-gray-600">
+          <div class="inline-block">
+            <span
+              class="px-8 py-3 text-xl font-bold tracking-widest uppercase rounded-full md:text-2xl"
+              :style="`background: #1d4ed8; color: white`"
+            >
+              Jejak Sejarah
+            </span>
+          </div>
+          <p class="max-w-2xl my-5 text-lg text-gray-600">
             Perjalanan panjang SMK Negeri 2 Singosari dalam mengembangkan pendidikan kejuruan berkualitas di Kabupaten
             Malang.
           </p>
@@ -765,7 +810,7 @@ useHead({
           <div
             v-for="(item, index) in timelineItems"
             :key="index"
-            class="relative flex flex-col items-center w-full max-w-md mb-24 group"
+            class="relative flex flex-col items-center w-full max-w-md mb-12 group"
             :class="{ 'opacity-0': !showAllIcons && index > 0 }"
             :style="{ transition: 'opacity 0.5s ease-in-out' }"
           >
@@ -780,7 +825,7 @@ useHead({
               v-if="showAllIcons || index === 0"
               :class="[
                 'z-20 flex items-center justify-center w-16 h-16 mb-6 transition-all duration-300 border-4 border-white rounded-full shadow-xl cursor-pointer bg-gradient-to-br from-blue-500 to-blue-700 group-hover:scale-110',
-                clickedMarkers[index] ? 'ring-4 ring-yellow-400' : ''
+                clickedMarkers[index] ? 'ring-4 ring-yellow-400' : '',
               ]"
               @click="toggleMarker(index)"
             >
@@ -809,20 +854,25 @@ useHead({
         </div>
 
         <!-- Desktop Timeline -->
-        <div v-else class="relative max-w-[1200px] mx-auto py-12">
-          <div class="absolute left-1/2 top-0 bottom-0 w-1 bg-[linear-gradient(to_bottom,transparent_0%_0%,#3b82f6_10%_50%,#2563eb_50%_90%,#3b82f6_90%_95%,transparent)] -translate-x-1/2 rounded-sm shadow-[0_0_20px_rgba(59,130,246,0.3)] z-10"></div>
+        <div v-else class="relative max-w-[1200px] mx-auto py-24">
+          <div
+            class="absolute left-1/2 top-0 bottom-0 w-1 bg-[linear-gradient(to_bottom,transparent_0%_0%,#3b82f6_10%_50%,#2563eb_50%_90%,#3b82f6_90%_95%,transparent)] -translate-x-1/2 rounded-sm shadow-[0_0_20px_rgba(59,130,246,0.3)] z-10"
+          ></div>
 
           <div
             v-for="(item, index) in timelineItems"
             :key="index"
-            class="relative clear-both mb-24 group"
+            class="relative clear-both mb-12 group"
             :class="{ 'opacity-0': !showAllIcons && index > 0 }"
             :style="{ transition: 'opacity 0.5s ease-in-out' }"
           >
             <!-- Content Card -->
             <div
               v-if="clickedMarkers[index]"
-              :class="['p-8 transition-all duration-500 bg-white/80 backdrop-blur-lg border border-white/30 shadow-2xl rounded-2xl hover:border-white/50 hover:shadow-3xl hover:scale-105 hover:-translate-y-2 group h-[300px] w-[42%] z-20 flex flex-col justify-center items-center text-center', index % 2 === 0 ? 'mr-12 float-left' : 'ml-12 float-right']"
+              :class="[
+                'p-8 transition-all duration-500 bg-white/80 backdrop-blur-lg border border-white/30 shadow-2xl rounded-2xl hover:border-white/50 hover:shadow-3xl hover:scale-105 hover:-translate-y-2 group h-[300px] w-[42%] z-20 flex flex-col justify-center items-center text-center',
+                index % 2 === 0 ? 'mr-12 float-left' : 'ml-12 float-right',
+              ]"
             >
               <div
                 :class="[
@@ -834,8 +884,12 @@ useHead({
               >
                 {{ item.year }}
               </div>
-              <h3 :class="['mb-3 text-2xl font-bold text-gray-800 transition-colors',
-                index % 2 === 0 ? 'group-hover:text-blue-600' : 'group-hover:text-orange-600']">
+              <h3
+                :class="[
+                  'mb-3 text-2xl font-bold text-gray-800 transition-colors',
+                  index % 2 === 0 ? 'group-hover:text-blue-600' : 'group-hover:text-orange-600',
+                ]"
+              >
                 {{ item.title }}
               </h3>
               <p class="leading-relaxed text-gray-600">{{ item.description }}</p>
@@ -850,14 +904,18 @@ useHead({
             </div>
 
             <!-- Marker Icon -->
-            <div v-if="showAllIcons || index === 0" class="absolute z-40 -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2">
+            <div
+              v-if="showAllIcons || index === 0"
+              class="absolute z-40 -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2"
+            >
               <div
                 :class="[
                   'w-16 h-16 rounded-full flex items-center justify-center shadow-[0_8px_24px_rgba(59,130,246,0.15)] border-[5px] border-white/80 backdrop-blur-sm transition-all duration-500 ease-in-out group-hover:scale-115 group-hover:rotate-[10deg] group-hover:shadow-[0_16px_40px_rgba(59,130,246,0.3)] cursor-pointer',
                   index % 2 === 0
                     ? 'bg-gradient-to-br from-blue-500 to-blue-700'
                     : 'bg-gradient-to-br from-orange-500 to-orange-700',
-                  clickedMarkers[index]]"
+                  clickedMarkers[index],
+                ]"
                 @click="toggleMarker(index)"
               >
                 <Icon :name="item.icon" size="28" class="text-white" />
@@ -867,7 +925,12 @@ useHead({
             <!-- Connector Line -->
             <div
               v-if="clickedMarkers[index]"
-              :class="['absolute top-1/2 w-[60px] h-[3px] -translate-y-1/2 z-1 transition-all duration-500 ease-in-out group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.6)] group-hover:h-[4px]', index % 2 === 0 ? 'right-1/2 mr-8 bg-gradient-to-r from-transparent via-blue-500 to-blue-600 rounded-full' : 'left-1/2 ml-8 bg-gradient-to-l from-transparent via-blue-500 to-blue-600 rounded-full']"
+              :class="[
+                'absolute top-1/2 w-[60px] h-[3px] -translate-y-1/2 z-1 transition-all duration-500 ease-in-out group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.6)] group-hover:h-[4px]',
+                index % 2 === 0
+                  ? 'right-1/2 mr-8 bg-gradient-to-r from-transparent via-blue-500 to-blue-600 rounded-full'
+                  : 'left-1/2 ml-8 bg-gradient-to-l from-transparent via-blue-500 to-blue-600 rounded-full',
+              ]"
             ></div>
           </div>
         </div>
@@ -893,9 +956,14 @@ useHead({
       </div>
     </section>
     <section id="jurusan" class="flex flex-col items-center gap-8 py-20 h-fit">
-      <span class="px-6 py-3 text-base font-bold tracking-widest text-center uppercase rounded-full md:text-lg" style="background: #eff6ff; color: #1d4ed8">
-        Jurusan
-      </span>
+      <div class="inline-block">
+        <span
+          class="px-8 py-3 text-xl font-bold tracking-widest uppercase rounded-full md:text-2xl"
+          :style="`background: #1d4ed8; color: white`"
+        >
+          Jurusan
+        </span>
+      </div>
       <div class="container flex items-center justify-center mx-auto">
         <MajorCarousel />
       </div>
@@ -903,7 +971,10 @@ useHead({
 
     <section id="berita" class="py-20 h-min-screen">
       <div class="container flex flex-col items-center gap-8 mx-auto">
-        <span class="px-6 py-3 text-base font-bold tracking-widest text-center uppercase rounded-full md:text-lg" style="background: #eff6ff; color: #1d4ed8">
+        <span
+          class="px-8 py-3 text-xl font-bold tracking-widest text-center uppercase rounded-full md:text-2xl"
+          style="background: #eff6ff; color: #1d4ed8"
+        >
           Informasi & Berita
         </span>
 
@@ -981,4 +1052,3 @@ useHead({
     </section>
   </main>
 </template>
-

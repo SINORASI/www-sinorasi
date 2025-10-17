@@ -88,7 +88,7 @@ const playbackIntervals = ref<Record<number, number>>({});
 const videoCards: VideoCard[] = [
   {
     id: 1,
-    thumbnail: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800&h=600&fit=crop",
+    thumbnail: "/images/thumbnail/rpl-thumbnail.webp",
     videoUrl: "pKI-5JJPol8",
     videoType: "youtube",
     logo: "/images/majorIcon/logo-rpl.webp",
@@ -99,7 +99,7 @@ const videoCards: VideoCard[] = [
   },
   {
     id: 2,
-    thumbnail: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&h=600&fit=crop",
+    thumbnail: "/images/thumbnail/tkj-thumbnail.webp",
     videoUrl: "GgSUvrHtFKY",
     videoType: "youtube",
     logo: "/images/majorIcon/logo-tkj.webp",
@@ -110,7 +110,7 @@ const videoCards: VideoCard[] = [
   },
   {
     id: 3,
-    thumbnail: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&h=600&fit=crop",
+    thumbnail: "/images/thumbnail/dkv-thumbnail.webp",
     videoUrl: "tlfc46ZCu0c",
     videoType: "youtube",
     logo: "/images/majorIcon/logo-dkv.webp",
@@ -121,7 +121,7 @@ const videoCards: VideoCard[] = [
   },
   {
     id: 4,
-    thumbnail: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop",
+    thumbnail: "/images/thumbnail/an-thumbnail.webp",
     videoUrl: "o-b0I1IorbU",
     videoType: "youtube",
     logo: "/images/majorIcon/logo-an.webp",
@@ -132,7 +132,7 @@ const videoCards: VideoCard[] = [
   },
   {
     id: 5,
-    thumbnail: "https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&h=600&fit=crop",
+    thumbnail: "/images/thumbnail/bc-thumbnail.webp",
     videoUrl: "Dcvcf2ssyfk",
     videoType: "youtube",
     logo: "/images/majorIcon/logo-bc.webp",
@@ -143,7 +143,7 @@ const videoCards: VideoCard[] = [
   },
   {
     id: 6,
-    thumbnail: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=800&h=600&fit=crop",
+    thumbnail: "/images/thumbnail/ei-thumbnail.webp",
     videoUrl: "xXydNK3sI6I",
     videoType: "youtube",
     logo: "/images/majorIcon/logo-tei.webp",
@@ -154,7 +154,7 @@ const videoCards: VideoCard[] = [
   },
   {
     id: 7,
-    thumbnail: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&h=600&fit=crop",
+    thumbnail: "/images/thumbnail/mt-thumbnail.webp",
     videoUrl: "eBL7a0bNtKo",
     videoType: "youtube",
     logo: "/images/majorIcon/logo-mt.webp",
@@ -165,7 +165,7 @@ const videoCards: VideoCard[] = [
   },
   {
     id: 8,
-    thumbnail: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&h=600&fit=crop",
+    thumbnail: "/images/thumbnail/av-thumbnail.webp",
     videoUrl: "ygvL6UDvGv4",
     videoType: "youtube",
     logo: "/images/majorIcon/logo-tav.webp",
