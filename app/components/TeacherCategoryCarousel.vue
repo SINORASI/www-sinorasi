@@ -8,29 +8,25 @@
     <div class="relative w-full px-16 max-w-7xl">
       <button
         @click="scrollLeft"
-        class="absolute left-0 z-10 p-3 transition-all -translate-y-1/2 rounded-full shadow-lg top-1/2 bg-white/90 hover:bg-white hover:scale-110"
+        :disabled="!canScrollLeft"
+        class="absolute left-0 z-10 p-3 transition-all -translate-y-1/2 rounded-full shadow-lg top-1/2 bg-white/90 hover:bg-white hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         <Icon name="lucide:chevron-left" size="32" class="text-neutral-700" />
       </button>
 
-      <div
-        ref="carouselContainer"
-        class="overflow-x-auto scrollbar-hide scroll-smooth"
-        style="scrollbar-width: none; -ms-overflow-style: none"
-      >
-        <div class="flex items-center justify-center gap-6 px-4">
-          <div v-for="teacher in teachers" :key="teacher.id" class="flex-shrink-0 w-64">
-            <TeacherCard
-              :teacher="teacher"
-              @show-details="(teacher) => $emit('open-modal', teacher, teachers, title)"
-            />
-          </div>
+      <div class="flex items-center justify-center gap-6 px-4">
+        <div v-for="teacher in visibleTeachers" :key="teacher.id" class="flex-shrink-0 w-64">
+          <TeacherCard
+            :teacher="teacher"
+            @show-details="(teacher) => $emit('open-modal', teacher, teachers, title)"
+          />
         </div>
       </div>
 
       <button
         @click="scrollRight"
-        class="absolute right-0 z-10 p-3 transition-all -translate-y-1/2 rounded-full shadow-lg top-1/2 bg-white/90 hover:bg-white hover:scale-110"
+        :disabled="!canScrollRight"
+        class="absolute right-0 z-10 p-3 transition-all -translate-y-1/2 rounded-full shadow-lg top-1/2 bg-white/90 hover:bg-white hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         <Icon name="lucide:chevron-right" size="32" class="text-neutral-700" />
       </button>
@@ -165,10 +161,10 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import TeacherCard from "./TeacherCard.vue";
 
-defineProps({
+const props = defineProps({
   title: String,
   pagination: String,
   teachers: Array,
@@ -183,22 +179,23 @@ defineEmits(["open-modal"]);
 
 const carouselContainer = ref(null);
 const isDialogOpen = ref(false);
+const currentIndex = ref(0);
+const visibleCount = 4;
+
+const visibleTeachers = computed(() => props.teachers.slice(currentIndex.value, currentIndex.value + visibleCount));
+const canScrollLeft = computed(() => currentIndex.value > 0);
+const canScrollRight = computed(() => currentIndex.value + visibleCount < props.teachers.length);
 
 const scrollLeft = () => {
-  if (carouselContainer.value) {
-    carouselContainer.value.scrollBy({
-      left: -300,
-      behavior: "smooth",
-    });
+  if (canScrollLeft.value) {
+    currentIndex.value -= visibleCount;
+    if (currentIndex.value < 0) currentIndex.value = 0;
   }
 };
 
 const scrollRight = () => {
-  if (carouselContainer.value) {
-    carouselContainer.value.scrollBy({
-      left: 300,
-      behavior: "smooth",
-    });
+  if (canScrollRight.value) {
+    currentIndex.value += visibleCount;
   }
 };
 

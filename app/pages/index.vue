@@ -111,48 +111,52 @@ const toggleMarker = (index: number) => {
   }
 };
 
-// Achievement carousel data
-const achievements = [
-  {
-    image: "/images/placeholder.jpg",
-    title: "LKS 2023 Kab. Malang : Kami Lolos Enam Bidang Lomba untuk Menuju Tingkat Provinsi",
-    description:
-      "SMKN 2 Singosari sukses menggelar Lomba Kompetensi Siswa (LKS) SMK tingkat Kabupaten Malang selama dua hari sejak Senin (6/3). Hasilnya, 13 siswa berhasil meraih prestasi dengan 6 bidang lomba lolos ke tingkat Provinsi Jawa Timur.",
-  },
-  {
-    image: "/images/placeholder.jpg",
-    title: "Juara 1 Lomba Karya Tulis Ilmiah Tingkat Nasional",
-    description:
-      "Tim siswa SMKN 2 Singosari berhasil meraih juara 1 dalam Lomba Karya Tulis Ilmiah yang diselenggarakan oleh Kementerian Pendidikan dan Kebudayaan dengan tema Inovasi Teknologi untuk Masa Depan.",
-  },
-  {
-    image: "/images/placeholder.jpg",
-    title: "Prestasi di Kompetisi Robotik Internasional",
-    description:
-      "Siswa jurusan Teknik Mekatronika membawa pulang medali emas dalam kompetisi robotik internasional yang diadakan di Singapura, menunjukkan kemampuan tinggi dalam bidang teknologi.",
-  },
-  {
-    image: "/images/placeholder.jpg",
-    title: "Akreditasi Unggul untuk Program Keahlian RPL",
-    description:
-      "Program Keahlian Rekayasa Perangkat Lunak SMKN 2 Singosari mendapat akreditasi unggul dari Badan Akreditasi Nasional, menjadikan program ini sebagai salah satu yang terbaik di Indonesia.",
-  },
-  {
-    image: "/images/placeholder.jpg",
-    title: "Kerjasama dengan Industri Teknologi Terdepan",
-    description:
-      "SMKN 2 Singosari menjalin kerjasama strategis dengan perusahaan teknologi terkemuka untuk memberikan pengalaman praktis kepada siswa dalam dunia kerja nyata.",
-  },
-];
+// Achievement carousel data - filtered from news data
+const achievements = computed(() => {
+  const achievementTags = ['prestasi', 'juara', 'emas', 'perak', 'perunggu', 'lks', 'lomba'];
+  const filtered = newsData.value
+    .filter(news => news.tags.some(tag => achievementTags.includes(tag.toLowerCase())))
+    .slice(0, 5)
+    .map(news => ({
+      image: news.thumbnail || "/images/placeholder.jpg",
+      title: news.title,
+      description: news.content ? news.content.replace(/<[^>]*>/g, '').slice(0, Math.floor(news.content.replace(/<[^>]*>/g, '').length / 2)) + "..." : news.subtitle,
+      slug: news.slug,
+    }));
+
+  // Fallback to static data if no achievement news found
+  if (filtered.length === 0) {
+    return [
+      {
+        image: "/images/placeholder.jpg",
+        title: "LKS 2023 Kab. Malang : Kami Lolos Enam Bidang Lomba untuk Menuju Tingkat Provinsi",
+        description:
+          "SMKN 2 Singosari sukses menggelar Lomba Kompetensi Siswa (LKS) SMK tingkat Kabupaten Malang selama dua hari sejak Senin (6/3). Hasilnya, 13 siswa berhasil meraih prestasi dengan 6 bidang lomba lolos ke tingkat Provinsi Jawa Timur.",
+        slug: null,
+      },
+      {
+        image: "/images/placeholder.jpg",
+        title: "Juara 1 Lomba Karya Tulis Ilmiah Tingkat Nasional",
+        description:
+          "Tim siswa SMKN 2 Singosari berhasil meraih juara 1 dalam Lomba Karya Tulis Ilmiah yang diselenggarakan oleh Kementerian Pendidikan dan Kebudayaan dengan tema Inovasi Teknologi untuk Masa Depan.",
+        slug: null,
+      },
+    ];
+  }
+
+  return filtered;
+});
 
 const currentAchievement = ref(0);
 
 const nextAchievement = () => {
-  currentAchievement.value = (currentAchievement.value + 1) % achievements.length;
+  const len = achievements.value.length;
+  currentAchievement.value = (currentAchievement.value + 1) % len;
 };
 
 const prevAchievement = () => {
-  currentAchievement.value = (currentAchievement.value - 1 + achievements.length) % achievements.length;
+  const len = achievements.value.length;
+  currentAchievement.value = (currentAchievement.value - 1 + len) % len;
 };
 
 const animateCounter = (counterRef: { value: number }, target: number, duration: number): void => {
@@ -410,15 +414,28 @@ useHead({
               :style="{ transform: `translateX(-${currentAchievement * 100}%)` }"
             >
               <div v-for="(achievement, index) in achievements" :key="index" class="flex-shrink-0 w-full">
-                <div class="flex flex-col items-center gap-8 md:flex-row">
+                <NuxtLink v-if="achievement.slug" :to="`/berita/${achievement.slug}`" class="block cursor-pointer">
+                  <div class="flex flex-col items-center gap-8 md:flex-row md:h-80">
+                    <img
+                      :src="achievement.image"
+                      class="object-cover w-full rounded-lg shadow-md h-48 md:w-1/3 md:h-full"
+                      alt="Achievement"
+                    />
+                    <div class="flex flex-col gap-4 text-center md:text-left md:w-1/2 md:pr-5 md:justify-center">
+                      <h3 class="text-xl md:text-2xl font-bold text-gray-800">{{ achievement.title }}</h3>
+                      <p class="leading-relaxed text-gray-600 text-sm md:text-base line-clamp-4">{{ achievement.description }}</p>
+                    </div>
+                  </div>
+                </NuxtLink>
+                <div v-else class="flex flex-col items-center gap-8 md:flex-row md:h-80">
                   <img
                     :src="achievement.image"
-                    class="object-cover w-full rounded-lg shadow-md h-80 md:w-1/3"
+                    class="object-cover w-full rounded-lg shadow-md h-48 md:w-1/3 md:h-full"
                     alt="Achievement"
                   />
-                  <div class="flex flex-col gap-4 text-center md:text-left md:w-1/2 md:pr-5">
-                    <h3 class="text-2xl font-bold text-gray-800">{{ achievement.title }}</h3>
-                    <p class="leading-relaxed text-gray-600">{{ achievement.description }}</p>
+                  <div class="flex flex-col gap-4 text-center md:text-left md:w-1/2 md:pr-5 md:justify-center">
+                    <h3 class="text-xl md:text-2xl font-bold text-gray-800">{{ achievement.title }}</h3>
+                    <p class="leading-relaxed text-gray-600 text-sm md:text-base line-clamp-4">{{ achievement.description }}</p>
                   </div>
                 </div>
               </div>

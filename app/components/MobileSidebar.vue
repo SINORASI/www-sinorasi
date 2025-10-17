@@ -651,6 +651,14 @@ const menuItems = [
         tags: ["events", "acara"],
       },
       {
+        title: "Data Guru",
+        desc: "Informasi tenaga pendidik",
+        icon: "lucide:users",
+        to: "/informasi/guru",
+        external: false,
+        tags: ["guru", "data", "tenaga", "pendidik", "teacher"],
+      },
+      {
         title: "Mitra Industri",
         desc: "Kerjasama dengan industri",
         icon: "lucide:building",

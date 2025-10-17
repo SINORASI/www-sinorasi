@@ -1,27 +1,27 @@
 <template>
-  <section class="relative w-full h-screen bg-neutral-300 py-30">
+  <section class="relative w-full py-30 h-screen" style="background-image: url('/images/guru/foto-guru-bersama.jpeg'); background-size: cover; background-position: bottom;">
     <div class="absolute bottom-0 left-0 right-0 flex justify-around w-full p-4 bg-neutral-200 h-fit">
       <div class="flex flex-col items-center justify-center">
-        <h1 class="text-4xl font-bold">50+</h1>
+        <h1 class="text-4xl font-bold">56+</h1>
         <p class="text-base">Guru Pengajar</p>
       </div>
       <div class="flex flex-col items-center justify-center">
-        <h1 class="text-4xl font-bold">20+</h1>
+        <h1 class="text-4xl font-bold">14+</h1>
         <p class="text-base">Karyawan</p>
       </div>
       <div class="flex flex-col items-center justify-center">
-        <h1 class="text-4xl font-bold">10+</h1>
+        <h1 class="text-4xl font-bold">12+</h1>
         <p class="text-base">Staff</p>
       </div>
       <div class="flex flex-col items-center justify-center">
-        <h1 class="text-4xl font-bold">15+</h1>
+        <h1 class="text-4xl font-bold">80+</h1>
         <p class="text-base">Lainnya</p>
       </div>
     </div>
   </section>
   <section class="container flex flex-col items-center justify-center gap-5 mx-auto py-30">
     <h1 class="p-4 text-3xl font-bold text-center rounded-lg shadow-sm bg-neutral-200">Guru Pengajar</h1>
-    <p class="p-4 text-lg font-bold text-center rounded-lg shadow-sm bg-neutral-200">SMK Negeri 02 Singosari</p>
+    <p class="p-4 text-lg font-bold text-center rounded-lg shadow-sm bg-neutral-200">SMK Negeri 2 Singosari</p>
 
     <TeacherCategoryCarousel
       v-for="category in teacherCategories"
@@ -66,228 +66,719 @@ useHead({
 
 const teacherCategories = ref([
   {
-    title: "Guru Pendidikan Agama Islam",
-    pagination: "01/20",
-    description:
-      'disini dijelaskan tentang apa itu guru bidang tertentu, semisalkan "guru bahasa indonesia di  smk negeri 02 singosari berfokus mengajarkan materi kebahasaan, pembuatan proposal dan bla bla bla b la disini dijelaskan tentang apa itu guru bidang tertentu, semisalkan "guru bahasa indonesia di  smk negeri 02 singosari berfokus mengajarkan materi kebahasaan, pembuatan proposal dan bla bla bla b la',
-    classes: ["Kelas X", "Kelas XI", "Kelas XII"],
-    materialsByClass: [
+    "title": "PNS",
+    "pagination": "01/35",
+    "description": "Pegawai Negeri Sipil di SMK Negeri 02 Singosari yang berperan dalam berbagai bidang pendidikan dan administrasi.",
+    "classes": [],
+    "materialsByClass": [],
+    "teachingFocus": "PNS berkontribusi dalam pengelolaan sekolah, administrasi, dan dukungan operasional untuk kelancaran proses pembelajaran.",
+    "teachers": [
       {
-        className: "Kelas 10",
-        materials: ["Materi 1", "Materi 2", "Materi 3", "Materi 4", "Materi 5", "Materi 6"],
+        "id": "pns-1",
+        "name": "IVAN SATRYANA",
+        "degree": "S.Pd",
+        "image": "/images/guru/PNS/IVAN SATRYANA, S.Pd.jpg",
+        "university": "",
+        "quote": ""
       },
       {
-        className: "Kelas 11",
-        materials: ["Materi 1", "Materi 2", "Materi 3", "Materi 4", "Materi 5", "Materi 6"],
+        "id": "pns-2",
+        "name": "MUNTAMAH",
+        "degree": "Dra.",
+        "image": "/images/guru/Foto - foto pns/Muntamah/muntamah2.jpg",
+        "university": "",
+        "quote": ""
       },
       {
-        className: "Kelas 12",
-        materials: ["Materi 1", "Materi 2", "Materi 3", "Materi 4", "Materi 5", "Materi 6"],
-      },
-    ],
-    teachingFocus:
-      "Guru Pendidikan Agama Islam di SMK Negeri 02 Singosari fokus membangun karakter siswa yang berakhlak mulia, memahami nilai-nilai Islam, dan mengamalkannya dalam kehidupan sehari-hari. Pembelajaran mencakup aspek spiritual, moral, dan sosial yang terintegrasi dengan lingkungan sekolah.",
-    teachers: [
-      {
-        id: "pai-1",
-        name: "Zulul Muthomimah",
-        degree: "S.PdI",
-        university: "Lulusan Universitas Gajah Mada",
-        quote: "Mendidik dengan hati, membangun generasi berakhlak mulia.",
+        "id": "pns-3",
+        "name": "FAUZI RAHMADANI",
+        "degree": "S.Sn",
+        "image": "/images/guru/PNS/FAUZI RAHMADANI, S.Sn.jpg",
+        "university": "",
+        "quote": ""
       },
       {
-        id: "pai-2",
-        name: "Faizatul Mukrimah",
-        degree: "S.Ag",
-        university: "Lulusan Universitas Indonesia",
-        quote: "Ilmu tanpa amal adalah pohon tanpa buah.",
+        "id": "pns-4",
+        "name": "WARDATUL MAULIDIYAH",
+        "degree": "S.Pd",
+        "image": "/images/guru/PNS/WARDATUL MAULIDIYAH, S.Pd.jpg",
+        "university": "",
+        "quote": ""
       },
       {
-        id: "pai-3",
-        name: "Ruffiah",
-        degree: "S.Ag",
-        university: "Lulusan Institut Teknologi Bandung",
-        quote: "Jadikan setiap kesulitan sebagai peluang untuk belajar.",
+        "id": "pns-5",
+        "name": "SETYAWAN EDI",
+        "degree": "A.Md",
+        "image": "/images/guru/Foto - foto pns/Edi/edi 2.jpg",
+        "university": "",
+        "quote": ""
       },
       {
-        id: "pai-4",
-        name: "Misbah Abdullah",
-        degree: "S.Ag",
-        university: "Lulusan Universitas Padjadjaran",
-        quote: "Kesabaran adalah kunci keberhasilan dalam pendidikan.",
+        "id": "pns-6",
+        "name": "SOFIANASARI",
+        "degree": "S.Sn",
+        "image": "/images/guru/Foto - foto pns/Sofia/sofia 2.jpg",
+        "university": "",
+        "quote": ""
       },
-    ],
+      {
+        "id": "pns-7",
+        "name": "SLAMET RIADI",
+        "degree": "S.Pd",
+        "image": "/images/guru/Foto - foto pns/Slamet/slamet 2.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "pns-8",
+        "name": "EWIT IRNIYAH",
+        "degree": "S.Pd",
+        "image": "/images/guru/PNS/EWIT IRNIYAH, S.Pd.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "pns-9",
+        "name": "SOLIKAH",
+        "degree": "S.Pd",
+        "image": "/images/guru/Foto - foto pns/Solikah/solikah 2.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "pns-10",
+        "name": "SRI NURUL SYAMSIAH",
+        "degree": "S.Pd, M.Pd",
+        "image": "/images/guru/Foto - foto pns/Nurul/nurul 2.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "pns-11",
+        "name": "FAJAR NINGTYAS",
+        "degree": "S.Pd",
+        "image": "/images/guru/Foto - foto pns/Fajar/fajar2.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "pns-12",
+        "name": "JEFRY YUDHA BAGUS SETYAWAN",
+        "degree": "S.Pd, Gr",
+        "image": "/images/guru/PNS/JEFRY YUDHA BAGUS SETYAWAN S.Pd, Gr.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "pns-13",
+        "name": "IDA AYU SUNIANTARI",
+        "degree": "S.Pd.H",
+        "image": "/images/guru/Foto - foto pns/Ida/ida 2.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "pns-14",
+        "name": "SITI MUZAYYANAH",
+        "degree": "Dra.",
+        "image": "/images/guru/Foto - foto pns/Siti/siti2.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "pns-15",
+        "name": "H. AHMAD MAKSUM",
+        "degree": "Drs., M.Pd",
+        "image": "/images/guru/Foto - foto pns/Maksum/maksum2.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "pns-18",
+        "name": "Hj. TITIK MARIYATI",
+        "degree": "S.Pd",
+        "image": "/images/guru/Foto - foto pns/Titik/titik 2.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "pns-19",
+        "name": "VINA BARIROTUR ROCHMAH",
+        "degree": "S.Pd",
+        "image": "/images/guru/PNS/VINA BARIROTUR ROCHMAH,S.Pd.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "pns-20",
+        "name": "TRIANA ARDIANI",
+        "degree": "S.Pd",
+        "image": "/images/guru/Foto - foto pns/Triana/triana2.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "pns-21",
+        "name": "SITTI HADIJAH",
+        "degree": "S.Pd",
+        "image": "/images/guru/PNS/SITTI HADIJAH, S.Pd.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "pns-22",
+        "name": "DIANA FARIDA",
+        "degree": "S.Si",
+        "image": "/images/guru/Foto - foto pns/Diana/diana 2.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "pns-23",
+        "name": "FEBRINA CANDRA CAHYANING DIAN",
+        "degree": "S.Sn",
+        "image": "/images/guru/Foto - foto pns/Febriana/febriana 2.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "pns-24",
+        "name": "MOCHAMAD BACHRUDIN",
+        "degree": "S.Pd",
+        "image": "/images/guru/Foto - foto pns/Barudin/barudin 2.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "pns-26",
+        "name": "SUCI ARTIWI",
+        "degree": "",
+        "image": "/images/guru/Foto - foto pns/Suci/suci 2.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "pns-27",
+        "name": "DIMAS WAHYUDI",
+        "degree": "",
+        "image": "/images/guru/Foto - foto pns/Dimas/dimas 2.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "pns-29",
+        "name": "NADIRO CHOTAMI",
+        "degree": "",
+        "image": "/images/guru/Foto - foto pns/Nadiro/nadiro 2.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "pns-30",
+        "name": "TOFIK KURHANA",
+        "degree": "",
+        "image": "/images/guru/Foto - foto pns/Tofik/tofik 2.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "pns-33",
+        "name": "WIWIN WINANGSIH",
+        "degree": "",
+        "image": "/images/guru/Foto - foto pns/Wiwin/wiwin 2.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "pns-34",
+        "name": "ZULKIFLI ABDILLAH",
+        "degree": "",
+        "image": "/images/guru/Foto - foto pns/Zulkifli/zulkfli 2.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "pns-35",
+        "name": "HERMAWAN",
+        "degree": "",
+        "image": "/images/guru/Foto - foto pns/Hermawan/hermawan2.jpg",
+        "university": "",
+        "quote": ""
+      }
+    ]
   },
   {
-    title: "Guru Produktif",
-    pagination: "01/15",
-    description:
-      "Guru produktif di SMK Negeri 02 Singosari berperan dalam mengajarkan keterampilan teknis dan praktis sesuai dengan program keahlian. Mereka membekali siswa dengan kompetensi yang dibutuhkan dunia industri dan dunia kerja.",
-    classes: ["Kelas X RPL", "Kelas XI RPL", "Kelas XII RPL", "Kelas X TKJ", "Kelas XI TKJ", "Kelas XII TKJ"],
-    materialsByClass: [
+    "title": "P3K",
+    "pagination": "01/19",
+    "description": "Pengawas/Pembina di SMK Negeri 02 Singosari yang bertugas mengawasi dan membina proses pendidikan.",
+    "classes": [],
+    "materialsByClass": [],
+    "teachingFocus": "Berperan aktif dalam mendukung visi misi SMK Negeri 02 Singosari.",
+    "teachers": [
       {
-        className: "Kelas 10",
-        materials: [
-          "Pemrograman Dasar",
-          "Basis Data",
-          "Sistem Komputer",
-          "Jaringan Dasar",
-          "Desain Grafis",
-          "Web Development",
-        ],
+        "id": "p3k-1",
+        "name": "DEVI ARVENI",
+        "degree": "S.Pd, Gr",
+        "image": "/images/guru/P3K/DEVI ARVENI, S.Pd, Gr.jpg",
+        "university": "",
+        "quote": ""
       },
       {
-        className: "Kelas 11",
-        materials: [
-          "Pemrograman Berorientasi Objek",
-          "Database Management",
-          "Administrasi Jaringan",
-          "Mobile Development",
-          "UI/UX Design",
-          "Cyber Security",
-        ],
+        "id": "p3k-2",
+        "name": "VITA PRIMASARI",
+        "degree": "S.Pd",
+        "image": "/images/guru/P3K/VITA PRIMASARI, S.Pd.jpg",
+        "university": "",
+        "quote": ""
       },
       {
-        className: "Kelas 12",
-        materials: [
-          "Project Management",
-          "Full Stack Development",
-          "Cloud Computing",
-          "DevOps",
-          "Machine Learning",
-          "Entrepreneurship",
-        ],
-      },
-    ],
-    teachingFocus:
-      "Guru produktif mengajarkan keterampilan praktis yang langsung applicable di dunia kerja. Fokus pembelajaran mencakup hands-on practice, project-based learning, dan kolaborasi dengan industri untuk memastikan siswa siap menghadapi tantangan dunia kerja.",
-    teachers: [
-      {
-        id: "prod-1",
-        name: "Budi Santoso",
-        degree: "S.Kom",
-        university: "Lulusan Institut Teknologi Sepuluh Nopember",
-        quote: "Inovasi adalah napas dari kemajuan teknologi.",
+        "id": "p3k-3",
+        "name": "MOKHAMAD AMRUL SADAT",
+        "degree": "ST, M.Pd",
+        "image": "/images/guru/P3K/MOKHAMAD AMRUL SADAT, ST,M.Pd.jpg",
+        "university": "",
+        "quote": ""
       },
       {
-        id: "prod-2",
-        name: "Citra Lestari",
-        degree: "S.T.",
-        university: "Lulusan Universitas Gajah Mada",
-        quote: "Praktik adalah guru terbaik dalam dunia kejuruan.",
+        "id": "p3k-4",
+        "name": "MIRA AYU",
+        "degree": "S.Pd",
+        "image": "/images/guru/P3K/MIRA AYU, S.Pd.jpg",
+        "university": "",
+        "quote": ""
       },
       {
-        id: "prod-3",
-        name: "Agus Wijaya",
-        degree: "M.T.",
-        university: "Lulusan Universitas Indonesia",
-        quote: "Kreativitas adalah kecerdasan yang sedang bersenang-senang.",
+        "id": "p3k-5",
+        "name": "CHUTMAN EFENDI",
+        "degree": "S.Pd, Gr",
+        "image": "/images/guru/P3K/CHUTMAN EFENDI, S,Pd, Gr.jpg",
+        "university": "",
+        "quote": ""
       },
-    ],
+      {
+        "id": "p3k-6",
+        "name": "KRISMAWANDI NUGROHO",
+        "degree": "S.Pd",
+        "image": "/images/guru/P3K/KRISMAWANDI NUGROHO,S.Pd.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "p3k-7",
+        "name": "FIDDA ZURIKA ISLAMIA",
+        "degree": "S.Pd",
+        "image": "/images/guru/P3K/FIDDA ZURIKA ISLAMIA, S.Pd.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "p3k-8",
+        "name": "SAMAODIN",
+        "degree": "S.AP",
+        "image": "/images/guru/P3K/SAMAODIN, S.AP.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "p3k-9",
+        "name": "TRIYAS KUSUMAWARDHANI",
+        "degree": "S.Pd., Gr.",
+        "image": "/images/guru/P3K/TRIYAS KUSUMAWARDHANI, S.Pd., Gr..jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "p3k-10",
+        "name": "YEFRY RULLY ISMARTONO",
+        "degree": "S.Pd",
+        "image": "/images/guru/P3K/YEFRY RULLY ISMARTONO, S.Pd.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "p3k-11",
+        "name": "ALIFAH DIANTEBES AINDRA",
+        "degree": "S.Pd",
+        "image": "/images/guru/P3K/ALIFAH DIANTEBES AINDRA, S.Pd.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "p3k-12",
+        "name": "AGUNG DWI KURNIAWAN",
+        "degree": "S.Pd",
+        "image": "/images/guru/P3K/AGUNG DWI KURNIAWAN, S.Pd.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "p3k-13",
+        "name": "ISRIZAL ANWAR ZUHRI",
+        "degree": "S.Psi",
+        "image": "/images/guru/P3K/ISRIZAL ANWAR ZUHRI, S.Psi.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "p3k-14",
+        "name": "BAMBANG ISHARTANTO",
+        "degree": "ST",
+        "image": "/images/guru/P3K/BAMBANG ISHARTANTO, ST.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "p3k-15",
+        "name": "ANJAR AFIF AFANDI",
+        "degree": "ST, M.Pd",
+        "image": "/images/guru/P3K/ANJAR AFIF AFANDI, ST, M.Pd.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "p3k-16",
+        "name": "MEGA  DWININGRUM",
+        "degree": "S.Pd",
+        "image": "/images/guru/P3K/MEGA  DWININGRUM, S.Pd.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "p3k-17",
+        "name": "ZULUL MUTHOMIMAH",
+        "degree": "S.PdI",
+        "image": "/images/guru/P3K/ZULUL MUTHOMIMAH, S.PdI.png",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "p3k-18",
+        "name": "IMAM SYAFII",
+        "degree": "S.Pd",
+        "image": "/images/guru/P3K/IMAM SYAFII, S.Pd.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "p3k-19",
+        "name": "NURAZIZAH CHOLIDIYAH",
+        "degree": "S.S., Gr.",
+        "image": "/images/guru/P3K/NURAZIZAH CHOLIDIYAH,S.S.,Gr..jpg",
+        "university": "",
+        "quote": ""
+      }
+    ]
   },
   {
-    title: "Guru Bahasa Indonesia",
-    pagination: "01/10",
-    description:
-      "Guru Bahasa Indonesia di SMK Negeri 02 Singosari berfokus mengajarkan materi kebahasaan, pembuatan proposal, surat menyurat, dan berbagai keterampilan komunikasi yang penting untuk dunia kerja.",
-    classes: ["Kelas X", "Kelas XI", "Kelas XII"],
-    materialsByClass: [
+    "title": "GTT",
+    "pagination": "01/07",
+    "description": "Guru Tetap di SMK Negeri 02 Singosari yang fokus pada pengembangan kompetensi siswa.",
+    "classes": [],
+    "materialsByClass": [],
+    "teachingFocus": "Berperan aktif dalam mendukung visi misi SMK Negeri 02 Singosari.",
+    "teachers": [
       {
-        className: "Kelas 10",
-        materials: [
-          "Tata Bahasa",
-          "Menulis Surat",
-          "Membaca Pemahaman",
-          "Berbicara Formal",
-          "Mendengarkan Aktif",
-          "Karya Sastra",
-        ],
+        "id": "gtt-1",
+        "name": "AANG NOERARIES WAHYUDIPASA",
+        "degree": "S.Si",
+        "image": "/images/guru/GTT/AANG NOERARIES WAHYUDIPASA, S.Si.jpg",
+        "university": "",
+        "quote": ""
       },
       {
-        className: "Kelas 11",
-        materials: ["Proposal Bisnis", "Laporan Kerja", "Presentasi Formal", "Debat", "Kritik Sastra", "Jurnalistik"],
+        "id": "gtt-3",
+        "name": "FENIS FITRIA DEWI",
+        "degree": "S.Si",
+        "image": "/images/guru/GTT/FENIS FITRIA DEWI, S.Si.jpg",
+        "university": "",
+        "quote": ""
       },
       {
-        className: "Kelas 12",
-        materials: [
-          "Komunikasi Bisnis",
-          "Negosiasi",
-          "Public Speaking",
-          "Copywriting",
-          "Content Writing",
-          "Skripsi/Karya Ilmiah",
-        ],
-      },
-    ],
-    teachingFocus:
-      "Pembelajaran Bahasa Indonesia diarahkan untuk mengembangkan kemampuan komunikasi siswa baik lisan maupun tulisan, dengan penekanan pada aplikasi praktis di dunia kerja seperti pembuatan dokumen bisnis, presentasi profesional, dan komunikasi efektif.",
-    teachers: [
-      {
-        id: "indo-1",
-        name: "Siti Rahayu",
-        degree: "S.Pd.",
-        university: "Lulusan Universitas Negeri Jakarta",
-        quote: "Bahasa menunjukkan bangsa, mari kita lestarikan.",
+        "id": "gtt-4",
+        "name": "RR. HENNING GRATYANIS ANGGRAENI",
+        "degree": "S.Pd",
+        "image": "/images/guru/GTT/RR. HENNING GRATYANIS ANGGRAENI, S.Pd.jpg",
+        "university": "",
+        "quote": ""
       },
       {
-        id: "indo-2",
-        name: "Dewi Anggraini",
-        degree: "M.Hum.",
-        university: "Lulusan Universitas Padjadjaran",
-        quote: "Kata-kata memiliki kekuatan untuk mengubah dunia.",
+        "id": "gtt-5",
+        "name": "TUTIK FARIDA",
+        "degree": "S.Pd",
+        "image": "/images/guru/GTT/TUTIK FARIDA, S.Pd.jpg",
+        "university": "",
+        "quote": ""
       },
-    ],
+      {
+        "id": "gtt-6",
+        "name": "AMIN MACHMUDI",
+        "degree": "S.Pd",
+        "image": "/images/guru/GTT/AMIN MACHMUDI,S.Pd.jpg",
+        "university": "",
+      },
+      {
+        "id": "gtt-7",
+        "name": "FITRIA KUMALA TRISNA",
+        "degree": "ST",
+        "image": "/images/guru/GTT/FITRIA KUMALA TRISNA, ST.jpg",
+        "university": "",
+        "quote": ""
+      }
+    ]
   },
   {
-    title: "Guru Matematika",
-    pagination: "01/12",
-    description:
-      "Guru Matematika di SMK Negeri 02 Singosari mengajarkan logika berpikir, pemecahan masalah, dan konsep matematika yang aplikatif untuk mendukung mata pelajaran produktif siswa.",
-    classes: ["Kelas X", "Kelas XI", "Kelas XII"],
-    materialsByClass: [
+    "title": "KARYAWAN",
+    "pagination": "01/15",
+    "description": "Karyawan SMK Negeri 02 Singosari yang mendukung operasional sekolah.",
+    "classes": [],
+    "materialsByClass": [],
+    "teachingFocus": "Berperan aktif dalam mendukung visi misi SMK Negeri 02 Singosari.",
+    "teachers": [
       {
-        className: "Kelas 10",
-        materials: ["Aljabar Dasar", "Geometri", "Fungsi Linear", "Persamaan", "Statistika Dasar", "Peluang"],
+        "id": "karyawan-1",
+        "name": "ARIYANTO",
+        "degree": "",
+        "image": "/images/guru/KARYAWAN/ARIYANTO.jpg",
+        "university": "",
+        "quote": ""
       },
       {
-        className: "Kelas 11",
-        materials: ["Trigonometri", "Fungsi Kuadrat", "Barisan & Deret", "Matriks", "Vektor", "Transformasi"],
+        "id": "karyawan-2",
+        "name": "AFFIN HENDRAMAWAN",
+        "degree": "",
+        "image": "/images/guru/KARYAWAN/AFFIN HENDRAMAWAN.jpg",
+        "university": "",
+        "quote": ""
       },
       {
-        className: "Kelas 12",
-        materials: ["Kalkulus", "Limit Fungsi", "Turunan", "Integral", "Matematika Diskrit", "Logika Proposisi"],
-      },
-    ],
-    teachingFocus:
-      "Pembelajaran matematika diarahkan untuk mengembangkan kemampuan berpikir logis, analitis, dan sistematis yang mendukung pembelajaran mata pelajaran produktif, khususnya dalam bidang teknologi dan rekayasa.",
-    teachers: [
-      {
-        id: "mat-1",
-        name: "Endang Susilo",
-        degree: "S.Si.",
-        university: "Lulusan Institut Teknologi Bandung",
-        quote: "Matematika adalah bahasa universal alam semesta.",
+        "id": "karyawan-3",
+        "name": "MEGAR SEMBADA KUMARA",
+        "degree": "SE",
+        "image": "/images/guru/KARYAWAN/MEGAR SEMBADA KUMARA, SE.jpg",
+        "university": "",
+        "quote": ""
       },
       {
-        id: "mat-2",
-        name: "Rina Hartati",
-        degree: "M.Sc.",
-        university: "Lulusan Universitas Gadjah Mada",
-        quote: "Logika akan membawa Anda dari A ke B. Imajinasi akan membawa Anda ke mana saja.",
+        "id": "karyawan-4",
+        "name": "NOFIN",
+        "degree": "",
+        "image": "/images/guru/KARYAWAN/NOFIN.jpg",
+        "university": "",
+        "quote": ""
       },
       {
-        id: "mat-3",
-        name: "Joko Prabowo",
-        degree: "S.Pd.",
-        university: "Lulusan Universitas Sebelas Maret",
-        quote: "Jangan khawatir tentang kesulitanmu dalam matematika, aku jamin kesulitanku lebih besar.",
+        "id": "karyawan-5",
+        "name": "SUNINGSIH",
+        "degree": "",
+        "image": "/images/guru/KARYAWAN/SUNINGSIH.jpg",
+        "university": "",
+        "quote": ""
       },
-    ],
+      {
+        "id": "karyawan-6",
+        "name": "RISDI ANTONO",
+        "degree": "",
+        "image": "/images/guru/KARYAWAN/RISDI ANTONO.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "karyawan-7",
+        "name": "ARNATA WAHYUNINGTIAS",
+        "degree": "",
+        "image": "/images/guru/KARYAWAN/ARNATA WAHYUNINGTIAS.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "karyawan-8",
+        "name": "ARACHMADI PUTRA PAMBUDI",
+        "degree": "",
+        "image": "/images/guru/KARYAWAN/ARACHMADI PUTRA PAMBUDI.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "karyawan-9",
+        "name": "LULUK RENANINGTYAS",
+        "degree": "",
+        "image": "/images/guru/KARYAWAN/LULUK RENANINGTYAS.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "karyawan-11",
+        "name": "UDIK WIRA AGUNG",
+        "degree": "",
+        "image": "/images/guru/KARYAWAN/UDIK WIRA AGUNG.png",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "karyawan-12",
+        "name": "DWI CAHYA SEPTIADI",
+        "degree": "",
+        "image": "/images/guru/KARYAWAN/DWI CAHYA SEPTIADI.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "karyawan-13",
+        "name": "NUR HASAN",
+        "degree": "",
+        "image": "/images/guru/KARYAWAN/NUR HASAN.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "karyawan-14",
+        "name": "SENOVANI FIRMAN DETTA",
+        "degree": "S.AP",
+        "image": "/images/guru/KARYAWAN/SENOVANI FIRMAN DETTA, S.AP.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "karyawan-15",
+        "name": "ROSI AKBAR NOR AZIZ",
+        "degree": "",
+        "image": "/images/guru/KARYAWAN/ROSI AKBAR NOR AZIZ.jpg",
+        "university": "",
+        "quote": ""
+      }
+    ]
   },
+  {
+    "title": "KTU",
+    "pagination": "01/01",
+    "description": "Kepala Tata Usaha yang mengelola administrasi dan operasional sekolah.",
+    "classes": [],
+    "materialsByClass": [],
+    "teachingFocus": "Berperan aktif dalam mendukung visi misi SMK Negeri 02 Singosari.",
+    "teachers": [
+      
+    ]
+  },
+  {
+    "title": "Kapro",
+    "pagination": "01/08",
+    "description": "Kepala Program Keahlian yang memimpin jurusan-jurusan di SMK Negeri 02 Singosari.",
+    "classes": [],
+    "materialsByClass": [],
+    "teachingFocus": "Berperan aktif dalam mendukung visi misi SMK Negeri 02 Singosari.",
+    "teachers": [
+      {
+        "id": "kapro-1",
+        "name": "FALKUDIN",
+        "degree": "S.T",
+        "image": "/images/guru/Kapro/AV/FALKUDIN, S.T.JPG",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "kapro-2",
+        "name": "HERMAWAN",
+        "degree": "ST, M.Pd",
+        "image": "/images/guru/Kapro/MT/HERMAWAN, ST,M.Pd.JPG",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "kapro-3",
+        "name": "ALIFAH DIANTEBES AINDRA",
+        "degree": "S.Pd",
+        "image": "/images/guru/P3K/ALIFAH DIANTEBES AINDRA, S.Pd.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "kapro-4",
+        "name": "DIMAS MAHARENDRA OKTENDIMA",
+        "degree": "S.Pd",
+        "image": "/images/guru/Kapro/AN/DIMAS MAHARENDRA OKTENDIMA,S.Pd.JPG",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "kapro-5",
+        "name": "FEBRINA CANDRA CAHYANING DIAN",
+        "degree": "S.Sn",
+        "image": "/images/guru/Kapro/BC/FEBRINA CANDRA CAHYANING DIAN, S.Sn.JPG",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "kapro-6",
+        "name": "MOKHAMAD AMRUL SADAT",
+        "degree": "ST, M.Pd",
+        "image": "/images/guru/Kapro/EI/MOKHAMAD AMRUL SADAT, ST,M.Pd.JPG",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "kapro-7",
+        "name": "ZOULFIKAR RAMSANJANIE AQSHA",
+        "degree": "S.Kom",
+        "image": "/images/guru/Kapro/DKV/ZOULFIKAR RAMSANJANIE AQSHA, S.Kom.JPG",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "kapro-8",
+        "name": "GAYAN LAGA",
+        "degree": "S.Pd",
+        "image": "/images/guru/Kapro/TKJ/GAYAN LAGA, S.Pd.jpg",
+        "university": "",
+        "quote": ""
+      }
+    ]
+  },
+  {
+    "title": "Korlabid",
+    "pagination": "01/05",
+    "description": "Koordinator Laboratorium yang mengelola fasilitas praktikum dan laboratorium.",
+    "classes": [],
+    "materialsByClass": [],
+    "teachingFocus": "Berperan aktif dalam mendukung visi misi SMK Negeri 02 Singosari.",
+    "teachers": [
+      {
+        "id": "korlabid-2",
+        "name": "ZULFA RUMAILAH",
+        "degree": "S.Pd",
+        "image": "/images/guru/Korlabid/KURIKULUM/ZULFA RUMAILAH, S.Pd.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "korlabid-3",
+        "name": "WIWIN WINANGSIH",
+        "degree": "S.Pd, M.Pd",
+        "image": "/images/guru/Korlabid/KESISWAAN/WIWIN WINANGSIH, S.Pd,M.Pd.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "korlabid-4",
+        "name": "ERI FERDIANTI",
+        "degree": "S.Pd, M.Pd",
+        "image": "/images/guru/Korlabid/SARPAS/ERI FERDIANTI,S.Pd, M.Pd.jpg",
+        "university": "",
+        "quote": ""
+      },
+      {
+        "id": "korlabid-5",
+        "name": "ROUDHOTUL HUSNA YANIF",
+        "degree": "S.Psi",
+        "image": "/images/guru/Korlabid/TU/ROUDHOTUL HUSNA YANIF, S.Psi.jpg",
+        "university": "",
+        "quote": ""
+      }
+    ]
+  }
 ]);
 
 const handleOpenModal = (teacher, teacherList, categoryTitle) => {
-  currentTeacherList.value = teacherList; // Store the list of the relevant category
+  currentTeacherList.value = teacherList;
   selectedTeacherCategoryTitle.value = categoryTitle;
   selectedTeacher.value = teacher;
   selectedTeacherIndex.value = teacherList.findIndex((t) => t.id === teacher.id);

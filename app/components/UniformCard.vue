@@ -47,7 +47,9 @@
           ]"
         >
           <Icon name="lucide:settings-2" size="16" />
-          <span>{{ selectedGrade }} - {{ selectedGender === "L" ? "L" : "P" }}{{ useAlmamater ? " + Jas" : "" }}</span>
+          <span>{{ selectedGrade === 'X' ? '10' : '11' }} - </span>
+          <Icon :name="selectedGender === 'L' ? 'material-symbols:male' : 'material-symbols:female'" size="16" />
+          <span>{{ useAlmamater ? " + Jas" : "" }}</span>
           <Icon :name="isMenuOpen ? 'lucide:chevron-up' : 'lucide:chevron-down'" size="14" />
         </button>
 
@@ -75,7 +77,7 @@
                       : 'bg-gray-100 text-gray-600 hover:bg-gray-200',
                   ]"
                 >
-                  X
+                  10
                 </button>
                 <button
                   @click="selectedGrade = 'XI'"
@@ -86,7 +88,7 @@
                       : 'bg-gray-100 text-gray-600 hover:bg-gray-200',
                   ]"
                 >
-                  XI
+                  11
                 </button>
               </div>
             </div>
@@ -104,7 +106,7 @@
                       : 'bg-gray-100 text-gray-600 hover:bg-gray-200',
                   ]"
                 >
-                  <Icon name="lucide:user" size="16" />
+                  <Icon name="material-symbols:male" size="16" />
                   <span>Laki-laki</span>
                   <Icon v-if="selectedGender === 'L'" name="lucide:check" size="16" class="ml-auto" />
                 </button>
@@ -117,7 +119,7 @@
                       : 'bg-gray-100 text-gray-600 hover:bg-gray-200',
                   ]"
                 >
-                  <Icon name="lucide:user" size="16" />
+                  <Icon name="material-symbols:female" size="16" />
                   <span>Perempuan</span>
                   <Icon v-if="selectedGender === 'P'" name="lucide:check" size="16" class="ml-auto" />
                 </button>
