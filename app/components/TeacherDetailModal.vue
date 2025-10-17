@@ -11,21 +11,12 @@
       </div>
 
       <div class="flex justify-center order-first md:order-none">
-        <div class="flex items-center justify-center w-64 h-64 rounded-lg bg-neutral-200">
-          <svg
-            xmlns="http://www.w.org/2000/svg"
-            class="w-32 h-32 text-neutral-400"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="1"
-              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-            />
-          </svg>
+        <div class="flex items-center justify-center w-64 h-64 rounded-lg bg-neutral-200 overflow-hidden">
+          <img
+            :src="teacher.image"
+            :alt="teacher.name"
+            class="object-cover w-full h-full"
+          />
         </div>
       </div>
 

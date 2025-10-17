@@ -1,4 +1,4 @@
-er<template>
+<template>
   <div
     class="overflow-hidden transition-shadow bg-white rounded-lg shadow-md cursor-pointer hover:shadow-xl"
     @click="$emit('showDetails', teacher)"

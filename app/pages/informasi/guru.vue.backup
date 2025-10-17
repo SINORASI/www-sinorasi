@@ -95,7 +95,7 @@ const teacherCategories = ref([
         "degree": "S.Sn",
         "image": "/images/guru/PNS/FAUZI RAHMADANI, S.Sn.jpg",
         "university": "",
-        "quote": "\"Seorang terpelajar harus sudah berbuat adil sejak dalam pikiran, apalagi dalam perbuatan\""
+        "quote": ""
       },
       {
         "id": "pns-4",
@@ -103,7 +103,7 @@ const teacherCategories = ref([
         "degree": "S.Pd",
         "image": "/images/guru/PNS/WARDATUL MAULIDIYAH, S.Pd.jpg",
         "university": "",
-        "quote": "Setiap lembar catatan yang kamu buat, adalah langkah kecil menuju impianmu"
+        "quote": ""
       },
       {
         "id": "pns-5",
@@ -119,7 +119,7 @@ const teacherCategories = ref([
         "degree": "S.Sn",
         "image": "/images/guru/Foto - foto pns/Sofia/sofia 2.jpg",
         "university": "",
-        "quote": "Berjuanglah untuk hidupmu, orangtua bukan penentu satu-satunya untuk masa depan ❤️"
+        "quote": ""
       },
       {
         "id": "pns-7",
@@ -175,7 +175,7 @@ const teacherCategories = ref([
         "degree": "S.Pd.H",
         "image": "/images/guru/Foto - foto pns/Ida/ida 2.jpg",
         "university": "",
-        "quote": "Perlakukanlah orang lain seperti kamu ingin diperlakukan"
+        "quote": ""
       },
       {
         "id": "pns-14",
@@ -199,7 +199,7 @@ const teacherCategories = ref([
         "degree": "S.Pd",
         "image": "/images/guru/Foto - foto pns/Titik/titik 2.jpg",
         "university": "",
-        "quote": "Siapa yang sungguh-sungguh pasti akan berhasil"
+        "quote": ""
       },
       {
         "id": "pns-19",
@@ -239,7 +239,7 @@ const teacherCategories = ref([
         "degree": "S.Sn",
         "image": "/images/guru/Foto - foto pns/Febriana/febriana 2.jpg",
         "university": "",
-        "quote": "Tetaplah jadi diri sendiri versi raw, tapi jangan lupa update biar terus upgrade"
+        "quote": ""
       },
       {
         "id": "pns-24",
@@ -287,7 +287,7 @@ const teacherCategories = ref([
         "degree": "",
         "image": "/images/guru/Foto - foto pns/Wiwin/wiwin 2.jpg",
         "university": "",
-        "quote": "Tidak keberhasilan tanpa perjuangan, kegagalan adalah hal biasa bangkit terus semangat untuk berjuang"
+        "quote": ""
       },
       {
         "id": "pns-34",
@@ -295,7 +295,7 @@ const teacherCategories = ref([
         "degree": "",
         "image": "/images/guru/Foto - foto pns/Zulkifli/zulkfli 2.jpg",
         "university": "",
-        "quote": "Keberhasilan dan kesuksesan tidak akan mungkin didapat tanpa usaha keras dan tak kenal lelah"
+        "quote": ""
       },
       {
         "id": "pns-35",
@@ -321,7 +321,7 @@ const teacherCategories = ref([
         "degree": "S.Pd, Gr",
         "image": "/images/guru/P3K/DEVI ARVENI, S.Pd, Gr.jpg",
         "university": "",
-        "quote": "Kerjakan yang bisa kamu lakukan sekarang, karena menunda akan menambah pekerjaanmu"
+        "quote": ""
       },
       {
         "id": "p3k-2",
@@ -329,7 +329,7 @@ const teacherCategories = ref([
         "degree": "S.Pd",
         "image": "/images/guru/P3K/VITA PRIMASARI, S.Pd.jpg",
         "university": "",
-        "quote": "Percayalah bahwa kamu memiliki kekuatan untuk bangkit dari setiap kesulitan dan menjadi lebih kuat dari sebelumnya."
+        "quote": ""
       },
       {
         "id": "p3k-3",
@@ -337,7 +337,7 @@ const teacherCategories = ref([
         "degree": "ST, M.Pd",
         "image": "/images/guru/P3K/MOKHAMAD AMRUL SADAT, ST,M.Pd.jpg",
         "university": "",
-        "quote": "SEMANGAT TANPO SAMBAT"
+        "quote": ""
       },
       {
         "id": "p3k-4",
@@ -353,7 +353,7 @@ const teacherCategories = ref([
         "degree": "S.Pd, Gr",
         "image": "/images/guru/P3K/CHUTMAN EFENDI, S,Pd, Gr.jpg",
         "university": "",
-        "quote": "SANTAI TAPI SAMPAI"
+        "quote": ""
       },
       {
         "id": "p3k-6",
@@ -369,7 +369,7 @@ const teacherCategories = ref([
         "degree": "S.Pd",
         "image": "/images/guru/P3K/FIDDA ZURIKA ISLAMIA, S.Pd.jpg",
         "university": "",
-        "quote": "Aku tidak bersaing dengan siapapun. Aku bersaing dengan diriku sendiri, yg harus lebih baik dari kemarin."
+        "quote": ""
       },
       {
         "id": "p3k-8",
@@ -385,7 +385,7 @@ const teacherCategories = ref([
         "degree": "S.Pd., Gr.",
         "image": "/images/guru/P3K/TRIYAS KUSUMAWARDHANI, S.Pd., Gr..jpg",
         "university": "",
-        "quote": "Hidup bukan soal cepat menemukan siapa dirimu, tapi berani berjalan sambil terus berubah. Seperti sungai yang mencari laut, kau akan menemukan dirimu di waktu yang tepat. Tidak apa-apa kalau sekarang kau belum tahu mau jadi apa. Bahkan kupu-kupu pun pernah merasa dirinya hanya ulat yang membosankan. ✌🏻"
+        "quote": ""
       },
       {
         "id": "p3k-10",
@@ -401,7 +401,7 @@ const teacherCategories = ref([
         "degree": "S.Pd",
         "image": "/images/guru/P3K/ALIFAH DIANTEBES AINDRA, S.Pd.jpg",
         "university": "",
-        "quote": "Nilai sejati manusia tak terukur dari cepatnya ia tiba, melainkan dari kedalaman manfaat yang ia bawa. Hidup layaknya perjalanan, terus mengasah diri dengan mencari dan memandang cakrawala guna memaksimalkan potensi sejati kita."
+        "quote": ""
       },
       {
         "id": "p3k-12",
@@ -409,7 +409,7 @@ const teacherCategories = ref([
         "degree": "S.Pd",
         "image": "/images/guru/P3K/AGUNG DWI KURNIAWAN, S.Pd.jpg",
         "university": "",
-        "quote": "Percayalah pada diri sendiri, karena kamu memiliki potensi yang luar biasa"
+        "quote": ""
       },
       {
         "id": "p3k-13",
@@ -433,7 +433,7 @@ const teacherCategories = ref([
         "degree": "ST, M.Pd",
         "image": "/images/guru/P3K/ANJAR AFIF AFANDI, ST, M.Pd.jpg",
         "university": "",
-        "quote": "Jangan tinggalkan sholat!"
+        "quote": ""
       },
       {
         "id": "p3k-16",
@@ -465,7 +465,7 @@ const teacherCategories = ref([
         "degree": "S.S., Gr.",
         "image": "/images/guru/P3K/NURAZIZAH CHOLIDIYAH,S.S.,Gr..jpg",
         "university": "",
-        "quote": "今からもっと頑張らなきゃ"
+        "quote": ""
       }
     ]
   },
@@ -491,7 +491,7 @@ const teacherCategories = ref([
         "degree": "S.Si",
         "image": "/images/guru/GTT/FENIS FITRIA DEWI, S.Si.jpg",
         "university": "",
-        "quote": "\"Kesuksesan bukan hanya milik yang pintar, tetapi milik mereka yang tekun, mau belajar, dan berani mencoba\" (B.J. Habibie)"
+        "quote": ""
       },
       {
         "id": "gtt-4",
@@ -515,7 +515,6 @@ const teacherCategories = ref([
         "degree": "S.Pd",
         "image": "/images/guru/GTT/AMIN MACHMUDI,S.Pd.jpg",
         "university": "",
-        "quote": "Mahkota seseorang adalah Akalnya, Derajat seseorang adalah Agamanya, sedangkan Kehotmatan seseorang adalah Budi Pekertinya  ( dikutip dari Umar Bin Khattab )"
       },
       {
         "id": "gtt-7",
@@ -597,7 +596,7 @@ const teacherCategories = ref([
         "degree": "",
         "image": "/images/guru/KARYAWAN/ARACHMADI PUTRA PAMBUDI.jpg",
         "university": "",
-        "quote": "Ada banyak cara untuk \"pergi\", tapi hanya ada satu cara untuk \"tetap di sini\"."
+        "quote": ""
       },
       {
         "id": "karyawan-9",
@@ -637,7 +636,7 @@ const teacherCategories = ref([
         "degree": "S.AP",
         "image": "/images/guru/KARYAWAN/SENOVANI FIRMAN DETTA, S.AP.jpg",
         "university": "",
-        "quote": "Teruslah belajar dan belajar untuk meraih cita-cita yang tinggi"
+        "quote": ""
       },
       {
         "id": "karyawan-15",
@@ -674,7 +673,7 @@ const teacherCategories = ref([
         "degree": "S.T",
         "image": "/images/guru/Kapro/AV/FALKUDIN, S.T.JPG",
         "university": "",
-        "quote": "Life as resistor"
+        "quote": ""
       },
       {
         "id": "kapro-2",
@@ -690,7 +689,7 @@ const teacherCategories = ref([
         "degree": "S.Pd",
         "image": "/images/guru/P3K/ALIFAH DIANTEBES AINDRA, S.Pd.jpg",
         "university": "",
-        "quote": "Nilai sejati manusia tak terukur dari cepatnya ia tiba, melainkan dari kedalaman manfaat yang ia bawa. Hidup layaknya perjalanan, terus mengasah diri dengan mencari dan memandang cakrawala guna memaksimalkan potensi sejati kita."
+        "quote": ""
       },
       {
         "id": "kapro-4",
@@ -698,7 +697,7 @@ const teacherCategories = ref([
         "degree": "S.Pd",
         "image": "/images/guru/Kapro/AN/DIMAS MAHARENDRA OKTENDIMA,S.Pd.JPG",
         "university": "",
-        "quote": "Ad Astra Per Aspera"
+        "quote": ""
       },
       {
         "id": "kapro-5",
@@ -706,7 +705,7 @@ const teacherCategories = ref([
         "degree": "S.Sn",
         "image": "/images/guru/Kapro/BC/FEBRINA CANDRA CAHYANING DIAN, S.Sn.JPG",
         "university": "",
-        "quote": "Tetaplah jadi diri sendiri versi raw, tapi jangan lupa update biar terus upgrade"
+        "quote": ""
       },
       {
         "id": "kapro-6",
@@ -714,7 +713,7 @@ const teacherCategories = ref([
         "degree": "ST, M.Pd",
         "image": "/images/guru/Kapro/EI/MOKHAMAD AMRUL SADAT, ST,M.Pd.JPG",
         "university": "",
-        "quote": "SEMANGAT TANPO SAMBAT"
+        "quote": ""
       },
       {
         "id": "kapro-7",
@@ -730,7 +729,7 @@ const teacherCategories = ref([
         "degree": "S.Pd",
         "image": "/images/guru/Kapro/TKJ/GAYAN LAGA, S.Pd.jpg",
         "university": "",
-        "quote": "Tidak ada kata terlambat untuk belajar."
+        "quote": ""
       }
     ]
   },
@@ -748,7 +747,7 @@ const teacherCategories = ref([
         "degree": "S.Pd",
         "image": "/images/guru/Korlabid/KURIKULUM/ZULFA RUMAILAH, S.Pd.jpg",
         "university": "",
-        "quote": "Ilmu yang kalian pelajari hari ini mungkin belum terasa manfaatnya sekarang, tapi suatu saat ia akan menjadi kunci yang membuka pintu masa depan kalian"
+        "quote": ""
       },
       {
         "id": "korlabid-3",
@@ -756,7 +755,7 @@ const teacherCategories = ref([
         "degree": "S.Pd, M.Pd",
         "image": "/images/guru/Korlabid/KESISWAAN/WIWIN WINANGSIH, S.Pd,M.Pd.jpg",
         "university": "",
-        "quote": "Tidak keberhasilan tanpa perjuangan, kegagalan adalah hal biasa bangkit terus semangat untuk berjuang"
+        "quote": ""
       },
       {
         "id": "korlabid-4",
@@ -772,7 +771,7 @@ const teacherCategories = ref([
         "degree": "S.Psi",
         "image": "/images/guru/Korlabid/TU/ROUDHOTUL HUSNA YANIF, S.Psi.jpg",
         "university": "",
-        "quote": "Hidup itu seperti puzle nikmati proses menyusunnya"
+        "quote": ""
       }
     ]
   }
