@@ -31,12 +31,12 @@
                   <Icon name="lucide:user-x" size="20" class="text-white" />
                 </div>
                 <div>
-                  <p class="text-white font-semibold">Akun Dinonaktifkan</p>
-                  <p class="text-gray-100 text-sm">Sistem akun sementara tidak tersedia</p>
+                  <p class="text-white font-semibold">{{ $t('sidebar.profile.disabled') }}</p>
+                  <p class="text-gray-100 text-sm">{{ $t('sidebar.profile.disabledDesc') }}</p>
                 </div>
               </div>
               <div class="text-center">
-                <p class="text-gray-200 text-sm">Fitur akun akan segera kembali</p>
+                <p class="text-gray-200 text-sm">{{ $t('sidebar.profile.comingSoon') }}</p>
               </div>
             </div>
           </div>
@@ -45,7 +45,7 @@
             <div class="relative">
               <input
                 type="text"
-                placeholder="Cari halaman, berita, jurusan, atau ekstrakurikuler..."
+                :placeholder="$t('sidebar.search.placeholder')"
                 v-model="searchQuery"
                 class="w-full px-3 py-3 pr-10 text-lg text-gray-800 transition-all duration-200 border border-gray-200 rounded-lg outline-none bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
@@ -72,25 +72,58 @@
                 <div class="flex items-center gap-3">
                   <Icon name="lucide:home" size="24" class="flex-shrink-0" />
                   <div class="flex-1">
-                    <p class="text-base font-semibold">Kembali ke Beranda</p>
-                    <p class="text-xs text-blue-100">Halaman utama website</p>
+                    <p class="text-base font-semibold">{{ $t('sidebar.homeButton.title') }}</p>
+                    <p class="text-xs text-blue-100">{{ $t('sidebar.homeButton.subtitle') }}</p>
                   </div>
                   <Icon name="lucide:arrow-right" size="20" class="flex-shrink-0" />
                 </div>
               </div>
             </NuxtLink>
 
-            <!-- Language Switcher (Disabled) -->
-            <div
-              class="flex items-center justify-between px-4 py-3 mt-3 border border-gray-200 rounded-lg cursor-not-allowed bg-gray-50 opacity-60"
-            >
-              <div class="flex items-center gap-3">
-                <Icon name="lucide:languages" size="20" class="text-gray-500" />
-                <span class="text-sm font-medium text-gray-600">Bahasa Indonesia</span>
-              </div>
-              <div class="flex items-center gap-2">
-                <span class="px-2 py-1 text-xs text-gray-500 bg-gray-200 rounded">Segera Hadir</span>
-              </div>
+            <!-- Language Switcher -->
+            <div class="relative mt-3">
+              <button
+                @click="showLanguageMenu = !showLanguageMenu"
+                class="flex items-center justify-between w-full px-4 py-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+              >
+                <div class="flex items-center gap-3">
+                  <Icon name="lucide:languages" size="20" class="text-gray-600" />
+                  <span class="text-sm font-medium text-gray-800">{{ $t('sidebar.languageSwitcher.label') }}</span>
+                </div>
+                <Icon
+                  name="lucide:chevron-down"
+                  size="16"
+                  class="text-gray-500 transition-transform"
+                  :class="{ 'rotate-180': showLanguageMenu }"
+                />
+              </button>
+
+              <!-- Language Dropdown -->
+              <transition name="dropdown" class="transition-all duration-200 ease-in-out">
+                <div
+                  v-if="showLanguageMenu"
+                  class="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50"
+                >
+                  <button
+                    v-for="lang in languages"
+                    :key="lang.code"
+                    @click="switchLanguage(lang.code)"
+                    class="flex items-center justify-between w-full px-4 py-3 text-left hover:bg-gray-50 transition-colors duration-200 first:rounded-t-lg last:rounded-b-lg"
+                    :class="{ 'bg-blue-50 text-blue-700': currentLanguage === lang.code }"
+                  >
+                    <div class="flex items-center gap-3">
+                      <span class="text-lg">{{ lang.flag }}</span>
+                      <span class="text-sm font-medium">{{ lang.name }}</span>
+                    </div>
+                    <Icon
+                      v-if="currentLanguage === lang.code"
+                      name="lucide:check"
+                      size="16"
+                      class="text-blue-600"
+                    />
+                  </button>
+                </div>
+              </transition>
             </div>
 
             <!-- Dark Mode Toggle (Disabled) -->
@@ -115,8 +148,7 @@
             >
               <p class="text-sm text-yellow-700">
                 <Icon name="lucide:info" size="16" class="inline mr-1" />
-                Tidak ada hasil untuk "<strong>{{ searchQuery }}</strong
-                >". Coba kata kunci lain seperti "voli", "basket", "robotik", "prestasi", atau "rpl".
+                {{ $t('sidebar.search.noResults', { query: searchQuery }) }}
               </p>
             </div>
             <div
@@ -125,7 +157,7 @@
             >
               <p class="text-xs text-green-700">
                 <Icon name="lucide:check-circle" size="14" class="inline mr-1" />
-                Ditemukan {{ filteredMenuItems.reduce((total: number, section: any) => total + section.submenu.length, 0) }} hasil
+                {{ $t('sidebar.search.resultsCount', { count: filteredMenuItems.reduce((total: number, section: any) => total + section.submenu.length, 0) }) }}
               </p>
             </div>
           </div>
@@ -134,7 +166,7 @@
               @click="toggleSection(item.title)"
               class="flex items-center justify-between mb-3 text-base font-semibold text-gray-800 cursor-pointer"
             >
-              {{ item.title }}
+              {{ $t(`sidebar.sections.${item.title.toLowerCase().replace(/\s+/g, '')}`) }}
               <div class="flex items-center gap-2">
                 <span v-if="searchQuery.trim()" class="px-2 py-1 text-xs text-blue-700 bg-blue-100 rounded-full">
                   {{ item.submenu.length }}
@@ -169,19 +201,19 @@
                           v-if="item.title === 'Berita' && sub.title !== 'Semua Berita'"
                           class="text-xs bg-red-100 text-red-700 px-1.5 py-0.5 rounded"
                         >
-                          Berita
+                          {{ $t('sidebar.matches.news') }}
                         </span>
                         <span
                           v-if="searchQuery.trim() && (sub as any).score > 90"
                           class="text-xs bg-green-100 text-green-700 px-1.5 py-0.5 rounded"
                         >
-                          Perfect match
+                          {{ $t('sidebar.matches.perfect') }}
                         </span>
                         <span
                           v-else-if="searchQuery.trim() && (sub as any).score > 70"
                           class="text-xs bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded"
                         >
-                          Good match
+                          {{ $t('sidebar.matches.good') }}
                         </span>
                       </div>
                       <p
@@ -212,19 +244,19 @@
                           v-if="item.title === 'Berita' && sub.title !== 'Semua Berita'"
                           class="text-xs bg-red-100 text-red-700 px-1.5 py-0.5 rounded"
                         >
-                          Berita
+                          {{ $t('sidebar.matches.news') }}
                         </span>
                         <span
                           v-if="searchQuery.trim() && (sub as any).score > 90"
                           class="text-xs bg-green-100 text-green-700 px-1.5 py-0.5 rounded"
                         >
-                          Perfect match
+                          {{ $t('sidebar.matches.perfect') }}
                         </span>
                         <span
                           v-else-if="searchQuery.trim() && (sub as any).score > 70"
                           class="text-xs bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded"
                         >
-                          Good match
+                          {{ $t('sidebar.matches.good') }}
                         </span>
                       </div>
                       <p
@@ -262,18 +294,18 @@ import { majorColorSchemes } from "~/utils/majorColors";
 import type { MajorName } from "~/models/MajorName";
 import type { News } from "~/models/News";
 
-const currentLanguage = ref("id");
+const { locales, setLocale } = useI18n();
+const currentLanguage = computed(() => {
+  const { $i18n } = useNuxtApp();
+  return $i18n.locale.value;
+});
 const showLanguageMenu = ref(false);
 
-const languages: { code: string; name: string; flag: string }[] = [
-  { code: 'id', name: 'Bahasa Indonesia', flag: '🇮🇩' },
-  { code: 'en', name: 'English', flag: '🇺🇸' }
-]
+const languages = computed(() => locales.value);
 
-const switchLanguage = (langCode: string) => {
-  currentLanguage.value = langCode;
+const switchLanguage = async (langCode: string) => {
+  await setLocale(langCode as 'id' | 'en');
   showLanguageMenu.value = false;
-  // TODO: Implement actual language switching logic
 };
 
 // Get current route for dynamic title

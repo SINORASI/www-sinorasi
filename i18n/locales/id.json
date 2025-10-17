@@ -1,0 +1,42 @@
+{
+  "sidebar": {
+    "search": {
+      "placeholder": "Cari halaman, berita, jurusan, atau ekstrakurikuler...",
+      "noResults": "Tidak ada hasil untuk \"{query}\". Coba kata kunci lain seperti \"voli\", \"basket\", \"robotik\", \"prestasi\", atau \"rpl\".",
+      "resultsCount": "Ditemukan {count} hasil"
+    },
+    "homeButton": {
+      "title": "Kembali ke Beranda",
+      "subtitle": "Halaman utama website"
+    },
+    "languageSwitcher": {
+      "label": "Bahasa Indonesia",
+      "comingSoon": "Segera Hadir"
+    },
+    "darkMode": {
+      "label": "Mode Gelap",
+      "comingSoon": "Segera Hadir"
+    },
+    "profile": {
+      "disabled": "Akun Dinonaktifkan",
+      "disabledDesc": "Sistem akun sementara tidak tersedia",
+      "comingSoon": "Fitur akun akan segera kembali"
+    },
+    "sections": {
+      "beranda": "Beranda",
+      "tentangkami": "Tentang Kami",
+      "konsentrasikeahlian": "Konsentrasi Keahlian",
+      "informasi": "Informasi",
+      "organisasi": "Organisasi",
+      "ekstrakurikuler": "Ekstrakurikuler",
+      "berita": "Berita",
+      "utilitas": "Utilitas",
+      "layanan": "Layanan"
+    },
+    "matches": {
+      "perfect": "Perfect match",
+      "good": "Good match",
+      "news": "Berita"
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "sidebar": {
+    "search": {
+      "placeholder": "Search pages, news, majors, or extracurriculars...",
+      "noResults": "No results for \"{query}\". Try other keywords like \"volleyball\", \"basketball\", \"robotics\", \"achievements\", or \"rpl\".",
+      "resultsCount": "Found {count} results"
+    },
+    "homeButton": {
+      "title": "Back to Home",
+      "subtitle": "Main website page"
+    },
+    "languageSwitcher": {
+      "label": "English",
+      "comingSoon": "Coming Soon"
+    },
+    "darkMode": {
+      "label": "Dark Mode",
+      "comingSoon": "Coming Soon"
+    },
+    "profile": {
+      "disabled": "Account Disabled",
+      "disabledDesc": "Account system temporarily unavailable",
+      "comingSoon": "Account features will return soon"
+    },
+    "sections": {
+      "beranda": "Home",
+      "tentangkami": "About Us",
+      "konsentrasikeahlian": "Major Programs",
+      "informasi": "Information",
+      "organisasi": "Organizations",
+      "ekstrakurikuler": "Extracurricular",
+      "berita": "News",
+      "utilitas": "Utilities",
+      "layanan": "Services"
+    },
+    "matches": {
+      "perfect": "Perfect match",
+      "good": "Good match",
+      "news": "News"
+    }
+  }
+}
