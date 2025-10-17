@@ -1,88 +1,23 @@
 <script setup lang="ts">
 import type { Organization } from '~/models/Organization'
 
-const organization: Organization = {
-  id: '5',
-  slug: 'bdi',
-  name: 'BDI',
-  nickname: 'Badan Dakwah Islam',
-  logo: '/images/organisasi/BDI.webp',
-  logoDescription: 'Logo BDI SMKN 2 Singosari menampilkan elemen islami dengan bulan sabit dan bintang yang melambangkan nilai-nilai keislaman dan spiritualitas.',
-  description: 'Badan Dakwah Islam yang fokus pada pengembangan spiritual dan kegiatan keagamaan.',
-  history: 'BDI didirikan untuk memperkuat nilai-nilai keislaman di lingkungan sekolah. Dengan berbagai program keagamaan, BDI telah berhasil menciptakan lingkungan yang kondusif untuk pengembangan spiritual siswa.',
-  established: '2008',
-  statistics: {
-    members: 35,
-    programs: 18,
-    years: 16,
-    meetings: 40
-  },
-  leadership: {
-    ketua: [{
-      id: '11',
-      name: 'Ahmad Fauzi',
-      image: '/images/profile-placeholder.png',
-      position: 'Ketua BDI'
-    }],
-    sekretaris: [{
-      id: '12',
-      name: 'Nur Hasanah',
-      image: '/images/profile-placeholder.png',
-      position: 'Sekretaris'
-    }]
-  },
-  sections: [
-    {
-      id: '1',
-      name: 'Tim Dakwah',
-      image: '/images/placeholder.jpg',
-      visi: 'Menjadi pusat pengembangan spiritual siswa muslim',
-      misi: 'Menyelenggarakan kegiatan keagamaan dan pengembangan karakter',
-      tasks: 'Pengajian rutin, kajian islam, kegiatan sosial keagamaan',
-      programs: ['Pengajian Rutin', 'Kajian Islam', 'Bakti Sosial', 'Ramadhan Program'],
-      members: [
-        { id: '11', name: 'Ahmad Fauzi', image: '/images/profile-placeholder.png', position: 'Ketua' },
-        { id: '12', name: 'Nur Hasanah', image: '/images/profile-placeholder.png', position: 'Sekretaris' }
-      ]
-    }
-  ],
-  activities: [
-    {
-      id: 'bdi1',
-      image: '/images/placeholder.jpg',
-      title: 'Pengajian Rutin Mingguan',
-      description: 'Kegiatan pengajian yang diadakan setiap hari Jumat untuk membahas materi keislaman.',
-      date: '2024-09-13'
-    },
-    {
-      id: 'bdi2',
-      image: '/images/placeholder.jpg',
-      title: 'Bakti Sosial Ramadhan',
-      description: 'Program bakti sosial selama bulan Ramadhan untuk membantu masyarakat sekitar.',
-      date: '2024-03-15'
-    }
-  ],
-  photos: [
-    '/images/placeholder.jpg',
-    '/images/placeholder.jpg',
-    '/images/placeholder.jpg',
-    '/images/placeholder.jpg'
-  ],
-  recruitmentPoster: '/images/placeholder.jpg',
-  recruitmentPeriod: '1-15 Oktober 2024'
-}
+// Fetch organization data from API
+const { data: organizationsResponse } = await useFetch("/api/organizations");
+const organizations = computed(() => organizationsResponse.value?.data || []);
+const organization = computed(() => organizations.value.find(org => org.slug === 'bdi') || {} as Organization);
+
+const activeTab = ref('overview')
 
 useHead({
-  title: `${organization.name} - Organisasi - SMKN 2 Singosari`,
+  title: `${organization.value.name} - Organisasi - SMKN 2 Singosari`,
   meta: [
     {
       name: "description",
-      content: organization.description,
+      content: organization.value.description,
     },
   ],
 });
 
-const activeTab = ref('overview')
 </script>
 
 <template>

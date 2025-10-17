@@ -1,88 +1,23 @@
 <script setup lang="ts">
 import type { Organization } from '~/models/Organization'
 
-const organization: Organization = {
-  id: '3',
-  slug: 'pmr',
-  name: 'PMR',
-  nickname: 'Palang Merah Remaja',
-  logo: '/images/organisasi/PMR.webp',
-  logoDescription: 'Logo PMR SMKN 2 Singosari menampilkan lambang Palang Merah dengan elemen remaja yang melambangkan semangat kemanusiaan dan kepedulian sosial.',
-  description: 'Palang Merah Remaja yang fokus pada kegiatan kemanusiaan dan pertolongan pertama.',
-  history: 'PMR telah berperan aktif dalam kegiatan sosial dan kesehatan siswa. Dengan semangat kemanusiaan, PMR SMKN 2 Singosari terus memberikan pelayanan kesehatan dan bantuan sosial kepada masyarakat sekitar sekolah.',
-  established: '2005',
-  statistics: {
-    members: 28,
-    programs: 15,
-    years: 19,
-    meetings: 36
-  },
-  leadership: {
-    ketua: [{
-      id: '7',
-      name: 'Fajar Nugroho',
-      image: '/images/profile-placeholder.png',
-      position: 'Ketua PMR'
-    }],
-    sekretaris: [{
-      id: '8',
-      name: 'Lina Kusuma',
-      image: '/images/profile-placeholder.png',
-      position: 'Sekretaris'
-    }]
-  },
-  sections: [
-    {
-      id: '1',
-      name: 'Tim Kesehatan',
-      image: '/images/placeholder.jpg',
-      visi: 'Menjadi garda terdepan dalam pelayanan kesehatan siswa',
-      misi: 'Memberikan pertolongan pertama dan edukasi kesehatan',
-      tasks: 'Pertolongan pertama, penyuluhan kesehatan, donor darah',
-      programs: ['UKS Sekolah', 'Donor Darah', 'Penyuluhan Kesehatan'],
-      members: [
-        { id: '7', name: 'Fajar Nugroho', image: '/images/profile-placeholder.png', position: 'Ketua' },
-        { id: '8', name: 'Lina Kusuma', image: '/images/profile-placeholder.png', position: 'Sekretaris' }
-      ]
-    }
-  ],
-  activities: [
-    {
-      id: 'pmr1',
-      image: '/images/placeholder.jpg',
-      title: 'Donor Darah Rutin',
-      description: 'Kegiatan donor darah yang diselenggarakan setiap bulan untuk membantu masyarakat.',
-      date: '2024-08-20'
-    },
-    {
-      id: 'pmr2',
-      image: '/images/placeholder.jpg',
-      title: 'Pelatihan Pertolongan Pertama',
-      description: 'Pelatihan keterampilan pertolongan pertama untuk anggota PMR.',
-      date: '2024-09-10'
-    }
-  ],
-  photos: [
-    '/images/placeholder.jpg',
-    '/images/placeholder.jpg',
-    '/images/placeholder.jpg',
-    '/images/placeholder.jpg'
-  ],
-  recruitmentPoster: '/images/placeholder.jpg',
-  recruitmentPeriod: '1-15 September 2024'
-}
+// Fetch organization data from API
+const { data: organizationsResponse } = await useFetch("/api/organizations");
+const organizations = computed(() => organizationsResponse.value?.data || []);
+const organization = computed(() => organizations.value.find(org => org.slug === 'pmr') || {} as Organization);
+
+const activeTab = ref('overview')
 
 useHead({
-  title: `${organization.name} - Organisasi - SMKN 2 Singosari`,
+  title: `${organization.value.name} - Organisasi - SMKN 2 Singosari`,
   meta: [
     {
       name: "description",
-      content: organization.description,
+      content: organization.value.description,
     },
   ],
 });
 
-const activeTab = ref('overview')
 </script>
 
 <template>
@@ -95,7 +30,7 @@ const activeTab = ref('overview')
             <img
               :src="organization.logo"
               :alt="organization.name"
-              class="object-contain w-24 h-24 rounded-2xl border-4 border-blue-200 shadow-lg md:w-32 md:h-32 bg-transparent"
+              class="object-contain w-88 h-24 rounded-2xl border-4 border-blue-200 shadow-lg md:w-100 md:h-32 bg-transparent"
             />
             <div class="flex-1">
               <h1 class="text-3xl font-bold text-gray-800 md:text-4xl">{{ organization.name }}</h1>

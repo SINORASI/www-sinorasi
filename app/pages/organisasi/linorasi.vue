@@ -1,88 +1,23 @@
 <script setup lang="ts">
 import type { Organization } from '~/models/Organization'
 
-const organization: Organization = {
-  id: '4',
-  slug: 'linorasi',
-  name: 'LINORASI',
-  nickname: 'Litbang Inovasi Raih Prestasi',
-  logo: '/images/organisasi/LINORASI.webp',
-  logoDescription: 'Logo LINORASI SMKN 2 Singosari menampilkan elemen inovasi dan prestasi dengan simbol roket yang melambangkan kemajuan dan pencapaian tinggi.',
-  description: 'Litbang Inovasi Raih Prestasi yang fokus pada pengembangan inovasi dan prestasi siswa.',
-  history: 'LINORASI didirikan untuk mendorong inovasi dan pencapaian prestasi siswa. Melalui berbagai program inovatif, LINORASI telah berhasil membawa nama sekolah ke tingkat yang lebih tinggi dalam berbagai kompetisi dan ajang prestasi.',
-  established: '2018',
-  statistics: {
-    members: 25,
-    programs: 20,
-    years: 6,
-    meetings: 30
-  },
-  leadership: {
-    ketua: [{
-      id: '9',
-      name: 'Eko Prasetyo',
-      image: '/images/profile-placeholder.png',
-      position: 'Ketua LINORASI'
-    }],
-    wakil: [{
-      id: '10',
-      name: 'Rina Amelia',
-      image: '/images/profile-placeholder.png',
-      position: 'Wakil Ketua'
-    }]
-  },
-  sections: [
-    {
-      id: '1',
-      name: 'Tim Inovasi',
-      image: '/images/placeholder.jpg',
-      visi: 'Mendorong inovasi siswa untuk kemajuan sekolah',
-      misi: 'Mengembangkan kreativitas dan kemampuan siswa melalui inovasi',
-      tasks: 'Pengembangan proyek inovasi, mentoring siswa',
-      programs: ['Innovation Camp', 'Science Fair', 'Robotik Competition'],
-      members: [
-        { id: '9', name: 'Eko Prasetyo', image: '/images/profile-placeholder.png', position: 'Ketua' },
-        { id: '10', name: 'Rina Amelia', image: '/images/profile-placeholder.png', position: 'Wakil Ketua' }
-      ]
-    }
-  ],
-  activities: [
-    {
-      id: 'linorasi1',
-      image: '/images/placeholder.jpg',
-      title: 'Innovation Camp 2024',
-      description: 'Kegiatan kamp inovasi tahunan yang melibatkan siswa dalam pengembangan proyek inovatif.',
-      date: '2024-07-15'
-    },
-    {
-      id: 'linorasi2',
-      image: '/images/placeholder.jpg',
-      title: 'Science Fair',
-      description: 'Pameran karya ilmiah siswa dengan tema inovasi teknologi.',
-      date: '2024-08-25'
-    }
-  ],
-  photos: [
-    '/images/placeholder.jpg',
-    '/images/placeholder.jpg',
-    '/images/placeholder.jpg',
-    '/images/placeholder.jpg'
-  ],
-  recruitmentPoster: '/images/placeholder.jpg',
-  recruitmentPeriod: '15-30 Agustus 2024'
-}
+// Fetch organization data from API
+const { data: organizationsResponse } = await useFetch("/api/organizations");
+const organizations = computed(() => organizationsResponse.value?.data || []);
+const organization = computed(() => organizations.value.find(org => org.slug === 'linorasi') || {} as Organization);
+
+const activeTab = ref('overview')
 
 useHead({
-  title: `${organization.name} - Organisasi - SMKN 2 Singosari`,
+  title: `${organization.value.name} - Organisasi - SMKN 2 Singosari`,
   meta: [
     {
       name: "description",
-      content: organization.description,
+      content: organization.value.description,
     },
   ],
 });
 
-const activeTab = ref('overview')
 </script>
 
 <template>

@@ -1,117 +1,23 @@
 <script setup lang="ts">
 import type { Organization } from '~/models/Organization'
 
-const organization: Organization = {
-  id: '1',
-  slug: 'osis',
-  name: 'OSIS',
-  nickname: 'Organisasi Siswa Intra Sekolah',
-  logo: '/images/organisasi/OSIS.webp',
-  logoDescription: 'Logo OSIS SMKN 2 Singosari menampilkan lambang sekolah dengan elemen siswa yang melambangkan semangat kebersamaan dan prestasi.',
-  description: 'Organisasi Siswa Intra Sekolah yang menjadi wadah bagi siswa untuk mengembangkan potensi dan kreativitas.',
-  history: 'Didirikan sejak tahun 2000, OSIS telah menjadi pilar utama dalam kegiatan siswa. OSIS SMKN 2 Singosari telah berhasil menyelenggarakan berbagai kegiatan yang bermanfaat bagi siswa, mulai dari kegiatan akademik hingga kegiatan sosial. Dengan semangat kebersamaan dan kreativitas, OSIS terus berkembang dan memberikan kontribusi positif bagi sekolah.',
-  established: '2000',
-  statistics: {
-    members: 45,
-    programs: 12,
-    years: 24,
-    meetings: 48
-  },
-  contactInfo: {
-    instagram: [{ label: 'Instagram', handle: '@osis_smkn2' }],
-    whatsapp: [{ label: 'WhatsApp', number: '+6281234567890' }]
-  },
-  leadership: {
-    ketua: [{
-      id: '1',
-      name: 'Ahmad Rahman',
-      image: '/images/profile-placeholder.png',
-      position: 'Ketua OSIS'
-    }],
-    wakil: [{
-      id: '2',
-      name: 'Siti Nurhaliza',
-      image: '/images/profile-placeholder.png',
-      position: 'Wakil Ketua OSIS'
-    }],
-    sekretaris: [{
-      id: '3',
-      name: 'Budi Santoso',
-      image: '/images/profile-placeholder.png',
-      position: 'Sekretaris'
-    }],
-    bendahara: [{
-      id: '4',
-      name: 'Maya Sari',
-      image: '/images/profile-placeholder.png',
-      position: 'Bendahara'
-    }]
-  },
-  sections: [
-    {
-      id: '1',
-      name: 'Bidang Akademik',
-      image: '/images/placeholder.jpg',
-      visi: 'Meningkatkan prestasi akademik siswa melalui berbagai program pembelajaran',
-      misi: 'Menyelenggarakan bimbingan belajar, workshop akademik, dan kompetisi ilmiah',
-      tasks: 'Koordinasi program akademik, pembinaan siswa berprestasi',
-      programs: ['Bimbingan Belajar Gratis', 'Workshop Matematika', 'Lomba Cerdas Cermat'],
-      members: [
-        { id: '1', name: 'Ahmad Rahman', image: '/images/profile-placeholder.png', position: 'Koordinator' },
-        { id: '2', name: 'Siti Nurhaliza', image: '/images/profile-placeholder.png', position: 'Anggota' }
-      ]
-    },
-    {
-      id: '2',
-      name: 'Bidang Olahraga',
-      image: '/images/placeholder.jpg',
-      visi: 'Mengembangkan bakat olahraga siswa dan meningkatkan kesehatan',
-      misi: 'Menyelenggarakan turnamen olahraga dan kegiatan kesehatan',
-      tasks: 'Pengorganisasian event olahraga, pembinaan atlet siswa',
-      programs: ['Turnamen Basket', 'Senam Pagi', 'Marathon Sekolah'],
-      members: [
-        { id: '3', name: 'Budi Santoso', image: '/images/profile-placeholder.png', position: 'Koordinator' },
-        { id: '4', name: 'Maya Sari', image: '/images/profile-placeholder.png', position: 'Anggota' }
-      ]
-    }
-  ],
-  activities: [
-    {
-      id: 'a1',
-      image: '/images/placeholder.jpg',
-      title: 'Rapat OSIS Bulanan',
-      description: 'Rapat koordinasi bulanan untuk membahas program kerja OSIS.',
-      date: '2024-09-15'
-    },
-    {
-      id: 'a2',
-      image: '/images/placeholder.jpg',
-      title: 'Lomba Cerdas Cermat',
-      description: 'Kompetisi akademik antar kelas yang diselenggarakan oleh bidang akademik.',
-      date: '2024-10-20'
-    }
-  ],
-  photos: [
-    '/images/placeholder.jpg',
-    '/images/placeholder.jpg',
-    '/images/placeholder.jpg',
-    '/images/placeholder.jpg'
-  ],
-  recruitmentPoster: '/images/placeholder.jpg',
-  recruitmentPeriod: '15-30 September 2024'
-}
+// Fetch organization data from API
+const { data: organizationsResponse } = await useFetch("/api/organizations");
+const organizations = computed(() => organizationsResponse.value?.data || []);
+const organization = computed(() => organizations.value.find(org => org.slug === 'osis') || {} as Organization);
+
+const activeTab = ref('overview')
 
 useHead({
-  title: `${organization.name} - Organisasi - SMKN 2 Singosari`,
+  title: `${organization.value.name} - Organisasi - SMKN 2 Singosari`,
   meta: [
     {
       name: "description",
-      content: organization.description,
+      content: organization.value.description,
     },
   ],
 });
 
-const activeTab = ref('overview')
 </script>
 
 <template>

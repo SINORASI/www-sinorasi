@@ -1,108 +1,23 @@
 <script setup lang="ts">
 import type { Organization } from '~/models/Organization'
 
-const organization: Organization = {
-  id: '6',
-  slug: 'ambalan',
-  name: 'AMBALAN',
-  nickname: 'Ambalan Pramuka',
-  logo: '/images/organisasi/AMBALAN.webp',
-  logoDescription: 'Logo AMBALAN SMKN 2 Singosari menampilkan elemen pramuka dengan api unggun dan simbol kepanduan yang melambangkan semangat kebersamaan dan petualangan.',
-  description: 'AMBALAN (Ambalan Pramuka) adalah organisasi pendidikan nonformal yang bertujuan membentuk karakter siswa melalui kegiatan kepramukaan yang menyenangkan dan mendidik.',
-  history: 'AMBALAN di SMK Negeri 2 Singosari telah lama menjadi bagian dari kegiatan ekstrakurikuler yang membantu siswa mengembangkan keterampilan survival, kepemimpinan, dan jiwa sosial.',
-  established: '2010',
-  statistics: {
-    members: 60,
-    programs: 40,
-    years: 14,
-    meetings: 4
-  },
-  contactInfo: {
-    instagram: [
-      { label: 'AMBALAN SMK 2 SGS', handle: '@ambalan_smkn2' },
-      { label: 'SMKn 2 SGS', handle: '@smkn2_singosari' }
-    ],
-    whatsapp: [
-      { label: 'Ketua AMBALAN', number: '081234567891' },
-      { label: 'Pembina', number: '089876543211' }
-    ],
-    socialMedia: [
-      { platform: 'instagram', handle: 'ambalan_smkn2' }
-    ]
-  },
-  leadership: {
-    sekretaris: [
-      { id: 's2', name: 'Sekretaris AMBALAN', image: '/images/profile-placeholder.png', position: 'Sekretaris' }
-    ],
-    ketua: [
-      { id: 'k2', name: 'Ketua AMBALAN', image: '/images/profile-placeholder.png', position: 'Ketua' }
-    ],
-    wakil: [
-      { id: 'w2', name: 'Wakil Ketua AMBALAN', image: '/images/profile-placeholder.png', position: 'Wakil Ketua' }
-    ],
-    bendahara: [
-      { id: 'b2', name: 'Bendahara AMBALAN', image: '/images/profile-placeholder.png', position: 'Bendahara' }
-    ]
-  },
-  sections: [
-    {
-      id: 'seksi-ambalan-1',
-      name: 'SEKSI KEPRAMUKAN',
-      image: '/images/profile-placeholder.png',
-      visi: 'Membentuk generasi muda yang tangguh dan berakhlak mulia',
-      misi: 'Mengembangkan keterampilan kepramukaan melalui kegiatan rutin dan program edukasi',
-      tasks: 'Mengorganisir kegiatan jambore, latihan survival, dan pendidikan karakter',
-      programs: [
-        'Latihan dasar kepramukaan',
-        'Kegiatan jambore',
-        'Pelatihan survival',
-        'Pendidikan lingkungan',
-        'Kegiatan sosial'
-      ],
-      members: [
-        { id: 'm6', name: 'Pembina AMBALAN', image: '/images/profile-placeholder.png', position: 'Pembina' },
-        { id: 'm7', name: 'Anggota 1', image: '/images/profile-placeholder.png', position: 'Anggota' },
-        { id: 'm8', name: 'Anggota 2', image: '/images/profile-placeholder.png', position: 'Anggota' }
-      ]
-    }
-  ],
-  activities: [
-    {
-      id: 'a5',
-      image: '/images/placeholder.jpg',
-      title: 'Jambore AMBALAN',
-      description: 'Kegiatan jambore tahunan yang melibatkan berbagai kegiatan kepramukaan dan pendidikan karakter.',
-      date: '2024-08-15'
-    },
-    {
-      id: 'a6',
-      image: '/images/placeholder.jpg',
-      title: 'Latihan Survival',
-      description: 'Pelatihan keterampilan survival di alam terbuka untuk membentuk mental yang tangguh.',
-      date: '2024-09-20'
-    }
-  ],
-  photos: [
-    '/images/placeholder.jpg',
-    '/images/placeholder.jpg',
-    '/images/placeholder.jpg',
-    '/images/placeholder.jpg'
-  ],
-  recruitmentPoster: '/images/placeholder.jpg',
-  recruitmentPeriod: '1-15 Agustus 2024'
-}
+// Fetch organization data from API
+const { data: organizationsResponse } = await useFetch("/api/organizations");
+const organizations = computed(() => organizationsResponse.value?.data || []);
+const organization = computed(() => organizations.value.find(org => org.slug === 'ambalan') || {} as Organization);
+
+const activeTab = ref('overview')
 
 useHead({
-  title: `${organization.name} - Organisasi - SMKN 2 Singosari`,
+  title: `${organization.value.name} - Organisasi - SMKN 2 Singosari`,
   meta: [
     {
       name: "description",
-      content: organization.description,
+      content: organization.value.description,
     },
   ],
 });
 
-const activeTab = ref('overview')
 </script>
 
 <template>
