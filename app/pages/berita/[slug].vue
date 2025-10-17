@@ -116,12 +116,17 @@ const relatedNews = computed(() => {
 
 
 const formatDate = (dateString: string) => {
-  const date = new Date(dateString)
-  return date.toLocaleDateString('id-ID', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  })
+  if (!dateString) return '';
+  try {
+    const date = new Date(dateString)
+    return date.toLocaleDateString('id-ID', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    })
+  } catch {
+    return dateString;
+  }
 }
 
 useHead({

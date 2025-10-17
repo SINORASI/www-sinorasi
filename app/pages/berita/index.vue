@@ -95,6 +95,21 @@ const paginationRange = computed(() => {
 
   return range;
 });
+
+// Date formatting function
+const formatDate = (dateString: string) => {
+  if (!dateString) return '';
+  try {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('id-ID', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  } catch {
+    return dateString;
+  }
+};
 </script>
 
 <template>
@@ -253,13 +268,7 @@ const paginationRange = computed(() => {
             <p class="mb-3 text-sm text-gray-600 line-clamp-2">{{ news.subtitle }}</p>
             <div class="flex items-center text-xs text-gray-500">
               <Icon name="lucide:calendar" size="14" class="mr-1" />
-              {{
-                new Date(news.publishedAt).toLocaleDateString("id-ID", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })
-              }}
+              {{ formatDate(news.publishedAt) }}
             </div>
           </div>
         </NuxtLink>

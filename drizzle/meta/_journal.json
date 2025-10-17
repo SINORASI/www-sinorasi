@@ -15,6 +15,20 @@
       "when": 1760616792799,
       "tag": "0001_yielding_riptide",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1760657529321,
+      "tag": "0002_fat_ultron",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1760658464445,
+      "tag": "0003_busy_thanos",
+      "breakpoints": true
     }
   ]
 }
