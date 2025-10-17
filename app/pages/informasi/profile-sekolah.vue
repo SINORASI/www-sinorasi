@@ -1,27 +1,31 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const currentSlide = ref(0);
 const isVisionMissionExpanded = ref(false);
-
-const nextSlide = () => {
-  if (currentSlide.value < 2) {
-    currentSlide.value++;
-  }
-};
-
-const prevSlide = () => {
-  if (currentSlide.value > 0) {
-    currentSlide.value--;
-  }
-};
-
-const goToSlide = (index: number) => {
-  currentSlide.value = index;
-};
+const expandedCard = ref<number | null>(null);
 
 const toggleVisionMission = () => {
   isVisionMissionExpanded.value = !isVisionMissionExpanded.value;
+};
+
+const expandCard = (index: number) => {
+  expandedCard.value = index;
+};
+
+const closeCard = () => {
+  expandedCard.value = null;
+};
+
+const nextCard = () => {
+  if (expandedCard.value !== null) {
+    expandedCard.value = (expandedCard.value + 1) % 3;
+  }
+};
+
+const prevCard = () => {
+  if (expandedCard.value !== null) {
+    expandedCard.value = (expandedCard.value - 1 + 3) % 3;
+  }
 };
 
 useHead({
@@ -61,7 +65,9 @@ useHead({
                   "Pendidikan adalah kunci untuk membuka pintu masa depan yang lebih baik. Mari bersama-sama membangun
                   generasi yang unggul dan berkarakter."
                 </blockquote>
-                <cite class="block mt-4 text-sm font-semibold text-center text-blue-600 lg:text-left">- Sumijah S.Pd M.Si</cite>
+                <cite class="block mt-4 text-sm font-semibold text-center text-blue-600 lg:text-left"
+                  >- Sumijah S.Pd M.Si</cite
+                >
               </div>
             </div>
 
@@ -94,213 +100,215 @@ useHead({
       </div>
     </section>
 
-        <!-- Vision Mission Section -->
-        <section class="py-20">
-          <div class="container px-4 mx-auto sm:px-6">
-            <div class="max-w-5xl mx-auto">
-              <!-- Collapsed Header -->
-              <button v-if="!isVisionMissionExpanded" @click="toggleVisionMission" class="w-full group">
-                <div class="p-8 transition-all duration-300 bg-white border-2 border-orange-100 shadow-xl rounded-2xl md:p-10 hover:border-orange-300 hover:shadow-2xl">
-                  <div class="flex items-center justify-between">
-                    <div>
-                      <h2 class="mb-2 text-3xl font-bold text-gray-800">Visi Dan Misi</h2>
-                      <p class="text-gray-600">SMK Negeri 02 Singosari</p>
-                    </div>
-                    <div class="flex items-center justify-center w-12 h-12 transition-transform duration-300 bg-orange-100 rounded-full group-hover:rotate-90 hover:bg-orange-600 hover:text-white">
-                      <Icon name="lucide:plus" size="24" />
-                    </div>
+    <!-- Vision Mission Section -->
+    <section class="py-20">
+      <div class="container max-w-[1200px] px-4 mx-auto sm:px-6">
+        <div class="max-w-5xl mx-auto">
+          <!-- Collapsed Header -->
+          <button v-if="!isVisionMissionExpanded" @click="toggleVisionMission" class="w-full group">
+            <div
+              class="p-8 transition-all duration-300 bg-white border-2 border-orange-100 shadow-xl rounded-2xl md:p-10 hover:border-orange-300 hover:shadow-2xl"
+            >
+              <div class="flex items-center justify-between">
+                <div>
+                  <h2 class="mb-2 text-3xl font-bold text-gray-800">Visi Dan Misi</h2>
+                  <p class="text-gray-600">SMK Negeri 02 Singosari</p>
+                </div>
+                <div
+                  class="flex items-center justify-center w-12 h-12 transition-transform duration-300 bg-orange-100 rounded-full group-hover:rotate-90 hover:bg-orange-600 hover:text-white"
+                >
+                  <Icon name="lucide:plus" size="24" />
+                </div>
+              </div>
+            </div>
+          </button>
+
+          <!-- Expanded Content -->
+          <div
+            v-else
+            class="overflow-hidden border-2 border-orange-100 shadow-xl rounded-2xl animate-expand backdrop-blur-xl bg-white/95"
+          >
+            <!-- Header (Clickable to collapse) -->
+            <button @click="toggleVisionMission" class="w-full group">
+              <div class="p-8 md:p-10">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <h2 class="mb-2 text-3xl font-bold text-gray-800">Visi Dan Misi</h2>
+                    <p class="text-gray-600">SMK Negeri 02 Singosari</p>
+                  </div>
+                  <div
+                    class="flex items-center justify-center w-12 h-12 transition-transform duration-300 bg-orange-100 rounded-full group-hover:rotate-180 hover:bg-orange-600 hover:text-white"
+                  >
+                    <Icon name="lucide:minus" size="24" />
                   </div>
                 </div>
-              </button>
-   
-              <!-- Expanded Content -->
-              <div v-else class="overflow-hidden border-2 border-orange-100 shadow-xl rounded-2xl animate-expand backdrop-blur-xl bg-white/95">
-                <!-- Header (Clickable to collapse) -->
-                <button @click="toggleVisionMission" class="w-full group">
-                  <div class="p-8 md:p-10">
-                    <div class="flex items-center justify-between">
-                      <div>
-                        <h2 class="mb-2 text-3xl font-bold text-gray-800">Visi Dan Misi</h2>
-                        <p class="text-gray-600">SMK Negeri 02 Singosari</p>
-                      </div>
-                      <div class="flex items-center justify-center w-12 h-12 transition-transform duration-300 bg-orange-100 rounded-full group-hover:rotate-180 hover:bg-orange-600 hover:text-white">
-                        <Icon name="lucide:minus" size="24" />
-                      </div>
-                    </div>
+              </div>
+            </button>
+
+            <!-- Content Area with Animation -->
+            <div class="px-8 pb-8 md:px-10 md:pb-10 animate-slide-down">
+              <div class="grid gap-6 md:grid-cols-2">
+                <div class="p-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
+                  <div class="inline-block p-4 mb-4 bg-blue-100 rounded-full">
+                    <Icon name="lucide:eye" size="32" class="text-blue-600" />
                   </div>
-                </button>
-   
-                <!-- Content Area with Animation -->
-                <div class="px-8 pb-8 md:px-10 md:pb-10 animate-slide-down">
-                  <div class="grid gap-6 md:grid-cols-2">
-                    <div class="p-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
-                      <div class="inline-block p-4 mb-4 bg-blue-100 rounded-full">
-                        <Icon name="lucide:eye" size="32" class="text-blue-600" />
-                      </div>
-                      <h3 class="mb-4 text-2xl font-bold text-gray-800">Visi</h3>
-                      <p class="leading-relaxed text-gray-700">
-                        Menjadi SMK unggulan yang menghasilkan lulusan berkarakter, kompeten, dan berdaya saing global.
-                      </p>
-                    </div>
-   
-                    <div class="p-8 bg-white border-2 border-orange-100 shadow-xl rounded-2xl">
-                      <div class="inline-block p-4 mb-4 bg-orange-100 rounded-full">
-                        <Icon name="lucide:target" size="32" class="text-orange-600" />
-                      </div>
-                      <h3 class="mb-4 text-2xl font-bold text-gray-800">Misi</h3>
-                      <ul class="space-y-3 text-gray-700">
-                        <li class="flex items-start">
-                          <Icon name="lucide:check-circle" size="20" class="text-orange-600 mr-2 mt-0.5 flex-shrink-0" />
-                          <span>Menyelenggarakan pendidikan berkualitas</span>
-                        </li>
-                        <li class="flex items-start">
-                          <Icon name="lucide:check-circle" size="20" class="text-orange-600 mr-2 mt-0.5 flex-shrink-0" />
-                          <span>Mengembangkan kompetensi siswa</span>
-                        </li>
-                        <li class="flex items-start">
-                          <Icon name="lucide:check-circle" size="20" class="text-orange-600 mr-2 mt-0.5 flex-shrink-0" />
-                          <span>Membentuk karakter unggul</span>
-                        </li>
-                      </ul>
-                    </div>
+                  <h3 class="mb-4 text-2xl font-bold text-gray-800">Visi</h3>
+                  <p class="leading-relaxed text-gray-700">
+                    Menjadi SMK unggulan yang menghasilkan lulusan berkarakter, kompeten, dan berdaya saing global.
+                  </p>
+                </div>
+
+                <div class="p-8 bg-white border-2 border-orange-100 shadow-xl rounded-2xl">
+                  <div class="inline-block p-4 mb-4 bg-orange-100 rounded-full">
+                    <Icon name="lucide:target" size="32" class="text-orange-600" />
                   </div>
+                  <h3 class="mb-4 text-2xl font-bold text-gray-800">Misi</h3>
+                  <ul class="space-y-3 text-gray-700">
+                    <li class="flex items-start">
+                      <Icon name="lucide:check-circle" size="20" class="text-orange-600 mr-2 mt-0.5 flex-shrink-0" />
+                      <span>Menyelenggarakan pendidikan berkualitas</span>
+                    </li>
+                    <li class="flex items-start">
+                      <Icon name="lucide:check-circle" size="20" class="text-orange-600 mr-2 mt-0.5 flex-shrink-0" />
+                      <span>Mengembangkan kompetensi siswa</span>
+                    </li>
+                    <li class="flex items-start">
+                      <Icon name="lucide:check-circle" size="20" class="text-orange-600 mr-2 mt-0.5 flex-shrink-0" />
+                      <span>Membentuk karakter unggul</span>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
           </div>
-        </section>
+        </div>
+      </div>
+    </section>
 
-    <!-- Video Profile Section - Carousel -->
+    <!-- Video Profile Section -->
     <section class="relative py-20">
-      <div class="container px-4 mx-auto mb-12 sm:px-6">
-        <div class="text-center">
+
+      <div class="container px-4 mx-auto">
+        <div class="text-center mb-12">
           <div
             class="inline-block px-10 py-6 mb-4 border border-orange-200 shadow-xl bg-gradient-to-r from-orange-500 to-orange-600 backdrop-blur-2xl rounded-2xl"
           >
             <h2 class="text-3xl font-bold text-white md:text-4xl">Video Profil Sekolah</h2>
           </div>
-          <p class="max-w-3xl mx-auto text-lg text-gray-600">
+          <p class="max-w-3xl mx-auto text-lg text-black">
             Mengenal lebih dekat SMK Negeri 2 Singosari - sekolah yang membangun generasi terampil dan berkarakter untuk
             masa depan yang lebih cerah.
           </p>
         </div>
-      </div>
 
-      <!-- Carousel Container -->
-      <div class="relative">
-        <div class="relative overflow-hidden" :style="{ height: '720px' }" style="transition: height 0.6s ease-in-out">
-          <!-- Slide 1: Video Profil -->
-          <Transition name="slide">
-            <div
-              v-show="currentSlide === 0"
-              class="absolute inset-0 flex items-center justify-center w-full h-full bg-black transition-all duration-[0.6s] ease-in-out"
-            >
-              <div class="flex items-center justify-center w-full h-full px-4 py-8 max-w-7xl">
-                <div class="relative w-full aspect-video">
-                  <img
-                    src="/images/placeholder.jpg"
-                    alt="Video Profil Placeholder"
-                    class="object-cover w-full h-full rounded-2xl"
-                  />
-                  <div class="absolute inset-0 flex items-center justify-center bg-black/50 rounded-2xl">
-                    <div class="text-center text-white">
-                      <Icon name="lucide:play-circle" size="64" class="mb-4" />
-                      <h3 class="text-xl font-bold">Video Profil Sekolah</h3>
-                      <p class="text-sm opacity-90">Coming Soon</p>
-                    </div>
-                  </div>
-                </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-0 w-full mx-auto">
+          <!-- Card 1: Video Profil -->
+           <div class="rounded-tl-lg rounded-bl-lg shadow-lg overflow-hidden cursor-pointer transition-transform" @click="expandCard(0)">
+             <div class="relative w-full h-96 overflow-hidden">
+               <img src="/images/thumbnail/profile-thumbnail.webp" alt="Video Profil Thumbnail" class="absolute inset-0 w-full h-full object-cover" />
+              <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-4 backdrop-blur-sm">
+                <h3 class="text-xl font-bold text-white font-sans">Video Profil</h3>
+                <p class="text-sm text-gray-200 mt-2 font-sans">
+                  Temukan lebih dalam tentang visi, misi, dan program unggulan SMK Negeri 2 Singosari melalui video profil
+                  kami.
+                </p>
               </div>
             </div>
-          </Transition>
+          </div>
 
-          <!-- Slide 2: Mars SMKN -->
-          <Transition name="slide">
-            <div
-              v-show="currentSlide === 1"
-              class="absolute inset-0 flex items-center justify-center w-full h-full bg-black transition-all duration-[0.6s] ease-in-out"
-            >
-              <div class="flex items-center justify-center w-full h-full px-4 py-8 max-w-7xl">
-                <div class="relative w-full aspect-video">
-                  <img
-                    src="/images/placeholder.jpg"
-                    alt="Mars SMKN Placeholder"
-                    class="object-cover w-full h-full rounded-2xl"
-                  />
-                  <div class="absolute inset-0 flex items-center justify-center bg-black/50 rounded-2xl">
-                    <div class="text-center text-white">
-                      <Icon name="lucide:music" size="64" class="mb-4" />
-                      <h3 class="text-xl font-bold">Mars SMK Negeri 2 Singosari</h3>
-                      <p class="text-sm opacity-90">Coming Soon</p>
-                    </div>
-                  </div>
-                </div>
+          <!-- Card 2: Mars SMK -->
+           <div class="shadow-lg overflow-hidden cursor-pointer transition-transform" @click="expandCard(1)">
+             <div class="relative w-full h-96 overflow-hidden">
+               <img src="/images/thumbnail/mars-thumbnail.webp" alt="Mars SMK Thumbnail" class="absolute inset-0 w-full h-full object-cover" />
+              <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-4 backdrop-blur-sm">
+                <h3 class="text-xl font-bold text-white font-sans">Mars SMK</h3>
+                <p class="text-sm text-gray-200 mt-2 font-sans">
+                  Dengarkan mars sekolah yang penuh semangat dan identitas kami sebagai komunitas SMK Negeri 2 Singosari.
+                </p>
               </div>
             </div>
-          </Transition>
+          </div>
 
-          <!-- Slide 3: Maps -->
-          <Transition name="slide">
-            <div
-              v-show="currentSlide === 2"
-              class="absolute inset-0 flex items-center justify-center w-full h-full bg-black transition-all duration-[0.6s] ease-in-out"
-            >
-              <div class="flex items-center justify-center w-full h-full px-4 py-8 max-w-7xl">
-                <div class="relative w-full aspect-video">
-                  <img
-                    src="/images/bg-aula.webp"
-                    alt="Maps Placeholder"
-                    class="object-cover w-full h-full rounded-2xl"
-                  />
-                  <div class="absolute inset-0 flex items-center justify-center bg-black/50 rounded-2xl">
-                    <div class="text-center text-white">
-                      <Icon name="lucide:map-pin" size="64" class="mb-4" />
-                      <h3 class="text-xl font-bold">Lokasi & Peta Sekolah</h3>
-                      <p class="text-sm opacity-90">Interactive Map Coming Soon</p>
-                    </div>
-                  </div>
-                </div>
+          <!-- Card 3: Maps Lokasi -->
+           <div class="rounded-tr-lg rounded-br-lg shadow-lg overflow-hidden cursor-pointer transition-transform" @click="expandCard(2)">
+            <div class="relative w-full h-96 overflow-hidden">
+              <img src="/images/placeholder.jpg" alt="Maps Lokasi" class="absolute inset-0 w-full h-full object-cover" />
+              <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-4 backdrop-blur-sm">
+                <h3 class="text-xl font-bold text-white font-sans">Maps Lokasi</h3>
+                <p class="text-sm text-gray-200 mt-2 font-sans">
+                  Jelajahi lokasi sekolah kami melalui peta interaktif dan temukan cara mudah untuk mengunjungi SMK Negeri
+                  2 Singosari.
+                </p>
               </div>
             </div>
-          </Transition>
+          </div>
         </div>
-      </div>
 
-      <!-- Navigation Arrows - Always Visible -->
-      <button
-        @click="prevSlide"
-        :class="[
-          'absolute z-20 p-3 text-gray-800 transition-all duration-200 -translate-y-1/2 rounded-full shadow-xl left-4 top-1/2',
-          currentSlide === 0
-            ? 'bg-gray-400 cursor-not-allowed'
-            : 'bg-white/90 hover:bg-white hover:scale-110 cursor-pointer',
-        ]"
-      >
-        <Icon name="lucide:chevron-left" size="24" />
-      </button>
-      <button
-        @click="nextSlide"
-        :class="[
-          'absolute z-20 p-3 text-gray-800 transition-all duration-200 -translate-y-1/2 rounded-full shadow-xl right-4 top-1/2',
-          currentSlide === 2
-            ? 'bg-gray-400 cursor-not-allowed'
-            : 'bg-white/90 hover:bg-white hover:scale-110 cursor-pointer',
-        ]"
-      >
-        <Icon name="lucide:chevron-right" size="24" />
-      </button>
+        <!-- Expanded Card Overlay -->
+        <div v-if="expandedCard !== null" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm" @click="closeCard">
+          <div class="relative max-w-4xl w-full mx-4" @click.stop>
+            <!-- Close Button -->
+            <button @click="closeCard" class="absolute top-4 right-4 z-10 w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors">
+              <Icon name="lucide:x" size="24" />
+            </button>
 
-      <!-- Slide Indicators -->
-      <div class="flex justify-center gap-3 mt-8">
-        <button
-          v-for="index in 3"
-          :key="index"
-          @click="goToSlide(index - 1)"
-          :class="[
-            'h-2 rounded-full transition-all duration-300',
-            currentSlide === index - 1 ? 'w-8 bg-orange-600' : 'w-2 bg-gray-300 hover:bg-gray-400',
-          ]"
-        />
+            <!-- Navigation Buttons -->
+            <button @click="prevCard" class="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors">
+              <Icon name="lucide:chevron-left" size="24" />
+            </button>
+            <button @click="nextCard" class="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors">
+              <Icon name="lucide:chevron-right" size="24" />
+            </button>
+
+            <!-- Expanded Content -->
+            <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
+              <!-- Card 0: Video Profil -->
+              <div v-if="expandedCard === 0" class="relative">
+                <div class="aspect-video">
+                  <iframe src="https://www.youtube.com/embed/Kks6HnhPzVQ" class="absolute inset-0 w-full h-full" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="Video Profil SMK Negeri 2 Singosari"></iframe>
+                </div>
+                <div class="p-8">
+                  <h3 class="text-2xl font-bold text-gray-800 mb-4">Video Profil</h3>
+                  <p class="text-gray-700 leading-relaxed">
+                    Temukan lebih dalam tentang visi, misi, dan program unggulan SMK Negeri 2 Singosari melalui video profil
+                    kami. Video ini menampilkan kegiatan sehari-hari, fasilitas, dan prestasi yang telah diraih oleh sekolah kami.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Card 1: Mars SMK -->
+              <div v-if="expandedCard === 1" class="relative">
+                <div class="aspect-video">
+                  <video class="absolute inset-0 w-full h-full object-cover" controls autoplay>
+                    <source src="https://smkn2-singosari.sch.id/wp-content/uploads/2023/10/marssmkn2.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                  </video>
+                </div>
+                <div class="p-8">
+                  <h3 class="text-2xl font-bold text-gray-800 mb-4">Mars SMK</h3>
+                  <p class="text-gray-700 leading-relaxed">
+                    Dengarkan mars sekolah yang penuh semangat dan identitas kami sebagai komunitas SMK Negeri 2 Singosari.
+                    Mars ini menjadi simbol kebersamaan dan semangat juang siswa-siswi dalam menjalani pendidikan.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Card 2: Maps Lokasi -->
+              <div v-if="expandedCard === 2" class="relative">
+                <div class="aspect-video">
+                  <img src="/images/placeholder.jpg" alt="Maps Lokasi" class="absolute inset-0 w-full h-full object-cover" />
+                </div>
+                <div class="p-8">
+                  <h3 class="text-2xl font-bold text-gray-800 mb-4">Maps Lokasi</h3>
+                  <p class="text-gray-700 leading-relaxed">
+                    Jelajahi lokasi sekolah kami melalui peta interaktif dan temukan cara mudah untuk mengunjungi SMK Negeri
+                    2 Singosari. Sekolah kami terletak di daerah strategis dengan akses transportasi yang mudah dijangkau.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 

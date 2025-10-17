@@ -29,6 +29,7 @@ const selectedCategory = ref<string>("all");
 const newsCategories = ref<string[]>(["all", "Pengumuman", "Prestasi", "Kerjasama", "Program Baru"]);
 const newsData = ref<News[]>([]);
 const isLoadingNews = ref(false);
+const showBackToTop = ref(false);
 
 // Fetch news data
 const fetchNews = async (category: string = "all") => {
@@ -211,10 +212,26 @@ onMounted(() => {
   checkMobile();
   window.addEventListener("resize", checkMobile);
 
+  // Scroll event listener for back to top button
+  const handleScroll = () => {
+    const scrollTop = window.scrollY;
+    const documentHeight = document.documentElement.scrollHeight;
+    const windowHeight = window.innerHeight;
+    const scrollThreshold = documentHeight * (1 / 5);
+    showBackToTop.value = scrollTop > scrollThreshold;
+  };
+  window.addEventListener("scroll", handleScroll);
+
   onUnmounted(() => {
     window.removeEventListener("resize", checkMobile);
+    window.removeEventListener("scroll", handleScroll);
   });
 });
+
+// Scroll to top method
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
 
 // Set page title
 useHead({
@@ -250,11 +267,11 @@ useHead({
         <div
           class="flex flex-col items-center w-full gap-8 text-center text-black lg:w-2/3 lg:items-start lg:text-left"
         >
-          <h1 class="text-3xl font-extrabold transition-all duration-700 ease-out md:text-4xl lg:text-5xl">
+          <h1 class="text-3xl font-black transition-all duration-700 ease-out md:text-4xl lg:text-5xl">
             SMK NEGERI 2 SINGOSARI
           </h1>
           <p class="text-lg font-semibold transition-all duration-700 ease-out md:text-xl lg:text-2xl">
-            Inovasi Raih Prestasi
+            INORASI - Inovasi Raih Prestasi
           </p>
           <p class="max-w-2xl text-sm leading-relaxed transition-all duration-700 ease-out md:text-lg">
             SMK Negeri 2 Singosari - Tempat di mana inovasi bertemu dengan prestasi. Kami berkomitmen untuk membentuk
@@ -1054,5 +1071,22 @@ useHead({
     <section id="faq">
       <FAQSection />
     </section>
+
+    <!-- Back to Top Button -->
+    <button
+      v-show="showBackToTop"
+      @click="scrollToTop"
+      class="fixed z-50 flex items-center justify-center transition-all duration-300 transform rounded-full bottom-8 right-8 w-14 h-14 hover:scale-110 group"
+      style="background: linear-gradient(135deg, #3b82f6, #1d4ed8)"
+    >
+      <svg
+        class="w-6 h-6 text-white transition-transform group-hover:-translate-y-1"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+      </svg>
+    </button>
   </main>
 </template>

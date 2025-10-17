@@ -35,6 +35,9 @@ const majorColor = computed(
     }
 );
 
+// Back to top button visibility
+const showBackToTop = ref(false);
+
 // Set dynamic page title
 useHead({
   title: () =>
@@ -51,6 +54,27 @@ useHead({
     },
   ],
 });
+
+// Scroll to top method
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
+
+onMounted(() => {
+  // Scroll event listener for back to top button
+  const handleScroll = () => {
+    const scrollTop = window.scrollY;
+    const documentHeight = document.documentElement.scrollHeight;
+    const windowHeight = window.innerHeight;
+    const scrollThreshold = documentHeight * (1 / 5);
+    showBackToTop.value = scrollTop > scrollThreshold;
+  };
+  window.addEventListener("scroll", handleScroll);
+
+  onUnmounted(() => {
+    window.removeEventListener("scroll", handleScroll);
+  });
+});
 </script>
 
 <template>
@@ -62,7 +86,7 @@ useHead({
 
       <!-- Content -->
       <div class="relative z-10 flex items-center w-full h-full min-h-screen">
-        <div class="container px-8 py-16 mx-auto">
+        <div class="container px-8 py-8 mx-auto">
           <div class="grid items-center grid-cols-1 gap-12 lg:grid-cols-2">
             <!-- Left Side - Logo Image -->
             <div class="flex flex-col items-start justify-center">
@@ -71,13 +95,13 @@ useHead({
                 <img
                   src="/images/majorIcon/logo-rpl.webp"
                   alt="RPL Logo"
-                  class="object-contain w-full h-auto drop-shadow-2xl"
+                  class="object-contain w-full h-full drop-shadow-2xl"
                 />
               </div>
             </div>
 
             <!-- Right Side - Title & Graphics -->
-            <div class="flex flex-col items-center justify-center space-y-6 lg:items-end lg:space-y-8">
+            <div class="flex flex-col items-center justify-center gap-2 lg:items-end lg:space-y-8">
               <!-- Main Title -->
               <div class="w-full text-center lg:text-right">
                 <h1
@@ -87,36 +111,13 @@ useHead({
                 </h1>
               </div>
 
-              <!-- Laptop Illustration with Tech Badges -->
+              <!-- Ornament Image -->
               <div class="relative w-full max-w-sm lg:max-w-md">
-                <!-- Laptop -->
-                <div class="p-4 bg-gray-800 shadow-2xl rounded-2xl lg:p-6">
-                  <!-- Screen -->
-                  <div
-                    class="relative overflow-hidden rounded-lg bg-gradient-to-br from-gray-700 to-gray-900 aspect-video"
-                  >
-                    <!-- Tech Badges -->
-                    <div class="absolute inset-0 flex items-center justify-center gap-2 p-3 lg:gap-4 lg:p-4">
-                      <div
-                        class="px-3 py-2 text-xs font-bold text-white transform bg-orange-500 rounded-lg shadow-lg lg:text-sm lg:px-4 lg:py-3 -rotate-6"
-                      >
-                        HTML
-                      </div>
-                      <div
-                        class="px-3 py-2 text-xs font-bold text-white bg-blue-600 rounded-lg shadow-lg lg:text-sm lg:px-4 lg:py-3"
-                      >
-                        CSS
-                      </div>
-                      <div
-                        class="px-3 py-2 text-xs font-bold text-white transform bg-green-500 rounded-lg shadow-lg lg:text-sm lg:px-4 lg:py-3 rotate-6"
-                      >
-                        CODE
-                      </div>
-                    </div>
-                  </div>
-                  <!-- Keyboard -->
-                  <div class="h-2 mt-2 bg-gray-700 lg:mt-3 lg:h-3 rounded-b-xl"></div>
-                </div>
+                <img
+                  src="/images/major/hero-major-ornament/rpl/laptop.webp"
+                  alt="RPL Ornament"
+                  class="object-contain w-full h-auto drop-shadow-2xl"
+                />
               </div>
 
               <!-- School Name Badge -->
@@ -397,6 +398,7 @@ useHead({
 
     <!-- Back to Top Button -->
     <button
+      v-show="showBackToTop"
       @click="scrollToTop"
       class="fixed z-50 flex items-center justify-center transition-all duration-300 transform rounded-full bottom-8 right-8 w-14 h-14 hover:scale-110 group"
       :style="`background: linear-gradient(135deg, ${majorColor.primary}, ${majorColor.accent})`"
@@ -413,15 +415,6 @@ useHead({
   </main>
 </template>
 
-<script lang="ts">
-export default {
-  methods: {
-    scrollToTop() {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    },
-  },
-};
-</script>
 
 <style scoped>
 /* Custom orange scrollbar for RPL page */

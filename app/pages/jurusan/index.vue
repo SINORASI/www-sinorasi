@@ -5,6 +5,9 @@ import type { MajorData } from "~/models/MajorData";
 // Fetch majors data from API
 const { data: majorDatas } = await useFetch<Record<MajorName, MajorData>>("/api/majors");
 
+// Back to top button visibility
+const showBackToTop = ref(false);
+
 // Set page title
 useHead({
   title: "Jurusan - SMKN 2 Singosari",

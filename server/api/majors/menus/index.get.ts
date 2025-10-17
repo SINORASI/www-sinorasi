@@ -68,19 +68,19 @@ const majorMenus: Record<MajorName, MenuItem[]> = {
     {
       title: "Fasilitas",
       submenu: [
-        { 
-          title: "Lab Programming", 
-          desc: "Fasilitas praktikum programming", 
+        {
+          title: "Lab Programming",
+          desc: "Fasilitas praktikum programming",
           icon: "lucide:monitor",
-          to: "/jurusan/rpl#tentang-jurusan",
+          to: "/jurusan/rpl#fasilitas",
           external: false,
           tags: ["lab", "laboratorium", "programming", "praktikum", "fasilitas"]
         },
-        { 
-          title: "Software Tools", 
-          desc: "Tools dan teknologi pengembangan", 
+        {
+          title: "Software Tools",
+          desc: "Tools dan teknologi pengembangan",
           icon: "lucide:pyramid",
-          to: "/jurusan/rpl#tentang-jurusan",
+          to: "/jurusan/rpl#fasilitas",
           external: false,
           tags: ["software", "tools", "teknologi", "development"]
         },
@@ -162,19 +162,19 @@ const majorMenus: Record<MajorName, MenuItem[]> = {
     {
       title: "Fasilitas",
       submenu: [
-        { 
-          title: "Lab Jaringan", 
-          desc: "Fasilitas praktikum jaringan komputer", 
+        {
+          title: "Lab Jaringan",
+          desc: "Fasilitas praktikum jaringan komputer",
           icon: "lucide:wifi",
-          to: "/jurusan/tkj#tentang-jurusan",
+          to: "/jurusan/tkj#fasilitas",
           external: false,
           tags: ["lab", "laboratorium", "jaringan", "praktikum", "fasilitas", "komputer"]
         },
-        { 
-          title: "Hardware Tools", 
-          desc: "Tools dan peralatan jaringan", 
+        {
+          title: "Hardware Tools",
+          desc: "Tools dan peralatan jaringan",
           icon: "lucide:cpu",
-          to: "/jurusan/tkj#tentang-jurusan",
+          to: "/jurusan/tkj#fasilitas",
           external: false,
           tags: ["hardware", "tools", "peralatan", "jaringan"]
         },
@@ -256,19 +256,19 @@ const majorMenus: Record<MajorName, MenuItem[]> = {
     {
       title: "Fasilitas",
       submenu: [
-        { 
-          title: "Studio Desain", 
-          desc: "Fasilitas studio desain grafis", 
+        {
+          title: "Studio Desain",
+          desc: "Fasilitas studio desain grafis",
           icon: "lucide:pen-tool",
-          to: "/jurusan/dkv#tentang-jurusan",
+          to: "/jurusan/dkv#fasilitas",
           external: false,
           tags: ["studio", "desain", "grafis", "fasilitas", "lab"]
         },
-        { 
-          title: "Software Design", 
-          desc: "Tools desain dan kreatif", 
+        {
+          title: "Software Design",
+          desc: "Tools desain dan kreatif",
           icon: "lucide:layers",
-          to: "/jurusan/dkv#tentang-jurusan",
+          to: "/jurusan/dkv#fasilitas",
           external: false,
           tags: ["software", "design", "tools", "kreatif", "adobe"]
         },
@@ -350,19 +350,19 @@ const majorMenus: Record<MajorName, MenuItem[]> = {
     {
       title: "Fasilitas",
       submenu: [
-        { 
-          title: "Studio Animasi", 
-          desc: "Fasilitas studio animasi", 
+        {
+          title: "Studio Animasi",
+          desc: "Fasilitas studio animasi",
           icon: "lucide:film",
-          to: "/jurusan/animasi#tentang-jurusan",
+          to: "/jurusan/animasi#fasilitas",
           external: false,
           tags: ["studio", "animasi", "fasilitas", "lab"]
         },
-        { 
-          title: "Animation Software", 
-          desc: "Tools animasi dan rendering", 
+        {
+          title: "Animation Software",
+          desc: "Tools animasi dan rendering",
           icon: "lucide:settings",
-          to: "/jurusan/animasi#tentang-jurusan",
+          to: "/jurusan/animasi#fasilitas",
           external: false,
           tags: ["animation", "software", "tools", "rendering", "blender", "maya"]
         },
@@ -444,19 +444,19 @@ const majorMenus: Record<MajorName, MenuItem[]> = {
     {
       title: "Fasilitas",
       submenu: [
-        { 
-          title: "Studio Broadcasting", 
-          desc: "Fasilitas studio penyiaran", 
+        {
+          title: "Studio Broadcasting",
+          desc: "Fasilitas studio penyiaran",
           icon: "lucide:tv",
-          to: "/jurusan/broadcasting#tentang-jurusan",
+          to: "/jurusan/broadcasting#fasilitas",
           external: false,
           tags: ["studio", "broadcasting", "penyiaran", "fasilitas", "lab"]
         },
-        { 
-          title: "Production Equipment", 
-          desc: "Peralatan produksi media", 
+        {
+          title: "Production Equipment",
+          desc: "Peralatan produksi media",
           icon: "lucide:mic",
-          to: "/jurusan/broadcasting#tentang-jurusan",
+          to: "/jurusan/broadcasting#fasilitas",
           external: false,
           tags: ["production", "equipment", "peralatan", "produksi", "media"]
         },
@@ -538,19 +538,19 @@ const majorMenus: Record<MajorName, MenuItem[]> = {
     {
       title: "Fasilitas",
       submenu: [
-        { 
-          title: "Lab Elektronika", 
-          desc: "Fasilitas praktikum elektronika", 
+        {
+          title: "Lab Elektronika",
+          desc: "Fasilitas praktikum elektronika",
           icon: "lucide:wrench",
-          to: "/jurusan/tei#tentang-jurusan",
+          to: "/jurusan/tei#fasilitas",
           external: false,
           tags: ["lab", "laboratorium", "elektronika", "praktikum", "fasilitas"]
         },
-        { 
-          title: "Industrial Tools", 
-          desc: "Tools dan peralatan industri", 
+        {
+          title: "Industrial Tools",
+          desc: "Tools dan peralatan industri",
           icon: "lucide:tool",
-          to: "/jurusan/tei#tentang-jurusan",
+          to: "/jurusan/tei#fasilitas",
           external: false,
           tags: ["industrial", "tools", "peralatan", "industri"]
         },
@@ -632,19 +632,19 @@ const majorMenus: Record<MajorName, MenuItem[]> = {
     {
       title: "Fasilitas",
       submenu: [
-        { 
-          title: "Lab Mekatronika", 
-          desc: "Fasilitas praktikum mekatronika", 
+        {
+          title: "Lab Mekatronika",
+          desc: "Fasilitas praktikum mekatronika",
           icon: "lucide:wrench",
-          to: "/jurusan/mekatronika#tentang-jurusan",
+          to: "/jurusan/mekatronika#fasilitas",
           external: false,
           tags: ["lab", "laboratorium", "mekatronika", "praktikum", "fasilitas"]
         },
-        { 
-          title: "Automation Tools", 
-          desc: "Tools otomasi dan robotik", 
+        {
+          title: "Automation Tools",
+          desc: "Tools otomasi dan robotik",
           icon: "lucide:tool",
-          to: "/jurusan/mekatronika#tentang-jurusan",
+          to: "/jurusan/mekatronika#fasilitas",
           external: false,
           tags: ["automation", "tools", "otomasi", "robotik", "robot"]
         },
@@ -726,19 +726,19 @@ const majorMenus: Record<MajorName, MenuItem[]> = {
     {
       title: "Fasilitas",
       submenu: [
-        { 
-          title: "Studio Audio Video", 
-          desc: "Fasilitas studio audio video", 
+        {
+          title: "Studio Audio Video",
+          desc: "Fasilitas studio audio video",
           icon: "lucide:music",
-          to: "/jurusan/tav#tentang-jurusan",
+          to: "/jurusan/tav#fasilitas",
           external: false,
           tags: ["studio", "audio", "video", "fasilitas", "lab"]
         },
-        { 
-          title: "AV Equipment", 
-          desc: "Peralatan audio video", 
+        {
+          title: "AV Equipment",
+          desc: "Peralatan audio video",
           icon: "lucide:speaker",
-          to: "/jurusan/tav#tentang-jurusan",
+          to: "/jurusan/tav#fasilitas",
           external: false,
           tags: ["av", "equipment", "peralatan", "audio", "video"]
         },

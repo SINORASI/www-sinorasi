@@ -88,7 +88,7 @@ const playbackIntervals = ref<Record<number, number>>({});
 const videoCards: VideoCard[] = [
   {
     id: 1,
-    thumbnail: "/images/thumbnail/rpl-thumbnail.webp",
+    thumbnail: "/images/major/thumbnail/rpl-thumbnail.webp",
     videoUrl: "pKI-5JJPol8",
     videoType: "youtube",
     logo: "/images/majorIcon/logo-rpl.webp",
@@ -99,7 +99,7 @@ const videoCards: VideoCard[] = [
   },
   {
     id: 2,
-    thumbnail: "/images/thumbnail/tkj-thumbnail.webp",
+    thumbnail: "/images/major/thumbnail/tkj-thumbnail.webp",
     videoUrl: "GgSUvrHtFKY",
     videoType: "youtube",
     logo: "/images/majorIcon/logo-tkj.webp",
@@ -110,7 +110,7 @@ const videoCards: VideoCard[] = [
   },
   {
     id: 3,
-    thumbnail: "/images/thumbnail/dkv-thumbnail.webp",
+    thumbnail: "/images/major/thumbnail/dkv-thumbnail.webp",
     videoUrl: "tlfc46ZCu0c",
     videoType: "youtube",
     logo: "/images/majorIcon/logo-dkv.webp",
@@ -121,7 +121,7 @@ const videoCards: VideoCard[] = [
   },
   {
     id: 4,
-    thumbnail: "/images/thumbnail/an-thumbnail.webp",
+    thumbnail: "/images/major/thumbnail/an-thumbnail.webp",
     videoUrl: "o-b0I1IorbU",
     videoType: "youtube",
     logo: "/images/majorIcon/logo-an.webp",
@@ -132,7 +132,7 @@ const videoCards: VideoCard[] = [
   },
   {
     id: 5,
-    thumbnail: "/images/thumbnail/bc-thumbnail.webp",
+    thumbnail: "/images/major/thumbnail/bc-thumbnail.webp",
     videoUrl: "Dcvcf2ssyfk",
     videoType: "youtube",
     logo: "/images/majorIcon/logo-bc.webp",
@@ -143,7 +143,7 @@ const videoCards: VideoCard[] = [
   },
   {
     id: 6,
-    thumbnail: "/images/thumbnail/ei-thumbnail.webp",
+    thumbnail: "/images/major/thumbnail/ei-thumbnail.webp",
     videoUrl: "xXydNK3sI6I",
     videoType: "youtube",
     logo: "/images/majorIcon/logo-tei.webp",
@@ -154,7 +154,7 @@ const videoCards: VideoCard[] = [
   },
   {
     id: 7,
-    thumbnail: "/images/thumbnail/mt-thumbnail.webp",
+    thumbnail: "/images/major/thumbnail/mt-thumbnail.webp",
     videoUrl: "eBL7a0bNtKo",
     videoType: "youtube",
     logo: "/images/majorIcon/logo-mt.webp",
@@ -165,7 +165,7 @@ const videoCards: VideoCard[] = [
   },
   {
     id: 8,
-    thumbnail: "/images/thumbnail/av-thumbnail.webp",
+    thumbnail: "/images/major/thumbnail/av-thumbnail.webp",
     videoUrl: "ygvL6UDvGv4",
     videoType: "youtube",
     logo: "/images/majorIcon/logo-tav.webp",
