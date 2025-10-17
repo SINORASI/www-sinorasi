@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { registerSchema, type RegisterForm } from '~/utils/schema'
-import { authClient } from '~/lib/auth-client'
 
 const formData = ref<RegisterForm>({
   username: '',
@@ -36,19 +35,8 @@ const submitRegister = async () => {
   isSubmitting.value = true
 
   try {
-    const { data, error } = await authClient.signUp.email({
-      email: formData.value.email,
-      password: formData.value.password,
-      name: formData.value.username, // Using username as name
-    })
-
-    if (error) {
-      console.log("Registration error:", error)
-      alert("Pendaftaran gagal: " + (error.message || error.code || "Terjadi kesalahan yang tidak diketahui"))
-      return
-    }
-
-    alert("Pendaftaran berhasil! Silakan login dengan akun Anda.")
+    // Registration temporarily disabled
+    alert("Sistem pendaftaran sementara tidak tersedia. Fitur akan segera kembali.")
 
     // Reset form
     formData.value = {
@@ -57,9 +45,6 @@ const submitRegister = async () => {
       password: '',
       confirmPassword: ''
     }
-
-    // Redirect to login
-    await navigateTo('/login')
   } catch (error) {
     alert("Terjadi kesalahan saat pendaftaran")
   } finally {

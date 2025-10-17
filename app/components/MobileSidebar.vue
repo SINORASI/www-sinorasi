@@ -261,7 +261,6 @@ import { ref, computed, watch } from "vue";
 import { majorColorSchemes } from "~/utils/majorColors";
 import type { MajorName } from "~/models/MajorName";
 import type { News } from "~/models/News";
-import { authClient } from '~/lib/auth-client'
 
 const currentLanguage = ref("id");
 const showLanguageMenu = ref(false);
@@ -300,18 +299,19 @@ const organizationsData = computed(() => {
   return response?.data || [];
 });
 
-// Get session data
-const { data: session } = await authClient.getSession()
+// Get session data - temporarily disabled
+const session = null
 
 // Define emit function
 const emit = defineEmits<{
   close: [];
 }>();
 
-// Handle logout
+// Handle logout - temporarily disabled
 const handleLogout = async () => {
   try {
-    await authClient.signOut()
+    // Logout temporarily disabled
+    alert("Sistem logout sementara tidak tersedia.")
     emit('close')
     await navigateTo('/')
   } catch (error) {

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { loginSchema, type LoginForm } from '~/utils/schema'
-import { authClient } from '~/lib/auth-client'
 
 type FormErrors<T> = Partial<Record<keyof T, string[]>>
 
@@ -36,19 +35,8 @@ const submitLogin = async () => {
   isSubmitting.value = true
 
   try {
-    const { data, error } = await authClient.signIn.email({
-      email: formData.value.email,
-      password: formData.value.password,
-    })
-
-    if (error) {
-      console.log("Login error:", error)
-      alert("Login gagal: " + (error.message || error.code || "Terjadi kesalahan yang tidak diketahui"))
-      return
-    }
-
-    // Success - redirect to dashboard
-    await navigateTo('/dashboard')
+    // Authentication temporarily disabled
+    alert("Sistem login sementara tidak tersedia. Fitur akan segera kembali.")
 
     // Reset form
     formData.value = {
