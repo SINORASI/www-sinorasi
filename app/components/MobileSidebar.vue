@@ -23,48 +23,20 @@
         </div>
 
         <div class="flex-1 p-4 overflow-y-auto">
-          <!-- Profile Section -->
+          <!-- Profile Section - Disabled -->
           <div class="mb-6">
-            <div class="p-4 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl shadow-lg">
+            <div class="p-4 bg-gradient-to-r from-gray-500 to-gray-600 rounded-xl shadow-lg">
               <div class="flex items-center gap-3 mb-3">
                 <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
-                  <Icon name="lucide:user" size="20" class="text-white" />
+                  <Icon name="lucide:user-x" size="20" class="text-white" />
                 </div>
                 <div>
-                  <p class="text-white font-semibold">{{ session?.user ? `Hi, ${session.user.name || 'User'}` : 'Selamat Datang' }}</p>
-                  <p class="text-blue-100 text-sm">{{ session?.user ? 'Selamat datang kembali!' : 'Silakan masuk untuk akses penuh' }}</p>
+                  <p class="text-white font-semibold">Akun Dinonaktifkan</p>
+                  <p class="text-gray-100 text-sm">Sistem akun sementara tidak tersedia</p>
                 </div>
               </div>
-              <div class="flex gap-2" v-if="!session?.user">
-                <NuxtLink
-                  to="/login"
-                  @click="$emit('close')"
-                  class="flex-1 bg-white text-blue-600 font-semibold py-2 px-4 rounded-lg text-center hover:bg-blue-50 transition-colors"
-                >
-                  Masuk
-                </NuxtLink>
-                <NuxtLink
-                  to="/register"
-                  @click="$emit('close')"
-                  class="flex-1 bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg text-center border-2 border-white hover:bg-blue-700 transition-colors"
-                >
-                  Registrasi
-                </NuxtLink>
-              </div>
-              <div class="flex gap-2" v-else>
-                <NuxtLink
-                  to="/dashboard"
-                  @click="$emit('close')"
-                  class="flex-1 bg-white text-blue-600 font-semibold py-2 px-4 rounded-lg text-center hover:bg-blue-50 transition-colors"
-                >
-                  Dashboard
-                </NuxtLink>
-                <button
-                  @click="handleLogout"
-                  class="flex-1 bg-red-600 text-white font-semibold py-2 px-4 rounded-lg text-center border-2 border-white hover:bg-red-700 transition-colors"
-                >
-                  Keluar
-                </button>
+              <div class="text-center">
+                <p class="text-gray-200 text-sm">Fitur akun akan segera kembali</p>
               </div>
             </div>
           </div>
@@ -488,14 +460,6 @@ const menuItems = [
         to: "/",
         external: false,
         tags: ["home", "beranda"],
-      },
-      {
-        title: "Dashboard",
-        desc: "Dashboard pengguna",
-        icon: "lucide:layout-dashboard",
-        to: "/dashboard",
-        external: false,
-        tags: ["dashboard", "profil", "user"],
       },
     ],
   },
