@@ -110,7 +110,7 @@ useHead({
             <div class="p-6 text-center bg-white border-2 border-purple-100 shadow-xl rounded-2xl">
               <Icon name="lucide:clock" size="32" class="mx-auto mb-3 text-purple-600" />
               <p class="text-3xl font-bold text-purple-600">{{ organization.statistics.years }}</p>
-              <p class="text-sm text-gray-600">Tahun Berdiri</p>
+              <p class="text-sm text-gray-600">Tahun Beroperasi</p>
             </div>
             <div class="p-6 text-center bg-white border-2 border-orange-100 shadow-xl rounded-2xl">
               <Icon name="lucide:calendar" size="32" class="mx-auto mb-3 text-orange-600" />
@@ -124,7 +124,7 @@ useHead({
             <h2 class="mb-4 text-2xl font-bold text-gray-800">Poster Pendaftaran</h2>
             <div class="text-center">
               <img
-                :src="organization.recruitmentPoster"
+                :src="'/images/placeholder.jpg'"
                 :alt="`Poster Pendaftaran ${organization.name}`"
                 class="max-w-md mx-auto rounded-xl shadow-lg"
               />
