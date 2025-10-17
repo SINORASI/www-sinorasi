@@ -393,8 +393,12 @@ body {
 /* Layout Specific Styles */
 .default-layout {
   min-height: 100vh;
-  display: grid;
-  grid-template-rows: auto 1fr auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.default-layout > main {
+  flex: 1;
 }
 
 .major-layout {
@@ -432,6 +436,7 @@ footer {
   position: relative !important;
   z-index: 1 !important;
   margin-top: auto;
+  order: 3;
 }
 
 /* Ensure proper z-index stacking */
@@ -441,9 +446,15 @@ header {
   top: 0 !important;
   left: 0 !important;
   right: 0 !important;
+  order: 1;
+}
+
+.default-layout > main {
+  order: 2;
 }
 
 footer {
   z-index: 1 !important;
   position: relative !important;
+  order: 3;
 }
