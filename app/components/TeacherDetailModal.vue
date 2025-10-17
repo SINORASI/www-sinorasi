@@ -1,17 +1,17 @@
 <template>
   <div
-    class="fixed inset-0 z-50 flex flex-col items-center justify-center p-8 font-serif text-white transition-opacity bg-neutral-800/95"
+    class="fixed inset-0 z-50 flex flex-col items-center justify-center p-4 md:p-8 font-serif text-white transition-opacity bg-neutral-800/95"
     @click.self="$emit('close')"
   >
-    <div class="grid items-center w-full max-w-6xl grid-cols-1 gap-8 mx-auto md:grid-cols-3">
+    <div class="grid items-center w-full max-w-6xl grid-cols-1 gap-6 md:gap-8 mx-auto md:grid-cols-3">
       <div class="text-center md:text-left">
-        <p class="mb-2 text-xl text-neutral-300">{{ categoryTitle }}</p>
-        <h3 class="text-4xl font-bold">{{ teacher.name }}, {{ teacher.degree }}</h3>
-        <p class="mt-2 text-lg text-neutral-400">{{ teacher.university }}</p>
+        <p class="mb-2 text-lg md:text-xl text-neutral-300">{{ categoryTitle }}</p>
+        <h3 class="text-2xl md:text-3xl lg:text-4xl font-bold">{{ teacher.name }}, {{ teacher.degree }}</h3>
+        <p class="mt-2 text-base md:text-lg text-neutral-400">{{ teacher.university }}</p>
       </div>
 
       <div class="flex justify-center order-first md:order-none">
-        <div class="flex items-center justify-center w-64 h-64 rounded-lg bg-neutral-200 overflow-hidden">
+        <div class="flex items-center justify-center w-48 h-48 md:w-64 md:h-64 rounded-lg bg-neutral-200 overflow-hidden">
           <img
             :src="teacher.image"
             :alt="teacher.name"
@@ -21,23 +21,23 @@
       </div>
 
       <div class="text-center md:text-left">
-        <h4 class="mb-3 text-3xl font-bold">Quote</h4>
-        <p class="leading-relaxed text-neutral-300">"{{ teacher.quote }}"</p>
+        <h4 class="mb-3 text-xl md:text-2xl lg:text-3xl font-bold">Quote</h4>
+        <p class="leading-relaxed text-neutral-300 text-sm md:text-base">"{{ teacher.quote }}"</p>
       </div>
     </div>
 
-    <div class="absolute flex items-center space-x-4 bottom-10">
+    <div class="absolute flex items-center space-x-3 md:space-x-4 bottom-6 md:bottom-10">
       <button
         @click="$emit('navigate', -1)"
-        class="flex items-center justify-center p-3 transition-colors rounded-full bg-white/20 hover:bg-white/40"
+        class="flex items-center justify-center p-2 md:p-3 transition-colors rounded-full bg-white/20 hover:bg-white/40"
       >
-        <Icon name="lucide:chevron-left" size="18" class="text-neutral-400" />
+        <Icon name="lucide:chevron-left" size="16 md:18" class="text-neutral-400" />
       </button>
       <button
         @click="$emit('navigate', 1)"
-        class="flex items-center justify-center p-3 transition-colors rounded-full bg-white/20 hover:bg-white/40"
+        class="flex items-center justify-center p-2 md:p-3 transition-colors rounded-full bg-white/20 hover:bg-white/40"
       >
-        <Icon name="lucide:chevron-right" size="18" class="text-neutral-400" />
+        <Icon name="lucide:chevron-right" size="16 md:18" class="text-neutral-400" />
       </button>
     </div>
   </div>

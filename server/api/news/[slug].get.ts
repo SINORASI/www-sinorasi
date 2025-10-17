@@ -1,45 +1,30 @@
-import { db } from '~/lib/db';
-import { news } from '~/db/schema';
-import { eq } from 'drizzle-orm';
-
 export default defineEventHandler(async (event) => {
   const slug = getRouterParam(event, 'slug');
 
   if (!slug) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Slug parameter is required'
+      statusMessage: 'Slug parameter is required',
     });
   }
 
   try {
-    const newsData = await db
-      .select()
-      .from(news)
-      .where(eq(news.slug, slug));
+    // Read JSON file
+    const newsData = await import('~/news_data.json').then(
+      (m) => m.default
+    );
 
-    if (newsData.length === 0) {
+    // Find article by slug
+    const item = newsData.find((article) => article.slug === slug);
+
+    if (!item) {
       throw createError({
         statusCode: 404,
-        statusMessage: 'News not found'
+        statusMessage: 'News not found',
       });
     }
 
-    const item = newsData[0];
-
-    // Transform data to match News interface
-    return {
-      id: item.id.toString(),
-      slug: item.slug,
-      title: item.title,
-      subtitle: item.subtitle || "",
-      thumbnail: item.thumbnail || "/images/placeholder.jpg",
-      tags: Array.isArray(item.tags) ? item.tags : [],
-      content: item.content,
-      publishedAt: item.publishedAt || "",
-      author: item.author || "SMKN 2 Singosari"
-    };
-
+    return item;
   } catch (error) {
     console.error('Error fetching news by slug:', error);
     if (error && typeof error === 'object' && 'statusCode' in error) {
@@ -47,7 +32,7 @@ export default defineEventHandler(async (event) => {
     }
     throw createError({
       statusCode: 500,
-      statusMessage: 'Internal server error'
+      statusMessage: 'Internal server error',
     });
   }
 });

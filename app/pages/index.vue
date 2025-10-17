@@ -383,7 +383,7 @@ useHead({
       </div>
     </section>
 
-    <section id="sambutan" class="py-20 bg-gradient-to-b from-white via-blue-50 to-white">
+    <section id="sambutan" class=" bg-gradient-to-b from-white via-blue-50 to-white">
       <div class="container px-4 mx-auto md:px-10">
         <div class="flex flex-col items-center justify-center gap-12 lg:flex-row">
           <!-- Content Area -->
@@ -447,7 +447,7 @@ useHead({
     </section>
 
     <!-- Achievement Carousel Section -->
-    <section id="prestasi" class="py-20 bg-gradient-to-b from-white via-blue-50 to-white">
+    <section id="prestasi" class="bg-gradient-to-b from-white via-blue-50 to-white">
       <div class="container flex flex-col items-center gap-8 mx-auto">
         <!-- Achievement Carousel -->
         <div
@@ -519,7 +519,7 @@ useHead({
     </section>
 
     <!-- School Uniform Section -->
-    <section id="seragam-sekolah" class="py-20 bg-gradient-to-b from-white via-gray-50 to-white">
+    <section id="seragam-sekolah" class="bg-gradient-to-b from-white via-gray-50 to-white">
       <div class="container px-4 mx-auto md:px-10">
         <div class="flex flex-col items-center gap-12">
           <!-- Section Header -->
@@ -990,7 +990,7 @@ useHead({
       </div>
     </section>
 
-    <section id="berita" class="py-20 h-min-screen">
+    <section id="berita" class="h-min-screen">
       <div class="container flex flex-col items-center gap-8 mx-auto">
         <span
           class="px-8 py-3 text-xl font-bold tracking-widest text-center uppercase rounded-full md:text-2xl"

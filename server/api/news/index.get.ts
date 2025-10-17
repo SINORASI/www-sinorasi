@@ -1,87 +1,63 @@
-import { db } from '~/lib/db';
-import { news } from '~/db/schema';
-import { desc, sql, like, or, and } from 'drizzle-orm';
-
 export default defineEventHandler(async (event) => {
-  // Get query parameters for filtering
   const query = getQuery(event);
   const { tag, tags, search, limit = 10, offset = 0 } = query;
 
   try {
-    // Build where conditions
-    const whereConditions = [];
+    // Read JSON file
+    const newsData = await import('~/news_data.json').then(m => m.default);
 
-    // Filter by tag (search in JSON array)
+    let filteredData = [...newsData];
+
+    // Filter by tag
     if (tag && typeof tag === 'string') {
-      whereConditions.push(sql`${news.tags}::text ILIKE ${`%${tag}%`}`);
+      filteredData = filteredData.filter(item =>
+        item.tags.some(t => t.toLowerCase().includes(tag.toLowerCase()))
+      );
     }
 
-    // Filter by multiple tags (comma-separated)
+    // Filter by multiple tags
     if (tags && typeof tags === 'string') {
-      const tagArray = tags.split(',').filter(t => t.trim());
-      if (tagArray.length > 0) {
-        const tagConditions = tagArray.map(tag =>
-          sql`EXISTS (SELECT 1 FROM jsonb_array_elements_text(${news.tags}) AS tag WHERE tag ILIKE ${`%${tag.trim()}%`})`
-        );
-        whereConditions.push(and(...tagConditions));
-      }
-    }
-
-    // Search in title and content
-    if (search && typeof search === 'string') {
-      whereConditions.push(
-        or(
-          sql`${news.title} ILIKE ${`%${search}%`}`,
-          sql`${news.content} ILIKE ${`%${search}%`}`
+      const tagArray = tags.split(',').map(t => t.trim().toLowerCase());
+      filteredData = filteredData.filter(item =>
+        tagArray.every(searchTag =>
+          item.tags.some(itemTag =>
+            itemTag.toLowerCase().includes(searchTag)
+          )
         )
       );
     }
 
-    // Build the query
-    const whereClause = whereConditions.length > 0 ? and(...whereConditions) : undefined;
+    // Search in title and content
+    if (search && typeof search === 'string') {
+      const searchLower = search.toLowerCase();
+      filteredData = filteredData.filter(
+        item =>
+          item.title.toLowerCase().includes(searchLower) ||
+          item.content.toLowerCase().includes(searchLower)
+      );
+    }
 
-    // Get total count
-    const totalResult = await db
-      .select({ count: sql<number>`count(*)` })
-      .from(news)
-      .where(whereClause);
+    const total = filteredData.length;
+    const limitNum = parseInt(limit as string);
+    const offsetNum = parseInt(offset as string);
 
-    const total = totalResult[0]?.count || 0;
-
-    // Get paginated results
-    const newsData = await db
-      .select()
-      .from(news)
-      .where(whereClause)
-      .orderBy(sql`${news.publishedAt} DESC`)
-      .limit(parseInt(limit as string))
-      .offset(parseInt(offset as string));
-
-    // Transform data to match News interface
-    const transformedData = newsData.map(item => ({
-      id: item.id.toString(),
-      slug: item.slug,
-      title: item.title,
-      subtitle: item.subtitle || "",
-      thumbnail: item.thumbnail || "/images/placeholder.jpg",
-      tags: Array.isArray(item.tags) ? item.tags : [],
-      content: item.content,
-      publishedAt: item.publishedAt || "",
-      author: item.author || "SMKN 2 Singosari"
-    }));
+    // Paginate
+    const paginatedData = filteredData.slice(
+      offsetNum,
+      offsetNum + limitNum
+    );
 
     return {
-      data: transformedData,
+      data: paginatedData,
       total,
-      offset: parseInt(offset as string),
-      limit: parseInt(limit as string)
+      offset: offsetNum,
+      limit: limitNum,
     };
-
   } catch (error) {
-    console.error('Error fetching news:', error);
+    console.error('Error reading news data:', error);
     throw createError({
       statusCode: 500,
-      statusMessage: 'Internal server error'
+      statusMessage: 'Internal server error',
     });
   }
 });
