@@ -11,7 +11,7 @@
       >
         <div class="flex items-center justify-between flex-shrink-0 gap-3 p-4 border-b border-gray-200">
           <div class="flex-1 min-w-0">
-            <h2 class="text-lg font-semibold text-gray-800 truncate">{{ pageTitle }}</h2>
+            <h2 class="text-lg font-semibold text-gray-800 truncate">{{ pageSubtitle }}</h2>
             <p class="text-sm text-gray-500 truncate">{{ pageSubtitle }}</p>
           </div>
           <button
@@ -23,7 +23,6 @@
         </div>
 
         <div class="flex-1 p-4 overflow-y-auto">
-          
           <div class="mb-6">
             <div class="p-4 bg-gradient-to-r from-gray-500 to-gray-600 rounded-xl shadow-lg">
               <div class="flex items-center gap-3 mb-3">
@@ -31,12 +30,12 @@
                   <Icon name="lucide:user-x" size="20" class="text-white" />
                 </div>
                 <div>
-                  <p class="text-white font-semibold">{{ $t('sidebar.profile.disabled') }}</p>
-                  <p class="text-gray-100 text-sm">{{ $t('sidebar.profile.disabledDesc') }}</p>
+                  <p class="text-white font-semibold">{{ $t("sidebar.profile.disabled") }}</p>
+                  <p class="text-gray-100 text-sm">{{ $t("sidebar.profile.disabledDesc") }}</p>
                 </div>
               </div>
               <div class="text-center">
-                <p class="text-gray-200 text-sm">{{ $t('sidebar.profile.comingSoon') }}</p>
+                <p class="text-gray-200 text-sm">{{ $t("sidebar.profile.comingSoon") }}</p>
               </div>
             </div>
           </div>
@@ -64,23 +63,21 @@
               />
             </div>
 
-            
-            <NuxtLink v-if="menuItems !== currentMenuItems" to="/" @click="emit('close')" class="block mt-3">
+            <NuxtLink v-if="menuItems !== currentMenuItems" to="/" @click="$emit('close')" class="block mt-3">
               <div
                 class="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg px-4 py-3 hover:from-blue-700 hover:to-blue-800 transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
               >
                 <div class="flex items-center gap-3">
                   <Icon name="lucide:home" size="24" class="flex-shrink-0" />
                   <div class="flex-1">
-                    <p class="text-base font-semibold">{{ $t('sidebar.homeButton.title') }}</p>
-                    <p class="text-xs text-blue-100">{{ $t('sidebar.homeButton.subtitle') }}</p>
+                    <p class="text-base font-semibold">{{ $t("sidebar.homeButton.title") }}</p>
+                    <p class="text-xs text-blue-100">{{ $t("sidebar.homeButton.subtitle") }}</p>
                   </div>
                   <Icon name="lucide:arrow-right" size="20" class="flex-shrink-0" />
                 </div>
               </div>
             </NuxtLink>
 
-            
             <div class="relative mt-3">
               <button
                 @click="showLanguageMenu = !showLanguageMenu"
@@ -88,7 +85,7 @@
               >
                 <div class="flex items-center gap-3">
                   <Icon name="lucide:languages" size="20" class="text-gray-600" />
-                  <span class="text-sm font-medium text-gray-800">{{ $t('sidebar.languageSwitcher.label') }}</span>
+                  <span class="text-sm font-medium text-gray-800">{{ $t("sidebar.languageSwitcher.label") }}</span>
                 </div>
                 <Icon
                   name="lucide:chevron-down"
@@ -98,7 +95,6 @@
                 />
               </button>
 
-              
               <transition name="dropdown" class="transition-all duration-200 ease-in-out">
                 <div
                   v-if="showLanguageMenu"
@@ -115,18 +111,12 @@
                       <span class="text-lg">{{ lang.flag }}</span>
                       <span class="text-sm font-medium">{{ lang.name }}</span>
                     </div>
-                    <Icon
-                      v-if="currentLanguage === lang.code"
-                      name="lucide:check"
-                      size="16"
-                      class="text-blue-600"
-                    />
+                    <Icon v-if="currentLanguage === lang.code" name="lucide:check" size="16" class="text-blue-600" />
                   </button>
                 </div>
               </transition>
             </div>
 
-            
             <div
               class="flex items-center justify-between px-4 py-3 mt-3 border border-gray-200 rounded-lg cursor-not-allowed bg-gray-50 opacity-60"
             >
@@ -148,7 +138,7 @@
             >
               <p class="text-sm text-yellow-700">
                 <Icon name="lucide:info" size="16" class="inline mr-1" />
-                {{ $t('sidebar.search.noResults', { query: searchQuery }) }}
+                {{ $t("sidebar.search.noResults", { query: searchQuery }) }}
               </p>
             </div>
             <div
@@ -157,111 +147,115 @@
             >
               <p class="text-xs text-green-700">
                 <Icon name="lucide:check-circle" size="14" class="inline mr-1" />
-                {{ $t('sidebar.search.resultsCount', { count: filteredMenuItems.reduce((total: number, section: any) => total + section.submenu.length, 0) }) }}
+                {{
+                  $t("sidebar.search.resultsCount", {
+                    count: (filteredMenuItems as Record<string, unknown>[]).reduce((total: number, section: Record<string, unknown>) => total + ((section.submenu as unknown[]).length), 0),
+                  })
+                }}
               </p>
             </div>
           </div>
           <div v-for="(item, index) in filteredMenuItems" :key="index" class="mb-6">
             <h3
-              @click="toggleSection(item.title)"
+              @click="toggleSection((item as Record<string, unknown>).title as string)"
               class="flex items-center justify-between mb-3 text-base font-semibold text-gray-800 cursor-pointer"
             >
-              {{ $t(`sidebar.sections.${item.title.toLowerCase().replace(/\s+/g, '')}`) }}
+              {{ $t(`sidebar.sections.${((item as Record<string, unknown>).title as string).toLowerCase().replace(/\s+/g, "")}`) }}
               <div class="flex items-center gap-2">
                 <span v-if="searchQuery.trim()" class="px-2 py-1 text-xs text-blue-700 bg-blue-100 rounded-full">
-                  {{ item.submenu.length }}
+                  {{ ((item as Record<string, unknown>).submenu as unknown[]).length }}
                 </span>
                 <Icon
                   name="lucide:chevron-down"
                   size="16"
                   class="transition-transform"
-                  :class="{ 'rotate-180': openSections[item.title] ?? false }"
+                  :class="{ 'rotate-180': openSections[(item as Record<string, unknown>).title as string] ?? false }"
                 />
               </div>
             </h3>
-            <div v-if="(openSections[item.title] ?? false) || searchQuery.trim()">
+            <div v-if="(openSections[(item as Record<string, unknown>).title as string] ?? false) || searchQuery.trim()">
               <div
-                v-for="(sub, subIndex) in item.submenu"
+                v-for="(sub, subIndex) in (item as Record<string, unknown>).submenu"
                 :key="subIndex"
                 class="mb-3 ml-4 transition-colors duration-200 border-l-2 border-gray-200 hover:border-blue-300"
               >
-                <a v-if="sub.external" :href="sub.to" target="_blank" class="block" @click="emit('close')">
+                <a v-if="(sub as Record<string, unknown>).external" :href="(sub as Record<string, unknown>).to as string" target="_blank" class="block" @click="$emit('close')">
                   <div
                     class="flex items-start gap-3 p-2 transition-colors duration-200 rounded cursor-pointer hover:bg-gray-50"
-                    :class="{ 'bg-blue-50 border border-blue-200': searchQuery.trim() && (sub as any).score > 80 }"
+                    :class="{ 'bg-blue-50 border border-blue-200': searchQuery.trim() && ((sub as Record<string, unknown>).score as number) > 80 }"
                   >
-                    <Icon :name="sub.icon" size="18" class="mt-0.5 flex-shrink-0" :style="{ color: '#000000' }" />
+                    <Icon :name="(sub as Record<string, unknown>).icon as string" size="18" class="mt-0.5 flex-shrink-0" :style="{ color: '#000000' }" />
                     <div class="flex-1">
                       <div class="flex items-center gap-2">
                         <p
                           class="text-sm font-medium text-gray-900"
-                          v-html="highlightSearchTerm(sub.title, searchQuery)"
+                          v-html="highlightSearchTerm((sub as Record<string, unknown>).title as string, searchQuery)"
                         ></p>
                         <span
-                          v-if="item.title === 'Berita' && sub.title !== 'Semua Berita'"
+                          v-if="((item as Record<string, unknown>).title as string) === 'Berita' && ((sub as Record<string, unknown>).title as string) !== 'Semua Berita'"
                           class="text-xs bg-red-100 text-red-700 px-1.5 py-0.5 rounded"
                         >
-                          {{ $t('sidebar.matches.news') }}
+                          {{ $t("sidebar.matches.news") }}
                         </span>
                         <span
-                          v-if="searchQuery.trim() && (sub as any).score > 90"
+                          v-if="searchQuery.trim() && ((sub as Record<string, unknown>).score as number) > 90"
                           class="text-xs bg-green-100 text-green-700 px-1.5 py-0.5 rounded"
                         >
-                          {{ $t('sidebar.matches.perfect') }}
+                          {{ $t("sidebar.matches.perfect") }}
                         </span>
                         <span
-                          v-else-if="searchQuery.trim() && (sub as any).score > 70"
+                          v-else-if="searchQuery.trim() && ((sub as Record<string, unknown>).score as number) > 70"
                           class="text-xs bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded"
                         >
-                          {{ $t('sidebar.matches.good') }}
+                          {{ $t("sidebar.matches.good") }}
                         </span>
                       </div>
                       <p
                         class="text-xs leading-relaxed text-gray-600"
-                        v-html="highlightSearchTerm(sub.desc, searchQuery)"
+                        v-html="highlightSearchTerm((sub as Record<string, unknown>).desc as string, searchQuery)"
                       ></p>
                     </div>
                   </div>
                 </a>
-                <NuxtLink v-else :to="sub.to || '#'" class="block" @click="emit('close')">
+                <NuxtLink v-else :to="((sub as Record<string, unknown>).to as string) || '#'" class="block" @click="$emit('close')">
                   <div
                     class="flex items-start gap-3 p-2 transition-colors duration-200 rounded cursor-pointer hover:bg-gray-50"
-                    :class="{ 'bg-blue-50 border border-blue-200': searchQuery.trim() && (sub as any).score > 80 }"
+                    :class="{ 'bg-blue-50 border border-blue-200': searchQuery.trim() && ((sub as Record<string, unknown>).score as number) > 80 }"
                   >
                     <Icon
-                      :name="sub.icon"
+                      :name="(sub as Record<string, unknown>).icon as string"
                       size="18"
                       class="mt-0.5 flex-shrink-0"
-                      :style="{ color: item.title === 'Konsentrasi Keahlian' ? getIconColor(sub.title) : '#000000' }"
+                      :style="{ color: ((item as Record<string, unknown>).title as string) === 'Konsentrasi Keahlian' ? getIconColor((sub as Record<string, unknown>).title as string) : '#000000' }"
                     />
                     <div class="flex-1">
                       <div class="flex items-center gap-2">
                         <p
                           class="text-sm font-medium text-gray-900"
-                          v-html="highlightSearchTerm(sub.title, searchQuery)"
+                          v-html="highlightSearchTerm((sub as Record<string, unknown>).title as string, searchQuery)"
                         ></p>
                         <span
-                          v-if="item.title === 'Berita' && sub.title !== 'Semua Berita'"
+                          v-if="((item as Record<string, unknown>).title as string) === 'Berita' && ((sub as Record<string, unknown>).title as string) !== 'Semua Berita'"
                           class="text-xs bg-red-100 text-red-700 px-1.5 py-0.5 rounded"
                         >
-                          {{ $t('sidebar.matches.news') }}
+                          {{ $t("sidebar.matches.news") }}
                         </span>
                         <span
-                          v-if="searchQuery.trim() && (sub as any).score > 90"
+                          v-if="searchQuery.trim() && ((sub as Record<string, unknown>).score as number) > 90"
                           class="text-xs bg-green-100 text-green-700 px-1.5 py-0.5 rounded"
                         >
-                          {{ $t('sidebar.matches.perfect') }}
+                          {{ $t("sidebar.matches.perfect") }}
                         </span>
                         <span
-                          v-else-if="searchQuery.trim() && (sub as any).score > 70"
+                          v-else-if="searchQuery.trim() && ((sub as Record<string, unknown>).score as number) > 70"
                           class="text-xs bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded"
                         >
-                          {{ $t('sidebar.matches.good') }}
+                          {{ $t("sidebar.matches.good") }}
                         </span>
                       </div>
                       <p
                         class="text-xs leading-relaxed text-gray-600"
-                        v-html="highlightSearchTerm(sub.desc, searchQuery)"
+                        v-html="highlightSearchTerm((sub as Record<string, unknown>).desc as string, searchQuery)"
                       ></p>
                     </div>
                   </div>
@@ -270,6 +264,7 @@
             </div>
           </div>
         </div>
+
       </div>
     </div>
   </transition>
@@ -289,10 +284,11 @@
 </style>
 
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
+import { computed, ref } from "vue";
 import type { Extracurricular } from "~/models/Extracurricular";
 import type { MajorName } from "~/models/MajorName";
 import type { News } from "~/models/News";
+import type { Organization } from "~/models/Organization";
 import { majorColorSchemes } from "~/utils/majorColors";
 
 const { locales, setLocale } = useI18n();
@@ -325,7 +321,7 @@ const { data: organizationsResponse } = await useFetch("/api/organizations", {
 });
 
 const organizationsData = computed(() => {
-  const response = organizationsResponse.value as { data?: unknown[]; total?: number } | null;
+  const response = organizationsResponse.value as { data?: Organization[]; total?: number } | null;
   return response?.data || [];
 });
 
@@ -345,7 +341,7 @@ const topExtracurriculars = computed(() => {
   const manualItems = ["Voli", "Basket", "Catur"];
   return extracurricularsData.value
     .filter((extra) => !manualItems.includes(extra.name))
-    .slice(0, 3)
+    .slice(0, 5)
     .map((extra) => ({
       title: extra.name,
       desc: extra.description,
@@ -567,6 +563,14 @@ const menuItems = [
         external: false,
         tags: ["mitra", "industri", "kerjasama", "partnership"],
       },
+      {
+        title: "Kontak",
+        desc: "Hubungi kami",
+        icon: "lucide:phone",
+        to: "/informasi/kontak",
+        external: false,
+        tags: ["kontak", "contact", "hubungi"],
+      },
     ],
   },
   {
@@ -581,8 +585,10 @@ const menuItems = [
         tags: ["organisasi", "semua", "daftar"],
       },
       ...organizationsData.value
-        .filter((org: any) => !["futsal-club", "english-club", "paskibra"].includes(org.slug))
-        .map((org: any) => ({
+        .filter(
+          (org: Organization) => !["futsal-club", "english-club", "paskibra"].includes(org.slug),
+        )
+        .map((org: Organization) => ({
           title: org.name,
           desc: org.shortDescription || org.description,
           icon: "lucide:users-round",
@@ -770,7 +776,9 @@ const filteredMenuItems = computed(() => {
     const title = (item.title as string).toLowerCase();
     const desc = (item.desc as string).toLowerCase();
 
-    const tags = item.tags ? item.tags.map((tag: string) => tag.toLowerCase()) : [];
+    const tags = (item.tags as string[])
+      ? (item.tags as string[]).map((tag: string) => tag.toLowerCase())
+      : [];
 
     if (title === query) score += 100;
     else if (title.startsWith(query)) score += 80;
@@ -843,9 +851,9 @@ const filteredMenuItems = computed(() => {
     return score;
   };
 
-  const scoredItems = currentMenuItems.value
-    .map((section) => {
-      const scoredSubmenu = section.submenu
+  const scoredItems = (currentMenuItems.value as Record<string, unknown>[])
+    .map((section: Record<string, unknown>) => {
+      const scoredSubmenu = (section.submenu as Record<string, unknown>[])
         .map((item: Record<string, unknown>) => ({ ...item, score: calculateRelevanceScore(item) }))
         .filter((item: Record<string, unknown> & { score: number }) => item.score > 0)
         .sort(
@@ -866,14 +874,16 @@ const filteredMenuItems = computed(() => {
     return scoredItems;
   }
 
-  const fallbackItems = currentMenuItems.value
-    .map((section) => ({
+  const fallbackItems = (currentMenuItems.value as Record<string, unknown>[])
+    .map((section: Record<string, unknown>) => ({
       ...section,
-      submenu: section.submenu.filter((item: any) => {
-        const tags = item.tags || [];
-        const searchText = `${item.title} ${item.desc} ${tags.join(" ")}`.toLowerCase();
-        return query.split(" ").some((word) => word.length > 2 && searchText.includes(word));
-      }),
+      submenu: (section.submenu as Record<string, unknown>[]).filter(
+        (item: Record<string, unknown>) => {
+          const tags = (item.tags as string[]) || [];
+          const searchText = `${item.title} ${item.desc} ${tags.join(" ")}`.toLowerCase();
+          return query.split(" ").some((word) => word.length > 2 && searchText.includes(word));
+        },
+      ),
     }))
     .filter((section) => section.submenu.length > 0);
 

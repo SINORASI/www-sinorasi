@@ -233,7 +233,7 @@ useHead({
           
            <div class="rounded-tr-lg rounded-br-lg shadow-lg overflow-hidden cursor-pointer transition-transform" @click="expandCard(2)">
             <div class="relative w-full h-96 overflow-hidden">
-              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3951.036!2d112.665!3d-7.888!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd629b46b6e7c8b%3A0x4e7b8b8b8b8b8b8b!2sJl.%20Perusahaan%20Raya%20No.20%2C%20Jajar%2C%20Tanjungtirto%2C%20Kec.%20Singosari%2C%20Kabupaten%20Malang%2C%20Jawa%20Timur%2065153!5e0!3m2!1sen!2sid!4v1697550000000!5m2!1sen!2sid" class="absolute inset-0 w-full h-full" frameborder="0" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+              <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d53004.90227511139!2d112.61905412163591!3d-7.903971658482226!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd62a2690b713bb%3A0x61a43c4cb3de3ff0!2sSMK%20Negeri%202%20Singosari!5e0!3m2!1sid!2sid!4v1760870911351!5m2!1sid!2sid" style="border:0;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="absolute inset-0 w-full h-full"></iframe>
               <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-4 backdrop-blur-sm">
                 <h3 class="text-xl font-bold text-white font-sans">Maps Lokasi</h3>
                 <p class="text-sm text-gray-200 mt-2 font-sans">
@@ -297,7 +297,7 @@ useHead({
               
               <div v-if="expandedCard === 2" class="relative">
                 <div class="aspect-video">
-                  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3951.036!2d112.665!3d-7.888!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd629b46b6e7c8b%3A0x4e7b8b8b8b8b8b8b!2sJl.%20Perusahaan%20Raya%20No.20%2C%20Jajar%2C%20Tanjungtirto%2C%20Kec.%20Singosari%2C%20Kabupaten%20Malang%2C%20Jawa%20Timur%2065153!5e0!3m2!1sen!2sid!4v1697550000000!5m2!1sen!2sid" class="absolute inset-0 w-full h-full" frameborder="0" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                  <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d53004.90227511139!2d112.61905412163591!3d-7.903971658482226!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd62a2690b713bb%3A0x61a43c4cb3de3ff0!2sSMK%20Negeri%202%20Singosari!5e0!3m2!1sid!2sid!4v1760870911351!5m2!1sid!2sid" style="border:0;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="absolute inset-0 w-full h-full"></iframe>
                 </div>
                 <div class="p-8">
                   <h3 class="text-2xl font-bold text-gray-800 mb-4">Maps Lokasi</h3>
