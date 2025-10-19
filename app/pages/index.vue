@@ -1180,8 +1180,9 @@ useHead({
             v-for="(news, index) in newsData"
             :key="news.id"
             :initial="{ opacity: 0, y: 20 }"
-            :animate="{ opacity: 1, y: 0 }"
-            :transition="{ duration: 0.6, delay: index * 0.1 }"
+            :whileInView="{ opacity: 1, y: 0 }"
+            :transition="{ duration: 0.6 }"
+            :viewport="{ once: true }"
           >
             <NuxtLink
               :to="`/berita/${news.slug}`"

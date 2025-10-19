@@ -95,8 +95,9 @@ const toggleFAQ = (index: number) => {
             :key="index"
             class="overflow-hidden transition-shadow duration-300 bg-white border border-gray-300 rounded-lg shadow-sm hover:shadow-md"
             :initial="{ opacity: 0, y: 50 }"
-            :animate="{ opacity: 1, y: 0 }"
-            :transition="{ duration: 0.5, delay: index * 0.1 }"
+            :whileInView="{ opacity: 1, y: 0 }"
+            :transition="{ duration: 0.5 }"
+            :viewport="{ once: true }"
           >
             
             <button
