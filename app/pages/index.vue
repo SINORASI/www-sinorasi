@@ -315,10 +315,10 @@ useHead({
       </div>
     </section>
 
-    <!-- Achievement Carousel Section -->
+    
     <section id="prestasi" class="bg-gradient-to-b from-white via-blue-50 to-white">
       <div class="container flex flex-col items-center gap-8 mx-auto">
-        <!-- Achievement Carousel -->
+        
         <div
           class="relative flex flex-col w-full max-w-5xl gap-6 p-8 mx-auto bg-white border-2 border-blue-100 shadow-xl rounded-2xl"
         >

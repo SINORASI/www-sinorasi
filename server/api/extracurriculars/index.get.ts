@@ -2,15 +2,15 @@ import type { Extracurricular } from "~/models/Extracurricular";
 
 export default defineEventHandler(
   async (event): Promise<{ data: Extracurricular[]; total: number }> => {
-    // TODO: Replace with actual API call
-    // const response = await $fetch('https://your-api.com/api/extracurriculars');
+    
+    
 
     const query = getQuery(event);
     const limit = parseInt(query.limit as string) || 50;
     const offset = parseInt(query.offset as string) || 0;
     const category = query.category as string;
 
-    // Mock data
+    
     const allExtracurriculars: Extracurricular[] = [
       {
         id: "1",
@@ -581,7 +581,7 @@ export default defineEventHandler(
       },
     ];
 
-    // Filter by category if specified
+    
     let filtered = allExtracurriculars;
     if (category && category !== "Semua") {
       filtered = allExtracurriculars.filter((e) => e.category === category);
