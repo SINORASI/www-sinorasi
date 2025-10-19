@@ -247,13 +247,8 @@ useHead({
 
         
         <div v-if="expandedCard !== null" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm" @click="closeCard">
-<<<<<<< HEAD
-          <div class="relative w-4/5 h-5/6 mx-auto" @click.stop>
-            
-=======
           <div class="relative w-3/5 h-4/6 mx-auto" @click.stop>
             <!-- Close Button -->
->>>>>>> 7140325c1819b5c26173ac574c14c74d52355ad5
             <button @click="closeCard" class="absolute top-4 right-4 z-10 w-12 h-12 bg-gray-600 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-gray-500 transition-colors">
               <Icon name="lucide:x" size="24" />
             </button>

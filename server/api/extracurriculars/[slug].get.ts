@@ -3,13 +3,6 @@ import type { Extracurricular } from "~/models/Extracurricular";
 export default defineEventHandler(async (event): Promise<Extracurricular | null> => {
   const slug = getRouterParam(event, "slug");
 
-<<<<<<< HEAD
-=======
-  // TODO: Replace with actual API call
-  // const extracurricular = await $fetch(`https://your-api.com/api/extracurriculars/${slug}`);
-
-  // Mock data
->>>>>>> 7140325c1819b5c26173ac574c14c74d52355ad5
   const extracurriculars: Extracurricular[] = [
     {
       id: "1",
@@ -17,23 +10,14 @@ export default defineEventHandler(async (event): Promise<Extracurricular | null>
       name: "Basket",
       category: "Olahraga",
       icon: "lucide:dribbble",
-<<<<<<< HEAD
       description:
         "Ekstrakurikuler basket untuk pengembangan keterampilan dan prestasi di bidang olahraga",
-=======
-      description: "Ekstrakurikuler basket untuk pengembangan keterampilan dan prestasi di bidang olahraga",
->>>>>>> 7140325c1819b5c26173ac574c14c74d52355ad5
       fullDescription:
         "<p>Ekstrakurikuler basket sekolah kami telah berdiri sejak tahun 2019 dan menjadi salah satu wadah pengembangan bakat siswa di bidang olahraga. Dengan fasilitas lapangan yang memadai dan bimbingan pelatih berpengalaman, kami berkomitmen membentuk karakter sportif dan jiwa kompetitif siswa.</p><p>Kegiatan latihan rutin dilaksanakan tiga kali seminggu dengan fokus pada pengembangan teknik dasar, strategi permainan, dan pembentukan mental juara yang kuat untuk menghadapi berbagai kompetisi.</p>",
       image: "/images/placeholder.jpg",
       coach: "Coach Budi Santoso",
       schedule: "Senin, Rabu, Jumat - 15:30-17:00 WIB",
       location: "Lapangan Basket Sekolah",
-<<<<<<< HEAD
-      fee: "Rp 150.000/bulan",
-=======
-
->>>>>>> 7140325c1819b5c26173ac574c14c74d52355ad5
       memberCount: 50,
       achievementCount: 10,
       yearEstablished: 2019,
@@ -83,8 +67,6 @@ export default defineEventHandler(async (event): Promise<Extracurricular | null>
         },
       ],
     },
-<<<<<<< HEAD
-=======
 
     {
       id: "2",
@@ -136,14 +118,16 @@ export default defineEventHandler(async (event): Promise<Extracurricular | null>
           id: "3",
           image: "/images/placeholder.jpg",
           title: "Turnamen Internal Sekolah",
-          description: "Event tahunan yang melibatkan siswa dalam kompetisi volley untuk mempererat tali persaudaraan",
+          description:
+            "Event tahunan yang melibatkan siswa dalam kompetisi volley untuk mempererat tali persaudaraan",
           date: "15 Mei 2024",
         },
         {
           id: "4",
           image: "/images/placeholder.jpg",
           title: "Workshop Strategi Permainan",
-          description: "Sesi pembelajaran tentang taktik permainan volley yang dipimpin oleh pelatih profesional",
+          description:
+            "Sesi pembelajaran tentang taktik permainan volley yang dipimpin oleh pelatih profesional",
           date: "10 Juni 2024",
         },
       ],
@@ -183,7 +167,8 @@ export default defineEventHandler(async (event): Promise<Extracurricular | null>
           id: "1",
           image: "/images/placeholder.jpg",
           title: "Kejuaraan Badminton Daerah",
-          description: "Pemain berhasil meraih medali emas dalam kompetisi badminton tingkat daerah",
+          description:
+            "Pemain berhasil meraih medali emas dalam kompetisi badminton tingkat daerah",
           date: "20 Februari 2024",
         },
         {
@@ -215,7 +200,8 @@ export default defineEventHandler(async (event): Promise<Extracurricular | null>
       name: "Futsal",
       category: "Olahraga",
       icon: "streamline-sharp:ball",
-      description: "Ekstrakurikuler futsal untuk mengembangkan keterampilan permainan indoor dan kerja sama tim",
+      description:
+        "Ekstrakurikuler futsal untuk mengembangkan keterampilan permainan indoor dan kerja sama tim",
       fullDescription:
         "<p>Ekstrakurikuler futsal sekolah kami telah berdiri sejak tahun 2019 dan menjadi wadah pengembangan bakat siswa di olahraga indoor. Dengan lapangan futsal yang berkualitas, kami membentuk pemain yang memiliki teknik dan strategi permainan yang baik.</p><p>Latihan dilakukan tiga kali seminggu dengan fokus pada teknik dasar, taktik, dan kondisi fisik.</p>",
       image: "/images/placeholder.jpg",
@@ -313,7 +299,8 @@ export default defineEventHandler(async (event): Promise<Extracurricular | null>
       name: "PMR",
       category: "Kesehatan",
       icon: "lucide:heart",
-      description: "Ekstrakurikuler PMR untuk pengembangan keterampilan kesehatan dan kepalangmerahan",
+      description:
+        "Ekstrakurikuler PMR untuk pengembangan keterampilan kesehatan dan kepalangmerahan",
       fullDescription:
         "<p>Ekstrakurikuler PMR sekolah kami telah berdiri sejak tahun 2015 dan menjadi wadah pengembangan siswa di bidang kesehatan dan kemanusiaan. Dengan bimbingan instruktur, kami membentuk siswa yang peduli terhadap kesehatan dan kesejahteraan orang lain.</p><p>Kegiatan meliputi latihan kesehatan, donor darah, dan kegiatan sosial.</p>",
       image: "/images/placeholder.jpg",
@@ -528,7 +515,8 @@ export default defineEventHandler(async (event): Promise<Extracurricular | null>
       name: "Photography",
       category: "Seni",
       icon: "lucide:camera",
-      description: "Ekstrakurikuler photography untuk pengembangan keterampilan fotografi dan kreativitas visual",
+      description:
+        "Ekstrakurikuler photography untuk pengembangan keterampilan fotografi dan kreativitas visual",
       fullDescription:
         "<p>Ekstrakurikuler photography sekolah kami telah berdiri sejak tahun 2020 dan menjadi wadah pengembangan bakat siswa di bidang fotografi. Dengan bimbingan fotografer profesional, kami membentuk siswa yang memiliki kemampuan fotografi yang baik dan mata kreatif.</p><p>Kegiatan meliputi teknik fotografi, editing, dan proyek fotografi.</p>",
       image: "/images/placeholder.jpg",
@@ -581,7 +569,6 @@ export default defineEventHandler(async (event): Promise<Extracurricular | null>
         },
       ],
     },
->>>>>>> 7140325c1819b5c26173ac574c14c74d52355ad5
   ];
 
   const extracurricular = extracurriculars.find((e) => e.slug === slug);

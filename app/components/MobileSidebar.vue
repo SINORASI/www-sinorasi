@@ -292,11 +292,8 @@
 import { computed, ref, watch } from "vue";
 import type { MajorName } from "~/models/MajorName";
 import type { News } from "~/models/News";
-<<<<<<< HEAD
 import { majorColorSchemes } from "~/utils/majorColors";
-=======
 import type { Extracurricular } from "~/models/Extracurricular";
->>>>>>> 7140325c1819b5c26173ac574c14c74d52355ad5
 
 const { locales, setLocale } = useI18n();
 const currentLanguage = computed(() => {
@@ -332,121 +329,33 @@ const organizationsData = computed(() => {
   return response?.data || [];
 });
 
-<<<<<<< HEAD
-const session = null;
-=======
 // Fetch extracurricular data from API
 const { data: extracurricularsResponse } = await useFetch("/api/extracurriculars", {
   query: { limit: 50 },
 });
 
 const extracurricularsData = computed(() => {
-  const response = extracurricularsResponse.value as { data?: Extracurricular[]; total?: number } | null;
+  const response = extracurricularsResponse.value as {
+    data?: Extracurricular[];
+    total?: number;
+  } | null;
   return response?.data || [];
 });
 
-// Compute top 5 extracurriculars by achievement count
 const topExtracurriculars = computed(() => {
-  return extracurricularsData.value
-    .sort((a, b) => (b.achievementCount || 0) - (a.achievementCount || 0))
-    .slice(0, 5)
-    .map((extra) => ({
-      title: extra.name,
-      desc: extra.description,
-      icon: extra.icon || "lucide:trophy",
-      to: `/ekstrakurikuler/${extra.slug}`,
-      external: false,
-      tags: ["ekstrakurikuler", extra.name.toLowerCase(), ...extra.name.toLowerCase().split(" ")],
-      highlighted: true,
-    }));
-});
-
-// Get session data - temporarily disabled
-const session = null
->>>>>>> 7140325c1819b5c26173ac574c14c74d52355ad5
-
-const emit = defineEmits<{
-  close: [];
-}>();
-
-const handleLogout = async () => {
-  try {
-    alert("Sistem logout sementara tidak tersedia.");
-    emit("close");
-    await navigateTo("/");
-  } catch (error) {
-    console.log("Logout error:", error);
-
-    emit("close");
-    await navigateTo("/");
-  }
-};
-
-watch(
-  () => route.path,
-  (newPath, oldPath) => {
-    if (newPath !== oldPath) {
-      setTimeout(() => {
-        emit("close");
-      }, 100);
-    }
-  },
-  { immediate: false },
-);
-
-const pageTitle = computed(() => {
-  const path = route.path;
-
-  if (path === "/") return "Beranda";
-  if (path === "/berita") return "Berita Terbaru";
-  if (path === "/acara") return "Events & Acara";
-  if (path === "/organisasi") return "Organisasi Sekolah";
-  if (path === "/ekstrakurikuler") return "Ekstrakurikuler";
-  if (path === "/informasi/profile-sekolah") return "Profil Sekolah";
-  if (path === "/informasi/struktur-organisasi") return "Struktur Organisasi";
-  if (path === "/informasi/sarana-prasarana") return "Sarana Prasarana";
-  if (path === "/informasi/guru") return "Data Guru";
-  if (path === "/informasi/kontak") return "Kontak Kami";
-  if (path === "/utilitas/anonymous-bk") return "Anonymous BK";
-  if (path === "/utilitas/traffic-tracker") return "Traffic Tracker";
-  if (path === "/utilitas/si-sarana") return "SI Sarana";
-
-  if (path.startsWith("/jurusan/")) {
-    const majorName = (route.params.majorName as string) || (path.split("/").pop() as string);
-    const majorMap: Record<string, string> = {
-      rpl: "Rekayasa Perangkat Lunak",
-      tkj: "Teknik Komputer Jaringan",
-      dkv: "Desain Komunikasi Visual",
-      tei: "Teknik Elektronika Industri",
-      mekatronika: "Mekatronika",
-      broadcasting: "Broadcasting",
-      animasi: "Animasi",
-      tav: "Teknik Audio Visual",
-    };
-    return majorMap[majorName] || "Jurusan";
-  }
-
-  if (path.startsWith("/berita/")) {
-    return "Detail Berita";
-  }
-
-  if (path.startsWith("/acara/")) {
-    return "Detail Acara";
-  }
-
-  if (path.startsWith("/ekstrakurikuler/")) {
-    const extraName = route.params.extra as string;
-    if (extraName === "voli") return "Ekstrakurikuler Voli";
-    if (extraName === "basket") return "Ekstrakurikuler Basket";
-    if (extraName === "catur") return "Ekstrakurikuler Catur";
-    return "Ekstrakurikuler";
-  }
-
-  if (path.startsWith("/organisasi/")) {
-    return "Detail Organisasi";
-  }
-
-  return "SMKN 2 Singosari";
+  return extracurricularsData.value.slice(0, 3).map((extra) => ({
+    title: extra.name,
+    desc: extra.description,
+    icon: "lucide:users-2",
+    to: `/ekstrakurikuler/${extra.slug}`,
+    external: false,
+    tags: [
+      "ekstrakurikuler",
+      "extra",
+      extra.name.toLowerCase(),
+      ...extra.name.toLowerCase().split(" "),
+    ],
+  }));
 });
 
 const pageSubtitle = computed(() => {
@@ -669,49 +578,23 @@ const menuItems = [
         tags: ["organisasi", "semua", "daftar"],
       },
       ...organizationsData.value
-<<<<<<< HEAD
-        .filter(
-          (org: Record<string, unknown>) =>
-            !["futsal-club", "english-club", "paskibra"].includes(org.slug as string),
-        )
-        .map((org: Record<string, unknown>) => ({
-          title: org.name as string,
-          desc: org.description as string,
+        .filter((org: any) => !["futsal-club", "english-club", "paskibra"].includes(org.slug))
+        .map((org: any) => ({
+          title: org.name,
+          desc: org.shortDescription || org.description,
           icon: "lucide:users-round",
-          to: `/organisasi/${org.slug as string}`,
+          to: `/organisasi/${org.slug}`,
           external: false,
           tags: [
             "organisasi",
             org.name.toLowerCase(),
             ...org.name.toLowerCase().split(" "),
-            ...(org.description
+            ...((org.shortDescription || org.description)
               ?.toLowerCase()
               .split(" ")
-              .filter((word: string) => word.length > 3) || []),
+              .filter((word) => word.length > 3) || []),
           ],
         })),
-=======
-        .filter((org: any) => !['futsal-club', 'english-club', 'paskibra'].includes(org.slug))
-        .map((org: any) => {
-          const description = org.shortDescription || org.description;
-          return {
-            title: org.name,
-            desc: description,
-            icon: "lucide:users-round",
-            to: `/organisasi/${org.slug}`,
-            external: false,
-            tags: [
-              "organisasi",
-              org.name.toLowerCase(),
-              ...org.name.toLowerCase().split(" "),
-              ...(description
-                ?.toLowerCase()
-                .split(" ")
-                .filter((word: string) => word.length > 3) || []),
-            ],
-          };
-        }),
->>>>>>> 7140325c1819b5c26173ac574c14c74d52355ad5
     ],
   },
   {
@@ -772,10 +655,10 @@ const menuItems = [
         tags: [
           "berita",
           "news",
-          ...news.tags.map((tag: string) => tag.toLowerCase()),
+          ...news.tags.map((tag) => tag.toLowerCase()),
           ...news.title.toLowerCase().split(" "),
           ...news.subtitle.toLowerCase().split(" "),
-        ].filter((tag: string) => tag.length > 2),
+        ].filter((tag) => tag.length > 2),
       })),
     ],
   },

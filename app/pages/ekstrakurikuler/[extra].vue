@@ -68,15 +68,9 @@ useHead({
       </div>
     </div>
 
-<<<<<<< HEAD
-    
-    <div v-else class="container px-4 py-8 mx-auto">
-      
-=======
     <!-- Content -->
     <div v-else class="container px-4 py-8 mx-auto max-w-[1200px]">
       <!-- Breadcrumb -->
->>>>>>> 7140325c1819b5c26173ac574c14c74d52355ad5
       <nav class="flex items-center mb-6 space-x-2 text-sm text-gray-600">
         <NuxtLink to="/" class="transition hover:text-blue-600">Home</NuxtLink>
         <Icon name="lucide:chevron-right" size="16" />
