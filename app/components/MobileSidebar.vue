@@ -342,19 +342,23 @@ const extracurricularsData = computed(() => {
 });
 
 const topExtracurriculars = computed(() => {
-  return extracurricularsData.value.slice(0, 3).map((extra) => ({
-    title: extra.name,
-    desc: extra.description,
-    icon: "lucide:users-2",
-    to: `/ekstrakurikuler/${extra.slug}`,
-    external: false,
-    tags: [
-      "ekstrakurikuler",
-      "extra",
-      extra.name.toLowerCase(),
-      ...extra.name.toLowerCase().split(" "),
-    ],
-  }));
+  const manualItems = ["Voli", "Basket", "Catur"];
+  return extracurricularsData.value
+    .filter((extra) => !manualItems.includes(extra.name))
+    .slice(0, 3)
+    .map((extra) => ({
+      title: extra.name,
+      desc: extra.description,
+      icon: "lucide:users-2",
+      to: `/ekstrakurikuler/${extra.slug}`,
+      external: false,
+      tags: [
+        "ekstrakurikuler",
+        "extra",
+        extra.name.toLowerCase(),
+        ...extra.name.toLowerCase().split(" "),
+      ],
+    }));
 });
 
 const pageSubtitle = computed(() => {
@@ -704,10 +708,18 @@ const menuItems = [
     title: "Layanan",
     submenu: [
       {
+        title: "Direktorat SMK",
+        desc: "Direktorat Sekolah Menengah Kejuruan",
+        icon: "lucide:building",
+        to: "http://smk.kemdikbud.go.id/",
+        external: true,
+        tags: ["direktorat", "smk", "kemdikbud", "layanan"],
+      },
+      {
         title: "E-Dapodik",
         desc: "Sistem Dapodik",
         icon: "lucide:database",
-        to: "https://dapodik.kemdikbud.go.id/",
+        to: "http://dapodik.smkn2-singosari.sch.id/",
         external: true,
         tags: ["dapodik", "data", "layanan"],
       },
@@ -715,7 +727,7 @@ const menuItems = [
         title: "E-Perpustakaan",
         desc: "Perpustakaan Digital",
         icon: "lucide:book-open",
-        to: "https://perpustakaan.kemdikbud.go.id/",
+        to: "http://perpus.smkn2-singosari.sch.id/",
         external: true,
         tags: ["perpustakaan", "library", "buku", "layanan"],
       },
@@ -723,7 +735,7 @@ const menuItems = [
         title: "E-Prakerin",
         desc: "Sistem Praktek Kerja Industri",
         icon: "lucide:briefcase",
-        to: "https://prakerin.kemdikbud.go.id/",
+        to: "http://prakerin.smkn2-singosari.sch.id/",
         external: true,
         tags: ["prakerin", "pkl", "magang", "industri", "layanan"],
       },
@@ -731,7 +743,7 @@ const menuItems = [
         title: "E-Raport",
         desc: "Raport Digital",
         icon: "lucide:file-text",
-        to: "https://raport.kemdikbud.go.id/",
+        to: "http://eraportbaru.smkn2-singosari.sch.id/",
         external: true,
         tags: ["raport", "nilai", "rapor", "layanan"],
       },
@@ -739,7 +751,7 @@ const menuItems = [
         title: "E-BKK",
         desc: "Bursa Kerja Khusus",
         icon: "lucide:users",
-        to: "https://bkk.kemdikbud.go.id/",
+        to: "http://bkk.smkn2-singosari.sch.id",
         external: true,
         tags: ["bkk", "bursa", "kerja", "lowongan", "layanan"],
       },
@@ -747,7 +759,7 @@ const menuItems = [
         title: "E-DataCenter",
         desc: "Data Center Sekolah",
         icon: "lucide:hard-drive",
-        to: "https://datacenter.kemdikbud.go.id/",
+        to: "http://cloud.smkn2-singosari.sch.id/",
         external: true,
         tags: ["datacenter", "cloud", "storage", "layanan"],
       },
@@ -755,33 +767,9 @@ const menuItems = [
         title: "E-Kelulusan",
         desc: "Informasi Kelulusan",
         icon: "lucide:graduation-cap",
-        to: "https://kelulusan.kemdikbud.go.id/",
+        to: "http://kelulusan.smkn2-singosari.sch.id/",
         external: true,
         tags: ["kelulusan", "lulus", "graduation", "layanan"],
-      },
-      {
-        title: "Kementerian Pendidikan dan Kebudayaan",
-        desc: "Situs resmi Kemdikbud",
-        icon: "lucide:external-link",
-        to: "https://www.kemdikbud.go.id/",
-        external: true,
-        tags: ["kemdikbud", "pendidikan", "layanan"],
-      },
-      {
-        title: "Dinas Pendidikan Jawa Timur",
-        desc: "Dinas Pendidikan Provinsi Jawa Timur",
-        icon: "lucide:external-link",
-        to: "https://disdik.jatimprov.go.id/",
-        external: true,
-        tags: ["disdik", "jatim", "pendidikan", "layanan"],
-      },
-      {
-        title: "Pemerintah Kabupaten Malang",
-        desc: "Situs resmi Pemkab Malang",
-        icon: "lucide:external-link",
-        to: "https://malangkab.go.id/",
-        external: true,
-        tags: ["malangkab", "pemerintah", "kabupaten", "layanan"],
       },
     ],
   },

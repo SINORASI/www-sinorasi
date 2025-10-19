@@ -324,29 +324,20 @@ useHead({
           </div>
         </div>
 
-        <div class="max-w-5xl mx-auto">
-          <div class="overflow-hidden bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
-            <div class="grid gap-0 lg:grid-cols-2">
-              <div class="bg-gray-300 h-80 lg:h-auto">
-                <img src="/images/placeholder.jpg" alt="Sejarah" class="object-cover w-full h-full" />
-              </div>
-              <div class="flex flex-col justify-center p-8 md:p-10">
-                <h3 class="mb-4 text-2xl font-bold text-gray-800">Sejarah SMK Negeri 2 Singosari</h3>
-                <p class="mb-6 leading-relaxed text-justify text-gray-700">
-                  Didirikan berdasarkan surat Perjanjian Kerjasama antara Bupati Malang dengan Direktur Pendidikan
-                  Sekolah Menengah Kejuruan No.0570ax/C5.4/Kep/KU/2007 Tanggal 25 Mei 2007. Sebagai Pengembangan dari
-                  Program Keahlian Teknik Audio Video, Teknik Elektronika Industri, dan Teknik Informatika (Rekayasa
-                  Perangkat Lunak) yang berasal dari SMK Negeri 1 Singosari yang telah meraih prestasi sebagai Juara
-                  Lomba Kompetensi Siswa baik tingkat Propinsi Jawa Timur maupun Tingkat Nasional.
-                </p>
-                <button class="inline-flex items-center font-semibold text-blue-600 hover:text-blue-800 w-fit group">
-                  Baca Selengkapnya
-                  <Icon name="lucide:arrow-right" class="ml-2 transition-transform group-hover:translate-x-1" />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+         <div class="max-w-5xl mx-auto">
+           <div class="overflow-hidden bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
+             <div class="p-8 md:p-10">
+               <h3 class="mb-4 text-2xl font-bold text-gray-800">Sejarah SMK Negeri 2 Singosari</h3>
+               <p class="leading-relaxed text-justify text-gray-700">
+                 Didirikan berdasarkan surat Perjanjian Kerjasama antara Bupati Malang dengan Direktur Pendidikan
+                 Sekolah Menengah Kejuruan No.0570ax/C5.4/Kep/KU/2007 Tanggal 25 Mei 2007. Sebagai Pengembangan dari
+                 Program Keahlian Teknik Audio Video, Teknik Elektronika Industri, dan Teknik Informatika (Rekayasa
+                 Perangkat Lunak) yang berasal dari SMK Negeri 1 Singosari yang telah meraih prestasi sebagai Juara
+                 Lomba Kompetensi Siswa baik tingkat Propinsi Jawa Timur maupun Tingkat Nasional.
+               </p>
+             </div>
+           </div>
+         </div>
       </div>
     </section>
   </div>
