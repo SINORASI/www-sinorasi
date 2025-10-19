@@ -189,7 +189,7 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
                     'text-sm transition duration-300',
                     isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
                   ]"
-                  >RPL</NuxtLink
+                  >Rekayasa Perangkat Lunak</NuxtLink
                 >
               </li>
               <li>
@@ -199,7 +199,7 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
                     'text-sm transition duration-300',
                     isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
                   ]"
-                  >TKJ</NuxtLink
+                  >Teknik Komputer Jaringan</NuxtLink
                 >
               </li>
               <li>
@@ -209,27 +209,7 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
                     'text-sm transition duration-300',
                     isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
                   ]"
-                  >DKV</NuxtLink
-                >
-              </li>
-              <li>
-                <NuxtLink
-                  :to="'/jurusan/tei'"
-                  :class="[
-                    'text-sm transition duration-300',
-                    isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
-                  ]"
-                  >EI</NuxtLink
-                >
-              </li>
-              <li>
-                <NuxtLink
-                  :to="'/jurusan/mekatronika'"
-                  :class="[
-                    'text-sm transition duration-300',
-                    isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
-                  ]"
-                  >MT</NuxtLink
+                  >Desain Komunikasi Visual</NuxtLink
                 >
               </li>
               <li>
@@ -239,7 +219,7 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
                     'text-sm transition duration-300',
                     isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
                   ]"
-                  >BC</NuxtLink
+                  >Broadcasting</NuxtLink
                 >
               </li>
               <li>
@@ -254,12 +234,32 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
               </li>
               <li>
                 <NuxtLink
+                  :to="'/jurusan/tei'"
+                  :class="[
+                    'text-sm transition duration-300',
+                    isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
+                  ]"
+                  >Teknik Elektronika Industri</NuxtLink
+                >
+              </li>
+              <li>
+                <NuxtLink
+                  :to="'/jurusan/mekatronika'"
+                  :class="[
+                    'text-sm transition duration-300',
+                    isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
+                  ]"
+                  >Teknik Mekatronika</NuxtLink
+                >
+              </li>
+              <li>
+                <NuxtLink
                   :to="'/jurusan/tav'"
                   :class="[
                     'text-sm transition duration-300',
                     isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
                   ]"
-                  >AV</NuxtLink
+                  >Teknik Audio Video</NuxtLink
                 >
               </li>
             </ul>
@@ -500,3 +500,4 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
     </div>
   </footer>
 </template>
+
