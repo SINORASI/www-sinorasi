@@ -26,13 +26,7 @@ const siswaCount = ref(0);
 const prestasiCount = ref(0);
 
 const selectedCategory = ref<string>("all");
-const newsCategories = ref<string[]>([
-  "all",
-  "Pengumuman",
-  "Prestasi",
-  "Kerjasama",
-  "Program Baru",
-]);
+const newsCategories = ref<string[]>(["all", "Pengumuman", "Prestasi", "Kerjasama", "Program Baru"]);
 const newsData = ref<News[]>([]);
 const isLoadingNews = ref(false);
 const showBackToTop = ref(false);
@@ -79,8 +73,7 @@ const timelineItems = [
   {
     year: "2015",
     title: "Akreditasi A",
-    description:
-      "SMK Negeri 2 Singosari berhasil meraih akreditasi A dari Badan Akreditasi Nasional Sekolah/Madrasah.",
+    description: "SMK Negeri 2 Singosari berhasil meraih akreditasi A dari Badan Akreditasi Nasional Sekolah/Madrasah.",
     icon: "lucide:award",
   },
   {
@@ -131,9 +124,8 @@ const achievements = computed(() => {
       image: news.thumbnail || "/images/placeholder.jpg",
       title: news.title,
       description: news.content
-        ? news.content
-            .replace(/<[^>]*>/g, "")
-            .slice(0, Math.floor(news.content.replace(/<[^>]*>/g, "").length / 2)) + "..."
+        ? news.content.replace(/<[^>]*>/g, "").slice(0, Math.floor(news.content.replace(/<[^>]*>/g, "").length / 2)) +
+          "..."
         : news.subtitle,
       slug: news.slug,
     }));
@@ -257,7 +249,6 @@ useHead({
       class="flex items-center justify-center min-h-screen px-4 pt-24 pb-10 md:pt-20 bg-gradient-to-b from-blue-50 to-white"
     >
       <div class="container flex flex-col justify-center items-center max-w-5xl mx-auto gap-18 lg:flex-row">
-
         <Motion
           class="flex flex-col justify-center items-center w-full lg:w-1/3"
           :initial="{ opacity: 0, x: -50 }"
@@ -323,10 +314,8 @@ useHead({
       </div>
     </section>
 
-    
     <section id="prestasi" class="bg-gradient-to-b from-white via-blue-50 to-white">
       <div class="container flex flex-col items-center gap-8 mx-auto">
-        
         <div
           class="relative flex flex-col w-full max-w-5xl gap-6 p-8 mx-auto bg-white border-2 border-blue-100 shadow-xl rounded-2xl"
         >
@@ -395,11 +384,21 @@ useHead({
       </div>
     </section>
 
-    <section id="profil-sekolah" class="py-20 h-min-screen bg-gradient-to-b from-white via-blue-50 to-white">
+    <Motion
+      id="profil-sekolah"
+      class="py-20 h-min-screen bg-gradient-to-b from-white via-blue-50 to-white"
+      :initial="{ opacity: 0, y: 50 }"
+      :animate="{ opacity: 1, y: 0 }"
+      :transition="{ duration: 0.8 }"
+    >
       <div class="container px-4 mx-auto md:px-10">
         <div class="flex flex-col gap-12 lg:flex-row lg:items-center">
-          
-          <div class="w-full lg:w-1/2">
+          <Motion
+            class="w-full lg:w-1/2"
+            :initial="{ opacity: 0, x: -50 }"
+            :animate="{ opacity: 1, x: 0 }"
+            :transition="{ duration: 0.8, delay: 0.2 }"
+          >
             <div class="relative group">
               <div
                 class="relative overflow-hidden transition-all duration-500 transform border-4 border-white shadow-2xl rounded-2xl group-hover:scale-105 group-hover:shadow-3xl"
@@ -417,10 +416,14 @@ useHead({
                 class="absolute w-32 h-32 rounded-full -bottom-4 -left-4 bg-gradient-to-br from-orange-500 to-orange-700 opacity-20 blur-2xl -z-10"
               ></div>
             </div>
-          </div>
+          </Motion>
 
-          
-          <div class="flex flex-col w-full gap-6 lg:w-1/2">
+          <Motion
+            class="flex flex-col w-full gap-6 lg:w-1/2"
+            :initial="{ opacity: 0, x: 50 }"
+            :animate="{ opacity: 1, x: 0 }"
+            :transition="{ duration: 0.8, delay: 0.4 }"
+          >
             <div class="inline-block">
               <span
                 class="px-2 py-3 flex justify-center items-center text-lg font-bold tracking-widest uppercase rounded-full md:text-xl"
@@ -462,15 +465,14 @@ useHead({
                 </p>
               </div>
             </div>
-          </div>
+          </Motion>
         </div>
       </div>
-    </section>
+    </Motion>
 
     <section id="sambutan" class="bg-gradient-to-b from-white via-blue-50 to-white">
       <div class="container px-4 mx-auto md:px-10">
         <div class="flex flex-col items-center justify-center gap-12 lg:flex-row">
-          
           <div class="flex flex-col w-full max-w-3xl gap-6 lg:w-3/5">
             <div class="inline-block">
               <span
@@ -499,7 +501,7 @@ useHead({
               </div>
             </div>
           </div>
-          
+
           <div class="w-full max-w-xl lg:w-1/5">
             <div class="relative max-w-xs group">
               <div
@@ -515,7 +517,7 @@ useHead({
                 <div
                   class="absolute inset-0 transition-opacity duration-500 bg-gradient-to-t from-blue-900/70 to-transparent"
                 ></div>
-                
+
                 <div class="absolute bottom-0 left-0 right-0 p-4">
                   <p class="text-xl font-bold text-center text-white">Sumijah S.Pd M.Si</p>
                   <p class="text-sm text-center text-white/90">Kepala Sekolah SMKN 2 Singosari</p>
@@ -530,12 +532,19 @@ useHead({
       </div>
     </section>
 
-    
-    <section id="prestasi" class="bg-gradient-to-b from-white via-blue-50 to-white">
+    <Motion
+      id="prestasi"
+      class="bg-gradient-to-b from-white via-blue-50 to-white"
+      :initial="{ opacity: 0, y: 50 }"
+      :animate="{ opacity: 1, y: 0 }"
+      :transition="{ duration: 0.8 }"
+    >
       <div class="container flex flex-col items-center gap-8 mx-auto">
-        
-        <div
+        <Motion
           class="relative flex flex-col w-full max-w-5xl gap-6 p-8 mx-auto bg-white border-2 border-blue-100 shadow-xl rounded-2xl"
+          :initial="{ opacity: 0, scale: 0.95 }"
+          :animate="{ opacity: 1, scale: 1 }"
+          :transition="{ duration: 0.6, delay: 0.2 }"
         >
           <div class="overflow-hidden">
             <div
@@ -598,16 +607,25 @@ useHead({
               <span class="text-lg">{{ String(achievements.length).padStart(2, "0") }}</span>
             </div>
           </div>
-        </div>
+        </Motion>
       </div>
-    </section>
+    </Motion>
 
-    
-    <section id="seragam-sekolah" class="bg-gradient-to-b from-white via-gray-50 to-white">
+    <Motion
+      id="seragam-sekolah"
+      class="bg-gradient-to-b from-white via-gray-50 to-white"
+      :initial="{ opacity: 0, y: 50 }"
+      :animate="{ opacity: 1, y: 0 }"
+      :transition="{ duration: 0.8 }"
+    >
       <div class="container px-4 mx-auto md:px-10">
         <div class="flex flex-col items-center gap-12">
-          
-          <div class="flex flex-col items-center gap-4 text-center">
+          <Motion
+            class="flex flex-col items-center gap-4 text-center"
+            :initial="{ opacity: 0, y: -30 }"
+            :animate="{ opacity: 1, y: 0 }"
+            :transition="{ duration: 0.6, delay: 0.2 }"
+          >
             <span
               class="px-8 py-3 text-xl font-bold tracking-widest text-center uppercase rounded-full md:text-2xl"
               style="background: #eff6ff; color: #1d4ed8"
@@ -615,11 +633,9 @@ useHead({
               Seragam Sekolah
             </span>
             <p class="max-w-2xl text-lg text-center text-white">Koleksi seragam sekolah SMK Negeri 2 Singosari</p>
-          </div>
+          </Motion>
 
-          
           <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 w-full max-w-[1600px]">
-            
             <UniformCard
               :gradeImages="{
                 X: {
@@ -658,7 +674,6 @@ useHead({
               primaryColor="sky"
             />
 
-            
             <UniformCard
               :gradeImages="{
                 X: {
@@ -697,7 +712,6 @@ useHead({
               primaryColor="gray"
             />
 
-            
             <UniformCard
               :gradeImages="{
                 X: {
@@ -736,7 +750,6 @@ useHead({
               primaryColor="gray"
             />
 
-            
             <UniformCard
               :gradeImages="{
                 X: {
@@ -775,7 +788,6 @@ useHead({
               primaryColor="blue"
             />
 
-            
             <UniformCard
               :gradeImages="{
                 X: {
@@ -814,7 +826,6 @@ useHead({
               primaryColor="brown"
             />
 
-            
             <UniformCard
               :gradeImages="{
                 X: {
@@ -854,7 +865,6 @@ useHead({
             />
           </div>
 
-          
           <div class="w-full max-w-4xl p-6 bg-white shadow-lg rounded-2xl">
             <div class="flex gap-4">
               <Icon name="lucide:info" size="24" class="text-orange-600 flex-shrink-0 mt-0.5" />
@@ -871,18 +881,16 @@ useHead({
           </div>
         </div>
       </div>
-    </section>
+    </Motion>
 
     <section
       id="jejak-sejarah"
       class="py-20 overflow-hidden h-min-screen bg-gradient-to-b from-white via-blue-50 to-white"
     >
       <div class="container relative flex flex-col items-center gap-8 px-4 mx-auto text-center md:px-10">
-        
         <div class="absolute top-0 left-0 bg-blue-200 rounded-full w-72 h-72 opacity-20 blur-3xl -z-10"></div>
         <div class="absolute bottom-0 right-0 bg-orange-200 rounded-full w-96 h-96 opacity-20 blur-3xl -z-10"></div>
 
-        
         <div class="flex flex-col items-center gap-4">
           <div class="inline-block">
             <span
@@ -897,7 +905,6 @@ useHead({
             Malang.
           </p>
 
-          
           <div class="flex items-center gap-3 px-6 py-3 bg-white border border-blue-100 rounded-full shadow-md">
             <Icon name="lucide:calendar" size="20" class="text-blue-600" />
             <span class="font-semibold text-gray-700">2007 - 2023</span>
@@ -906,7 +913,6 @@ useHead({
           </div>
         </div>
 
-        
         <div v-if="isMobile" class="relative flex flex-col items-center w-full py-10">
           <div
             class="absolute top-0 w-1 h-full transform -translate-x-1/2 rounded-full shadow-lg left-1/2 bg-gradient-to-b from-blue-400 via-blue-600 to-blue-400"
@@ -919,13 +925,11 @@ useHead({
             :class="{ 'opacity-0': !showAllIcons && index > 0 }"
             :style="{ transition: 'opacity 0.5s ease-in-out' }"
           >
-            
             <div
               v-if="showAllIcons || index === 0"
               class="absolute top-0 w-1 h-8 transform -translate-x-1/2 left-1/2 bg-gradient-to-b from-transparent to-blue-600"
             ></div>
 
-            
             <div
               v-if="showAllIcons || index === 0"
               :class="[
@@ -937,7 +941,6 @@ useHead({
               <Icon :name="item.icon" size="28" class="text-white" />
             </div>
 
-            
             <div
               v-if="clickedMarkers[index]"
               class="w-full p-6 text-center transition-all duration-300 bg-white border-2 border-blue-100 shadow-xl rounded-2xl hover:border-blue-300 hover:shadow-2xl hover:-translate-y-1"
@@ -958,7 +961,6 @@ useHead({
           </div>
         </div>
 
-        
         <div v-else class="relative max-w-[1200px] mx-auto py-24">
           <div
             class="absolute left-1/2 top-0 bottom-0 w-1 bg-[linear-gradient(to_bottom,transparent_0%_0%,#3b82f6_10%_50%,#2563eb_50%_90%,#3b82f6_90%_95%,transparent)] -translate-x-1/2 rounded-sm shadow-[0_0_20px_rgba(59,130,246,0.3)] z-10"
@@ -971,7 +973,6 @@ useHead({
             :class="{ 'opacity-0': !showAllIcons && index > 0 }"
             :style="{ transition: 'opacity 0.5s ease-in-out' }"
           >
-            
             <div
               v-if="clickedMarkers[index]"
               :class="[
@@ -999,7 +1000,6 @@ useHead({
               </h3>
               <p class="leading-relaxed text-gray-600">{{ item.description }}</p>
 
-              
               <div
                 :class="[
                   'absolute top-4 w-3 h-3 rounded-full',
@@ -1008,7 +1008,6 @@ useHead({
               ></div>
             </div>
 
-            
             <div
               v-if="showAllIcons || index === 0"
               class="absolute z-40 -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2"
@@ -1027,7 +1026,6 @@ useHead({
               </div>
             </div>
 
-            
             <div
               v-if="clickedMarkers[index]"
               :class="[
@@ -1040,7 +1038,6 @@ useHead({
           </div>
         </div>
 
-        
         <div
           class="max-w-2xl px-8 py-6 mt-10 text-white shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 rounded-2xl"
         >
@@ -1060,30 +1057,49 @@ useHead({
         </div>
       </div>
     </section>
-    <section id="jurusan" class="flex flex-col items-center gap-8 py-20 h-fit">
-      <div class="inline-block">
+    <Motion
+      id="jurusan"
+      class="flex flex-col items-center gap-8 py-20 h-fit"
+      :initial="{ opacity: 0, y: 50 }"
+      :animate="{ opacity: 1, y: 0 }"
+      :transition="{ duration: 0.8 }"
+    >
+      <Motion
+        class="inline-block"
+        :initial="{ opacity: 0, scale: 0.8 }"
+        :animate="{ opacity: 1, scale: 1 }"
+        :transition="{ duration: 0.6, delay: 0.2 }"
+      >
         <span
           class="px-8 py-3 text-xl font-bold tracking-widest uppercase rounded-full md:text-2xl"
           :style="`background: #1d4ed8; color: white`"
         >
           Jurusan
         </span>
-      </div>
+      </Motion>
       <div class="container flex items-center justify-center mx-auto">
         <MajorCarousel />
       </div>
-    </section>
+    </Motion>
 
-    <section id="berita" class="h-min-screen">
+    <Motion
+      id="berita"
+      class="h-min-screen"
+      :initial="{ opacity: 0, y: 50 }"
+      :animate="{ opacity: 1, y: 0 }"
+      :transition="{ duration: 0.8 }"
+    >
       <div class="container flex flex-col items-center gap-8 mx-auto">
-        <span
+        <Motion
           class="px-8 py-3 text-xl font-bold tracking-widest text-center uppercase rounded-full md:text-2xl"
           style="background: #eff6ff; color: #1d4ed8"
+          :initial="{ opacity: 0, scale: 0.8 }"
+          :animate="{ opacity: 1, scale: 1 }"
+          :transition="{ duration: 0.6, delay: 0.2 }"
         >
           Informasi & Berita
-        </span>
+        </Motion>
 
-        
         <div class="flex flex-wrap justify-center gap-3">
           <button
             v-for="category in newsCategories"
@@ -1100,7 +1116,6 @@ useHead({
           </button>
         </div>
 
-        
         <div v-if="isLoadingNews" class="flex items-center justify-center py-20">
           <div class="flex flex-col items-center gap-3">
             <div class="w-12 h-12 border-b-2 border-blue-600 rounded-full animate-spin"></div>
@@ -1108,7 +1123,6 @@ useHead({
           </div>
         </div>
 
-        
         <div
           v-else-if="newsData.length > 0"
           class="grid w-full grid-cols-1 gap-6 px-4 mt-5 sm:grid-cols-2 lg:grid-cols-4 place-items-stretch"
@@ -1134,13 +1148,11 @@ useHead({
           </NuxtLink>
         </div>
 
-        
         <div v-else class="flex flex-col items-center justify-center gap-4 py-20">
           <Icon name="lucide:newspaper" size="64" class="text-gray-400" />
           <p class="text-lg text-gray-600">Tidak ada berita untuk kategori ini</p>
         </div>
 
-        
         <div class="mt-8">
           <NuxtLink
             to="/berita"
@@ -1151,12 +1163,11 @@ useHead({
           </NuxtLink>
         </div>
       </div>
-    </section>
+    </Motion>
     <section id="faq">
       <FAQSection />
     </section>
 
-    
     <button
       v-show="showBackToTop"
       @click="scrollToTop"
