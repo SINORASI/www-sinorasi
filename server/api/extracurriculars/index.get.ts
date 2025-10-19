@@ -2,15 +2,11 @@ import type { Extracurricular } from "~/models/Extracurricular";
 
 export default defineEventHandler(
   async (event): Promise<{ data: Extracurricular[]; total: number }> => {
-    
-    
-
     const query = getQuery(event);
     const limit = parseInt(query.limit as string) || 50;
     const offset = parseInt(query.offset as string) || 0;
     const category = query.category as string;
 
-    
     const allExtracurriculars: Extracurricular[] = [
       {
         id: "1",
@@ -581,7 +577,6 @@ export default defineEventHandler(
       },
     ];
 
-    
     let filtered = allExtracurriculars;
     if (category && category !== "Semua") {
       filtered = allExtracurriculars.filter((e) => e.category === category);

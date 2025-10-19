@@ -329,7 +329,6 @@ const organizationsData = computed(() => {
   return response?.data || [];
 });
 
-
 const { data: extracurricularsResponse } = await useFetch("/api/extracurriculars", {
   query: { limit: 50 },
 });
