@@ -1,23 +1,26 @@
-<template>
+  <template>
   <Motion
+    v-if="isOpen"
     :initial="{ opacity: 0 }"
-    :animate="isOpen ? { opacity: 1 } : { opacity: 0 }"
+    :animate="{ opacity: 1 }"
     :transition="{ duration: 0.3, ease: 'easeInOut' }"
   >
-    <div class="fixed inset-0 z-[9000] flex">
+    <div class="fixed inset-0 z-[10000] flex">
       <Motion
         :initial="{ opacity: 0 }"
-        :animate="isOpen ? { opacity: 0.5 } : { opacity: 0 }"
+        :animate="{ opacity: 0.5 }"
+        :exit="{ opacity: 0 }"
         :transition="{ duration: 0.3, ease: 'easeInOut' }"
-        class="fixed inset-0 bg-black/50 backdrop-blur-sm"
+        class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[10000]"
         @click="$emit('close')"
       ></Motion>
 
       <Motion
         :initial="{ x: '100%' }"
-        :animate="isOpen ? { x: '0%' } : { x: '100%' }"
+        :animate="{ x: '0%' }"
+        :exit="{ x: '100%', opacity: 0 }"
         :transition="{ duration: 0.3, ease: 'easeInOut' }"
-        class="relative flex flex-col w-full h-full bg-white shadow-2xl sm:ml-auto sm:w-96"
+        class="relative flex flex-col w-full h-full bg-white shadow-2xl sm:ml-auto sm:w-96 z-[10001]"
       >
         <div class="flex items-center justify-between flex-shrink-0 gap-3 p-4 border-b border-gray-200">
           <div class="flex-1 min-w-0">
@@ -184,7 +187,13 @@
                 />
               </div>
             </h3>
-            <div v-if="(openSections[(item as Record<string, unknown>).title as string] ?? false) || searchQuery.trim()">
+            <Motion
+              v-if="(openSections[(item as Record<string, unknown>).title as string] ?? false) || searchQuery.trim()"
+              :initial="{ opacity: 0, height: 0 }"
+              :animate="{ opacity: 1, height: 'auto' }"
+              :exit="{ opacity: 0, height: 0 }"
+              :transition="{ duration: 0.3, ease: 'easeInOut' }"
+            >
               <div
                 v-for="(sub, subIndex) in (item as Record<string, unknown>).submenu"
                 :key="subIndex"
@@ -272,7 +281,7 @@
                   </div>
                 </NuxtLink>
               </div>
-            </div>
+            </Motion>
           </div>
         </div>
       </Motion>
@@ -301,6 +310,7 @@ import type { MajorName } from "~/models/MajorName";
 import type { News } from "~/models/News";
 import type { Organization } from "~/models/Organization";
 import { majorColorSchemes } from "~/utils/majorColors";
+import indexGet from "~~/server/api/achievements/index.get";
 
 const { locales, setLocale } = useI18n();
 const currentLanguage = computed(() => {

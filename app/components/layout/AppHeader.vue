@@ -14,16 +14,18 @@ const scrollToSection = (id: string) => {
 };
 
 const populateScrollItems = async () => {
+  if (route.path !== "/") return;
+
   await nextTick();
   scrollItems.value = [];
 
-  await new Promise((resolve) => setTimeout(resolve, 100));
+  const maxRetries = 5;
+  const baseDelay = 100;
 
-  if (route.path.startsWith("/jurusan/")) {
-    return;
-  }
+  for (let attempt = 0; attempt < maxRetries; attempt++) {
+    const delay = baseDelay * Math.pow(2, attempt);
+    await new Promise((resolve) => setTimeout(resolve, delay));
 
-  if (route.path === "/") {
     const homeSections = [
       { id: "profil-sekolah", label: "Profil" },
       { id: "sambutan", label: "Sambutan" },
@@ -35,32 +37,28 @@ const populateScrollItems = async () => {
       { id: "faq", label: "FAQ" },
     ];
 
-    homeSections.forEach((section) => {
-      if (document.getElementById(section.id)) {
-        scrollItems.value.push(section);
-      }
-    });
+    const populatedSections = homeSections.filter((section) =>
+      document.getElementById(section.id)
+    );
+
+    if (populatedSections.length > 0) {
+      scrollItems.value = populatedSections;
+      console.log(`Scroll items populated successfully on attempt ${attempt + 1}`);
+      return;
+    }
   }
+
+  console.error("Failed to populate scroll items after maximum retries");
 };
 
 onMounted(() => {
   populateScrollItems();
-
-  setTimeout(() => {
-    if (scrollItems.value.length === 0) {
-      populateScrollItems();
-    }
-  }, 500);
 });
 
 watch(
   () => route.path,
   () => {
-    nextTick(() => {
-      setTimeout(() => {
-        populateScrollItems();
-      }, 500);
-    });
+    populateScrollItems();
   },
 );
 
@@ -76,6 +74,7 @@ onMounted(() => {
     :initial="{ y: -100, opacity: 0 }"
     :animate="{ y: 0, opacity: 1 }"
     :transition="{ duration: 0.8, ease: 'easeOut' }"
+    class="z-[999] fixed top-0 left-0 right-0"
   >
     <header
       :class="['z-[999] border-b-1 fixed top-0 left-0 right-0 transition-all duration-500 ease-in-out', headerClass]"
