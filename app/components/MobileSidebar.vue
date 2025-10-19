@@ -293,6 +293,7 @@ import { ref, computed, watch } from "vue";
 import { majorColorSchemes } from "~/utils/majorColors";
 import type { MajorName } from "~/models/MajorName";
 import type { News } from "~/models/News";
+import type { Extracurricular } from "~/models/Extracurricular";
 
 const { locales, setLocale } = useI18n();
 const currentLanguage = computed(() => {
@@ -329,6 +330,32 @@ const { data: organizationsResponse } = await useFetch("/api/organizations", {
 const organizationsData = computed(() => {
   const response = organizationsResponse.value as { data?: any[]; total?: number } | null;
   return response?.data || [];
+});
+
+// Fetch extracurricular data from API
+const { data: extracurricularsResponse } = await useFetch("/api/extracurriculars", {
+  query: { limit: 50 },
+});
+
+const extracurricularsData = computed(() => {
+  const response = extracurricularsResponse.value as { data?: Extracurricular[]; total?: number } | null;
+  return response?.data || [];
+});
+
+// Compute top 5 extracurriculars by achievement count
+const topExtracurriculars = computed(() => {
+  return extracurricularsData.value
+    .sort((a, b) => (b.achievementCount || 0) - (a.achievementCount || 0))
+    .slice(0, 5)
+    .map((extra) => ({
+      title: extra.name,
+      desc: extra.description,
+      icon: extra.icon || "lucide:trophy",
+      to: `/ekstrakurikuler/${extra.slug}`,
+      external: false,
+      tags: ["ekstrakurikuler", extra.name.toLowerCase(), ...extra.name.toLowerCase().split(" ")],
+      highlighted: true,
+    }));
 });
 
 // Get session data - temporarily disabled
@@ -651,22 +678,25 @@ const menuItems = [
       },
       ...organizationsData.value
         .filter((org: any) => !['futsal-club', 'english-club', 'paskibra'].includes(org.slug))
-        .map((org: any) => ({
-          title: org.name,
-          desc: org.description,
-          icon: "lucide:users-round",
-          to: `/organisasi/${org.slug}`,
-          external: false,
-          tags: [
-            "organisasi",
-            org.name.toLowerCase(),
-            ...org.name.toLowerCase().split(" "),
-            ...(org.description
-              ?.toLowerCase()
-              .split(" ")
-              .filter((word: string) => word.length > 3) || []),
-          ],
-        })),
+        .map((org: any) => {
+          const description = org.shortDescription || org.description;
+          return {
+            title: org.name,
+            desc: description,
+            icon: "lucide:users-round",
+            to: `/organisasi/${org.slug}`,
+            external: false,
+            tags: [
+              "organisasi",
+              org.name.toLowerCase(),
+              ...org.name.toLowerCase().split(" "),
+              ...(description
+                ?.toLowerCase()
+                .split(" ")
+                .filter((word: string) => word.length > 3) || []),
+            ],
+          };
+        }),
     ],
   },
   {
@@ -680,6 +710,7 @@ const menuItems = [
         external: false,
         tags: ["ekstrakurikuler", "extracurricular", "extra", "semua", "daftar"],
       },
+      ...topExtracurriculars.value,
       {
         title: "Voli",
         desc: "Ekstrakurikuler Bola Voli",

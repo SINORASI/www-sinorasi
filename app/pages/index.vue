@@ -124,9 +124,11 @@ const toggleMarker = (index: number) => {
 
 // Achievement carousel data - filtered from news data
 const achievements = computed(() => {
-  const achievementTags = ["prestasi", "juara", "emas", "perak", "perunggu", "lks", "lomba"];
   const filtered = newsData.value
-    .filter((news) => news.tags.some((tag) => achievementTags.includes(tag.toLowerCase())))
+    .filter((news) => {
+      const content = news.content ? news.content.toLowerCase() : "";
+      return content.includes("juara") || content.includes("prestasi");
+    })
     .slice(0, 5)
     .map((news) => ({
       image: news.thumbnail || "/images/placeholder.jpg",
@@ -324,6 +326,78 @@ useHead({
       </div>
     </section>
 
+    <!-- Achievement Carousel Section -->
+    <section id="prestasi" class="bg-gradient-to-b from-white via-blue-50 to-white">
+      <div class="container flex flex-col items-center gap-8 mx-auto">
+        <!-- Achievement Carousel -->
+        <div
+          class="relative flex flex-col w-full max-w-5xl gap-6 p-8 mx-auto bg-white border-2 border-blue-100 shadow-xl rounded-2xl"
+        >
+          <div class="overflow-hidden">
+            <div
+              class="flex transition-transform duration-500 ease-in-out"
+              :style="{ transform: `translateX(-${currentAchievement * 100}%)` }"
+            >
+              <div v-for="(achievement, index) in achievements" :key="index" class="flex-shrink-0 w-full">
+                <NuxtLink v-if="achievement.slug" :to="`/berita/${achievement.slug}`" class="block cursor-pointer">
+                  <div class="flex flex-col items-center gap-8 md:flex-row md:h-80">
+                    <img
+                      :src="achievement.image"
+                      class="object-cover w-full rounded-lg shadow-md aspect-square md:w-1/3"
+                      alt="Achievement"
+                    />
+                    <div class="flex flex-col gap-4 text-center md:text-left md:w-2/3 md:justify-center">
+                      <h3 class="text-xl md:text-2xl font-bold text-gray-800">{{ achievement.title }}</h3>
+                      <p class="leading-relaxed text-gray-600 text-sm md:text-base line-clamp-5">
+                        {{ achievement.description }}
+                      </p>
+                    </div>
+                  </div>
+                </NuxtLink>
+                <div v-else class="flex flex-col items-center gap-8 md:flex-row md:h-80">
+                  <img
+                    :src="achievement.image"
+                    class="object-cover w-full rounded-lg shadow-md aspect-square md:w-1/3"
+                    alt="Achievement"
+                  />
+                  <div class="flex flex-col gap-4 text-center md:text-left md:w-2/3 md:pr-5 md:justify-center">
+                    <h3 class="text-xl md:text-2xl font-bold text-gray-800">{{ achievement.title }}</h3>
+                    <p class="leading-relaxed text-gray-600 text-sm md:text-base line-clamp-5">
+                      {{ achievement.description }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="border-t border-gray-200"></div>
+
+          <div class="flex items-center justify-between">
+            <div class="flex gap-4">
+              <button
+                @click="prevAchievement"
+                class="flex items-center justify-center p-3 transition bg-gray-100 border border-gray-200 rounded-full shadow-md cursor-pointer hover:bg-blue-600 hover:text-white hover:scale-110"
+              >
+                <Icon name="lucide:chevron-left" size="20" />
+              </button>
+              <button
+                @click="nextAchievement"
+                class="flex items-center justify-center p-3 transition bg-gray-100 border border-gray-200 rounded-full shadow-md cursor-pointer hover:bg-blue-600 hover:text-white hover:scale-110"
+              >
+                <Icon name="lucide:chevron-right" size="20" />
+              </button>
+            </div>
+            <div class="font-bold text-gray-700">
+              <span class="text-2xl text-blue-600">{{ String(currentAchievement + 1).padStart(2, "0") }}</span>
+              <span class="mx-1 text-gray-400">/</span>
+              <span class="text-lg">{{ String(achievements.length).padStart(2, "0") }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section id="profil-sekolah" class="py-20 h-min-screen bg-gradient-to-b from-white via-blue-50 to-white">
       <div class="container px-4 mx-auto md:px-10">
         <div class="flex flex-col gap-12 lg:flex-row lg:items-center">
@@ -476,10 +550,10 @@ useHead({
                   <div class="flex flex-col items-center gap-8 md:flex-row md:h-80">
                     <img
                       :src="achievement.image"
-                      class="object-cover w-full rounded-lg shadow-md h-48 md:w-1/3 md:h-full"
+                      class="object-cover w-full rounded-lg shadow-md aspect-square md:w-1/3"
                       alt="Achievement"
                     />
-                    <div class="flex flex-col gap-4 text-center md:text-left md:w-1/2 md:pr-5 md:justify-center">
+                    <div class="flex flex-col gap-4 text-center md:text-left md:w-2/3 md:pr-5 md:justify-center">
                       <h3 class="text-xl md:text-2xl font-bold text-gray-800">{{ achievement.title }}</h3>
                       <p class="leading-relaxed text-gray-600 text-sm md:text-base line-clamp-4">
                         {{ achievement.description }}
@@ -490,10 +564,10 @@ useHead({
                 <div v-else class="flex flex-col items-center gap-8 md:flex-row md:h-80">
                   <img
                     :src="achievement.image"
-                    class="object-cover w-full rounded-lg shadow-md h-48 md:w-1/3 md:h-full"
+                    class="object-cover w-full rounded-lg shadow-md aspect-square md:w-1/3"
                     alt="Achievement"
                   />
-                  <div class="flex flex-col gap-4 text-center md:text-left md:w-1/2 md:pr-5 md:justify-center">
+                  <div class="flex flex-col gap-4 text-center md:text-left md:w-2/3 md:pr-5 md:justify-center">
                     <h3 class="text-xl md:text-2xl font-bold text-gray-800">{{ achievement.title }}</h3>
                     <p class="leading-relaxed text-gray-600 text-sm md:text-base line-clamp-4">
                       {{ achievement.description }}

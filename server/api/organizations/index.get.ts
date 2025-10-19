@@ -12,6 +12,7 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
       name: 'OSIS',
       logo: '/images/organisasi/OSIS.webp',
       description: 'OSIS, atau Organisasi Siswa Intra Sekolah, adalah organisasi yang ada di tingkat sekolah menengah pertama (SMP sederajat) dan sekolah menengah atas (SMA/K sederajat) di Indonesia. Anggotanya adalah siswa-siswi di sekolah tersebut. OSIS bertugas sebagai wadah untuk kegiatan siswa, mewakili aspirasi mereka, dan membantu kelancaran kegiatan sekolah.',
+      shortDescription: 'Dewan siswa yang mewakili kepentingan siswa dan mengorganisir kegiatan sekolah.',
       logoDescriptions: {
         maknaSimbol: [
           'Buku Terbuka: Simbol menuntut ilmu pengetahuan dan teknologi.',
@@ -234,6 +235,7 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
       name: 'PMR',
       logo: '/images/organisasi/PMR.webp',
       description: 'PMR adalah singkatan dari Palang Merah Remaja, sebuah organisasi kepemudaan dan kemanusia. Organisasi ini bertujuan untuk menanamkan prinsip-prinsip Palang Merah, mengembangkan keterampilan sosial dan kemanusiaan, serta melatih anggota untuk menjadi relawan PMI di masa depan.',
+      shortDescription: 'Organisasi Palang Merah Remaja yang fokus pada layanan kemanusiaan dan kesehatan.',
       logoDescriptions: {
         maknaSimbol: [
           'Bunga Berkelopak Lima: Melambangkan lima prinsip dasar gerakan Palang Merah dan Bulan Sabit Merah Internasional: Kemanusiaan, Kesamaan, Kenetralan, Kemandirian, Kesukarelaan, Kesatuan, Kesemestaan.',
@@ -260,35 +262,35 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
       },
       leadership: {
         ketua: [{
-          id: '7',
+          id: '33',
           name: 'Rasyika Salsabila',
           image: '/images/profile-placeholder.png',
           position: 'Ketua Umum'
         }],
         wakil: [{
-          id: '8',
+          id: '34',
           name: 'Refli Maulana Izat',
           image: '/images/profile-placeholder.png',
           position: 'Wakil Ketua'
         }],
         sekretaris: [{
-          id: '9',
+          id: '35',
           name: 'Chesylia Anggie Pertiwi',
           image: '/images/profile-placeholder.png',
           position: 'Sekretaris 1'
         }, {
-          id: '10',
+          id: '36',
           name: 'Febby Anggun Cahyani',
           image: '/images/profile-placeholder.png',
           position: 'Sekretaris 2'
         }],
         bendahara: [{
-          id: '11',
+          id: '37',
           name: 'Salvia Okta Difianti',
           image: '/images/profile-placeholder.png',
           position: 'Bendahara 1'
         }, {
-          id: '12',
+          id: '38',
           name: 'Amelia Putri Irawati',
           image: '/images/profile-placeholder.png',
           position: 'Bendahara 2'
@@ -304,7 +306,7 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
           tasks: 'Pengawasan kedisiplinan, pembinaan siswa',
           programs: ['Patroli Sekolah', 'Pembinaan Karakter', 'Penegakan Tata Tertib'],
           members: [
-            { id: '13', name: 'Mutia Amanda Saraphova', image: '/images/profile-placeholder.png', position: 'Koordinator' }
+            { id: '39', name: 'Mutia Amanda Saraphova', image: '/images/profile-placeholder.png', position: 'Koordinator' }
           ]
         },
         {
@@ -316,8 +318,8 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
           tasks: 'Pengadaan perlengkapan, inventarisasi, distribusi',
           programs: ['Manajemen Inventaris', 'Pengadaan Alat', 'Distribusi Logistik'],
           members: [
-            { id: '14', name: 'Denis Widya', image: '/images/profile-placeholder.png', position: 'Koordinator' },
-            { id: '15', name: 'Chanda Zulia Lestari', image: '/images/profile-placeholder.png', position: 'Anggota' }
+            { id: '40', name: 'Denis Widya', image: '/images/profile-placeholder.png', position: 'Koordinator' },
+            { id: '41', name: 'Chanda Zulia Lestari', image: '/images/profile-placeholder.png', position: 'Anggota' }
           ]
         },
         {
@@ -329,7 +331,7 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
           tasks: 'Publikasi kegiatan, media sosial, hubungan masyarakat',
           programs: ['Media Sosial', 'Publikasi', 'Event Promotion'],
           members: [
-            { id: '16', name: 'Maulida Latifatul Ismi', image: '/images/profile-placeholder.png', position: 'Koordinator' }
+            { id: '42', name: 'Maulida Latifatul Ismi', image: '/images/profile-placeholder.png', position: 'Koordinator' }
           ]
         },
         {
@@ -341,7 +343,7 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
           tasks: 'Pertolongan pertama, penyuluhan kesehatan, donor darah',
           programs: ['UKS Sekolah', 'Donor Darah', 'Penyuluhan Kesehatan'],
           members: [
-            { id: '17', name: 'Bella Putri Rahmadhani', image: '/images/profile-placeholder.png', position: 'Koordinator' }
+            { id: '43', name: 'Bella Putri Rahmadhani', image: '/images/profile-placeholder.png', position: 'Koordinator' }
           ]
         },
         {
@@ -353,7 +355,7 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
           tasks: 'Pemeriksaan kesehatan, program kesehatan, emergency response',
           programs: ['Pemeriksaan Kesehatan', 'Program Kesehatan', 'Emergency Response'],
           members: [
-            { id: '18', name: 'Nur Khasanah Fathiniyah', image: '/images/profile-placeholder.png', position: 'Koordinator' }
+            { id: '44', name: 'Nur Khasanah Fathiniyah', image: '/images/profile-placeholder.png', position: 'Koordinator' }
           ]
         },
         {
@@ -365,7 +367,7 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
           tasks: 'Pengamanan area, patroli keamanan, pencegahan kejahatan',
           programs: ['Patroli Keamanan', 'Pengamanan Event', 'Pencegahan Kecelakaan'],
           members: [
-            { id: '19', name: 'M. Divan Rossy A.F', image: '/images/profile-placeholder.png', position: 'Koordinator' }
+            { id: '45', name: 'M. Divan Rossy A.F', image: '/images/profile-placeholder.png', position: 'Koordinator' }
           ]
         },
         {
@@ -377,7 +379,7 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
           tasks: 'Monitoring keamanan, koordinasi security, emergency handling',
           programs: ['Monitoring CCTV', 'Koordinasi Security', 'Emergency Handling'],
           members: [
-            { id: '20', name: 'M. Shaiku Malek', image: '/images/profile-placeholder.png', position: 'Koordinator' }
+            { id: '46', name: 'M. Shaiku Malek', image: '/images/profile-placeholder.png', position: 'Koordinator' }
           ]
         },
         {
@@ -389,8 +391,8 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
           tasks: 'Program pendidikan, dakwah islamiyah, pembinaan spiritual',
           programs: ['Pendidikan Islam', 'Dakwah', 'Pembinaan Rohani'],
           members: [
-            { id: '21', name: 'Syakila Putri Arifianti', image: '/images/profile-placeholder.png', position: 'Koordinator 1' },
-            { id: '22', name: 'Radhina Dzahabiyyah ya\'lafuna', image: '/images/profile-placeholder.png', position: 'Koordinator 2' }
+            { id: '47', name: 'Syakila Putri Arifianti', image: '/images/profile-placeholder.png', position: 'Koordinator 1' },
+            { id: '48', name: 'Radhina Dzahabiyyah ya\'lafuna', image: '/images/profile-placeholder.png', position: 'Koordinator 2' }
           ]
         }
       ],
@@ -406,16 +408,17 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
       name: 'LINORASI',
       logo: '/images/organisasi/LINORASI.webp',
       description: 'LINORASI merupakan salah satu wadah mengembangkan inovasi dan kreasi siswa SMK Negeri 2 Singosari, serta memberikan kesempatan untuk menjalin kerjasama dengan berbagai pihak.',
+      shortDescription: 'Organisasi literasi yang mempromosikan inovasi dan kreativitas di antara siswa.',
       logoDescriptions: {
         maknaSimbol: [
-          '- Tulisan "Literasi": Merupakan penegasan bahwa logo ini adalah milik literasi sekolah SMK Negeri 2 Singosari.',
-          '- Burung Terbang: Melambangkan kebebasan murid dalam berkarya dan menuangkan ide-ide positif.',
-          '- Buku: Menggambarkan jendela ilmu sebagai sumber pengetahuan untuk menemukan ide dan inovasi.',
-          '- Daun: Melambangkan kontribusi guru dalam memberikan pengetahuan kepada murid.'
+          'Tulisan "Literasi": Merupakan penegasan bahwa logo ini adalah milik literasi sekolah SMK Negeri 2 Singosari.',
+          'Burung Terbang: Melambangkan kebebasan murid dalam berkarya dan menuangkan ide-ide positif.',
+          'Buku: Menggambarkan jendela ilmu sebagai sumber pengetahuan untuk menemukan ide dan inovasi.',
+          'Daun: Melambangkan kontribusi guru dalam memberikan pengetahuan kepada murid.'
         ],
         maknaWarna: [
-          '- Oranye: Merupakan simbol percaya diri dan kemampuan bersosialisasi.',
-          '- Biru: Merupakan lambang profesionalisme, kekuatan, ketenangan, serta mampu merangsang kemampuan berkomunikasi dan berekspresi.'
+          'Oranye: Merupakan simbol percaya diri dan kemampuan bersosialisasi.',
+          'Biru: Merupakan lambang profesionalisme, kekuatan, ketenangan, serta mampu merangsang kemampuan berkomunikasi dan berekspresi.'
         ]
       },
       vision: 'Mewujudkan generasi yang cerdas, kreatif, ahli dalam menulis dan berkarya, serta mampu menghadapi persaingan global dan menciptakan murid yang berkarakter.',
@@ -433,24 +436,24 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
       },
       leadership: {
         ketua: [{
-          id: '9',
+          id: '49',
           name: 'Akhyar Bima Arizkillah',
           image: '/images/profile-placeholder.png',
           position: 'Ketua'
         }],
         wakil: [{
-          id: '10',
+          id: '50',
           name: 'Alfin Vigo Ardiansya',
           image: '/images/profile-placeholder.png',
           position: 'Wakil Ketua'
         }],
         sekretaris: [{
-          id: '11',
+          id: '51',
           name: 'Cinta Monicha Aprilia',
           image: '/images/profile-placeholder.png',
           position: 'Sekretaris & Bendahara'
         }, {
-          id: '12',
+          id: '52',
           name: 'Sherina Najwa Novianti',
           image: '/images/profile-placeholder.png',
           position: 'Sekretaris & Bendahara'
@@ -467,8 +470,8 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
           tasks: 'Pengaturan jadwal piket, pengawasan kebersihan, pembinaan disiplin',
           programs: ['Sistem Piket Harian', 'Pembinaan Kedisiplinan', 'Program Kebersihan'],
           members: [
-            { id: '13', name: 'Fitriana Mozarelyn Hakim', image: '/images/profile-placeholder.png', position: 'Koordinator' },
-            { id: '14', name: 'Alika Maulidya Rahmawati', image: '/images/profile-placeholder.png', position: 'Koordinator' }
+            { id: '53', name: 'Fitriana Mozarelyn Hakim', image: '/images/profile-placeholder.png', position: 'Koordinator' },
+            { id: '54', name: 'Alika Maulidya Rahmawati', image: '/images/profile-placeholder.png', position: 'Koordinator' }
           ]
         },
         {
@@ -480,9 +483,9 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
           tasks: 'Konten creation, social media management, digital marketing',
           programs: ['Content Creation', 'Social Media Campaign', 'Digital Storytelling'],
           members: [
-            { id: '15', name: 'Zahra Aulia Ramadhani', image: '/images/profile-placeholder.png', position: 'Koordinator' },
-            { id: '16', name: 'Nur Khasanah Fathiniyah', image: '/images/profile-placeholder.png', position: 'Anggota' },
-            { id: '17', name: 'Aliffiansyah Fitra Fahrezi', image: '/images/profile-placeholder.png', position: 'Anggota' }
+            { id: '55', name: 'Zahra Aulia Ramadhani', image: '/images/profile-placeholder.png', position: 'Koordinator' },
+            { id: '56', name: 'Nur Khasanah Fathiniyah', image: '/images/profile-placeholder.png', position: 'Anggota' },
+            { id: '57', name: 'Aliffiansyah Fitra Fahrezi', image: '/images/profile-placeholder.png', position: 'Anggota' }
           ]
         },
         {
@@ -494,8 +497,8 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
           tasks: 'Fotografi, videografi, editing, arsip digital',
           programs: ['Event Documentation', 'Photo Editing', 'Video Production'],
           members: [
-            { id: '18', name: 'Desy Indah Mutiara', image: '/images/profile-placeholder.png', position: 'Koordinator' },
-            { id: '19', name: 'Muhammad Alexandra Femilianto', image: '/images/profile-placeholder.png', position: 'Anggota' }
+            { id: '58', name: 'Desy Indah Mutiara', image: '/images/profile-placeholder.png', position: 'Koordinator' },
+            { id: '59', name: 'Muhammad Alexandra Femilianto', image: '/images/profile-placeholder.png', position: 'Anggota' }
           ]
         },
         {
@@ -507,10 +510,10 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
           tasks: 'Pembuatan mading, artikel, desain grafis, publikasi',
           programs: ['Mading Sekolah', 'Lomba Menulis', 'Workshop Jurnalistik'],
           members: [
-            { id: '20', name: 'Emil Dio Ramadani', image: '/images/profile-placeholder.png', position: 'Koordinator' },
-            { id: '21', name: 'Aditya Genta Fahrezi', image: '/images/profile-placeholder.png', position: 'Anggota' },
-            { id: '22', name: 'Jose Manuel Kartika', image: '/images/profile-placeholder.png', position: 'Anggota' },
-            { id: '23', name: 'Deva Dirgantara Cahaya Loviananda', image: '/images/profile-placeholder.png', position: 'Anggota' }
+            { id: '60', name: 'Emil Dio Ramadani', image: '/images/profile-placeholder.png', position: 'Koordinator' },
+            { id: '61', name: 'Aditya Genta Fahrezi', image: '/images/profile-placeholder.png', position: 'Anggota' },
+            { id: '62', name: 'Jose Manuel Kartika', image: '/images/profile-placeholder.png', position: 'Anggota' },
+            { id: '63', name: 'Deva Dirgantara Cahaya Loviananda', image: '/images/profile-placeholder.png', position: 'Anggota' }
           ]
         }
       ],
@@ -528,22 +531,23 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
       name: 'BDI',
       logo: '/images/organisasi/BDI.webp',
       description: 'BDI (Badan Dakwah Islam) adalah organisasi keislaman di lingkungan sekolah yang bergerak dalam kegiatan dakwah, pembinaan keagamaan, dan pengembangan karakter Islami bagi siswa-siswi.',
+      shortDescription: 'Organisasi Dakwah Islam yang membina nilai-nilai agama dan pengembangan karakter.',
       logoDescriptions: {
         maknaSimbol: [
-          '- Segitiga: Melambangkan semangat dalam meneladani sunnah Rasulullah SAW.',
-          '- Lingkaran: Mewakili kekompakan dan rasa saling memahami antar anggota BDI.',
-          '- Bintang Besar: Melambangkan Nabi Muhammad SAW sebagai suri teladan utama.',
-          '- Empat Bintang di Samping: Melambangkan Khulafaur Rasyidin.',
-          '- Empat Bintang di Bawah: Melambangkan empat imam besar mazhab: Imam Hanafi, Imam Maliki, Imam Syafi\'i, dan Imam Hambali.',
-          '- Buku dan Pena: Simbol bahwa anggota BDI bersungguh-sungguh dalam menuntut ilmu agama maupun umum.',
-          '- Garuda: Mengandung makna bahwa BDI menjunjung tinggi nilai-nilai Pancasila dan cinta tanah air.',
-          '- Garis Hijau Melengkung: Menggambarkan kesiapan BDI dalam menyelenggarakan dan mengembangkan kegiatan keislaman di sekolah.',
-          '- Teks "ROIS AAM": Menunjukkan peran anggota BDI sebagai pemimpin dan teladan dalam hal keagamaan.'
+          'Segitiga: Melambangkan semangat dalam meneladani sunnah Rasulullah SAW.',
+          'Lingkaran: Mewakili kekompakan dan rasa saling memahami antar anggota BDI.',
+          'Bintang Besar: Melambangkan Nabi Muhammad SAW sebagai suri teladan utama.',
+          'Empat Bintang di Samping: Melambangkan Khulafaur Rasyidin.',
+          'Empat Bintang di Bawah: Melambangkan empat imam besar mazhab: Imam Hanafi, Imam Maliki, Imam Syafi\'i, dan Imam Hambali.',
+          'Buku dan Pena: Simbol bahwa anggota BDI bersungguh-sungguh dalam menuntut ilmu agama maupun umum.',
+          'Garuda: Mengandung makna bahwa BDI menjunjung tinggi nilai-nilai Pancasila dan cinta tanah air.',
+          'Garis Hijau Melengkung: Menggambarkan kesiapan BDI dalam menyelenggarakan dan mengembangkan kegiatan keislaman di sekolah.',
+          'Teks "ROIS AAM": Menunjukkan peran anggota BDI sebagai pemimpin dan teladan dalam hal keagamaan.'
         ],
         maknaWarna: [
-          '- Hijau: Melambangkan kejayaan dan kesuburan.',
-          '- Putih: Melambangkan kesucian, ketulusan, dan niat yang bersih.',
-          '- Kuning: Melambangkan keceriaan, semangat, dan optimisme.'
+          'Hijau: Melambangkan kejayaan dan kesuburan.',
+          'Putih: Melambangkan kesucian, ketulusan, dan niat yang bersih.',
+          'Kuning: Melambangkan keceriaan, semangat, dan optimisme.'
         ]
       },
       vision: 'Menjadi organisasi pelajar yang membimbing siswa-siswi menuju pribadi yang beriman, berakhlak mulia, dan cinta Islam, melalui dakwah yang membumi, menyenangkan, dan membangun.',
@@ -561,35 +565,35 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
       },
       leadership: {
         ketua: [{
-          id: '11',
+          id: '64',
           name: 'Rachma Rizkia Herry Putri',
           image: '/images/profile-placeholder.png',
           position: 'Ketua'
         }],
         wakil: [{
-          id: '12',
+          id: '65',
           name: 'Achmad Achzam Beinargi',
           image: '/images/profile-placeholder.png',
           position: 'Wakil Ketua'
         }],
         sekretaris: [{
-          id: '13',
+          id: '66',
           name: 'Iqbal Yanuaris',
           image: '/images/profile-placeholder.png',
           position: 'Sekretaris 1'
         }, {
-          id: '14',
+          id: '67',
           name: 'Ananta Putra Dharmawan',
           image: '/images/profile-placeholder.png',
           position: 'Sekretaris 2'
         }],
         bendahara: [{
-          id: '15',
+          id: '68',
           name: 'Yayan Putra Wahyudi',
           image: '/images/profile-placeholder.png',
           position: 'Bendahara 1'
         }, {
-          id: '16',
+          id: '69',
           name: 'Luluk Fika ulmillah Handoko',
           image: '/images/profile-placeholder.png',
           position: 'Bendahara 2'
@@ -605,10 +609,10 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
           tasks: 'Pengorganisasian tahlil, istighosah, pembinaan spiritual',
           programs: ['Tahlil Rutin', 'Istighosah', 'Pembinaan Rohani'],
           members: [
-            { id: '17', name: 'Muhammad Alvin Nur Roihan', image: '/images/profile-placeholder.png', position: 'Koordinator' },
-            { id: '21', name: 'Ananda Achmad Furqon', image: '/images/profile-placeholder.png', position: 'Anggota' },
-            { id: '22', name: 'Muhammad Saikhu Malek', image: '/images/profile-placeholder.png', position: 'Anggota' },
-            { id: '23', name: 'Sherina Najwa Novianti', image: '/images/profile-placeholder.png', position: 'Anggota' }
+            { id: '70', name: 'Muhammad Alvin Nur Roihan', image: '/images/profile-placeholder.png', position: 'Koordinator' },
+            { id: '71', name: 'Ananda Achmad Furqon', image: '/images/profile-placeholder.png', position: 'Anggota' },
+            { id: '72', name: 'Muhammad Saikhu Malek', image: '/images/profile-placeholder.png', position: 'Anggota' },
+            { id: '73', name: 'Sherina Najwa Novianti', image: '/images/profile-placeholder.png', position: 'Anggota' }
           ]
         },
         {
@@ -620,10 +624,10 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
           tasks: 'Pengorganisasian amal jum\'at, kegiatan sosial, bakti sosial',
           programs: ['Amal Jum\'at', 'Bakti Sosial', 'Kegiatan Sosial'],
           members: [
-            { id: '18', name: 'Muhammad Arif Muzaky Hilmi', image: '/images/profile-placeholder.png', position: 'Koordinator' },
-            { id: '24', name: 'Densel Starina', image: '/images/profile-placeholder.png', position: 'Anggota' },
-            { id: '25', name: 'Ayu Wulandari', image: '/images/profile-placeholder.png', position: 'Anggota' },
-            { id: '26', name: 'Irfan Hamid', image: '/images/profile-placeholder.png', position: 'Anggota' }
+            { id: '74', name: 'Muhammad Arif Muzaky Hilmi', image: '/images/profile-placeholder.png', position: 'Koordinator' },
+            { id: '75', name: 'Densel Starina', image: '/images/profile-placeholder.png', position: 'Anggota' },
+            { id: '76', name: 'Ayu Wulandari', image: '/images/profile-placeholder.png', position: 'Anggota' },
+            { id: '77', name: 'Irfan Hamid', image: '/images/profile-placeholder.png', position: 'Anggota' }
           ]
         },
         {
@@ -635,10 +639,10 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
           tasks: 'Pengorganisasian tadarus pagi, pembinaan membaca Al-Qur\'an',
           programs: ['Tadarus Pagi', 'Pembinaan Al-Qur\'an', 'Kegiatan Rohani'],
           members: [
-            { id: '19', name: 'Azizi Haikal An Nur', image: '/images/profile-placeholder.png', position: 'Koordinator' },
-            { id: '27', name: 'M Deva Prasetyo', image: '/images/profile-placeholder.png', position: 'Anggota' },
-            { id: '28', name: 'Moch Alief Zainudin Nasrullah', image: '/images/profile-placeholder.png', position: 'Anggota' },
-            { id: '29', name: 'Moh Agung Asraf Annabil', image: '/images/profile-placeholder.png', position: 'Anggota' }
+            { id: '78', name: 'Azizi Haikal An Nur', image: '/images/profile-placeholder.png', position: 'Koordinator' },
+            { id: '79', name: 'M Deva Prasetyo', image: '/images/profile-placeholder.png', position: 'Anggota' },
+            { id: '80', name: 'Moch Alief Zainudin Nasrullah', image: '/images/profile-placeholder.png', position: 'Anggota' },
+            { id: '81', name: 'Moh Agung Asraf Annabil', image: '/images/profile-placeholder.png', position: 'Anggota' }
           ]
         },
         {
@@ -650,10 +654,10 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
           tasks: 'Pengorganisasian banjari, latihan seni islami, pertunjukan',
           programs: ['Banjari', 'Seni Islami', 'Pertunjukan Seni'],
           members: [
-            { id: '20', name: 'M. Nizar Fadillah', image: '/images/profile-placeholder.png', position: 'Koordinator' },
-            { id: '30', name: 'Saidatul Aliyah', image: '/images/profile-placeholder.png', position: 'Anggota' },
-            { id: '31', name: 'M. Chamim Bayhaqi', image: '/images/profile-placeholder.png', position: 'Anggota' },
-            { id: '32', name: 'Denis Arya Chandra', image: '/images/profile-placeholder.png', position: 'Anggota' }
+            { id: '82', name: 'M. Nizar Fadillah', image: '/images/profile-placeholder.png', position: 'Koordinator' },
+            { id: '83', name: 'Saidatul Aliyah', image: '/images/profile-placeholder.png', position: 'Anggota' },
+            { id: '84', name: 'M. Chamim Bayhaqi', image: '/images/profile-placeholder.png', position: 'Anggota' },
+            { id: '85', name: 'Denis Arya Chandra', image: '/images/profile-placeholder.png', position: 'Anggota' }
           ]
         }
       ],
@@ -669,21 +673,22 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
       name: 'AMBALAN',
       logo: '/images/organisasi/AMBALAN.webp',
       description: 'Ambalan Siliwangi–Srikandi (S4AC) adalah organisasi kepramukaan di SMKN 2 Singosari yang pertama kali diresmikan pada tanggal 2 November 2009. Ambalan ini menjadi wadah pengembangan diri bagi siswa berusia 16–20 tahun, khususnya Pramuka Penegak. Nama Siliwangi diambil untuk putra, melambangkan pribadi tegas, berwibawa, dan bijaksana, sementara nama Srikandi untuk putri mencerminkan sosok tangguh, gagah, dan tidak mudah menyerah, meski menghadapi berbagai tantangan.',
+      shortDescription: 'Organisasi pramuka yang mengembangkan keterampilan kepemimpinan dan survival melalui kegiatan pramuka.',
       logoDescriptions: {
         maknaSimbol: [
-          '- Bentuk Segi Lima: Menggambarkan Pancasila.',
-          '- Tulisan Siliwangi-Srikandi: Siliwangi bermakna kesiapan untuk menjadi pemimpin, sementara Srikandi bermakna kemampuan untuk mengeluarkan segala potensi demi kebaikan.',
-          '- Nomor 26177 – 26178: Merupakan nomor gugus depan.',
-          '- Padi dan Kapas: Melambangkan kemakmuran serta kebutuhan sandang dan pangan.',
-          '- Kujang: Senjata khas Sunda yang melambangkan kekuatan dan keberanian.',
-          '- Busur dan Anak Panah: Melambangkan bahwa anggota Pramuka memiliki tujuan mulia dalam setiap kegiatannya.',
-          '- Api: Memiliki makna semangat yang terus berkobar dan keyakinan yang tidak pernah padam.',
-          '- WOSM (World Organization of the Scout Movement): Merupakan lambang kepanduan sedunia.',
-          '- Tunas Kelapa: Bermakna bahwa anggota Pramuka dapat hidup di mana saja dan bermanfaat bagi masyarakat.'
+          'Bentuk Segi Lima: Menggambarkan Pancasila.',
+          'Tulisan Siliwangi-Srikandi: Siliwangi bermakna kesiapan untuk menjadi pemimpin, sementara Srikandi bermakna kemampuan untuk mengeluarkan segala potensi demi kebaikan.',
+          'Nomor 26177 – 26178: Merupakan nomor gugus depan.',
+          'Padi dan Kapas: Melambangkan kemakmuran serta kebutuhan sandang dan pangan.',
+          'Kujang: Senjata khas Sunda yang melambangkan kekuatan dan keberanian.',
+          'Busur dan Anak Panah: Melambangkan bahwa anggota Pramuka memiliki tujuan mulia dalam setiap kegiatannya.',
+          'Api: Memiliki makna semangat yang terus berkobar dan keyakinan yang tidak pernah padam.',
+          'WOSM (World Organization of the Scout Movement): Merupakan lambang kepanduan sedunia.',
+          'Tunas Kelapa: Bermakna bahwa anggota Pramuka dapat hidup di mana saja dan bermanfaat bagi masyarakat.'
         ],
         maknaWarna: [
-          '- Biru Tua: Terinspirasi dari laut, melambangkan ketangguhan dan kepercayaan.',
-          '- Biru Muda: Terinspirasi dari langit, melambangkan harapan yang setinggi langit.'
+          'Biru Tua: Terinspirasi dari laut, melambangkan ketangguhan dan kepercayaan.',
+          'Biru Muda: Terinspirasi dari langit, melambangkan harapan yang setinggi langit.'
         ]
       },
       vision: 'Memiliki kepribadian yang beriman, bertakwa, berakhlak mulia, berjiwa patriotik, taat hukum, disiplin, menjunjung tinggi nilai-nilai luhur bangsa, berkecakapan hidup, sehat jasmani, dan rohani serta memiliki rasa toleransi. Menjadi warga negara yang berjiwa Pancasila, setia dan patuh kepada Negara Kesatuan Republik Indonesia serta menjadi masyarakat yang baik dan berguna.',
@@ -711,19 +716,19 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
       },
       leadership: {
         ketua: [
-          { id: 'pr1', name: 'Muhammad Mufid Arhaburrizqi', image: '/images/profile-placeholder.png', position: 'Pradana' },
-          { id: 'pr2', name: 'Siti Aminah', image: '/images/profile-placeholder.png', position: 'Pradana' }
+          { id: '86', name: 'Muhammad Mufid Arhaburrizqi', image: '/images/profile-placeholder.png', position: 'Pradana' },
+          { id: '87', name: 'Siti Aminah', image: '/images/profile-placeholder.png', position: 'Pradana' }
         ],
         sekretaris: [
-          { id: 'kr1', name: 'Adhiesta Alifiani Nadhiswara', image: '/images/profile-placeholder.png', position: 'Kerani' },
-          { id: 'kr2', name: 'Reysa Darajatina Burhani', image: '/images/profile-placeholder.png', position: 'Kerani' }
+          { id: '88', name: 'Adhiesta Alifiani Nadhiswara', image: '/images/profile-placeholder.png', position: 'Kerani' },
+          { id: '89', name: 'Reysa Darajatina Burhani', image: '/images/profile-placeholder.png', position: 'Kerani' }
         ],
         bendahara: [
-          { id: 'ht1', name: 'Inggrid Devianne Maharani Putri', image: '/images/profile-placeholder.png', position: 'Hartaka' }
+          { id: '90', name: 'Inggrid Devianne Maharani Putri', image: '/images/profile-placeholder.png', position: 'Hartaka' }
         ],
         wakil: [
-          { id: 'pa1', name: 'Muhammad Wisnu Dewandaru', image: '/images/profile-placeholder.png', position: 'Pemangku Adat' },
-          { id: 'pa2', name: 'Yuyun Elistiowati', image: '/images/profile-placeholder.png', position: 'Pemangku Adat' }
+          { id: '91', name: 'Muhammad Wisnu Dewandaru', image: '/images/profile-placeholder.png', position: 'Pemangku Adat' },
+          { id: '92', name: 'Yuyun Elistiowati', image: '/images/profile-placeholder.png', position: 'Pemangku Adat' }
         ]
       },
       sections: [
@@ -742,9 +747,9 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
             'Kegiatan sosial'
           ],
           members: [
-            { id: 'gk1', name: 'Kent J Luffy', image: '/images/profile-placeholder.png', position: 'Ketua Sie' },
-            { id: 'gk2', name: 'Chalisa Cahaya Santika', image: '/images/profile-placeholder.png', position: 'Anggota' },
-            { id: 'gk3', name: 'M. Saikhu Malek', image: '/images/profile-placeholder.png', position: 'Anggota' }
+            { id: '93', name: 'Kent J Luffy', image: '/images/profile-placeholder.png', position: 'Ketua Sie' },
+            { id: '94', name: 'Chalisa Cahaya Santika', image: '/images/profile-placeholder.png', position: 'Anggota' },
+            { id: '95', name: 'M. Saikhu Malek', image: '/images/profile-placeholder.png', position: 'Anggota' }
           ]
         },
         {
@@ -756,9 +761,9 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
           tasks: 'Pelatihan teknik kepramukaan',
           programs: ['Pelatihan Teknik', 'Latihan Kepramukaan'],
           members: [
-            { id: 'tp1', name: 'Malik Fajar Al Amri', image: '/images/profile-placeholder.png', position: 'Ketua Sie' },
-            { id: 'tp2', name: 'Razzaq Zhahir Jaka Putra', image: '/images/profile-placeholder.png', position: 'Anggota' },
-            { id: 'tp3', name: 'Muhammad Alexandra Femilianto', image: '/images/profile-placeholder.png', position: 'Anggota' }
+            { id: '96', name: 'Malik Fajar Al Amri', image: '/images/profile-placeholder.png', position: 'Ketua Sie' },
+            { id: '97', name: 'Razzaq Zhahir Jaka Putra', image: '/images/profile-placeholder.png', position: 'Anggota' },
+            { id: '98', name: 'Muhammad Alexandra Femilianto', image: '/images/profile-placeholder.png', position: 'Anggota' }
           ]
         },
         {
@@ -770,8 +775,8 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
           tasks: 'Pengorganisasian kegiatan operasional',
           programs: ['Kegiatan Operasional', 'Event Pramuka'],
           members: [
-            { id: 'go1', name: 'Febby Anggun', image: '/images/profile-placeholder.png', position: 'Ketua Sie' },
-            { id: 'go2', name: 'Fika Rizty Amelia', image: '/images/profile-placeholder.png', position: 'Anggota' }
+            { id: '99', name: 'Febby Anggun', image: '/images/profile-placeholder.png', position: 'Ketua Sie' },
+            { id: '100', name: 'Fika Rizty Amelia', image: '/images/profile-placeholder.png', position: 'Anggota' }
           ]
         },
         {
@@ -783,9 +788,9 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
           tasks: 'Evaluasi program, pengembangan kegiatan',
           programs: ['Evaluasi Program', 'Pengembangan Kegiatan'],
           members: [
-            { id: 'eb1', name: 'Tiara Nafisah', image: '/images/profile-placeholder.png', position: 'Ketua Sie' },
-            { id: 'eb2', name: 'Miftachul Jannah', image: '/images/profile-placeholder.png', position: 'Anggota' },
-            { id: 'eb3', name: 'Lintang Dewi Nur Fadilla', image: '/images/profile-placeholder.png', position: 'Anggota' }
+            { id: '101', name: 'Tiara Nafisah', image: '/images/profile-placeholder.png', position: 'Ketua Sie' },
+            { id: '102', name: 'Miftachul Jannah', image: '/images/profile-placeholder.png', position: 'Anggota' },
+            { id: '103', name: 'Lintang Dewi Nur Fadilla', image: '/images/profile-placeholder.png', position: 'Anggota' }
           ]
         },
         {
@@ -797,9 +802,9 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
           tasks: 'Publikasi kegiatan, media sosial',
           programs: ['Media Sosial', 'Publikasi'],
           members: [
-            { id: 'hu1', name: 'Khoirotul Ilmiyah', image: '/images/profile-placeholder.png', position: 'Ketua Sie' },
-            { id: 'hu2', name: 'Raditya Javas Nararya', image: '/images/profile-placeholder.png', position: 'Anggota' },
-            { id: 'hu3', name: 'Radhina Dzahabiyyah Ya\'lafuna', image: '/images/profile-placeholder.png', position: 'Anggota' }
+            { id: '104', name: 'Khoirotul Ilmiyah', image: '/images/profile-placeholder.png', position: 'Ketua Sie' },
+            { id: '105', name: 'Raditya Javas Nararya', image: '/images/profile-placeholder.png', position: 'Anggota' },
+            { id: '106', name: 'Radhina Dzahabiyyah Ya\'lafuna', image: '/images/profile-placeholder.png', position: 'Anggota' }
           ]
         }
       ],
@@ -824,3 +829,4 @@ export default defineEventHandler(async (event): Promise<{ data: Organization[],
     total: allOrganizations.length
   };
 });
+

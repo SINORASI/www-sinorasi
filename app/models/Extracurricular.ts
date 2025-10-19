@@ -47,7 +47,6 @@ export interface Extracurricular {
   coach?: string;
   schedule?: string;
   location?: string;
-  fee?: string;
   fullDescription?: string;
 
   // Lists
