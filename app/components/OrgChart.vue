@@ -1165,25 +1165,6 @@ const connectingLines = computed(() => {
         </div>
       </div>
     </div>
-
-    
-    <div class="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm rounded-lg p-3 shadow-lg">
-      <h4 class="text-sm font-semibold text-gray-800 mb-2">Legenda</h4>
-      <div class="space-y-1 text-xs">
-        <div class="flex items-center gap-2">
-          <div class="w-3 h-3 bg-gradient-to-r from-purple-500 to-purple-700 rounded-full"></div>
-          <span>Kepala Sekolah</span>
-        </div>
-        <div class="flex items-center gap-2">
-          <div class="w-3 h-3 bg-gradient-to-r from-blue-500 to-blue-700 rounded-full"></div>
-          <span>Wakil Kepala Sekolah</span>
-        </div>
-        <div class="flex items-center gap-2">
-          <div class="w-3 h-3 bg-gradient-to-r from-green-500 to-green-700 rounded-full"></div>
-          <span>Staff</span>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 

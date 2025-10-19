@@ -1,6 +1,9 @@
 <script setup lang="ts">
 definePageMeta({ layout: false });
 
+import AppHeader from "~/components/layout/AppHeader.vue";
+import AppFooter from "~/components/layout/AppFooter.vue";
+
 const selectedFilter = ref("ALL");
 const showDialog = ref(false);
 const selectedPartner = ref<any>(null);
@@ -47,13 +50,13 @@ const closeDialog = () => {
 };
 
 const nextImage = () => {
-  if (selectedPartner.value?.images) {
+  if (selectedPartner.value && selectedPartner.value.images) {
     currentImageIndex.value = (currentImageIndex.value + 1) % selectedPartner.value.images.length;
   }
 };
 
 const prevImage = () => {
-  if (selectedPartner.value?.images) {
+  if (selectedPartner.value && selectedPartner.value.images) {
     currentImageIndex.value =
       currentImageIndex.value === 0
         ? selectedPartner.value.images.length - 1
@@ -100,13 +103,11 @@ const filteredPartners = computed(() => {
     <div class="min-h-screen py-24 bg-gradient-to-br from-gray-50 via-white to-gray-100">
     <div class="container px-4 mx-auto sm:px-6">
       <div class="max-w-7xl mx-auto bg-white shadow-2xl shadow-gray-300/20 rounded-3xl overflow-hidden border border-gray-200 animate-fade-in">
-        
         <div class="relative px-8 py-20 text-center bg-gradient-to-r from-slate-800 via-slate-700 to-slate-900 overflow-hidden">
           <div class="absolute inset-0 bg-black/20"></div>
           <div class="absolute inset-0 opacity-10">
             <div class="absolute inset-0 bg-gradient-to-br from-orange-400/20 to-transparent"></div>
           </div>
-          
           <div class="absolute top-0 left-0 w-32 h-32 bg-orange-400/10 rounded-full -translate-x-16 -translate-y-16"></div>
           <div class="absolute bottom-0 right-0 w-48 h-48 bg-orange-400/10 rounded-full translate-x-24 translate-y-24"></div>
           <div class="relative z-10">
@@ -138,7 +139,6 @@ const filteredPartners = computed(() => {
           </div>
         </div>
 
-        
         <div class="px-8 py-12 bg-gradient-to-r from-slate-50 to-gray-100 border-b border-gray-200">
           <div class="grid gap-8 md:grid-cols-3">
             <div class="text-center">
@@ -165,25 +165,50 @@ const filteredPartners = computed(() => {
           </div>
         </div>
 
-        
         <div class="px-8 py-16 bg-gradient-to-b from-white to-slate-50">
           <div class="mb-8 text-center">
-            <h2 class="mb-4 text-2xl font-bold text-gray-800">Partner Slider</h2>
-            <p class="text-gray-600">Our industry partners</p>
+            <h2 class="mb-4 text-2xl font-bold text-gray-800">Daftar Mitra Industri</h2>
+            <p class="text-gray-600">Klik pada kartu perusahaan untuk melihat detail kemitraan</p>
           </div>
-          <MajorPartnerSlider :major="'tkj'" />
+          <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div
+              v-for="(partner, index) in filteredPartners"
+              :key="partner.id"
+              @click="openDialog(partner)"
+              class="group relative p-6 transition-all duration-500 bg-white border border-gray-200 shadow-lg rounded-2xl hover:shadow-2xl hover:shadow-slate-500/20 hover:-translate-y-1 hover:border-orange-300 cursor-pointer overflow-hidden animate-slide-in-up"
+              :style="{ animationDelay: `${index * 0.1}s` }"
+            >
+              <div class="absolute inset-0 bg-gradient-to-br from-orange-50/50 to-slate-50/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+              <div class="relative mb-4 overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl aspect-video group-hover:shadow-md transition-all duration-500 border border-gray-100">
+                <img :src="partner.logo" :alt="partner.name" class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105" />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div class="absolute top-3 right-3 px-2 py-1 bg-slate-700/90 backdrop-blur-sm rounded-lg text-xs font-semibold text-white">
+                  {{ partner.major }}
+                </div>
+              </div>
+
+              <div class="relative z-10">
+                <h3 class="mb-2 text-lg font-bold text-gray-900 group-hover:text-slate-700 transition-colors duration-300 line-clamp-2">
+                  {{ partner.name }}
+                </h3>
+                <p class="text-sm leading-relaxed text-gray-600 group-hover:text-gray-700 transition-colors duration-300 line-clamp-3">
+                  {{ partner.description }}
+                </p>
+                <div class="mt-4 flex items-center justify-center text-orange-600 font-semibold text-sm opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 bg-orange-50/50 rounded-lg py-2">
+                  <Icon name="lucide:eye" size="16" class="mr-2" />
+                  <span>Lihat Detail Kemitraan</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-
-        
-        
-
       </div>
     </div>
      </div>
      <AppFooter bgColor="linear-gradient(135deg, #fb923c, #f97316)" />
    </div>
 
-  
   <Teleport to="body">
     <Transition
       enter-active-class="transition-all duration-500 ease-out"
@@ -201,7 +226,6 @@ const filteredPartners = computed(() => {
         <div
           class="bg-white rounded-2xl w-full max-w-6xl max-h-[90vh] overflow-y-auto shadow-2xl shadow-slate-500/30 border border-gray-200"
         >
-          
           <button
             @click="closeDialog"
             class="sticky z-10 float-right p-3 text-gray-600 transition-all bg-white rounded-xl shadow-lg top-6 right-6 hover:text-gray-800 hover:shadow-xl hover:scale-110 border border-gray-200"
@@ -211,9 +235,7 @@ const filteredPartners = computed(() => {
 
           <div class="clear-both p-8 md:p-12">
             <div class="grid gap-8 md:grid-cols-2 md:gap-12">
-              
               <div class="flex flex-col">
-                
                 <div class="overflow-hidden bg-gradient-to-br from-gray-50 to-slate-100 border border-gray-200 shadow-xl shadow-slate-500/10 rounded-2xl">
                   <div class="relative aspect-square">
                     <div class="flex items-center justify-center w-full h-full p-8 bg-gradient-to-br from-white to-gray-50">
@@ -224,7 +246,6 @@ const filteredPartners = computed(() => {
                       />
                     </div>
 
-                    
                     <button
                       v-if="selectedPartner.images.length > 1"
                       @click="prevImage"
@@ -233,7 +254,6 @@ const filteredPartners = computed(() => {
                       <Icon name="lucide:chevron-left" size="24" />
                     </button>
 
-                    
                     <button
                       v-if="selectedPartner.images.length > 1"
                       @click="nextImage"
@@ -242,7 +262,6 @@ const filteredPartners = computed(() => {
                       <Icon name="lucide:chevron-right" size="24" />
                     </button>
 
-                    
                     <div
                       v-if="selectedPartner.images.length > 1"
                       class="absolute flex gap-3 -translate-x-1/2 bottom-6 left-1/2"
@@ -260,7 +279,6 @@ const filteredPartners = computed(() => {
                   </div>
                 </div>
 
-                
                 <div class="mt-6 grid grid-cols-2 gap-4">
                   <div class="text-center p-4 bg-slate-50 rounded-xl border border-slate-200">
                     <Icon name="lucide:users" size="24" class="mx-auto mb-2 text-slate-600" />
@@ -275,9 +293,7 @@ const filteredPartners = computed(() => {
                 </div>
               </div>
 
-              
               <div class="flex flex-col">
-                
                 <div class="mb-6">
                   <div class="inline-flex items-center gap-2 px-4 py-2 mb-4 bg-slate-100 rounded-full text-sm font-semibold text-slate-700">
                     <Icon name="lucide:building" size="16" />
@@ -288,7 +304,6 @@ const filteredPartners = computed(() => {
                   </h2>
                 </div>
 
-                
                 <div class="mb-6">
                   <h3 class="flex items-center mb-4 text-lg font-bold text-gray-800">
                     <Icon name="lucide:handshake" size="20" class="mr-2 text-orange-600" />
@@ -301,7 +316,6 @@ const filteredPartners = computed(() => {
                   </div>
                 </div>
 
-                
                 <div class="mb-8">
                   <h3 class="flex items-center mb-4 text-lg font-bold text-gray-800">
                     <Icon name="lucide:info" size="20" class="mr-2 text-slate-600" />
@@ -314,9 +328,7 @@ const filteredPartners = computed(() => {
                   </div>
                 </div>
 
-                
                 <div class="flex items-center justify-center gap-4 mt-auto">
-                  
                   <button
                     @click="closeDialog"
                     class="flex items-center gap-3 px-6 py-3 font-semibold text-gray-700 transition-all duration-300 bg-gray-100 rounded-xl hover:bg-gray-200 hover:scale-105 border border-gray-200"
@@ -325,7 +337,6 @@ const filteredPartners = computed(() => {
                     Kembali
                   </button>
 
-                  
                   <NuxtLink
                     to="/"
                     class="flex items-center gap-3 px-6 py-3 font-semibold text-white transition-all duration-300 bg-gradient-to-r from-slate-700 to-slate-800 rounded-xl hover:from-slate-800 hover:to-slate-900 hover:scale-105 shadow-lg"
@@ -344,7 +355,6 @@ const filteredPartners = computed(() => {
 </template>
 
 <style scoped>
-
 @keyframes fade-in {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
@@ -377,11 +387,9 @@ const filteredPartners = computed(() => {
   animation: scale-in 0.5s ease-out;
 }
 
-
 .group:hover {
   animation: subtle-float 3s ease-in-out infinite;
 }
-
 
 .line-clamp-2 {
   display: -webkit-box;
@@ -399,14 +407,12 @@ const filteredPartners = computed(() => {
   overflow: hidden;
 }
 
-
 .gradient-text {
   background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
-
 
 .modal-content {
   scroll-behavior: smooth;
@@ -430,7 +436,6 @@ const filteredPartners = computed(() => {
   background: linear-gradient(135deg, #334155, #1e293b);
 }
 
-
 .shadow-professional {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
@@ -438,7 +443,6 @@ const filteredPartners = computed(() => {
 .shadow-professional-lg {
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
-
 
 ::-webkit-scrollbar {
   width: 12px;
@@ -459,4 +463,3 @@ const filteredPartners = computed(() => {
   background: linear-gradient(135deg, #ea580c, #dc2626);
 }
 </style>
-

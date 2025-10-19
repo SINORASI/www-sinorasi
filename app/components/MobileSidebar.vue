@@ -290,10 +290,10 @@
 
 <script setup lang="ts">
 import { computed, ref, watch } from "vue";
+import type { Extracurricular } from "~/models/Extracurricular";
 import type { MajorName } from "~/models/MajorName";
 import type { News } from "~/models/News";
 import { majorColorSchemes } from "~/utils/majorColors";
-import type { Extracurricular } from "~/models/Extracurricular";
 
 const { locales, setLocale } = useI18n();
 const currentLanguage = computed(() => {
