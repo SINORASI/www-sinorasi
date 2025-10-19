@@ -60,7 +60,10 @@ import { computed, onMounted, ref, watch } from "vue";
 
 declare global {
   interface Window {
-    YT: unknown;
+    YT: {
+      Player: any;
+      [key: string]: any;
+    };
     onYouTubeIframeAPIReady: () => void;
   }
 }
@@ -80,7 +83,16 @@ interface VideoCard {
 const hoveredCard = ref<number | null>(null);
 const currentSlide = ref(0);
 const cardsPerSlide = 4;
-const youtubePlayers = ref<Record<number, unknown>>({});
+type YTPlayer = {
+  seekTo: (seconds: number, allowSeekAhead: boolean) => void;
+  setPlaybackRate: (rate: number) => void;
+  playVideo: () => void;
+  pauseVideo: () => void;
+  getCurrentTime: () => number;
+  getIframe: () => HTMLIFrameElement;
+};
+
+const youtubePlayers = ref<Record<number, YTPlayer>>({});
 const playersReady = ref<Record<number, boolean>>({});
 const playbackIntervals = ref<Record<number, number>>({});
 
@@ -228,9 +240,10 @@ const createPlayer = (id: number, videoId: string) => {
     events: {
       onReady: (event: unknown) => {
         playersReady.value[id] = true;
-        event.target.setPlaybackQuality("hd720");
-        event.target.getIframe().style.width = "100%";
-        event.target.getIframe().style.height = "100%";
+        const ytEvent = event as { target: any };
+        ytEvent.target.setPlaybackQuality("sd360");
+        ytEvent.target.getIframe().style.width = "100%";
+        ytEvent.target.getIframe().style.height = "100%";
       },
     },
   });
