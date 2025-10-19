@@ -18,16 +18,30 @@ const closeDialog = () => {
 const { data: extracurricularsResponse, pending, error } = await useFetch("/api/extracurriculars");
 const extracurriculars = computed(() => extracurricularsResponse.value?.data || []);
 
+const manualItems = ["Voli", "Basket", "Catur"];
+const allowedExtracurricularNames = computed(() => {
+  const topExtras = extracurriculars.value
+    .filter((extra: any) => !manualItems.includes(extra.name))
+    .slice(0, 3)
+    .map((extra: any) => extra.name);
+  return [...manualItems, ...topExtras];
+});
+
 const categories = computed(() => {
   const cats = new Set<string>(["Semua"]);
-  extracurriculars.value.forEach((extra: any) => {
+  const allowedExtras = extracurriculars.value.filter((extra: any) =>
+    allowedExtracurricularNames.value.includes(extra.name),
+  );
+  allowedExtras.forEach((extra: any) => {
     if (extra.category) cats.add(extra.category);
   });
   return Array.from(cats);
 });
 
 const filteredExtracurriculars = computed(() => {
-  let filtered = extracurriculars.value;
+  let filtered = extracurriculars.value.filter((extra: any) =>
+    allowedExtracurricularNames.value.includes(extra.name),
+  );
 
   if (selectedCategory.value !== "Semua") {
     filtered = filtered.filter((extra: any) => extra.category === selectedCategory.value);
@@ -170,7 +184,7 @@ useHead({
                 <h2
                   class="text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-600 animate-gradient-shift drop-shadow-lg"
                 >
-                  {{ extracurriculars.length }}
+                  {{ allowedExtracurricularNames.length }}
                 </h2>
                 
                 <div class="flex justify-center gap-1 mt-2">
@@ -223,7 +237,7 @@ useHead({
                 <h2
                   class="text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-600 animate-gradient-shift drop-shadow-lg"
                 >
-                  {{ extracurriculars.length }}
+                  {{ allowedExtracurricularNames.length }}
                 </h2>
                 
                 <div class="flex justify-center gap-1 mt-2">
