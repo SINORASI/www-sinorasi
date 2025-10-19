@@ -1,23 +1,20 @@
 <script setup lang="ts">
-
-// User data from session
 const user = {
-  name: 'John Doe',
-  username: 'johndoe',
-  email: 'john@example.com',
-  role: 'Siswa',
-  class: 'XII RPL 1',
-  avatar: '/images/profile-placeholder.png',
-  joinDate: '2023-08-15',
-  lastLogin: new Date().toISOString().split('T')[0]
-}
+  name: "John Doe",
+  username: "johndoe",
+  email: "john@example.com",
+  role: "Siswa",
+  class: "XII RPL 1",
+  avatar: "/images/profile-placeholder.png",
+  joinDate: "2023-08-15",
+  lastLogin: new Date().toISOString().split("T")[0],
+};
 
-// Handle logout
 const handleLogout = async () => {
-  await navigateTo('/')
-}
+  await navigateTo("/");
+};
 
-const searchQuery = ref('')
+const searchQuery = ref("");
 
 useHead({
   title: "Dashboard - SMKN 2 Singosari",
@@ -31,55 +28,55 @@ useHead({
 
 const utilityFeatures = [
   {
-    title: 'Anonymous BK',
-    description: 'Konsultasi anonim dengan BK sekolah',
-    icon: 'lucide:shield',
-    href: '/utilitas/anonymous-bk',
-    color: 'blue'
+    title: "Anonymous BK",
+    description: "Konsultasi anonim dengan BK sekolah",
+    icon: "lucide:shield",
+    href: "/utilitas/anonymous-bk",
+    color: "blue",
   },
   {
-    title: 'SI Sarana',
-    description: 'Sistem Informasi Sarana Prasarana sekolah',
-    icon: 'lucide:alert-triangle',
-    href: '/utilitas/si-sarana',
-    color: 'orange'
+    title: "SI Sarana",
+    description: "Sistem Informasi Sarana Prasarana sekolah",
+    icon: "lucide:alert-triangle",
+    href: "/utilitas/si-sarana",
+    color: "orange",
   },
   {
-    title: 'Traffic Tracker',
-    description: 'Cek estimasi waktu tempuh ke sekolah',
-    icon: 'lucide:bar-chart',
-    href: '/utilitas/traffic-tracker',
-    color: 'green'
-  }
-]
+    title: "Traffic Tracker",
+    description: "Cek estimasi waktu tempuh ke sekolah",
+    icon: "lucide:bar-chart",
+    href: "/utilitas/traffic-tracker",
+    color: "green",
+  },
+];
 
 const quickActions = [
-  { title: 'Berita Terbaru', href: '/berita', icon: 'lucide:newspaper' },
-  { title: 'Jadwal Pelajaran', href: '#', icon: 'lucide:calendar' },
-  { title: 'Ekstrakurikuler', href: '/ekstrakurikuler', icon: 'lucide:workflow' }
-]
+  { title: "Berita Terbaru", href: "/berita", icon: "lucide:newspaper" },
+  { title: "Jadwal Pelajaran", href: "#", icon: "lucide:calendar" },
+  { title: "Ekstrakurikuler", href: "/ekstrakurikuler", icon: "lucide:workflow" },
+];
 
 const formatDate = (dateString: string) => {
-  const date = new Date(dateString)
-  return date.toLocaleDateString('id-ID', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  })
-}
+  const date = new Date(dateString);
+  return date.toLocaleDateString("id-ID", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+};
 </script>
 
 <template>
   <div class="min-h-screen py-24 bg-gradient-to-b from-white via-blue-50 to-white">
     <div class="container px-4 mx-auto sm:px-6">
       <div class="max-w-6xl mx-auto">
-        <!-- Header -->
+        
         <div class="mb-8">
           <h1 class="text-3xl font-bold text-gray-800 md:text-4xl">Dashboard</h1>
           <p class="mt-2 text-gray-600">Selamat datang kembali, {{ user.name }}!</p>
         </div>
 
-        <!-- User Info Card -->
+        
         <div class="p-6 mb-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl md:p-8">
           <div class="flex flex-col items-center gap-6 md:flex-row md:items-start">
             <div class="flex-shrink-0">
@@ -130,7 +127,7 @@ const formatDate = (dateString: string) => {
           </div>
         </div>
 
-        <!-- Quick Actions -->
+        
         <div class="mb-8">
           <h3 class="mb-4 text-xl font-bold text-gray-800 md:text-2xl">Aksi Cepat</h3>
           <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
@@ -146,7 +143,7 @@ const formatDate = (dateString: string) => {
           </div>
         </div>
 
-        <!-- Search Section -->
+        
         <div class="mb-8">
           <div class="p-6 bg-white border-2 border-gray-100 shadow-xl rounded-2xl md:p-8">
             <h3 class="mb-4 text-xl font-bold text-gray-800 md:text-2xl">Cari Informasi</h3>
@@ -169,7 +166,7 @@ const formatDate = (dateString: string) => {
           </div>
         </div>
 
-        <!-- Utility Features Highlight -->
+        
         <div>
           <h3 class="mb-4 text-xl font-bold text-gray-800 md:text-2xl">Fitur Utilitas</h3>
           <div class="grid gap-6 md:grid-cols-3">

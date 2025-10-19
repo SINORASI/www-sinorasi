@@ -1,27 +1,28 @@
 <script setup lang="ts">
-import { siSaranaSchema, validateSiSarana, type SiSaranaForm } from '~/utils/schema'
+import { type SiSaranaForm, validateSiSarana } from "~/utils/schema";
 
 const formData = ref<SiSaranaForm>({
-  category: '',
-  title: '',
-  description: '',
-  location: '',
-  urgency: 'medium',
-  reporterName: '',
-  reporterContact: '',
-  attachments: []
-})
+  category: "",
+  title: "",
+  description: "",
+  location: "",
+  urgency: "medium",
+  reporterName: "",
+  reporterContact: "",
+  attachments: [],
+});
 
-const errors = ref<Record<string, string>>({})
-const isSubmitting = ref(false)
-const showGuidelines = ref(false)
+const errors = ref<Record<string, string>>({});
+const isSubmitting = ref(false);
+const showGuidelines = ref(false);
 
 useHead({
   title: "SI Sarana - Utilitas - SMKN 2 Singosari",
   meta: [
     {
       name: "description",
-      content: "Laporkan kerusakan atau masalah fasilitas sekolah melalui SI Sarana SMK Negeri 2 Singosari.",
+      content:
+        "Laporkan kerusakan atau masalah fasilitas sekolah melalui SI Sarana SMK Negeri 2 Singosari.",
     },
   ],
 });
@@ -37,10 +38,10 @@ const categories = [
 ];
 
 const urgencyLevels = [
-  { value: 'low', label: 'Rendah', color: 'bg-green-100 text-green-800' },
-  { value: 'medium', label: 'Sedang', color: 'bg-yellow-100 text-yellow-800' },
-  { value: 'high', label: 'Tinggi', color: 'bg-orange-100 text-orange-800' },
-  { value: 'critical', label: 'Kritis', color: 'bg-red-100 text-red-800' },
+  { value: "low", label: "Rendah", color: "bg-green-100 text-green-800" },
+  { value: "medium", label: "Sedang", color: "bg-yellow-100 text-yellow-800" },
+  { value: "high", label: "Tinggi", color: "bg-orange-100 text-orange-800" },
+  { value: "critical", label: "Kritis", color: "bg-red-100 text-red-800" },
 ];
 
 const handleFileChange = (event: Event) => {
@@ -48,29 +49,24 @@ const handleFileChange = (event: Event) => {
   const files = Array.from(target.files || []);
 
   if (files.length > 0) {
-    // Check total files limit
     if ((formData.value.attachments?.length || 0) + files.length > 5) {
       alert("Maksimal 5 file yang dapat diupload.");
       return;
     }
 
-    // Validate each file
     for (const file of files) {
-      // Validate file size (max 5MB)
       if (file.size > 5 * 1024 * 1024) {
         alert(`Ukuran file ${file.name} terlalu besar. Maksimal 5MB.`);
         return;
       }
 
-      // Validate file type
-      const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'application/pdf'];
+      const allowedTypes = ["image/jpeg", "image/png", "image/gif", "application/pdf"];
       if (!allowedTypes.includes(file.type)) {
         alert(`Tipe file ${file.name} tidak didukung. Gunakan JPG, PNG, GIF, atau PDF.`);
         return;
       }
     }
 
-    // Add files to attachments
     formData.value.attachments = [...(formData.value.attachments || []), ...files];
   }
 };
@@ -80,59 +76,57 @@ const removeAttachment = (index: number) => {
 };
 
 const validateForm = () => {
-  const result = validateSiSarana(formData.value)
+  const result = validateSiSarana(formData.value);
   if (!result.success) {
-    errors.value = {}
+    errors.value = {};
     result.error.issues.forEach((error) => {
-      errors.value[error.path[0] as string] = error.message
-    })
-    return false
+      errors.value[error.path[0] as string] = error.message;
+    });
+    return false;
   }
-  errors.value = {}
-  return true
-}
+  errors.value = {};
+  return true;
+};
 
 const submitReport = async () => {
   if (!validateForm()) {
-    return
+    return;
   }
 
-  isSubmitting.value = true
+  isSubmitting.value = true;
 
   try {
-    // TODO: Replace with actual API call to /api/si-sarana
-    const response = await $fetch('/api/si-sarana', {
-      method: 'POST',
-      body: formData.value
-    })
+    const response = await $fetch("/api/si-sarana", {
+      method: "POST",
+      body: formData.value,
+    });
 
-    alert("Laporan berhasil dikirim! Tim maintenance akan segera menindaklanjuti.")
+    alert("Laporan berhasil dikirim! Tim maintenance akan segera menindaklanjuti.");
 
-    // Reset form
     formData.value = {
-      category: '',
-      title: '',
-      description: '',
-      location: '',
-      urgency: 'medium',
-      reporterName: '',
-      reporterContact: '',
-      attachments: []
-    }
-    errors.value = {}
+      category: "",
+      title: "",
+      description: "",
+      location: "",
+      urgency: "medium",
+      reporterName: "",
+      reporterContact: "",
+      attachments: [],
+    };
+    errors.value = {};
   } catch (error) {
-    alert("Terjadi kesalahan saat mengirim laporan. Silakan coba lagi.")
+    alert("Terjadi kesalahan saat mengirim laporan. Silakan coba lagi.");
   } finally {
-    isSubmitting.value = false
+    isSubmitting.value = false;
   }
-}
+};
 </script>
 
 <template>
   <div class="min-h-screen py-24 bg-gradient-to-br from-slate-50 via-orange-50 to-orange-100">
     <div class="container px-4 mx-auto sm:px-6 lg:px-8">
       <div class="max-w-5xl mx-auto">
-        <!-- Header Section -->
+        
         <div class="mb-16 text-center animate-fade-in-up">
           <div
             class="inline-block px-8 py-6 mb-6 border border-orange-200 shadow-2xl bg-gradient-to-r from-orange-600 to-orange-800 backdrop-blur-2xl rounded-3xl transform hover:scale-105 transition-all duration-300 sm:px-12 sm:py-8"
@@ -145,7 +139,7 @@ const submitReport = async () => {
           </p>
         </div>
 
-        <!-- Guidelines Button -->
+        
         <div class="mb-12 text-center animate-slide-in-right stagger-2">
           <button
             @click="showGuidelines = true"
@@ -156,7 +150,7 @@ const submitReport = async () => {
           </button>
         </div>
 
-        <!-- Guidelines Modal -->
+        
         <Teleport to="body">
           <Transition name="dialog">
             <div
@@ -218,10 +212,10 @@ const submitReport = async () => {
           </Transition>
         </Teleport>
 
-        <!-- Form Section -->
+        
         <div class="p-6 bg-white border border-orange-200 shadow-2xl rounded-3xl backdrop-blur-sm md:p-10 lg:p-12 animate-fade-in-up">
           <form @submit.prevent="submitReport" class="space-y-8">
-            <!-- Category Selection -->
+            
             <div>
               <label class="flex items-center mb-4 text-base font-bold text-gray-800">
                 <Icon name="lucide:folder" size="20" class="mr-3 text-orange-600" />
@@ -247,7 +241,7 @@ const submitReport = async () => {
               <p v-if="errors.category" class="mt-3 text-sm text-red-600">{{ errors.category }}</p>
             </div>
 
-            <!-- Title -->
+            
             <div>
               <label for="title" class="flex items-center mb-4 text-base font-bold text-gray-800">
                 <Icon name="lucide:file-text" size="20" class="mr-3 text-orange-600" />
@@ -263,7 +257,7 @@ const submitReport = async () => {
               <p v-if="errors.title" class="mt-3 text-sm text-red-600">{{ errors.title }}</p>
             </div>
 
-            <!-- Location -->
+            
             <div>
               <label for="location" class="flex items-center mb-4 text-base font-bold text-gray-800">
                 <Icon name="lucide:map-pin" size="20" class="mr-3 text-orange-600" />
@@ -279,7 +273,7 @@ const submitReport = async () => {
               <p v-if="errors.location" class="mt-3 text-sm text-red-600">{{ errors.location }}</p>
             </div>
 
-            <!-- Description -->
+            
             <div>
               <label for="description" class="flex items-center mb-4 text-base font-bold text-gray-800">
                 <Icon name="lucide:file-text" size="20" class="mr-3 text-orange-600" />
@@ -296,7 +290,7 @@ const submitReport = async () => {
               <p class="mt-3 ml-1 text-sm text-gray-500">Semakin detail, semakin cepat kami dapat menindaklanjuti</p>
             </div>
 
-            <!-- Urgency Level -->
+            
             <div>
               <label class="flex items-center mb-4 text-base font-bold text-gray-800">
                 <Icon name="lucide:alert-triangle" size="20" class="mr-3 text-orange-600" />
@@ -320,7 +314,7 @@ const submitReport = async () => {
               </div>
             </div>
 
-            <!-- Reporter Information -->
+            
             <div class="grid gap-6 md:grid-cols-2">
               <div>
                 <label for="reporterName" class="flex items-center mb-4 text-base font-bold text-gray-800">
@@ -353,7 +347,7 @@ const submitReport = async () => {
               </div>
             </div>
 
-            <!-- File Upload -->
+            
             <div>
               <label class="flex items-center mb-4 text-base font-bold text-gray-800">
                 <Icon name="lucide:paperclip" size="20" class="mr-3 text-orange-600" />
@@ -409,7 +403,7 @@ const submitReport = async () => {
               <p v-if="errors.attachments" class="mt-3 text-sm text-red-600">{{ errors.attachments }}</p>
             </div>
 
-            <!-- Submit Button -->
+            
             <button
               type="submit"
               :disabled="isSubmitting"
@@ -431,7 +425,7 @@ const submitReport = async () => {
           </div>
         </div>
 
-        <!-- Info Cards -->
+        
         <div class="grid gap-6 mt-12 sm:gap-8 md:grid-cols-2">
           <div class="p-8 bg-white border border-blue-200 shadow-2xl rounded-3xl hover:shadow-3xl transition-all duration-300 hover:scale-105 transform animate-scale-in stagger-3">
             <Icon name="lucide:headphones" size="36" class="mb-4 text-blue-600 animate-float" />

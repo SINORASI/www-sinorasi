@@ -1,164 +1,185 @@
 <script setup lang="ts">
-import type { Organization } from '~/models/Organization'
+import type { Organization } from "~/models/Organization";
 
-// Mock data for organizations
 const organizations = ref<Organization[]>([
   {
-    id: '1',
-    slug: 'osis',
-    name: 'OSIS SMKN 2 Singosari',
-    logo: '/images/placeholder.jpg',
-    description: 'Organisasi Siswa Intra Sekolah yang menjadi wadah bagi siswa untuk mengembangkan potensi dan kreativitas.',
-    history: 'Didirikan sejak tahun 2000, OSIS telah menjadi pilar utama dalam kegiatan siswa.',
-    established: '2000',
+    id: "1",
+    slug: "osis",
+    name: "OSIS SMKN 2 Singosari",
+    logo: "/images/placeholder.jpg",
+    description:
+      "Organisasi Siswa Intra Sekolah yang menjadi wadah bagi siswa untuk mengembangkan potensi dan kreativitas.",
+    history: "Didirikan sejak tahun 2000, OSIS telah menjadi pilar utama dalam kegiatan siswa.",
+    established: "2000",
     contactInfo: {
-      instagram: [{ label: 'Instagram', handle: '@osis_smkn2' }],
-      whatsapp: [{ label: 'WhatsApp', number: '+6281234567890' }]
+      instagram: [{ label: "Instagram", handle: "@osis_smkn2" }],
+      whatsapp: [{ label: "WhatsApp", number: "+6281234567890" }],
     },
     statistics: {
       members: 45,
       programs: 12,
       years: 24,
-      meetings: 48
+      meetings: 48,
     },
     leadership: {
-      ketua: [{
-        id: '1',
-        name: 'Ahmad Rahman',
-        image: '/images/profile-placeholder.png',
-        position: 'Ketua OSIS'
-      }],
-      wakil: [{
-        id: '2',
-        name: 'Siti Nurhaliza',
-        image: '/images/profile-placeholder.png',
-        position: 'Wakil Ketua OSIS'
-      }],
-      sekretaris: [{
-        id: '3',
-        name: 'Budi Santoso',
-        image: '/images/profile-placeholder.png',
-        position: 'Sekretaris'
-      }],
-      bendahara: [{
-        id: '4',
-        name: 'Maya Sari',
-        image: '/images/profile-placeholder.png',
-        position: 'Bendahara'
-      }]
+      ketua: [
+        {
+          id: "1",
+          name: "Ahmad Rahman",
+          image: "/images/profile-placeholder.png",
+          position: "Ketua OSIS",
+        },
+      ],
+      wakil: [
+        {
+          id: "2",
+          name: "Siti Nurhaliza",
+          image: "/images/profile-placeholder.png",
+          position: "Wakil Ketua OSIS",
+        },
+      ],
+      sekretaris: [
+        {
+          id: "3",
+          name: "Budi Santoso",
+          image: "/images/profile-placeholder.png",
+          position: "Sekretaris",
+        },
+      ],
+      bendahara: [
+        {
+          id: "4",
+          name: "Maya Sari",
+          image: "/images/profile-placeholder.png",
+          position: "Bendahara",
+        },
+      ],
     },
     sections: [],
-    activities: []
+    activities: [],
   },
   {
-    id: '3',
-    slug: 'pmr',
-    name: 'PMR SMKN 2 Singosari',
-    logo: '/images/placeholder.jpg',
-    description: 'Palang Merah Remaja yang fokus pada kegiatan kemanusiaan dan pertolongan pertama.',
-    history: 'PMR telah berperan aktif dalam kegiatan sosial dan kesehatan siswa.',
-    established: '2005',
+    id: "3",
+    slug: "pmr",
+    name: "PMR SMKN 2 Singosari",
+    logo: "/images/placeholder.jpg",
+    description:
+      "Palang Merah Remaja yang fokus pada kegiatan kemanusiaan dan pertolongan pertama.",
+    history: "PMR telah berperan aktif dalam kegiatan sosial dan kesehatan siswa.",
+    established: "2005",
     contactInfo: {
-      whatsapp: [{ label: 'WhatsApp', number: '+6281234567891' }]
+      whatsapp: [{ label: "WhatsApp", number: "+6281234567891" }],
     },
     statistics: {
       members: 28,
       programs: 15,
       years: 19,
-      meetings: 36
+      meetings: 36,
     },
     leadership: {
-      ketua: [{
-        id: '7',
-        name: 'Fajar Nugroho',
-        image: '/images/profile-placeholder.png',
-        position: 'Ketua PMR'
-      }],
-      sekretaris: [{
-        id: '8',
-        name: 'Lina Kusuma',
-        image: '/images/profile-placeholder.png',
-        position: 'Sekretaris'
-      }]
+      ketua: [
+        {
+          id: "7",
+          name: "Fajar Nugroho",
+          image: "/images/profile-placeholder.png",
+          position: "Ketua PMR",
+        },
+      ],
+      sekretaris: [
+        {
+          id: "8",
+          name: "Lina Kusuma",
+          image: "/images/profile-placeholder.png",
+          position: "Sekretaris",
+        },
+      ],
     },
     sections: [],
-    activities: []
+    activities: [],
   },
   {
-    id: '4',
-    slug: 'linorasi',
-    name: 'LINORASI SMKN 2 Singosari',
-    logo: '/images/placeholder.jpg',
-    description: 'Litbang Inovasi Raih Prestasi yang fokus pada pengembangan inovasi dan prestasi siswa.',
-    history: 'LINORASI didirikan untuk mendorong inovasi dan pencapaian prestasi siswa.',
-    established: '2018',
+    id: "4",
+    slug: "linorasi",
+    name: "LINORASI SMKN 2 Singosari",
+    logo: "/images/placeholder.jpg",
+    description:
+      "Litbang Inovasi Raih Prestasi yang fokus pada pengembangan inovasi dan prestasi siswa.",
+    history: "LINORASI didirikan untuk mendorong inovasi dan pencapaian prestasi siswa.",
+    established: "2018",
     contactInfo: {
-      instagram: [{ label: 'Instagram', handle: '@linorasi_smkn2' }],
-      socialMedia: [
-        { platform: 'youtube', handle: '@linorasi_official' }
-      ]
+      instagram: [{ label: "Instagram", handle: "@linorasi_smkn2" }],
+      socialMedia: [{ platform: "youtube", handle: "@linorasi_official" }],
     },
     statistics: {
       members: 25,
       programs: 20,
       years: 6,
-      meetings: 30
+      meetings: 30,
     },
     leadership: {
-      ketua: [{
-        id: '9',
-        name: 'Eko Prasetyo',
-        image: '/images/profile-placeholder.png',
-        position: 'Ketua LINORASI'
-      }],
-      wakil: [{
-        id: '10',
-        name: 'Rina Amelia',
-        image: '/images/profile-placeholder.png',
-        position: 'Wakil Ketua'
-      }]
+      ketua: [
+        {
+          id: "9",
+          name: "Eko Prasetyo",
+          image: "/images/profile-placeholder.png",
+          position: "Ketua LINORASI",
+        },
+      ],
+      wakil: [
+        {
+          id: "10",
+          name: "Rina Amelia",
+          image: "/images/profile-placeholder.png",
+          position: "Wakil Ketua",
+        },
+      ],
     },
     sections: [],
-    activities: []
+    activities: [],
   },
   {
-    id: '5',
-    slug: 'bdi',
-    name: 'BDI SMKN 2 Singosari',
-    logo: '/images/placeholder.jpg',
-    description: 'Badan Dakwah Islam yang fokus pada pengembangan spiritual dan kegiatan keagamaan.',
-    history: 'BDI didirikan untuk memperkuat nilai-nilai keislaman di lingkungan sekolah.',
-    established: '2008',
+    id: "5",
+    slug: "bdi",
+    name: "BDI SMKN 2 Singosari",
+    logo: "/images/placeholder.jpg",
+    description:
+      "Badan Dakwah Islam yang fokus pada pengembangan spiritual dan kegiatan keagamaan.",
+    history: "BDI didirikan untuk memperkuat nilai-nilai keislaman di lingkungan sekolah.",
+    established: "2008",
     contactInfo: {
-      instagram: [{ label: 'Instagram', handle: '@bdi_smkn2' }],
-      whatsapp: [{ label: 'WhatsApp', number: '+6281234567892' }]
+      instagram: [{ label: "Instagram", handle: "@bdi_smkn2" }],
+      whatsapp: [{ label: "WhatsApp", number: "+6281234567892" }],
     },
     statistics: {
       members: 35,
       programs: 18,
       years: 16,
-      meetings: 40
+      meetings: 40,
     },
     leadership: {
-      ketua: [{
-        id: '11',
-        name: 'Ahmad Fauzi',
-        image: '/images/profile-placeholder.png',
-        position: 'Ketua BDI'
-      }],
-      sekretaris: [{
-        id: '12',
-        name: 'Nur Hasanah',
-        image: '/images/profile-placeholder.png',
-        position: 'Sekretaris'
-      }]
+      ketua: [
+        {
+          id: "11",
+          name: "Ahmad Fauzi",
+          image: "/images/profile-placeholder.png",
+          position: "Ketua BDI",
+        },
+      ],
+      sekretaris: [
+        {
+          id: "12",
+          name: "Nur Hasanah",
+          image: "/images/profile-placeholder.png",
+          position: "Sekretaris",
+        },
+      ],
     },
     sections: [],
-    activities: []
-  }
-])
+    activities: [],
+  },
+]);
 
-const searchQuery = ref('')
+const searchQuery = ref("");
 
 useHead({
   title: "Admin - Kelola Organisasi - SMKN 2 Singosari",
@@ -171,21 +192,22 @@ useHead({
 });
 
 const filteredOrganizations = computed(() => {
-  if (!searchQuery.value.trim()) return organizations.value
-  const query = searchQuery.value.toLowerCase()
-  return organizations.value.filter(org =>
-    org.name.toLowerCase().includes(query) ||
-    org.description.toLowerCase().includes(query) ||
-    org.slug.toLowerCase().includes(query)
-  )
-})
+  if (!searchQuery.value.trim()) return organizations.value;
+  const query = searchQuery.value.toLowerCase();
+  return organizations.value.filter(
+    (org) =>
+      org.name.toLowerCase().includes(query) ||
+      org.description.toLowerCase().includes(query) ||
+      org.slug.toLowerCase().includes(query),
+  );
+});
 </script>
 
 <template>
   <div class="min-h-screen py-24 bg-gradient-to-b from-white via-purple-50 to-white">
     <div class="container px-4 mx-auto sm:px-6">
       <div class="max-w-7xl mx-auto">
-        <!-- Header -->
+        
         <div class="flex flex-col gap-4 mb-8 md:flex-row md:items-center md:justify-between">
           <div>
             <h1 class="text-3xl font-bold text-gray-800 md:text-4xl">Kelola Organisasi</h1>
@@ -197,7 +219,7 @@ const filteredOrganizations = computed(() => {
           </button>
         </div>
 
-        <!-- Search and Stats -->
+        
         <div class="grid grid-cols-1 gap-6 mb-8 md:grid-cols-5">
           <div class="md:col-span-4">
             <div class="relative">
@@ -222,14 +244,14 @@ const filteredOrganizations = computed(() => {
           </div>
         </div>
 
-        <!-- Organizations Grid -->
+        
         <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           <div
             v-for="org in filteredOrganizations"
             :key="org.id"
             class="p-6 bg-white border-2 border-gray-100 shadow-xl rounded-2xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
           >
-            <!-- Organization Header -->
+            
             <div class="flex items-center gap-4 mb-4">
               <img
                 :src="org.logo"
@@ -242,10 +264,10 @@ const filteredOrganizations = computed(() => {
               </div>
             </div>
 
-            <!-- Description -->
+            
             <p class="text-gray-600 text-sm mb-4 line-clamp-3">{{ org.description }}</p>
 
-            <!-- Statistics -->
+            
             <div class="grid grid-cols-2 gap-3 mb-4">
               <div class="text-center p-3 bg-purple-50 rounded-lg">
                 <p class="text-lg font-bold text-purple-600">{{ org.statistics.members }}</p>
@@ -257,7 +279,7 @@ const filteredOrganizations = computed(() => {
               </div>
             </div>
 
-            <!-- Leadership Preview -->
+            
             <div class="mb-4">
               <p class="text-sm font-semibold text-gray-700 mb-2">Pengurus Utama:</p>
               <div class="space-y-1">
@@ -276,7 +298,7 @@ const filteredOrganizations = computed(() => {
               </div>
             </div>
 
-            <!-- Contact Info -->
+            
             <div class="mb-4">
               <p class="text-sm font-semibold text-gray-700 mb-2">Kontak:</p>
               <div class="flex flex-wrap gap-2">
@@ -304,7 +326,7 @@ const filteredOrganizations = computed(() => {
               </div>
             </div>
 
-            <!-- Actions -->
+            
             <div class="flex gap-2">
               <button class="flex-1 flex items-center justify-center gap-2 px-3 py-2 text-sm font-semibold text-blue-600 transition-colors bg-blue-100 rounded-lg hover:bg-blue-200">
                 <Icon name="lucide:eye" size="16" />
@@ -321,7 +343,7 @@ const filteredOrganizations = computed(() => {
           </div>
         </div>
 
-        <!-- Empty State -->
+        
         <div v-if="filteredOrganizations.length === 0" class="p-12 text-center bg-white border-2 border-gray-100 shadow-xl rounded-2xl">
           <Icon name="lucide:users" size="48" class="mx-auto mb-4 text-gray-400" />
           <h3 class="text-lg font-semibold text-gray-600 mb-2">Tidak ada organisasi ditemukan</h3>

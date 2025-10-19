@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { MajorName } from "~/models/MajorName";
 import type { MajorData } from "~/models/MajorData";
+import type { MajorName } from "~/models/MajorName";
 import type { MajorTopic } from "~/models/MajorTopic";
 import { majorColorSchemes } from "~/utils/majorColors";
 
@@ -8,7 +8,6 @@ const props = defineProps<{
   major?: MajorName;
 }>();
 
-// Fetch majors data and topics from API
 const { data: majorDatas } = await useFetch<Record<MajorName, MajorData>>("/api/majors");
 const { data: majorTopics } = await useFetch<Record<MajorName, MajorTopic[]>>("/api/major-topics");
 
@@ -35,7 +34,6 @@ const hexToRgb = (hex: string) => {
 
 const majorColorRgb = computed(() => hexToRgb(majorColor.value.primary));
 
-// Split topics into two columns dynamically
 const leftColumnTopics = computed(() => {
   const topics = majorTopics.value?.[major] || [];
   return topics.filter((_, idx) => idx % 2 === 0);
@@ -48,14 +46,12 @@ const rightColumnTopics = computed(() => {
 
 const toggleLeftExpanded = (id: string): void => {
   if (expandedLeftItems.value[id]) {
-    // Close the item
     expandedLeftItems.value = {
       ...expandedLeftItems.value,
       [id]: false,
     };
     leftOpenOrder.value = leftOpenOrder.value.filter((item) => item !== id);
   } else {
-    // Check if we already have 2 items open
     if (leftOpenOrder.value.length >= 2) {
       const oldestId = leftOpenOrder.value[0];
       if (oldestId) {
@@ -66,7 +62,7 @@ const toggleLeftExpanded = (id: string): void => {
         leftOpenOrder.value = leftOpenOrder.value.slice(1);
       }
     }
-    // Open the new item
+
     expandedLeftItems.value = {
       ...expandedLeftItems.value,
       [id]: true,
@@ -77,14 +73,12 @@ const toggleLeftExpanded = (id: string): void => {
 
 const toggleRightExpanded = (id: string): void => {
   if (expandedRightItems.value[id]) {
-    // Close the item
     expandedRightItems.value = {
       ...expandedRightItems.value,
       [id]: false,
     };
     rightOpenOrder.value = rightOpenOrder.value.filter((item) => item !== id);
   } else {
-    // Check if we already have 2 items open
     if (rightOpenOrder.value.length >= 2) {
       const oldestId = rightOpenOrder.value[0];
       if (oldestId) {
@@ -95,7 +89,7 @@ const toggleRightExpanded = (id: string): void => {
         rightOpenOrder.value = rightOpenOrder.value.slice(1);
       }
     }
-    // Open the new item
+
     expandedRightItems.value = {
       ...expandedRightItems.value,
       [id]: true,
@@ -107,25 +101,25 @@ const toggleRightExpanded = (id: string): void => {
 
 <template>
   <div class="w-full">
-    <!-- Two Column Grid -->
+    
     <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 md:gap-5 lg:gap-6">
-      <!-- Left Column -->
+      
       <div class="space-y-4">
         <div v-for="(topic, index) in leftColumnTopics" :key="topic.id" class="transition-all duration-300">
-          <!-- Collapsed State -->
+          
           <button v-if="!expandedLeftItems[topic.id]" @click="toggleLeftExpanded(topic.id)" class="w-full group">
             <div
               class="relative flex items-center justify-between gap-3 px-5 py-4 md:px-6 md:py-5 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5"
               :style="`background: ${majorColor.primary}`"
             >
-              <!-- Title -->
+              
               <div class="flex-1 min-w-0 text-left">
                 <h3 class="pr-2 text-sm font-semibold leading-snug text-white md:text-base line-clamp-2">
                   {{ topic.title }}
                 </h3>
               </div>
 
-              <!-- Plus Icon -->
+              
               <div class="flex-shrink-0">
                 <div
                   class="flex items-center justify-center w-8 h-8 transition-transform duration-300 rounded-lg md:w-9 md:h-9 bg-white/20 group-hover:rotate-90"
@@ -138,22 +132,22 @@ const toggleRightExpanded = (id: string): void => {
             </div>
           </button>
 
-          <!-- Expanded State -->
+          
           <div v-else class="overflow-hidden border shadow-lg rounded-xl animate-expand backdrop-blur-xl border-white/20" :style="`background: rgba(${majorColorRgb.r}, ${majorColorRgb.g}, ${majorColorRgb.b}, 0.2);`">
-            <!-- Header (Clickable to collapse) -->
+            
             <button @click="toggleLeftExpanded(topic.id)" class="w-full group">
               <div
                 class="relative flex items-center justify-between gap-3 px-5 py-4 md:px-6 md:py-5"
                 :style="`background: ${majorColor.primary}`"
               >
-                <!-- Title -->
+                
                 <div class="flex-1 min-w-0 text-left">
                   <h3 class="pr-2 text-sm font-semibold leading-snug text-white md:text-base">
                     {{ topic.title }}
                   </h3>
                 </div>
 
-                <!-- Minus Icon -->
+                
                 <div class="flex-shrink-0">
                   <div
                     class="flex items-center justify-center w-8 h-8 transition-transform duration-300 rounded-lg md:w-9 md:h-9 bg-white/20 group-hover:rotate-180"
@@ -166,7 +160,7 @@ const toggleRightExpanded = (id: string): void => {
               </div>
             </button>
 
-            <!-- Content Area with Animation -->
+            
             <div class="p-4 md:p-5 lg:p-6 animate-slide-down" >
               <p class="text-sm leading-relaxed text-justify text-gray-700 md:text-base">
                 {{ topic.description }}
@@ -176,23 +170,23 @@ const toggleRightExpanded = (id: string): void => {
         </div>
       </div>
 
-      <!-- Right Column -->
+      
       <div class="space-y-4">
         <div v-for="(topic, index) in rightColumnTopics" :key="topic.id" class="transition-all duration-300">
-          <!-- Collapsed State -->
+          
           <button v-if="!expandedRightItems[topic.id]" @click="toggleRightExpanded(topic.id)" class="w-full group">
             <div
               class="relative flex items-center justify-between gap-3 px-5 py-4 md:px-6 md:py-5 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5"
               :style="`background: ${majorColor.primary}`"
             >
-              <!-- Title -->
+              
               <div class="flex-1 min-w-0 text-left">
                 <h3 class="pr-2 text-sm font-semibold leading-snug text-white md:text-base line-clamp-2">
                   {{ topic.title }}
                 </h3>
               </div>
 
-              <!-- Plus Icon -->
+              
               <div class="flex-shrink-0">
                 <div
                   class="flex items-center justify-center w-8 h-8 transition-transform duration-300 rounded-lg md:w-9 md:h-9 bg-white/20 group-hover:rotate-90"
@@ -205,22 +199,22 @@ const toggleRightExpanded = (id: string): void => {
             </div>
           </button>
 
-          <!-- Expanded State -->
+          
           <div v-else class="overflow-hidden border shadow-lg rounded-xl animate-expand backdrop-blur-xl border-white/20" :style="`background: rgba(${majorColorRgb.r}, ${majorColorRgb.g}, ${majorColorRgb.b}, 0.2);`">
-            <!-- Header (Clickable to collapse) -->
+            
             <button @click="toggleRightExpanded(topic.id)" class="w-full group">
               <div
                 class="relative flex items-center justify-between gap-3 px-5 py-4 md:px-6 md:py-5"
                 :style="`background: ${majorColor.primary}`"
               >
-                <!-- Title -->
+                
                 <div class="flex-1 min-w-0 text-left">
                   <h3 class="pr-2 text-sm font-semibold leading-snug text-white md:text-base">
                     {{ topic.title }}
                   </h3>
                 </div>
 
-                <!-- Minus Icon -->
+                
                 <div class="flex-shrink-0">
                   <div
                     class="flex items-center justify-center w-8 h-8 transition-transform duration-300 rounded-lg md:w-9 md:h-9 bg-white/20 group-hover:rotate-180"
@@ -233,7 +227,7 @@ const toggleRightExpanded = (id: string): void => {
               </div>
             </button>
 
-            <!-- Content Area with Animation -->
+            
             <div class="p-4 md:p-5 lg:p-6 animate-slide-down">
               <p class="text-sm leading-relaxed text-justify text-gray-700 md:text-base">
                 {{ topic.description }}
@@ -244,7 +238,7 @@ const toggleRightExpanded = (id: string): void => {
       </div>
     </div>
 
-    <!-- Empty State -->
+    
     <div v-if="leftColumnTopics.length === 0 && rightColumnTopics.length === 0" class="py-16 text-center md:py-20">
       <div
         class="flex items-center justify-center w-20 h-20 mx-auto mb-6 rounded-full shadow-lg md:w-24 md:h-24"

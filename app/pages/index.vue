@@ -24,14 +24,18 @@ const jurusanCount = ref(0);
 const siswaCount = ref(0);
 const prestasiCount = ref(0);
 
-// News section
 const selectedCategory = ref<string>("all");
-const newsCategories = ref<string[]>(["all", "Pengumuman", "Prestasi", "Kerjasama", "Program Baru"]);
+const newsCategories = ref<string[]>([
+  "all",
+  "Pengumuman",
+  "Prestasi",
+  "Kerjasama",
+  "Program Baru",
+]);
 const newsData = ref<News[]>([]);
 const isLoadingNews = ref(false);
 const showBackToTop = ref(false);
 
-// Fetch news data
 const fetchNews = async (category: string = "all") => {
   isLoadingNews.value = true;
   try {
@@ -50,13 +54,11 @@ const fetchNews = async (category: string = "all") => {
   }
 };
 
-// Filter news by category
 const filterByCategory = (category: string) => {
   selectedCategory.value = category;
   fetchNews(category);
 };
 
-// Timeline data
 const isMobile = ref(false);
 const timelineItems = [
   {
@@ -76,7 +78,8 @@ const timelineItems = [
   {
     year: "2015",
     title: "Akreditasi A",
-    description: "SMK Negeri 2 Singosari berhasil meraih akreditasi A dari Badan Akreditasi Nasional Sekolah/Madrasah.",
+    description:
+      "SMK Negeri 2 Singosari berhasil meraih akreditasi A dari Badan Akreditasi Nasional Sekolah/Madrasah.",
     icon: "lucide:award",
   },
   {
@@ -98,31 +101,24 @@ const timelineItems = [
 const clickedMarkers = ref([false, false, false, false, false]);
 const showAllIcons = ref(false);
 
-// Major color scheme
-const majorColor = computed(() => majorColorSchemes["rpl"]);
+const majorColor = computed(() => majorColorSchemes.rpl);
 
 const toggleMarker = (index: number) => {
   if (index === 0 && !showAllIcons.value) {
-    // First click on first marker: show all icons and show all cards
     showAllIcons.value = true;
     clickedMarkers.value = [true, true, true, true, true];
   } else if (index === 0 && showAllIcons.value) {
-    // Second click on first marker: hide all icons except first, hide all cards
     showAllIcons.value = false;
     clickedMarkers.value = [false, false, false, false, false];
   } else {
-    // For other markers: if first click (card not shown), show all cards; else toggle off
     if (!clickedMarkers.value[index]) {
-      // First click: show all cards
       clickedMarkers.value = [true, true, true, true, true];
     } else {
-      // Subsequent click: toggle off this card
       clickedMarkers.value[index] = false;
     }
   }
 };
 
-// Achievement carousel data - filtered from news data
 const achievements = computed(() => {
   const achievementTags = ["prestasi", "juara", "emas", "perak", "perunggu", "lks", "lomba"];
   const filtered = newsData.value
@@ -132,13 +128,13 @@ const achievements = computed(() => {
       image: news.thumbnail || "/images/placeholder.jpg",
       title: news.title,
       description: news.content
-        ? news.content.replace(/<[^>]*>/g, "").slice(0, Math.floor(news.content.replace(/<[^>]*>/g, "").length / 2)) +
-          "..."
+        ? news.content
+            .replace(/<[^>]*>/g, "")
+            .slice(0, Math.floor(news.content.replace(/<[^>]*>/g, "").length / 2)) + "..."
         : news.subtitle,
       slug: news.slug,
     }));
 
-  // Fallback to static data if no achievement news found
   if (filtered.length === 0) {
     return [
       {
@@ -173,7 +169,6 @@ const prevAchievement = () => {
   currentAchievement.value = (currentAchievement.value - 1 + len) % len;
 };
 
-// Hero image carousel
 const heroImages = ref([
   "/images/seragam/putih-putih/10-putih-putih-jas-l/DSC04215.webp",
   "/images/seragam/putih-putih/11-putih-putih-jas-l/DSC04320.webp",
@@ -188,7 +183,7 @@ const animateCounter = (counterRef: { value: number }, target: number, duration:
     const elapsed = currentTime - startTime;
     const progress = Math.min(elapsed / duration, 1);
 
-    const easeOut = 1 - Math.pow(1 - progress, 3);
+    const easeOut = 1 - (1 - progress) ** 3;
 
     counterRef.value = Math.floor(startValue + (target - startValue) * easeOut);
 
@@ -209,17 +204,14 @@ onMounted(() => {
     animateCounter(prestasiCount, props.prestasiTarget, props.duration);
   }, 100);
 
-  // Fetch initial news data
   fetchNews();
 
-  // Check if mobile
   const checkMobile = () => {
     isMobile.value = window.innerWidth < 768;
   };
   checkMobile();
   window.addEventListener("resize", checkMobile);
 
-  // Scroll event listener for back to top button
   const handleScroll = () => {
     const scrollTop = window.scrollY;
     const documentHeight = document.documentElement.scrollHeight;
@@ -229,7 +221,6 @@ onMounted(() => {
   };
   window.addEventListener("scroll", handleScroll);
 
-  // Hero image carousel interval
   const heroInterval = setInterval(() => {
     currentHeroImage.value = (currentHeroImage.value + 1) % heroImages.value.length;
   }, 5000);
@@ -241,12 +232,10 @@ onMounted(() => {
   });
 });
 
-// Scroll to top method
 const scrollToTop = () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
 };
 
-// Set page title
 useHead({
   title: "Beranda - SMKN 2 Singosari",
   meta: [
@@ -265,7 +254,7 @@ useHead({
       class="flex items-center justify-center min-h-screen px-4 pt-24 pb-10 md:pt-20 bg-gradient-to-b from-blue-50 to-white"
     >
       <div class="container flex flex-col justify-center items-center max-w-5xl mx-auto gap-18 lg:flex-row">
-        <!-- Student Photo on Left -->
+        
         <div class="flex flex-col justify-center items-center w-full lg:w-1/3">
           <div class="relative group">
             <img
@@ -276,7 +265,7 @@ useHead({
           </div>
         </div>
 
-        <!-- Content on Right -->
+        
         <div
           class="flex flex-col items-center w-full gap-8 text-center text-black lg:w-2/3 lg:items-start lg:text-left"
         >
@@ -327,7 +316,7 @@ useHead({
     <section id="profil-sekolah" class="py-20 h-min-screen bg-gradient-to-b from-white via-blue-50 to-white">
       <div class="container px-4 mx-auto md:px-10">
         <div class="flex flex-col gap-12 lg:flex-row lg:items-center">
-          <!-- Drone Image -->
+          
           <div class="w-full lg:w-1/2">
             <div class="relative group">
               <div
@@ -348,7 +337,7 @@ useHead({
             </div>
           </div>
 
-          <!-- School Facts and Intro -->
+          
           <div class="flex flex-col w-full gap-6 lg:w-1/2">
             <div class="inline-block">
               <span
@@ -399,7 +388,7 @@ useHead({
     <section id="sambutan" class="bg-gradient-to-b from-white via-blue-50 to-white">
       <div class="container px-4 mx-auto md:px-10">
         <div class="flex flex-col items-center justify-center gap-12 lg:flex-row">
-          <!-- Content Area -->
+          
           <div class="flex flex-col w-full max-w-3xl gap-6 lg:w-3/5">
             <div class="inline-block">
               <span
@@ -428,7 +417,7 @@ useHead({
               </div>
             </div>
           </div>
-          <!-- Photo Card -->
+          
           <div class="w-full max-w-xl lg:w-1/5">
             <div class="relative max-w-xs group">
               <div
@@ -444,7 +433,7 @@ useHead({
                 <div
                   class="absolute inset-0 transition-opacity duration-500 bg-gradient-to-t from-blue-900/70 to-transparent"
                 ></div>
-                <!-- Name overlay at bottom -->
+                
                 <div class="absolute bottom-0 left-0 right-0 p-4">
                   <p class="text-xl font-bold text-center text-white">Sumijah S.Pd M.Si</p>
                   <p class="text-sm text-center text-white/90">Kepala Sekolah SMKN 2 Singosari</p>
@@ -459,10 +448,10 @@ useHead({
       </div>
     </section>
 
-    <!-- Achievement Carousel Section -->
+    
     <section id="prestasi" class="bg-gradient-to-b from-white via-blue-50 to-white">
       <div class="container flex flex-col items-center gap-8 mx-auto">
-        <!-- Achievement Carousel -->
+        
         <div
           class="relative flex flex-col w-full max-w-5xl gap-6 p-8 mx-auto bg-white border-2 border-blue-100 shadow-xl rounded-2xl"
         >
@@ -531,11 +520,11 @@ useHead({
       </div>
     </section>
 
-    <!-- School Uniform Section -->
+    
     <section id="seragam-sekolah" class="bg-gradient-to-b from-white via-gray-50 to-white">
       <div class="container px-4 mx-auto md:px-10">
         <div class="flex flex-col items-center gap-12">
-          <!-- Section Header -->
+          
           <div class="flex flex-col items-center gap-4 text-center">
             <span
               class="px-8 py-3 text-xl font-bold tracking-widest text-center uppercase rounded-full md:text-2xl"
@@ -546,9 +535,9 @@ useHead({
             <p class="max-w-2xl text-lg text-center text-white">Koleksi seragam sekolah SMK Negeri 2 Singosari</p>
           </div>
 
-          <!-- Uniform Cards -->
+          
           <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 w-full max-w-[1600px]">
-            <!-- Alma Mater -->
+            
             <UniformCard
               :gradeImages="{
                 X: {
@@ -587,7 +576,7 @@ useHead({
               primaryColor="sky"
             />
 
-            <!-- Putih Putih -->
+            
             <UniformCard
               :gradeImages="{
                 X: {
@@ -626,7 +615,7 @@ useHead({
               primaryColor="gray"
             />
 
-            <!-- Putih Abu -->
+            
             <UniformCard
               :gradeImages="{
                 X: {
@@ -665,7 +654,7 @@ useHead({
               primaryColor="gray"
             />
 
-            <!-- Batik -->
+            
             <UniformCard
               :gradeImages="{
                 X: {
@@ -704,7 +693,7 @@ useHead({
               primaryColor="blue"
             />
 
-            <!-- Pramuka -->
+            
             <UniformCard
               :gradeImages="{
                 X: {
@@ -743,7 +732,7 @@ useHead({
               primaryColor="brown"
             />
 
-            <!-- Olahraga -->
+            
             <UniformCard
               :gradeImages="{
                 X: {
@@ -783,7 +772,7 @@ useHead({
             />
           </div>
 
-          <!-- Additional Info -->
+          
           <div class="w-full max-w-4xl p-6 bg-white shadow-lg rounded-2xl">
             <div class="flex gap-4">
               <Icon name="lucide:info" size="24" class="text-orange-600 flex-shrink-0 mt-0.5" />
@@ -807,11 +796,11 @@ useHead({
       class="py-20 overflow-hidden h-min-screen bg-gradient-to-b from-white via-blue-50 to-white"
     >
       <div class="container relative flex flex-col items-center gap-8 px-4 mx-auto text-center md:px-10">
-        <!-- Decorative Background Elements -->
+        
         <div class="absolute top-0 left-0 bg-blue-200 rounded-full w-72 h-72 opacity-20 blur-3xl -z-10"></div>
         <div class="absolute bottom-0 right-0 bg-orange-200 rounded-full w-96 h-96 opacity-20 blur-3xl -z-10"></div>
 
-        <!-- Section Header -->
+        
         <div class="flex flex-col items-center gap-4">
           <div class="inline-block">
             <span
@@ -826,7 +815,7 @@ useHead({
             Malang.
           </p>
 
-          <!-- Year Range Badge -->
+          
           <div class="flex items-center gap-3 px-6 py-3 bg-white border border-blue-100 rounded-full shadow-md">
             <Icon name="lucide:calendar" size="20" class="text-blue-600" />
             <span class="font-semibold text-gray-700">2007 - 2023</span>
@@ -835,7 +824,7 @@ useHead({
           </div>
         </div>
 
-        <!-- Mobile Timeline -->
+        
         <div v-if="isMobile" class="relative flex flex-col items-center w-full py-10">
           <div
             class="absolute top-0 w-1 h-full transform -translate-x-1/2 rounded-full shadow-lg left-1/2 bg-gradient-to-b from-blue-400 via-blue-600 to-blue-400"
@@ -848,13 +837,13 @@ useHead({
             :class="{ 'opacity-0': !showAllIcons && index > 0 }"
             :style="{ transition: 'opacity 0.5s ease-in-out' }"
           >
-            <!-- Connecting Line -->
+            
             <div
               v-if="showAllIcons || index === 0"
               class="absolute top-0 w-1 h-8 transform -translate-x-1/2 left-1/2 bg-gradient-to-b from-transparent to-blue-600"
             ></div>
 
-            <!-- Icon Circle -->
+            
             <div
               v-if="showAllIcons || index === 0"
               :class="[
@@ -866,7 +855,7 @@ useHead({
               <Icon :name="item.icon" size="28" class="text-white" />
             </div>
 
-            <!-- Content Card -->
+            
             <div
               v-if="clickedMarkers[index]"
               class="w-full p-6 text-center transition-all duration-300 bg-white border-2 border-blue-100 shadow-xl rounded-2xl hover:border-blue-300 hover:shadow-2xl hover:-translate-y-1"
@@ -887,7 +876,7 @@ useHead({
           </div>
         </div>
 
-        <!-- Desktop Timeline -->
+        
         <div v-else class="relative max-w-[1200px] mx-auto py-24">
           <div
             class="absolute left-1/2 top-0 bottom-0 w-1 bg-[linear-gradient(to_bottom,transparent_0%_0%,#3b82f6_10%_50%,#2563eb_50%_90%,#3b82f6_90%_95%,transparent)] -translate-x-1/2 rounded-sm shadow-[0_0_20px_rgba(59,130,246,0.3)] z-10"
@@ -900,7 +889,7 @@ useHead({
             :class="{ 'opacity-0': !showAllIcons && index > 0 }"
             :style="{ transition: 'opacity 0.5s ease-in-out' }"
           >
-            <!-- Content Card -->
+            
             <div
               v-if="clickedMarkers[index]"
               :class="[
@@ -928,7 +917,7 @@ useHead({
               </h3>
               <p class="leading-relaxed text-gray-600">{{ item.description }}</p>
 
-              <!-- Decorative Corner -->
+              
               <div
                 :class="[
                   'absolute top-4 w-3 h-3 rounded-full',
@@ -937,7 +926,7 @@ useHead({
               ></div>
             </div>
 
-            <!-- Marker Icon -->
+            
             <div
               v-if="showAllIcons || index === 0"
               class="absolute z-40 -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2"
@@ -956,7 +945,7 @@ useHead({
               </div>
             </div>
 
-            <!-- Connector Line -->
+            
             <div
               v-if="clickedMarkers[index]"
               :class="[
@@ -969,7 +958,7 @@ useHead({
           </div>
         </div>
 
-        <!-- Bottom CTA -->
+        
         <div
           class="max-w-2xl px-8 py-6 mt-10 text-white shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 rounded-2xl"
         >
@@ -1012,7 +1001,7 @@ useHead({
           Informasi & Berita
         </span>
 
-        <!-- Category Filter -->
+        
         <div class="flex flex-wrap justify-center gap-3">
           <button
             v-for="category in newsCategories"
@@ -1029,7 +1018,7 @@ useHead({
           </button>
         </div>
 
-        <!-- Loading State -->
+        
         <div v-if="isLoadingNews" class="flex items-center justify-center py-20">
           <div class="flex flex-col items-center gap-3">
             <div class="w-12 h-12 border-b-2 border-blue-600 rounded-full animate-spin"></div>
@@ -1037,7 +1026,7 @@ useHead({
           </div>
         </div>
 
-        <!-- News Grid -->
+        
         <div
           v-else-if="newsData.length > 0"
           class="grid w-full grid-cols-1 gap-6 px-4 mt-5 sm:grid-cols-2 lg:grid-cols-4 place-items-stretch"
@@ -1063,13 +1052,13 @@ useHead({
           </NuxtLink>
         </div>
 
-        <!-- Empty State -->
+        
         <div v-else class="flex flex-col items-center justify-center gap-4 py-20">
           <Icon name="lucide:newspaper" size="64" class="text-gray-400" />
           <p class="text-lg text-gray-600">Tidak ada berita untuk kategori ini</p>
         </div>
 
-        <!-- View All Button -->
+        
         <div class="mt-8">
           <NuxtLink
             to="/berita"
@@ -1085,7 +1074,7 @@ useHead({
       <FAQSection />
     </section>
 
-    <!-- Back to Top Button -->
+    
     <button
       v-show="showBackToTop"
       @click="scrollToTop"

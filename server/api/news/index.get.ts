@@ -3,49 +3,39 @@ export default defineEventHandler(async (event) => {
   const { tag, tags, search, limit = 10, offset = 0 } = query;
 
   try {
-    // Read JSON file
-    const newsData = await import('~/news_data.json').then(m => m.default);
+    const newsData = await import("~/news_data.json").then((m) => m.default);
 
     let filteredData = [...newsData];
 
-    // Filter by tag
-    if (tag && typeof tag === 'string') {
-      filteredData = filteredData.filter(item =>
-        item.tags.some(t => t.toLowerCase().includes(tag.toLowerCase()))
+    if (tag && typeof tag === "string") {
+      filteredData = filteredData.filter((item) =>
+        item.tags.some((t) => t.toLowerCase().includes(tag.toLowerCase())),
       );
     }
 
-    // Filter by multiple tags
-    if (tags && typeof tags === 'string') {
-      const tagArray = tags.split(',').map(t => t.trim().toLowerCase());
-      filteredData = filteredData.filter(item =>
-        tagArray.every(searchTag =>
-          item.tags.some(itemTag =>
-            itemTag.toLowerCase().includes(searchTag)
-          )
-        )
+    if (tags && typeof tags === "string") {
+      const tagArray = tags.split(",").map((t) => t.trim().toLowerCase());
+      filteredData = filteredData.filter((item) =>
+        tagArray.every((searchTag) =>
+          item.tags.some((itemTag) => itemTag.toLowerCase().includes(searchTag)),
+        ),
       );
     }
 
-    // Search in title and content
-    if (search && typeof search === 'string') {
+    if (search && typeof search === "string") {
       const searchLower = search.toLowerCase();
       filteredData = filteredData.filter(
-        item =>
+        (item) =>
           item.title.toLowerCase().includes(searchLower) ||
-          item.content.toLowerCase().includes(searchLower)
+          item.content.toLowerCase().includes(searchLower),
       );
     }
 
     const total = filteredData.length;
-    const limitNum = parseInt(limit as string);
-    const offsetNum = parseInt(offset as string);
+    const limitNum = parseInt(limit as string, 10);
+    const offsetNum = parseInt(offset as string, 10);
 
-    // Paginate
-    const paginatedData = filteredData.slice(
-      offsetNum,
-      offsetNum + limitNum
-    );
+    const paginatedData = filteredData.slice(offsetNum, offsetNum + limitNum);
 
     return {
       data: paginatedData,
@@ -54,10 +44,10 @@ export default defineEventHandler(async (event) => {
       limit: limitNum,
     };
   } catch (error) {
-    console.error('Error reading news data:', error);
+    console.error("Error reading news data:", error);
     throw createError({
       statusCode: 500,
-      statusMessage: 'Internal server error',
+      statusMessage: "Internal server error",
     });
   }
 });

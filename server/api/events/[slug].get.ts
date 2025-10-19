@@ -1,6 +1,5 @@
-import type { Event } from '~/models/Event';
+import type { Event } from "~/models/Event";
 
-// Mock data - same as data.ts
 const eventData: Event[] = [
   {
     id: "1",
@@ -100,16 +99,16 @@ WhatsApp: +62 812-3456-7890`,
 ];
 
 export default defineEventHandler(async (event) => {
-  const slug = getRouterParam(event, 'slug');
-  
-  const eventItem = eventData.find(e => e.slug === slug);
-  
+  const slug = getRouterParam(event, "slug");
+
+  const eventItem = eventData.find((e) => e.slug === slug);
+
   if (!eventItem) {
     throw createError({
       statusCode: 404,
-      statusMessage: 'Event not found'
+      statusMessage: "Event not found",
     });
   }
-  
+
   return eventItem;
 });

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
+import { computed, onMounted, ref } from "vue";
 import type { MajorName } from "~/models/MajorName";
 import { majorColorSchemes } from "~/utils/majorColors";
 
@@ -19,14 +19,12 @@ const major = props.major;
 
 const majorColor = computed(() => majorColorSchemes[major]);
 
-// Fetch partners data from API
 const { data: partnersData } = await useFetch<Company[]>(`/api/partners/${major}`);
 
 const currentCompanies = computed(() => {
   return partnersData.value || [];
 });
 
-// Triple the array for seamless infinite loop
 const duplicatedCompanies = computed(() => {
   const base = currentCompanies.value;
   return [...base, ...base, ...base];
@@ -37,7 +35,7 @@ const sliderRef = ref<HTMLElement>();
 onMounted(() => {
   if (sliderRef.value && currentCompanies.value.length > 0) {
     const count = currentCompanies.value.length;
-    const duration = count * 3; // 3 seconds per item
+    const duration = count * 3;
     sliderRef.value.style.setProperty("--animation-duration", `${duration}s`);
   }
 });

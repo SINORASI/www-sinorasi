@@ -13,15 +13,50 @@ export interface MajorColorScheme {
   gradient: string;
 }
 
-export const majorColors: Record<MajorName, { primary: string; secondary: string; gradient: string }> = {
-  rpl: { primary: "#F78B21", secondary: "#E67E00", gradient: "linear-gradient(135deg, #F78B21, #E67E00)" },
-  tkj: { primary: "#FFC911", secondary: "#E6B800", gradient: "linear-gradient(135deg, #FFC911, #E6B800)" },
-  dkv: { primary: "#3598F9", secondary: "#2E7CE6", gradient: "linear-gradient(135deg, #3598F9, #2E7CE6)" },
-  animasi: { primary: "#D93F92", secondary: "#C73682", gradient: "linear-gradient(135deg, #D93F92, #C73682)" },
-  broadcasting: { primary: "#E14648", secondary: "#C93E40", gradient: "linear-gradient(135deg, #E14648, #C93E40)" },
-  tei: { primary: "#059451", secondary: "#047B42", gradient: "linear-gradient(135deg, #059451, #047B42)" },
-  mekatronika: { primary: "#57A77C", secondary: "#4E9670", gradient: "linear-gradient(135deg, #57A77C, #4E9670)" },
-  tav: { primary: "#4FA898", secondary: "#469788", gradient: "linear-gradient(135deg, #4FA898, #469788)" },
+export const majorColors: Record<
+  MajorName,
+  { primary: string; secondary: string; gradient: string }
+> = {
+  rpl: {
+    primary: "#F78B21",
+    secondary: "#E67E00",
+    gradient: "linear-gradient(135deg, #F78B21, #E67E00)",
+  },
+  tkj: {
+    primary: "#FFC911",
+    secondary: "#E6B800",
+    gradient: "linear-gradient(135deg, #FFC911, #E6B800)",
+  },
+  dkv: {
+    primary: "#3598F9",
+    secondary: "#2E7CE6",
+    gradient: "linear-gradient(135deg, #3598F9, #2E7CE6)",
+  },
+  animasi: {
+    primary: "#D93F92",
+    secondary: "#C73682",
+    gradient: "linear-gradient(135deg, #D93F92, #C73682)",
+  },
+  broadcasting: {
+    primary: "#E14648",
+    secondary: "#C93E40",
+    gradient: "linear-gradient(135deg, #E14648, #C93E40)",
+  },
+  tei: {
+    primary: "#059451",
+    secondary: "#047B42",
+    gradient: "linear-gradient(135deg, #059451, #047B42)",
+  },
+  mekatronika: {
+    primary: "#57A77C",
+    secondary: "#4E9670",
+    gradient: "linear-gradient(135deg, #57A77C, #4E9670)",
+  },
+  tav: {
+    primary: "#4FA898",
+    secondary: "#469788",
+    gradient: "linear-gradient(135deg, #4FA898, #469788)",
+  },
 };
 
 export const majorColorSchemes: Record<MajorName, MajorColorScheme> = {
@@ -148,14 +183,14 @@ export const getMajorIconFilter = (major: MajorName): string => {
   filters.push("saturate(1.3)");
 
   const hueRotateMap: Record<MajorName, number> = {
-    rpl: 25, // Orange
-    tkj: 45, // Yellow
-    dkv: 220, // Blue
-    animasi: 320, // Pink
-    broadcasting: 355, // Red
-    tei: 140, // Green
-    mekatronika: 150, // Dark green
-    tav: 165, // Light green
+    rpl: 25,
+    tkj: 45,
+    dkv: 220,
+    animasi: 320,
+    broadcasting: 355,
+    tei: 140,
+    mekatronika: 150,
+    tav: 165,
   };
 
   filters.push(`hue-rotate(${hueRotateMap[major]}deg)`);

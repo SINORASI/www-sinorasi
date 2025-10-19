@@ -3,7 +3,7 @@
     <div
       :class="['flex items-center justify-between py-8 bg-secondary', direction === 'right' ? 'flex-row-reverse' : '']"
     >
-      <!-- Event Details -->
+      
       <div class="flex flex-col justify-between h-full pr-12">
         <div>
           <p class="text-lg font-semibold text-gray-700">{{ event.date }}</p>
@@ -18,12 +18,12 @@
         </div>
       </div>
 
-      <!-- Event Image -->
+      
       <div class="flex-shrink-0">
         <img :src="event.imageUrl" alt="Event Image" class="object-cover w-64 h-64 shadow-lg rounded-xl" />
       </div>
     </div>
-    <!-- Bottom Separator -->
+    
     <div class="border-t border-gray-400"></div>
   </NuxtLink>
 </template>

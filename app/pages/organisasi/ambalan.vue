@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import type { Organization } from '~/models/Organization'
+import type { Organization } from "~/models/Organization";
 
-// Fetch organization data from API
 const { data: organizationsResponse } = await useFetch("/api/organizations");
 const organizations = computed(() => organizationsResponse.value?.data || []);
-const organization = computed(() => organizations.value.find(org => org.slug === 'ambalan') || {} as Organization);
+const organization = computed(
+  () => organizations.value.find((org) => org.slug === "ambalan") || ({} as Organization),
+);
 
-const activeTab = ref('overview')
+const activeTab = ref("overview");
 
 useHead({
   title: `${organization.value.name} - Organisasi - SMKN 2 Singosari`,
@@ -17,14 +18,13 @@ useHead({
     },
   ],
 });
-
 </script>
 
 <template>
   <div class="min-h-screen py-24 bg-gradient-to-b from-white via-blue-50 to-white">
     <div class="container px-4 mx-auto sm:px-6">
       <div class="max-w-6xl mx-auto">
-        <!-- Header -->
+        
         <div class="mb-8">
           <div class="flex flex-col gap-6 md:flex-row md:items-center">
             <img
@@ -54,7 +54,7 @@ useHead({
           </div>
         </div>
 
-        <!-- Tab Navigation -->
+        
         <div class="mb-8">
           <div class="flex border-b border-gray-200">
             <button
@@ -81,21 +81,21 @@ useHead({
           </div>
         </div>
 
-        <!-- Overview Tab -->
+        
         <div v-if="activeTab === 'overview'" class="space-y-8">
-          <!-- Logo Description -->
+          
           <div class="p-6 bg-white border-2 border-blue-100 shadow-xl rounded-2xl md:p-8">
             <h2 class="mb-4 text-2xl font-bold text-gray-800">Deskripsi Logo</h2>
             <p class="text-gray-600 leading-relaxed">{{ organization.logoDescription }}</p>
           </div>
 
-          <!-- History Section -->
+          
           <div class="p-6 bg-white border-2 border-blue-100 shadow-xl rounded-2xl md:p-8">
             <h2 class="mb-4 text-2xl font-bold text-gray-800">Sejarah</h2>
             <p class="text-gray-600 leading-relaxed">{{ organization.history }}</p>
           </div>
 
-          <!-- Statistics Grid -->
+          
           <div class="grid grid-cols-2 gap-6 md:grid-cols-4">
             <div class="p-6 text-center bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
               <Icon name="lucide:users" size="32" class="mx-auto mb-3 text-blue-600" />
@@ -119,7 +119,7 @@ useHead({
             </div>
           </div>
 
-          <!-- Recruitment Poster -->
+          
           <div class="p-6 bg-white border-2 border-blue-100 shadow-xl rounded-2xl md:p-8">
             <h2 class="mb-4 text-2xl font-bold text-gray-800">Poster Pendaftaran</h2>
             <div class="text-center">
@@ -133,7 +133,7 @@ useHead({
           </div>
         </div>
 
-        <!-- Photos Tab -->
+        
         <div v-if="activeTab === 'photos'" class="space-y-6">
           <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             <div
@@ -150,10 +150,10 @@ useHead({
           </div>
         </div>
 
-        <!-- Leadership Tab -->
+        
         <div v-if="activeTab === 'leadership'" class="space-y-6">
           <div class="grid gap-6 md:grid-cols-2">
-            <!-- Ketua -->
+            
             <div
               v-for="leader in organization.leadership.ketua"
               :key="leader.id"
@@ -172,7 +172,7 @@ useHead({
               </div>
             </div>
 
-            <!-- Wakil Ketua -->
+            
             <div
               v-for="leader in organization.leadership.wakil"
               :key="leader.id"
@@ -191,7 +191,7 @@ useHead({
               </div>
             </div>
 
-            <!-- Sekretaris -->
+            
             <div
               v-for="leader in organization.leadership.sekretaris"
               :key="leader.id"
@@ -210,7 +210,7 @@ useHead({
               </div>
             </div>
 
-            <!-- Bendahara -->
+            
             <div
               v-for="leader in organization.leadership.bendahara"
               :key="leader.id"
@@ -231,7 +231,7 @@ useHead({
           </div>
         </div>
 
-        <!-- Sections Tab -->
+        
         <div v-if="activeTab === 'sections'" class="space-y-6">
           <div
             v-for="section in organization.sections"
@@ -300,7 +300,7 @@ useHead({
           </div>
         </div>
 
-        <!-- Activities Tab -->
+        
         <div v-if="activeTab === 'activities'" class="space-y-6">
           <div class="grid gap-6 md:grid-cols-2">
             <div
@@ -325,10 +325,10 @@ useHead({
           </div>
         </div>
 
-        <!-- Contact Tab -->
+        
         <div v-if="activeTab === 'contact'" class="space-y-6">
           <div class="grid gap-6 md:grid-cols-2">
-            <!-- Instagram -->
+            
             <div
               v-if="organization.contactInfo?.instagram?.length"
               class="p-6 bg-white border-2 border-pink-100 shadow-xl rounded-2xl"
@@ -356,7 +356,7 @@ useHead({
               </div>
             </div>
 
-            <!-- WhatsApp -->
+            
             <div
               v-if="organization.contactInfo?.whatsapp?.length"
               class="p-6 bg-white border-2 border-green-100 shadow-xl rounded-2xl"
@@ -384,7 +384,7 @@ useHead({
               </div>
             </div>
 
-            <!-- Social Media -->
+            
             <div
               v-if="organization.contactInfo?.socialMedia?.length"
               class="p-6 bg-white border-2 border-red-100 shadow-xl rounded-2xl md:col-span-2"

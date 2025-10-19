@@ -1,38 +1,34 @@
 export default defineEventHandler(async (event) => {
-  const slug = getRouterParam(event, 'slug');
+  const slug = getRouterParam(event, "slug");
 
   if (!slug) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Slug parameter is required',
+      statusMessage: "Slug parameter is required",
     });
   }
 
   try {
-    // Read JSON file
-    const newsData = await import('~/news_data.json').then(
-      (m) => m.default
-    );
+    const newsData = await import("~/news_data.json").then((m) => m.default);
 
-    // Find article by slug
     const item = newsData.find((article) => article.slug === slug);
 
     if (!item) {
       throw createError({
         statusCode: 404,
-        statusMessage: 'News not found',
+        statusMessage: "News not found",
       });
     }
 
     return item;
   } catch (error) {
-    console.error('Error fetching news by slug:', error);
-    if (error && typeof error === 'object' && 'statusCode' in error) {
-      throw error; // Re-throw createError
+    console.error("Error fetching news by slug:", error);
+    if (error && typeof error === "object" && "statusCode" in error) {
+      throw error;
     }
     throw createError({
       statusCode: 500,
-      statusMessage: 'Internal server error',
+      statusMessage: "Internal server error",
     });
   }
 });

@@ -1,25 +1,23 @@
 export default defineEventHandler(async (event) => {
-  const id = getRouterParam(event, 'id')
+  const id = getRouterParam(event, "id");
 
   if (!id) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'ID is required'
-    })
+      statusMessage: "ID is required",
+    });
   }
 
   try {
-    // Here you would typically delete from a database
-    // For now, we'll just return success
     return {
       success: true,
-      message: `Report ${id} deleted successfully`
-    }
+      message: `Report ${id} deleted successfully`,
+    };
   } catch (error) {
     throw createError({
       statusCode: 500,
-      statusMessage: 'Internal server error',
-      data: error
-    })
+      statusMessage: "Internal server error",
+      data: error,
+    });
   }
-})
+});

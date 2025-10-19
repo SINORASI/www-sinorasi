@@ -4,7 +4,7 @@
       <h2 class="text-2xl font-bold md:text-3xl text-neutral-800">{{ title }}</h2>
     </div>
 
-    <!-- Carousel View -->
+    
     <div class="relative w-full px-4 md:px-16 max-w-7xl">
       <button
         @click="scrollLeft"
@@ -32,14 +32,14 @@
       </button>
     </div>
 
-    <!-- Description -->
+    
     <div v-if="description" class="max-w-4xl px-4 mt-8 text-center">
       <p class="text-base leading-relaxed text-neutral-700">
         {{ description }}
       </p>
     </div>
 
-    <!-- See More Link Button (Bottom Right) -->
+    
     <div class="flex justify-end w-full px-4 mt-6 max-w-7xl">
       <button
         @click="openDialog"
@@ -50,12 +50,12 @@
       </button>
     </div>
 
-    <!-- Full Screen Dialog -->
+    
     <Teleport to="body">
       <Transition name="dialog">
         <div v-if="isDialogOpen" class="fixed inset-0 z-50 overflow-y-auto transition-opacity duration-300 bg-white" @click.self="closeDialog">
           <div class="min-h-screen p-8 py-30">
-            <!-- Header -->
+            
             <div class="mx-auto mb-8 max-w-7xl px-4">
               <div class="flex items-center justify-between mb-6">
                 <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-neutral-800">{{ title }}</h2>
@@ -68,7 +68,7 @@
               </p>
             </div>
 
-            <!-- All Teachers Grid -->
+            
             <div class="mx-auto mb-12 max-w-7xl px-4">
               <h3 class="mb-6 text-xl md:text-2xl font-bold text-neutral-800">Daftar Guru</h3>
               <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
@@ -81,20 +81,20 @@
               </div>
             </div>
 
-            <!-- Materials Section -->
+            
             <div v-if="materialsByClass && materialsByClass.length > 0" class="mx-auto mb-12 max-w-7xl px-4">
               <h3 class="mb-8 text-xl md:text-2xl font-bold text-center text-neutral-800">Materi Yang Diajarkan</h3>
 
               <div class="space-y-6 md:space-y-8">
                 <div v-for="classData in materialsByClass" :key="classData.className" class="space-y-4">
-                  <!-- Class Name -->
+                  
                   <div class="flex justify-center">
                     <div class="px-4 md:px-8 py-2 md:py-3 text-base md:text-lg font-bold text-white rounded-lg bg-neutral-800">
                       {{ classData.className }}
                     </div>
                   </div>
 
-                  <!-- Materials Grid -->
+                  
                   <div class="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
                     <div
                       v-for="(material, index) in classData.materials"
@@ -107,7 +107,7 @@
                 </div>
               </div>
 
-              <!-- Navigation Buttons -->
+              
               <div class="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 mt-6 md:mt-8">
                 <button
                   class="flex items-center justify-center gap-2 px-4 md:px-6 py-2 font-semibold transition-colors rounded-lg bg-neutral-300 hover:bg-neutral-400 text-neutral-800 text-sm md:text-base"
@@ -124,7 +124,7 @@
               </div>
             </div>
 
-            <!-- Teaching Focus Section -->
+            
             <div v-if="teachingFocus" class="mx-auto mb-12 max-w-7xl px-4">
               <div class="p-4 md:p-8 rounded-lg bg-neutral-100">
                 <h3 class="flex items-center gap-2 mb-4 text-xl md:text-2xl font-bold text-neutral-800">
@@ -135,7 +135,7 @@
               </div>
             </div>
 
-            <!-- Classes Section -->
+            
             <div v-if="classes && classes.length > 0" class="mx-auto mb-12 max-w-7xl px-4">
               <div class="p-4 md:p-8 rounded-lg bg-neutral-100">
                 <h3 class="flex items-center gap-2 mb-4 text-xl md:text-2xl font-bold text-neutral-800">
@@ -161,18 +161,17 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
-import TeacherCard from "./TeacherCard.vue";
+import { computed, ref } from "vue";
 
 const props = defineProps({
   title: String,
   pagination: String,
   teachers: Array,
   description: String,
-  classes: Array, // Array of class names (e.g., ['Kelas X RPL', 'Kelas XI RPL'])
-  subjectMaterials: Array, // Array of subject materials taught (deprecated, use materialsByClass)
-  materialsByClass: Array, // Array of objects: [{ className: 'Kelas 10', materials: ['Materi 1', 'Materi 2', ...] }]
-  teachingFocus: String, // Description of teaching focus
+  classes: Array,
+  subjectMaterials: Array,
+  materialsByClass: Array,
+  teachingFocus: String,
 });
 
 defineEmits(["open-modal"]);
@@ -185,12 +184,16 @@ const visibleCount = computed(() => {
   if (process.client) {
     return window.innerWidth < 768 ? 1 : window.innerWidth < 1024 ? 2 : 4;
   }
-  return 4; // Default for SSR
+  return 4;
 });
 
-const visibleTeachers = computed(() => props.teachers.slice(currentIndex.value, currentIndex.value + visibleCount.value));
+const visibleTeachers = computed(() =>
+  props.teachers.slice(currentIndex.value, currentIndex.value + visibleCount.value),
+);
 const canScrollLeft = computed(() => currentIndex.value > 0);
-const canScrollRight = computed(() => currentIndex.value + visibleCount.value < props.teachers.length);
+const canScrollRight = computed(
+  () => currentIndex.value + visibleCount.value < props.teachers.length,
+);
 
 const scrollLeft = () => {
   if (canScrollLeft.value) {

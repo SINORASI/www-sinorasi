@@ -1,6 +1,5 @@
 <script lang="ts" setup>
-import { ref, computed } from "vue";
-import type { Extracurricular } from "~/models/Extracurricular";
+import { computed, ref } from "vue";
 
 const isDialogOpen = ref(false);
 const searchQuery = ref("");
@@ -16,11 +15,9 @@ const closeDialog = () => {
   document.body.style.overflow = "";
 };
 
-// Fetch extracurriculars
 const { data: extracurricularsResponse, pending, error } = await useFetch("/api/extracurriculars");
 const extracurriculars = computed(() => extracurricularsResponse.value?.data || []);
 
-// Categories
 const categories = computed(() => {
   const cats = new Set<string>(["Semua"]);
   extracurriculars.value.forEach((extra: any) => {
@@ -29,7 +26,6 @@ const categories = computed(() => {
   return Array.from(cats);
 });
 
-// Filtered extracurriculars by category and search
 const filteredExtracurriculars = computed(() => {
   let filtered = extracurriculars.value;
 
@@ -40,7 +36,9 @@ const filteredExtracurriculars = computed(() => {
   if (searchQuery.value.trim()) {
     const query = searchQuery.value.toLowerCase();
     filtered = filtered.filter(
-      (extra: any) => extra.name.toLowerCase().includes(query) || extra.description?.toLowerCase().includes(query)
+      (extra: any) =>
+        extra.name.toLowerCase().includes(query) ||
+        extra.description?.toLowerCase().includes(query),
     );
   }
 
@@ -52,7 +50,8 @@ useHead({
   meta: [
     {
       name: "description",
-      content: "Daftar ekstrakurikuler dan organisasi di SMK Negeri 2 Singosari. Kembangkan bakat dan minatmu!",
+      content:
+        "Daftar ekstrakurikuler dan organisasi di SMK Negeri 2 Singosari. Kembangkan bakat dan minatmu!",
     },
   ],
 });
@@ -60,7 +59,7 @@ useHead({
 
 <template>
   <div class="min-h-screen py-24 bg-gradient-to-br from-blue-50 via-white to-blue-50 relative overflow-hidden">
-    <!-- Animated Background Elements -->
+    
     <div class="absolute inset-0">
       <div
         class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-200/30 via-cyan-200/30 to-orange-200/30 animate-gradient-shift"
@@ -80,7 +79,7 @@ useHead({
       ></div>
     </div>
 
-    <!-- Floating Geometric Shapes -->
+    
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
       <div
         class="absolute top-20 left-20 w-4 h-4 bg-gray-300/30 rotate-45 animate-bounce-in"
@@ -105,27 +104,27 @@ useHead({
     </div>
 
     <div class="container px-4 py-8 mx-auto sm:px-6 relative z-10">
-      <!-- Header Section -->
+      
       <div class="flex flex-col items-center mb-20 animate-fade-in-up">
         <div class="relative group mb-8">
-          <!-- Main Title with Neon Effect -->
+          
           <div class="relative">
             <h1
               class="text-5xl sm:text-6xl lg:text-7xl text-center font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-cyan-600 to-orange-600 animate-gradient-shift drop-shadow-2xl"
             >
               EKSTRAKURIKULER
             </h1>
-            <!-- Neon Glow Effect -->
+            
             <div
               class="absolute inset-0 text-5xl sm:text-6xl text-center lg:text-7xl font-black text-blue-600 blur-sm opacity-75 animate-pulse"
             >
               EKSTRAKURIKULER
             </div>
-            <!-- Animated Border -->
+            
             <div class="absolute -inset-4 border-2 border-blue-600/50 rounded-3xl animate-pulse-glow"></div>
           </div>
 
-          <!-- Subtitle -->
+          
           <div class="mt-6 relative">
             <p
               class="text-xl sm:text-2xl text-gray-800 font-light tracking-wide animate-slide-in-left text-center max-w-4xl leading-relaxed"
@@ -133,7 +132,7 @@ useHead({
               Temukan passionmu dan kembangkan potensimu melalui berbagai kegiatan ekstrakurikuler yang menantang dan
               inspiratif
             </p>
-            <!-- Decorative Lines -->
+            
             <div class="flex justify-center items-center gap-6 mt-6">
               <div class="w-20 h-px bg-gradient-to-r from-transparent to-blue-600 animate-shimmer"></div>
               <div class="w-3 h-3 bg-blue-600 rounded-full animate-pulse"></div>
@@ -143,22 +142,22 @@ useHead({
         </div>
       </div>
 
-      <!-- Stats Cards -->
+      
       <div class="grid max-w-5xl grid-cols-1 gap-8 mx-auto mb-24 md:grid-cols-2">
         <div class="relative group">
-          <!-- Cyberpunk Card Design -->
+          
           <div
             class="bg-gradient-to-br from-white/90 to-gray-50/90 backdrop-blur-xl border border-blue-300/50 rounded-2xl p-8 text-center hover-lift stagger-1 animate-scale-in overflow-hidden shadow-lg"
           >
-            <!-- Animated Border -->
+            
             <div
               class="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-200/30 via-cyan-200/30 to-orange-200/30 animate-gradient-shift"
             ></div>
             <div class="absolute inset-[1px] bg-gradient-to-br from-white to-gray-50 rounded-2xl"></div>
 
-            <!-- Content -->
+            
             <div class="relative z-10">
-              <!-- Icon with Glow -->
+              
               <div
                 class="inline-block p-6 mb-6 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-2xl shadow-2xl animate-bounce-in relative"
               >
@@ -166,14 +165,14 @@ useHead({
                 <div class="absolute inset-0 bg-blue-400/20 rounded-2xl blur-xl animate-pulse-glow"></div>
               </div>
 
-              <!-- Number with Counter Effect -->
+              
               <div class="mb-4">
                 <h2
                   class="text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-600 animate-gradient-shift drop-shadow-lg"
                 >
                   {{ extracurriculars.length }}
                 </h2>
-                <!-- Digital Counter Effect -->
+                
                 <div class="flex justify-center gap-1 mt-2">
                   <div class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
                   <div class="w-2 h-2 bg-cyan-500 rounded-full animate-pulse" style="animation-delay: 0.2s"></div>
@@ -187,7 +186,7 @@ useHead({
               ></div>
             </div>
 
-            <!-- Hover Particles -->
+            
             <div
               class="absolute top-4 right-4 w-2 h-2 bg-blue-500 rounded-full opacity-0 group-hover:opacity-100 animate-ping"
             ></div>
@@ -199,19 +198,19 @@ useHead({
         </div>
 
         <div class="relative group">
-          <!-- Cyberpunk Card Design -->
+          
           <div
             class="bg-gradient-to-br from-white/90 to-gray-50/90 backdrop-blur-xl border border-blue-300/50 rounded-2xl p-8 text-center hover-lift stagger-2 animate-scale-in overflow-hidden shadow-lg"
           >
-            <!-- Animated Border -->
+            
             <div
               class="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-200/30 via-cyan-200/30 to-orange-200/30 animate-gradient-shift"
             ></div>
             <div class="absolute inset-[1px] bg-gradient-to-br from-white to-gray-50 rounded-2xl"></div>
 
-            <!-- Content -->
+            
             <div class="relative z-10">
-              <!-- Icon with Glow -->
+              
               <div
                 class="inline-block p-6 mb-6 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-2xl shadow-2xl animate-bounce-in relative"
               >
@@ -219,14 +218,14 @@ useHead({
                 <div class="absolute inset-0 bg-blue-400/20 rounded-2xl blur-xl animate-pulse-glow"></div>
               </div>
 
-              <!-- Number with Counter Effect -->
+              
               <div class="mb-4">
                 <h2
                   class="text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-600 animate-gradient-shift drop-shadow-lg"
                 >
                   {{ extracurriculars.length }}
                 </h2>
-                <!-- Digital Counter Effect -->
+                
                 <div class="flex justify-center gap-1 mt-2">
                   <div class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
                   <div class="w-2 h-2 bg-cyan-500 rounded-full animate-pulse" style="animation-delay: 0.2s"></div>
@@ -240,7 +239,7 @@ useHead({
               ></div>
             </div>
 
-            <!-- Hover Particles -->
+            
             <div
               class="absolute top-4 right-4 w-2 h-2 bg-blue-500 rounded-full opacity-0 group-hover:opacity-100 animate-ping"
             ></div>
@@ -252,21 +251,21 @@ useHead({
         </div>
       </div>
 
-      <!-- Ekstrakurikuler Section -->
+      
       <section class="mb-24 animate-fade-in-on-scroll">
         <div class="mb-16 text-center">
-          <!-- Section Title with Cyberpunk Style -->
+          
           <div class="relative mb-8">
             <h2
               class="text-4xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-cyan-600 to-orange-600 animate-gradient-shift"
             >
               PILIH EKSTRAKURIKULER
             </h2>
-            <!-- Neon Underline -->
+            
             <div
               class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-full animate-shimmer"
             ></div>
-            <!-- Glow Effect -->
+            
             <div class="absolute inset-0 text-4xl sm:text-5xl font-black text-blue-600/30 blur-lg animate-pulse">
               PILIH EKSTRAKURIKULER
             </div>
@@ -279,7 +278,7 @@ useHead({
             mengembangkan skill dan karaktermu secara maksimal
           </p>
 
-          <!-- Decorative Elements -->
+          
           <div class="flex justify-center items-center gap-8 mt-8">
             <div class="w-12 h-px bg-gradient-to-r from-transparent to-blue-600 animate-shimmer"></div>
             <div class="w-4 h-4 border-2 border-blue-600 rotate-45 animate-spin"></div>
@@ -287,7 +286,7 @@ useHead({
           </div>
         </div>
 
-        <!-- Category Filter -->
+        
         <div class="flex flex-wrap justify-center gap-4 mb-16">
           <button
             v-for="category in categories"
@@ -300,20 +299,20 @@ useHead({
                 : 'bg-white/90 backdrop-blur-sm text-gray-700 hover:text-gray-900 border-gray-300/50 hover:border-blue-400 hover:from-blue-500/20 hover:to-cyan-500/20',
             ]"
           >
-            <!-- Button Glow Effect -->
+            
             <span class="relative z-10">{{ category }}</span>
             <div
               v-if="selectedCategory === category"
               class="absolute inset-0 bg-gradient-to-r from-blue-400/20 to-cyan-400/20 animate-gradient-shift"
             ></div>
-            <!-- Hover Particles -->
+            
             <div
               class="absolute top-2 right-2 w-1 h-1 bg-blue-400 rounded-full opacity-0 group-hover:opacity-100 animate-ping"
             ></div>
           </button>
         </div>
 
-        <!-- Ekstrakurikuler Grid -->
+        
         <div v-if="pending" class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
           <div
             v-for="i in 9"
@@ -339,12 +338,12 @@ useHead({
               `stagger-${(index % 6) + 1}`,
             ]"
           >
-            <!-- Card Background Glow -->
+            
             <div
               class="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
             ></div>
 
-            <!-- Icon Container -->
+            
             <div class="relative mb-6">
               <div
                 class="inline-block p-6 bg-gradient-to-br from-gray-200 to-gray-300 rounded-2xl group-hover:from-blue-500 group-hover:to-cyan-600 transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 shadow-xl"
@@ -354,12 +353,12 @@ useHead({
                   size="40"
                   class="text-gray-700 group-hover:text-white transition-colors duration-300"
                 />
-                <!-- Icon Glow Effect -->
+                
                 <div
                   class="absolute inset-0 bg-blue-400/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 ></div>
               </div>
-              <!-- Floating Particles -->
+              
               <div
                 class="absolute -top-1 -right-1 w-3 h-3 bg-blue-400 rounded-full opacity-0 group-hover:opacity-100 animate-ping"
               ></div>
@@ -369,12 +368,12 @@ useHead({
               ></div>
             </div>
 
-            <!-- Title -->
+            
             <h3 class="mb-4 text-xl font-bold text-gray-800 group-hover:text-blue-600 transition-colors duration-300">
               {{ extra.name }}
             </h3>
 
-            <!-- Description -->
+            
             <p
               v-if="extra.description"
               class="text-sm text-gray-600 line-clamp-2 leading-relaxed mb-4 group-hover:text-gray-800 transition-colors duration-300"
@@ -382,7 +381,7 @@ useHead({
               {{ extra.description }}
             </p>
 
-            <!-- Category Badge -->
+            
             <div
               v-if="extra.category"
               class="inline-block px-4 py-2 text-xs font-bold bg-gradient-to-r from-blue-500/20 to-cyan-500/20 text-blue-600 border border-blue-400/30 rounded-full mb-4 group-hover:from-blue-500/30 group-hover:to-cyan-500/30 transition-all duration-300"
@@ -390,7 +389,7 @@ useHead({
               {{ extra.category }}
             </div>
 
-            <!-- Arrow Indicator -->
+            
             <div class="flex items-center justify-center">
               <Icon
                 name="lucide:arrow-right"
@@ -399,7 +398,7 @@ useHead({
               />
             </div>
 
-            <!-- Animated Border -->
+            
             <div
               class="absolute inset-0 rounded-2xl border-2 border-transparent group-hover:border-blue-400/50 transition-all duration-500"
             ></div>
@@ -426,18 +425,18 @@ useHead({
         </div>
       </section>
 
-      <!-- CTA Section -->
+      
       <section class="max-w-5xl p-12 mx-auto text-center animate-fade-in-on-scroll relative">
-        <!-- Cyberpunk CTA Card -->
+        
         <div
           class="bg-gradient-to-br from-white/95 to-gray-50/95 backdrop-blur-xl border border-blue-300/50 rounded-3xl p-12 hover-lift overflow-hidden relative group shadow-xl"
         >
-          <!-- Animated Background -->
+          
           <div
             class="absolute inset-0 bg-gradient-to-r from-blue-200/20 via-cyan-200/20 to-orange-200/20 animate-gradient-shift"
           ></div>
 
-          <!-- Floating Elements -->
+          
           <div class="absolute top-6 left-6 w-3 h-3 bg-blue-400 rounded-full animate-float opacity-60"></div>
           <div
             class="absolute top-8 right-8 w-2 h-2 bg-cyan-400 rounded-full animate-float opacity-60"
@@ -449,34 +448,34 @@ useHead({
           ></div>
 
           <div class="relative z-10">
-            <!-- Icon with Glow -->
+            
             <div
               class="inline-block p-8 mb-8 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-3xl shadow-2xl animate-bounce-in relative"
             >
               <Icon name="lucide:lightbulb" size="56" class="text-white animate-pulse" />
-              <!-- Glow Effect -->
+              
               <div class="absolute inset-0 bg-blue-400/30 rounded-3xl blur-2xl animate-pulse-glow"></div>
             </div>
 
-            <!-- Title -->
+            
             <h2
               class="mb-8 text-4xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-cyan-600 to-orange-600 animate-gradient-shift"
             >
               BUAT EKSTRAKURIKULER BARU
             </h2>
 
-            <!-- Description -->
+            
             <p class="mb-10 text-xl text-gray-700 leading-relaxed max-w-3xl mx-auto">
               Tidak menemukan ekstrakurikuler yang sesuai dengan passionmu? Jadilah pionir dan buat komunitas baru yang
               akan menginspirasi teman-teman lainnya!
             </p>
 
-            <!-- CTA Button -->
+            
             <button
               @click="openDialog"
               class="inline-flex items-center gap-4 px-10 py-5 font-bold text-white transition-all duration-500 bg-gradient-to-r from-blue-500 to-cyan-600 rounded-2xl shadow-2xl hover:shadow-3xl hover:scale-105 animate-pulse-glow relative overflow-hidden group/btn"
             >
-              <!-- Button Glow -->
+              
               <div
                 class="absolute inset-0 bg-gradient-to-r from-blue-400 to-cyan-400 opacity-0 group-hover/btn:opacity-20 transition-opacity duration-300 pointer-events-none"
               ></div>
@@ -488,7 +487,7 @@ useHead({
                 class="relative z-10 transition-transform duration-300 group-hover/btn:translate-x-2"
               />
 
-              <!-- Button Particles -->
+              
               <div
                 class="absolute top-3 right-3 w-1 h-1 bg-white rounded-full opacity-0 group-hover/btn:opacity-100 animate-ping pointer-events-none"
               ></div>
@@ -498,7 +497,7 @@ useHead({
               ></div>
             </button>
 
-            <!-- Decorative Border -->
+            
             <div
               class="absolute inset-0 rounded-3xl border-2 border-transparent group-hover:border-blue-400/50 transition-all duration-500"
             ></div>
@@ -507,7 +506,7 @@ useHead({
       </section>
     </div>
 
-    <!-- Dialog Modal -->
+    
     <Teleport to="body">
       <Transition
         enter-active-class="transition-opacity duration-300"
@@ -523,7 +522,7 @@ useHead({
           <div
             class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border-2 border-blue-100"
           >
-            <!-- Dialog Header -->
+            
             <div
               class="flex items-center justify-between p-6 border-b border-gray-200 bg-gradient-to-r from-blue-600 to-blue-800 rounded-t-2xl"
             >
@@ -533,9 +532,9 @@ useHead({
               </button>
             </div>
 
-            <!-- Dialog Content -->
+            
             <div class="p-6 space-y-6">
-              <!-- Step 1 -->
+              
               <div class="flex gap-4">
                 <div class="flex items-center justify-center flex-shrink-0 w-10 h-10 bg-blue-600 rounded-full">
                   <span class="text-lg font-bold text-white">1</span>
@@ -549,7 +548,7 @@ useHead({
                 </div>
               </div>
 
-              <!-- Step 2 -->
+              
               <div class="flex gap-4">
                 <div class="flex items-center justify-center flex-shrink-0 w-10 h-10 bg-blue-600 rounded-full">
                   <span class="text-lg font-bold text-white">2</span>
@@ -563,7 +562,7 @@ useHead({
                 </div>
               </div>
 
-              <!-- Step 3 -->
+              
               <div class="flex gap-4">
                 <div class="flex items-center justify-center flex-shrink-0 w-10 h-10 bg-blue-600 rounded-full">
                   <span class="text-lg font-bold text-white">3</span>
@@ -574,7 +573,7 @@ useHead({
                     Jika masih bingung, silahkan hubungi kontak di bawah ini:
                   </p>
 
-                  <!-- Contact Cards -->
+                  
                   <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
                     <div class="p-4 border-2 border-blue-100 bg-blue-50 rounded-xl">
                       <div class="flex items-center gap-2 mb-3">
@@ -602,7 +601,7 @@ useHead({
               </div>
             </div>
 
-            <!-- Dialog Footer -->
+            
             <div class="flex justify-center p-6 border-t border-gray-200">
               <button
                 @click="closeDialog"

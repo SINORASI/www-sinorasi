@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import OrgChart from '~/components/OrgChart.vue'
-
 useHead({
   title: "Struktur Organisasi - Informasi - SMKN 2 Singosari",
   meta: [
@@ -14,20 +12,20 @@ useHead({
 
 <template>
   <div class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 relative overflow-hidden">
-    <!-- Animated background elements -->
+    
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
       <div class="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-400/20 to-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
       <div class="absolute top-1/2 -left-40 w-96 h-96 bg-gradient-to-tr from-indigo-400/15 to-cyan-500/15 rounded-full blur-3xl animate-pulse delay-1000"></div>
       <div class="absolute -bottom-40 right-1/4 w-72 h-72 bg-gradient-to-tl from-purple-400/20 to-pink-500/20 rounded-full blur-3xl animate-pulse delay-2000"></div>
     </div>
 
-    <!-- Hero Section -->
+    
     <section class="relative h-[500px] flex items-center justify-center overflow-hidden">
-      <!-- Dynamic background with particles effect -->
+      
       <div class="absolute inset-0 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900"></div>
       <div class="absolute inset-0 bg-gradient-to-t from-transparent via-blue-900/20 to-transparent"></div>
 
-      <!-- Floating particles -->
+      
       <div class="absolute inset-0">
         <div class="absolute top-20 left-20 w-2 h-2 bg-white/30 rounded-full animate-bounce delay-100"></div>
         <div class="absolute top-32 right-32 w-1 h-1 bg-white/40 rounded-full animate-bounce delay-300"></div>
@@ -50,10 +48,10 @@ useHead({
       </div>
     </section>
 
-    <!-- Main Content -->
+    
     <section class="relative z-10 py-16 px-4">
       <div class="container max-w-7xl mx-auto">
-        <!-- Introduction Card -->
+        
         <div class="text-center mb-16">
           <div class="inline-block p-8 bg-white/80 backdrop-blur-sm border border-white/50 rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-500 hover:-translate-y-1">
             <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4">
@@ -66,12 +64,12 @@ useHead({
           </div>
         </div>
 
-        <!-- Organizational Chart -->
+        
         <div class="bg-white/60 backdrop-blur-sm border border-white/50 rounded-3xl shadow-2xl p-8 md:p-12">
           <OrgChart />
         </div>
 
-        <!-- Additional Information -->
+        
         <div class="mt-16 grid md:grid-cols-3 gap-8">
           <div class="bg-white/80 backdrop-blur-sm border border-white/50 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
             <div class="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mb-4">

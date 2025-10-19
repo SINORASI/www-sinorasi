@@ -5,7 +5,7 @@ export interface News {
   subtitle: string;
   thumbnail: string;
   tags: string[];
-  content: string; // Markdown content
+  content: string;
   publishedAt: string;
   author?: string;
 }

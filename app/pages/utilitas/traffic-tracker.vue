@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { trafficTrackerSchema, type TrafficTrackerForm } from "~/utils/schema";
+import { type TrafficTrackerForm, trafficTrackerSchema } from "~/utils/schema";
 
 interface TrafficResults {
   time: string;
@@ -53,7 +53,8 @@ interface TrafficReportForm {
   };
 }
 
-const schoolAddress = "SMK Negeri 2 Singosari, Jl. Raya Singosari, Singosari, Malang, Jawa Timur, Indonesia";
+const schoolAddress =
+  "SMK Negeri 2 Singosari, Jl. Raya Singosari, Singosari, Malang, Jawa Timur, Indonesia";
 
 const form = ref<TrafficTrackerForm>({
   origin: "",
@@ -67,7 +68,7 @@ const reportForm = ref<TrafficReportForm>({
   type: "traffic_jam",
   severity: "medium",
   description: "",
-  location: undefined
+  location: undefined,
 });
 
 const results = ref<TrafficResults | null>(null);
@@ -86,7 +87,6 @@ const validationErrors = ref<Record<string, string>>({});
 const showReportForm = ref(false);
 const showTrafficIncidents = ref(false);
 
-
 const getCurrentLocation = () => {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
@@ -94,12 +94,12 @@ const getCurrentLocation = () => {
         const lat = position.coords.latitude;
         const lng = position.coords.longitude;
         form.value.origin = `${lat},${lng}`;
-        // Also set for traffic reporting
+
         reportForm.value.location = { lat, lng };
       },
-      (err) => {
+      (_err) => {
         error.value = "Tidak dapat mendapatkan lokasi saat ini. Pastikan izin lokasi diaktifkan.";
-      }
+      },
     );
   } else {
     error.value = "Geolokasi tidak didukung oleh browser ini.";
@@ -109,8 +109,8 @@ const getCurrentLocation = () => {
 const fetchCurrentTraffic = async () => {
   if (!reportForm.value.location) {
     await getCurrentLocation();
-    // Wait a bit for location to be set
-    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    await new Promise((resolve) => setTimeout(resolve, 1000));
   }
 
   if (!reportForm.value.location) {
@@ -122,13 +122,13 @@ const fetchCurrentTraffic = async () => {
   reportError.value = "";
 
   try {
-    const response = await $fetch('/api/traffic-tracker/current', {
-      method: 'GET',
+    const response = await $fetch("/api/traffic-tracker/current", {
+      method: "GET",
       query: {
         lat: reportForm.value.location.lat,
         lng: reportForm.value.location.lng,
-        radius: 10
-      }
+        radius: 10,
+      },
     });
 
     currentTraffic.value = response;
@@ -151,24 +151,24 @@ const submitTrafficReport = async () => {
   reportSuccess.value = "";
 
   try {
-    const response = await $fetch('/api/traffic-tracker/report', {
-      method: 'POST',
+    const response = await $fetch("/api/traffic-tracker/report", {
+      method: "POST",
       body: {
         location: reportForm.value.location,
         type: reportForm.value.type,
         severity: reportForm.value.severity,
         description: reportForm.value.description,
-        timestamp: new Date().toISOString()
-      }
+        timestamp: new Date().toISOString(),
+      },
     });
 
     reportSuccess.value = response.message;
-    // Reset form
+
     reportForm.value = {
       type: "traffic_jam",
       severity: "medium",
       description: "",
-      location: reportForm.value.location
+      location: reportForm.value.location,
     };
   } catch (err: any) {
     reportError.value = err.message || "Gagal mengirim laporan lalu lintas.";
@@ -179,22 +179,33 @@ const submitTrafficReport = async () => {
 
 const getIncidentIcon = (type?: string) => {
   switch (type) {
-    case 'accident': return 'lucide:car-crash';
-    case 'construction': return 'lucide:construction';
-    case 'traffic_jam': return 'lucide:traffic-cone';
-    case 'road_closure': return 'lucide:road-closed';
-    case 'flooding': return 'lucide:cloud-rain';
-    default: return 'lucide:alert-triangle';
+    case "accident":
+      return "lucide:car-crash";
+    case "construction":
+      return "lucide:construction";
+    case "traffic_jam":
+      return "lucide:traffic-cone";
+    case "road_closure":
+      return "lucide:road-closed";
+    case "flooding":
+      return "lucide:cloud-rain";
+    default:
+      return "lucide:alert-triangle";
   }
 };
 
 const getSeverityColor = (severity?: string) => {
   switch (severity) {
-    case 'low': return 'text-yellow-600 bg-yellow-50';
-    case 'medium': return 'text-orange-600 bg-orange-50';
-    case 'high': return 'text-red-600 bg-red-50';
-    case 'critical': return 'text-red-800 bg-red-100';
-    default: return 'text-gray-600 bg-gray-50';
+    case "low":
+      return "text-yellow-600 bg-yellow-50";
+    case "medium":
+      return "text-orange-600 bg-orange-50";
+    case "high":
+      return "text-red-600 bg-red-50";
+    case "critical":
+      return "text-red-800 bg-red-100";
+    default:
+      return "text-gray-600 bg-gray-50";
   }
 };
 
@@ -223,14 +234,13 @@ const getTips = (traffic: string, duration: string) => {
 };
 
 const getRecommendation = (duration: string, traffic: string) => {
-  const durationMin = parseInt(duration.split(" ")[0] || "0");
+  const durationMin = parseInt(duration.split(" ")[0] || "0", 10);
   if (traffic === "Macet" || durationMin > 60) return "Tidak direkomendasikan saat ini.";
   if (durationMin > 30) return "Direkomendasikan jika mendesak.";
   return "Direkomendasikan.";
 };
 
 const calculateRoute = async () => {
-  // Validate form
   const validation = trafficTrackerSchema.safeParse(form.value);
   if (!validation.success) {
     validationErrors.value = {};
@@ -242,7 +252,6 @@ const calculateRoute = async () => {
     return;
   }
 
-  // Clear validation errors
   validationErrors.value = {};
 
   loading.value = true;
@@ -250,9 +259,9 @@ const calculateRoute = async () => {
   results.value = null;
 
   try {
-    const response = await $fetch('/api/traffic-tracker', {
-      method: 'POST',
-      body: form.value
+    const response = await $fetch("/api/traffic-tracker", {
+      method: "POST",
+      body: form.value,
     });
 
     results.value = response;
@@ -268,7 +277,8 @@ useHead({
   meta: [
     {
       name: "description",
-      content: "Cek estimasi waktu tempuh ke SMK Negeri 2 Singosari dari lokasi Anda dengan traffic tracker.",
+      content:
+        "Cek estimasi waktu tempuh ke SMK Negeri 2 Singosari dari lokasi Anda dengan traffic tracker.",
     },
   ],
 });
@@ -277,7 +287,7 @@ useHead({
 <template>
   <div class="min-h-screen py-24 bg-gradient-to-b from-white via-blue-50 to-white">
     <div class="container px-4 mx-auto sm:px-6">
-      <!-- Page Header -->
+      
       <div class="mb-12 text-center">
         <div
           class="inline-block px-10 py-6 mb-4 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
@@ -290,7 +300,7 @@ useHead({
         </p>
       </div>
 
-      <!-- Form Section -->
+      
       <div class="max-w-md mx-auto mb-12">
         <form @submit.prevent="calculateRoute" class="p-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
           <div class="mb-6">
@@ -331,7 +341,7 @@ useHead({
           </button>
         </form>
 
-        <!-- Error Message -->
+        
         <div v-if="error" class="p-4 mt-6 border-l-4 border-red-600 bg-red-50 rounded-r-xl">
           <div class="flex items-start">
             <Icon name="lucide:alert-circle" size="20" class="text-red-600 mr-3 mt-0.5 flex-shrink-0" />
@@ -340,10 +350,10 @@ useHead({
         </div>
       </div>
 
-      <!-- Crowd-sourced Features Section -->
+      
       <div class="max-w-4xl mx-auto mb-12">
         <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-          <!-- Traffic Report Form -->
+          
           <div class="p-6 bg-white border-2 border-orange-100 shadow-xl rounded-2xl">
             <div class="flex items-center justify-between mb-4">
               <h3 class="text-lg font-bold text-gray-800">Laporkan Kondisi Lalu Lintas</h3>
@@ -414,7 +424,7 @@ useHead({
             </div>
           </div>
 
-          <!-- Current Traffic Incidents -->
+          
           <div class="p-6 bg-white border-2 border-green-100 shadow-xl rounded-2xl">
             <div class="flex items-center justify-between mb-4">
               <h3 class="text-lg font-bold text-gray-800">Kondisi Lalu Lintas Terkini</h3>
@@ -475,9 +485,9 @@ useHead({
       </div>
 
 
-      <!-- Results Section -->
+      
       <div v-if="results" class="max-w-6xl mx-auto">
-        <!-- Main Stats Grid -->
+        
         <div class="grid grid-cols-1 gap-6 mb-8 md:grid-cols-3">
           <div
             class="p-8 text-center transition-shadow bg-white border-2 border-blue-100 shadow-xl rounded-2xl hover:shadow-2xl"
@@ -524,7 +534,7 @@ useHead({
           </div>
         </div>
 
-        <!-- Recommendation Card -->
+        
         <div class="p-8 mb-8 text-center bg-white border-2 border-orange-100 shadow-xl rounded-2xl">
           <div
             class="inline-block px-6 py-3 mb-4 border border-orange-200 bg-gradient-to-r from-orange-500 to-orange-600 rounded-xl"
@@ -545,7 +555,7 @@ useHead({
           </p>
         </div>
 
-        <!-- Proximity & Time Analytics -->
+        
         <div class="grid grid-cols-1 gap-6 mb-8 md:grid-cols-2">
           <div class="p-8 bg-white border-2 border-green-100 shadow-xl rounded-2xl">
             <div
@@ -617,7 +627,7 @@ useHead({
           </div>
         </div>
 
-        <!-- Useful Information -->
+        
         <div class="p-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
           <div
             class="inline-block px-6 py-3 mb-6 border border-blue-200 bg-gradient-to-r from-blue-600 to-blue-800 rounded-xl"
@@ -649,7 +659,7 @@ useHead({
           </div>
         </div>
 
-        <!-- Additional Information Card -->
+        
         <div class="p-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
           <div
             class="inline-block px-6 py-3 mb-6 border border-blue-200 bg-gradient-to-r from-blue-600 to-blue-800 rounded-xl"
@@ -681,7 +691,7 @@ useHead({
           </ul>
         </div>
 
-        <!-- Open Source Attribution -->
+        
         <div class="p-6 bg-gray-50 border-2 border-gray-200 shadow-xl rounded-2xl">
           <div class="text-center">
             <h4 class="text-lg font-bold text-gray-800 mb-2">Dukungan Teknologi Open Source</h4>

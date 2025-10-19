@@ -1,25 +1,25 @@
 <script setup lang="ts">
-import { profileSchema, type ProfileForm } from '~/utils/schema'
+import { type ProfileForm, profileSchema } from "~/utils/schema";
 
 const formData = ref<ProfileForm>({
-  name: 'John Doe',
-  username: 'johndoe',
-  email: 'john@example.com',
-  phone: '+6281234567890',
-  bio: 'Siswa SMKN 2 Singosari yang antusias belajar teknologi.',
-  currentPassword: '',
-  newPassword: '',
-  confirmNewPassword: ''
-})
+  name: "John Doe",
+  username: "johndoe",
+  email: "john@example.com",
+  phone: "+6281234567890",
+  bio: "Siswa SMKN 2 Singosari yang antusias belajar teknologi.",
+  currentPassword: "",
+  newPassword: "",
+  confirmNewPassword: "",
+});
 
-const errors = ref<Record<string, string[] | undefined>>({})
-const isSubmitting = ref(false)
-const activeTab = ref('profile')
-const showGuidelines = ref(false)
+const errors = ref<Record<string, string[] | undefined>>({});
+const isSubmitting = ref(false);
+const activeTab = ref("profile");
+const showGuidelines = ref(false);
 
-const selectedFile = ref<File | null>(null)
-const previewUrl = ref<string | null>(null)
-const isUploading = ref(false)
+const selectedFile = ref<File | null>(null);
+const previewUrl = ref<string | null>(null);
+const isUploading = ref(false);
 
 useHead({
   title: "Edit Profil - SMKN 2 Singosari",
@@ -32,110 +32,97 @@ useHead({
 });
 
 const tabs = [
-  { id: 'profile', label: 'Informasi Profil', icon: 'lucide:user' },
-  { id: 'security', label: 'Keamanan', icon: 'lucide:shield' }
-]
+  { id: "profile", label: "Informasi Profil", icon: "lucide:user" },
+  { id: "security", label: "Keamanan", icon: "lucide:shield" },
+];
 
 const submitProfile = async () => {
-  // Validate form
-  const result = profileSchema.safeParse(formData.value)
+  const result = profileSchema.safeParse(formData.value);
 
   if (!result.success) {
-    errors.value = result.error.flatten().fieldErrors
-    return
+    errors.value = result.error.flatten().fieldErrors;
+    return;
   }
 
-  // Clear errors
-  errors.value = {}
-  isSubmitting.value = true
+  errors.value = {};
+  isSubmitting.value = true;
 
   try {
-    // Simulate profile update
-    await new Promise(resolve => setTimeout(resolve, 1000))
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    alert("Profil berhasil diperbarui!")
+    alert("Profil berhasil diperbarui!");
 
-    // Reset password fields
-    formData.value.currentPassword = ''
-    formData.value.newPassword = ''
-    formData.value.confirmNewPassword = ''
+    formData.value.currentPassword = "";
+    formData.value.newPassword = "";
+    formData.value.confirmNewPassword = "";
   } catch (error) {
-    alert("Terjadi kesalahan saat memperbarui profil")
+    alert("Terjadi kesalahan saat memperbarui profil");
   } finally {
-    isSubmitting.value = false
+    isSubmitting.value = false;
   }
-}
+};
 
-// Handle file selection
 const handleFileSelect = (event: Event) => {
-  const target = event.target as HTMLInputElement
-  const file = target.files?.[0]
+  const target = event.target as HTMLInputElement;
+  const file = target.files?.[0];
 
   if (file) {
-    // Validate file type
-    if (!file.type.startsWith('image/')) {
-      alert('Please select an image file')
-      return
+    if (!file.type.startsWith("image/")) {
+      alert("Please select an image file");
+      return;
     }
 
-    // Validate file size (5MB limit)
     if (file.size > 5 * 1024 * 1024) {
-      alert('File size must be less than 5MB')
-      return
+      alert("File size must be less than 5MB");
+      return;
     }
 
-    selectedFile.value = file
+    selectedFile.value = file;
 
-    // Create preview URL
-    const reader = new FileReader()
+    const reader = new FileReader();
     reader.onload = (e) => {
-      previewUrl.value = e.target?.result as string
-    }
-    reader.readAsDataURL(file)
+      previewUrl.value = e.target?.result as string;
+    };
+    reader.readAsDataURL(file);
   }
-}
+};
 
-// Handle photo upload
 const uploadPhoto = async () => {
-  if (!selectedFile.value) return
+  if (!selectedFile.value) return;
 
-  isUploading.value = true
+  isUploading.value = true;
 
   try {
-    // Simulate photo upload
-    await new Promise(resolve => setTimeout(resolve, 1500))
+    await new Promise((resolve) => setTimeout(resolve, 1500));
 
-    alert("Foto profil berhasil diperbarui!")
+    alert("Foto profil berhasil diperbarui!");
 
-    // Clear file selection and preview URL after successful upload
-    selectedFile.value = null
-    previewUrl.value = null
-
+    selectedFile.value = null;
+    previewUrl.value = null;
   } catch (error) {
-    console.log("Upload error:", error)
-    alert("Terjadi kesalahan saat mengupload foto")
+    console.log("Upload error:", error);
+    alert("Terjadi kesalahan saat mengupload foto");
   } finally {
-    isUploading.value = false
+    isUploading.value = false;
   }
-}
+};
 
-// Handle logout
 const handleLogout = async () => {
-  await navigateTo('/')
-}
+  await navigateTo("/");
+};
 </script>
 
 <template>
   <div class="min-h-screen py-24 bg-gradient-to-b from-white via-blue-50 to-white">
     <div class="container px-4 mx-auto sm:px-6">
       <div class="max-w-4xl mx-auto">
-        <!-- Header -->
+        
         <div class="mb-8">
           <h1 class="text-3xl font-bold text-gray-800 md:text-4xl">Edit Profil</h1>
           <p class="mt-2 text-gray-600">Kelola informasi dan pengaturan akun Anda</p>
         </div>
 
-        <!-- Tab Navigation -->
+        
         <div class="mb-8">
           <div class="flex border-b border-gray-200">
             <button
@@ -155,9 +142,9 @@ const handleLogout = async () => {
           </div>
         </div>
 
-        <!-- Profile Information Tab -->
+        
         <div v-if="activeTab === 'profile'" class="space-y-8">
-          <!-- Profile Picture Section -->
+          
           <div class="p-6 bg-white border-2 border-blue-100 shadow-xl rounded-2xl md:p-8">
             <h3 class="mb-6 text-xl font-bold text-gray-800">Foto Profil</h3>
             <div class="flex items-center gap-6">
@@ -200,7 +187,7 @@ const handleLogout = async () => {
             </div>
           </div>
 
-          <!-- Personal Information Form -->
+          
           <div class="p-6 bg-white border-2 border-blue-100 shadow-xl rounded-2xl md:p-8">
             <h3 class="mb-6 text-xl font-bold text-gray-800">Informasi Pribadi</h3>
 
@@ -324,9 +311,9 @@ const handleLogout = async () => {
           </div>
         </div>
 
-        <!-- Security Tab -->
+        
         <div v-if="activeTab === 'security'" class="space-y-8">
-          <!-- Change Password Form -->
+          
           <div class="p-6 bg-white border-2 border-orange-100 shadow-xl rounded-2xl md:p-8">
             <h3 class="mb-6 text-xl font-bold text-gray-800">Ubah Password</h3>
 
@@ -415,7 +402,7 @@ const handleLogout = async () => {
             </form>
           </div>
 
-          <!-- Security Guidelines -->
+          
           <div class="p-6 bg-white border-2 border-green-100 shadow-xl rounded-2xl md:p-8">
             <h3 class="mb-6 text-xl font-bold text-gray-800">Tips Keamanan</h3>
             <div class="space-y-4">
@@ -444,7 +431,7 @@ const handleLogout = async () => {
           </div>
         </div>
 
-        <!-- Guidelines Modal -->
+        
         <Teleport to="body">
           <Transition name="dialog">
             <div

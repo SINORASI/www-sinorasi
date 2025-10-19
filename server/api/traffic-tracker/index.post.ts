@@ -1,21 +1,8 @@
-import { trafficTrackerSchema, type TrafficTrackerForm } from '~/utils/schema';
+import { type TrafficTrackerForm, trafficTrackerSchema } from "~/utils/schema";
 
 interface Coordinate {
   lat: number;
   lng: number;
-}
-
-interface RouteRequest {
-  origin: Coordinate;
-  destination: Coordinate;
-  profile: "driving" | "walking" | "cycling" | "transit";
-  preferences?: RoutePreferences;
-  time?: Date;
-}
-
-interface RoutePreferences {
-  avoidTolls?: boolean;
-  avoidHighways?: boolean;
 }
 
 interface TrafficResults {
@@ -47,80 +34,76 @@ interface TrafficResults {
 }
 
 export default defineEventHandler(async (event): Promise<TrafficResults> => {
-  const body = await readBody(event) as TrafficTrackerForm;
+  const body = (await readBody(event)) as TrafficTrackerForm;
   const config = useRuntimeConfig();
 
-  // Validate input using Zod schema
   const validation = trafficTrackerSchema.safeParse(body);
   if (!validation.success) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Invalid input data',
-      data: validation.error.issues
+      statusMessage: "Invalid input data",
+      data: validation.error.issues,
     });
   }
 
-  // OSRM configuration - using public OSRM demo server for now
-  const osrmBaseUrl = config.public?.osrmBaseUrl || 'https://router.project-osrm.org';
+  const _osrmBaseUrl = config.public?.osrmBaseUrl || "https://router.project-osrm.org";
 
-  const schoolAddress = "SMK Negeri 2 Singosari, Jl. Raya Singosari, Singosari, Malang, Jawa Timur, Indonesia";
+  const schoolAddress =
+    "SMK Negeri 2 Singosari, Jl. Raya Singosari, Singosari, Malang, Jawa Timur, Indonesia";
 
   try {
-    // Geocode origin address using Nominatim (OSM geocoding)
     const originCoords = await geocodeAddress(body.origin);
     if (!originCoords) {
       throw createError({
         statusCode: 400,
-        statusMessage: 'Origin address not found. Please check the address and try again.'
+        statusMessage: "Origin address not found. Please check the address and try again.",
       });
     }
 
-    // Geocode school address using Nominatim
     const destinationCoords = await geocodeAddress(schoolAddress);
     if (!destinationCoords) {
       throw createError({
         statusCode: 500,
-        statusMessage: 'School address geocoding failed. Please contact support.'
+        statusMessage: "School address geocoding failed. Please contact support.",
       });
     }
 
-    // Get route from OSRM
     const routeData = await getOSRMRoute(originCoords, destinationCoords, body.travelMode);
 
     if (!routeData || routeData.routes.length === 0) {
       throw createError({
         statusCode: 400,
-        statusMessage: 'Unable to calculate route. The routing service may be temporarily unavailable.'
+        statusMessage:
+          "Unable to calculate route. The routing service may be temporarily unavailable.",
       });
     }
 
     const route = routeData.routes[0];
     const duration = formatDuration(route.duration);
     const distance = formatDistance(route.distance);
-    const traffic = getTrafficStatus(route.duration, route.duration); // Basic implementation
-    const routeSummary = `Route via ${route.legs[0]?.summary || 'main roads'}`;
+    const traffic = getTrafficStatus(route.duration, route.duration);
+    const routeSummary = `Route via ${route.legs[0]?.summary || "main roads"}`;
     const bestTime = getBestTime();
     const tips = getTips(traffic, duration);
     const recommendation = getRecommendation(duration, traffic);
 
-    // Enhanced analytics with OSRM data
     const analytics = {
       proximity: {
         distanceToSchool: distance,
         estimatedArrival: calculateEstimatedArrival(duration),
-        timeToSchool: duration
+        timeToSchool: duration,
       },
       timeAnalytics: {
         currentCongestion: traffic,
-        peakHours: ['07:00-09:00', '16:00-18:00'],
+        peakHours: ["07:00-09:00", "16:00-18:00"],
         recommendedDeparture: getRecommendedDeparture(),
-        alternativeRoutes: routeData.routes.length
+        alternativeRoutes: routeData.routes.length,
       },
       usefulInfo: {
         fuelEstimate: calculateFuelEstimate(distance),
         carbonFootprint: calculateCarbonFootprint(distance),
-        safetyRating: getSafetyRating(traffic)
-      }
+        safetyRating: getSafetyRating(traffic),
+      },
     };
 
     return {
@@ -131,52 +114,59 @@ export default defineEventHandler(async (event): Promise<TrafficResults> => {
       bestTime,
       tips,
       recommendation,
-      analytics
+      analytics,
     };
-  } catch (error: any) {
-    console.error('Traffic tracker error:', error);
+  } catch (error: unknown) {
+    console.error("Traffic tracker error:", error);
 
-    // Enhanced error handling with specific messages
-    if (error.statusCode) {
-      throw error; // Re-throw custom errors
+    if (error && typeof error === "object" && "statusCode" in error) {
+      throw error;
     }
 
-    // Handle network/geocoding errors
-    if (error.message?.includes('fetch')) {
+    if (
+      error &&
+      typeof error === "object" &&
+      "message" in error &&
+      typeof error.message === "string" &&
+      error.message.includes("fetch")
+    ) {
       throw createError({
         statusCode: 503,
-        statusMessage: 'External service temporarily unavailable. Please try again later.'
+        statusMessage: "External service temporarily unavailable. Please try again later.",
       });
     }
 
-    // Handle JSON parsing errors
-    if (error.message?.includes('JSON')) {
+    if (
+      error &&
+      typeof error === "object" &&
+      "message" in error &&
+      typeof error.message === "string" &&
+      error.message.includes("JSON")
+    ) {
       throw createError({
         statusCode: 502,
-        statusMessage: 'Invalid response from routing service. Please try again.'
+        statusMessage: "Invalid response from routing service. Please try again.",
       });
     }
 
-    // Generic fallback
     throw createError({
       statusCode: 500,
-      statusMessage: 'An unexpected error occurred while calculating your route. Please try again.'
+      statusMessage: "An unexpected error occurred while calculating your route. Please try again.",
     });
   }
 });
 
-// Geocode address using Nominatim (OpenStreetMap)
 async function geocodeAddress(address: string): Promise<Coordinate | null> {
   try {
     const nominatimUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}&limit=1&countrycodes=id`;
     const response = await fetch(nominatimUrl, {
       headers: {
-        'User-Agent': 'SMKN2-Singosari-Traffic-Tracker/1.0'
-      }
+        "User-Agent": "SMKN2-Singosari-Traffic-Tracker/1.0",
+      },
     });
 
     if (!response.ok) {
-      throw new Error('Geocoding service unavailable');
+      throw new Error("Geocoding service unavailable");
     }
 
     const data = await response.json();
@@ -187,42 +177,39 @@ async function geocodeAddress(address: string): Promise<Coordinate | null> {
 
     return {
       lat: parseFloat(data[0].lat),
-      lng: parseFloat(data[0].lon)
+      lng: parseFloat(data[0].lon),
     };
   } catch (error) {
-    console.error('Geocoding error:', error);
+    console.error("Geocoding error:", error);
     return null;
   }
 }
 
-// Get route from OSRM
 async function getOSRMRoute(origin: Coordinate, destination: Coordinate, travelMode: string) {
   try {
-    // Map travel modes to OSRM profiles
     const profileMap: { [key: string]: string } = {
-      'driving': 'driving',
-      'walking': 'walking',
-      'cycling': 'cycling',
-      'transit': 'driving' // fallback to driving for transit
+      driving: "driving",
+      walking: "walking",
+      cycling: "cycling",
+      transit: "driving",
     };
 
-    const profile = profileMap[travelMode] || 'driving';
+    const profile = profileMap[travelMode] || "driving";
     const osrmUrl = `https://router.project-osrm.org/route/v1/${profile}/${origin.lng},${origin.lat};${destination.lng},${destination.lat}?overview=full&alternatives=true&steps=true`;
 
     const response = await fetch(osrmUrl);
 
     if (!response.ok) {
-      throw new Error('Routing service unavailable');
+      throw new Error("Routing service unavailable");
     }
 
     return await response.json();
   } catch (error) {
-    console.error('OSRM routing error:', error);
+    console.error("OSRM routing error:", error);
     throw error;
   }
 }
 
-// Format duration from seconds to human readable
 function formatDuration(seconds: number): string {
   const hours = Math.floor(seconds / 3600);
   const minutes = Math.floor((seconds % 3600) / 60);
@@ -233,7 +220,6 @@ function formatDuration(seconds: number): string {
   return `${minutes} menit`;
 }
 
-// Format distance from meters to human readable
 function formatDistance(meters: number): string {
   const km = meters / 1000;
   return `${km.toFixed(1)} km`;
@@ -264,7 +250,7 @@ function getTips(traffic: string, duration: string): string {
 }
 
 function getRecommendation(duration: string, traffic: string): string {
-  const durationMin = parseInt(duration.split(" ")[0] || "0");
+  const durationMin = parseInt(duration.split(" ")[0] || "0", 10);
   if (traffic === "Macet" || durationMin > 60) return "Tidak direkomendasikan saat ini.";
   if (durationMin > 30) return "Direkomendasikan jika mendesak.";
   return "Direkomendasikan.";
@@ -274,13 +260,13 @@ function calculateEstimatedArrival(duration: string): string {
   const now = new Date();
   const durationMin = parseDurationToMinutes(duration);
   const arrival = new Date(now.getTime() + durationMin * 60000);
-  return arrival.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+  return arrival.toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" });
 }
 
 function parseDurationToMinutes(duration: string): number {
   const hours = duration.match(/(\d+)\s*jam/);
   const mins = duration.match(/(\d+)\s*menit/);
-  return (hours ? parseInt(hours[1]) * 60 : 0) + (mins ? parseInt(mins[1]) : 0);
+  return (hours ? parseInt(hours[1], 10) * 60 : 0) + (mins ? parseInt(mins[1], 10) : 0);
 }
 
 function getRecommendedDeparture(): string {
@@ -292,24 +278,28 @@ function getRecommendedDeparture(): string {
 }
 
 function calculateFuelEstimate(distance: string): string {
-  const distKm = parseFloat(distance.replace(' km', ''));
-  const avgConsumption = 12; // km/liter
+  const distKm = parseFloat(distance.replace(" km", ""));
+  const avgConsumption = 12;
   const liters = distKm / avgConsumption;
   return `${liters.toFixed(1)} liter`;
 }
 
 function calculateCarbonFootprint(distance: string): string {
-  const distKm = parseFloat(distance.replace(' km', ''));
-  const co2PerKm = 0.12; // kg CO2 per km for average car
+  const distKm = parseFloat(distance.replace(" km", ""));
+  const co2PerKm = 0.12;
   const co2 = distKm * co2PerKm;
   return `${co2.toFixed(1)} kg CO2`;
 }
 
 function getSafetyRating(traffic: string): string {
   switch (traffic) {
-    case "Lancar": return "Tinggi";
-    case "Padat": return "Sedang";
-    case "Macet": return "Rendah";
-    default: return "Sedang";
+    case "Lancar":
+      return "Tinggi";
+    case "Padat":
+      return "Sedang";
+    case "Macet":
+      return "Rendah";
+    default:
+      return "Sedang";
   }
 }

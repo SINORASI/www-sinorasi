@@ -1,6 +1,5 @@
-import type { Event } from '~/models/Event';
+import type { Event } from "~/models/Event";
 
-// Mock data - same as data.ts
 const eventData: Event[] = [
   {
     id: "1",
@@ -103,30 +102,27 @@ WhatsApp: +62 812-3456-7890`,
 ];
 
 export default defineEventHandler(async (event) => {
-  // Get query parameters for filtering
   const query = getQuery(event);
   const { upcoming, past, limit, offset } = query;
 
   let filteredEvents = [...eventData];
 
-  // Filter by upcoming/past events (based on publishedAt for now)
   const currentDate = new Date();
-  if (upcoming === 'true') {
-    filteredEvents = filteredEvents.filter(e => new Date(e.publishedAt) >= currentDate);
-  } else if (past === 'true') {
-    filteredEvents = filteredEvents.filter(e => new Date(e.publishedAt) < currentDate);
+  if (upcoming === "true") {
+    filteredEvents = filteredEvents.filter((e) => new Date(e.publishedAt) >= currentDate);
+  } else if (past === "true") {
+    filteredEvents = filteredEvents.filter((e) => new Date(e.publishedAt) < currentDate);
   }
 
-  // Apply pagination
-  const startIndex = offset ? parseInt(offset as string) : 0;
-  const endIndex = limit ? startIndex + parseInt(limit as string) : filteredEvents.length;
-  
+  const startIndex = offset ? parseInt(offset as string, 10) : 0;
+  const endIndex = limit ? startIndex + parseInt(limit as string, 10) : filteredEvents.length;
+
   const paginatedEvents = filteredEvents.slice(startIndex, endIndex);
 
   return {
     data: paginatedEvents,
     total: filteredEvents.length,
     offset: startIndex,
-    limit: endIndex - startIndex
+    limit: endIndex - startIndex,
   };
 });

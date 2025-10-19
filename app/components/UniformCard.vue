@@ -6,12 +6,12 @@
       'hover:shadow-2xl',
     ]"
   >
-    <!-- Image Carousel - 4:5 aspect ratio like Instagram -->
+    
     <div class="relative overflow-hidden aspect-[4/5]">
-      <!-- Background Gradient -->
+      
       <div :class="['absolute inset-0', bgGradientClass]"></div>
 
-      <!-- Carousel Images -->
+      
       <div class="relative w-full h-full">
         <TransitionGroup
           enter-active-class="transition-all duration-600 ease-[cubic-bezier(0.25,0.1,0.25,1)]"
@@ -32,10 +32,10 @@
         </TransitionGroup>
       </div>
 
-      <!-- Gradient Overlay -->
+      
       <div :class="['absolute inset-0', gradientOverlayClass]"></div>
 
-      <!-- Floating Menu Button - Glassmorphism -->
+      
       <div class="absolute z-60 top-4 left-4">
         <button
           @click="isMenuOpen = !isMenuOpen"
@@ -53,7 +53,7 @@
           <Icon :name="isMenuOpen ? 'lucide:chevron-up' : 'lucide:chevron-down'" size="14" />
         </button>
 
-        <!-- Popup Menu -->
+        
         <Transition
           enter-active-class="transition-all duration-200 ease-out"
           leave-active-class="transition-all duration-150 ease-in"
@@ -64,7 +64,7 @@
             v-if="isMenuOpen"
             class="absolute top-full left-0 mt-2 backdrop-blur-xl bg-white/95 border border-white/50 rounded-xl shadow-2xl overflow-hidden min-w-[200px]"
           >
-            <!-- Grade Selection -->
+            
             <div class="p-3 border-b border-gray-200/50">
               <div class="mb-2 text-xs font-bold text-gray-500">KELAS</div>
               <div class="flex gap-2">
@@ -93,7 +93,7 @@
               </div>
             </div>
 
-            <!-- Gender Selection -->
+            
             <div class="p-3">
               <div class="mb-2 text-xs font-bold text-gray-500">JENIS KELAMIN</div>
               <div class="space-y-2">
@@ -126,7 +126,7 @@
               </div>
             </div>
 
-            <!-- Almamater Option (if available) -->
+            
             <div v-if="almamaterImages" class="p-3 border-t border-gray-200/50">
               <button
                 @click="useAlmamater = !useAlmamater"
@@ -146,18 +146,18 @@
         </Transition>
       </div>
 
-      <!-- Day Number Badge -->
+      
       <div class="absolute px-3 py-1 rounded-full z-60 top-4 right-4 bg-white/90 backdrop-blur-sm">
         <span :class="['text-xs font-semibold', badgeTextClass]">{{ dayNumber }}</span>
       </div>
 
-      <!-- Day Name -->
+      
       <div class="absolute z-60 bottom-4 left-4">
         <p class="text-sm font-medium text-white/90 drop-shadow-md">{{ uniformDay }}</p>
         <h3 class="text-2xl font-bold text-white drop-shadow-lg">{{ day }}</h3>
       </div>
 
-      <!-- Carousel Indicators -->
+      
       <div class="absolute z-60 bottom-4 right-4 flex gap-1.5">
         <button
           v-for="(_, index) in currentImages"
@@ -175,13 +175,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted, watch } from "vue";
+import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 
 interface Props {
   gradeImages: {
     X: {
-      L: string[]; // Laki-laki (Male)
-      P: string[]; // Perempuan (Female)
+      L: string[];
+      P: string[];
     };
     XI: {
       L: string[];
@@ -214,7 +214,6 @@ const useAlmamater = ref(false);
 const isMenuOpen = ref(false);
 let intervalId: ReturnType<typeof setInterval> | null = null;
 
-// Get current images based on selected grade and gender
 const currentImages = computed(() => {
   if (useAlmamater.value && props.almamaterImages) {
     return props.almamaterImages[selectedGrade.value][selectedGender.value];
@@ -222,18 +221,15 @@ const currentImages = computed(() => {
   return props.gradeImages[selectedGrade.value][selectedGender.value];
 });
 
-// Function to select gender and close menu
 const selectGender = (gender: "L" | "P") => {
   selectedGender.value = gender;
   isMenuOpen.value = false;
 };
 
-// Reset image index when grade or gender changes
 watch([selectedGrade, selectedGender, useAlmamater], () => {
   currentImageIndex.value = 0;
 });
 
-// Auto-slide every 3 seconds
 const startAutoSlide = () => {
   intervalId = setInterval(() => {
     currentImageIndex.value = (currentImageIndex.value + 1) % currentImages.value.length;
@@ -255,7 +251,6 @@ onUnmounted(() => {
   stopAutoSlide();
 });
 
-// Dynamic classes based on primary color
 const colorMap = {
   blue: {
     hover: "hover:border-blue-300",

@@ -26,7 +26,7 @@ useHead({
 <template>
   <div class="min-h-screen py-24 bg-gradient-to-b from-white via-blue-50 to-white">
     <div class="container px-4 mx-auto sm:px-6">
-      <!-- Page Header -->
+      
       <div class="mb-12 text-center">
         <div
           class="inline-block px-10 py-6 mb-4 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
@@ -36,7 +36,7 @@ useHead({
         <p class="max-w-2xl mx-auto text-lg text-gray-600">Informasi kontak dan lokasi SMK Negeri 2 Singosari</p>
       </div>
 
-      <!-- Contact Cards -->
+      
       <div class="grid max-w-5xl grid-cols-1 gap-6 mx-auto mb-16 md:grid-cols-3">
         <div
           class="p-8 text-center transition-shadow bg-white border-2 border-blue-100 shadow-xl rounded-2xl hover:shadow-2xl"
@@ -73,7 +73,7 @@ useHead({
         </div>
       </div>
 
-      <!-- Map Section -->
+      
       <div class="max-w-5xl mx-auto">
         <div
           class="inline-block px-10 py-6 mb-8 border border-orange-200 shadow-xl bg-gradient-to-r from-orange-500 to-orange-600 backdrop-blur-2xl rounded-2xl"
@@ -91,7 +91,7 @@ useHead({
         </div>
       </div>
 
-      <!-- Image Carousel Section -->
+      
       <div class="max-w-5xl mx-auto mt-16">
         <div
           class="inline-block px-10 py-6 mb-8 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
@@ -123,7 +123,7 @@ useHead({
         </div>
       </div>
 
-      <!-- Social Media Section -->
+      
       <div class="max-w-5xl mx-auto mt-16">
         <div class="p-8 text-center bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
           <h3 class="mb-6 text-2xl font-bold text-gray-800">Ikuti Kami</h3>

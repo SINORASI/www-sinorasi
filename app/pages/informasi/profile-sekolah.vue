@@ -33,7 +33,8 @@ useHead({
   meta: [
     {
       name: "description",
-      content: "Profil lengkap SMK Negeri 2 Singosari. Sejarah, visi misi, dan sambutan kepala sekolah.",
+      content:
+        "Profil lengkap SMK Negeri 2 Singosari. Sejarah, visi misi, dan sambutan kepala sekolah.",
     },
   ],
 });
@@ -41,7 +42,7 @@ useHead({
 
 <template>
   <div class="min-h-screen bg-gradient-to-b from-white via-blue-50 to-white">
-    <!-- Welcome Section -->
+    
     <section class="py-32">
       <div class="container w-max-[1200px] px-4 mx-auto sm:px-6">
         <div class="mb-12 text-center">
@@ -55,7 +56,7 @@ useHead({
 
         <div class="mx-auto">
           <div class="flex flex-col gap-8">
-            <!-- Principal Photo and Quote -->
+            
             <div class="flex flex-col items-center justify-center lg:flex-row lg:items-center lg:gap-8">
               <div class="p-6 bg-white border-2 border-blue-100 shadow-xl rounded-2xl w-fit">
                 <img src="/images/kepsek.webp" alt="Kepala Sekolah" class="w-64 rounded-xl md:w-80" />
@@ -71,7 +72,7 @@ useHead({
               </div>
             </div>
 
-            <!-- Welcome Message -->
+            
             <div class="flex items-center justify-center">
               <div
                 class="w-full max-w-5xl p-8 space-y-6 leading-relaxed text-gray-700 bg-white border-2 border-blue-100 shadow-xl rounded-2xl md:p-12"
@@ -100,11 +101,11 @@ useHead({
       </div>
     </section>
 
-    <!-- Vision Mission Section -->
+    
     <section class="py-20">
       <div class="container max-w-[1200px] px-4 mx-auto sm:px-6">
         <div class="max-w-5xl mx-auto">
-          <!-- Collapsed Header -->
+          
           <button v-if="!isVisionMissionExpanded" @click="toggleVisionMission" class="w-full group">
             <div
               class="p-8 transition-all duration-300 bg-white border-2 border-orange-100 shadow-xl rounded-2xl md:p-10 hover:border-orange-300 hover:shadow-2xl"
@@ -123,12 +124,12 @@ useHead({
             </div>
           </button>
 
-          <!-- Expanded Content -->
+          
           <div
             v-else
             class="overflow-hidden border-2 border-orange-100 shadow-xl rounded-2xl animate-expand backdrop-blur-xl bg-white/95"
           >
-            <!-- Header (Clickable to collapse) -->
+            
             <button @click="toggleVisionMission" class="w-full group">
               <div class="p-8 md:p-10">
                 <div class="flex items-center justify-between">
@@ -145,7 +146,7 @@ useHead({
               </div>
             </button>
 
-            <!-- Content Area with Animation -->
+            
             <div class="px-8 pb-8 md:px-10 md:pb-10 animate-slide-down">
               <div class="grid gap-6 md:grid-cols-2">
                 <div class="p-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
@@ -185,7 +186,7 @@ useHead({
       </div>
     </section>
 
-    <!-- Video Profile Section -->
+    
     <section class="relative py-20">
 
       <div class="container px-4 mx-auto">
@@ -202,7 +203,7 @@ useHead({
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-0 w-full mx-auto">
-          <!-- Card 1: Video Profil -->
+          
            <div class="rounded-tl-lg rounded-bl-lg shadow-lg overflow-hidden cursor-pointer transition-transform" @click="expandCard(0)">
              <div class="relative w-full h-96 overflow-hidden">
                <img src="/images/thumbnail/profile-thumbnail.webp" alt="Video Profil Thumbnail" class="absolute inset-0 w-full h-full object-cover" />
@@ -216,7 +217,7 @@ useHead({
             </div>
           </div>
 
-          <!-- Card 2: Mars SMK -->
+          
            <div class="shadow-lg overflow-hidden cursor-pointer transition-transform" @click="expandCard(1)">
              <div class="relative w-full h-96 overflow-hidden">
                <img src="/images/thumbnail/mars-thumbnail.webp" alt="Mars SMK Thumbnail" class="absolute inset-0 w-full h-full object-cover" />
@@ -229,7 +230,7 @@ useHead({
             </div>
           </div>
 
-          <!-- Card 3: Maps Lokasi -->
+          
            <div class="rounded-tr-lg rounded-br-lg shadow-lg overflow-hidden cursor-pointer transition-transform" @click="expandCard(2)">
             <div class="relative w-full h-96 overflow-hidden">
               <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3951.036!2d112.665!3d-7.888!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd629b46b6e7c8b%3A0x4e7b8b8b8b8b8b8b!2sJl.%20Perusahaan%20Raya%20No.20%2C%20Jajar%2C%20Tanjungtirto%2C%20Kec.%20Singosari%2C%20Kabupaten%20Malang%2C%20Jawa%20Timur%2065153!5e0!3m2!1sen!2sid!4v1697550000000!5m2!1sen!2sid" class="absolute inset-0 w-full h-full" frameborder="0" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -244,15 +245,15 @@ useHead({
           </div>
         </div>
 
-        <!-- Expanded Card Overlay -->
+        
         <div v-if="expandedCard !== null" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm" @click="closeCard">
           <div class="relative w-4/5 h-5/6 mx-auto" @click.stop>
-            <!-- Close Button -->
+            
             <button @click="closeCard" class="absolute top-4 right-4 z-10 w-12 h-12 bg-gray-600 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-gray-500 transition-colors">
               <Icon name="lucide:x" size="24" />
             </button>
 
-            <!-- Navigation Buttons -->
+            
             <button @click="prevCard" class="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-gray-600 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-gray-500 transition-colors">
               <Icon name="lucide:chevron-left" size="24" />
             </button>
@@ -260,9 +261,9 @@ useHead({
               <Icon name="lucide:chevron-right" size="24" />
             </button>
 
-            <!-- Expanded Content -->
+            
             <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
-              <!-- Card 0: Video Profil -->
+              
               <div v-if="expandedCard === 0" class="relative">
                 <div class="aspect-video">
                   <iframe src="https://www.youtube.com/embed/Kks6HnhPzVQ" class="absolute inset-0 w-full h-full" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="Video Profil SMK Negeri 2 Singosari"></iframe>
@@ -276,7 +277,7 @@ useHead({
                 </div>
               </div>
 
-              <!-- Card 1: Mars SMK -->
+              
               <div v-if="expandedCard === 1" class="relative">
                 <div class="aspect-video">
                   <video class="absolute inset-0 w-full h-full object-cover" controls autoplay>
@@ -293,7 +294,7 @@ useHead({
                 </div>
               </div>
 
-              <!-- Card 2: Maps Lokasi -->
+              
               <div v-if="expandedCard === 2" class="relative">
                 <div class="aspect-video">
                   <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3951.036!2d112.665!3d-7.888!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd629b46b6e7c8b%3A0x4e7b8b8b8b8b8b8b!2sJl.%20Perusahaan%20Raya%20No.20%2C%20Jajar%2C%20Tanjungtirto%2C%20Kec.%20Singosari%2C%20Kabupaten%20Malang%2C%20Jawa%20Timur%2065153!5e0!3m2!1sen!2sid!4v1697550000000!5m2!1sen!2sid" class="absolute inset-0 w-full h-full" frameborder="0" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -312,7 +313,7 @@ useHead({
       </div>
     </section>
 
-    <!-- History Section -->
+    
     <section class="py-20">
       <div class="container px-4 mx-auto sm:px-6">
         <div class="mb-12 text-center">

@@ -1,16 +1,15 @@
 <script lang="ts" setup>
-import { ref, computed } from "vue";
-import type { MajorName } from "~/models/MajorName";
+import { computed, ref } from "vue";
 import type { KaproProfile } from "~/models/KaproProfile";
 import type { MajorData } from "~/models/MajorData";
+import type { MajorName } from "~/models/MajorName";
 import { majorColorSchemes } from "~/utils/majorColors";
 
 const props = defineProps<{
   major?: MajorName;
 }>();
 
-// Fetch majors data from API
-const { data: majorDatas } = await useFetch<Record<MajorName, MajorData>>("/api/majors");
+const { data: _majorDatas } = await useFetch<Record<MajorName, MajorData>>("/api/majors");
 
 const kapros: Record<MajorName, KaproProfile[]> = {
   rpl: [
@@ -209,7 +208,6 @@ const route = useRoute();
 const major = props.major || (route.params.majorName as MajorName);
 const kapro = kapros[major] || [];
 
-// Get major color scheme
 const majorColor = computed(() => {
   return (
     majorColorSchemes[major] || {
@@ -261,11 +259,11 @@ const getTransitionClasses = () => {
 <template>
   <div class="w-full max-w-6xl px-4 py-8 mx-auto">
     <div class="overflow-hidden">
-      <!-- Grid Layout -->
+      
       <div class="grid grid-cols-1 gap-8 p-6 lg:grid-cols-5 md:p-8 lg:p-10">
-        <!-- Left: Image Section (2 columns on large screens) -->
+        
         <div class="flex flex-col items-center justify-center space-y-6 lg:col-span-2">
-          <!-- Profile Image -->
+          
           <div class="relative w-full max-w-xs aspect-[3/4]">
             <div class="absolute inset-0 overflow-hidden rounded-2xl" :style="{ backgroundColor: majorColor.light }">
               <Transition
@@ -288,7 +286,7 @@ const getTransitionClasses = () => {
             </div>
           </div>
 
-          <!-- Name and Position -->
+          
           <div class="text-center space-y-2 w-full px-4 min-h-[120px] flex flex-col justify-center">
             <Transition
               name="fade"
@@ -329,9 +327,9 @@ const getTransitionClasses = () => {
           </div>
         </div>
 
-        <!-- Right: Quote Section (3 columns on large screens) -->
+        
         <div class="lg:col-span-3 flex flex-col justify-between min-h-[400px] lg:min-h-[500px]">
-          <!-- Quote -->
+          
           <div class="flex items-center justify-center flex-1 p-6 md:p-8">
             <Transition
               name="fade"
@@ -344,7 +342,7 @@ const getTransitionClasses = () => {
               leave-to-class="opacity-0"
             >
               <div :key="current" class="space-y-6 text-center">
-                <!-- Quote Icon -->
+                
                 <div class="flex justify-center">
                   <div
                     class="flex items-center justify-center rounded-full w-14 h-14 md:w-16 md:h-16"
@@ -354,7 +352,7 @@ const getTransitionClasses = () => {
                   </div>
                 </div>
 
-                <!-- Quote Text -->
+                
                 <p class="text-2xl font-bold leading-relaxed text-gray-800 md:text-3xl lg:text-4xl">
                   {{ kapro[current]?.quote }}
                 </p>
@@ -362,9 +360,9 @@ const getTransitionClasses = () => {
             </Transition>
           </div>
 
-          <!-- Navigation Controls -->
+          
           <div class="pt-4 space-y-6">
-            <!-- Progress Dots -->
+            
             <div class="flex justify-center items-center gap-2 min-h-[16px]">
               <button
                 v-for="(item, idx) in kapro"
@@ -382,9 +380,9 @@ const getTransitionClasses = () => {
               ></button>
             </div>
 
-            <!-- Navigation Buttons -->
+            
             <div class="flex items-center justify-between px-4">
-              <!-- Previous Button -->
+              
               <button
                 @click="prev"
                 :style="{
@@ -397,7 +395,7 @@ const getTransitionClasses = () => {
                 <span class="text-sm">Previous</span>
               </button>
 
-              <!-- Counter -->
+              
               <div class="flex items-baseline gap-1">
                 <span :style="{ color: majorColor.text }" class="text-2xl font-bold md:text-3xl">
                   {{ String(current + 1).padStart(2, "0") }}
@@ -405,7 +403,7 @@ const getTransitionClasses = () => {
                 <span class="text-lg text-gray-400 md:text-xl"> /{{ String(kapro.length).padStart(2, "0") }} </span>
               </div>
 
-              <!-- Next Button -->
+              
               <button
                 @click="next"
                 :style="{

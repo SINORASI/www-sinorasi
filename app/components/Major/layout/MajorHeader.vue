@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, computed } from "vue";
-import type { MajorName } from "~/models/MajorName";
+import { computed, onMounted, onUnmounted, ref } from "vue";
 import type { MajorData } from "~/models/MajorData";
-import MobileSidebar from "~/components/MobileSidebar.vue";
+import type { MajorName } from "~/models/MajorName";
 
 const route = useRoute();
 const major = (route.params.majorName as MajorName) || (route.path.split("/").pop() as MajorName);
 
-// Fetch major data and menus from API
 const { data: majorDatas } = await useFetch<Record<MajorName, MajorData>>("/api/majors");
 const { data: majorMenus } = await useFetch("/api/majors/menus");
 
-const headerClass = ref("bg-white/20 backdrop-blur-[8px] border-b-white/20 shadow-lg shadow-orange-500/10");
+const headerClass = ref(
+  "bg-white/20 backdrop-blur-[8px] border-b-white/20 shadow-lg shadow-orange-500/10",
+);
 const sizeClass = ref("compact");
 const isOpen = ref(false);
 
@@ -20,11 +20,12 @@ const menuItems = computed(() => majorMenus.value?.[major] || []);
 onMounted(() => {
   const handleScroll = () => {
     if (window.scrollY > window.innerHeight) {
-      // Keep glassmorphism but maybe adjust opacity or something
-      headerClass.value = "bg-white/30 backdrop-blur-[8px] border-b-white/30 shadow-lg shadow-orange-500/10";
+      headerClass.value =
+        "bg-white/30 backdrop-blur-[8px] border-b-white/30 shadow-lg shadow-orange-500/10";
       sizeClass.value = "compact";
     } else {
-      headerClass.value = "bg-white/20 backdrop-blur-[8px] border-b-white/20 shadow-lg shadow-orange-500/10";
+      headerClass.value =
+        "bg-white/20 backdrop-blur-[8px] border-b-white/20 shadow-lg shadow-orange-500/10";
       sizeClass.value = "compact";
     }
   };

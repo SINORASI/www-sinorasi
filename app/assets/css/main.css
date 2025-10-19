@@ -12,8 +12,6 @@ body {
   max-width: 100%;
 }
 
-/* Visual & Shadow Rules */
-/* Tinted shadows - no black shadows */
 .shadow-lg {
   box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.1), 0 4px 6px -2px rgba(59, 130, 246, 0.05);
 }
@@ -26,7 +24,6 @@ body {
   box-shadow: 0 25px 50px -12px rgba(59, 130, 246, 0.25);
 }
 
-/* Orange tinted shadows for specific elements */
 .shadow-orange {
   box-shadow: 0 10px 15px -3px rgba(249, 115, 22, 0.1), 0 4px 6px -2px rgba(249, 115, 22, 0.05);
 }
@@ -35,41 +32,14 @@ body {
   box-shadow: 0 20px 25px -5px rgba(249, 115, 22, 0.1), 0 10px 10px -5px rgba(249, 115, 22, 0.04);
 }
 
-/* Hover glassmorphism effect - reduced to 30-35% opacity */
 .hover\:bg-white\/20:hover {
   background-color: rgba(255, 255, 255, 0.32);
 }
 
-/* Department hover overlays - dynamic based on majorColors.primary */
 .major-overlay {
   transition: background-color 0.3s ease;
 }
 
-/* Accessibility - prefers-reduced-motion */
-/* @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-
-  .animate-pulse {
-    animation: none;
-  }
-
-  .animate-bounce {
-    animation: none;
-  }
-
-  .animate-spin {
-    animation: none;
-  }
-} */
-
-/* Custom scrollbar with tinted colors */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -87,7 +57,6 @@ body {
   background: rgba(59, 130, 246, 0.5);
 }
 
-/* Custom animations for organizational chart */
 @keyframes fade-in-up {
   from {
     opacity: 0;
@@ -103,7 +72,6 @@ body {
   animation: fade-in-up 1s ease-out;
 }
 
-/* Dialog modal transitions */
 .dialog-enter-active,
 .dialog-leave-active {
   transition: all 0.3s ease-out;
@@ -125,7 +93,6 @@ body {
   box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.25);
 }
 
-/* Advanced animations for ekstrakurikuler page */
 @keyframes float {
   0%,
   100% {
@@ -266,7 +233,6 @@ body {
   animation: gradient-shift 3s ease infinite;
 }
 
-/* Glassmorphism effects */
 .glass-card {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(20px);
@@ -285,7 +251,6 @@ body {
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
 }
 
-/* Particle effect container */
 .particles-container {
   position: absolute;
   top: 0;
@@ -313,7 +278,6 @@ body {
   animation-duration: 10s;
 }
 
-/* Stagger animation delays */
 .stagger-1 {
   animation-delay: 0.1s;
 }
@@ -333,7 +297,6 @@ body {
   animation-delay: 0.6s;
 }
 
-/* Hover effects */
 .hover-lift {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -351,7 +314,6 @@ body {
   box-shadow: 0 0 30px rgba(59, 130, 246, 0.4);
 }
 
-/* Scroll-triggered animations */
 @keyframes fade-in-on-scroll {
   from {
     opacity: 0;
@@ -368,7 +330,6 @@ body {
   animation: fade-in-on-scroll 0.8s ease-out forwards;
 }
 
-/* Modern gradient backgrounds */
 .gradient-mesh {
   background: radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
     radial-gradient(circle at 80% 20%, rgba(249, 115, 22, 0.1) 0%, transparent 50%),
@@ -381,7 +342,6 @@ body {
   animation: gradient-shift 4s ease infinite;
 }
 
-/* Glassmorphism effects */
 .backdrop-blur-sm {
   backdrop-filter: blur(4px);
 }
@@ -390,7 +350,6 @@ body {
   backdrop-filter: blur(40px);
 }
 
-/* Layout Specific Styles */
 .default-layout {
   min-height: 100vh;
   display: flex;
@@ -413,7 +372,6 @@ body {
   background: none !important;
 }
 
-/* Major layout flexbox structure */
 .major-layout {
   display: flex;
   flex-direction: column;
@@ -431,7 +389,6 @@ body {
   flex-shrink: 0;
 }
 
-/* Ensure footer stays at bottom */
 footer {
   position: relative !important;
   z-index: 1 !important;
@@ -439,7 +396,6 @@ footer {
   order: 3;
 }
 
-/* Ensure proper z-index stacking */
 header {
   z-index: 999 !important;
   position: fixed !important;

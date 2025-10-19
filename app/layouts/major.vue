@@ -1,9 +1,7 @@
 <script lang="ts" setup>
-import MajorHeader from "~/components/Major/layout/MajorHeader.vue";
-import AppFooter from "~/components/layout/AppFooter.vue";
+import { computed, ref, watch } from "vue";
 import type { MajorName } from "~/models/MajorName";
 import { majorColorSchemes } from "~/utils/majorColors";
-import { watch, ref, computed } from "vue";
 
 const route = useRoute();
 const major = (route.params.majorName as MajorName) || (route.path.split("/").pop() as MajorName);
@@ -14,13 +12,15 @@ const isTransitioning = ref(false);
 watch(route, (newRoute, oldRoute) => {
   if (oldRoute && newRoute.path !== oldRoute.path) {
     isTransitioning.value = true;
-    setTimeout(() => isTransitioning.value = false, 400);
+    setTimeout(() => {
+      isTransitioning.value = false;
+    }, 400);
   }
 });
 
 const backgroundStyle = computed(() => {
   if (isTransitioning.value) {
-    return 'background: transparent';
+    return "background: transparent";
   }
   return `background: linear-gradient(135deg, ${majorColor.primary}08, ${majorColor.accent}08)`;
 });
@@ -32,11 +32,11 @@ const backgroundStyle = computed(() => {
     :class="{ transitioning: isTransitioning }"
     :style="backgroundStyle"
   >
-    <MajorHeader />
+    <MajorLayoutMajorHeader />
     <div class="flex-1">
       <slot />
     </div>
-    <AppFooter :bg-color="majorColor.primary" class="mt-auto" />
+    <LayoutAppFooter :bg-color="majorColor.primary" class="mt-auto" />
   </div>
 </template>
 

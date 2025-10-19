@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { anonymousBKSchema, validateAnonymousBK, type AnonymousBKForm } from "~/utils/schema";
+import { type AnonymousBKForm, validateAnonymousBK } from "~/utils/schema";
 
 const formData = ref<AnonymousBKForm>({
   story: "",
@@ -14,21 +14,36 @@ const currentStep = ref(1);
 const totalSteps = 4;
 
 const categories = [
-  { value: 'bullying', label: 'Bullying', icon: 'lucide:users-x', color: 'text-red-600' },
-  { value: 'stress', label: 'Stres', icon: 'lucide:brain', color: 'text-yellow-600' },
-  { value: 'friendship', label: 'Persahabatan', icon: 'lucide:heart', color: 'text-pink-600' },
-  { value: 'academic', label: 'Tekanan Akademik', icon: 'lucide:book-open', color: 'text-green-600' },
-  { value: 'family', label: 'Masalah Keluarga', icon: 'lucide:home', color: 'text-purple-600' },
-  { value: 'mental-health', label: 'Kesehatan Mental', icon: 'lucide:heart-pulse', color: 'text-pink-500' },
-  { value: 'career', label: 'Kebingungan Karir', icon: 'lucide:briefcase', color: 'text-blue-700' },
-  { value: 'peer-pressure', label: 'Tekanan Teman Sebaya', icon: 'lucide:users', color: 'text-orange-600' },
-  { value: 'advice', label: 'Nasihat', icon: 'lucide:lightbulb', color: 'text-blue-600' },
-  { value: 'other', label: 'Lainnya', icon: 'lucide:more-horizontal', color: 'text-gray-600' }
+  { value: "bullying", label: "Bullying", icon: "lucide:users-x", color: "text-red-600" },
+  { value: "stress", label: "Stres", icon: "lucide:brain", color: "text-yellow-600" },
+  { value: "friendship", label: "Persahabatan", icon: "lucide:heart", color: "text-pink-600" },
+  {
+    value: "academic",
+    label: "Tekanan Akademik",
+    icon: "lucide:book-open",
+    color: "text-green-600",
+  },
+  { value: "family", label: "Masalah Keluarga", icon: "lucide:home", color: "text-purple-600" },
+  {
+    value: "mental-health",
+    label: "Kesehatan Mental",
+    icon: "lucide:heart-pulse",
+    color: "text-pink-500",
+  },
+  { value: "career", label: "Kebingungan Karir", icon: "lucide:briefcase", color: "text-blue-700" },
+  {
+    value: "peer-pressure",
+    label: "Tekanan Teman Sebaya",
+    icon: "lucide:users",
+    color: "text-orange-600",
+  },
+  { value: "advice", label: "Nasihat", icon: "lucide:lightbulb", color: "text-blue-600" },
+  { value: "other", label: "Lainnya", icon: "lucide:more-horizontal", color: "text-gray-600" },
 ];
 
 const getCategoryLabel = (value: string) => {
-  const cat = categories.find(c => c.value === value);
-  return cat ? cat.label : 'Lainnya';
+  const cat = categories.find((c) => c.value === value);
+  return cat ? cat.label : "Lainnya";
 };
 
 const nextStep = () => {
@@ -51,7 +66,10 @@ const validateStep = (step: number) => {
     return formData.value.category !== "";
   }
   if (step === 3) {
-    return formData.value.contactMethod === "none" || (formData.value.contactInfo && formData.value.contactInfo.trim() !== "");
+    return (
+      formData.value.contactMethod === "none" ||
+      (formData.value.contactInfo && formData.value.contactInfo.trim() !== "")
+    );
   }
   return true;
 };
@@ -59,11 +77,11 @@ const validateStep = (step: number) => {
 const validateAndProceed = (step: number) => {
   if (validateStep(step)) {
     nextStep();
-    if (step === 1) errors.value.story = '';
-    if (step === 2) errors.value.category = '';
+    if (step === 1) errors.value.story = "";
+    if (step === 2) errors.value.category = "";
   } else {
-    if (step === 1) errors.value.story = 'Cerita tidak boleh kosong';
-    if (step === 2) errors.value.category = 'Pilih kategori terlebih dahulu';
+    if (step === 1) errors.value.story = "Cerita tidak boleh kosong";
+    if (step === 2) errors.value.category = "Pilih kategori terlebih dahulu";
   }
 };
 
@@ -90,7 +108,6 @@ const validateForm = () => {
   return true;
 };
 
-// Enhanced error handling for Zod validation errors
 const handleValidationErrors = (issues: any[]) => {
   errors.value = {};
   issues.forEach((issue) => {
@@ -124,7 +141,6 @@ const submitStory = async () => {
     }
   } catch (error: any) {
     if (error.statusCode === 400 && error.data) {
-      // Handle Zod validation errors
       handleValidationErrors(error.data);
     } else {
       alert("Terjadi kesalahan saat mengirim cerita. Silakan coba lagi.");
@@ -139,7 +155,7 @@ const submitStory = async () => {
   <div class="min-h-screen py-24 bg-gradient-to-br from-orange-50 via-blue-50 to-indigo-50">
     <div class="container px-4 mx-auto sm:px-6 lg:px-8">
       <div class="max-w-4xl mx-auto">
-        <!-- Header Section -->
+        
         <div class="mb-12 text-center">
           <div class="inline-flex items-center gap-3 mb-6">
             <div class="p-3 bg-orange-100 rounded-full">
@@ -156,7 +172,7 @@ const submitStory = async () => {
           </p>
         </div>
 
-        <!-- Trust Indicators -->
+        
         <div class="mb-8">
           <div class="flex flex-wrap justify-center gap-4">
             <div class="flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow-sm border border-orange-200">
@@ -174,7 +190,7 @@ const submitStory = async () => {
           </div>
         </div>
 
-        <!-- Step Indicator -->
+        
         <div class="mb-8">
           <div class="flex justify-center">
             <div class="flex items-center space-x-4">
@@ -207,7 +223,7 @@ const submitStory = async () => {
           </div>
         </div>
 
-        <!-- Guidelines Button -->
+        
         <div class="mb-8 text-center">
           <button
             @click="showGuidelines = true"
@@ -219,7 +235,7 @@ const submitStory = async () => {
           </button>
         </div>
 
-        <!-- Guidelines Modal -->
+        
         <Teleport to="body">
           <Transition name="dialog">
             <div
@@ -280,9 +296,9 @@ const submitStory = async () => {
           </Transition>
         </Teleport>
 
-        <!-- Multi-Step Form Section -->
+        
         <div class="bg-white border-2 border-orange-200 shadow-xl rounded-2xl overflow-hidden">
-          <!-- Step 1: Story -->
+          
           <div v-if="currentStep === 1" class="p-8 md:p-10">
             <div class="text-center mb-8">
               <div class="inline-flex items-center justify-center w-16 h-16 bg-orange-100 rounded-full mb-4">
@@ -324,7 +340,7 @@ const submitStory = async () => {
             </div>
           </div>
 
-          <!-- Step 2: Category -->
+          
           <div v-if="currentStep === 2" class="p-8 md:p-10">
             <div class="text-center mb-8">
               <div class="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
@@ -381,7 +397,7 @@ const submitStory = async () => {
             </div>
           </div>
 
-          <!-- Step 3: Contact -->
+          
           <div v-if="currentStep === 3" class="p-8 md:p-10">
             <div class="text-center mb-8">
               <div class="inline-flex items-center justify-center w-16 h-16 bg-indigo-100 rounded-full mb-4">
@@ -464,7 +480,7 @@ const submitStory = async () => {
             </div>
           </div>
 
-          <!-- Step 4: Review & Submit -->
+          
           <div v-if="currentStep === 4" class="p-8 md:p-10">
             <div class="text-center mb-8">
               <div class="inline-flex items-center justify-center w-16 h-16 bg-orange-100 rounded-full mb-4">
@@ -532,7 +548,7 @@ const submitStory = async () => {
           </div>
         </div>
 
-        <!-- Help Section -->
+        
         <div class="p-6 mt-8 text-center bg-white border-2 border-orange-200 shadow-xl rounded-2xl">
           <div class="inline-flex items-center justify-center w-16 h-16 bg-orange-100 rounded-full mb-4">
             <Icon name="lucide:headphones" size="32" class="text-orange-600" />
@@ -557,7 +573,7 @@ const submitStory = async () => {
           </div>
         </div>
 
-        <!-- Security Footer -->
+        
         <div class="mt-8 text-center">
           <div class="inline-flex items-center gap-4 px-6 py-4 bg-white border border-orange-200 rounded-full shadow-sm">
             <div class="flex items-center gap-2">

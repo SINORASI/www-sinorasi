@@ -1,66 +1,65 @@
 <script setup lang="ts">
-import { newsSchema, type NewsForm } from '~/utils/schema'
-import type { News } from '~/models/News'
+import type { News } from "~/models/News";
+import { type NewsForm, newsSchema } from "~/utils/schema";
 
-// Mock data - in real app this would come from API
 const newsList = ref<News[]>([
   {
-    id: '1',
-    slug: 'prestasi-siswa-juara-nasional',
-    title: 'Prestasi Siswa SMKN 2 Singosari Juara Nasional',
-    subtitle: 'Siswa kelas XII RPL berhasil meraih juara 1 dalam kompetisi nasional',
-    thumbnail: '/images/placeholder.jpg',
-    tags: ['prestasi', 'kompetisi', 'juara'],
-    content: 'Konten berita lengkap...',
-    publishedAt: '2024-01-15T10:00:00Z',
-    author: 'Admin'
+    id: "1",
+    slug: "prestasi-siswa-juara-nasional",
+    title: "Prestasi Siswa SMKN 2 Singosari Juara Nasional",
+    subtitle: "Siswa kelas XII RPL berhasil meraih juara 1 dalam kompetisi nasional",
+    thumbnail: "/images/placeholder.jpg",
+    tags: ["prestasi", "kompetisi", "juara"],
+    content: "Konten berita lengkap...",
+    publishedAt: "2024-01-15T10:00:00Z",
+    author: "Admin",
   },
   {
-    id: '2',
-    slug: 'kegiatan-pramuka-2024',
-    title: 'Kegiatan Pramuka Tahun 2024',
-    subtitle: 'Berbagai kegiatan pramuka yang akan dilaksanakan tahun ini',
-    thumbnail: '/images/placeholder.jpg',
-    tags: ['pramuka', 'kegiatan', 'ekstrakurikuler'],
-    content: 'Konten berita lengkap...',
-    publishedAt: '2024-01-10T08:00:00Z',
-    author: 'Admin'
-  }
-])
+    id: "2",
+    slug: "kegiatan-pramuka-2024",
+    title: "Kegiatan Pramuka Tahun 2024",
+    subtitle: "Berbagai kegiatan pramuka yang akan dilaksanakan tahun ini",
+    thumbnail: "/images/placeholder.jpg",
+    tags: ["pramuka", "kegiatan", "ekstrakurikuler"],
+    content: "Konten berita lengkap...",
+    publishedAt: "2024-01-10T08:00:00Z",
+    author: "Admin",
+  },
+]);
 
-const searchQuery = ref('')
-const showCreateModal = ref(false)
-const showEditModal = ref(false)
-const showDeleteModal = ref(false)
-const editingNews = ref<News | null>(null)
-const deletingNews = ref<News | null>(null)
-const isSubmitting = ref(false)
+const searchQuery = ref("");
+const showCreateModal = ref(false);
+const showEditModal = ref(false);
+const showDeleteModal = ref(false);
+const editingNews = ref<News | null>(null);
+const deletingNews = ref<News | null>(null);
+const isSubmitting = ref(false);
 
 const formData = ref<NewsForm>({
-  title: '',
-  subtitle: '',
-  content: '',
-  tags: '',
-  publishedAt: new Date().toISOString().split('T')[0]
-})
+  title: "",
+  subtitle: "",
+  content: "",
+  tags: "",
+  publishedAt: new Date().toISOString().split("T")[0],
+});
 
-const errors = ref<Record<string, string[]>>({})
+const errors = ref<Record<string, string[]>>({});
 
 const validateField = (field: keyof NewsForm) => {
-  const result = newsSchema.safeParse(formData.value)
+  const result = newsSchema.safeParse(formData.value);
   if (!result.success) {
-    const fieldErrors = result.error.flatten().fieldErrors
-    errors.value[field] = fieldErrors[field] || []
+    const fieldErrors = result.error.flatten().fieldErrors;
+    errors.value[field] = fieldErrors[field] || [];
   } else {
-    errors.value[field] = []
+    errors.value[field] = [];
   }
-}
+};
 
 const clearFieldError = (field: keyof NewsForm) => {
   if (errors.value[field]) {
-    errors.value[field] = []
+    errors.value[field] = [];
   }
-}
+};
 
 useHead({
   title: "Admin - Kelola Berita - SMKN 2 Singosari",
@@ -73,143 +72,149 @@ useHead({
 });
 
 const filteredNews = computed(() => {
-  if (!searchQuery.value.trim()) return newsList.value
-  const query = searchQuery.value.toLowerCase()
-  return newsList.value.filter(news =>
-    news.title.toLowerCase().includes(query) ||
-    news.subtitle.toLowerCase().includes(query) ||
-    news.tags.some(tag => tag.toLowerCase().includes(query))
-  )
-})
+  if (!searchQuery.value.trim()) return newsList.value;
+  const query = searchQuery.value.toLowerCase();
+  return newsList.value.filter(
+    (news) =>
+      news.title.toLowerCase().includes(query) ||
+      news.subtitle.toLowerCase().includes(query) ||
+      news.tags.some((tag) => tag.toLowerCase().includes(query)),
+  );
+});
 
 const openCreateModal = () => {
   formData.value = {
-    title: '',
-    subtitle: '',
-    content: '',
-    tags: '',
-    publishedAt: new Date().toISOString().split('T')[0]
-  }
-  errors.value = {}
-  showCreateModal.value = true
-}
+    title: "",
+    subtitle: "",
+    content: "",
+    tags: "",
+    publishedAt: new Date().toISOString().split("T")[0],
+  };
+  errors.value = {};
+  showCreateModal.value = true;
+};
 
 const openEditModal = (news: News) => {
-  editingNews.value = news
+  editingNews.value = news;
   formData.value = {
     title: news.title,
     subtitle: news.subtitle,
     content: news.content,
-    tags: news.tags.join(', '),
-    publishedAt: new Date(news.publishedAt).toISOString().split('T')[0]
-  }
-  errors.value = {}
-  showEditModal.value = true
-}
+    tags: news.tags.join(", "),
+    publishedAt: new Date(news.publishedAt).toISOString().split("T")[0],
+  };
+  errors.value = {};
+  showEditModal.value = true;
+};
 
 const openDeleteModal = (news: News) => {
-  deletingNews.value = news
-  showDeleteModal.value = true
-}
+  deletingNews.value = news;
+  showDeleteModal.value = true;
+};
 
 const submitNews = async () => {
-  const result = newsSchema.safeParse(formData.value)
+  const result = newsSchema.safeParse(formData.value);
 
   if (!result.success) {
-    errors.value = result.error.flatten().fieldErrors
-    return
+    errors.value = result.error.flatten().fieldErrors;
+    return;
   }
 
-  errors.value = {}
-  isSubmitting.value = true
+  errors.value = {};
+  isSubmitting.value = true;
 
   try {
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000))
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     if (editingNews.value) {
-      // Update existing news
-      const index = newsList.value.findIndex(n => n.id === editingNews.value!.id)
+      const index = newsList.value.findIndex((n) => n.id === editingNews.value?.id);
       if (index !== -1) {
-        const tags = formData.value.tags.split(',').map(tag => tag.trim()).filter(tag => tag)
+        const tags = formData.value.tags
+          .split(",")
+          .map((tag) => tag.trim())
+          .filter((tag) => tag);
         newsList.value[index] = {
           ...newsList.value[index],
           title: formData.value.title,
           subtitle: formData.value.subtitle,
           content: formData.value.content,
           tags,
-          publishedAt: new Date(formData.value.publishedAt).toISOString()
-        }
+          publishedAt: new Date(formData.value.publishedAt).toISOString(),
+        };
       }
-      showEditModal.value = false
-      editingNews.value = null
+      showEditModal.value = false;
+      editingNews.value = null;
     } else {
-      // Create new news
       const newNews: News = {
         id: Date.now().toString(),
-        slug: formData.value.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''),
+        slug: formData.value.title
+          .toLowerCase()
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/^-|-$/g, ""),
         title: formData.value.title,
         subtitle: formData.value.subtitle,
-        thumbnail: '/images/placeholder.jpg',
-        tags: formData.value.tags.split(',').map(tag => tag.trim()).filter(tag => tag),
+        thumbnail: "/images/placeholder.jpg",
+        tags: formData.value.tags
+          .split(",")
+          .map((tag) => tag.trim())
+          .filter((tag) => tag),
         content: formData.value.content,
         publishedAt: new Date(formData.value.publishedAt).toISOString(),
-        author: 'Admin'
-      }
-      newsList.value.unshift(newNews)
-      showCreateModal.value = false
+        author: "Admin",
+      };
+      newsList.value.unshift(newNews);
+      showCreateModal.value = false;
     }
 
     formData.value = {
-      title: '',
-      subtitle: '',
-      content: '',
-      tags: '',
-      publishedAt: new Date().toISOString().split('T')[0]
-    }
+      title: "",
+      subtitle: "",
+      content: "",
+      tags: "",
+      publishedAt: new Date().toISOString().split("T")[0],
+    };
   } catch (error) {
-    alert("Terjadi kesalahan saat menyimpan berita")
+    alert("Terjadi kesalahan saat menyimpan berita");
   } finally {
-    isSubmitting.value = false
+    isSubmitting.value = false;
   }
-}
+};
 
 const deleteNews = async () => {
-  if (!deletingNews.value) return
+  if (!deletingNews.value) return;
 
   try {
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 500))
+    await new Promise((resolve) => setTimeout(resolve, 500));
 
-    const index = newsList.value.findIndex(n => n.id === deletingNews.value!.id)
+    const index = newsList.value.findIndex((n) => n.id === deletingNews.value?.id);
     if (index !== -1) {
-      newsList.value.splice(index, 1)
+      newsList.value.splice(index, 1);
     }
 
-    showDeleteModal.value = false
-    deletingNews.value = null
+    showDeleteModal.value = false;
+    deletingNews.value = null;
   } catch (error) {
-    alert("Terjadi kesalahan saat menghapus berita")
+    alert("Terjadi kesalahan saat menghapus berita");
   }
-}
+};
 
 const formatDate = (dateString: string) => {
-  const date = new Date(dateString)
-  return date.toLocaleDateString('id-ID', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit'
-  })
-}
+  const date = new Date(dateString);
+  return date.toLocaleDateString("id-ID", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+};
 </script>
 
 <template>
   <div class="min-h-screen py-24 bg-gradient-to-b from-white via-red-50 to-white">
     <div class="container px-4 mx-auto sm:px-6">
       <div class="max-w-7xl mx-auto">
-        <!-- Header -->
+        
         <div class="flex flex-col gap-4 mb-8 md:flex-row md:items-center md:justify-between">
           <div>
             <h1 class="text-3xl font-bold text-gray-800 md:text-4xl">Kelola Berita</h1>
@@ -224,7 +229,7 @@ const formatDate = (dateString: string) => {
           </button>
         </div>
 
-        <!-- Search and Stats -->
+        
         <div class="grid grid-cols-1 gap-6 mb-8 md:grid-cols-4">
           <div class="md:col-span-3">
             <div class="relative">
@@ -249,7 +254,6 @@ const formatDate = (dateString: string) => {
           </div>
         </div>
 
-        <!-- News List -->
         <div class="space-y-4">
           <div
             v-for="news in filteredNews"
@@ -319,7 +323,7 @@ const formatDate = (dateString: string) => {
     </div>
   </div>
 
-  <!-- Create/Edit Modal -->
+  
   <Teleport to="body">
     <Transition name="modal">
       <div
@@ -486,7 +490,7 @@ const formatDate = (dateString: string) => {
     </Transition>
   </Teleport>
 
-  <!-- Delete Confirmation Modal -->
+  
   <Teleport to="body">
     <Transition name="modal">
       <div

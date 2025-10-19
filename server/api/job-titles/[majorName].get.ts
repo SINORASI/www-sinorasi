@@ -1,26 +1,28 @@
-import type { MajorName } from '~/models/MajorName';
-import type { JobTitle } from '~/models/JobTitle';
+import type { JobTitle } from "~/models/JobTitle";
+import type { MajorName } from "~/models/MajorName";
 
-// Mock data - same as data.ts
 const JobTitles: Record<MajorName, JobTitle[]> = {
   rpl: [
     {
       id: "1",
       image: "/images/logo.webp",
       title: "Software Engineer",
-      description: "profesional yang merancang, mengembangkan, menguji, dan memelihara perangkat lunak komputer, aplikasi, dan sistem untuk memecahkan masalah dunia nyata",
+      description:
+        "profesional yang merancang, mengembangkan, menguji, dan memelihara perangkat lunak komputer, aplikasi, dan sistem untuk memecahkan masalah dunia nyata",
     },
     {
       id: "2",
       image: "/images/logo.webp",
       title: "Web Developer",
-      description: "Profesional yang membangun, mengembangkan, dan memelihara situs web dan aplikasi web",
+      description:
+        "Profesional yang membangun, mengembangkan, dan memelihara situs web dan aplikasi web",
     },
     {
       id: "3",
       image: "/images/logo.webp",
       title: "Frontend Developer",
-      description: "profesional yang berfokus pada sisi visual dan interaktif aplikasi atau situs web yang langsung dilihat dan digunakan oleh pengguna",
+      description:
+        "profesional yang berfokus pada sisi visual dan interaktif aplikasi atau situs web yang langsung dilihat dan digunakan oleh pengguna",
     },
   ],
   tkj: [
@@ -166,16 +168,16 @@ const JobTitles: Record<MajorName, JobTitle[]> = {
 };
 
 export default defineEventHandler(async (event) => {
-  const majorName = getRouterParam(event, 'majorName') as MajorName;
-  
+  const majorName = getRouterParam(event, "majorName") as MajorName;
+
   const jobTitles = JobTitles[majorName];
-  
+
   if (!jobTitles) {
     throw createError({
       statusCode: 404,
-      statusMessage: 'Job titles not found for this major'
+      statusMessage: "Job titles not found for this major",
     });
   }
-  
+
   return jobTitles;
 });

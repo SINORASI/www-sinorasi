@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-import { ref, computed, useSlots } from "vue";
+import { computed, ref, useSlots } from "vue";
 
 const slots = useSlots();
 const currentIndex = ref(0);

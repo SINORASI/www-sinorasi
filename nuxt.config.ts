@@ -4,7 +4,15 @@ export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: false },
   css: ["~/assets/css/main.css"],
-  modules: ["@nuxt/fonts", "@nuxt/icon", "@nuxt/scripts", "@nuxtjs/mdc", "@nuxt/image", "motion-v/nuxt", "@nuxtjs/i18n"],
+  modules: [
+    "@nuxt/fonts",
+    "@nuxt/icon",
+    "@nuxt/scripts",
+    "@nuxtjs/mdc",
+    "@nuxt/image",
+    "motion-v/nuxt",
+    "@nuxtjs/i18n",
+  ],
   app: {
     pageTransition: { name: "page", mode: "out-in" },
     head: {
@@ -33,10 +41,10 @@ export default defineNuxtConfig({
     plugins: [tailwindcss()],
   },
   i18n: {
-    defaultLocale: 'id',
+    defaultLocale: "id",
     locales: [
-      { code: 'id', name: 'Bahasa Indonesia', file: 'id.json' },
-      { code: 'en', name: 'English', file: 'en.json' }
-    ]
+      { code: "id", name: "Bahasa Indonesia", file: "id.json" },
+      { code: "en", name: "English", file: "en.json" },
+    ],
   },
 });

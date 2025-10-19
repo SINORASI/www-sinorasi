@@ -1,21 +1,13 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, nextTick, watch } from "vue";
+import { nextTick, onMounted, ref, watch } from "vue";
 
-const headerClass = ref("bg-white/20 backdrop-blur-[8px] border-b-white/20 shadow-lg shadow-orange-500/10");
+const headerClass = ref(
+  "bg-white/20 backdrop-blur-[8px] border-b-white/20 shadow-lg shadow-orange-500/10",
+);
 const sizeClass = ref("compact");
 const isSidebarOpen = ref(false);
 const route = useRoute();
 const scrollItems = ref<Array<{ id: string; label: string }>>([]);
-
-// const navItems = [
-//   { label: "Home", href: "/" },
-//   { label: "Profile", href: "/informasi/profile-sekolah" },
-//   { label: "Departments", href: "/jurusan" },
-//   { label: "Facilities", href: "/informasi/sarana-prasarana" },
-//   { label: "Achievements", href: "#achievements" },
-//   { label: "News", href: "/berita" },
-//   { label: "Contact", href: "/informasi/kontak" },
-// ];
 
 const scrollToSection = (id: string) => {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -25,17 +17,13 @@ const populateScrollItems = async () => {
   await nextTick();
   scrollItems.value = [];
 
-  // Add a small delay to ensure DOM is fully rendered
   await new Promise((resolve) => setTimeout(resolve, 100));
 
-  // Exclude scroll items on major pages
   if (route.path.startsWith("/jurusan/")) {
     return;
   }
 
-  // Only show scroll items on the home page
   if (route.path === "/") {
-    // Use custom short labels for home page sections
     const homeSections = [
       { id: "profil-sekolah", label: "Profil" },
       { id: "sambutan", label: "Sambutan" },
@@ -47,7 +35,6 @@ const populateScrollItems = async () => {
       { id: "faq", label: "FAQ" },
     ];
 
-    // Verify sections exist on the page
     homeSections.forEach((section) => {
       if (document.getElementById(section.id)) {
         scrollItems.value.push(section);
@@ -59,7 +46,6 @@ const populateScrollItems = async () => {
 onMounted(() => {
   populateScrollItems();
 
-  // Retry once more after a longer delay to ensure DOM is fully loaded
   setTimeout(() => {
     if (scrollItems.value.length === 0) {
       populateScrollItems();
@@ -70,18 +56,17 @@ onMounted(() => {
 watch(
   () => route.path,
   () => {
-    // Wait for next tick and longer delay for the page to fully render
     nextTick(() => {
       setTimeout(() => {
         populateScrollItems();
       }, 500);
     });
-  }
+  },
 );
 
 onMounted(() => {
-  // Apply consistent glassmorphism effect on all pages
-  headerClass.value = "bg-white/20 backdrop-blur-[8px] border-b-white/20 shadow-lg shadow-orange-500/10";
+  headerClass.value =
+    "bg-white/20 backdrop-blur-[8px] border-b-white/20 shadow-lg shadow-orange-500/10";
   sizeClass.value = "compact";
 });
 </script>

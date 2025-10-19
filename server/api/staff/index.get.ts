@@ -1,16 +1,31 @@
-import type { Staff } from '~/models/Staff';
+import type { Staff } from "~/models/Staff";
 
-// Mock data - same as data.ts
 const staffData = {
   kepsek: [
     { image: "/images/placeholder.jpg", name: "Sumijah S.Pd, M.Si", position: "Kepala Sekolah" },
     { image: "/images/placeholder.jpg", name: "Sumijah S.Pd, M.Si", position: "Kepala Sekolah" },
   ] as Staff[],
   wakasek: [
-    { image: "/images/placeholder.jpg", name: "Sumijah S.Pd, M.Si", position: "Wakil Kepala Sekolah" },
-    { image: "/images/placeholder.jpg", name: "Sumijah S.Pd, M.Si", position: "Wakil Kepala Sekolah" },
-    { image: "/images/placeholder.jpg", name: "Sumijah S.Pd, M.Si", position: "Wakil Kepala Sekolah" },
-    { image: "/images/placeholder.jpg", name: "Sumijah S.Pd, M.Si", position: "Wakil Kepala Sekolah" },
+    {
+      image: "/images/placeholder.jpg",
+      name: "Sumijah S.Pd, M.Si",
+      position: "Wakil Kepala Sekolah",
+    },
+    {
+      image: "/images/placeholder.jpg",
+      name: "Sumijah S.Pd, M.Si",
+      position: "Wakil Kepala Sekolah",
+    },
+    {
+      image: "/images/placeholder.jpg",
+      name: "Sumijah S.Pd, M.Si",
+      position: "Wakil Kepala Sekolah",
+    },
+    {
+      image: "/images/placeholder.jpg",
+      name: "Sumijah S.Pd, M.Si",
+      position: "Wakil Kepala Sekolah",
+    },
   ] as Staff[],
   kurikulum: [
     { image: "/images/placeholder.jpg", name: "Sumijah S.Pd, M.Si", position: "Kurikulum" },
@@ -41,16 +56,15 @@ const staffData = {
 };
 
 export default defineEventHandler(async (event) => {
-  // Get query parameters for filtering by department
   const query = getQuery(event);
   const { department } = query;
 
-  if (department && typeof department === 'string') {
+  if (department && typeof department === "string") {
     const deptData = staffData[department as keyof typeof staffData];
     if (!deptData) {
       throw createError({
         statusCode: 404,
-        statusMessage: 'Department not found'
+        statusMessage: "Department not found",
       });
     }
     return deptData;

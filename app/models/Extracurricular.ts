@@ -1,5 +1,3 @@
-import type { Activity } from "./Activity";
-
 export interface ExtracurricularStats {
   members: number;
   achievements: number;
@@ -37,29 +35,24 @@ export interface Extracurricular {
   image?: string;
   established?: string;
 
-  // Stats
   memberCount?: number;
   achievementCount?: number;
   yearEstablished?: number;
   meetingsPerWeek?: number;
 
-  // Details
   coach?: string;
   schedule?: string;
   location?: string;
   fee?: string;
   fullDescription?: string;
 
-  // Lists
   requirements?: string[];
   activities?: ExtracurricularActivity[];
 
-  // Registration
   registrationOpen?: boolean;
   registrationPeriod?: string;
   contactInfo?: string;
 
-  // Legacy support
   statistics?: ExtracurricularStats;
   registrationInfo?: ExtracurricularInfo;
 }

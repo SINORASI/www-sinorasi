@@ -1,0 +1,48 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.2.6/schema.json",
+  "assist": {
+    "enabled": true,
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true
+    }
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineEnding": "lf",
+    "lineWidth": 100
+  },
+  "files": {
+    "includes": ["**/*.js", "**/*.ts", "**/*.vue", "**/*.json"]
+  },
+  "overrides": [
+    {
+      "includes": [".nuxt/**"],
+      "linter": {
+        "enabled": false
+      }
+    },
+    {
+      "includes": ["**/*.vue"],
+      "linter": {
+        "rules": {
+          "style": {
+            "useTemplate": "off"
+          },
+          "correctness": {
+            "noUnusedVariables": "off"
+          }
+        }
+      }
+    }
+  ]
+}

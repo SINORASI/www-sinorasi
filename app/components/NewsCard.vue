@@ -6,13 +6,13 @@ defineProps<{
 }>();
 
 const formatDate = (dateString: string) => {
-  if (!dateString) return '';
+  if (!dateString) return "";
   try {
     const date = new Date(dateString);
-    return date.toLocaleDateString('id-ID', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
+    return date.toLocaleDateString("id-ID", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
     });
   } catch {
     return dateString;

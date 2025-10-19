@@ -2,7 +2,7 @@
   <div class="min-h-screen py-24 bg-gradient-to-b from-white via-blue-50 to-white">
     <div class="container px-4 py-8 mx-auto sm:px-6">
       <div v-if="news" class="max-w-5xl mx-auto">
-        <!-- Breadcrumb -->
+        
         <nav class="mb-8">
           <ol class="flex items-center space-x-2 text-sm text-gray-600">
             <li><NuxtLink to="/" class="font-medium hover:text-blue-600">Beranda</NuxtLink></li>
@@ -13,7 +13,7 @@
           </ol>
         </nav>
 
-        <!-- Article Header -->
+        
         <div class="mb-10">
           <div class="mb-6">
             <img :src="news.thumbnail" :alt="news.title" class="w-full h-80 md:h-[500px] object-cover rounded-2xl shadow-2xl border-4 border-white" />
@@ -44,14 +44,14 @@
           </div>
         </div>
 
-        <!-- Article Content -->
+        
         <article class="p-8 mb-12 bg-white border-2 border-blue-100 shadow-xl rounded-2xl md:p-12">
           <div class="prose prose-lg max-w-none">
             <MDC :value="news.content" />
           </div>
         </article>
 
-        <!-- Related News -->
+        
         <section id="berita-lainnya" class="mt-12">
           <div class="p-6 mb-8 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl">
             <h2 class="text-2xl font-bold text-white md:text-3xl">Berita Lainnya</h2>
@@ -79,7 +79,7 @@
         </section>
       </div>
 
-      <!-- Not Found State -->
+      
       <div v-else class="max-w-2xl p-12 mx-auto text-center bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
         <Icon name="lucide:file-x" size="64" class="mx-auto mb-4 text-gray-300" />
         <h1 class="mb-4 text-3xl font-bold text-gray-900">Berita Tidak Ditemukan</h1>
@@ -94,50 +94,47 @@
 </template>
 
 <script setup lang="ts">
-import type { News } from '~/models/News'
+import type { News } from "~/models/News";
 
-const route = useRoute()
-const slug = route.params.slug as string
+const route = useRoute();
+const slug = route.params.slug as string;
 
-// Fetch single news from API
-const { data: news } = await useFetch<News>(`/api/news/${slug}`)
+const { data: news } = await useFetch<News>(`/api/news/${slug}`);
 
-// Fetch all news for related items
-const { data: allNewsResponse } = await useFetch<{ data: News[], total: number }>('/api/news', {
+const { data: allNewsResponse } = await useFetch<{ data: News[]; total: number }>("/api/news", {
   query: {
-    limit: 5
-  }
-})
+    limit: 5,
+  },
+});
 
 const relatedNews = computed(() => {
-  if (!news.value || !allNewsResponse.value?.data) return []
-  return allNewsResponse.value.data.filter((n: News) => n.id !== news.value!.id).slice(0, 4)
-})
-
+  if (!news.value || !allNewsResponse.value?.data) return [];
+  return allNewsResponse.value.data.filter((n: News) => n.id !== news.value?.id).slice(0, 4);
+});
 
 const formatDate = (dateString: string) => {
-  if (!dateString) return '';
+  if (!dateString) return "";
   try {
-    const date = new Date(dateString)
-    return date.toLocaleDateString('id-ID', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    })
+    const date = new Date(dateString);
+    return date.toLocaleDateString("id-ID", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
   } catch {
     return dateString;
   }
-}
+};
 
 useHead({
-  title: news.value ? `${news.value.title} - SMKN 2 Singosari` : 'Berita Tidak Ditemukan',
+  title: news.value ? `${news.value.title} - SMKN 2 Singosari` : "Berita Tidak Ditemukan",
   meta: [
     {
-      name: 'description',
-      content: news.value ? news.value.subtitle : 'Berita SMKN 2 Singosari'
-    }
-  ]
-})
+      name: "description",
+      content: news.value ? news.value.subtitle : "Berita SMKN 2 Singosari",
+    },
+  ],
+});
 </script>
 
 <style scoped>

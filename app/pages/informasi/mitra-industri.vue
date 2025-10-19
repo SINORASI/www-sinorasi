@@ -1,11 +1,6 @@
 <script setup lang="ts">
 definePageMeta({ layout: false });
 
-import AppHeader from "~/components/layout/AppHeader.vue";
-import AppFooter from "~/components/layout/AppFooter.vue";
-import MajorPartnerSlider from "~/components/Major/MajorPartnerSlider.vue";
-import type { MajorName } from "~/models/MajorName";
-
 const selectedFilter = ref("ALL");
 const showDialog = ref(false);
 const selectedPartner = ref<any>(null);
@@ -16,7 +11,8 @@ useHead({
   meta: [
     {
       name: "description",
-      content: "Daftar mitra industri dan kerjasama SMK Negeri 2 Singosari dengan berbagai perusahaan.",
+      content:
+        "Daftar mitra industri dan kerjasama SMK Negeri 2 Singosari dengan berbagai perusahaan.",
     },
   ],
 });
@@ -51,15 +47,17 @@ const closeDialog = () => {
 };
 
 const nextImage = () => {
-  if (selectedPartner.value && selectedPartner.value.images) {
+  if (selectedPartner.value?.images) {
     currentImageIndex.value = (currentImageIndex.value + 1) % selectedPartner.value.images.length;
   }
 };
 
 const prevImage = () => {
-  if (selectedPartner.value && selectedPartner.value.images) {
+  if (selectedPartner.value?.images) {
     currentImageIndex.value =
-      currentImageIndex.value === 0 ? selectedPartner.value.images.length - 1 : currentImageIndex.value - 1;
+      currentImageIndex.value === 0
+        ? selectedPartner.value.images.length - 1
+        : currentImageIndex.value - 1;
   }
 };
 
@@ -67,10 +65,8 @@ const goToImage = (index: number) => {
   currentImageIndex.value = index;
 };
 
-// Load business partners data from JSON
-const { data: businessPartnersData } = await useFetch('/images/industri/business_partners.json');
+const { data: businessPartnersData } = await useFetch("/images/industri/business_partners.json");
 
-// Transform business partners data to match the expected format
 const partners = computed(() => {
   const data = businessPartnersData.value as any;
   if (!data?.business_partners) return [];
@@ -80,13 +76,15 @@ const partners = computed(() => {
     name: partner.business_name,
     description: `Mitra industri ${partner.business_name} yang telah berkolaborasi dengan SMK Negeri 2 Singosari dalam program pengembangan keterampilan siswa.`,
     fullDescription: `Perusahaan ${partner.business_name} telah menjadi mitra strategis SMK Negeri 2 Singosari dalam program pengembangan sumber daya manusia. Melalui kerjasama ini, siswa mendapatkan kesempatan untuk praktik kerja lapangan, magang, dan pengembangan kompetensi yang sesuai dengan kebutuhan industri modern.`,
-    logo: partner.images.length > 0 ? `/images/industri/${partner.images[0].path}` : "/images/placeholder.jpg",
+    logo:
+      partner.images.length > 0
+        ? `/images/industri/${partner.images[0].path}`
+        : "/images/placeholder.jpg",
     images: partner.images.map((img: any) => `/images/industri/${img.path}`),
-    major: "ALL", // Default to ALL, can be customized based on business type
+    major: "ALL",
   }));
 });
 
-// Computed property to filter partners based on selected filter
 const filteredPartners = computed(() => {
   if (!partners.value) return [];
   if (selectedFilter.value === "ALL") {
@@ -102,13 +100,13 @@ const filteredPartners = computed(() => {
     <div class="min-h-screen py-24 bg-gradient-to-br from-gray-50 via-white to-gray-100">
     <div class="container px-4 mx-auto sm:px-6">
       <div class="max-w-7xl mx-auto bg-white shadow-2xl shadow-gray-300/20 rounded-3xl overflow-hidden border border-gray-200 animate-fade-in">
-        <!-- Page Header -->
+        
         <div class="relative px-8 py-20 text-center bg-gradient-to-r from-slate-800 via-slate-700 to-slate-900 overflow-hidden">
           <div class="absolute inset-0 bg-black/20"></div>
           <div class="absolute inset-0 opacity-10">
             <div class="absolute inset-0 bg-gradient-to-br from-orange-400/20 to-transparent"></div>
           </div>
-          <!-- Decorative elements -->
+          
           <div class="absolute top-0 left-0 w-32 h-32 bg-orange-400/10 rounded-full -translate-x-16 -translate-y-16"></div>
           <div class="absolute bottom-0 right-0 w-48 h-48 bg-orange-400/10 rounded-full translate-x-24 translate-y-24"></div>
           <div class="relative z-10">
@@ -140,7 +138,7 @@ const filteredPartners = computed(() => {
           </div>
         </div>
 
-        <!-- Partnership Overview Section -->
+        
         <div class="px-8 py-12 bg-gradient-to-r from-slate-50 to-gray-100 border-b border-gray-200">
           <div class="grid gap-8 md:grid-cols-3">
             <div class="text-center">
@@ -167,7 +165,7 @@ const filteredPartners = computed(() => {
           </div>
         </div>
 
-        <!-- Partners Slider -->
+        
         <div class="px-8 py-16 bg-gradient-to-b from-white to-slate-50">
           <div class="mb-8 text-center">
             <h2 class="mb-4 text-2xl font-bold text-gray-800">Partner Slider</h2>
@@ -176,29 +174,8 @@ const filteredPartners = computed(() => {
           <MajorPartnerSlider :major="'tkj'" />
         </div>
 
-        <!-- Filter Navigation Bar - Disabled -->
-        <!-- <div class="px-8 py-8 bg-white border-b border-gray-200">
-          <div class="mb-4 text-center">
-            <h2 class="text-xl font-bold text-gray-800">Filter Berdasarkan Konsentrasi Keahlian</h2>
-            <p class="text-sm text-gray-600">Pilih konsentrasi keahlian untuk melihat mitra industri terkait</p>
-          </div>
-          <div class="flex flex-wrap justify-center gap-3">
-            <button
-              v-for="(filter, index) in filters"
-              :key="filter.id"
-              @click="selectFilter(filter.id)"
-              :class="[
-                'px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-300 transform hover:scale-105 animate-scale-in',
-                selectedFilter === filter.id
-                  ? 'bg-gradient-to-r from-slate-700 to-slate-800 text-white shadow-lg shadow-slate-500/30 ring-2 ring-orange-400/50'
-                  : 'bg-gray-50 text-gray-700 border-2 border-gray-200 hover:border-orange-400 hover:text-slate-700 hover:bg-orange-50 hover:shadow-md',
-              ]"
-              :style="{ animationDelay: `${index * 0.05}s` }"
-            >
-              {{ filter.label }}
-            </button>
-          </div>
-        </div> -->
+        
+        
 
       </div>
     </div>
@@ -206,7 +183,7 @@ const filteredPartners = computed(() => {
      <AppFooter bgColor="linear-gradient(135deg, #fb923c, #f97316)" />
    </div>
 
-  <!-- Fullscreen Dialog -->
+  
   <Teleport to="body">
     <Transition
       enter-active-class="transition-all duration-500 ease-out"
@@ -224,7 +201,7 @@ const filteredPartners = computed(() => {
         <div
           class="bg-white rounded-2xl w-full max-w-6xl max-h-[90vh] overflow-y-auto shadow-2xl shadow-slate-500/30 border border-gray-200"
         >
-          <!-- Close Button -->
+          
           <button
             @click="closeDialog"
             class="sticky z-10 float-right p-3 text-gray-600 transition-all bg-white rounded-xl shadow-lg top-6 right-6 hover:text-gray-800 hover:shadow-xl hover:scale-110 border border-gray-200"
@@ -234,9 +211,9 @@ const filteredPartners = computed(() => {
 
           <div class="clear-both p-8 md:p-12">
             <div class="grid gap-8 md:grid-cols-2 md:gap-12">
-              <!-- Left Side - Company Images -->
+              
               <div class="flex flex-col">
-                <!-- Main Image with Carousel -->
+                
                 <div class="overflow-hidden bg-gradient-to-br from-gray-50 to-slate-100 border border-gray-200 shadow-xl shadow-slate-500/10 rounded-2xl">
                   <div class="relative aspect-square">
                     <div class="flex items-center justify-center w-full h-full p-8 bg-gradient-to-br from-white to-gray-50">
@@ -247,7 +224,7 @@ const filteredPartners = computed(() => {
                       />
                     </div>
 
-                    <!-- Previous Button -->
+                    
                     <button
                       v-if="selectedPartner.images.length > 1"
                       @click="prevImage"
@@ -256,7 +233,7 @@ const filteredPartners = computed(() => {
                       <Icon name="lucide:chevron-left" size="24" />
                     </button>
 
-                    <!-- Next Button -->
+                    
                     <button
                       v-if="selectedPartner.images.length > 1"
                       @click="nextImage"
@@ -265,7 +242,7 @@ const filteredPartners = computed(() => {
                       <Icon name="lucide:chevron-right" size="24" />
                     </button>
 
-                    <!-- Dots Indicator -->
+                    
                     <div
                       v-if="selectedPartner.images.length > 1"
                       class="absolute flex gap-3 -translate-x-1/2 bottom-6 left-1/2"
@@ -283,7 +260,7 @@ const filteredPartners = computed(() => {
                   </div>
                 </div>
 
-                <!-- Partnership Stats -->
+                
                 <div class="mt-6 grid grid-cols-2 gap-4">
                   <div class="text-center p-4 bg-slate-50 rounded-xl border border-slate-200">
                     <Icon name="lucide:users" size="24" class="mx-auto mb-2 text-slate-600" />
@@ -298,9 +275,9 @@ const filteredPartners = computed(() => {
                 </div>
               </div>
 
-              <!-- Right Side - Content -->
+              
               <div class="flex flex-col">
-                <!-- Company Header -->
+                
                 <div class="mb-6">
                   <div class="inline-flex items-center gap-2 px-4 py-2 mb-4 bg-slate-100 rounded-full text-sm font-semibold text-slate-700">
                     <Icon name="lucide:building" size="16" />
@@ -311,7 +288,7 @@ const filteredPartners = computed(() => {
                   </h2>
                 </div>
 
-                <!-- Partnership Overview -->
+                
                 <div class="mb-6">
                   <h3 class="flex items-center mb-4 text-lg font-bold text-gray-800">
                     <Icon name="lucide:handshake" size="20" class="mr-2 text-orange-600" />
@@ -324,7 +301,7 @@ const filteredPartners = computed(() => {
                   </div>
                 </div>
 
-                <!-- Detailed Description -->
+                
                 <div class="mb-8">
                   <h3 class="flex items-center mb-4 text-lg font-bold text-gray-800">
                     <Icon name="lucide:info" size="20" class="mr-2 text-slate-600" />
@@ -337,9 +314,9 @@ const filteredPartners = computed(() => {
                   </div>
                 </div>
 
-                <!-- Action Buttons -->
+                
                 <div class="flex items-center justify-center gap-4 mt-auto">
-                  <!-- Close Button -->
+                  
                   <button
                     @click="closeDialog"
                     class="flex items-center gap-3 px-6 py-3 font-semibold text-gray-700 transition-all duration-300 bg-gray-100 rounded-xl hover:bg-gray-200 hover:scale-105 border border-gray-200"
@@ -348,7 +325,7 @@ const filteredPartners = computed(() => {
                     Kembali
                   </button>
 
-                  <!-- Contact/Home Button -->
+                  
                   <NuxtLink
                     to="/"
                     class="flex items-center gap-3 px-6 py-3 font-semibold text-white transition-all duration-300 bg-gradient-to-r from-slate-700 to-slate-800 rounded-xl hover:from-slate-800 hover:to-slate-900 hover:scale-105 shadow-lg"
@@ -367,7 +344,7 @@ const filteredPartners = computed(() => {
 </template>
 
 <style scoped>
-/* Professional animations for business theme */
+
 @keyframes fade-in {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
@@ -400,12 +377,12 @@ const filteredPartners = computed(() => {
   animation: scale-in 0.5s ease-out;
 }
 
-/* Subtle hover effects for professional feel */
+
 .group:hover {
   animation: subtle-float 3s ease-in-out infinite;
 }
 
-/* Line clamp utilities */
+
 .line-clamp-2 {
   display: -webkit-box;
   line-clamp: 2;
@@ -422,7 +399,7 @@ const filteredPartners = computed(() => {
   overflow: hidden;
 }
 
-/* Professional gradient text effect */
+
 .gradient-text {
   background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
   -webkit-background-clip: text;
@@ -430,7 +407,7 @@ const filteredPartners = computed(() => {
   background-clip: text;
 }
 
-/* Clean scrollbar for modal */
+
 .modal-content {
   scroll-behavior: smooth;
 }
@@ -453,7 +430,7 @@ const filteredPartners = computed(() => {
   background: linear-gradient(135deg, #334155, #1e293b);
 }
 
-/* Professional shadow utilities */
+
 .shadow-professional {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
@@ -462,7 +439,7 @@ const filteredPartners = computed(() => {
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
-/* Custom orange scrollbar */
+
 ::-webkit-scrollbar {
   width: 12px;
 }

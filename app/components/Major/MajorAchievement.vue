@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
-import { Motion } from "motion-v";
-import type { MajorName } from "~/models/MajorName";
+import { computed, ref } from "vue";
 import type { MajorData } from "~/models/MajorData";
+import type { MajorName } from "~/models/MajorName";
 import { majorColorSchemes } from "~/utils/majorColors";
 
 const props = defineProps<{
@@ -20,9 +19,10 @@ interface Achievement {
 const route = useRoute();
 const major = props.major || (route.params.majorName as MajorName);
 
-// Fetch achievements and major data
-const { data: achievementsData } = await useFetch<Achievement[]>(`/api/achievements?major=${major}`);
-const { data: majorDatas } = await useFetch<Record<MajorName, MajorData>>("/api/majors");
+const { data: achievementsData } = await useFetch<Achievement[]>(
+  `/api/achievements?major=${major}`,
+);
+const { data: _majorDatas } = await useFetch<Record<MajorName, MajorData>>("/api/majors");
 
 const currentIndex = ref<number>(0);
 const selectedAchievement = ref<Achievement | null>(null);
@@ -30,7 +30,6 @@ const slideDirection = ref<"left" | "right" | "">("");
 
 const achievements = computed(() => achievementsData.value || []);
 
-// Get major color scheme
 const majorColor = computed(() => {
   return majorColorSchemes[major];
 });
@@ -78,7 +77,8 @@ const previousSlide = (): void => {
     slideDirection.value = "right";
 
     setTimeout(() => {
-      currentIndex.value = (currentIndex.value - 1 + achievements.value.length) % achievements.value.length;
+      currentIndex.value =
+        (currentIndex.value - 1 + achievements.value.length) % achievements.value.length;
     }, 150);
 
     setTimeout(() => {
@@ -99,11 +99,11 @@ const closeModal = (): void => {
 
 <template>
   <div class="w-full">
-    <!-- Carousel Container -->
+    
     <div class="relative flex flex-col items-center gap-6 px-2 md:gap-8 md:px-4">
-      <!-- Cards Row -->
+      
       <div class="relative flex items-center justify-center w-full gap-3 md:gap-6 lg:gap-8">
-        <!-- Previous Button -->
+        
         <button
           class="z-10 flex items-center justify-center flex-shrink-0 w-10 h-10 transition-all duration-300 rounded-full shadow-lg md:w-12 md:h-12 hover:scale-110 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed"
           :style="`background: linear-gradient(135deg, ${majorColor.primary}, ${majorColor.accent})`"
@@ -115,7 +115,7 @@ const closeModal = (): void => {
           </svg>
         </button>
 
-        <!-- Left Preview Card (hidden on mobile) -->
+        
         <div
           v-if="leftAchievement && !isAnimating"
           class="flex-shrink-0 hidden w-40 scale-90 pointer-events-none lg:block xl:w-48 opacity-30"
@@ -124,7 +124,7 @@ const closeModal = (): void => {
             class="overflow-hidden bg-white border-4 shadow-lg rounded-xl"
             :style="`border-color: ${majorColor.primary}`"
           >
-            <!-- Avatar -->
+            
             <div
               class="relative flex items-center justify-center h-44 xl:h-52 bg-gradient-to-br from-gray-100 to-gray-200"
             >
@@ -136,7 +136,7 @@ const closeModal = (): void => {
                 <div class="w-16 rounded-t-full h-14 mt-9" :style="`background: ${majorColor.light}`"></div>
               </div>
             </div>
-            <!-- Name Badge -->
+            
             <div
               class="px-3 py-2.5 text-center text-white font-bold text-xs truncate"
               :style="`background: ${majorColor.primary}`"
@@ -146,7 +146,7 @@ const closeModal = (): void => {
           </div>
         </div>
 
-        <!-- Main Card -->
+        
         <div
           v-if="currentAchievement"
           class="flex-shrink-0 w-full max-w-[200px] sm:max-w-[240px] md:max-w-[280px] lg:max-w-[320px] cursor-pointer"
@@ -163,13 +163,13 @@ const closeModal = (): void => {
               class="bg-white rounded-2xl shadow-2xl border-4 md:border-[5px] overflow-hidden w-full h-full transform hover:scale-105 hover:shadow-3xl transition-all duration-300 group"
               :style="`border-color: ${majorColor.primary}`"
             >
-              <!-- Avatar Section -->
+              
               <div
                 class="relative flex items-center justify-center h-56 overflow-hidden sm:h-64 md:h-72 lg:h-80 bg-gradient-to-br from-gray-100 to-gray-200"
               >
-                <!-- Avatar -->
+                
                 <div class="relative z-10 flex flex-col items-center">
-                  <!-- Head -->
+                  
                   <Motion
                     :initial="{ y: 20, opacity: 0 }"
                     :animate="{ y: 0, opacity: 1 }"
@@ -180,7 +180,7 @@ const closeModal = (): void => {
                       :style="`background: ${majorColor.light}`"
                     ></div>
                   </Motion>
-                  <!-- Body -->
+                  
                   <Motion
                     :initial="{ y: 30, opacity: 0 }"
                     :animate="{ y: 0, opacity: 1 }"
@@ -194,7 +194,7 @@ const closeModal = (): void => {
                 </div>
               </div>
 
-              <!-- Name Badge -->
+              
               <Motion
                 :initial="{ y: 20, opacity: 0 }"
                 :animate="{ y: 0, opacity: 1 }"
@@ -211,7 +211,7 @@ const closeModal = (): void => {
           </Motion>
         </div>
 
-        <!-- Right Preview Card (hidden on mobile) -->
+        
         <div
           v-if="rightAchievement && !isAnimating"
           class="flex-shrink-0 hidden w-40 scale-90 pointer-events-none lg:block xl:w-48 opacity-30"
@@ -220,7 +220,7 @@ const closeModal = (): void => {
             class="overflow-hidden bg-white border-4 shadow-lg rounded-xl"
             :style="`border-color: ${majorColor.primary}`"
           >
-            <!-- Avatar -->
+            
             <div
               class="relative flex items-center justify-center h-44 xl:h-52 bg-gradient-to-br from-gray-100 to-gray-200"
             >
@@ -232,7 +232,7 @@ const closeModal = (): void => {
                 <div class="w-16 rounded-t-full h-14 mt-9" :style="`background: ${majorColor.light}`"></div>
               </div>
             </div>
-            <!-- Name Badge -->
+            
             <div
               class="px-3 py-2.5 text-center text-white font-bold text-xs truncate"
               :style="`background: ${majorColor.primary}`"
@@ -242,7 +242,7 @@ const closeModal = (): void => {
           </div>
         </div>
 
-        <!-- Next Button -->
+        
         <button
           class="z-10 flex items-center justify-center flex-shrink-0 w-10 h-10 transition-all duration-300 rounded-full shadow-lg md:w-12 md:h-12 hover:scale-110 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed"
           :style="`background: linear-gradient(135deg, ${majorColor.primary}, ${majorColor.accent})`"
@@ -255,7 +255,7 @@ const closeModal = (): void => {
         </button>
       </div>
 
-      <!-- Achievement Details Below Card -->
+      
       <Motion
         v-if="currentAchievement"
         :key="`details-${currentAchievement.id}`"
@@ -264,7 +264,7 @@ const closeModal = (): void => {
         :transition="{ delay: 0.3, duration: 0.6 }"
         class="w-full max-w-4xl px-4 text-center"
       >
-        <!-- Achievement Title -->
+        
         <Motion
           :initial="{ opacity: 0, y: 20 }"
           :animate="{ opacity: 1, y: 0 }"
@@ -275,7 +275,7 @@ const closeModal = (): void => {
           </h3>
         </Motion>
 
-        <!-- Achievement Description -->
+        
         <Motion
           :initial="{ opacity: 0, y: 20 }"
           :animate="{ opacity: 1, y: 0 }"
@@ -288,7 +288,7 @@ const closeModal = (): void => {
       </Motion>
     </div>
 
-    <!-- Modal for Full Details -->
+    
     <Teleport to="body">
       <Transition name="modal">
         <div
@@ -300,7 +300,7 @@ const closeModal = (): void => {
             class="relative bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto transform transition-all duration-300"
             @click.stop
           >
-            <!-- Close Button -->
+            
             <button
               class="absolute z-10 flex items-center justify-center w-10 h-10 transition-all duration-300 bg-gray-100 rounded-full shadow-lg top-4 right-4 md:top-6 md:right-6 md:w-12 md:h-12 hover:bg-gray-200 hover:scale-110"
               @click="closeModal"
@@ -310,7 +310,7 @@ const closeModal = (): void => {
               </svg>
             </button>
 
-            <!-- Modal Header -->
+            
             <div
               class="px-6 py-8 text-center text-white md:px-8 md:py-10 rounded-t-3xl"
               :style="`background: linear-gradient(135deg, ${majorColor.primary}, ${majorColor.secondary})`"
@@ -337,9 +337,9 @@ const closeModal = (): void => {
               </div>
             </div>
 
-            <!-- Modal Body -->
+            
             <div class="px-6 py-6 md:px-8 md:py-8">
-              <!-- Student Info -->
+              
               <div class="pb-6 mb-6 border-b border-gray-200">
                 <div class="flex items-center gap-4">
                   <div
@@ -359,7 +359,7 @@ const closeModal = (): void => {
                 </div>
               </div>
 
-              <!-- Description -->
+              
               <div class="mb-6">
                 <h4 class="mb-3 text-sm font-semibold tracking-wide text-gray-500 uppercase">Deskripsi Prestasi</h4>
                 <p class="leading-relaxed text-gray-700">
@@ -367,7 +367,7 @@ const closeModal = (): void => {
                 </p>
               </div>
 
-              <!-- Additional Details -->
+              
               <div
                 class="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 md:p-6 rounded-2xl"
                 :style="`background: linear-gradient(135deg, ${majorColor.light}20, ${majorColor.accent}10)`"

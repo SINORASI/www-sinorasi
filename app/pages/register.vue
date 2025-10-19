@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { registerSchema, type RegisterForm } from '~/utils/schema'
+import { type RegisterForm, registerSchema } from "~/utils/schema";
 
 const formData = ref<RegisterForm>({
-  username: '',
-  email: '',
-  password: '',
-  confirmPassword: ''
-})
-const errors = ref<Record<string, string[]>>({})
-const isSubmitting = ref(false)
-const showGuidelines = ref(false)
+  username: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+});
+const errors = ref<Record<string, string[]>>({});
+const isSubmitting = ref(false);
+const showGuidelines = ref(false);
 
 useHead({
   title: "Register - SMKN 2 Singosari",
@@ -22,42 +22,38 @@ useHead({
 });
 
 const submitRegister = async () => {
-  // Validate form
-  const result = registerSchema.safeParse(formData.value)
+  const result = registerSchema.safeParse(formData.value);
 
   if (!result.success) {
-    errors.value = result.error.flatten().fieldErrors
-    return
+    errors.value = result.error.flatten().fieldErrors;
+    return;
   }
 
-  // Clear errors
-  errors.value = {}
-  isSubmitting.value = true
+  errors.value = {};
+  isSubmitting.value = true;
 
   try {
-    // Registration temporarily disabled
-    alert("Sistem pendaftaran sementara tidak tersedia. Fitur akan segera kembali.")
+    alert("Sistem pendaftaran sementara tidak tersedia. Fitur akan segera kembali.");
 
-    // Reset form
     formData.value = {
-      username: '',
-      email: '',
-      password: '',
-      confirmPassword: ''
-    }
+      username: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    };
   } catch (error) {
-    alert("Terjadi kesalahan saat pendaftaran")
+    alert("Terjadi kesalahan saat pendaftaran");
   } finally {
-    isSubmitting.value = false
+    isSubmitting.value = false;
   }
-}
+};
 </script>
 
 <template>
   <div class="min-h-screen py-24 bg-gradient-to-b from-white via-orange-50 to-white">
     <div class="container px-4 mx-auto sm:px-6">
       <div class="max-w-md mx-auto">
-        <!-- Header Section -->
+        
         <div class="mb-12 text-center">
           <div
             class="inline-block px-10 py-6 mb-4 border border-orange-200 shadow-xl bg-gradient-to-r from-orange-600 to-orange-800 backdrop-blur-2xl rounded-2xl"
@@ -69,7 +65,7 @@ const submitRegister = async () => {
           </p>
         </div>
 
-        <!-- Guidelines Button -->
+        
         <div class="mb-8 text-center">
           <button
             @click="showGuidelines = true"
@@ -80,7 +76,7 @@ const submitRegister = async () => {
           </button>
         </div>
 
-        <!-- Guidelines Modal -->
+        
         <Teleport to="body">
           <Transition name="dialog">
             <div
@@ -136,7 +132,7 @@ const submitRegister = async () => {
           </Transition>
         </Teleport>
 
-        <!-- Form Section -->
+        
         <div class="p-8 bg-white border-2 border-orange-100 shadow-xl rounded-2xl md:p-10">
           <form @submit.prevent="submitRegister" class="space-y-6">
             <div>
@@ -245,7 +241,7 @@ const submitRegister = async () => {
           </div>
         </div>
 
-        <!-- Help Section -->
+        
         <div class="p-6 mt-8 text-center bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
           <Icon name="lucide:headphones" size="32" class="mx-auto mb-3 text-blue-600" />
           <p class="mb-2 font-semibold text-gray-700">Butuh bantuan?</p>

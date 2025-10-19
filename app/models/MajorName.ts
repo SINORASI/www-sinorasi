@@ -1,1 +1,9 @@
-export type MajorName = "rpl" | "tkj" | "dkv" | "animasi" | "broadcasting" | "tei" | "mekatronika" | "tav";
+export type MajorName =
+  | "rpl"
+  | "tkj"
+  | "dkv"
+  | "animasi"
+  | "broadcasting"
+  | "tei"
+  | "mekatronika"
+  | "tav";

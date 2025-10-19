@@ -5,7 +5,7 @@ export interface Event {
   details: string;
   date: string;
   imageUrl: string;
-  content: string; // Markdown content
+  content: string;
   publishedAt: string;
   author?: string;
   organizationSlug?: string;

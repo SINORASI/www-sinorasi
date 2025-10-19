@@ -8,7 +8,6 @@ const props = defineProps<{
 
 const majorColor = computed(() => majorColorSchemes[props.major]);
 
-// Define tools for each major
 const toolsData = {
   rpl: [
     {
@@ -278,7 +277,7 @@ const tools = computed(() => toolsData[props.major] || []);
     :style="`background: linear-gradient(135deg, ${majorColor.primary}05, ${majorColor.accent}05)`"
   >
     <div class="container flex flex-col items-center justify-center gap-10 px-4 mx-auto md:gap-12">
-      <!-- Section Header -->
+      
       <div class="max-w-3xl space-y-4 text-center">
         <div class="inline-block">
           <span
@@ -299,14 +298,14 @@ const tools = computed(() => toolsData[props.major] || []);
         </p>
       </div>
 
-      <!-- Tools Grid -->
+      
       <div class="grid w-full max-w-6xl grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         <div
           v-for="tool in tools"
           :key="tool.name"
           class="flex flex-col items-center p-6 transition-all duration-300 bg-white shadow-lg rounded-2xl hover:shadow-xl hover:-translate-y-1"
         >
-          <!-- Icon -->
+          
           <div
             class="flex items-center justify-center w-16 h-16 mb-4 rounded-full shadow-md"
             :style="`background: ${majorColor.light}; color: ${majorColor.primary}`"
@@ -314,12 +313,12 @@ const tools = computed(() => toolsData[props.major] || []);
             <Icon :name="tool.icon" :size="32" />
           </div>
 
-          <!-- Name -->
+          
           <h3 class="mb-2 text-lg font-bold text-center text-gray-800 md:text-xl">
             {{ tool.name }}
           </h3>
 
-          <!-- Description -->
+          
           <p class="text-sm text-center text-gray-600 md:text-base">
             {{ tool.description }}
           </p>

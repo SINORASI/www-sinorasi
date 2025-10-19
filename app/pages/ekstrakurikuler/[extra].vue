@@ -5,11 +5,13 @@ import type { Extracurricular } from "~/models/Extracurricular";
 const route = useRoute();
 const extraSlug = computed(() => route.params.extra as string);
 
-// Fetch extracurricular data
-const { data: extraResponse, pending, error } = await useFetch(`/api/extracurriculars/${extraSlug.value}`);
+const {
+  data: extraResponse,
+  pending,
+  error,
+} = await useFetch(`/api/extracurriculars/${extraSlug.value}`);
 const extra = computed(() => extraResponse.value as Extracurricular | null);
 
-// Fetch related extracurriculars
 const { data: relatedResponse } = await useFetch("/api/extracurriculars", {
   query: { limit: 6 },
 });
@@ -19,7 +21,9 @@ const relatedExtras = computed(() => {
 });
 
 useHead({
-  title: computed(() => (extra.value ? `${extra.value.name} - Ekstrakurikuler SMKN 2 Singosari` : "Ekstrakurikuler")),
+  title: computed(() =>
+    extra.value ? `${extra.value.name} - Ekstrakurikuler SMKN 2 Singosari` : "Ekstrakurikuler",
+  ),
   meta: [
     {
       name: "description",
@@ -31,7 +35,7 @@ useHead({
 
 <template>
   <div class="min-h-screen py-30 bg-gradient-to-br from-blue-50 via-white to-orange-50">
-    <!-- Loading State -->
+    
     <div v-if="pending" class="container px-4 py-8 mx-auto">
       <div class="p-8 mb-8 bg-white shadow-xl rounded-2xl animate-pulse">
         <div class="w-1/3 h-8 mb-4 bg-gray-200 rounded"></div>
@@ -48,7 +52,7 @@ useHead({
       </div>
     </div>
 
-    <!-- Error State -->
+    
     <div v-else-if="error || !extra" class="container px-4 py-8 mx-auto">
       <div class="p-12 text-center bg-white border-2 border-red-100 shadow-xl rounded-2xl">
         <Icon name="lucide:alert-circle" size="64" class="mx-auto mb-4 text-red-400" />
@@ -64,9 +68,9 @@ useHead({
       </div>
     </div>
 
-    <!-- Content -->
+    
     <div v-else class="container px-4 py-8 mx-auto">
-      <!-- Breadcrumb -->
+      
       <nav class="flex items-center mb-6 space-x-2 text-sm text-gray-600">
         <NuxtLink to="/" class="transition hover:text-blue-600">Home</NuxtLink>
         <Icon name="lucide:chevron-right" size="16" />
@@ -75,7 +79,7 @@ useHead({
         <span class="font-semibold text-gray-800">{{ extra.name }}</span>
       </nav>
 
-      <!-- Hero Section -->
+      
       <div class="p-8 mb-8 text-white shadow-2xl bg-gradient-to-r from-blue-600 to-blue-800 rounded-2xl md:p-12">
         <div class="flex items-center mb-4">
           <div class="p-3 mr-4 rounded-full bg-white/20 backdrop-blur-sm">
@@ -89,7 +93,7 @@ useHead({
         <p class="text-lg text-blue-50">{{ extra.description }}</p>
       </div>
 
-      <!-- Stats Cards -->
+      
       <div class="max-w-4xl p-8 mx-auto mb-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
         <div class="grid grid-cols-2 gap-6 md:grid-cols-4 md:gap-8">
           <div v-if="extra.memberCount" class="text-center">
@@ -113,7 +117,7 @@ useHead({
         </div>
       </div>
 
-      <!-- About Section -->
+      
       <div
         v-if="extra.fullDescription"
         class="max-w-6xl mx-auto mb-8 overflow-hidden bg-white border-2 border-blue-100 shadow-xl rounded-2xl"
@@ -136,9 +140,9 @@ useHead({
         </div>
       </div>
 
-      <!-- Information Cards -->
+      
       <div class="grid max-w-6xl gap-8 mx-auto mb-8 md:grid-cols-2">
-        <!-- Info Card -->
+        
         <div class="p-6 bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
           <h2 class="flex items-center mb-4 text-2xl font-bold text-gray-800">
             <Icon name="lucide:info" size="24" class="mr-2 text-blue-600" />
@@ -169,7 +173,7 @@ useHead({
           </div>
         </div>
 
-        <!-- Requirements Card -->
+        
         <div
           v-if="extra.requirements && extra.requirements.length > 0"
           class="p-6 bg-white border-2 border-blue-100 shadow-xl rounded-2xl"
@@ -187,7 +191,7 @@ useHead({
         </div>
       </div>
 
-      <!-- Activities Section -->
+      
       <div v-if="extra.activities && extra.activities.length > 0" class="max-w-6xl mx-auto mb-8">
         <div class="mb-12 text-center">
           <div
@@ -221,7 +225,7 @@ useHead({
         </div>
       </div>
 
-      <!-- Registration Section -->
+      
       <div v-if="extra.registrationOpen" class="max-w-5xl mx-auto mb-8">
         <div class="mb-12 text-center">
           <div
@@ -256,7 +260,7 @@ useHead({
         </div>
       </div>
 
-      <!-- Related Extracurriculars -->
+      
       <div v-if="relatedExtras.length > 0" class="p-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
         <h2 class="flex items-center mb-6 text-2xl font-bold text-gray-800">
           <Icon name="lucide:sparkles" size="24" class="mr-2 text-blue-600" />

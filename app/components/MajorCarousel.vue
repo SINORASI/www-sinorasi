@@ -13,7 +13,7 @@
       >
         <div class="video-card">
           <img v-show="hoveredCard !== card.id" :src="card.thumbnail" :alt="card.title" class="thumbnail" />
-          <!-- YouTube player container -->
+          
           <div
             v-if="card.videoType === 'youtube'"
             :id="`youtube-player-${card.id}`"
@@ -21,7 +21,7 @@
             :class="{ 'video-active': hoveredCard === card.id }"
           />
 
-          <!-- Logo and title positioned above overlay - fade on hover -->
+          
           <div :class="['card-header', { 'card-header-hidden': hoveredCard === card.id }]">
             <div class="card-header-content">
               <div class="card-logo">
@@ -56,12 +56,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 
-// YouTube API type definition
 declare global {
   interface Window {
-    YT: any;
+    YT: unknown;
     onYouTubeIframeAPIReady: () => void;
   }
 }
@@ -81,7 +80,7 @@ interface VideoCard {
 const hoveredCard = ref<number | null>(null);
 const currentSlide = ref(0);
 const cardsPerSlide = 4;
-const youtubePlayers = ref<Record<number, any>>({});
+const youtubePlayers = ref<Record<number, unknown>>({});
 const playersReady = ref<Record<number, boolean>>({});
 const playbackIntervals = ref<Record<number, number>>({});
 
@@ -104,7 +103,8 @@ const videoCards: VideoCard[] = [
     videoType: "youtube",
     logo: "/images/majorIcon/logo-tkj.webp",
     title: "Teknik Komputer dan Jaringan",
-    description: "Instalasi, konfigurasi, dan maintenance jaringan komputer, server, dan keamanan IT",
+    description:
+      "Instalasi, konfigurasi, dan maintenance jaringan komputer, server, dan keamanan IT",
     slug: "tkj",
     startTime: 33,
   },
@@ -115,7 +115,8 @@ const videoCards: VideoCard[] = [
     videoType: "youtube",
     logo: "/images/majorIcon/logo-dkv.webp",
     title: "Desain Komunikasi Visual",
-    description: "Desain grafis, branding, ilustrasi, dan komunikasi visual untuk media cetak dan digital",
+    description:
+      "Desain grafis, branding, ilustrasi, dan komunikasi visual untuk media cetak dan digital",
     slug: "dkv",
     startTime: 11,
   },
@@ -126,7 +127,8 @@ const videoCards: VideoCard[] = [
     videoType: "youtube",
     logo: "/images/majorIcon/logo-an.webp",
     title: "Animasi",
-    description: "Teknik animasi 2D, 3D, motion graphics, character design, dan produksi multimedia",
+    description:
+      "Teknik animasi 2D, 3D, motion graphics, character design, dan produksi multimedia",
     slug: "animasi",
     startTime: 11,
   },
@@ -137,7 +139,8 @@ const videoCards: VideoCard[] = [
     videoType: "youtube",
     logo: "/images/majorIcon/logo-bc.webp",
     title: "Broadcasting",
-    description: "Produksi siaran televisi, radio, videografi, editing video, dan jurnalistik multimedia",
+    description:
+      "Produksi siaran televisi, radio, videografi, editing video, dan jurnalistik multimedia",
     slug: "broadcasting",
     startTime: 15,
   },
@@ -159,7 +162,8 @@ const videoCards: VideoCard[] = [
     videoType: "youtube",
     logo: "/images/majorIcon/logo-mt.webp",
     title: "Mekatronika",
-    description: "Menggabungkan mekanik, elektronik, dan komputer untuk sistem otomasi dan robotika",
+    description:
+      "Menggabungkan mekanik, elektronik, dan komputer untuk sistem otomasi dan robotika",
     slug: "mekatronika",
     startTime: 41,
   },
@@ -170,20 +174,20 @@ const videoCards: VideoCard[] = [
     videoType: "youtube",
     logo: "/images/majorIcon/logo-tav.webp",
     title: "Teknik Audio Video",
-    description: "Instalasi dan perawatan sistem audio video, sound system, home theater, dan multimedia",
+    description:
+      "Instalasi dan perawatan sistem audio video, sound system, home theater, dan multimedia",
     slug: "tav",
     startTime: 14,
   },
 ];
 
-// Load YouTube API
 let apiLoaded = false;
 onMounted(() => {
   if (!window.YT) {
     const tag = document.createElement("script");
     tag.src = "https://www.youtube.com/iframe_api";
     const firstScriptTag = document.getElementsByTagName("script")[0];
-    if (firstScriptTag && firstScriptTag.parentNode) {
+    if (firstScriptTag?.parentNode) {
       firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
     }
 
@@ -222,7 +226,7 @@ const createPlayer = (id: number, videoId: string) => {
       loop: 1,
     },
     events: {
-      onReady: (event: any) => {
+      onReady: (event: unknown) => {
         playersReady.value[id] = true;
         event.target.setPlaybackQuality("hd720");
         event.target.getIframe().style.width = "100%";
@@ -232,7 +236,6 @@ const createPlayer = (id: number, videoId: string) => {
   });
 };
 
-// Watch for slide changes
 watch(currentSlide, () => {
   setTimeout(() => {
     if (apiLoaded) {
@@ -251,12 +254,10 @@ const handleMouseEnter = (id: number) => {
     player.setPlaybackRate(0.75);
     player.playVideo();
 
-    // Clear any existing interval
     if (playbackIntervals.value[id]) {
       clearInterval(playbackIntervals.value[id]);
     }
 
-    // Monitor playback and loop between startTime and startTime + 5 seconds
     playbackIntervals.value[id] = window.setInterval(() => {
       if (hoveredCard.value === id && player.getCurrentTime) {
         const currentTime = player.getCurrentTime();
@@ -273,7 +274,6 @@ const handleMouseLeave = (id: number) => {
   const player = youtubePlayers.value[id];
   const card = videoCards.find((c) => c.id === id);
 
-  // Clear interval
   if (playbackIntervals.value[id]) {
     clearInterval(playbackIntervals.value[id]);
     delete playbackIntervals.value[id];
@@ -295,12 +295,10 @@ const handleTouchStart = (id: number) => {
     player.setPlaybackRate(0.75);
     player.playVideo();
 
-    // Clear any existing interval
     if (playbackIntervals.value[id]) {
       clearInterval(playbackIntervals.value[id]);
     }
 
-    // Monitor playback and loop between startTime and startTime + 5 seconds
     playbackIntervals.value[id] = window.setInterval(() => {
       if (hoveredCard.value === id && player.getCurrentTime) {
         const currentTime = player.getCurrentTime();
@@ -317,7 +315,6 @@ const handleTouchEnd = (id: number) => {
   const player = youtubePlayers.value[id];
   const card = videoCards.find((c) => c.id === id);
 
-  // Clear interval
   if (playbackIntervals.value[id]) {
     clearInterval(playbackIntervals.value[id]);
     delete playbackIntervals.value[id];
@@ -586,7 +583,7 @@ const navigateToMajorsList = () => {
   transform: translateY(-1px);
 }
 
-/* Responsive Design */
+
 @media (max-width: 768px) {
   .grid {
     grid-template-columns: 1fr;
@@ -701,22 +698,20 @@ const navigateToMajorsList = () => {
   }
 }
 
-/* Tablet: 768px - 1024px */
+
 @media (min-width: 768px) and (max-width: 1024px) {
   .grid {
     gap: 1rem;
   }
 
-  /* .video-card-wrapper {
-    /* Tablet specific adjustments for spacing 
-  } */
+  
 
   .navigation {
     margin-top: 40px;
   }
 }
 
-/* Desktop: >1024px */
+
 @media (min-width: 1024px) {
   .container {
     max-width: 1600px;
@@ -726,9 +721,7 @@ const navigateToMajorsList = () => {
     gap: 2rem;
   }
 
-  /* .video-card {
-    /* Prevent distortion with larger screens 
-  } */
+  
 
   .navigation {
     margin-top: 56px;

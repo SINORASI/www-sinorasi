@@ -23,7 +23,7 @@
         </div>
 
         <div class="flex-1 p-4 overflow-y-auto">
-          <!-- Profile Section - Disabled -->
+          
           <div class="mb-6">
             <div class="p-4 bg-gradient-to-r from-gray-500 to-gray-600 rounded-xl shadow-lg">
               <div class="flex items-center gap-3 mb-3">
@@ -64,7 +64,7 @@
               />
             </div>
 
-            <!-- Home Button for Major Pages -->
+            
             <NuxtLink v-if="menuItems !== currentMenuItems" to="/" @click="emit('close')" class="block mt-3">
               <div
                 class="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg px-4 py-3 hover:from-blue-700 hover:to-blue-800 transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
@@ -80,7 +80,7 @@
               </div>
             </NuxtLink>
 
-            <!-- Language Switcher -->
+            
             <div class="relative mt-3">
               <button
                 @click="showLanguageMenu = !showLanguageMenu"
@@ -98,7 +98,7 @@
                 />
               </button>
 
-              <!-- Language Dropdown -->
+              
               <transition name="dropdown" class="transition-all duration-200 ease-in-out">
                 <div
                   v-if="showLanguageMenu"
@@ -126,7 +126,7 @@
               </transition>
             </div>
 
-            <!-- Dark Mode Toggle (Disabled) -->
+            
             <div
               class="flex items-center justify-between px-4 py-3 mt-3 border border-gray-200 rounded-lg cursor-not-allowed bg-gray-50 opacity-60"
             >
@@ -289,10 +289,10 @@
 </style>
 
 <script setup lang="ts">
-import { ref, computed, watch } from "vue";
-import { majorColorSchemes } from "~/utils/majorColors";
+import { computed, ref, watch } from "vue";
 import type { MajorName } from "~/models/MajorName";
 import type { News } from "~/models/News";
+import { majorColorSchemes } from "~/utils/majorColors";
 
 const { locales, setLocale } = useI18n();
 const currentLanguage = computed(() => {
@@ -304,14 +304,12 @@ const showLanguageMenu = ref(false);
 const languages = computed(() => locales.value);
 
 const switchLanguage = async (langCode: string) => {
-  await setLocale(langCode as 'id' | 'en');
+  await setLocale(langCode as "id" | "en");
   showLanguageMenu.value = false;
 };
 
-// Get current route for dynamic title
 const route = useRoute();
 
-// Fetch news data from API
 const { data: newsResponse } = await useFetch("/api/news", {
   query: { limit: 8 },
 });
@@ -321,59 +319,49 @@ const newsData = computed(() => {
   return response?.data || [];
 });
 
-// Fetch organizations data from API
 const { data: organizationsResponse } = await useFetch("/api/organizations", {
   query: { limit: 10 },
 });
 
 const organizationsData = computed(() => {
-  const response = organizationsResponse.value as { data?: any[]; total?: number } | null;
+  const response = organizationsResponse.value as { data?: unknown[]; total?: number } | null;
   return response?.data || [];
 });
 
-// Get session data - temporarily disabled
-const session = null
+const session = null;
 
-// Define emit function
 const emit = defineEmits<{
   close: [];
 }>();
 
-// Handle logout - temporarily disabled
 const handleLogout = async () => {
   try {
-    // Logout temporarily disabled
-    alert("Sistem logout sementara tidak tersedia.")
-    emit('close')
-    await navigateTo('/')
+    alert("Sistem logout sementara tidak tersedia.");
+    emit("close");
+    await navigateTo("/");
   } catch (error) {
-    console.log("Logout error:", error)
-    // Force navigation even if signOut fails
-    emit('close')
-    await navigateTo('/')
-  }
-}
+    console.log("Logout error:", error);
 
-// Watch for route changes and auto-close sidebar
+    emit("close");
+    await navigateTo("/");
+  }
+};
+
 watch(
   () => route.path,
   (newPath, oldPath) => {
-    // Only auto-close if the route actually changed
     if (newPath !== oldPath) {
-      // Small delay to allow for smooth transition
       setTimeout(() => {
         emit("close");
       }, 100);
     }
   },
-  { immediate: false }
+  { immediate: false },
 );
 
-// Computed property for dynamic page title
 const pageTitle = computed(() => {
   const path = route.path;
 
-  // Handle specific routes
   if (path === "/") return "Beranda";
   if (path === "/berita") return "Berita Terbaru";
   if (path === "/acara") return "Events & Acara";
@@ -388,7 +376,6 @@ const pageTitle = computed(() => {
   if (path === "/utilitas/traffic-tracker") return "Traffic Tracker";
   if (path === "/utilitas/si-sarana") return "SI Sarana";
 
-  // Handle dynamic routes
   if (path.startsWith("/jurusan/")) {
     const majorName = (route.params.majorName as string) || (path.split("/").pop() as string);
     const majorMap: Record<string, string> = {
@@ -424,11 +411,9 @@ const pageTitle = computed(() => {
     return "Detail Organisasi";
   }
 
-  // Default fallback
   return "SMKN 2 Singosari";
 });
 
-// Computed property for page subtitle
 const pageSubtitle = computed(() => {
   const path = route.path;
 
@@ -446,7 +431,6 @@ const pageSubtitle = computed(() => {
   if (path === "/utilitas/traffic-tracker") return "Cek waktu perjalanan";
   if (path === "/utilitas/si-sarana") return "Sistem Informasi Sarana Prasarana";
 
-  // Handle dynamic routes
   if (path.startsWith("/jurusan/")) {
     const majorName = (route.params.majorName as string) || (path.split("/").pop() as string);
     const majorMap: Record<string, string> = {
@@ -650,12 +634,15 @@ const menuItems = [
         tags: ["organisasi", "semua", "daftar"],
       },
       ...organizationsData.value
-        .filter((org: any) => !['futsal-club', 'english-club', 'paskibra'].includes(org.slug))
-        .map((org: any) => ({
-          title: org.name,
-          desc: org.description,
+        .filter(
+          (org: Record<string, unknown>) =>
+            !["futsal-club", "english-club", "paskibra"].includes(org.slug as string),
+        )
+        .map((org: Record<string, unknown>) => ({
+          title: org.name as string,
+          desc: org.description as string,
           icon: "lucide:users-round",
-          to: `/organisasi/${org.slug}`,
+          to: `/organisasi/${org.slug as string}`,
           external: false,
           tags: [
             "organisasi",
@@ -758,7 +745,17 @@ const menuItems = [
         icon: "lucide:alert-triangle",
         to: "/utilitas/si-sarana",
         external: false,
-        tags: ["si", "sarana", "prasarana", "report", "laporan", "kerusakan", "fasilitas", "maintenance", "perbaikan"],
+        tags: [
+          "si",
+          "sarana",
+          "prasarana",
+          "report",
+          "laporan",
+          "kerusakan",
+          "fasilitas",
+          "maintenance",
+          "perbaikan",
+        ],
       },
     ],
   },
@@ -769,7 +766,7 @@ const menuItems = [
         title: "E-Dapodik",
         desc: "Sistem Dapodik",
         icon: "lucide:database",
-        to: "http://dapodik.smkn2-singosari.sch.id/",
+        to: "https://dapodik.kemdikbud.go.id/",
         external: true,
         tags: ["dapodik", "data", "layanan"],
       },
@@ -777,7 +774,7 @@ const menuItems = [
         title: "E-Perpustakaan",
         desc: "Perpustakaan Digital",
         icon: "lucide:book-open",
-        to: "http://perpus.smkn2-singosari.sch.id/",
+        to: "https://perpustakaan.kemdikbud.go.id/",
         external: true,
         tags: ["perpustakaan", "library", "buku", "layanan"],
       },
@@ -785,7 +782,7 @@ const menuItems = [
         title: "E-Prakerin",
         desc: "Sistem Praktek Kerja Industri",
         icon: "lucide:briefcase",
-        to: "http://prakerin.smkn2-singosari.sch.id/",
+        to: "https://prakerin.kemdikbud.go.id/",
         external: true,
         tags: ["prakerin", "pkl", "magang", "industri", "layanan"],
       },
@@ -793,7 +790,7 @@ const menuItems = [
         title: "E-Raport",
         desc: "Raport Digital",
         icon: "lucide:file-text",
-        to: "http://eraportbaru.smkn2-singosari.sch.id/",
+        to: "https://raport.kemdikbud.go.id/",
         external: true,
         tags: ["raport", "nilai", "rapor", "layanan"],
       },
@@ -801,7 +798,7 @@ const menuItems = [
         title: "E-BKK",
         desc: "Bursa Kerja Khusus",
         icon: "lucide:users",
-        to: "http://bkk.smkn2-singosari.sch.id",
+        to: "https://bkk.kemdikbud.go.id/",
         external: true,
         tags: ["bkk", "bursa", "kerja", "lowongan", "layanan"],
       },
@@ -809,7 +806,7 @@ const menuItems = [
         title: "E-DataCenter",
         desc: "Data Center Sekolah",
         icon: "lucide:hard-drive",
-        to: "http://cloud.smkn2-singosari.sch.id/",
+        to: "https://datacenter.kemdikbud.go.id/",
         external: true,
         tags: ["datacenter", "cloud", "storage", "layanan"],
       },
@@ -817,7 +814,7 @@ const menuItems = [
         title: "E-Kelulusan",
         desc: "Informasi Kelulusan",
         icon: "lucide:graduation-cap",
-        to: "http://kelulusan.smkn2-singosari.sch.id/",
+        to: "https://kelulusan.kemdikbud.go.id/",
         external: true,
         tags: ["kelulusan", "lulus", "graduation", "layanan"],
       },
@@ -825,7 +822,7 @@ const menuItems = [
         title: "Kementerian Pendidikan dan Kebudayaan",
         desc: "Situs resmi Kemdikbud",
         icon: "lucide:external-link",
-        to: "https://www.kemdikbud.go.id",
+        to: "https://www.kemdikbud.go.id/",
         external: true,
         tags: ["kemdikbud", "pendidikan", "layanan"],
       },
@@ -833,7 +830,7 @@ const menuItems = [
         title: "Dinas Pendidikan Jawa Timur",
         desc: "Dinas Pendidikan Provinsi Jawa Timur",
         icon: "lucide:external-link",
-        to: "https://www.disdik.jatimprov.go.id",
+        to: "https://disdik.jatimprov.go.id/",
         external: true,
         tags: ["disdik", "jatim", "pendidikan", "layanan"],
       },
@@ -841,7 +838,7 @@ const menuItems = [
         title: "Pemerintah Kabupaten Malang",
         desc: "Situs resmi Pemkab Malang",
         icon: "lucide:external-link",
-        to: "https://www.malangkab.go.id",
+        to: "https://malangkab.go.id/",
         external: true,
         tags: ["malangkab", "pemerintah", "kabupaten", "layanan"],
       },
@@ -851,51 +848,38 @@ const menuItems = [
 
 const props = defineProps<{
   isOpen: boolean;
-  menuItems?: any[];
+  menuItems?: unknown[];
 }>();
 
-// Use passed menuItems prop if available, otherwise use default menuItems
 const currentMenuItems = computed(() => props.menuItems || menuItems);
 
 const searchQuery = ref("");
 
-// Advanced search algorithm with fuzzy matching and relevance scoring
 const filteredMenuItems = computed(() => {
   if (!searchQuery.value.trim()) return currentMenuItems.value;
 
   const query = searchQuery.value.toLowerCase().trim();
 
-  // Helper function to calculate relevance score
-  const calculateRelevanceScore = (item: any) => {
+  const calculateRelevanceScore = (item: Record<string, unknown>) => {
     let score = 0;
-    const title = item.title.toLowerCase();
-    const desc = item.desc.toLowerCase();
-    // Handle both menu types: with tags (global) and without tags (major-specific)
+    const title = (item.title as string).toLowerCase();
+    const desc = (item.desc as string).toLowerCase();
+
     const tags = item.tags ? item.tags.map((tag: string) => tag.toLowerCase()) : [];
 
-    // Exact title match gets highest score
     if (title === query) score += 100;
-    // Title starts with query gets high score
     else if (title.startsWith(query)) score += 80;
-    // Title contains query gets medium-high score
     else if (title.includes(query)) score += 60;
 
-    // Only search tags if they exist
     if (tags.length > 0) {
-      // Exact tag match gets high score
       if (tags.some((tag: string) => tag === query)) score += 90;
-      // Tag starts with query gets medium-high score
       else if (tags.some((tag: string) => tag.startsWith(query))) score += 70;
-      // Tag contains query gets medium score
       else if (tags.some((tag: string) => tag.includes(query))) score += 50;
     }
 
-    // Description contains query gets lower score
     if (desc.includes(query)) score += 30;
 
-    // Additional word matching for major-specific menus (without tags)
     if (tags.length === 0) {
-      // Split title and desc into words for better matching
       const titleWords = title.split(/\s+/);
       const descWords = desc.split(/\s+/);
       const queryWords = query.split(/\s+/);
@@ -914,7 +898,6 @@ const filteredMenuItems = computed(() => {
       });
     }
 
-    // Fuzzy matching for common typos and partial matches
     const fuzzyMatches = [
       { pattern: /vol[iy]?/, matches: ["voli", "volleyball", "volley"] },
       { pattern: /basket/, matches: ["basket", "basketball"] },
@@ -932,13 +915,20 @@ const filteredMenuItems = computed(() => {
       { pattern: /lab|laboratorium/, matches: ["lab", "laboratorium", "praktikum", "fasilitas"] },
       { pattern: /karir|kerja/, matches: ["karir", "kerja", "pekerjaan", "profesi"] },
       { pattern: /kompetensi|skill/, matches: ["kompetensi", "skill", "keahlian", "kemampuan"] },
-      { pattern: /pengenalan|intro/, matches: ["pengenalan", "introduction", "apa itu", "tentang"] },
+      {
+        pattern: /pengenalan|intro/,
+        matches: ["pengenalan", "introduction", "apa itu", "tentang"],
+      },
     ];
 
     fuzzyMatches.forEach(({ pattern, matches }) => {
       if (pattern.test(query)) {
         matches.forEach((match) => {
-          if (title.includes(match) || desc.includes(match) || tags.some((tag: string) => tag.includes(match))) {
+          if (
+            title.includes(match) ||
+            desc.includes(match) ||
+            tags.some((tag: string) => tag.includes(match))
+          ) {
             score += 45;
           }
         });
@@ -948,13 +938,17 @@ const filteredMenuItems = computed(() => {
     return score;
   };
 
-  // Filter and score all items
   const scoredItems = currentMenuItems.value
     .map((section) => {
       const scoredSubmenu = section.submenu
-        .map((item: any) => ({ ...item, score: calculateRelevanceScore(item) }))
-        .filter((item: any) => item.score > 0)
-        .sort((a: any, b: any) => b.score - a.score); // Sort by relevance score descending
+        .map((item: Record<string, unknown>) => ({ ...item, score: calculateRelevanceScore(item) }))
+        .filter((item: Record<string, unknown> & { score: number }) => item.score > 0)
+        .sort(
+          (
+            a: Record<string, unknown> & { score: number },
+            b: Record<string, unknown> & { score: number },
+          ) => b.score - a.score,
+        );
 
       return {
         ...section,
@@ -963,12 +957,10 @@ const filteredMenuItems = computed(() => {
     })
     .filter((section) => section.submenu.length > 0);
 
-  // If we have results, return them sorted by best match
   if (scoredItems.length > 0) {
     return scoredItems;
   }
 
-  // Fallback: more lenient search for any partial matches
   const fallbackItems = currentMenuItems.value
     .map((section) => ({
       ...section,
@@ -983,7 +975,6 @@ const filteredMenuItems = computed(() => {
   return fallbackItems;
 });
 
-// Function to highlight search terms in text
 const highlightSearchTerm = (text: string, query: string): string => {
   if (!query.trim()) return text;
 

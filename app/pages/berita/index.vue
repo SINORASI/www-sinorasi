@@ -9,19 +9,16 @@ useHead({
   ],
 });
 
-// State management
 const searchQuery = ref("");
 const selectedTags = ref<string[]>([]);
 const currentPage = ref(1);
 const itemsPerPage = 9;
 const showAllTags = ref(false);
 
-// Fetch all unique tags from news data
 const { data: allNewsResponse } = await useFetch("/api/news", {
-  query: { limit: 1000 }, // Fetch a large number to get all tags
+  query: { limit: 1000 },
 });
 
-// Available tags derived from all news data
 const availableTags = computed(() => {
   const allNews = allNewsResponse.value?.data || [];
   const tagSet = new Set<string>();
@@ -29,7 +26,6 @@ const availableTags = computed(() => {
   allNews.forEach((news: any) => {
     if (news.tags && Array.isArray(news.tags)) {
       news.tags.forEach((tag: string) => {
-        // Only include tags that are meaningful (not too short, not numbers only)
         if (tag.length > 2 && !/^\d+$/.test(tag)) {
           tagSet.add(tag);
         }
@@ -37,11 +33,9 @@ const availableTags = computed(() => {
     }
   });
 
-  // Convert to array and sort alphabetically
   return Array.from(tagSet).sort();
 });
 
-// Display tags (limited or all)
 const displayTags = computed(() => {
   if (showAllTags.value) {
     return availableTags.value;
@@ -49,10 +43,8 @@ const displayTags = computed(() => {
   return availableTags.value.slice(0, 10);
 });
 
-// Computed offset for pagination
 const offset = computed(() => (currentPage.value - 1) * itemsPerPage);
 
-// Fetch news data with reactive query parameters
 const {
   data: newsResponse,
   pending,
@@ -61,33 +53,31 @@ const {
 } = await useFetch("/api/news", {
   query: computed(() => ({
     search: searchQuery.value,
-    tags: selectedTags.value.join(','),
+    tags: selectedTags.value.join(","),
     limit: itemsPerPage,
     offset: offset.value,
   })),
   watch: [searchQuery, selectedTags, offset],
 });
 
-// Computed properties
 const newsList = computed(() => newsResponse.value?.data || []);
 const totalNews = computed(() => newsResponse.value?.total || 0);
 const totalPages = computed(() => Math.ceil(totalNews.value / itemsPerPage));
 const hasResults = computed(() => newsList.value.length > 0);
 
-// Methods
 const handleSearch = (query: string) => {
   searchQuery.value = query;
-  currentPage.value = 1; // Reset to first page on new search
+  currentPage.value = 1;
 };
 
 const handleTagFilter = (tag: string) => {
   const index = selectedTags.value.indexOf(tag);
   if (index > -1) {
-    selectedTags.value.splice(index, 1); // Remove tag if already selected
+    selectedTags.value.splice(index, 1);
   } else {
-    selectedTags.value.push(tag); // Add tag if not selected
+    selectedTags.value.push(tag);
   }
-  currentPage.value = 1; // Reset to first page on new filter
+  currentPage.value = 1;
 };
 
 const clearFilters = () => {
@@ -98,17 +88,20 @@ const clearFilters = () => {
 
 const goToPage = (page: number) => {
   currentPage.value = page;
-  // Scroll to top smoothly
+
   window.scrollTo({ top: 0, behavior: "smooth" });
 };
 
-// Computed for pagination display
 const paginationRange = computed(() => {
   const range = [];
-  const delta = 2; // Number of pages to show on each side of current page
+  const delta = 2;
 
   for (let i = 1; i <= totalPages.value; i++) {
-    if (i === 1 || i === totalPages.value || (i >= currentPage.value - delta && i <= currentPage.value + delta)) {
+    if (
+      i === 1 ||
+      i === totalPages.value ||
+      (i >= currentPage.value - delta && i <= currentPage.value + delta)
+    ) {
       range.push(i);
     } else if (range[range.length - 1] !== "...") {
       range.push("...");
@@ -118,15 +111,14 @@ const paginationRange = computed(() => {
   return range;
 });
 
-// Date formatting function
 const formatDate = (dateString: string) => {
-  if (!dateString) return '';
+  if (!dateString) return "";
   try {
     const date = new Date(dateString);
-    return date.toLocaleDateString('id-ID', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
+    return date.toLocaleDateString("id-ID", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
   } catch {
     return dateString;
@@ -137,7 +129,7 @@ const formatDate = (dateString: string) => {
 <template>
   <div class="min-h-screen py-24 bg-gradient-to-b from-white via-blue-50 to-white">
     <div class="container px-4 py-8 mx-auto sm:px-6 sm:py-12">
-      <!-- Header Section -->
+      
       <div class="flex flex-col items-center mb-12">
         <div
           class="p-6 px-10 py-6 mb-4 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
@@ -147,9 +139,9 @@ const formatDate = (dateString: string) => {
         <p class="max-w-2xl text-center text-gray-600">Informasi dan berita terbaru dari SMK Negeri 2 Singosari</p>
       </div>
 
-      <!-- Search and Filter Section -->
+      
       <div class="p-6 mb-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl sm:p-8">
-        <!-- Search Bar -->
+        
         <div class="mb-6">
           <div class="relative">
             <input
@@ -162,7 +154,7 @@ const formatDate = (dateString: string) => {
           </div>
         </div>
 
-        <!-- Tag Filters -->
+        
         <div class="mb-4">
           <h3 class="mb-4 text-sm font-semibold text-gray-700">Filter berdasarkan kategori:</h3>
           <div class="flex flex-wrap gap-3">
@@ -190,7 +182,7 @@ const formatDate = (dateString: string) => {
           </div>
         </div>
 
-        <!-- Active Filters Display -->
+        
         <div v-if="searchQuery || selectedTags.length > 0" class="flex flex-wrap items-center gap-2 pt-4 border-t border-gray-200">
           <span class="text-sm font-medium text-gray-600">Filter aktif:</span>
           <span
@@ -220,7 +212,7 @@ const formatDate = (dateString: string) => {
         </div>
       </div>
 
-      <!-- Results Count -->
+      
       <div class="mb-6">
         <p class="text-center text-gray-600">
           Menampilkan <span class="font-bold text-blue-600">{{ newsList.length }}</span> dari
@@ -228,7 +220,7 @@ const formatDate = (dateString: string) => {
         </p>
       </div>
 
-      <!-- Loading State -->
+      
       <div v-if="pending" class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         <div
           v-for="i in itemsPerPage"
@@ -242,7 +234,7 @@ const formatDate = (dateString: string) => {
         </div>
       </div>
 
-      <!-- Error State -->
+      
       <div v-else-if="error" class="p-12 text-center bg-white border-2 border-red-200 shadow-xl rounded-2xl">
         <Icon name="lucide:alert-circle" size="64" class="mx-auto mb-4 text-red-400" />
         <h3 class="mb-2 text-xl font-bold text-red-800">Terjadi Kesalahan</h3>
@@ -255,7 +247,7 @@ const formatDate = (dateString: string) => {
         </button>
       </div>
 
-      <!-- No Results State -->
+      
       <div v-else-if="!hasResults" class="p-12 text-center bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
         <Icon name="lucide:inbox" size="64" class="mx-auto mb-4 text-gray-300" />
         <h3 class="mb-2 text-xl font-bold text-gray-700">Tidak Ada Hasil</h3>
@@ -268,7 +260,7 @@ const formatDate = (dateString: string) => {
         </button>
       </div>
 
-      <!-- News Grid -->
+      
       <div v-else class="grid grid-cols-1 gap-6 mb-12 sm:grid-cols-2 lg:grid-cols-3">
         <NuxtLink
           v-for="news in newsList"
@@ -305,9 +297,9 @@ const formatDate = (dateString: string) => {
         </NuxtLink>
       </div>
 
-      <!-- Pagination -->
+      
       <div v-if="totalPages > 1 && hasResults" class="flex items-center justify-center gap-2 mt-12">
-        <!-- Previous Button -->
+        
         <button
           @click="goToPage(currentPage - 1)"
           :disabled="currentPage === 1"
@@ -321,7 +313,7 @@ const formatDate = (dateString: string) => {
           <Icon name="lucide:chevron-left" size="18" />
         </button>
 
-        <!-- Page Numbers -->
+        
         <template v-for="(page, index) in paginationRange" :key="index">
           <span v-if="page === '...'" class="px-3 py-2 font-bold text-gray-400">...</span>
           <button

@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import { loginSchema, type LoginForm } from '~/utils/schema'
+import { type LoginForm, loginSchema } from "~/utils/schema";
 
-type FormErrors<T> = Partial<Record<keyof T, string[]>>
+type FormErrors<T> = Partial<Record<keyof T, string[]>>;
 
 const formData = ref<LoginForm>({
-  email: '',
-  password: ''
-})
-const errors = ref<FormErrors<LoginForm>>({})
-const isSubmitting = ref(false)
-const showGuidelines = ref(false)
+  email: "",
+  password: "",
+});
+const errors = ref<FormErrors<LoginForm>>({});
+const isSubmitting = ref(false);
+const showGuidelines = ref(false);
 
 useHead({
   title: "Login - SMKN 2 Singosari",
@@ -22,40 +22,36 @@ useHead({
 });
 
 const submitLogin = async () => {
-  // Validate form
-  const result = loginSchema.safeParse(formData.value)
+  const result = loginSchema.safeParse(formData.value);
 
   if (!result.success) {
-    errors.value = result.error.flatten().fieldErrors
-    return
+    errors.value = result.error.flatten().fieldErrors;
+    return;
   }
 
-  // Clear errors
-  errors.value = {}
-  isSubmitting.value = true
+  errors.value = {};
+  isSubmitting.value = true;
 
   try {
-    // Authentication temporarily disabled
-    alert("Sistem login sementara tidak tersedia. Fitur akan segera kembali.")
+    alert("Sistem login sementara tidak tersedia. Fitur akan segera kembali.");
 
-    // Reset form
     formData.value = {
-      email: '',
-      password: ''
-    }
+      email: "",
+      password: "",
+    };
   } catch (error) {
-    alert("Terjadi kesalahan saat login")
+    alert("Terjadi kesalahan saat login");
   } finally {
-    isSubmitting.value = false
+    isSubmitting.value = false;
   }
-}
+};
 </script>
 
 <template>
   <div class="min-h-screen py-24 bg-gradient-to-b from-white via-blue-50 to-white">
     <div class="container px-4 mx-auto sm:px-6">
       <div class="max-w-md mx-auto">
-        <!-- Header Section -->
+        
         <div class="mb-12 text-center">
           <div
             class="inline-block px-10 py-6 mb-4 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
@@ -67,7 +63,7 @@ const submitLogin = async () => {
           </p>
         </div>
 
-        <!-- Guidelines Button -->
+        
         <div class="mb-8 text-center">
           <button
             @click="showGuidelines = true"
@@ -78,7 +74,7 @@ const submitLogin = async () => {
           </button>
         </div>
 
-        <!-- Guidelines Modal -->
+        
         <Teleport to="body">
           <Transition name="dialog">
             <div
@@ -134,7 +130,7 @@ const submitLogin = async () => {
           </Transition>
         </Teleport>
 
-        <!-- Form Section -->
+        
         <div class="p-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl md:p-10">
           <form @submit.prevent="submitLogin" class="space-y-6">
             <div>
@@ -200,7 +196,7 @@ const submitLogin = async () => {
           </div>
         </div>
 
-        <!-- Help Section -->
+        
         <div class="p-6 mt-8 text-center bg-white border-2 border-orange-100 shadow-xl rounded-2xl">
           <Icon name="lucide:headphones" size="32" class="mx-auto mb-3 text-orange-600" />
           <p class="mb-2 font-semibold text-gray-700">Butuh bantuan?</p>
