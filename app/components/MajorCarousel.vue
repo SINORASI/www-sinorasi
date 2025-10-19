@@ -1,10 +1,13 @@
 <template>
   <div class="container px-4 py-8 mx-auto">
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-      <div
+      <Motion
         v-for="card in currentSlideCards"
         :key="card.id"
         class="video-card-wrapper"
+        :initial="{ opacity: 0, y: 50 }"
+        :animate="{ opacity: 1, y: 0 }"
+        :transition="{ duration: 0.6, delay: card.id * 0.1 }"
         @mouseenter="handleMouseEnter(card.id)"
         @mouseleave="handleMouseLeave(card.id)"
         @touchstart="handleTouchStart(card.id)"
@@ -44,19 +47,25 @@
             </div>
           </div>
         </div>
-      </div>
+      </Motion>
     </div>
 
-    <div class="navigation">
+    <Motion
+      class="navigation"
+      :initial="{ opacity: 0, y: 30 }"
+      :animate="{ opacity: 1, y: 0 }"
+      :transition="{ duration: 0.6, delay: 0.8 }"
+    >
       <button class="nav-btn" @click="prevSlide" :disabled="currentSlide === 0">← Kembali</button>
       <button class="nav-btn view-all-btn" @click="navigateToMajorsList">Lihat Selengkapnya</button>
       <button class="nav-btn" @click="nextSlide" :disabled="currentSlide === totalSlides - 1">Selanjutnya →</button>
-    </div>
+    </Motion>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from "vue";
+import { Motion } from "motion-v";
 
 declare global {
   interface Window {

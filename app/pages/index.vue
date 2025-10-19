@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { News } from "~/models/News";
 import { majorColorSchemes } from "~/utils/majorColors";
+import { Motion } from "motion-v";
 
 definePageMeta({
   layout: "default",
@@ -256,8 +257,13 @@ useHead({
       class="flex items-center justify-center min-h-screen px-4 pt-24 pb-10 md:pt-20 bg-gradient-to-b from-blue-50 to-white"
     >
       <div class="container flex flex-col justify-center items-center max-w-5xl mx-auto gap-18 lg:flex-row">
-        
-        <div class="flex flex-col justify-center items-center w-full lg:w-1/3">
+
+        <Motion
+          class="flex flex-col justify-center items-center w-full lg:w-1/3"
+          :initial="{ opacity: 0, x: -50 }"
+          :animate="{ opacity: 1, x: 0 }"
+          :transition="{ duration: 0.8 }"
+        >
           <div class="relative group">
             <img
               src="/images/seragam/putih-putih/10-putih-putih-l/DSC04123.webp"
@@ -265,11 +271,13 @@ useHead({
               class="object-cover transition-transform duration-300 rounded-lg shadow-lg w-60 md:w-150 h-100 md:h-150 group-hover:scale-105"
             />
           </div>
-        </div>
+        </Motion>
 
-        
-        <div
+        <Motion
           class="flex flex-col items-center w-full gap-8 text-center text-black lg:w-2/3 lg:items-start lg:text-left"
+          :initial="{ opacity: 0, x: 50 }"
+          :animate="{ opacity: 1, x: 0 }"
+          :transition="{ duration: 0.8, delay: 0.2 }"
         >
           <h1 class="text-3xl font-black transition-all duration-700 ease-out md:text-4xl lg:text-5xl">
             SMK NEGERI 2 SINGOSARI
@@ -311,7 +319,7 @@ useHead({
               <div class="text-sm transition-all duration-700 ease-out md:text-lg">Prestasi</div>
             </div>
           </div>
-        </div>
+        </Motion>
       </div>
     </section>
 

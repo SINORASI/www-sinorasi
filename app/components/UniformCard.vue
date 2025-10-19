@@ -1,10 +1,13 @@
 <template>
-  <div
+  <Motion
     :class="[
       'group bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-gray-100 transition-all duration-300 hover:-translate-y-2',
       hoverBorderClass,
       'hover:shadow-2xl',
     ]"
+    :initial="{ opacity: 0, scale: 0.9, y: 30 }"
+    :animate="{ opacity: 1, scale: 1, y: 0 }"
+    :transition="{ duration: 0.5, delay: 0.1 }"
   >
     
     <div class="relative overflow-hidden aspect-[4/5]">
@@ -171,11 +174,12 @@
         ></button>
       </div>
     </div>
-  </div>
+  </Motion>
 </template>
 
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref, watch } from "vue";
+import { Motion } from "motion-v";
 
 interface Props {
   gradeImages: {

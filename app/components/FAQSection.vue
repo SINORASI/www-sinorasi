@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { Motion } from "motion-v";
+
 interface FAQItem {
   question: string;
   answer: string;
@@ -67,21 +69,34 @@ const toggleFAQ = (index: number) => {
   <section id="faq">
     <div class="container py-28 px-4 mx-auto md:px-10">
       <div class="flex flex-col items-center gap-8">
-        
-        <div class="px-8 py-4 rounded-lg shadow-md bg-secondary backdrop-blur-2xl">
-          <h2 class="text-3xl font-bold">Pertanyaan yang Sering Diajukan</h2>
-        </div>
 
-        <p class="max-w-2xl text-center text-gray-600">
+        <Motion
+          class="px-8 py-4 rounded-lg shadow-md bg-secondary backdrop-blur-2xl"
+          :initial="{ opacity: 0, y: -30 }"
+          :animate="{ opacity: 1, y: 0 }"
+          :transition="{ duration: 0.6 }"
+        >
+          <h2 class="text-3xl font-bold">Pertanyaan yang Sering Diajukan</h2>
+        </Motion>
+
+        <Motion
+          class="max-w-2xl text-center text-gray-600"
+          :initial="{ opacity: 0, y: 30 }"
+          :animate="{ opacity: 1, y: 0 }"
+          :transition="{ duration: 0.6, delay: 0.2 }"
+        >
           Temukan jawaban atas pertanyaan umum tentang SMK Negeri 2 Singosari
-        </p>
+        </Motion>
 
         
         <div class="w-full max-w-4xl space-y-4">
-          <div
+          <Motion
             v-for="(item, index) in faqItems"
             :key="index"
             class="overflow-hidden transition-shadow duration-300 bg-white border border-gray-300 rounded-lg shadow-sm hover:shadow-md"
+            :initial="{ opacity: 0, x: -50 }"
+            :animate="{ opacity: 1, x: 0 }"
+            :transition="{ duration: 0.5, delay: index * 0.1 }"
           >
             
             <button
@@ -112,11 +127,16 @@ const toggleFAQ = (index: number) => {
                 </div>
               </div>
             </Transition>
-          </div>
+          </Motion>
         </div>
 
         
-        <div class="mt-8 text-center">
+        <Motion
+          class="mt-8 text-center"
+          :initial="{ opacity: 0, y: 30 }"
+          :animate="{ opacity: 1, y: 0 }"
+          :transition="{ duration: 0.6, delay: 0.8 }"
+        >
           <p class="mb-4 text-gray-600">Masih ada pertanyaan lain?</p>
           <NuxtLink
             to="/informasi/kontak"
@@ -125,7 +145,7 @@ const toggleFAQ = (index: number) => {
             Hubungi Kami
             <Icon name="lucide:arrow-right" size="18" />
           </NuxtLink>
-        </div>
+        </Motion>
       </div>
     </div>
   </section>
