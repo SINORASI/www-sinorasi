@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { Motion } from "motion-v";
 import type { News } from "~/models/News";
-import { majorColorSchemes } from "~/utils/majorColors";
 
 definePageMeta({
   layout: "default",
@@ -99,26 +98,68 @@ const timelineItems = [
   },
 ];
 
-const clickedMarkers = ref([false, false, false, false, false]);
+const clickedMarkers = ref([true, false, false, false, false]);
 const showAllIcons = ref(false);
+const animationStarted = ref(false);
+const lineScale = ref(0.1)
+const cardVisibility = ref([false, false, false, false, false]);
 
-const majorColor = computed(() => majorColorSchemes.rpl);
+const startStaggeredAnimation = () => {
+  animationStarted.value = true;
+  showAllIcons.value = true;
 
-const toggleMarker = (index: number) => {
-  if (index === 0 && !showAllIcons.value) {
-    showAllIcons.value = true;
-    clickedMarkers.value = [true, true, true, true, true];
-  } else if (index === 0 && showAllIcons.value) {
-    showAllIcons.value = false;
-    clickedMarkers.value = [false, false, false, false, false];
-  } else {
-    if (!clickedMarkers.value[index]) {
-      clickedMarkers.value = [true, true, true, true, true];
-    } else {
-      clickedMarkers.value[index] = false;
+  const lineAnimationDuration = 5000
+  const startTime = Date.now()
+
+  const animateLine = () => {
+    const elapsed = Date.now() - startTime
+    const progress = Math.min(elapsed / lineAnimationDuration, 1)
+    const easeOut = 1 - Math.pow(1 - progress, 4)
+    lineScale.value = 0.1 + (easeOut * 1)
+
+    if (progress < 1) {
+      requestAnimationFrame(animateLine)
     }
   }
+  requestAnimationFrame(animateLine)
+
+  timelineItems.forEach((_, index) => {
+    setTimeout(() => {
+      clickedMarkers.value[index] = true
+      cardVisibility.value[index] = true
+    }, index * 400)
+  })
 };
+
+const toggleMarker = (index: number) => {
+  if (index !== 0) return
+
+  if (!showAllIcons.value) {
+    startStaggeredAnimation()
+  } else {
+    showAllIcons.value = false
+    animationStarted.value = false
+    clickedMarkers.value = [true, false, false, false, false]
+    cardVisibility.value = [false, false, false, false, false]
+
+    const closeAnimationDuration = 1000
+    const startTime = Date.now()
+    const startScale = lineScale.value
+
+    const animateClose = () => {
+      const elapsed = Date.now() - startTime
+      const progress = Math.min(elapsed / closeAnimationDuration, 1)
+      const easeOut = 1 - Math.pow(1 - progress, 3)
+      lineScale.value = startScale + (0.15 - startScale) * easeOut
+
+      if (progress < 1) {
+        requestAnimationFrame(animateClose)
+      }
+    }
+    requestAnimationFrame(animateClose)
+  }
+}
+
 
 const achievements = computed(() => {
   const filtered = newsData.value
@@ -883,9 +924,13 @@ useHead({
         </div>
 
         <div v-if="isMobile" class="relative flex flex-col items-center w-full py-10">
-          <div
+          <Motion
             class="absolute top-0 w-1 h-full transform -translate-x-1/2 rounded-full shadow-lg left-1/2 bg-gradient-to-b from-blue-400 via-blue-600 to-blue-400"
-          ></div>
+            :initial="{ scaleY: 1 }"
+            :animate="{ scaleY: lineScale }"
+            :transition="{ duration: 0.1, ease: 'linear' }"
+            style="transform-origin: top;"
+          ></Motion>
 
           <div
             v-for="(item, index) in timelineItems"
@@ -894,46 +939,65 @@ useHead({
             :class="{ 'opacity-0': !showAllIcons && index > 0 }"
             :style="{ transition: 'opacity 0.5s ease-in-out' }"
           >
-            <div
+            <Motion
               v-if="showAllIcons || index === 0"
               class="absolute top-0 w-1 h-8 transform -translate-x-1/2 left-1/2 bg-gradient-to-b from-transparent to-blue-600"
-            ></div>
+              :initial="{ scaleY: index === 0 ? 1 : 0 }"
+              :animate="{ scaleY: clickedMarkers[index] ? 1 : 0 }"
+              :transition="{ duration: 0.8, delay: index * 0.2 }"
+              style="transform-origin: top;"
+            ></Motion>
 
-            <div
+            <Motion
               v-if="showAllIcons || index === 0"
               :class="[
-                'z-20 flex items-center justify-center w-16 h-16 mb-6 transition-all duration-300 border-4 border-white rounded-full shadow-xl cursor-pointer bg-gradient-to-br from-blue-500 to-blue-700 group-hover:scale-110',
+                'z-20 flex items-center justify-center w-16 h-16 mb-6 transition-all duration-300 border-4 border-white rounded-full shadow-xl bg-gradient-to-br from-blue-500 to-blue-700 group-hover:scale-110',
                 clickedMarkers[index] ? 'ring-4 ring-yellow-400' : '',
+                'cursor-pointer pointer-events-auto'
               ]"
-              @click="toggleMarker(index)"
+              :initial="{ opacity: index === 0 ? 1 : 0, scale: index === 0 ? 1 : 0 }"
+              :animate="{ opacity: clickedMarkers[index] ? 1 : 0, scale: clickedMarkers[index] ? 1 : 0 }"
+              :transition="{ duration: 0.8, delay: index * 0.2 }"
+              @click="index === 0 && toggleMarker(index)"
             >
               <Icon :name="item.icon" size="28" class="text-white" />
-            </div>
+            </Motion>
 
-            <div
-              v-if="clickedMarkers[index]"
-              class="w-full p-6 text-center transition-all duration-300 bg-white border-2 border-blue-100 shadow-xl rounded-2xl hover:border-blue-300 hover:shadow-2xl hover:-translate-y-1"
+            <Motion
+              v-if="cardVisibility[index]"
+              :initial="{ opacity: 0, y: -100 }"
+              :whileInView="{ opacity: 1, y: 0 }"
+              :transition="{ duration: 0.8, delay: 0 }"
+              :viewport="{ once: true }"
             >
               <div
-                :class="[
-                  'inline-block px-6 py-3 rounded-full mb-4 font-bold text-lg',
-                  index % 2 === 0
-                    ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white'
-                    : 'bg-gradient-to-r from-orange-500 to-orange-600 text-white',
-                ]"
+                class="w-full p-6 text-center transition-all duration-300 bg-white border-2 border-blue-100 shadow-xl rounded-2xl hover:border-blue-300 hover:shadow-2xl hover:-translate-y-1"
               >
-                {{ item.year }}
+                <div
+                  :class="[
+                    'inline-block px-6 py-3 rounded-full mb-4 font-bold text-lg',
+                    index % 2 === 0
+                      ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white'
+                      : 'bg-gradient-to-r from-orange-500 to-orange-600 text-white',
+                  ]"
+                >
+                  {{ item.year }}
+                </div>
+                <h3 class="mb-3 text-xl font-bold text-gray-800">{{ item.title }}</h3>
+                <p class="text-sm leading-relaxed text-justify text-gray-600">{{ item.description }}</p>
               </div>
-              <h3 class="mb-3 text-xl font-bold text-gray-800">{{ item.title }}</h3>
-              <p class="text-sm leading-relaxed text-justify text-gray-600">{{ item.description }}</p>
-            </div>
+            </Motion>
           </div>
         </div>
 
         <div v-else class="relative max-w-[1200px] mx-auto py-24">
-          <div
+          <Motion
             class="absolute left-1/2 top-0 bottom-0 w-1 bg-[linear-gradient(to_bottom,transparent_0%_0%,#3b82f6_10%_50%,#2563eb_50%_90%,#3b82f6_90%_95%,transparent)] -translate-x-1/2 rounded-sm shadow-[0_0_20px_rgba(59,130,246,0.3)] z-10"
-          ></div>
+            :initial="{ scaleY: 1 }"
+            :animate="{ scaleY: lineScale }"
+            :transition="{ duration: 0.1, ease: 'linear' }"
+            style="transform-origin: top;"
+          ></Motion>
 
           <div
             v-for="(item, index) in timelineItems"
@@ -942,68 +1006,82 @@ useHead({
             :class="{ 'opacity-0': !showAllIcons && index > 0 }"
             :style="{ transition: 'opacity 0.5s ease-in-out' }"
           >
-            <div
-              v-if="clickedMarkers[index]"
-              :class="[
-                'p-8 transition-all duration-500 bg-white/80 backdrop-blur-lg border border-white/30 shadow-2xl rounded-2xl hover:border-white/50 hover:shadow-3xl hover:scale-105 hover:-translate-y-2 group h-[300px] w-[42%] z-20 flex flex-col justify-center items-center text-center',
-                index % 2 === 0 ? 'mr-12 float-left' : 'ml-12 float-right',
-              ]"
+            <Motion
+              v-if="cardVisibility[index]"
+              :initial="{ opacity: 0, y: -100 }"
+              :whileInView="{ opacity: 1, y: 0 }"
+              :transition="{ duration: 0.8, delay: 0 }"
+              :viewport="{ once: true }"
             >
               <div
                 :class="[
-                  'inline-block px-6 py-3 rounded-full mb-4 font-bold text-lg shadow-lg',
-                  index % 2 === 0
-                    ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white'
-                    : 'bg-gradient-to-r from-orange-500 to-orange-600 text-white',
+                  'p-8 transition-all duration-500 bg-white/80 backdrop-blur-lg border border-white/30 shadow-2xl rounded-2xl hover:border-white/50 hover:shadow-3xl hover:scale-105 hover:-translate-y-2 group h-[300px] w-[42%] z-20 flex flex-col justify-center items-center text-center',
+                  index % 2 === 0 ? 'mr-12 float-left' : 'ml-12 float-right',
                 ]"
               >
-                {{ item.year }}
+                <div
+                  :class="[
+                    'inline-block px-6 py-3 rounded-full mb-4 font-bold text-lg shadow-lg',
+                    index % 2 === 0
+                      ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white'
+                      : 'bg-gradient-to-r from-orange-500 to-orange-600 text-white',
+                  ]"
+                >
+                  {{ item.year }}
+                </div>
+                <h3
+                  :class="[
+                    'mb-3 text-2xl font-bold text-gray-800 transition-colors',
+                    index % 2 === 0 ? 'group-hover:text-blue-600' : 'group-hover:text-orange-600',
+                  ]"
+                >
+                  {{ item.title }}
+                </h3>
+                <p class="leading-relaxed text-gray-600">{{ item.description }}</p>
+
+                <div
+                  :class="[
+                    'absolute top-4 w-3 h-3 rounded-full',
+                    index % 2 === 0 ? 'right-4 bg-blue-400' : 'left-4 bg-orange-400',
+                  ]"
+                ></div>
               </div>
-              <h3
-                :class="[
-                  'mb-3 text-2xl font-bold text-gray-800 transition-colors',
-                  index % 2 === 0 ? 'group-hover:text-blue-600' : 'group-hover:text-orange-600',
-                ]"
-              >
-                {{ item.title }}
-              </h3>
-              <p class="leading-relaxed text-gray-600">{{ item.description }}</p>
+            </Motion>
 
-              <div
-                :class="[
-                  'absolute top-4 w-3 h-3 rounded-full',
-                  index % 2 === 0 ? 'right-4 bg-blue-400' : 'left-4 bg-orange-400',
-                ]"
-              ></div>
-            </div>
-
-            <div
+            <Motion
               v-if="showAllIcons || index === 0"
               class="absolute z-40 -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2"
+              :initial="{ opacity: index === 0 ? 1 : 0, scale: index === 0 ? 1 : 0 }"
+              :animate="{ opacity: clickedMarkers[index] ? 1 : 0, scale: clickedMarkers[index] ? 1 : 0 }"
+              :transition="{ duration: 0.8, delay: index * 0.2 }"
             >
               <div
                 :class="[
-                  'w-16 h-16 rounded-full flex items-center justify-center shadow-[0_8px_24px_rgba(59,130,246,0.15)] border-[5px] border-white/80 backdrop-blur-sm transition-all duration-500 ease-in-out group-hover:scale-115 group-hover:rotate-[10deg] group-hover:shadow-[0_16px_40px_rgba(59,130,246,0.3)] cursor-pointer',
+                  'w-16 h-16 rounded-full flex items-center justify-center shadow-[0_8px_24px_rgba(59,130,246,0.15)] border-[5px] border-white/80 backdrop-blur-sm transition-all duration-500 ease-in-out group-hover:scale-115 group-hover:rotate-[10deg] group-hover:shadow-[0_16px_40px_rgba(59,130,246,0.3)] cursor-pointer pointer-events-auto',
                   index % 2 === 0
                     ? 'bg-gradient-to-br from-blue-500 to-blue-700'
                     : 'bg-gradient-to-br from-orange-500 to-orange-700',
                   clickedMarkers[index],
                 ]"
-                @click="toggleMarker(index)"
+                @click="index === 0 && toggleMarker(index)"
               >
                 <Icon :name="item.icon" size="28" class="text-white" />
               </div>
-            </div>
+            </Motion>
 
-            <div
-              v-if="clickedMarkers[index]"
+            <Motion
+              v-if="cardVisibility[index]"
               :class="[
                 'absolute top-1/2 w-[60px] h-[3px] -translate-y-1/2 z-1 transition-all duration-500 ease-in-out group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.6)] group-hover:h-[4px]',
                 index % 2 === 0
                   ? 'right-1/2 mr-8 bg-gradient-to-r from-transparent via-blue-500 to-blue-600 rounded-full'
                   : 'left-1/2 ml-8 bg-gradient-to-l from-transparent via-blue-500 to-blue-600 rounded-full',
               ]"
-            ></div>
+              :initial="{ scaleX: 0 }"
+              :animate="{ scaleX: cardVisibility[index] ? 1 : 0 }"
+              :transition="{ duration: 0.8, delay: 0 }"
+              :style="{ transformOrigin: index % 2 === 0 ? 'right' : 'left' }"
+            ></Motion>
           </div>
         </div>
 
@@ -1098,25 +1176,31 @@ useHead({
           v-else-if="newsData.length > 0"
           class="grid w-full grid-cols-1 gap-6 px-4 mt-5 sm:grid-cols-2 lg:grid-cols-4 place-items-stretch"
         >
-          <NuxtLink
-            v-for="news in newsData"
+          <Motion
+            v-for="(news, index) in newsData"
             :key="news.id"
-            :to="`/berita/${news.slug}`"
-            class="relative flex flex-col overflow-hidden transition-all duration-300 bg-white border border-gray-100 shadow-lg cursor-pointer rounded-2xl group hover:shadow-xl"
+            :initial="{ opacity: 0, y: 20 }"
+            :animate="{ opacity: 1, y: 0 }"
+            :transition="{ duration: 0.6, delay: index * 0.1 }"
           >
-            <div class="h-48 overflow-hidden">
-              <img
-                :src="news.thumbnail"
-                class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
-                :alt="news.title"
-              />
-            </div>
-            <div class="flex flex-col flex-grow p-5">
-              <p class="mb-2 text-xs font-semibold text-blue-600">{{ news.tags.join(", ") }}</p>
-              <h3 class="flex-grow mb-2 font-bold text-gray-800">{{ news.title }}</h3>
-              <p class="text-sm text-gray-500 line-clamp-2">{{ news.subtitle }}</p>
-            </div>
-          </NuxtLink>
+            <NuxtLink
+              :to="`/berita/${news.slug}`"
+              class="relative flex flex-col overflow-hidden transition-all duration-300 bg-white border border-gray-100 shadow-lg cursor-pointer rounded-2xl group hover:shadow-xl"
+            >
+              <div class="h-48 overflow-hidden">
+                <img
+                  :src="news.thumbnail"
+                  class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
+                  :alt="news.title"
+                />
+              </div>
+              <div class="flex flex-col flex-grow p-5">
+                <p class="mb-2 text-xs font-semibold text-blue-600">{{ news.tags.join(", ") }}</p>
+                <h3 class="flex-grow mb-2 font-bold text-gray-800">{{ news.title }}</h3>
+                <p class="text-sm text-gray-500 line-clamp-2">{{ news.subtitle }}</p>
+              </div>
+            </NuxtLink>
+          </Motion>
         </div>
 
         <div v-else class="flex flex-col items-center justify-center gap-4 py-20">

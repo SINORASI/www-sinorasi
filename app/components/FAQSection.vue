@@ -94,8 +94,8 @@ const toggleFAQ = (index: number) => {
             v-for="(item, index) in faqItems"
             :key="index"
             class="overflow-hidden transition-shadow duration-300 bg-white border border-gray-300 rounded-lg shadow-sm hover:shadow-md"
-            :initial="{ opacity: 0, x: -50 }"
-            :animate="{ opacity: 1, x: 0 }"
+            :initial="{ opacity: 0, y: 50 }"
+            :animate="{ opacity: 1, y: 0 }"
             :transition="{ duration: 0.5, delay: index * 0.1 }"
           >
             
