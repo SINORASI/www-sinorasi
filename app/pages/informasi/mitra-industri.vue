@@ -1,9 +1,6 @@
 <script setup lang="ts">
 definePageMeta({ layout: false });
 
-import AppHeader from "~/components/layout/AppHeader.vue";
-import AppFooter from "~/components/layout/AppFooter.vue";
-
 const selectedFilter = ref("ALL");
 const showDialog = ref(false);
 const selectedPartner = ref<any>(null);
@@ -50,13 +47,13 @@ const closeDialog = () => {
 };
 
 const nextImage = () => {
-  if (selectedPartner.value && selectedPartner.value.images) {
+  if (selectedPartner.value?.images) {
     currentImageIndex.value = (currentImageIndex.value + 1) % selectedPartner.value.images.length;
   }
 };
 
 const prevImage = () => {
-  if (selectedPartner.value && selectedPartner.value.images) {
+  if (selectedPartner.value?.images) {
     currentImageIndex.value =
       currentImageIndex.value === 0
         ? selectedPartner.value.images.length - 1

@@ -78,7 +78,8 @@
               </div>
             </NuxtLink>
 
-            <div class="relative mt-3">
+            <!-- Temporarily hidden language switcher -->
+            <div v-if="false" class="relative mt-3">
               <button
                 @click="showLanguageMenu = !showLanguageMenu"
                 class="flex items-center justify-between w-full px-4 py-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors duration-200"

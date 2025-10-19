@@ -1,4 +1,3 @@
-si
 <script setup lang="ts">
 const props = defineProps<{
   bgColor?: string;

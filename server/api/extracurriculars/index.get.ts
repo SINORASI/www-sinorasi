@@ -3,8 +3,8 @@ import type { Extracurricular } from "~/models/Extracurricular";
 export default defineEventHandler(
   async (event): Promise<{ data: Extracurricular[]; total: number }> => {
     const query = getQuery(event);
-    const limit = parseInt(query.limit as string) || 50;
-    const offset = parseInt(query.offset as string) || 0;
+    const limit = parseInt(query.limit as string, 10) || 50;
+    const offset = parseInt(query.offset as string, 10) || 0;
     const category = query.category as string;
 
     const allExtracurriculars: Extracurricular[] = [

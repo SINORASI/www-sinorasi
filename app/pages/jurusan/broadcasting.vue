@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import KaproCarousel from "~/components/Major/KaproCarousel.vue";
-import ReferenceCareers from "~/components/Major/ReferenceCareers.vue";
 import type { MajorData } from "~/models/MajorData";
 import type { MajorName } from "~/models/MajorName";
 import { majorColorSchemes } from "~/utils/majorColors";

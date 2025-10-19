@@ -116,6 +116,7 @@ if (!majorDatas.value?.[major]) {
                 v-for="(sub, subIndex) in item.submenu"
                 :key="subIndex"
                 class="px-4 py-3 transition-colors duration-200 cursor-pointer hover:bg-gray-50"
+                @click="navigateTo(sub.to)"
               >
                 <div class="flex items-center gap-3">
                   <Icon :name="sub.icon" size="20" :class="majorDatas?.[major]?.textColor || 'text-gray-900'" />
