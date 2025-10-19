@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import KaproCarousel from "~/components/Major/KaproCarousel.vue";
+import ReferenceCareers from "~/components/Major/ReferenceCareers.vue";
 import type { MajorData } from "~/models/MajorData";
 import type { MajorName } from "~/models/MajorName";
 import { majorColorSchemes } from "~/utils/majorColors";
@@ -67,18 +69,18 @@ onMounted(() => {
 
 <template>
   <main class="overflow-x-hidden scroll-smooth">
-    
+
     <section id="tentang-jurusan" class="relative flex items-center justify-center min-h-screen overflow-hidden">
-      
+
       <div class="absolute inset-0" :style="`background: ${majorColor.gradient}`"></div>
 
-      
+
       <div class="relative z-10 flex items-center w-full h-full min-h-screen">
         <div class="container px-8 py-16 mx-auto">
           <div class="grid items-center grid-cols-1 gap-12 lg:grid-cols-2">
-            
+
             <div class="flex flex-col items-start justify-center">
-              
+
               <div class="w-full max-w-md lg:max-w-lg">
                 <img
                   src="/images/majorIcon/logo-an.webp"
@@ -88,9 +90,9 @@ onMounted(() => {
               </div>
             </div>
 
-            
+
             <div class="flex flex-col items-center justify-center space-y-6 lg:items-end lg:space-y-8">
-              
+
               <div class="w-full text-center lg:text-right">
                 <h1
                   class="text-4xl font-black leading-none tracking-tight text-white uppercase sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl drop-shadow-2xl"
@@ -99,7 +101,7 @@ onMounted(() => {
                 </h1>
               </div>
 
-              
+
               <div class="relative w-full max-w-sm lg:max-w-md">
                 <img
                   src="/images/major/hero-major-ornament/an/drawing-tab.webp"
@@ -108,7 +110,7 @@ onMounted(() => {
                 />
               </div>
 
-              
+
               <div class="px-6 py-3 bg-white shadow-2xl rounded-2xl lg:px-8 lg:py-4">
                 <p
                   class="text-xl font-bold text-transparent sm:text-2xl lg:text-3xl bg-clip-text bg-gradient-to-r"
@@ -122,7 +124,7 @@ onMounted(() => {
         </div>
       </div>
 
-      
+
       <div class="absolute z-20 transform -translate-x-1/2 bottom-8 left-1/2 animate-bounce">
         <div
           class="flex justify-center w-8 h-12 pt-2 border-2 rounded-full bg-white/10 backdrop-blur-sm"
@@ -133,14 +135,14 @@ onMounted(() => {
       </div>
     </section>
 
-    
+
     <section
       id="kepala-program"
       class="relative min-h-screen py-16 md:py-24"
       :style="`background: linear-gradient(to bottom, white, ${majorColor.light}10)`"
     >
       <div class="container flex flex-col items-center gap-10 px-4 mx-auto md:gap-12">
-        
+
         <div class="max-w-3xl space-y-4 text-center">
           <div class="inline-block">
             <span
@@ -158,21 +160,21 @@ onMounted(() => {
           </p>
         </div>
 
-        
+
         <div class="w-full p-6 bg-white rounded-3xl md:p-10">
           <KaproCarousel :major="major" />
         </div>
       </div>
     </section>
 
-    
+
     <section
       id="materi-pembelajaran"
       class="min-h-screen py-16 md:py-24"
       :style="`background: linear-gradient(135deg, ${majorColor.primary}05, ${majorColor.accent}05)`"
     >
       <div class="container flex flex-col items-center justify-center gap-10 px-4 mx-auto md:gap-12">
-        
+
         <div class="max-w-3xl space-y-4 text-center">
           <div class="inline-block">
             <span
@@ -193,19 +195,19 @@ onMounted(() => {
           </p>
         </div>
 
-        
+
         <div class="w-full max-w-7xl">
           <MajorTopics :major="major" />
         </div>
       </div>
     </section>
 
-    
+
     <MajorTools :major="major" />
 
-    
+
     <section id="kesempatan-kerja" class="relative min-h-screen py-16 overflow-hidden bg-white md:py-24">
-      
+
       <div class="absolute inset-0 opacity-5">
         <div
           class="absolute inset-0"
@@ -214,7 +216,7 @@ onMounted(() => {
       </div>
 
       <div class="container relative z-10 flex flex-col items-center justify-center px-4 mx-auto">
-        
+
         <div class="max-w-4xl mb-12 space-y-4 text-center md:mb-16">
           <div class="inline-block">
             <span
@@ -232,14 +234,14 @@ onMounted(() => {
           </p>
         </div>
 
-        
+
         <div class="flex flex-col items-center justify-center w-full">
           <ReferenceCareers :major="major" />
         </div>
       </div>
     </section>
 
-    
+
     <section
       id="mitra-kerja"
       class="min-h-screen py-16 md:py-24"
@@ -247,7 +249,7 @@ onMounted(() => {
     >
       <div class="container flex items-center justify-center px-4 mx-auto">
         <div class="flex flex-col items-center justify-center w-full gap-10 md:gap-12 max-w-7xl">
-          
+
           <div class="space-y-4 text-center">
             <div class="inline-block">
               <span
@@ -268,7 +270,7 @@ onMounted(() => {
             </p>
           </div>
 
-          
+
           <div class="w-full">
             <MajorPartnerSlider :major="major" />
           </div>
@@ -276,10 +278,10 @@ onMounted(() => {
       </div>
     </section>
 
-    
+
     <section id="minigame" class="min-h-screen py-16 md:py-24">
       <div class="container flex flex-col items-center justify-center gap-8 px-4 mx-auto md:gap-12">
-        
+
         <div class="space-y-4 text-center">
           <div class="inline-block">
             <span
@@ -297,18 +299,18 @@ onMounted(() => {
           </p>
         </div>
 
-        
+
         <div class="w-full max-w-6xl">
           <div
             class="relative flex justify-center items-center w-full min-h-[300px] md:min-h-[400px] rounded-3xl p-8 md:p-12 shadow-2xl overflow-hidden group transform hover:scale-[1.02] transition-all duration-300"
             :style="`background: linear-gradient(135deg, ${majorColor.primary}, ${majorColor.accent})`"
           >
-            
+
             <div class="absolute inset-0 opacity-10">
               <div class="absolute inset-0 bg-gradient-to-br from-white to-transparent animate-pulse"></div>
             </div>
 
-            
+
             <div class="relative z-10 space-y-6 text-center">
               <div
                 class="flex items-center justify-center w-24 h-24 mx-auto transition-transform duration-300 rounded-full shadow-xl md:w-32 md:h-32 bg-white/20 backdrop-blur-sm group-hover:rotate-12"
@@ -342,7 +344,7 @@ onMounted(() => {
               </button>
             </div>
 
-            
+
             <div class="absolute w-20 h-20 border-4 rounded-full top-10 right-10 border-white/20 animate-ping"></div>
             <div
               class="absolute w-16 h-16 border-4 rounded-full bottom-10 left-10 border-white/20 animate-ping"
@@ -353,10 +355,10 @@ onMounted(() => {
       </div>
     </section>
 
-    
+
     <section id="prestasi" class="min-h-screen py-16 md:py-24 bg-gradient-to-b from-white to-gray-50">
       <div class="container flex flex-col items-center justify-center px-4 mx-auto">
-        
+
         <div class="mb-12 space-y-4 text-center md:mb-16">
           <div class="inline-block">
             <span
@@ -377,14 +379,14 @@ onMounted(() => {
           </p>
         </div>
 
-        
+
         <div class="flex flex-col items-center justify-center w-full max-w-7xl">
           <MajorAchievement :major="major" />
         </div>
       </div>
     </section>
 
-    
+
     <button
       v-show="showBackToTop"
       @click="scrollToTop"

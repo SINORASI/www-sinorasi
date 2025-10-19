@@ -1,7 +1,7 @@
 <script lang="ts" setup>
+import { Motion } from "motion-v";
 import type { News } from "~/models/News";
 import { majorColorSchemes } from "~/utils/majorColors";
-import { Motion } from "motion-v";
 
 definePageMeta({
   layout: "default",
@@ -26,7 +26,13 @@ const siswaCount = ref(0);
 const prestasiCount = ref(0);
 
 const selectedCategory = ref<string>("all");
-const newsCategories = ref<string[]>(["all", "Pengumuman", "Prestasi", "Kerjasama", "Program Baru"]);
+const newsCategories = ref<string[]>([
+  "all",
+  "Pengumuman",
+  "Prestasi",
+  "Kerjasama",
+  "Program Baru",
+]);
 const newsData = ref<News[]>([]);
 const isLoadingNews = ref(false);
 const showBackToTop = ref(false);
@@ -73,7 +79,8 @@ const timelineItems = [
   {
     year: "2015",
     title: "Akreditasi A",
-    description: "SMK Negeri 2 Singosari berhasil meraih akreditasi A dari Badan Akreditasi Nasional Sekolah/Madrasah.",
+    description:
+      "SMK Negeri 2 Singosari berhasil meraih akreditasi A dari Badan Akreditasi Nasional Sekolah/Madrasah.",
     icon: "lucide:award",
   },
   {
@@ -124,8 +131,9 @@ const achievements = computed(() => {
       image: news.thumbnail || "/images/placeholder.jpg",
       title: news.title,
       description: news.content
-        ? news.content.replace(/<[^>]*>/g, "").slice(0, Math.floor(news.content.replace(/<[^>]*>/g, "").length / 2)) +
-          "..."
+        ? news.content
+            .replace(/<[^>]*>/g, "")
+            .slice(0, Math.floor(news.content.replace(/<[^>]*>/g, "").length / 2)) + "..."
         : news.subtitle,
       slug: news.slug,
     }));
@@ -252,8 +260,9 @@ useHead({
         <Motion
           class="flex flex-col justify-center items-center w-full lg:w-1/3"
           :initial="{ opacity: 0, x: -50 }"
-          :animate="{ opacity: 1, x: 0 }"
+          :whileInView="{ opacity: 1, x: 0 }"
           :transition="{ duration: 0.8 }"
+          :viewport="{ once: true }"
         >
           <div class="relative group">
             <img
@@ -267,8 +276,9 @@ useHead({
         <Motion
           class="flex flex-col items-center w-full gap-8 text-center text-black lg:w-2/3 lg:items-start lg:text-left"
           :initial="{ opacity: 0, x: 50 }"
-          :animate="{ opacity: 1, x: 0 }"
+          :whileInView="{ opacity: 1, x: 0 }"
           :transition="{ duration: 0.8, delay: 0.2 }"
+          :viewport="{ once: true }"
         >
           <h1 class="text-3xl font-black transition-all duration-700 ease-out md:text-4xl lg:text-5xl">
             SMK NEGERI 2 SINGOSARI
@@ -314,90 +324,22 @@ useHead({
       </div>
     </section>
 
-    <section id="prestasi" class="bg-gradient-to-b from-white via-blue-50 to-white">
-      <div class="container flex flex-col items-center gap-8 mx-auto">
-        <div
-          class="relative flex flex-col w-full max-w-5xl gap-6 p-8 mx-auto bg-white border-2 border-blue-100 shadow-xl rounded-2xl"
-        >
-          <div class="overflow-hidden">
-            <div
-              class="flex transition-transform duration-500 ease-in-out"
-              :style="{ transform: `translateX(-${currentAchievement * 100}%)` }"
-            >
-              <div v-for="(achievement, index) in achievements" :key="index" class="flex-shrink-0 w-full">
-                <NuxtLink v-if="achievement.slug" :to="`/berita/${achievement.slug}`" class="block cursor-pointer">
-                  <div class="flex flex-col items-center gap-8 md:flex-row md:h-80">
-                    <img
-                      :src="achievement.image"
-                      class="object-cover w-full rounded-lg shadow-md aspect-square md:w-1/3"
-                      alt="Achievement"
-                    />
-                    <div class="flex flex-col gap-4 text-center md:text-left md:w-2/3 md:justify-center">
-                      <h3 class="text-xl md:text-2xl font-bold text-gray-800">{{ achievement.title }}</h3>
-                      <p class="leading-relaxed text-gray-600 text-sm md:text-base line-clamp-5">
-                        {{ achievement.description }}
-                      </p>
-                    </div>
-                  </div>
-                </NuxtLink>
-                <div v-else class="flex flex-col items-center gap-8 md:flex-row md:h-80">
-                  <img
-                    :src="achievement.image"
-                    class="object-cover w-full rounded-lg shadow-md aspect-square md:w-1/3"
-                    alt="Achievement"
-                  />
-                  <div class="flex flex-col gap-4 text-center md:text-left md:w-2/3 md:pr-5 md:justify-center">
-                    <h3 class="text-xl md:text-2xl font-bold text-gray-800">{{ achievement.title }}</h3>
-                    <p class="leading-relaxed text-gray-600 text-sm md:text-base line-clamp-5">
-                      {{ achievement.description }}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="border-t border-gray-200"></div>
-
-          <div class="flex items-center justify-between">
-            <div class="flex gap-4">
-              <button
-                @click="prevAchievement"
-                class="flex items-center justify-center p-3 transition bg-gray-100 border border-gray-200 rounded-full shadow-md cursor-pointer hover:bg-blue-600 hover:text-white hover:scale-110"
-              >
-                <Icon name="lucide:chevron-left" size="20" />
-              </button>
-              <button
-                @click="nextAchievement"
-                class="flex items-center justify-center p-3 transition bg-gray-100 border border-gray-200 rounded-full shadow-md cursor-pointer hover:bg-blue-600 hover:text-white hover:scale-110"
-              >
-                <Icon name="lucide:chevron-right" size="20" />
-              </button>
-            </div>
-            <div class="font-bold text-gray-700">
-              <span class="text-2xl text-blue-600">{{ String(currentAchievement + 1).padStart(2, "0") }}</span>
-              <span class="mx-1 text-gray-400">/</span>
-              <span class="text-lg">{{ String(achievements.length).padStart(2, "0") }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <Motion
       id="profil-sekolah"
       class="py-20 h-min-screen bg-gradient-to-b from-white via-blue-50 to-white"
       :initial="{ opacity: 0, y: 50 }"
-      :animate="{ opacity: 1, y: 0 }"
+      :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8 }"
+      :viewport="{ once: true }"
     >
       <div class="container px-4 mx-auto md:px-10">
         <div class="flex flex-col gap-12 lg:flex-row lg:items-center">
           <Motion
             class="w-full lg:w-1/2"
             :initial="{ opacity: 0, x: -50 }"
-            :animate="{ opacity: 1, x: 0 }"
+            :whileInView="{ opacity: 1, x: 0 }"
             :transition="{ duration: 0.8, delay: 0.2 }"
+            :viewport="{ once: true }"
           >
             <div class="relative group">
               <div
@@ -421,8 +363,9 @@ useHead({
           <Motion
             class="flex flex-col w-full gap-6 lg:w-1/2"
             :initial="{ opacity: 0, x: 50 }"
-            :animate="{ opacity: 1, x: 0 }"
+            :whileInView="{ opacity: 1, x: 0 }"
             :transition="{ duration: 0.8, delay: 0.4 }"
+            :viewport="{ once: true }"
           >
             <div class="inline-block">
               <span
@@ -470,10 +413,23 @@ useHead({
       </div>
     </Motion>
 
-    <section id="sambutan" class="bg-gradient-to-b from-white via-blue-50 to-white">
+    <Motion
+      id="sambutan"
+      class="bg-gradient-to-b from-white via-blue-50 to-white"
+      :initial="{ opacity: 0, y: 50 }"
+      :whileInView="{ opacity: 1, y: 0 }"
+      :transition="{ duration: 0.8 }"
+      :viewport="{ once: true }"
+    >
       <div class="container px-4 mx-auto md:px-10">
         <div class="flex flex-col items-center justify-center gap-12 lg:flex-row">
-          <div class="flex flex-col w-full max-w-3xl gap-6 lg:w-3/5">
+          <Motion
+            class="flex flex-col w-full max-w-3xl gap-6 lg:w-3/5"
+            :initial="{ opacity: 0, x: -50 }"
+            :whileInView="{ opacity: 1, x: 0 }"
+            :transition="{ duration: 0.8, delay: 0.2 }"
+            :viewport="{ once: true }"
+          >
             <div class="inline-block">
               <span
                 class="px-2 py-3 flex justify-center items-center text-lg font-bold tracking-widest uppercase rounded-full md:text-xl"
@@ -500,9 +456,15 @@ useHead({
                 <p class="italic">Wassalamu'alaikum wr.wb.</p>
               </div>
             </div>
-          </div>
+          </Motion>
 
-          <div class="w-full max-w-xl lg:w-1/5">
+          <Motion
+            class="w-full max-w-xl lg:w-1/5"
+            :initial="{ opacity: 0, x: 50 }"
+            :whileInView="{ opacity: 1, x: 0 }"
+            :transition="{ duration: 0.8, delay: 0.4 }"
+            :viewport="{ once: true }"
+          >
             <div class="relative max-w-xs group">
               <div
                 class="relative overflow-hidden transition-all duration-500 transform border-4 border-white shadow-2xl rounded-2xl group-hover:scale-105 group-hover:shadow-3xl"
@@ -527,24 +489,26 @@ useHead({
                 class="absolute w-32 h-32 rounded-full -bottom-4 -left-4 bg-gradient-to-br from-orange-500 to-orange-700 opacity-20 blur-2xl -z-10"
               ></div>
             </div>
-          </div>
+          </Motion>
         </div>
       </div>
-    </section>
+    </Motion>
 
     <Motion
       id="prestasi"
       class="bg-gradient-to-b from-white via-blue-50 to-white"
       :initial="{ opacity: 0, y: 50 }"
-      :animate="{ opacity: 1, y: 0 }"
+      :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8 }"
+      :viewport="{ once: true }"
     >
       <div class="container flex flex-col items-center gap-8 mx-auto">
         <Motion
           class="relative flex flex-col w-full max-w-5xl gap-6 p-8 mx-auto bg-white border-2 border-blue-100 shadow-xl rounded-2xl"
           :initial="{ opacity: 0, scale: 0.95 }"
-          :animate="{ opacity: 1, scale: 1 }"
+          :whileInView="{ opacity: 1, scale: 1 }"
           :transition="{ duration: 0.6, delay: 0.2 }"
+          :viewport="{ once: true }"
         >
           <div class="overflow-hidden">
             <div
@@ -615,8 +579,9 @@ useHead({
       id="seragam-sekolah"
       class="bg-gradient-to-b from-white via-gray-50 to-white"
       :initial="{ opacity: 0, y: 50 }"
-      :animate="{ opacity: 1, y: 0 }"
+      :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8 }"
+      :viewport="{ once: true }"
     >
       <div class="container px-4 mx-auto md:px-10">
         <div class="flex flex-col items-center gap-12">
@@ -883,9 +848,13 @@ useHead({
       </div>
     </Motion>
 
-    <section
+    <Motion
       id="jejak-sejarah"
       class="py-20 overflow-hidden h-min-screen bg-gradient-to-b from-white via-blue-50 to-white"
+      :initial="{ opacity: 0, y: 50 }"
+      :whileInView="{ opacity: 1, y: 0 }"
+      :transition="{ duration: 0.8 }"
+      :viewport="{ once: true }"
     >
       <div class="container relative flex flex-col items-center gap-8 px-4 mx-auto text-center md:px-10">
         <div class="absolute top-0 left-0 bg-blue-200 rounded-full w-72 h-72 opacity-20 blur-3xl -z-10"></div>
@@ -1056,13 +1025,14 @@ useHead({
           </div>
         </div>
       </div>
-    </section>
+    </Motion>
     <Motion
       id="jurusan"
       class="flex flex-col items-center gap-8 py-20 h-fit"
       :initial="{ opacity: 0, y: 50 }"
-      :animate="{ opacity: 1, y: 0 }"
+      :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8 }"
+      :viewport="{ once: true }"
     >
       <Motion
         class="inline-block"
@@ -1086,8 +1056,9 @@ useHead({
       id="berita"
       class="h-min-screen"
       :initial="{ opacity: 0, y: 50 }"
-      :animate="{ opacity: 1, y: 0 }"
+      :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8 }"
+      :viewport="{ once: true }"
     >
       <div class="container flex flex-col items-center gap-8 mx-auto">
         <Motion
@@ -1164,9 +1135,15 @@ useHead({
         </div>
       </div>
     </Motion>
-    <section id="faq">
+    <Motion
+      id="faq"
+      :initial="{ opacity: 0, y: 50 }"
+      :whileInView="{ opacity: 1, y: 0 }"
+      :transition="{ duration: 0.8 }"
+      :viewport="{ once: true }"
+    >
       <FAQSection />
-    </section>
+    </Motion>
 
     <button
       v-show="showBackToTop"

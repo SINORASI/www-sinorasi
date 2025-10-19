@@ -1,13 +1,23 @@
 <template>
-  <transition name="sidebar" class="transition-all duration-300 ease-in-out">
-    <div v-if="isOpen" class="fixed inset-0 z-[9000] flex">
-      <div
-        class="fixed inset-0 transition-opacity duration-300 ease-in-out bg-black/50 backdrop-blur-sm"
+  <Motion
+    :initial="{ opacity: 0 }"
+    :animate="isOpen ? { opacity: 1 } : { opacity: 0 }"
+    :transition="{ duration: 0.3, ease: 'easeInOut' }"
+  >
+    <div class="fixed inset-0 z-[9000] flex">
+      <Motion
+        :initial="{ opacity: 0 }"
+        :animate="isOpen ? { opacity: 0.5 } : { opacity: 0 }"
+        :transition="{ duration: 0.3, ease: 'easeInOut' }"
+        class="fixed inset-0 bg-black/50 backdrop-blur-sm"
         @click="$emit('close')"
-      ></div>
+      ></Motion>
 
-      <div
-        class="relative flex flex-col w-full h-full transition-transform duration-300 ease-in-out bg-white shadow-2xl sm:ml-auto sm:w-96"
+      <Motion
+        :initial="{ x: '100%' }"
+        :animate="isOpen ? { x: '0%' } : { x: '100%' }"
+        :transition="{ duration: 0.3, ease: 'easeInOut' }"
+        class="relative flex flex-col w-full h-full bg-white shadow-2xl sm:ml-auto sm:w-96"
       >
         <div class="flex items-center justify-between flex-shrink-0 gap-3 p-4 border-b border-gray-200">
           <div class="flex-1 min-w-0">
@@ -265,10 +275,9 @@
             </div>
           </div>
         </div>
-
-      </div>
+      </Motion>
     </div>
-  </transition>
+  </Motion>
 </template>
 
 <style scoped>
@@ -286,6 +295,7 @@
 
 <script setup lang="ts">
 import { computed, ref } from "vue";
+import { Motion } from "motion-v";
 import type { Extracurricular } from "~/models/Extracurricular";
 import type { MajorName } from "~/models/MajorName";
 import type { News } from "~/models/News";

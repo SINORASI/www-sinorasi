@@ -64,8 +64,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref, watch } from "vue";
 import { Motion } from "motion-v";
+import { computed, onMounted, ref, watch } from "vue";
 
 declare global {
   interface Window {

@@ -178,8 +178,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import { Motion } from "motion-v";
+import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 
 interface Props {
   gradeImages: {
