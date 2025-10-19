@@ -10,7 +10,7 @@ export default defineNuxtConfig({
     head: {
       title: "SMK Negeri 2 Singosari",
       htmlAttrs: { lang: "id" },
-      link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+      link: [{ rel: "icon", type: "image/png", href: "/images/logo-smk.webp" }],
       charset: "utf-8",
       viewport: "width=device-width, initial-scale=1",
       meta: [

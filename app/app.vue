@@ -27,9 +27,20 @@ useSeoMeta({
 <style>
 .page-enter-active,
 .page-leave-active {
-  transition: all 0.4s;
+  transition: opacity 0.6s ease-in-out, filter 0.6s ease-in-out;
 }
-.page-enter-from,
+.page-enter-from {
+  opacity: 0;
+  filter: blur(1rem);
+}
+.page-enter-to {
+  opacity: 1;
+  filter: blur(0);
+}
+.page-leave-from {
+  opacity: 1;
+  filter: blur(0);
+}
 .page-leave-to {
   opacity: 0;
   filter: blur(1rem);
