@@ -496,11 +496,14 @@ useHead({
                 style="animation-delay: 0.2s"
               ></div>
             </button>
+<<<<<<< HEAD
 
             
             <div
               class="absolute inset-0 rounded-3xl border-2 border-transparent group-hover:border-blue-400/50 transition-all duration-500"
             ></div>
+=======
+>>>>>>> 7140325c1819b5c26173ac574c14c74d52355ad5
           </div>
         </div>
       </section>

@@ -27,12 +27,8 @@ const backgroundStyle = computed(() => {
 </script>
 
 <template>
-  <div
-    class="flex flex-col min-h-screen major-layout"
-    :class="{ transitioning: isTransitioning }"
-    :style="backgroundStyle"
-  >
-    <MajorLayoutMajorHeader />
+  <div class="major-layout">
+    <MajorHeader />
     <div class="flex-1">
       <slot />
     </div>
@@ -41,7 +37,5 @@ const backgroundStyle = computed(() => {
 </template>
 
 <style scoped>
-.major-layout.transitioning {
-  background: transparent !important;
-}
+
 </style>

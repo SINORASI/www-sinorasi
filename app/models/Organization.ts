@@ -32,6 +32,7 @@ export interface Organization {
   maknaSimbol?: string[];
   maknaWarna?: string[];
   description: string;
+  shortDescription?: string;
   vision?: string;
   mission?: string;
   history?: string;
