@@ -1,3 +1,4 @@
+import { defineEventHandler, getQuery, readBody, createError, setCookie, getCookie } from 'h3';
 import type { TeacherCategory } from "~/models/Teacher";
 
 export default defineEventHandler(

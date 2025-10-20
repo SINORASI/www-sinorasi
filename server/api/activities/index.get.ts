@@ -1,3 +1,4 @@
+import { defineEventHandler, getQuery, readBody, createError, setCookie, getCookie } from 'h3';
 import type { Activity } from "~/models/Activity";
 
 export default defineEventHandler(async (event): Promise<{ data: Activity[]; total: number }> => {

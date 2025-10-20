@@ -1,3 +1,4 @@
+import { defineEventHandler, getQuery, readBody, createError, setCookie, getCookie } from 'h3';
 import type { MajorData } from "~/models/MajorData";
 import type { MajorName } from "~/models/MajorName";
 

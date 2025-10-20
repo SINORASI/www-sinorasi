@@ -1,3 +1,4 @@
+import { defineEventHandler, getQuery, readBody, createError, setCookie, getCookie } from 'h3';
 import { z } from "zod";
 
 const trafficReportSchema = z.object({

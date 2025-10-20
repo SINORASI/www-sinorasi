@@ -1,3 +1,4 @@
+import { defineEventHandler, getQuery, readBody, createError, setCookie, getCookie } from 'h3';
 import type { JobTitle } from "~/models/JobTitle";
 import type { MajorName } from "~/models/MajorName";
 

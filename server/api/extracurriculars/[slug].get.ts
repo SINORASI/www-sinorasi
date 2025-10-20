@@ -1,3 +1,4 @@
+import { defineEventHandler, getQuery, readBody, createError, setCookie, getCookie } from 'h3';
 import type { Extracurricular } from "~/models/Extracurricular";
 
 export default defineEventHandler(async (event): Promise<Extracurricular | null> => {

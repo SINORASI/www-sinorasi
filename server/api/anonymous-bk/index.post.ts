@@ -1,3 +1,4 @@
+import { defineEventHandler, readBody, createError } from "h3";
 import { validateAnonymousBK } from "~/utils/schema";
 
 export default defineEventHandler(async (event) => {

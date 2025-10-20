@@ -1,3 +1,4 @@
+import { defineEventHandler, getQuery, readBody, createError, setCookie, getCookie } from 'h3';
 import type { Achievement } from "~/models/Achievement";
 
 export default defineEventHandler(async (event): Promise<Achievement | null> => {

@@ -1,3 +1,4 @@
+import { defineEventHandler, getQuery, readBody, createError, setCookie, getCookie } from 'h3';
 import { type TrafficTrackerForm, trafficTrackerSchema } from "~/utils/schema";
 
 interface Coordinate {
