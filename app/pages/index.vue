@@ -25,13 +25,7 @@ const siswaCount = ref(0);
 const prestasiCount = ref(0);
 
 const selectedCategory = ref<string>("all");
-const newsCategories = ref<string[]>([
-  "all",
-  "Pengumuman",
-  "Prestasi",
-  "Kerjasama",
-  "Program Baru",
-]);
+const newsCategories = ref<string[]>(["all", "Pengumuman", "Prestasi", "Kerjasama", "Program Baru"]);
 const newsData = ref<News[]>([]);
 const isLoadingNews = ref(false);
 const showBackToTop = ref(false);
@@ -78,8 +72,7 @@ const timelineItems = [
   {
     year: "2015",
     title: "Akreditasi A",
-    description:
-      "SMK Negeri 2 Singosari berhasil meraih akreditasi A dari Badan Akreditasi Nasional Sekolah/Madrasah.",
+    description: "SMK Negeri 2 Singosari berhasil meraih akreditasi A dari Badan Akreditasi Nasional Sekolah/Madrasah.",
     icon: "lucide:award",
   },
   {
@@ -101,65 +94,64 @@ const timelineItems = [
 const clickedMarkers = ref([true, false, false, false, false]);
 const showAllIcons = ref(false);
 const animationStarted = ref(false);
-const lineScale = ref(0.1)
+const lineScale = ref(0.1);
 const cardVisibility = ref([false, false, false, false, false]);
 
 const startStaggeredAnimation = () => {
   animationStarted.value = true;
   showAllIcons.value = true;
 
-  const lineAnimationDuration = 5000
-  const startTime = Date.now()
+  const lineAnimationDuration = 5000;
+  const startTime = Date.now();
 
   const animateLine = () => {
-    const elapsed = Date.now() - startTime
-    const progress = Math.min(elapsed / lineAnimationDuration, 1)
-    const easeOut = 1 - Math.pow(1 - progress, 4)
-    lineScale.value = 0.1 + (easeOut * 1)
+    const elapsed = Date.now() - startTime;
+    const progress = Math.min(elapsed / lineAnimationDuration, 1);
+    const easeOut = 1 - Math.pow(1 - progress, 4);
+    lineScale.value = 0.1 + easeOut * 1;
 
     if (progress < 1) {
-      requestAnimationFrame(animateLine)
+      requestAnimationFrame(animateLine);
     }
-  }
-  requestAnimationFrame(animateLine)
+  };
+  requestAnimationFrame(animateLine);
 
   timelineItems.forEach((_, index) => {
     setTimeout(() => {
-      clickedMarkers.value[index] = true
-      cardVisibility.value[index] = true
-    }, index * 400)
-  })
+      clickedMarkers.value[index] = true;
+      cardVisibility.value[index] = true;
+    }, index * 400);
+  });
 };
 
 const toggleMarker = (index: number) => {
-  if (index !== 0) return
+  if (index !== 0) return;
 
   if (!showAllIcons.value) {
-    startStaggeredAnimation()
+    startStaggeredAnimation();
   } else {
-    showAllIcons.value = false
-    animationStarted.value = false
-    clickedMarkers.value = [true, false, false, false, false]
-    cardVisibility.value = [false, false, false, false, false]
+    showAllIcons.value = false;
+    animationStarted.value = false;
+    clickedMarkers.value = [true, false, false, false, false];
+    cardVisibility.value = [false, false, false, false, false];
 
-    const closeAnimationDuration = 1000
-    const startTime = Date.now()
-    const startScale = lineScale.value
+    const closeAnimationDuration = 1000;
+    const startTime = Date.now();
+    const startScale = lineScale.value;
 
     const animateClose = () => {
-      const elapsed = Date.now() - startTime
-      const progress = Math.min(elapsed / closeAnimationDuration, 1)
-      const easeOut = 1 - Math.pow(1 - progress, 3)
-      lineScale.value = startScale + (0.15 - startScale) * easeOut
+      const elapsed = Date.now() - startTime;
+      const progress = Math.min(elapsed / closeAnimationDuration, 1);
+      const easeOut = 1 - Math.pow(1 - progress, 3);
+      lineScale.value = startScale + (0.15 - startScale) * easeOut;
 
       if (progress < 1) {
-        requestAnimationFrame(animateClose)
+        requestAnimationFrame(animateClose);
       }
-    }
-    requestAnimationFrame(animateClose)
+    };
+    requestAnimationFrame(animateClose);
   }
-}
-
+};
 
 const achievements = computed(() => {
   const filtered = newsData.value
@@ -172,9 +164,8 @@ const achievements = computed(() => {
       image: news.thumbnail || "/images/placeholder.jpg",
       title: news.title,
       description: news.content
-        ? news.content
-            .replace(/<[^>]*>/g, "")
-            .slice(0, Math.floor(news.content.replace(/<[^>]*>/g, "").length / 2)) + "..."
+        ? news.content.replace(/<[^>]*>/g, "").slice(0, Math.floor(news.content.replace(/<[^>]*>/g, "").length / 2)) +
+          "..."
         : news.subtitle,
       slug: news.slug,
     }));
@@ -929,7 +920,7 @@ useHead({
             :initial="{ scaleY: 1 }"
             :animate="{ scaleY: lineScale }"
             :transition="{ duration: 0.1, ease: 'linear' }"
-            style="transform-origin: top;"
+            style="transform-origin: top"
           ></Motion>
 
           <div
@@ -945,7 +936,7 @@ useHead({
               :initial="{ scaleY: index === 0 ? 1 : 0 }"
               :animate="{ scaleY: clickedMarkers[index] ? 1 : 0 }"
               :transition="{ duration: 0.8, delay: index * 0.2 }"
-              style="transform-origin: top;"
+              style="transform-origin: top"
             ></Motion>
 
             <Motion
@@ -953,7 +944,7 @@ useHead({
               :class="[
                 'z-20 flex items-center justify-center w-16 h-16 mb-6 transition-all duration-300 border-4 border-white rounded-full shadow-xl bg-gradient-to-br from-blue-500 to-blue-700 group-hover:scale-110',
                 clickedMarkers[index] ? 'ring-4 ring-yellow-400' : '',
-                'cursor-pointer pointer-events-auto'
+                'cursor-pointer pointer-events-auto',
               ]"
               :initial="{ opacity: index === 0 ? 1 : 0, scale: index === 0 ? 1 : 0 }"
               :animate="{ opacity: clickedMarkers[index] ? 1 : 0, scale: clickedMarkers[index] ? 1 : 0 }"
@@ -996,7 +987,7 @@ useHead({
             :initial="{ scaleY: 1 }"
             :animate="{ scaleY: lineScale }"
             :transition="{ duration: 0.1, ease: 'linear' }"
-            style="transform-origin: top;"
+            style="transform-origin: top"
           ></Motion>
 
           <div
