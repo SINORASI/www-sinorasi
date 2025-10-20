@@ -1,17 +1,18 @@
   <template>
   <Motion
-    v-if="isOpen"
-    :initial="{ opacity: 0 }"
-    :animate="{ opacity: 1 }"
-    :transition="{ duration: 0.3, ease: 'easeInOut' }"
-  >
-    <div class="fixed inset-0 z-[10000] flex">
+     v-if="isOpen"
+     :initial="{ opacity: 0 }"
+     :animate="{ opacity: 1 }"
+     :transition="{ duration: 0.3, ease: 'easeInOut' }"
+     class="z-[99999]"
+   >
+    <div class="fixed inset-0 z-[99999] flex">
       <Motion
         :initial="{ opacity: 0 }"
         :animate="{ opacity: 0.5 }"
         :exit="{ opacity: 0 }"
         :transition="{ duration: 0.3, ease: 'easeInOut' }"
-        class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[10000]"
+        class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[100000]"
         @click="$emit('close')"
       ></Motion>
 
@@ -20,7 +21,7 @@
         :animate="{ x: '0%' }"
         :exit="{ x: '100%', opacity: 0 }"
         :transition="{ duration: 0.3, ease: 'easeInOut' }"
-        class="relative flex flex-col w-full h-full bg-white shadow-2xl sm:ml-auto sm:w-96 z-[10001]"
+        class="relative flex flex-col w-full h-full bg-white shadow-2xl sm:ml-auto sm:w-96 z-[100001]"
       >
         <div class="flex items-center justify-between flex-shrink-0 gap-3 p-4 border-b border-gray-200">
           <div class="flex-1 min-w-0">
