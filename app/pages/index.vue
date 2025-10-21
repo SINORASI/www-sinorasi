@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { motion } from "motion-v";
+// PERBAIKAN 1: Import diubah. 'Motion' dihapus, 'animate' ditambahkan.
+import { motion, animate } from "motion-v";
 import type { News } from "~/models/News";
 
 definePageMeta({
@@ -58,6 +59,7 @@ const filterByCategory = (category: string) => {
 
 const isMobile = ref(false);
 const timelineItems = [
+  // ... (data timeline Anda tidak berubah)
   {
     year: "2007",
     title: "Awal Berdiri",
@@ -101,62 +103,56 @@ const lineScale = ref(0.1);
 const cardVisibility = ref([false, false, false, false, false]);
 
 const startStaggeredAnimation = () => {
+  // Prevent animation if page is not fully mounted or elements are null
+  if (typeof window === "undefined") return;
+
   animationStarted.value = true;
   showAllIcons.value = true;
 
-  const lineAnimationDuration = 3000;
-  const startTime = Date.now();
-
-  const animateLine = () => {
-    const elapsed = Date.now() - startTime;
-    const progress = Math.min(elapsed / lineAnimationDuration, 1);
-    const easeInOut = progress < 0.5 ? 2 * progress * progress : -1 + (4 - 2 * progress) * progress;
-    lineScale.value = 0.1 + easeInOut * 0.9;
-
-    if (progress < 1) {
-      requestAnimationFrame(animateLine);
-    }
-  };
-  requestAnimationFrame(animateLine);
+  // PERBAIKAN 5: Menggunakan utilitas 'animate' dari motion-v
+  // alih-alih requestAnimationFrame manual. Durasi dalam detik.
+  animate(0.1, 1.0, {
+    duration: 3, // 3000ms
+    ease: "easeInOut",
+    onUpdate: (latest) => (lineScale.value = latest),
+  });
 
   timelineItems.forEach((_, index) => {
     setTimeout(() => {
-      clickedMarkers.value[index] = true;
-      cardVisibility.value[index] = true;
+      if (clickedMarkers.value && cardVisibility.value) {
+        clickedMarkers.value[index] = true;
+        cardVisibility.value[index] = true;
+      }
     }, index * 400);
   });
 };
 
 const toggleMarker = (index: number) => {
-  if (index !== 0) return;
+  if (index !== 0 || typeof window === "undefined") return;
 
   if (!showAllIcons.value) {
     startStaggeredAnimation();
   } else {
     showAllIcons.value = false;
     animationStarted.value = false;
-    clickedMarkers.value = [true, false, false, false, false];
-    cardVisibility.value = [false, false, false, false, false];
+    if (clickedMarkers.value && cardVisibility.value) {
+      clickedMarkers.value = [true, false, false, false, false];
+      cardVisibility.value = [false, false, false, false, false];
+    }
 
-    const closeAnimationDuration = 5000;
-    const startTime = Date.now();
+    // PERBAIKAN 5: Menggunakan utilitas 'animate' dari motion-v
+    // alih-alih requestAnimationFrame manual. Durasi dalam detik.
     const startScale = lineScale.value;
-
-    const animateClose = () => {
-      const elapsed = Date.now() - startTime;
-      const progress = Math.min(elapsed / closeAnimationDuration, 1);
-      const easeInOut = progress < 0.5 ? 2 * progress * progress : -1 + (4 - 2 * progress) * progress;
-      lineScale.value = startScale + (0.1 - startScale) * easeInOut;
-
-      if (progress < 1) {
-        requestAnimationFrame(animateClose);
-      }
-    };
-    requestAnimationFrame(animateClose);
+    animate(startScale, 0.1, {
+      duration: 5, // 5000ms
+      ease: "easeInOut",
+      onUpdate: (latest) => (lineScale.value = latest),
+    });
   }
 };
 
 const achievements = computed(() => {
+  // ... (logika achievements Anda tidak berubah)
   const filtered = newsData.value
     .filter((news) => {
       const content = news.content ? news.content.toLowerCase() : "";
@@ -213,66 +209,77 @@ const heroImages = ref([
 ]);
 const currentHeroImage = ref(0);
 
-const animateCounter = (counterRef: { value: number }, target: number, duration: number): void => {
-  const startTime = performance.now();
-  const startValue = 0;
-
-  const animate = (currentTime: number): void => {
-    const elapsed = currentTime - startTime;
-    const progress = Math.min(elapsed / duration, 1);
-
-    const easeOut = 1 - (1 - progress) ** 3;
-
-    counterRef.value = Math.floor(startValue + (target - startValue) * easeOut);
-
-    if (progress < 1) {
-      requestAnimationFrame(animate);
-    } else {
-      counterRef.value = target;
-    }
-  };
-
-  requestAnimationFrame(animate);
-};
+// PERBAIKAN 4: Fungsi 'animateCounter' manual dihapus.
+// Logika counter dipindahkan ke onMounted menggunakan
+// utilitas 'animate' dari motion-v.
 
 onMounted(() => {
-  setTimeout(() => {
-    animateCounter(jurusanCount, props.jurusanTarget, props.duration);
-    animateCounter(siswaCount, props.siswaTarget, props.duration);
-    animateCounter(prestasiCount, props.prestasiTarget, props.duration);
-    animateCounter(tahunCount, props.tahunTarget, props.duration);
-  }, 100);
+  // Only run animations on client side
+  if (import.meta.client) {
+    // PERBAIKAN 4: Menggunakan utilitas 'animate' dari motion-v
+    setTimeout(() => {
+      const durationInSeconds = props.duration / 1000;
+      const ease = "easeOut";
 
-  fetchNews();
+      animate(0, props.jurusanTarget, {
+        duration: durationInSeconds,
+        ease: ease,
+        onUpdate: (latest) => (jurusanCount.value = Math.floor(latest)),
+      });
+      animate(0, props.siswaTarget, {
+        duration: durationInSeconds,
+        ease: ease,
+        onUpdate: (latest) => (siswaCount.value = Math.floor(latest)),
+      });
+      animate(0, props.prestasiTarget, {
+        duration: durationInSeconds,
+        ease: ease,
+        onUpdate: (latest) => (prestasiCount.value = Math.floor(latest)),
+      });
+      animate(0, props.tahunTarget, {
+        duration: durationInSeconds,
+        ease: ease,
+        onUpdate: (latest) => (tahunCount.value = Math.floor(latest)),
+      });
+    }, 100);
 
-  const checkMobile = () => {
-    isMobile.value = window.innerWidth < 768;
-  };
-  checkMobile();
-  window.addEventListener("resize", checkMobile);
+    fetchNews();
 
-  const handleScroll = () => {
-    const scrollTop = window.scrollY;
-    const documentHeight = document.documentElement.scrollHeight;
-    const windowHeight = window.innerHeight;
-    const scrollThreshold = documentHeight * (1 / 5);
-    showBackToTop.value = scrollTop > scrollThreshold;
-  };
-  window.addEventListener("scroll", handleScroll);
+    const checkMobile = () => {
+      if (window) {
+        isMobile.value = window.innerWidth < 768;
+      }
+    };
+    checkMobile();
+    window?.addEventListener("resize", checkMobile);
 
-  const heroInterval = setInterval(() => {
-    currentHeroImage.value = (currentHeroImage.value + 1) % heroImages.value.length;
-  }, 5000);
+    const handleScroll = () => {
+      if (window && document) {
+        const scrollTop = window.scrollY;
+        const documentHeight = document.documentElement.scrollHeight;
+        const windowHeight = window.innerHeight;
+        const scrollThreshold = documentHeight * (1 / 5);
+        showBackToTop.value = scrollTop > scrollThreshold;
+      }
+    };
+    window?.addEventListener("scroll", handleScroll);
 
-  onUnmounted(() => {
-    window.removeEventListener("resize", checkMobile);
-    window.removeEventListener("scroll", handleScroll);
-    clearInterval(heroInterval);
-  });
+    const heroInterval = setInterval(() => {
+      currentHeroImage.value = (currentHeroImage.value + 1) % heroImages.value.length;
+    }, 5000);
+
+    onUnmounted(() => {
+      window?.removeEventListener("resize", checkMobile);
+      window?.removeEventListener("scroll", handleScroll);
+      clearInterval(heroInterval);
+    });
+  }
 });
 
 const scrollToTop = () => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  if (import.meta.client && window) {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
 };
 
 useHead({
@@ -293,22 +300,45 @@ useHead({
       id="hero"
       class="relative flex items-center justify-center min-h-screen px-4 pt-24 pb-10 md:pt-20 overflow-hidden"
     >
-      <!-- Floating geometric shapes -->
-      <div class="absolute top-20 left-10 w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full opacity-20 hero-shape-1"></div>
-      <div class="absolute top-40 right-20 w-12 h-12 bg-gradient-to-br from-orange-400 to-orange-600 transform rotate-45 opacity-25 hero-shape-2"></div>
-      <div class="absolute bottom-40 left-20 w-20 h-20 bg-gradient-to-br from-blue-300 to-orange-400 rounded-lg opacity-15 hero-shape-3"></div>
+      <motion.div
+        class="absolute top-20 left-10 w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full opacity-20"
+        :animate="{ y: [0, -20, 0] }"
+        :transition="{
+          duration: 6,
+          ease: 'easeInOut',
+          repeat: Infinity,
+        }"
+      />
+      <div
+        class="absolute top-40 right-20 w-12 h-12 bg-gradient-to-br from-orange-400 to-orange-600 transform rotate-45 opacity-25 hero-shape-2"
+      ></div>
+      <div
+        class="absolute bottom-40 left-20 w-20 h-20 bg-gradient-to-br from-blue-300 to-orange-400 rounded-lg opacity-15 hero-shape-3"
+      ></div>
 
-      <!-- Thematic ornaments for Hero Section -->
-      <div class="absolute top-100 right-30 z-0"><Icon name="lucide:lightbulb" size="120" class="text-blue-300 opacity-10 hero-ornament-1" /></div>
-      <div class="absolute bottom-59 right-130 z-0"><Icon name="lucide:rocket" size="140" class="text-orange-300 opacity-8 hero-ornament-2" /></div>
-      <div class="absolute top-50 left-100 z-0"><Icon name="lucide:star" size="110" class="text-blue-400 opacity-12 hero-ornament-3" /></div>
+      <div class="absolute top-100 right-30 z-0">
+        <Icon name="lucide:lightbulb" size="120" class="text-blue-300 opacity-10 hero-ornament-1" />
+      </div>
+      <div class="absolute bottom-59 right-130 z-0">
+        <Icon name="lucide:rocket" size="140" class="text-orange-300 opacity-8 hero-ornament-2" />
+      </div>
+      <div class="absolute top-50 left-100 z-0">
+        <Icon name="lucide:star" size="110" class="text-blue-400 opacity-12 hero-ornament-3" />
+      </div>
 
-      <!-- Large background geometric shapes -->
-      <div class="absolute top-10 right-1/4 w-32 h-32 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full opacity-10 large-hero-shape-1"></div>
-      <div class="absolute bottom-20 right-10 w-40 h-40 bg-gradient-to-br from-green-400 to-blue-400 transform rotate-45 opacity-8 large-hero-shape-2"></div>
-      <div class="absolute top-1/2 left-5 w-28 h-28 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-lg opacity-12 large-hero-shape-3"></div>
+      <div
+        class="absolute top-10 right-1/4 w-32 h-32 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full opacity-10 large-hero-shape-1"
+      ></div>
+      <div
+        class="absolute bottom-20 right-10 w-40 h-40 bg-gradient-to-br from-green-400 to-blue-400 transform rotate-45 opacity-8 large-hero-shape-2"
+      ></div>
+      <div
+        class="absolute top-1/2 left-5 w-28 h-28 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-lg opacity-12 large-hero-shape-3"
+      ></div>
 
-      <div class="container flex flex-col justify-center items-center max-w-5xl mx-auto gap-18 lg:flex-row relative z-10">
+      <div
+        class="container flex flex-col justify-center items-center max-w-5xl mx-auto gap-18 lg:flex-row relative z-10"
+      >
         <motion.div
           class="flex flex-col justify-center items-center w-full lg:w-1/3"
           :initial="{ opacity: 0, x: -50 }"
@@ -384,18 +414,26 @@ useHead({
       :transition="{ duration: 0.8 }"
       :inViewOptions="{ once: true }"
     >
+      <div class="absolute top-0 left-1/2 z-0">
+        <Icon name="lucide:graduation-cap" size="160" class="text-blue-400 opacity-10 profil-ornament-1" />
+      </div>
+      <div class="absolute top-1/4 left-20 z-0">
+        <Icon name="lucide:book" size="130" class="text-orange-300 opacity-8 profil-ornament-2" />
+      </div>
+      <div class="absolute bottom-10 right-10 z-0">
+        <Icon name="lucide:school" size="180" class="text-blue-300 opacity-12 profil-ornament-3" />
+      </div>
 
-      <!-- Thematic ornaments for Profil Sekolah Section -->
-      <div class="absolute top-0 left-1/2 z-0"><Icon name="lucide:graduation-cap" size="160" class="text-blue-400 opacity-10 profil-ornament-1" /></div>
-      <div class="absolute top-1/4 left-20 z-0"><Icon name="lucide:book" size="130" class="text-orange-300 opacity-8 profil-ornament-2" /></div>
-      <div class="absolute bottom-10 right-10 z-0"><Icon name="lucide:school" size="180" class="text-blue-300 opacity-12 profil-ornament-3" /></div>
+      <div
+        class="absolute bottom-10 left-20 w-44 h-44 bg-gradient-to-br from-orange-400 to-red-400 transform rotate-45 opacity-6 large-profil-shape-2"
+      ></div>
 
-      <!-- Large background geometric shapes -->
-      <div class="absolute bottom-10 left-20 w-44 h-44 bg-gradient-to-br from-orange-400 to-red-400 transform rotate-45 opacity-6 large-profil-shape-2"></div>
-
-      <!-- Large background geometric shapes -->
-      <div class="absolute top-[-50] left-1/4 w-40 h-40 bg-gradient-to-br from-cyan-400 to-blue-400 rounded-full opacity-8 large-profil-shape-1"></div>
-      <div class="absolute bottom-10 right-1/3 w-48 h-48 bg-gradient-to-br from-orange-400 to-red-400 transform rotate-45 opacity-6 large-profil-shape-2"></div>
+      <div
+        class="absolute top-[-50] left-1/4 w-40 h-40 bg-gradient-to-br from-cyan-400 to-blue-400 rounded-full opacity-8 large-profil-shape-1"
+      ></div>
+      <div
+        class="absolute bottom-10 right-1/3 w-48 h-48 bg-gradient-to-br from-orange-400 to-red-400 transform rotate-45 opacity-6 large-profil-shape-2"
+      ></div>
 
       <div class="container px-4 mx-auto md:px-10 relative z-10">
         <div class="flex flex-col gap-12 lg:flex-row lg:items-center">
@@ -486,16 +524,22 @@ useHead({
       :transition="{ duration: 0.8 }"
       :inViewOptions="{ once: true }"
     >
+      <div class="absolute top-20 right-50 z-0">
+        <Icon name="lucide:handshake" size="150" class="text-blue-300 opacity-10 sambutan-ornament-1" />
+      </div>
+      <div class="absolute bottom-20 right-12 z-0">
+        <Icon name="lucide:message-circle" size="125" class="text-orange-300 opacity-8 sambutan-ornament-2" />
+      </div>
+      <div class="absolute top-1/2 left-16 z-0">
+        <Icon name="lucide:award" size="170" class="text-blue-400 opacity-12 sambutan-ornament-3" />
+      </div>
 
-      <!-- Thematic ornaments for Sambutan Kepala Sekolah Section -->
-      <div class="absolute top-20 right-50 z-0"><Icon name="lucide:handshake" size="150" class="text-blue-300 opacity-10 sambutan-ornament-1" /></div>
-      <div class="absolute bottom-20 right-12 z-0"><Icon name="lucide:message-circle" size="125" class="text-orange-300 opacity-8 sambutan-ornament-2" /></div>
-      <div class="absolute top-1/2 left-16 z-0"><Icon name="lucide:award" size="170" class="text-blue-400 opacity-12 sambutan-ornament-3" /></div>
-
-      <!-- Large SVG illustration - stylized lightbulb -->
       <div class="absolute top-5 left-70 z-0">
         <svg width="200" height="200" viewBox="0 0 24 24" class="text-yellow-300 opacity-20 large-svg-1">
-          <path fill="currentColor" d="M12 2C13.1 2 14 2.9 14 4V5C14 5.55 14.45 6 15 6S16 5.55 16 5V4C16 1.79 14.21 0 12 0S8 1.79 8 4V5C8 5.55 8.45 6 9 6S10 5.55 10 5V4C10 2.9 10.9 2 12 2M12 6C8.13 6 5 9.13 5 13C5 14.65 5.67 16.17 6.78 17.22L8.07 15.93C7.5 15.25 7.14 14.4 7.07 13.5H9.07C9.15 14.05 9.4 14.56 9.78 15L12 17.22L14.22 15C14.6 14.56 14.85 14.05 14.93 13.5H16.93C16.86 14.4 16.5 15.25 15.93 15.93L17.22 17.22C18.33 16.17 19 14.65 19 13C19 9.13 15.87 6 12 6M12 8C14.76 8 17 10.24 17 13C17 13.5 16.95 14 16.84 14.5H15.16C15.05 14 15 13.5 15 13C15 11.34 13.66 10 12 10S9 11.34 9 13C9 13.5 8.95 14 8.84 14.5H7.16C7.05 14 7 13.5 7 13C7 10.24 9.24 8 12 8M12 11C12.55 11 13 11.45 13 12S12.55 13 13 13 11 12.55 11 12 11.45 11 12 11M12 18C11.45 18 11 18.45 11 19V22H13V19C13 18.45 12.55 18 12 18Z"/>
+          <path
+            fill="currentColor"
+            d="M12 2C13.1 2 14 2.9 14 4V5C14 5.55 14.45 6 15 6S16 5.55 16 5V4C16 1.79 14.21 0 12 0S8 1.79 8 4V5C8 5.55 8.45 6 9 6S10 5.55 10 5V4C10 2.9 10.9 2 12 2M12 6C8.13 6 5 9.13 5 13C5 14.65 5.67 16.17 6.78 17.22L8.07 15.93C7.5 15.25 7.14 14.4 7.07 13.5H9.07C9.15 14.05 9.4 14.56 9.78 15L12 17.22L14.22 15C14.6 14.56 14.85 14.05 14.93 13.5H16.93C16.86 14.4 16.5 15.25 15.93 15.93L17.22 17.22C18.33 16.17 19 14.65 19 13C19 9.13 15.87 6 12 6M12 8C14.76 8 17 10.24 17 13C17 13.5 16.95 14 16.84 14.5H15.16C15.05 14 15 13.5 15 13C15 11.34 13.66 10 12 10S9 11.34 9 13C9 13.5 8.95 14 8.84 14.5H7.16C7.05 14 7 13.5 7 13C7 10.24 9.24 8 12 8M12 11C12.55 11 13 11.45 13 12S12.55 13 13 13 11 12.55 11 12 11.45 11 12 11M12 18C11.45 18 11 18.45 11 19V22H13V19C13 18.45 12.55 18 12 18Z"
+          />
         </svg>
       </div>
 
@@ -580,17 +624,24 @@ useHead({
       :transition="{ duration: 0.8 }"
       :inViewOptions="{ once: true }"
     >
-      <!-- Wave pattern background -->
       <div class="absolute inset-0 wave-pattern opacity-50 z-0"></div>
 
-      <!-- Large background geometric shapes -->
-      <div class="absolute bottom-0 left-80 w-42 h-42 bg-gradient-to-br from-violet-400 to-purple-400 rounded-full opacity-9 large-prestasi-shape-1"></div>
-      <div class="absolute bottom-0 right-80 w-48 h-48 bg-gradient-to-br from-pink-400 to-rose-400 transform rotate-45 opacity-7 large-prestasi-shape-2"></div>
+      <div
+        class="absolute bottom-0 left-80 w-42 h-42 bg-gradient-to-br from-violet-400 to-purple-400 rounded-full opacity-9 large-prestasi-shape-1"
+      ></div>
+      <div
+        class="absolute bottom-0 right-80 w-48 h-48 bg-gradient-to-br from-pink-400 to-rose-400 transform rotate-45 opacity-7 large-prestasi-shape-2"
+      ></div>
 
-      <!-- Thematic ornaments for Prestasi Section -->
-      <div class="absolute bottom-20 left-10 z-0"><Icon name="lucide:trophy" size="120" class="text-orange-300 opacity-10 prestasi-ornament-1" /></div>
-      <div class="absolute top-0 right-80 z-0"><Icon name="lucide:medal" size="135" class="text-blue-400 opacity-8 prestasi-ornament-2" /></div>
-      <div class="absolute bottom-1/3 right-12 z-0"><Icon name="lucide:star" size="155" class="text-orange-300 opacity-12 prestasi-ornament-3" /></div>
+      <div class="absolute bottom-20 left-10 z-0">
+        <Icon name="lucide:trophy" size="120" class="text-orange-300 opacity-10 prestasi-ornament-1" />
+      </div>
+      <div class="absolute top-0 right-80 z-0">
+        <Icon name="lucide:medal" size="135" class="text-blue-400 opacity-8 prestasi-ornament-2" />
+      </div>
+      <div class="absolute bottom-1/3 right-12 z-0">
+        <Icon name="lucide:star" size="155" class="text-orange-300 opacity-12 prestasi-ornament-3" />
+      </div>
 
       <div class="container flex flex-col items-center gap-8 mx-auto relative z-10">
         <motion.div
@@ -673,19 +724,26 @@ useHead({
       :transition="{ duration: 0.8 }"
       :inViewOptions="{ once: true }"
     >
-      <!-- Floating sparkles around uniform cards -->
       <div class="absolute top-20 left-16 w-3 h-3 bg-yellow-300 rounded-full opacity-70 sparkle-1"></div>
       <div class="absolute top-40 right-24 w-4 h-4 bg-blue-300 rounded-full opacity-60 sparkle-2"></div>
       <div class="absolute bottom-32 left-12 w-2 h-2 bg-pink-300 rounded-full opacity-80 sparkle-3"></div>
 
-      <!-- Thematic ornaments for Seragam Sekolah Section -->
-      <div class="absolute bottom-20 right-12 z-0"><Icon name="lucide:badge" size="165" class="text-orange-300 opacity-8 seragam-ornament-2" /></div>
-      <div class="absolute top-1/2 left-16 z-0"><Icon name="lucide:shirt" size="175" class="text-blue-400 opacity-12 seragam-ornament-3" /></div>
+      <div class="absolute bottom-20 right-12 z-0">
+        <Icon name="lucide:badge" size="165" class="text-orange-300 opacity-8 seragam-ornament-2" />
+      </div>
+      <div class="absolute top-1/2 left-16 z-0">
+        <Icon name="lucide:shirt" size="175" class="text-blue-400 opacity-12 seragam-ornament-3" />
+      </div>
 
-      <!-- Large background geometric shapes -->
-      <div class="absolute top-5 left-1/6 w-40 h-40 bg-gradient-to-br from-indigo-400 to-blue-400 rounded-full opacity-10 large-berita-shape-1"></div>
-      <div class="absolute bottom-10 right-1/5 w-45 h-45 bg-gradient-to-br from-teal-400 to-cyan-400 transform rotate-45 opacity-8 large-berita-shape-2"></div>
-      <div class="absolute top-1/2 right-1/4 w-35 h-35 bg-gradient-to-br from-amber-400 to-yellow-400 rounded-lg opacity-9 large-berita-shape-3"></div>
+      <div
+        class="absolute top-5 left-1/6 w-40 h-40 bg-gradient-to-br from-indigo-400 to-blue-400 rounded-full opacity-10 large-berita-shape-1"
+      ></div>
+      <div
+        class="absolute bottom-10 right-1/5 w-45 h-45 bg-gradient-to-br from-teal-400 to-cyan-400 transform rotate-45 opacity-8 large-berita-shape-2"
+      ></div>
+      <div
+        class="absolute top-1/2 right-1/4 w-35 h-35 bg-gradient-to-br from-amber-400 to-yellow-400 rounded-lg opacity-9 large-berita-shape-3"
+      ></div>
 
       <div class="container px-4 mx-auto md:px-10 relative z-10">
         <div class="flex flex-col items-center gap-12">
@@ -960,20 +1018,29 @@ useHead({
       :transition="{ duration: 0.8 }"
       :inViewOptions="{ once: true }"
     >
-      <!-- Decorative timeline markers -->
+      <div class="absolute top-20 right-1/4 z-0">
+        <Icon name="lucide:clock" size="200" class="text-blue-300 opacity-10 timeline-ornament-1" />
+      </div>
+      <div class="absolute bottom-32 right-12 z-0">
+        <Icon name="lucide:calendar" size="140" class="text-orange-300 opacity-8 timeline-ornament-2" />
+      </div>
+      <div class="absolute top-1/2 left-16 z-0">
+        <Icon name="lucide:scroll" size="185" class="text-blue-400 opacity-12 timeline-ornament-3" />
+      </div>
 
-      <!-- Thematic ornaments for Jejak Sejarah Section -->
-      <div class="absolute top-20 right-1/4 z-0"><Icon name="lucide:clock" size="200" class="text-blue-300 opacity-10 timeline-ornament-1" /></div>
-      <div class="absolute bottom-32 right-12 z-0"><Icon name="lucide:calendar" size="140" class="text-orange-300 opacity-8 timeline-ornament-2" /></div>
-      <div class="absolute top-1/2 left-16 z-0"><Icon name="lucide:scroll" size="185" class="text-blue-400 opacity-12 timeline-ornament-3" /></div>
+      <div
+        class="absolute top-10 left-1/4 w-38 h-38 bg-gradient-to-br from-green-400 to-teal-400 rounded-full opacity-8 large-timeline-shape-1"
+      ></div>
+      <div
+        class="absolute bottom-20 right-1/3 w-42 h-42 bg-gradient-to-br from-orange-400 to-red-400 transform rotate-45 opacity-6 large-timeline-shape-2"
+      ></div>
+      <div
+        class="absolute top-1/3 right-5 w-36 h-36 bg-gradient-to-br from-blue-400 to-indigo-400 rounded-lg opacity-10 large-timeline-shape-3"
+      ></div>
 
-      <!-- Large background geometric shapes -->
-      <div class="absolute top-10 left-1/4 w-38 h-38 bg-gradient-to-br from-green-400 to-teal-400 rounded-full opacity-8 large-timeline-shape-1"></div>
-      <div class="absolute bottom-20 right-1/3 w-42 h-42 bg-gradient-to-br from-orange-400 to-red-400 transform rotate-45 opacity-6 large-timeline-shape-2"></div>
-      <div class="absolute top-1/3 right-5 w-36 h-36 bg-gradient-to-br from-blue-400 to-indigo-400 rounded-lg opacity-10 large-timeline-shape-3"></div>
-
-      <!-- Large floating book icon -->
-      <div class="absolute top-1/4 left-10 z-0"><Icon name="lucide:book-open" size="75" class="text-blue-300 opacity-20 large-icon-4" /></div>
+      <div class="absolute top-1/4 left-10 z-0">
+        <Icon name="lucide:book-open" size="75" class="text-blue-300 opacity-20 large-icon-4" />
+      </div>
 
       <div class="container relative flex flex-col items-center gap-8 px-4 mx-auto text-center md:px-10 z-10">
         <div class="absolute top-0 left-0 bg-blue-200 rounded-full w-72 h-72 opacity-20 blur-3xl z-10"></div>
@@ -1006,7 +1073,7 @@ useHead({
             class="absolute top-0 w-1 h-full transform rounded-full shadow-lg left-1/2 bg-gradient-to-b from-blue-400 via-blue-600 to-blue-400"
             :initial="{ scaleY: 0.1 }"
             :animate="{ scaleY: lineScale }"
-            :transition="{ duration: 3000, ease: 'easeInOut' }"
+            :transition="{ duration: 3, ease: 'easeInOut' }"
             style="transform-origin: top"
           ></motion.div>
 
@@ -1022,7 +1089,7 @@ useHead({
               class="absolute top-0 w-1 h-8 transform -translate-x-1/2 left-1/2 bg-gradient-to-b from-transparent to-blue-600"
               :initial="{ scaleY: index === 0 ? 1 : 0 }"
               :animate="{ scaleY: clickedMarkers[index] ? 1 : 0 }"
-              :transition="{ duration: 3000, delay: index * 0.2 }"
+              :transition="{ duration: 3, delay: index * 0.2 }"
               style="transform-origin: top"
             ></motion.div>
 
@@ -1191,23 +1258,31 @@ useHead({
       :transition="{ duration: 0.8 }"
       :inViewOptions="{ once: true }"
     >
-
-      <!-- Enhanced large SVG illustration - stylized gear/book -->
       <div class="absolute bottom-50 right-0 z-0">
         <svg width="300" height="300" viewBox="0 0 24 24" class="text-green-300 opacity-20 large-svg-jurusan">
-          <path fill="currentColor" d="M12 2C13.1 2 14 2.9 14 4V5H16V4C16 1.79 14.21 0 12 0S8 1.79 8 4V5H10V4C10 2.9 10.9 2 12 2M12 6C8.13 6 5 9.13 5 13C5 14.65 5.67 16.17 6.78 17.22L8.07 15.93C7.5 15.25 7.14 14.4 7.07 13.5H9.07C9.15 14.05 9.4 14.56 9.78 15L12 17.22L14.22 15C14.6 14.56 14.85 14.05 14.93 13.5H16.93C16.86 14.4 16.5 15.25 15.93 15.93L17.22 17.22C18.33 16.17 19 14.65 19 13C19 9.13 15.87 6 12 6M12 8C14.76 8 17 10.24 17 13C17 13.5 16.95 14 16.84 14.5H15.16C15.05 14 15 13.5 15 13C15 11.34 13.66 10 12 10S9 11.34 9 13C9 13.5 8.95 14 8.84 14.5H7.16C7.05 14 7 13.5 7 13C7 10.24 9.24 8 12 8M12 11C12.55 11 13 11.45 13 12S12.55 13 13 13 11 12.55 11 12 11.45 11 12 11M12 18C11.45 18 11 18.45 11 19V22H13V19C13 18.45 12.55 18 12 18Z"/>
+          <path
+            fill="currentColor"
+            d="M12 2C13.1 2 14 2.9 14 4V5H16V4C16 1.79 14.21 0 12 0S8 1.79 8 4V5H10V4C10 2.9 10.9 2 12 2M12 6C8.13 6 5 9.13 5 13C5 14.65 5.67 16.17 6.78 17.22L8.07 15.93C7.5 15.25 7.14 14.4 7.07 13.5H9.07C9.15 14.05 9.4 14.56 9.78 15L12 17.22L14.22 15C14.6 14.56 14.85 14.05 14.93 13.5H16.93C16.86 14.4 16.5 15.25 15.93 15.93L17.22 17.22C18.33 16.17 19 14.65 19 13C19 9.13 15.87 6 12 6M12 8C14.76 8 17 10.24 17 13C17 13.5 16.95 14 16.84 14.5H15.16C15.05 14 15 13.5 15 13C15 11.34 13.66 10 12 10S9 11.34 9 13C9 13.5 8.95 14 8.84 14.5H7.16C7.05 14 7 13.5 7 13C7 10.24 9.24 8 12 8M12 11C12.55 11 13 11.45 13 12S12.55 13 13 13 11 12.55 11 12 11.45 11 12 11M12 18C11.45 18 11 18.45 11 19V22H13V19C13 18.45 12.55 18 12 18Z"
+          />
         </svg>
       </div>
 
-      <!-- Thematic ornaments for Jurusan Section -->
-      <div class="absolute bottom-20 right-1/4 z-0"><Icon name="lucide:compass" size="210" class="text-blue-300 opacity-10 jurusan-ornament-1" /></div>
-      <div class="absolute bottom-20 right left-0 z-0"><Icon name="lucide:route" size="150" class="text-orange-300 opacity-8 jurusan-ornament-2" /></div>
-      <div class="absolute top-1/2 left-16 z-0"><Icon name="lucide:books" size="195" class="text-blue-400 opacity-12 jurusan-ornament-3" /></div>
+      <div class="absolute bottom-20 right-1/4 z-0">
+        <Icon name="lucide:compass" size="210" class="text-blue-300 opacity-10 jurusan-ornament-1" />
+      </div>
+      <div class="absolute bottom-20 right left-0 z-0">
+        <Icon name="lucide:route" size="150" class="text-orange-300 opacity-8 jurusan-ornament-2" />
+      </div>
+      <div class="absolute top-1/2 left-16 z-0">
+        <Icon name="lucide:books" size="195" class="text-blue-400 opacity-12 jurusan-ornament-3" />
+      </div>
 
-
-      <!-- Abstract shapes - kept larger ones -->
-      <div class="absolute top-32 left-12 w-12 h-6 bg-gradient-to-r from-pink-300 to-pink-500 rounded-full opacity-20 abstract-1"></div>
-      <div class="absolute bottom-20 right-12 w-16 h-8 bg-gradient-to-r from-cyan-300 to-cyan-500 rounded-full opacity-25 abstract-2"></div>
+      <div
+        class="absolute top-32 left-12 w-12 h-6 bg-gradient-to-r from-pink-300 to-pink-500 rounded-full opacity-20 abstract-1"
+      ></div>
+      <div
+        class="absolute bottom-20 right-12 w-16 h-8 bg-gradient-to-r from-cyan-300 to-cyan-500 rounded-full opacity-25 abstract-2"
+      ></div>
 
       <motion.div
         class="inline-block relative z-10"
@@ -1235,18 +1310,27 @@ useHead({
       :transition="{ duration: 0.8 }"
       :inViewOptions="{ once: true }"
     >
-      <!-- Curved line pattern background -->
       <div class="absolute inset-0 curve-pattern opacity-40 z-0"></div>
 
-      <!-- Large background geometric shapes -->
-      <div class="absolute top-5 left-1/6 w-35 h-35 bg-gradient-to-br from-indigo-400 to-blue-400 rounded-full opacity-10 large-berita-shape-1"></div>
-      <div class="absolute bottom-10 right-1/5 w-40 h-40 bg-gradient-to-br from-teal-400 to-cyan-400 transform rotate-45 opacity-8 large-berita-shape-2"></div>
-      <div class="absolute top-1/2 right-1/4 w-30 h-30 bg-gradient-to-br from-amber-400 to-yellow-400 rounded-lg opacity-9 large-berita-shape-3"></div>
+      <div
+        class="absolute top-5 left-1/6 w-35 h-35 bg-gradient-to-br from-indigo-400 to-blue-400 rounded-full opacity-10 large-berita-shape-1"
+      ></div>
+      <div
+        class="absolute bottom-10 right-1/5 w-40 h-40 bg-gradient-to-br from-teal-400 to-cyan-400 transform rotate-45 opacity-8 large-berita-shape-2"
+      ></div>
+      <div
+        class="absolute top-1/2 right-1/4 w-30 h-30 bg-gradient-to-br from-amber-400 to-yellow-400 rounded-lg opacity-9 large-berita-shape-3"
+      ></div>
 
-      <!-- Thematic ornaments for Berita Section -->
-      <div class="absolute top-20 right-1/4 z-0"><Icon name="lucide:newspaper" size="220" class="text-blue-300 opacity-10 berita-ornament-1" /></div>
-      <div class="absolute bottom-20 right-12 z-0"><Icon name="lucide:megaphone" size="160" class="text-orange-300 opacity-8 berita-ornament-2" /></div>
-      <div class="absolute top-1/2 left-16 z-0"><Icon name="lucide:rss" size="180" class="text-blue-400 opacity-12 berita-ornament-3" /></div>
+      <div class="absolute top-20 right-1/4 z-0">
+        <Icon name="lucide:newspaper" size="220" class="text-blue-300 opacity-10 berita-ornament-1" />
+      </div>
+      <div class="absolute bottom-20 right-12 z-0">
+        <Icon name="lucide:megaphone" size="160" class="text-orange-300 opacity-8 berita-ornament-2" />
+      </div>
+      <div class="absolute top-1/2 left-16 z-0">
+        <Icon name="lucide:rss" size="180" class="text-blue-400 opacity-12 berita-ornament-3" />
+      </div>
 
       <div class="container flex flex-col items-center gap-8 mx-auto relative z-10">
         <motion.div
@@ -1339,21 +1423,31 @@ useHead({
       :transition="{ duration: 0.8 }"
       :inViewOptions="{ once: true }"
     >
-      <!-- Background pattern of question marks and light bulbs -->
       <div class="absolute inset-0 faq-pattern opacity-30 z-0"></div>
 
-      <!-- Large background geometric shapes -->
-      <div class="absolute top-5 left-1/5 w-40 h-40 bg-gradient-to-br from-cyan-400 to-blue-400 rounded-full opacity-8 large-faq-shape-1"></div>
-      <div class="absolute bottom-10 right-1/4 w-45 h-45 bg-gradient-to-br from-pink-400 to-purple-400 transform rotate-45 opacity-6 large-faq-shape-2"></div>
-      <div class="absolute top-1/2 right-1/3 w-35 h-35 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-lg opacity-10 large-faq-shape-3"></div>
+      <div
+        class="absolute top-5 left-1/5 w-40 h-40 bg-gradient-to-br from-cyan-400 to-blue-400 rounded-full opacity-8 large-faq-shape-1"
+      ></div>
+      <div
+        class="absolute bottom-10 right-1/4 w-45 h-45 bg-gradient-to-br from-pink-400 to-purple-400 transform rotate-45 opacity-6 large-faq-shape-2"
+      ></div>
+      <div
+        class="absolute top-1/2 right-1/3 w-35 h-35 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-lg opacity-10 large-faq-shape-3"
+      ></div>
 
-      <!-- Large floating question mark icon -->
-      <div class="absolute top-1/4 left-10 z-0"><Icon name="lucide:help-circle" size="70" class="text-indigo-300 opacity-25 large-icon-5" /></div>
+      <div class="absolute top-1/4 left-10 z-0">
+        <Icon name="lucide:help-circle" size="70" class="text-indigo-300 opacity-25 large-icon-5" />
+      </div>
 
-      <!-- Thematic ornaments for FAQ Section -->
-      <div class="absolute top-20 right-50 z-0"><Icon name="lucide:help-circle" size="230" class="text-blue-300 opacity-10 faq-ornament-1" /></div>
-      <div class="absolute bottom-20 right-12 z-0"><Icon name="lucide:lightbulb" size="170" class="text-orange-300 opacity-8 faq-ornament-2" /></div>
-      <div class="absolute top-1/2 left-16 z-0"><Icon name="lucide:message-square" size="190" class="text-blue-400 opacity-12 faq-ornament-3" /></div>
+      <div class="absolute top-20 right-50 z-0">
+        <Icon name="lucide:help-circle" size="230" class="text-blue-300 opacity-10 faq-ornament-1" />
+      </div>
+      <div class="absolute bottom-20 right-12 z-0">
+        <Icon name="lucide:lightbulb" size="170" class="text-orange-300 opacity-8 faq-ornament-2" />
+      </div>
+      <div class="absolute top-1/2 left-16 z-0">
+        <Icon name="lucide:message-square" size="190" class="text-blue-400 opacity-12 faq-ornament-3" />
+      </div>
 
       <div class="relative z-10">
         <FAQSection />
@@ -1383,58 +1477,111 @@ useHead({
 
 <style scoped>
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
 }
 
 @keyframes float-delayed {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-15px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
 }
 
 @keyframes float-slow {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 @keyframes rotate-slow {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes twinkle {
-  0%, 100% { opacity: 0.3; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.2); }
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
 }
 
 @keyframes pulse-slow {
-  0%, 100% { transform: scale(1); opacity: 0.4; }
-  50% { transform: scale(1.1); opacity: 0.8; }
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
 }
 
 @keyframes bounce-gentle {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-5px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
 }
 
 @keyframes rotate-very-slow {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes float-very-slow {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-5px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
 }
 
 @keyframes fade-in-out {
-  0%, 100% { opacity: 0.2; }
-  50% { opacity: 0.6; }
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.6;
+  }
 }
 
-.hero-shape-1 {
-  animation: float 6s ease-in-out infinite;
-}
+/* PERBAIKAN 6: 
+  Keyframe '.hero-shape-1' dihapus dari sini karena 
+  animasinya sekarang ditangani oleh motion-v di template.
+*/
 
 .hero-shape-2 {
   animation: float-delayed 8s ease-in-out infinite;
@@ -1609,7 +1756,6 @@ useHead({
   animation: float-slow 8.5s ease-in-out infinite, rotate-very-slow 39s linear infinite;
 }
 
-
 .seragam-ornament-2 {
   animation: float-delayed 8s ease-in-out infinite, rotate-very-slow 40s linear infinite reverse;
 }
@@ -1667,27 +1813,61 @@ useHead({
 }
 
 @media (max-width: 768px) {
-  .hero-shape-1, .hero-shape-2, .hero-shape-3,
-  .large-hero-shape-1, .large-hero-shape-2, .large-hero-shape-3,
-  .sparkle-1, .sparkle-2, .sparkle-3,
-  .large-profil-shape-1, .large-profil-shape-2, .large-profil-shape-3,
-  .large-prestasi-shape-1, .large-prestasi-shape-2,
-  .large-berita-shape-1, .large-berita-shape-2, .large-berita-shape-3,
-  .large-timeline-shape-1, .large-timeline-shape-2, .large-timeline-shape-3,
-  .large-faq-shape-1, .large-faq-shape-2, .large-faq-shape-3,
-  .large-icon-4, .large-icon-5,
+  .hero-shape-1,
+  .hero-shape-2,
+  .hero-shape-3,
+  .large-hero-shape-1,
+  .large-hero-shape-2,
+  .large-hero-shape-3,
+  .sparkle-1,
+  .sparkle-2,
+  .sparkle-3,
+  .large-profil-shape-1,
+  .large-profil-shape-2,
+  .large-profil-shape-3,
+  .large-prestasi-shape-1,
+  .large-prestasi-shape-2,
+  .large-berita-shape-1,
+  .large-berita-shape-2,
+  .large-berita-shape-3,
+  .large-timeline-shape-1,
+  .large-timeline-shape-2,
+  .large-timeline-shape-3,
+  .large-faq-shape-1,
+  .large-faq-shape-2,
+  .large-faq-shape-3,
+  .large-icon-4,
+  .large-icon-5,
   .large-svg-1,
-  .abstract-1, .abstract-2,
+  .abstract-1,
+  .abstract-2,
   .large-svg-jurusan,
-  .hero-ornament-1, .hero-ornament-2, .hero-ornament-3,
-  .profil-ornament-1, .profil-ornament-2, .profil-ornament-3,
-  .sambutan-ornament-1, .sambutan-ornament-2, .sambutan-ornament-3,
-  .prestasi-ornament-1, .prestasi-ornament-2, .prestasi-ornament-3,
-  .seragam-ornament-2, .seragam-ornament-3,
-  .timeline-ornament-1, .timeline-ornament-2, .timeline-ornament-3,
-  .jurusan-ornament-1, .jurusan-ornament-2, .jurusan-ornament-3,
-  .berita-ornament-1, .berita-ornament-2, .berita-ornament-3,
-  .faq-ornament-1, .faq-ornament-2, .faq-ornament-3 {
+  .hero-ornament-1,
+  .hero-ornament-2,
+  .hero-ornament-3,
+  .profil-ornament-1,
+  .profil-ornament-2,
+  .profil-ornament-3,
+  .sambutan-ornament-1,
+  .sambutan-ornament-2,
+  .sambutan-ornament-3,
+  .prestasi-ornament-1,
+  .prestasi-ornament-2,
+  .prestasi-ornament-3,
+  .seragam-ornament-2,
+  .seragam-ornament-3,
+  .timeline-ornament-1,
+  .timeline-ornament-2,
+  .timeline-ornament-3,
+  .jurusan-ornament-1,
+  .jurusan-ornament-2,
+  .jurusan-ornament-3,
+  .berita-ornament-1,
+  .berita-ornament-2,
+  .berita-ornament-3,
+  .faq-ornament-1,
+  .faq-ornament-2,
+  .faq-ornament-3 {
     display: none;
   }
 

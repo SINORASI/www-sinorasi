@@ -67,6 +67,7 @@
 <script setup lang="ts">
 import { Motion } from "motion-v";
 import { computed, onMounted, ref, watch } from "vue";
+// No isClient import needed; use typeof window !== 'undefined' for client check
 
 declare global {
   interface Window {
@@ -93,6 +94,7 @@ interface VideoCard {
 const hoveredCard = ref<number | null>(null);
 const currentSlide = ref(0);
 const cardsPerSlide = 4;
+let apiLoaded = false;
 type YTPlayer = {
   seekTo: (seconds: number, allowSeekAhead: boolean) => void;
   setPlaybackRate: (rate: number) => void;
@@ -203,37 +205,38 @@ const videoCards: VideoCard[] = [
   },
 ];
 
-let apiLoaded = false;
 onMounted(() => {
-  if (!window.YT) {
-    const tag = document.createElement("script");
-    tag.src = "https://www.youtube.com/iframe_api";
-    const firstScriptTag = document.getElementsByTagName("script")[0];
-    if (firstScriptTag?.parentNode) {
-      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-    }
+  if (typeof window !== 'undefined') {
+    if (!window.YT) {
+      const tag = document.createElement("script");
+      tag.src = "https://www.youtube.com/iframe_api";
+      const firstScriptTag = document.getElementsByTagName("script")[0];
+      if (firstScriptTag?.parentNode) {
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+      }
 
-    window.onYouTubeIframeAPIReady = () => {
+      window.onYouTubeIframeAPIReady = () => {
+        apiLoaded = true;
+        initializePlayers();
+      };
+    } else {
       apiLoaded = true;
       initializePlayers();
-    };
-  } else {
-    apiLoaded = true;
-    initializePlayers();
+    }
   }
 });
-
 const initializePlayers = () => {
+  if (typeof window === 'undefined') return;
+
   currentSlideCards.value.forEach((card) => {
-    if (card.videoType === "youtube" && !youtubePlayers.value[card.id]) {
+    if (card.videoType === 'youtube' && !youtubePlayers.value[card.id]) {
       createPlayer(card.id, card.videoUrl);
     }
   });
 };
 
 const createPlayer = (id: number, videoId: string) => {
-  if (!window.YT || !window.YT.Player) return;
-
+  if (typeof window === 'undefined' || !window.YT || !window.YT.Player) return;
   youtubePlayers.value[id] = new window.YT.Player(`youtube-player-${id}`, {
     videoId: videoId,
     playerVars: {
@@ -251,24 +254,26 @@ const createPlayer = (id: number, videoId: string) => {
       onReady: (event: unknown) => {
         playersReady.value[id] = true;
         const ytEvent = event as { target: any };
-        ytEvent.target.setPlaybackQuality("sd360");
-        ytEvent.target.getIframe().style.width = "100%";
-        ytEvent.target.getIframe().style.height = "100%";
+        ytEvent.target.setPlaybackQuality('sd360');
+        ytEvent.target.getIframe().style.width = '100%';
+        ytEvent.target.getIframe().style.height = '100%';
       },
     },
   });
 };
 
 watch(currentSlide, () => {
-  setTimeout(() => {
-    if (apiLoaded) {
-      initializePlayers();
-    }
-  }, 100);
+  if (typeof window !== 'undefined') {
+    setTimeout(() => {
+      if (apiLoaded) {
+        initializePlayers();
+      }
+    }, 100);
+  }
 });
 
 const handleMouseEnter = (id: number) => {
-  hoveredCard.value = id;
+  if (typeof window === 'undefined') return;
   const player = youtubePlayers.value[id];
   const card = videoCards.find((c) => c.id === id);
 
@@ -293,7 +298,7 @@ const handleMouseEnter = (id: number) => {
 };
 
 const handleMouseLeave = (id: number) => {
-  hoveredCard.value = null;
+  if (typeof window === 'undefined') return;
   const player = youtubePlayers.value[id];
   const card = videoCards.find((c) => c.id === id);
 
@@ -309,7 +314,7 @@ const handleMouseLeave = (id: number) => {
 };
 
 const handleTouchStart = (id: number) => {
-  hoveredCard.value = id;
+  if (typeof window === 'undefined') return;
   const player = youtubePlayers.value[id];
   const card = videoCards.find((c) => c.id === id);
 
@@ -334,7 +339,7 @@ const handleTouchStart = (id: number) => {
 };
 
 const handleTouchEnd = (id: number) => {
-  hoveredCard.value = null;
+  if (typeof window === 'undefined') return;
   const player = youtubePlayers.value[id];
   const card = videoCards.find((c) => c.id === id);
 
