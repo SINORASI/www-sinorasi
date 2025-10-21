@@ -290,6 +290,7 @@ useHead({
 <template>
   <main class="flex flex-col gap-52">
     <section
+      id="hero"
       class="relative flex items-center justify-center min-h-screen px-4 pt-24 pb-10 md:pt-20 overflow-hidden"
     >
       <!-- Floating geometric shapes -->
@@ -313,7 +314,7 @@ useHead({
           :initial="{ opacity: 0, x: -50 }"
           :whileInView="{ opacity: 1, x: 0 }"
           :transition="{ duration: 0.8 }"
-          :viewport="{ once: true }"
+          :inViewOptions="{ once: true }"
         >
           <div class="relative group">
             <img
@@ -329,7 +330,7 @@ useHead({
           :initial="{ opacity: 0, x: 50 }"
           :whileInView="{ opacity: 1, x: 0 }"
           :transition="{ duration: 0.8, delay: 0.2 }"
-          :viewport="{ once: true }"
+          :inViewOptions="{ once: true }"
         >
           <h1 class="text-3xl font-black transition-all duration-700 ease-out md:text-4xl lg:text-5xl">
             SMK NEGERI 2 SINGOSARI
@@ -381,7 +382,7 @@ useHead({
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8 }"
-      :viewport="{ once: true }"
+      :inViewOptions="{ once: true }"
     >
 
       <!-- Thematic ornaments for Profil Sekolah Section -->
@@ -403,7 +404,7 @@ useHead({
             :initial="{ opacity: 0, x: -50 }"
             :whileInView="{ opacity: 1, x: 0 }"
             :transition="{ duration: 0.8, delay: 0.2 }"
-            :viewport="{ once: true }"
+            :inViewOptions="{ once: true }"
           >
             <div class="relative group">
               <div
@@ -429,7 +430,7 @@ useHead({
             :initial="{ opacity: 0, x: 50 }"
             :whileInView="{ opacity: 1, x: 0 }"
             :transition="{ duration: 0.8, delay: 0.4 }"
-            :viewport="{ once: true }"
+            :inViewOptions="{ once: true }"
           >
             <div class="inline-block">
               <span
@@ -483,7 +484,7 @@ useHead({
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8 }"
-      :viewport="{ once: true }"
+      :inViewOptions="{ once: true }"
     >
 
       <!-- Thematic ornaments for Sambutan Kepala Sekolah Section -->
@@ -505,7 +506,7 @@ useHead({
             :initial="{ opacity: 0, x: -50 }"
             :whileInView="{ opacity: 1, x: 0 }"
             :transition="{ duration: 0.8, delay: 0.2 }"
-            :viewport="{ once: true }"
+            :inViewOptions="{ once: true }"
           >
             <div class="inline-block">
               <span
@@ -540,7 +541,7 @@ useHead({
             :initial="{ opacity: 0, x: 50 }"
             :whileInView="{ opacity: 1, x: 0 }"
             :transition="{ duration: 0.8, delay: 0.4 }"
-            :viewport="{ once: true }"
+            :inViewOptions="{ once: true }"
           >
             <div class="relative max-w-xs group">
               <div
@@ -577,7 +578,7 @@ useHead({
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8 }"
-      :viewport="{ once: true }"
+      :inViewOptions="{ once: true }"
     >
       <!-- Wave pattern background -->
       <div class="absolute inset-0 wave-pattern opacity-50 z-0"></div>
@@ -597,7 +598,7 @@ useHead({
           :initial="{ opacity: 0, scale: 0.95 }"
           :whileInView="{ opacity: 1, scale: 1 }"
           :transition="{ duration: 0.6, delay: 0.2 }"
-          :viewport="{ once: true }"
+          :inViewOptions="{ once: true }"
         >
           <div class="overflow-hidden">
             <div
@@ -670,7 +671,7 @@ useHead({
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8 }"
-      :viewport="{ once: true }"
+      :inViewOptions="{ once: true }"
     >
       <!-- Floating sparkles around uniform cards -->
       <div class="absolute top-20 left-16 w-3 h-3 bg-yellow-300 rounded-full opacity-70 sparkle-1"></div>
@@ -957,7 +958,7 @@ useHead({
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8 }"
-      :viewport="{ once: true }"
+      :inViewOptions="{ once: true }"
     >
       <!-- Decorative timeline markers -->
 
@@ -1045,7 +1046,7 @@ useHead({
               :initial="{ opacity: 0, y: -100 }"
               :whileInView="{ opacity: 1, y: 0 }"
               :transition="{ duration: 0.8, delay: 0 }"
-              :viewport="{ once: true }"
+              :inViewOptions="{ once: true }"
             >
               <div
                 class="w-full p-6 text-center transition-all duration-300 bg-white border-2 border-blue-100 shadow-xl rounded-2xl hover:border-blue-300 hover:shadow-2xl hover:-translate-y-1"
@@ -1088,7 +1089,7 @@ useHead({
               :initial="{ opacity: 0, y: -100 }"
               :whileInView="{ opacity: 1, y: 0 }"
               :transition="{ duration: 0.8, delay: 0 }"
-              :viewport="{ once: true }"
+              :inViewOptions="{ once: true }"
             >
               <div
                 :class="[
@@ -1188,7 +1189,7 @@ useHead({
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8 }"
-      :viewport="{ once: true }"
+      :inViewOptions="{ once: true }"
     >
 
       <!-- Enhanced large SVG illustration - stylized gear/book -->
@@ -1232,7 +1233,7 @@ useHead({
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8 }"
-      :viewport="{ once: true }"
+      :inViewOptions="{ once: true }"
     >
       <!-- Curved line pattern background -->
       <div class="absolute inset-0 curve-pattern opacity-40 z-0"></div>
@@ -1291,7 +1292,7 @@ useHead({
             :initial="{ opacity: 0, y: 20 }"
             :whileInView="{ opacity: 1, y: 0 }"
             :transition="{ duration: 0.6 }"
-            :viewport="{ once: true }"
+            :inViewOptions="{ once: true }"
           >
             <NuxtLink
               :to="`/berita/${news.slug}`"
@@ -1336,7 +1337,7 @@ useHead({
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8 }"
-      :viewport="{ once: true }"
+      :inViewOptions="{ once: true }"
     >
       <!-- Background pattern of question marks and light bulbs -->
       <div class="absolute inset-0 faq-pattern opacity-30 z-0"></div>

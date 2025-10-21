@@ -97,7 +97,7 @@ const toggleFAQ = (index: number) => {
             :initial="{ opacity: 0, y: 50 }"
             :whileInView="{ opacity: 1, y: 0 }"
             :transition="{ duration: 0.5 }"
-            :viewport="{ once: true }"
+            :inViewOptions="{ once: true }"
           >
             
             <button

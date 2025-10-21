@@ -134,7 +134,7 @@ onMounted(() => {
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8, delay: 0.1 }"
-      :viewport="{ once: true }"
+      :inViewOptions="{ once: true }"
     >
       <div class="container flex flex-col items-center gap-10 px-4 mx-auto md:gap-12">
         <div class="max-w-3xl space-y-4 text-center">
@@ -167,7 +167,7 @@ onMounted(() => {
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8, delay: 0.2 }"
-      :viewport="{ once: true }"
+      :inViewOptions="{ once: true }"
     >
       <div class="container flex flex-col items-center justify-center gap-10 px-4 mx-auto md:gap-12">
         <div class="max-w-3xl space-y-4 text-center">
@@ -200,7 +200,7 @@ onMounted(() => {
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8, delay: 0.3 }"
-      :viewport="{ once: true }"
+      :inViewOptions="{ once: true }"
     >
       <MajorTools :major="major" />
     </motion.div>
@@ -211,7 +211,7 @@ onMounted(() => {
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8, delay: 0.4 }"
-      :viewport="{ once: true }"
+      :inViewOptions="{ once: true }"
     >
       <div class="absolute inset-0 opacity-5">
         <div
@@ -251,7 +251,7 @@ onMounted(() => {
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8, delay: 0.5 }"
-      :viewport="{ once: true }"
+      :inViewOptions="{ once: true }"
     >
       <div class="container flex items-center justify-center px-4 mx-auto">
         <div class="flex flex-col items-center justify-center w-full gap-10 md:gap-12 max-w-7xl">
@@ -288,7 +288,7 @@ onMounted(() => {
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8, delay: 0.6 }"
-      :viewport="{ once: true }"
+      :inViewOptions="{ once: true }"
     >
       <div class="container flex flex-col items-center justify-center gap-8 px-4 mx-auto md:gap-12">
         <div class="space-y-4 text-center">
@@ -366,7 +366,7 @@ onMounted(() => {
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8, delay: 0.7 }"
-      :viewport="{ once: true }"
+      :inViewOptions="{ once: true }"
     >
       <div class="container flex flex-col items-center justify-center px-4 mx-auto">
         <div class="mb-12 space-y-4 text-center md:mb-16">
