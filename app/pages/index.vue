@@ -253,9 +253,7 @@ onMounted(() => {
 
   const handleScroll = () => {
     const scrollTop = window.scrollY;
-    const documentHeight = document.documentElement.scrollHeight;
-    const windowHeight = window.innerHeight;
-    const scrollThreshold = documentHeight * (1 / 5);
+    const scrollThreshold = 300;
     showBackToTop.value = scrollTop > scrollThreshold;
   };
   window.addEventListener("scroll", handleScroll);
@@ -1357,21 +1355,28 @@ useHead({
       </div>
     </Motion>
 
-    <button
+    <Motion
       v-show="showBackToTop"
-      @click="scrollToTop"
-      class="fixed z-50 flex items-center justify-center transition-all duration-300 transform rounded-full bottom-8 right-8 w-14 h-14 hover:scale-110 group"
-      style="background: linear-gradient(135deg, #3b82f6, #1d4ed8)"
+      :initial="{ opacity: 0, y: 20 }"
+      :animate="{ opacity: 1, y: 0 }"
+      :exit="{ opacity: 0, y: 20 }"
+      :transition="{ duration: 0.3 }"
     >
-      <svg
-        class="w-6 h-6 text-white transition-transform group-hover:-translate-y-1"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
+      <button
+        @click="scrollToTop"
+        class="fixed z-50 flex items-center justify-center transition-all duration-300 transform rounded-full bottom-8 right-8 w-14 h-14 hover:scale-110 group"
+        style="background: linear-gradient(135deg, #3b82f6, #1d4ed8)"
       >
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-      </svg>
-    </button>
+        <svg
+          class="w-6 h-6 text-white transition-transform group-hover:-translate-y-1"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+        </svg>
+      </button>
+    </Motion>
   </main>
 </template>
 
@@ -1550,10 +1555,6 @@ useHead({
   animation: fade-in-out 4.5s ease-in-out infinite 1s;
 }
 
-.abstract-3 {
-  animation: pulse-slow 3.8s ease-in-out infinite 0.5s;
-}
-
 .faq-pattern {
   background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23dbeafe' fill-opacity='0.15'%3E%3Ctext x='40' y='25' font-family='Arial' font-size='20' text-anchor='middle'%3E%3F%3C/text%3E%3Ctext x='10' y='55' font-family='Arial' font-size='16' text-anchor='middle'%3E%F0%9F%92%A1%3C/text%3E%3Ctext x='70' y='15' font-family='Arial' font-size='18' text-anchor='middle'%3E%3F%3C/text%3E%3Ctext x='40' y='75' font-family='Arial' font-size='14' text-anchor='middle'%3E%F0%9F%92%A1%3C/text%3E%3C/g%3E%3C/svg%3E");
 }
@@ -1701,3 +1702,4 @@ useHead({
   }
 }
 </style>
+
