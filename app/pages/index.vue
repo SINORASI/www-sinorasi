@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Motion } from "motion-v";
+import { motion } from "motion-v";
 import type { News } from "~/models/News";
 
 definePageMeta({
@@ -253,7 +253,9 @@ onMounted(() => {
 
   const handleScroll = () => {
     const scrollTop = window.scrollY;
-    const scrollThreshold = 300;
+    const documentHeight = document.documentElement.scrollHeight;
+    const windowHeight = window.innerHeight;
+    const scrollThreshold = documentHeight * (1 / 5);
     showBackToTop.value = scrollTop > scrollThreshold;
   };
   window.addEventListener("scroll", handleScroll);
@@ -288,7 +290,7 @@ useHead({
 <template>
   <main class="flex flex-col gap-52">
     <section
-      class="relative flex items-center justify-center min-h-screen px-4 pt-24 pb-10 md:pt-20 bg-gradient-to-b from-blue-50 to-white overflow-hidden"
+      class="relative flex items-center justify-center min-h-screen px-4 pt-24 pb-10 md:pt-20 overflow-hidden"
     >
       <!-- Floating geometric shapes -->
       <div class="absolute top-20 left-10 w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full opacity-20 hero-shape-1"></div>
@@ -306,7 +308,7 @@ useHead({
       <div class="absolute top-1/2 left-5 w-28 h-28 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-lg opacity-12 large-hero-shape-3"></div>
 
       <div class="container flex flex-col justify-center items-center max-w-5xl mx-auto gap-18 lg:flex-row relative z-10">
-        <Motion
+        <motion.div
           class="flex flex-col justify-center items-center w-full lg:w-1/3"
           :initial="{ opacity: 0, x: -50 }"
           :whileInView="{ opacity: 1, x: 0 }"
@@ -320,9 +322,9 @@ useHead({
               class="object-cover transition-transform duration-300 rounded-lg shadow-lg w-60 md:w-150 h-100 md:h-150 group-hover:scale-105"
             />
           </div>
-        </Motion>
+        </motion.div>
 
-        <Motion
+        <motion.div
           class="flex flex-col items-center w-full gap-8 text-center text-black lg:w-2/3 lg:items-start lg:text-left"
           :initial="{ opacity: 0, x: 50 }"
           :whileInView="{ opacity: 1, x: 0 }"
@@ -369,11 +371,11 @@ useHead({
               <div class="text-sm transition-all duration-700 ease-out md:text-lg">Prestasi</div>
             </div>
           </div>
-        </Motion>
+        </motion.div>
       </div>
     </section>
 
-    <Motion
+    <motion.section
       id="profil-sekolah"
       class="relative py-20 h-min-screen bg-gradient-to-b from-white via-blue-50 to-white overflow-hidden"
       :initial="{ opacity: 0, y: 50 }"
@@ -396,7 +398,7 @@ useHead({
 
       <div class="container px-4 mx-auto md:px-10 relative z-10">
         <div class="flex flex-col gap-12 lg:flex-row lg:items-center">
-          <Motion
+          <motion.div
             class="w-full lg:w-1/2"
             :initial="{ opacity: 0, x: -50 }"
             :whileInView="{ opacity: 1, x: 0 }"
@@ -420,9 +422,9 @@ useHead({
                 class="absolute w-32 h-32 rounded-full -bottom-4 -left-4 bg-gradient-to-br from-orange-500 to-orange-700 opacity-20 blur-2xl -z-10"
               ></div>
             </div>
-          </Motion>
+          </motion.div>
 
-          <Motion
+          <motion.div
             class="flex flex-col w-full gap-6 lg:w-1/2"
             :initial="{ opacity: 0, x: 50 }"
             :whileInView="{ opacity: 1, x: 0 }"
@@ -470,14 +472,14 @@ useHead({
                 </p>
               </div>
             </div>
-          </Motion>
+          </motion.div>
         </div>
       </div>
-    </Motion>
+    </motion.section>
 
-    <Motion
+    <motion.section
       id="sambutan"
-      class="relative bg-gradient-to-b from-white via-blue-50 to-white overflow-hidden"
+      class="relative overflow-hidden"
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8 }"
@@ -498,7 +500,7 @@ useHead({
 
       <div class="container px-4 mx-auto md:px-10 relative z-10">
         <div class="flex flex-col items-center justify-center gap-12 lg:flex-row">
-          <Motion
+          <motion.div
             class="flex flex-col w-full max-w-3xl gap-6 lg:w-3/5"
             :initial="{ opacity: 0, x: -50 }"
             :whileInView="{ opacity: 1, x: 0 }"
@@ -531,9 +533,9 @@ useHead({
                 <p class="italic">Wassalamu'alaikum wr.wb.</p>
               </div>
             </div>
-          </Motion>
+          </motion.div>
 
-          <Motion
+          <motion.div
             class="w-full max-w-xl lg:w-1/5"
             :initial="{ opacity: 0, x: 50 }"
             :whileInView="{ opacity: 1, x: 0 }"
@@ -564,14 +566,14 @@ useHead({
                 class="absolute w-32 h-32 rounded-full -bottom-4 -left-4 bg-gradient-to-br from-orange-500 to-orange-700 opacity-20 blur-2xl -z-10"
               ></div>
             </div>
-          </Motion>
+          </motion.div>
         </div>
       </div>
-    </Motion>
+    </motion.section>
 
-    <Motion
+    <motion.section
       id="prestasi"
-      class="relative bg-gradient-to-b from-white via-blue-50 to-white overflow-hidden"
+      class="relative overflow-hidden"
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8 }"
@@ -590,7 +592,7 @@ useHead({
       <div class="absolute bottom-1/3 right-12 z-0"><Icon name="lucide:star" size="155" class="text-orange-300 opacity-12 prestasi-ornament-3" /></div>
 
       <div class="container flex flex-col items-center gap-8 mx-auto relative z-10">
-        <Motion
+        <motion.div
           class="relative flex flex-col w-full max-w-5xl gap-6 p-8 mx-auto bg-white border-2 border-blue-100 shadow-xl rounded-2xl"
           :initial="{ opacity: 0, scale: 0.95 }"
           :whileInView="{ opacity: 1, scale: 1 }"
@@ -658,13 +660,13 @@ useHead({
               <span class="text-lg">{{ String(achievements.length).padStart(2, "0") }}</span>
             </div>
           </div>
-        </Motion>
+        </motion.div>
       </div>
-    </Motion>
+    </motion.section>
 
-    <Motion
+    <motion.section
       id="seragam-sekolah"
-      class="relative bg-gradient-to-b from-white via-gray-50 to-white overflow-hidden"
+      class="relative overflow-hidden"
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8 }"
@@ -686,7 +688,7 @@ useHead({
 
       <div class="container px-4 mx-auto md:px-10 relative z-10">
         <div class="flex flex-col items-center gap-12">
-          <Motion
+          <motion.div
             class="flex flex-col items-center gap-4 text-center"
             :initial="{ opacity: 0, y: -30 }"
             :animate="{ opacity: 1, y: 0 }"
@@ -699,7 +701,7 @@ useHead({
               Seragam Sekolah
             </span>
             <p class="max-w-2xl text-lg text-center text-white">Koleksi seragam sekolah SMK Negeri 2 Singosari</p>
-          </Motion>
+          </motion.div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 w-full max-w-[1600px]">
             <UniformCard
@@ -947,11 +949,11 @@ useHead({
           </div>
         </div>
       </div>
-    </Motion>
+    </motion.section>
 
-    <Motion
+    <motion.section
       id="jejak-sejarah"
-      class="relative py-20 overflow-hidden h-min-screen bg-gradient-to-b from-white via-blue-50 to-white"
+      class="relative py-20 overflow-hidden h-min-screen"
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8 }"
@@ -999,13 +1001,13 @@ useHead({
         </div>
 
         <div v-if="isMobile" class="relative flex flex-col items-center w-full py-10">
-          <Motion
+          <motion.div
             class="absolute top-0 w-1 h-full transform rounded-full shadow-lg left-1/2 bg-gradient-to-b from-blue-400 via-blue-600 to-blue-400"
             :initial="{ scaleY: 0.1 }"
             :animate="{ scaleY: lineScale }"
             :transition="{ duration: 3000, ease: 'easeInOut' }"
             style="transform-origin: top"
-          ></Motion>
+          ></motion.div>
 
           <div
             v-for="(item, index) in timelineItems"
@@ -1014,16 +1016,16 @@ useHead({
             :class="{ 'opacity-0': !showAllIcons && index > 0 }"
             :style="{ transition: 'opacity 0.5s ease-in-out' }"
           >
-            <Motion
+            <motion.div
               v-if="showAllIcons || index === 0"
               class="absolute top-0 w-1 h-8 transform -translate-x-1/2 left-1/2 bg-gradient-to-b from-transparent to-blue-600"
               :initial="{ scaleY: index === 0 ? 1 : 0 }"
               :animate="{ scaleY: clickedMarkers[index] ? 1 : 0 }"
               :transition="{ duration: 3000, delay: index * 0.2 }"
               style="transform-origin: top"
-            ></Motion>
+            ></motion.div>
 
-            <Motion
+            <motion.div
               v-if="showAllIcons || index === 0"
               :class="[
                 'z-20 flex items-center justify-center w-16 h-16 mb-6 transition-all duration-300 border-4 border-white rounded-full shadow-xl bg-gradient-to-br from-blue-500 to-blue-700 group-hover:scale-110',
@@ -1036,9 +1038,9 @@ useHead({
               @click="index === 0 && toggleMarker(index)"
             >
               <Icon :name="item.icon" size="28" class="text-white" />
-            </Motion>
+            </motion.div>
 
-            <Motion
+            <motion.div
               v-if="cardVisibility[index]"
               :initial="{ opacity: 0, y: -100 }"
               :whileInView="{ opacity: 1, y: 0 }"
@@ -1061,18 +1063,18 @@ useHead({
                 <h3 class="mb-3 text-xl font-bold text-gray-800">{{ item.title }}</h3>
                 <p class="text-sm leading-relaxed text-justify text-gray-600">{{ item.description }}</p>
               </div>
-            </Motion>
+            </motion.div>
           </div>
         </div>
 
         <div v-else class="relative max-w-[1200px] mx-auto py-24">
-          <Motion
+          <motion.div
             class="absolute left-1/2 top-0 bottom-0 w-1 bg-[linear-gradient(to_bottom,transparent_0%_0%,#3b82f6_10%_50%,#2563eb_50%_90%,#3b82f6_90%_95%,transparent)] -translate-x-1/2 rounded-sm shadow-[0_0_20px_rgba(59,130,246,0.3)] z-10"
             :initial="{ scaleY: 1 }"
             :animate="{ scaleY: lineScale }"
             :transition="{ duration: 0.1, ease: 'linear' }"
             style="transform-origin: top"
-          ></Motion>
+          ></motion.div>
 
           <div
             v-for="(item, index) in timelineItems"
@@ -1081,7 +1083,7 @@ useHead({
             :class="{ 'opacity-0': !showAllIcons && index > 0 }"
             :style="{ transition: 'opacity 0.5s ease-in-out' }"
           >
-            <Motion
+            <motion.div
               v-if="cardVisibility[index]"
               :initial="{ opacity: 0, y: -100 }"
               :whileInView="{ opacity: 1, y: 0 }"
@@ -1121,9 +1123,9 @@ useHead({
                   ]"
                 ></div>
               </div>
-            </Motion>
+            </motion.div>
 
-            <Motion
+            <motion.div
               v-if="showAllIcons || index === 0"
               class="absolute z-40 -translate-x-1/2 -translate-y-1/2 left-1/2 top-1/2"
               :initial="{ opacity: index === 0 ? 1 : 0, scale: index === 0 ? 1 : 0 }"
@@ -1142,9 +1144,9 @@ useHead({
               >
                 <Icon :name="item.icon" size="28" class="text-white" />
               </div>
-            </Motion>
+            </motion.div>
 
-            <Motion
+            <motion.div
               v-if="cardVisibility[index]"
               :class="[
                 'absolute top-1/2 w-[60px] h-[3px] -translate-y-1/2 z-1 transition-all duration-500 ease-in-out group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.6)] group-hover:h-[4px]',
@@ -1156,7 +1158,7 @@ useHead({
               :animate="{ scaleX: cardVisibility[index] ? 1 : 0 }"
               :transition="{ duration: 0.8, delay: 0 }"
               :style="{ transformOrigin: index % 2 === 0 ? 'right' : 'left' }"
-            ></Motion>
+            ></motion.div>
           </div>
         </div>
 
@@ -1178,8 +1180,9 @@ useHead({
           </div>
         </div>
       </div>
-    </Motion>
-    <Motion
+    </motion.section>
+
+    <motion.section
       id="jurusan"
       class="relative flex flex-col items-center gap-8 py-20 h-fit overflow-hidden"
       :initial="{ opacity: 0, y: 50 }"
@@ -1205,7 +1208,7 @@ useHead({
       <div class="absolute top-32 left-12 w-12 h-6 bg-gradient-to-r from-pink-300 to-pink-500 rounded-full opacity-20 abstract-1"></div>
       <div class="absolute bottom-20 right-12 w-16 h-8 bg-gradient-to-r from-cyan-300 to-cyan-500 rounded-full opacity-25 abstract-2"></div>
 
-      <Motion
+      <motion.div
         class="inline-block relative z-10"
         :initial="{ opacity: 0, scale: 0.8 }"
         :animate="{ opacity: 1, scale: 1 }"
@@ -1217,13 +1220,13 @@ useHead({
         >
           Jurusan
         </span>
-      </Motion>
+      </motion.div>
       <div class="container flex items-center justify-center mx-auto relative z-10">
         <MajorCarousel />
       </div>
-    </Motion>
+    </motion.section>
 
-    <Motion
+    <motion.section
       id="berita"
       class="relative h-min-screen overflow-hidden"
       :initial="{ opacity: 0, y: 50 }"
@@ -1245,7 +1248,7 @@ useHead({
       <div class="absolute top-1/2 left-16 z-0"><Icon name="lucide:rss" size="180" class="text-blue-400 opacity-12 berita-ornament-3" /></div>
 
       <div class="container flex flex-col items-center gap-8 mx-auto relative z-10">
-        <Motion
+        <motion.div
           class="px-8 py-3 text-xl font-bold tracking-widest text-center uppercase rounded-full md:text-2xl"
           style="background: #eff6ff; color: #1d4ed8"
           :initial="{ opacity: 0, scale: 0.8 }"
@@ -1253,7 +1256,7 @@ useHead({
           :transition="{ duration: 0.6, delay: 0.2 }"
         >
           Informasi & Berita
-        </Motion>
+        </motion.div>
 
         <div class="flex flex-wrap justify-center gap-3">
           <button
@@ -1282,7 +1285,7 @@ useHead({
           v-else-if="newsData.length > 0"
           class="grid w-full grid-cols-1 gap-6 px-4 mt-5 sm:grid-cols-2 lg:grid-cols-4 place-items-stretch"
         >
-          <Motion
+          <motion.div
             v-for="(news, index) in newsData"
             :key="news.id"
             :initial="{ opacity: 0, y: 20 }"
@@ -1307,7 +1310,7 @@ useHead({
                 <p class="text-sm text-gray-500 line-clamp-2">{{ news.subtitle }}</p>
               </div>
             </NuxtLink>
-          </Motion>
+          </motion.div>
         </div>
 
         <div v-else class="flex flex-col items-center justify-center gap-4 py-20">
@@ -1325,8 +1328,9 @@ useHead({
           </NuxtLink>
         </div>
       </div>
-    </Motion>
-    <Motion
+    </motion.section>
+
+    <motion.section
       id="faq"
       class="relative overflow-hidden"
       :initial="{ opacity: 0, y: 50 }"
@@ -1353,30 +1357,26 @@ useHead({
       <div class="relative z-10">
         <FAQSection />
       </div>
-    </Motion>
+    </motion.section>
 
-    <Motion
+    <motion.button
       v-show="showBackToTop"
+      @click="scrollToTop"
+      class="fixed z-50 flex items-center justify-center transition-all duration-300 transform rounded-full bottom-8 right-8 w-14 h-14 hover:scale-110 group cursor-pointer"
+      :style="{ background: `linear-gradient(135deg, #3b82f6, #1d4ed8)` }"
       :initial="{ opacity: 0, y: 20 }"
-      :animate="{ opacity: 1, y: 0 }"
-      :exit="{ opacity: 0, y: 20 }"
-      :transition="{ duration: 0.3 }"
+      :animate="{ opacity: showBackToTop ? 1 : 0, y: showBackToTop ? 0 : 20 }"
+      :transition="{ duration: 0.3, ease: 'easeInOut' }"
     >
-      <button
-        @click="scrollToTop"
-        class="fixed z-50 flex items-center justify-center transition-all duration-300 transform rounded-full bottom-8 right-8 w-14 h-14 hover:scale-110 group"
-        style="background: linear-gradient(135deg, #3b82f6, #1d4ed8)"
+      <svg
+        class="w-6 h-6 text-white transition-transform group-hover:-translate-y-1"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
       >
-        <svg
-          class="w-6 h-6 text-white transition-transform group-hover:-translate-y-1"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-        </svg>
-      </button>
-    </Motion>
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+      </svg>
+    </motion.button>
   </main>
 </template>
 
@@ -1702,4 +1702,3 @@ useHead({
   }
 }
 </style>
-
