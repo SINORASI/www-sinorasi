@@ -132,10 +132,10 @@ onMounted(() => {
         </div>
       </div>
     </section>
-    <Motion
+
+    <motion.section
       id="kepala-program"
       class="relative min-h-screen py-16 md:py-24"
-      :style="`background: linear-gradient(to bottom, white, ${majorColor.light}10)`"
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8, delay: 0.1 }"
@@ -163,11 +163,11 @@ onMounted(() => {
           <KaproCarousel :major="major" />
         </div>
       </div>
-    </Motion>
-    <Motion
+    </motion.section>
+
+    <motion.section
       id="materi-pembelajaran"
       class="min-h-screen py-16 md:py-24"
-      :style="`background: linear-gradient(135deg, ${majorColor.primary}05, ${majorColor.accent}05)`"
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8, delay: 0.2 }"
@@ -198,20 +198,21 @@ onMounted(() => {
           <MajorTopics :major="major" />
         </div>
       </div>
-    </Motion>
+    </motion.section>
 
-    <motion.div
+    <motion.section
+      id="tools-software"
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8, delay: 0.3 }"
       :inViewOptions="{ once: true }"
     >
       <MajorTools :major="major" />
-    </motion.div>
+    </motion.section>
 
-    <motion.div
+    <motion.section
       id="kesempatan-kerja"
-      class="relative min-h-screen py-16 overflow-hidden bg-white md:py-24"
+      class="relative min-h-screen py-16 overflow-hidden md:py-24"
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8, delay: 0.4 }"
@@ -246,11 +247,11 @@ onMounted(() => {
           <ReferenceCareers :major="major" />
         </div>
       </div>
-    </motion.div>
-    <Motion
+    </motion.section>
+
+    <motion.section
       id="mitra-kerja"
       class="min-h-screen py-16 md:py-24"
-      :style="`background: linear-gradient(to bottom, white, ${majorColor.light}15)`"
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8, delay: 0.5 }"
@@ -283,8 +284,9 @@ onMounted(() => {
           </div>
         </div>
       </div>
-    </Motion>
-    <motion.div
+    </motion.section>
+
+    <motion.section
       id="minigame"
       class="min-h-screen py-16 md:py-24"
       :initial="{ opacity: 0, y: 50 }"
@@ -360,10 +362,11 @@ onMounted(() => {
           </div>
         </div>
       </div>
-    </motion.div>
-    <Motion
+    </motion.section>
+
+    <motion.section
       id="prestasi"
-      class="min-h-screen py-16 md:py-24 bg-gradient-to-b from-white to-gray-50"
+      class="min-h-screen py-16 md:py-24"
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8, delay: 0.7 }"
@@ -394,15 +397,16 @@ onMounted(() => {
           <MajorAchievement :major="major" />
         </div>
       </div>
-    </Motion>
-    <Motion
+    </motion.section>
+
+    <motion.button
       v-show="showBackToTop"
       @click="scrollToTop"
       class="fixed z-50 flex items-center justify-center transition-all duration-300 transform rounded-full bottom-8 right-8 w-14 h-14 hover:scale-110 group cursor-pointer"
-      :style="backToTopStyle"
+      :style="{ background: `linear-gradient(135deg, ${majorColor.primary}, ${majorColor.accent})` }"
       :initial="{ opacity: 0, y: 20 }"
       :animate="{ opacity: showBackToTop ? 1 : 0, y: showBackToTop ? 0 : 20 }"
-      :transition="{ duration: 0.3 }"
+      :transition="{ duration: 0.3, ease: 'easeInOut' }"
     >
       <svg
         class="w-6 h-6 text-white transition-transform group-hover:-translate-y-1"
@@ -412,6 +416,6 @@ onMounted(() => {
       >
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
       </svg>
-    </Motion>
+    </motion.button>
   </main>
 </template>
