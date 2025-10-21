@@ -129,6 +129,7 @@ onMounted(() => {
     <Motion
       id="kepala-program"
       class="relative min-h-screen py-16 md:py-24"
+      :style="`background: linear-gradient(to bottom, white, ${majorColor.light}10)`"
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8, delay: 0.1 }"
@@ -161,6 +162,7 @@ onMounted(() => {
     <Motion
       id="materi-pembelajaran"
       class="min-h-screen py-16 md:py-24"
+      :style="`background: linear-gradient(135deg, ${majorColor.primary}05, ${majorColor.accent}05)`"
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8, delay: 0.2 }"
@@ -244,6 +246,7 @@ onMounted(() => {
     <Motion
       id="mitra-kerja"
       class="min-h-screen py-16 md:py-24"
+      :style="`background: linear-gradient(to bottom, white, ${majorColor.light}15)`"
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8, delay: 0.5 }"
