@@ -1,11 +1,12 @@
   <template>
   <Motion
-     v-if="isOpen"
-     :initial="{ opacity: 0 }"
-     :animate="{ opacity: 1 }"
-     :transition="{ duration: 0.3, ease: 'easeInOut' }"
-     class="z-[99999]"
-   >
+    v-if="isOpen"
+    :initial="{ opacity: 0 }"
+    :animate="{ opacity: 1 }"
+    :exit="{ opacity: 0 }"
+    :transition="{ duration: 0.3, ease: 'easeInOut' }"
+    class="z-[99999]"
+  >
     <div class="fixed inset-0 z-[99999] flex">
       <Motion
         :initial="{ opacity: 0 }"
@@ -304,14 +305,20 @@
 </style>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { Motion } from "motion-v";
 import type { Extracurricular } from "~/models/Extracurricular";
 import type { MajorName } from "~/models/MajorName";
 import type { News } from "~/models/News";
 import type { Organization } from "~/models/Organization";
 import { majorColorSchemes } from "~/utils/majorColors";
-import indexGet from "~~/server/api/achievements/index.get";
+
+const props = withDefaults(defineProps<{
+  isOpen: boolean;
+  menuItems?: unknown[];
+}>(), {
+  isOpen: false,
+});
 
 const { locales, setLocale } = useI18n();
 const currentLanguage = computed(() => {
@@ -319,6 +326,12 @@ const currentLanguage = computed(() => {
   return $i18n.locale.value;
 });
 const showLanguageMenu = ref(false);
+
+// Debug logging for sidebar animation
+watch(() => props.isOpen, (newVal, oldVal) => {
+  console.log('Sidebar isOpen changed:', { oldVal, newVal });
+  console.log('Animation should trigger:', newVal ? 'enter' : 'exit');
+}, { immediate: true });
 
 const languages = computed(() => locales.value);
 
@@ -778,11 +791,6 @@ const menuItems = [
     ],
   },
 ];
-
-const props = defineProps<{
-  isOpen: boolean;
-  menuItems?: unknown[];
-}>();
 
 const currentMenuItems = computed(() => props.menuItems || menuItems);
 
