@@ -1,4 +1,4 @@
-  <template>
+<template>
   <Motion
     v-if="isOpen"
     :initial="{ opacity: 0 }"

@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-// PERBAIKAN 1: Import diubah. 'Motion' dihapus, 'animate' ditambahkan.
 import { motion, animate } from "motion-v";
 import type { News } from "~/models/News";
 
@@ -59,7 +58,6 @@ const filterByCategory = (category: string) => {
 
 const isMobile = ref(false);
 const timelineItems = [
-  // ... (data timeline Anda tidak berubah)
   {
     year: "2007",
     title: "Awal Berdiri",
@@ -109,8 +107,6 @@ const startStaggeredAnimation = () => {
   animationStarted.value = true;
   showAllIcons.value = true;
 
-  // PERBAIKAN 5: Menggunakan utilitas 'animate' dari motion-v
-  // alih-alih requestAnimationFrame manual. Durasi dalam detik.
   animate(0.1, 1.0, {
     duration: 3, // 3000ms
     ease: "easeInOut",
@@ -140,8 +136,6 @@ const toggleMarker = (index: number) => {
       cardVisibility.value = [false, false, false, false, false];
     }
 
-    // PERBAIKAN 5: Menggunakan utilitas 'animate' dari motion-v
-    // alih-alih requestAnimationFrame manual. Durasi dalam detik.
     const startScale = lineScale.value;
     animate(startScale, 0.1, {
       duration: 5, // 5000ms
@@ -152,7 +146,6 @@ const toggleMarker = (index: number) => {
 };
 
 const achievements = computed(() => {
-  // ... (logika achievements Anda tidak berubah)
   const filtered = newsData.value
     .filter((news) => {
       const content = news.content ? news.content.toLowerCase() : "";
@@ -209,14 +202,9 @@ const heroImages = ref([
 ]);
 const currentHeroImage = ref(0);
 
-// PERBAIKAN 4: Fungsi 'animateCounter' manual dihapus.
-// Logika counter dipindahkan ke onMounted menggunakan
-// utilitas 'animate' dari motion-v.
-
 onMounted(() => {
   // Only run animations on client side
   if (import.meta.client) {
-    // PERBAIKAN 4: Menggunakan utilitas 'animate' dari motion-v
     setTimeout(() => {
       const durationInSeconds = props.duration / 1000;
       const ease = "easeOut";
