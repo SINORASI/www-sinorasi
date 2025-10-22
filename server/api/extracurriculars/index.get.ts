@@ -1,4 +1,11 @@
-import { defineEventHandler, getQuery, readBody, createError, setCookie, getCookie } from 'h3';
+import {
+  defineEventHandler,
+  getQuery,
+  readBody,
+  createError,
+  setCookie,
+  getCookie,
+} from "h3";
 import type { Extracurricular } from "~/models/Extracurricular";
 
 export default defineEventHandler(
@@ -181,21 +188,24 @@ export default defineEventHandler(
             id: "2",
             image: "/images/placeholder.jpg",
             title: "Pelatihan Teknik Smash",
-            description: "Program intensif untuk meningkatkan kemampuan smash dan drop shot",
+            description:
+              "Program intensif untuk meningkatkan kemampuan smash dan drop shot",
             date: "18 April 2024",
           },
           {
             id: "3",
             image: "/images/placeholder.jpg",
             title: "Turnamen Sekolah",
-            description: "Kompetisi internal untuk mempromosikan olahraga badminton di sekolah",
+            description:
+              "Kompetisi internal untuk mempromosikan olahraga badminton di sekolah",
             date: "30 Mei 2024",
           },
           {
             id: "4",
             image: "/images/placeholder.jpg",
             title: "Workshop dengan Atlet Profesional",
-            description: "Sesi bersama atlet profesional untuk belajar strategi permainan",
+            description:
+              "Sesi bersama atlet profesional untuk belajar strategi permainan",
             date: "15 Juni 2024",
           },
         ],
@@ -234,14 +244,16 @@ export default defineEventHandler(
             id: "1",
             image: "/images/placeholder.jpg",
             title: "Kejuaraan Futsal Kota",
-            description: "Tim futsal berhasil meraih juara 2 dalam kompetisi tingkat kota",
+            description:
+              "Tim futsal berhasil meraih juara 2 dalam kompetisi tingkat kota",
             date: "25 Maret 2024",
           },
           {
             id: "2",
             image: "/images/placeholder.jpg",
             title: "Pelatihan Teknik Dasar",
-            description: "Program latihan untuk meningkatkan teknik passing dan shooting",
+            description:
+              "Program latihan untuk meningkatkan teknik passing dan shooting",
             date: "22 April 2024",
           },
           {
@@ -260,45 +272,7 @@ export default defineEventHandler(
           },
         ],
       },
-      {
-        id: "5",
-        slug: "ambalan",
-        name: "Ambalan",
-        category: "Kesehatan",
-        icon: "lucide:tent",
-        description:
-          "Ekstrakurikuler ambalan untuk pengembangan keterampilan pertolongan pertama dan kesehatan masyarakat",
-        fullDescription:
-          "<p>Ekstrakurikuler ambalan sekolah kami telah berdiri sejak tahun 2016 dan menjadi wadah pengembangan siswa di bidang kesehatan. Dengan bimbingan instruktur kesehatan, kami membentuk siswa yang siap membantu dalam situasi darurat.</p><p>Kegiatan meliputi latihan pertolongan pertama, simulasi kecelakaan, dan edukasi kesehatan.</p>",
-        image: "/images/placeholder.jpg",
-        coach: "Instruktur Maya Putri",
-        schedule: "Rabu, Jumat - 14:00-16:00 WIB",
-        location: "Ruang Kesehatan Sekolah",
 
-        memberCount: 30,
-        achievementCount: 6,
-        yearEstablished: 2016,
-        meetingsPerWeek: 2,
-        registrationOpen: true,
-        registrationPeriod: "Pendaftaran dibuka: 1-31 Juli 2024",
-        contactInfo: "Instruktur Maya: 0817-4567-8901",
-        requirements: [
-          "Siswa aktif kelas 8-12",
-          "Mengisi formulir pendaftaran",
-          "Surat persetujuan orang tua",
-          "Sertifikat kesehatan",
-          "Pas foto 3x4 (2 lembar)",
-        ],
-        activities: [
-          {
-            id: "ambalan-act-1",
-            image: "/images/placeholder.jpg",
-            title: "Kegiatan Latgab Penegak Se – Singosari",
-            description: "Kegiatan latihan gabungan penegak di Singosari.",
-            date: "2025-09-13",
-          },
-        ],
-      },
       {
         id: "6",
         slug: "pmr",
@@ -404,7 +378,8 @@ export default defineEventHandler(
         name: "Tari",
         category: "Seni",
         icon: "lucide:music",
-        description: "Ekstrakurikuler tari untuk pengembangan kreativitas dan ekspresi seni siswa",
+        description:
+          "Ekstrakurikuler tari untuk pengembangan kreativitas dan ekspresi seni siswa",
         fullDescription:
           "<p>Ekstrakurikuler tari sekolah kami telah berdiri sejak tahun 2019 dan menjadi wadah pengembangan bakat siswa di bidang seni tari. Dengan bimbingan koreografer profesional, kami membentuk siswa yang memiliki kemampuan tari yang baik dan ekspresi seni yang tinggi.</p><p>Kegiatan meliputi latihan tari tradisional dan modern, serta pertunjukan.</p>",
         image: "/images/placeholder.jpg",
@@ -463,7 +438,8 @@ export default defineEventHandler(
         name: "Karawitan",
         category: "Seni",
         icon: "lucide:music-2",
-        description: "Ekstrakurikuler karawitan untuk pengembangan musik tradisional Jawa",
+        description:
+          "Ekstrakurikuler karawitan untuk pengembangan musik tradisional Jawa",
         fullDescription:
           "<p>Ekstrakurikuler karawitan sekolah kami telah berdiri sejak tahun 2017 dan menjadi wadah pengembangan bakat siswa di musik tradisional Jawa. Dengan bimbingan guru karawitan, kami membentuk siswa yang menghargai dan melestarikan budaya Jawa melalui musik.</p><p>Kegiatan meliputi latihan gamelan, vokal, dan pertunjukan.</p>",
         image: "/images/placeholder.jpg",

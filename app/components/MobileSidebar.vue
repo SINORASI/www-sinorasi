@@ -378,7 +378,7 @@ const extracurricularsData = computed(() => {
 });
 
 const topExtracurriculars = computed(() => {
-  const manualItems = ["Voli", "Basket", "Catur"];
+  const manualItems = ["Voli", "Basket", "Catur", "Ambalan"];
   return extracurricularsData.value
     .filter((extra) => !manualItems.includes(extra.name))
     .slice(0, 5)
