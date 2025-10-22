@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { nextTick, onMounted, ref, watch } from "vue";
 
-const headerClass = ref(
-  "bg-white/20 backdrop-blur-[8px] border-b-white/20 shadow-lg shadow-orange-500/10",
-);
+const headerClass = ref("bg-white/20 backdrop-blur-[8px] border-b-white/20 shadow-lg shadow-orange-500/10");
 const sizeClass = ref("compact");
 const isSidebarOpen = ref(false);
 const route = useRoute();
@@ -37,9 +35,7 @@ const populateScrollItems = async () => {
       { id: "faq", label: "FAQ" },
     ];
 
-    const populatedSections = homeSections.filter((section) =>
-      document.getElementById(section.id)
-    );
+    const populatedSections = homeSections.filter((section) => document.getElementById(section.id));
 
     if (populatedSections.length > 0) {
       scrollItems.value = populatedSections;
@@ -59,12 +55,11 @@ watch(
   () => route.path,
   () => {
     populateScrollItems();
-  },
+  }
 );
 
 onMounted(() => {
-  headerClass.value =
-    "bg-white/20 backdrop-blur-[8px] border-b-white/20 shadow-lg shadow-orange-500/10";
+  headerClass.value = "bg-white/20 backdrop-blur-[8px] border-b-white/20 shadow-lg shadow-orange-500/10";
   sizeClass.value = "compact";
 });
 </script>
@@ -112,7 +107,10 @@ onMounted(() => {
               </h2>
               <p
                 class="-mt-1"
-                :style="{ fontSize: sizeClass === 'full' ? '1rem' : '0.875rem', transition: 'font-size 0.5s ease-in-out' }"
+                :style="{
+                  fontSize: sizeClass === 'full' ? '1rem' : '0.875rem',
+                  transition: 'font-size 0.5s ease-in-out',
+                }"
               >
                 Inovasi Raih Prestasi
               </p>
@@ -126,7 +124,9 @@ onMounted(() => {
           :transition="{ delay: 0.3, duration: 0.6 }"
         >
           <div
-            :class="(sizeClass === 'full' ? 'gap-5' : 'gap-4') + ' hidden md:flex transition-all duration-500 ease-in-out'"
+            :class="
+              (sizeClass === 'full' ? 'gap-5' : 'gap-4') + ' hidden md:flex transition-all duration-500 ease-in-out'
+            "
           >
             <button
               v-for="item in scrollItems"

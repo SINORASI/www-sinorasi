@@ -24,7 +24,6 @@ useHead({
 <template>
   <main class="min-h-screen py-36 bg-gray-50">
     <div class="container px-4 mx-auto">
-      
       <div class="mb-12 text-center">
         <div class="inline-block">
           <span
@@ -40,29 +39,24 @@ useHead({
         </p>
       </div>
 
-      
       <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         <div
           v-for="(majorData, majorKey) in majorDatas"
           :key="majorKey"
           class="p-6 transition-all duration-300 transform bg-white shadow-lg rounded-2xl hover:shadow-xl hover:-translate-y-1"
         >
-          
           <div class="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full">
             <img :src="majorData.logo" :alt="`${majorData.short} Logo`" class="object-contain w-10 h-10" />
           </div>
 
-          
           <h3 class="mb-3 text-xl font-bold text-center text-gray-800">
             {{ majorData.nameMajor }}
           </h3>
 
-          
           <p class="mb-4 text-sm text-center text-gray-600">
             {{ majorData.description }}
           </p>
 
-          
           <div class="mb-4">
             <h4 class="mb-2 text-sm font-semibold text-gray-700">Prasyarat:</h4>
             <ul class="text-xs text-gray-600 list-disc list-inside">
@@ -70,7 +64,6 @@ useHead({
             </ul>
           </div>
 
-          
           <div class="mb-4">
             <h4 class="mb-2 text-sm font-semibold text-gray-700">Mata Pelajaran Utama:</h4>
             <ul class="text-xs text-gray-600 list-disc list-inside">
@@ -78,7 +71,6 @@ useHead({
             </ul>
           </div>
 
-          
           <div class="text-center">
             <NuxtLink
               :to="`/jurusan/${majorKey}`"
@@ -90,7 +82,6 @@ useHead({
         </div>
       </div>
 
-      
       <div class="mt-12 text-center">
         <NuxtLink
           to="/#jurusan"

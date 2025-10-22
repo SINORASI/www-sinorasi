@@ -17,7 +17,7 @@
       >
         <div class="video-card">
           <img v-show="hoveredCard !== card.id" :src="card.thumbnail" :alt="card.title" class="thumbnail" />
-          
+
           <div
             v-if="card.videoType === 'youtube'"
             :id="`youtube-player-${card.id}`"
@@ -25,7 +25,6 @@
             :class="{ 'video-active': hoveredCard === card.id }"
           />
 
-          
           <div :class="['card-header', { 'card-header-hidden': hoveredCard === card.id }]">
             <div class="card-header-content">
               <div class="card-logo">
@@ -127,8 +126,7 @@ const videoCards: VideoCard[] = [
     videoType: "youtube",
     logo: "/images/majorIcon/logo-tkj.webp",
     title: "Teknik Komputer dan Jaringan",
-    description:
-      "Instalasi, konfigurasi, dan maintenance jaringan komputer, server, dan keamanan IT",
+    description: "Instalasi, konfigurasi, dan maintenance jaringan komputer, server, dan keamanan IT",
     slug: "tkj",
     startTime: 33,
   },
@@ -139,8 +137,7 @@ const videoCards: VideoCard[] = [
     videoType: "youtube",
     logo: "/images/majorIcon/logo-dkv.webp",
     title: "Desain Komunikasi Visual",
-    description:
-      "Desain grafis, branding, ilustrasi, dan komunikasi visual untuk media cetak dan digital",
+    description: "Desain grafis, branding, ilustrasi, dan komunikasi visual untuk media cetak dan digital",
     slug: "dkv",
     startTime: 11,
   },
@@ -151,8 +148,7 @@ const videoCards: VideoCard[] = [
     videoType: "youtube",
     logo: "/images/majorIcon/logo-an.webp",
     title: "Animasi",
-    description:
-      "Teknik animasi 2D, 3D, motion graphics, character design, dan produksi multimedia",
+    description: "Teknik animasi 2D, 3D, motion graphics, character design, dan produksi multimedia",
     slug: "animasi",
     startTime: 11,
   },
@@ -163,8 +159,7 @@ const videoCards: VideoCard[] = [
     videoType: "youtube",
     logo: "/images/majorIcon/logo-bc.webp",
     title: "Broadcasting",
-    description:
-      "Produksi siaran televisi, radio, videografi, editing video, dan jurnalistik multimedia",
+    description: "Produksi siaran televisi, radio, videografi, editing video, dan jurnalistik multimedia",
     slug: "broadcasting",
     startTime: 15,
   },
@@ -186,8 +181,7 @@ const videoCards: VideoCard[] = [
     videoType: "youtube",
     logo: "/images/majorIcon/logo-mt.webp",
     title: "Mekatronika",
-    description:
-      "Menggabungkan mekanik, elektronik, dan komputer untuk sistem otomasi dan robotika",
+    description: "Menggabungkan mekanik, elektronik, dan komputer untuk sistem otomasi dan robotika",
     slug: "mekatronika",
     startTime: 41,
   },
@@ -198,15 +192,14 @@ const videoCards: VideoCard[] = [
     videoType: "youtube",
     logo: "/images/majorIcon/logo-tav.webp",
     title: "Teknik Audio Video",
-    description:
-      "Instalasi dan perawatan sistem audio video, sound system, home theater, dan multimedia",
+    description: "Instalasi dan perawatan sistem audio video, sound system, home theater, dan multimedia",
     slug: "tav",
     startTime: 14,
   },
 ];
 
 onMounted(() => {
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     if (!window.YT) {
       const tag = document.createElement("script");
       tag.src = "https://www.youtube.com/iframe_api";
@@ -226,17 +219,17 @@ onMounted(() => {
   }
 });
 const initializePlayers = () => {
-  if (typeof window === 'undefined') return;
+  if (typeof window === "undefined") return;
 
   currentSlideCards.value.forEach((card) => {
-    if (card.videoType === 'youtube' && !youtubePlayers.value[card.id]) {
+    if (card.videoType === "youtube" && !youtubePlayers.value[card.id]) {
       createPlayer(card.id, card.videoUrl);
     }
   });
 };
 
 const createPlayer = (id: number, videoId: string) => {
-  if (typeof window === 'undefined' || !window.YT || !window.YT.Player) return;
+  if (typeof window === "undefined" || !window.YT || !window.YT.Player) return;
   youtubePlayers.value[id] = new window.YT.Player(`youtube-player-${id}`, {
     videoId: videoId,
     playerVars: {
@@ -254,16 +247,16 @@ const createPlayer = (id: number, videoId: string) => {
       onReady: (event: unknown) => {
         playersReady.value[id] = true;
         const ytEvent = event as { target: any };
-        ytEvent.target.setPlaybackQuality('sd360');
-        ytEvent.target.getIframe().style.width = '100%';
-        ytEvent.target.getIframe().style.height = '100%';
+        ytEvent.target.setPlaybackQuality("sd360");
+        ytEvent.target.getIframe().style.width = "100%";
+        ytEvent.target.getIframe().style.height = "100%";
       },
     },
   });
 };
 
 watch(currentSlide, () => {
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     setTimeout(() => {
       if (apiLoaded) {
         initializePlayers();
@@ -273,7 +266,7 @@ watch(currentSlide, () => {
 });
 
 const handleMouseEnter = (id: number) => {
-  if (typeof window === 'undefined') return;
+  if (typeof window === "undefined") return;
   const player = youtubePlayers.value[id];
   const card = videoCards.find((c) => c.id === id);
 
@@ -298,7 +291,7 @@ const handleMouseEnter = (id: number) => {
 };
 
 const handleMouseLeave = (id: number) => {
-  if (typeof window === 'undefined') return;
+  if (typeof window === "undefined") return;
   const player = youtubePlayers.value[id];
   const card = videoCards.find((c) => c.id === id);
 
@@ -314,7 +307,7 @@ const handleMouseLeave = (id: number) => {
 };
 
 const handleTouchStart = (id: number) => {
-  if (typeof window === 'undefined') return;
+  if (typeof window === "undefined") return;
   const player = youtubePlayers.value[id];
   const card = videoCards.find((c) => c.id === id);
 
@@ -339,7 +332,7 @@ const handleTouchStart = (id: number) => {
 };
 
 const handleTouchEnd = (id: number) => {
-  if (typeof window === 'undefined') return;
+  if (typeof window === "undefined") return;
   const player = youtubePlayers.value[id];
   const card = videoCards.find((c) => c.id === id);
 
@@ -611,7 +604,6 @@ const navigateToMajorsList = () => {
   transform: translateY(-1px);
 }
 
-
 @media (max-width: 768px) {
   .grid {
     grid-template-columns: 1fr;
@@ -726,19 +718,15 @@ const navigateToMajorsList = () => {
   }
 }
 
-
 @media (min-width: 768px) and (max-width: 1024px) {
   .grid {
     gap: 1rem;
   }
 
-  
-
   .navigation {
     margin-top: 40px;
   }
 }
-
 
 @media (min-width: 1024px) {
   .container {
@@ -748,8 +736,6 @@ const navigateToMajorsList = () => {
   .grid {
     gap: 2rem;
   }
-
-  
 
   .navigation {
     margin-top: 56px;

@@ -69,7 +69,6 @@ const toggleFAQ = (index: number) => {
   <section id="faq">
     <div class="container py-28 px-4 mx-auto md:px-10">
       <div class="flex flex-col items-center gap-8">
-
         <Motion
           class="px-8 py-4 rounded-lg shadow-md bg-secondary backdrop-blur-2xl"
           :initial="{ opacity: 0, y: -30 }"
@@ -88,7 +87,6 @@ const toggleFAQ = (index: number) => {
           Temukan jawaban atas pertanyaan umum tentang SMK Negeri 2 Singosari
         </Motion>
 
-        
         <div class="w-full max-w-4xl space-y-4">
           <Motion
             v-for="(item, index) in faqItems"
@@ -99,7 +97,6 @@ const toggleFAQ = (index: number) => {
             :transition="{ duration: 0.5 }"
             :inViewOptions="{ once: true }"
           >
-            
             <button
               @click="toggleFAQ(index)"
               class="flex items-center justify-between w-full px-6 py-4 text-left transition-colors duration-200 hover:bg-gray-50"
@@ -113,7 +110,6 @@ const toggleFAQ = (index: number) => {
               />
             </button>
 
-            
             <Transition
               enter-active-class="transition-all duration-300 ease-out"
               enter-from-class="opacity-0 max-h-0"
@@ -131,7 +127,6 @@ const toggleFAQ = (index: number) => {
           </Motion>
         </div>
 
-        
         <Motion
           class="mt-8 text-center"
           :initial="{ opacity: 0, y: 30 }"

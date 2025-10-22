@@ -19,9 +19,7 @@ interface Achievement {
 const route = useRoute();
 const major = props.major || (route.params.majorName as MajorName);
 
-const { data: achievementsData } = await useFetch<Achievement[]>(
-  `/api/achievements?major=${major}`,
-);
+const { data: achievementsData } = await useFetch<Achievement[]>(`/api/achievements?major=${major}`);
 const { data: _majorDatas } = await useFetch<Record<MajorName, MajorData>>("/api/majors");
 
 const currentIndex = ref<number>(0);
@@ -77,8 +75,7 @@ const previousSlide = (): void => {
     slideDirection.value = "right";
 
     setTimeout(() => {
-      currentIndex.value =
-        (currentIndex.value - 1 + achievements.value.length) % achievements.value.length;
+      currentIndex.value = (currentIndex.value - 1 + achievements.value.length) % achievements.value.length;
     }, 150);
 
     setTimeout(() => {
@@ -99,11 +96,8 @@ const closeModal = (): void => {
 
 <template>
   <div class="w-full">
-    
     <div class="relative flex flex-col items-center gap-6 px-2 md:gap-8 md:px-4">
-      
       <div class="relative flex items-center justify-center w-full gap-3 md:gap-6 lg:gap-8">
-        
         <button
           class="z-10 flex items-center justify-center flex-shrink-0 w-10 h-10 transition-all duration-300 rounded-full shadow-lg md:w-12 md:h-12 hover:scale-110 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed"
           :style="`background: linear-gradient(135deg, ${majorColor.primary}, ${majorColor.accent})`"
@@ -115,7 +109,6 @@ const closeModal = (): void => {
           </svg>
         </button>
 
-        
         <div
           v-if="leftAchievement && !isAnimating"
           class="flex-shrink-0 hidden w-40 scale-90 pointer-events-none lg:block xl:w-48 opacity-30"
@@ -124,7 +117,6 @@ const closeModal = (): void => {
             class="overflow-hidden bg-white border-4 shadow-lg rounded-xl"
             :style="`border-color: ${majorColor.primary}`"
           >
-            
             <div
               class="relative flex items-center justify-center h-44 xl:h-52 bg-gradient-to-br from-gray-100 to-gray-200"
             >
@@ -136,7 +128,7 @@ const closeModal = (): void => {
                 <div class="w-16 rounded-t-full h-14 mt-9" :style="`background: ${majorColor.light}`"></div>
               </div>
             </div>
-            
+
             <div
               class="px-3 py-2.5 text-center text-white font-bold text-xs truncate"
               :style="`background: ${majorColor.primary}`"
@@ -146,7 +138,6 @@ const closeModal = (): void => {
           </div>
         </div>
 
-        
         <div
           v-if="currentAchievement"
           class="flex-shrink-0 w-full max-w-[200px] sm:max-w-[240px] md:max-w-[280px] lg:max-w-[320px] cursor-pointer"
@@ -154,7 +145,11 @@ const closeModal = (): void => {
         >
           <Motion
             :key="currentAchievement.id"
-            :initial="{ opacity: 0, scale: 0.8, x: slideDirection === 'left' ? 100 : slideDirection === 'right' ? -100 : 0 }"
+            :initial="{
+              opacity: 0,
+              scale: 0.8,
+              x: slideDirection === 'left' ? 100 : slideDirection === 'right' ? -100 : 0,
+            }"
             :animate="{ opacity: 1, scale: 1, x: 0 }"
             :transition="{ duration: 0.6, ease: 'easeOut' }"
             class="w-full h-full"
@@ -163,13 +158,10 @@ const closeModal = (): void => {
               class="bg-white rounded-2xl shadow-2xl border-4 md:border-[5px] overflow-hidden w-full h-full transform hover:scale-105 hover:shadow-3xl transition-all duration-300 group"
               :style="`border-color: ${majorColor.primary}`"
             >
-              
               <div
                 class="relative flex items-center justify-center h-56 overflow-hidden sm:h-64 md:h-72 lg:h-80 bg-gradient-to-br from-gray-100 to-gray-200"
               >
-                
                 <div class="relative z-10 flex flex-col items-center">
-                  
                   <Motion
                     :initial="{ y: 20, opacity: 0 }"
                     :animate="{ y: 0, opacity: 1 }"
@@ -180,7 +172,7 @@ const closeModal = (): void => {
                       :style="`background: ${majorColor.light}`"
                     ></div>
                   </Motion>
-                  
+
                   <Motion
                     :initial="{ y: 30, opacity: 0 }"
                     :animate="{ y: 0, opacity: 1 }"
@@ -194,7 +186,6 @@ const closeModal = (): void => {
                 </div>
               </div>
 
-              
               <Motion
                 :initial="{ y: 20, opacity: 0 }"
                 :animate="{ y: 0, opacity: 1 }"
@@ -211,7 +202,6 @@ const closeModal = (): void => {
           </Motion>
         </div>
 
-        
         <div
           v-if="rightAchievement && !isAnimating"
           class="flex-shrink-0 hidden w-40 scale-90 pointer-events-none lg:block xl:w-48 opacity-30"
@@ -220,7 +210,6 @@ const closeModal = (): void => {
             class="overflow-hidden bg-white border-4 shadow-lg rounded-xl"
             :style="`border-color: ${majorColor.primary}`"
           >
-            
             <div
               class="relative flex items-center justify-center h-44 xl:h-52 bg-gradient-to-br from-gray-100 to-gray-200"
             >
@@ -232,7 +221,7 @@ const closeModal = (): void => {
                 <div class="w-16 rounded-t-full h-14 mt-9" :style="`background: ${majorColor.light}`"></div>
               </div>
             </div>
-            
+
             <div
               class="px-3 py-2.5 text-center text-white font-bold text-xs truncate"
               :style="`background: ${majorColor.primary}`"
@@ -242,7 +231,6 @@ const closeModal = (): void => {
           </div>
         </div>
 
-        
         <button
           class="z-10 flex items-center justify-center flex-shrink-0 w-10 h-10 transition-all duration-300 rounded-full shadow-lg md:w-12 md:h-12 hover:scale-110 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed"
           :style="`background: linear-gradient(135deg, ${majorColor.primary}, ${majorColor.accent})`"
@@ -255,7 +243,6 @@ const closeModal = (): void => {
         </button>
       </div>
 
-      
       <Motion
         v-if="currentAchievement"
         :key="`details-${currentAchievement.id}`"
@@ -264,7 +251,6 @@ const closeModal = (): void => {
         :transition="{ delay: 0.3, duration: 0.6 }"
         class="w-full max-w-4xl px-4 text-center"
       >
-        
         <Motion
           :initial="{ opacity: 0, y: 20 }"
           :animate="{ opacity: 1, y: 0 }"
@@ -275,7 +261,6 @@ const closeModal = (): void => {
           </h3>
         </Motion>
 
-        
         <Motion
           :initial="{ opacity: 0, y: 20 }"
           :animate="{ opacity: 1, y: 0 }"
@@ -288,7 +273,6 @@ const closeModal = (): void => {
       </Motion>
     </div>
 
-    
     <Teleport to="body">
       <Transition name="modal">
         <div
@@ -300,7 +284,6 @@ const closeModal = (): void => {
             class="relative bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto transform transition-all duration-300"
             @click.stop
           >
-            
             <button
               class="absolute z-10 flex items-center justify-center w-10 h-10 transition-all duration-300 bg-gray-100 rounded-full shadow-lg top-4 right-4 md:top-6 md:right-6 md:w-12 md:h-12 hover:bg-gray-200 hover:scale-110"
               @click="closeModal"
@@ -310,7 +293,6 @@ const closeModal = (): void => {
               </svg>
             </button>
 
-            
             <div
               class="px-6 py-8 text-center text-white md:px-8 md:py-10 rounded-t-3xl"
               :style="`background: linear-gradient(135deg, ${majorColor.primary}, ${majorColor.secondary})`"
@@ -337,9 +319,7 @@ const closeModal = (): void => {
               </div>
             </div>
 
-            
             <div class="px-6 py-6 md:px-8 md:py-8">
-              
               <div class="pb-6 mb-6 border-b border-gray-200">
                 <div class="flex items-center gap-4">
                   <div
@@ -359,7 +339,6 @@ const closeModal = (): void => {
                 </div>
               </div>
 
-              
               <div class="mb-6">
                 <h4 class="mb-3 text-sm font-semibold tracking-wide text-gray-500 uppercase">Deskripsi Prestasi</h4>
                 <p class="leading-relaxed text-gray-700">
@@ -367,7 +346,6 @@ const closeModal = (): void => {
                 </p>
               </div>
 
-              
               <div
                 class="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 md:p-6 rounded-2xl"
                 :style="`background: linear-gradient(135deg, ${majorColor.light}20, ${majorColor.accent}10)`"
@@ -391,5 +369,4 @@ const closeModal = (): void => {
   </div>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

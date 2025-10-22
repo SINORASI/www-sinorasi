@@ -9,12 +9,9 @@
     :animate="{ opacity: 1, scale: 1, y: 0 }"
     :transition="{ duration: 0.5, delay: 0.1 }"
   >
-    
     <div class="relative overflow-hidden aspect-[4/5]">
-      
       <div :class="['absolute inset-0', bgGradientClass]"></div>
 
-      
       <div class="relative w-full h-full">
         <TransitionGroup
           enter-active-class="transition-all duration-600 ease-[cubic-bezier(0.25,0.1,0.25,1)]"
@@ -35,10 +32,8 @@
         </TransitionGroup>
       </div>
 
-      
       <div :class="['absolute inset-0', gradientOverlayClass]"></div>
 
-      
       <div class="absolute z-60 top-4 left-4">
         <button
           @click="isMenuOpen = !isMenuOpen"
@@ -50,13 +45,12 @@
           ]"
         >
           <Icon name="lucide:settings-2" size="16" />
-          <span>{{ selectedGrade === 'X' ? '10' : '11' }} - </span>
+          <span>{{ selectedGrade === "X" ? "10" : "11" }} - </span>
           <Icon :name="selectedGender === 'L' ? 'material-symbols:male' : 'material-symbols:female'" size="16" />
           <span>{{ useAlmamater ? " + Jas" : "" }}</span>
           <Icon :name="isMenuOpen ? 'lucide:chevron-up' : 'lucide:chevron-down'" size="14" />
         </button>
 
-        
         <Transition
           enter-active-class="transition-all duration-200 ease-out"
           leave-active-class="transition-all duration-150 ease-in"
@@ -67,7 +61,6 @@
             v-if="isMenuOpen"
             class="absolute top-full left-0 mt-2 backdrop-blur-xl bg-white/95 border border-white/50 rounded-xl shadow-2xl overflow-hidden min-w-[200px]"
           >
-            
             <div class="p-3 border-b border-gray-200/50">
               <div class="mb-2 text-xs font-bold text-gray-500">KELAS</div>
               <div class="flex gap-2">
@@ -96,7 +89,6 @@
               </div>
             </div>
 
-            
             <div class="p-3">
               <div class="mb-2 text-xs font-bold text-gray-500">JENIS KELAMIN</div>
               <div class="space-y-2">
@@ -129,7 +121,6 @@
               </div>
             </div>
 
-            
             <div v-if="almamaterImages" class="p-3 border-t border-gray-200/50">
               <button
                 @click="useAlmamater = !useAlmamater"
@@ -149,18 +140,15 @@
         </Transition>
       </div>
 
-      
       <div class="absolute px-3 py-1 rounded-full z-60 top-4 right-4 bg-white/90 backdrop-blur-sm">
         <span :class="['text-xs font-semibold', badgeTextClass]">{{ dayNumber }}</span>
       </div>
 
-      
       <div class="absolute z-60 bottom-4 left-4">
         <p class="text-sm font-medium text-white/90 drop-shadow-md">{{ uniformDay }}</p>
         <h3 class="text-2xl font-bold text-white drop-shadow-lg">{{ day }}</h3>
       </div>
 
-      
       <div class="absolute z-60 bottom-4 right-4 flex gap-1.5">
         <button
           v-for="(_, index) in currentImages"
