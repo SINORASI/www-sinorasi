@@ -1,4 +1,5 @@
 <script setup lang="ts">
+
 useHead({
   titleTemplate: (titleChunk) => {
     return titleChunk ? `${titleChunk} - SMK Negeri 2 Singosari` : "SMK Negeri 2 Singosari";

@@ -309,7 +309,7 @@
 </style>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { motion, AnimatePresence } from "motion-v";
 import type { Extracurricular } from "~/models/Extracurricular";
 import type { MajorName } from "~/models/MajorName";
@@ -317,15 +317,12 @@ import type { News } from "~/models/News";
 import type { Organization } from "~/models/Organization";
 import { majorColorSchemes } from "~/utils/majorColors";
 
-const props = withDefaults(
-  defineProps<{
-    isOpen: boolean;
-    menuItems?: unknown[];
-  }>(),
-  {
-    isOpen: false,
-  },
-);
+const props = withDefaults(defineProps<{
+  isOpen: boolean;
+  menuItems?: unknown[];
+}>(), {
+  isOpen: false,
+});
 
 defineEmits<{
   close: [];
