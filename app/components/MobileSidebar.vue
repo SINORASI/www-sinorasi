@@ -309,7 +309,7 @@
 </style>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { motion, AnimatePresence } from "motion-v";
 import type { Extracurricular } from "~/models/Extracurricular";
 import type { MajorName } from "~/models/MajorName";

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { motion, animate } from "motion-v";
+import { motion, animate, AnimatePresence } from "motion-v";
 import type { News } from "~/models/News";
 
 definePageMeta({
@@ -246,7 +246,7 @@ onMounted(() => {
         const scrollTop = window.scrollY;
         const documentHeight = document.documentElement.scrollHeight;
         const windowHeight = window.innerHeight;
-        const scrollThreshold = documentHeight * (1 / 5);
+        const scrollThreshold = 300;
         showBackToTop.value = scrollTop > scrollThreshold;
       }
     };
