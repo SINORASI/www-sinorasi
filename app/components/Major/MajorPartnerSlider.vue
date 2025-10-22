@@ -4,13 +4,13 @@ import type { MajorName } from "~/models/MajorName";
 import { majorColorSchemes } from "~/utils/majorColors";
 
 const props = defineProps<{
-    major: MajorName;
+  major: MajorName;
 }>();
 
 interface Company {
-    id: number;
-    name: string;
-    logo: string;
+  id: number;
+  name: string;
+  logo: string;
 }
 
 const route = useRoute();
@@ -18,30 +18,25 @@ const major = props.major;
 
 const majorColor = computed(() => majorColorSchemes[major]);
 
-const { data: partnersData } = await useFetch<Company[]>(
-    `/api/partners/${major}`,
-);
+const { data: partnersData } = await useFetch<Company[]>(`/api/partners/${major}`);
 
 const currentCompanies = computed(() => {
-    return partnersData.value || [];
+  return partnersData.value || [];
 });
 
 const duplicatedCompanies = computed(() => {
-    const base = currentCompanies.value;
-    return [...base, ...base, ...base];
+  const base = currentCompanies.value;
+  return [...base, ...base, ...base];
 });
 
 const sliderRef = ref<HTMLElement>();
 
 onMounted(() => {
-    if (sliderRef.value && currentCompanies.value.length > 0) {
-        const count = currentCompanies.value.length;
-        const duration = count * 3;
-        sliderRef.value.style.setProperty(
-            "--animation-duration",
-            `${duration}s`,
-        );
-    }
+  if (sliderRef.value && currentCompanies.value.length > 0) {
+    const count = currentCompanies.value.length;
+    const duration = count * 3;
+    sliderRef.value.style.setProperty("--animation-duration", `${duration}s`);
+  }
 });
 </script>
 

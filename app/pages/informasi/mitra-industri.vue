@@ -1,6 +1,6 @@
 <script setup lang="ts">
 definePageMeta({
-    layout: "default",
+  layout: "default",
 });
 
 const showDialog = ref(false);
@@ -8,71 +8,66 @@ const selectedPartner = ref<any>(null);
 const currentImageIndex = ref(0);
 
 useHead({
-    title: "Mitra Industri - Informasi - SMKN 2 Singosari",
-    meta: [
-        {
-            name: "description",
-            content:
-                "Daftar mitra industri dan kerjasama SMK Negeri 2 Singosari dengan berbagai perusahaan.",
-        },
-    ],
+  title: "Mitra Industri - Informasi - SMKN 2 Singosari",
+  meta: [
+    {
+      name: "description",
+      content:
+        "Daftar mitra industri dan kerjasama SMK Negeri 2 Singosari dengan berbagai perusahaan.",
+    },
+  ],
 });
 
 const openDialog = (partner: any) => {
-    selectedPartner.value = partner;
-    currentImageIndex.value = 0;
-    showDialog.value = true;
-    document.body.style.overflow = "hidden";
+  selectedPartner.value = partner;
+  currentImageIndex.value = 0;
+  showDialog.value = true;
+  document.body.style.overflow = "hidden";
 };
 
 const closeDialog = () => {
-    showDialog.value = false;
-    selectedPartner.value = null;
-    document.body.style.overflow = "auto";
+  showDialog.value = false;
+  selectedPartner.value = null;
+  document.body.style.overflow = "auto";
 };
 
 const nextImage = () => {
-    if (selectedPartner.value?.images) {
-        currentImageIndex.value =
-            (currentImageIndex.value + 1) % selectedPartner.value.images.length;
-    }
+  if (selectedPartner.value?.images) {
+    currentImageIndex.value = (currentImageIndex.value + 1) % selectedPartner.value.images.length;
+  }
 };
 
 const prevImage = () => {
-    if (selectedPartner.value?.images) {
-        currentImageIndex.value =
-            currentImageIndex.value === 0
-                ? selectedPartner.value.images.length - 1
-                : currentImageIndex.value - 1;
-    }
+  if (selectedPartner.value?.images) {
+    currentImageIndex.value =
+      currentImageIndex.value === 0
+        ? selectedPartner.value.images.length - 1
+        : currentImageIndex.value - 1;
+  }
 };
 
 const goToImage = (index: number) => {
-    currentImageIndex.value = index;
+  currentImageIndex.value = index;
 };
 
-const { data: businessPartnersData } = await useFetch(
-    "/images/industri/business_partners.json",
-);
+const { data: businessPartnersData } = await useFetch("/images/industri/business_partners.json");
 
 const partners = computed(() => {
-    const data = businessPartnersData.value as any;
-    if (!data?.business_partners) return [];
+  const data = businessPartnersData.value as any;
+  if (!data?.business_partners) return [];
 
-    return data.business_partners.map((partner: any, index: number) => ({
-        id: index + 1,
-        name: partner.business_name,
-        description: `Mitra industri ${partner.business_name} yang telah berkolaborasi dengan SMK Negeri 2 Singosari dalam program pengembangan keterampilan siswa.`,
-        fullDescription: `Perusahaan ${partner.business_name} telah menjadi mitra strategis SMK Negeri 2 Singosari dalam program pengembangan sumber daya manusia. Melalui kerjasama ini, siswa mendapatkan kesempatan untuk praktik kerja lapangan, magang, dan pengembangan kompetensi yang sesuai dengan kebutuhan industri modern.`,
-        logo:
-            partner.images.length > 0
-                ? `/images/industri/${partner.images[0].path}`
-                : "/images/placeholder.jpg",
-        images: partner.images.map(
-            (img: any) => `/images/industri/${img.path}`,
-        ),
-        major: "ALL",
-    }));
+  return data.business_partners.map((partner: any, index: number) => ({
+    id: index + 1,
+    name: partner.business_name,
+    description: `Mitra industri ${partner.business_name} yang telah berkolaborasi dengan SMK Negeri 2 Singosari dalam program pengembangan keterampilan siswa.`,
+    fullDescription: `Perusahaan ${partner.business_name} telah menjadi mitra strategis SMK Negeri 2 Singosari dalam program pengembangan sumber daya manusia. Melalui kerjasama ini, siswa mendapatkan kesempatan untuk praktik kerja lapangan, magang, dan pengembangan kompetensi yang sesuai dengan kebutuhan industri modern.`,
+    logo:
+      partner.images.length > 0
+        ? `/images/industri/${partner.images[0].path}`
+        : "/images/placeholder.jpg",
+    images: partner.images.map((img: any) => `/images/industri/${img.path}`),
+    major: "ALL",
+  }));
 });
 </script>
 

@@ -23,7 +23,7 @@ const populateScrollItems = async () => {
   const baseDelay = 100;
 
   for (let attempt = 0; attempt < maxRetries; attempt++) {
-    const delay = baseDelay * Math.pow(2, attempt);
+    const delay = baseDelay * 2 ** attempt;
     await new Promise((resolve) => setTimeout(resolve, delay));
 
     const homeSections = [
@@ -37,9 +37,7 @@ const populateScrollItems = async () => {
       { id: "faq", label: "FAQ" },
     ];
 
-    const populatedSections = homeSections.filter((section) =>
-      document.getElementById(section.id)
-    );
+    const populatedSections = homeSections.filter((section) => document.getElementById(section.id));
 
     if (populatedSections.length > 0) {
       scrollItems.value = populatedSections;

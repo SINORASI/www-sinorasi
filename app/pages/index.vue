@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { motion, animate, AnimatePresence } from "motion-v";
+import { animate, motion, AnimatePresence } from "motion-v";
 import type { News } from "~/models/News";
 
 definePageMeta({
@@ -383,7 +383,7 @@ useHead({
                     :initial="{ opacity: 0, x: -50 }"
                     :whileInView="{ opacity: 1, x: 0 }"
                     :transition="{ duration: 0.8 }"
-            :inViewOptions="{ once: true }"
+                    :inViewOptions="{ once: true }"
                 >
                     <div class="relative group">
                         <img
@@ -399,7 +399,7 @@ useHead({
                     :initial="{ opacity: 0, x: 50 }"
                     :whileInView="{ opacity: 1, x: 0 }"
                     :transition="{ duration: 0.8, delay: 0.2 }"
-            :inViewOptions="{ once: true }"
+                    :inViewOptions="{ once: true }"
                 >
                     <h1
                         class="text-3xl font-black transition-all duration-700 ease-out md:text-4xl lg:text-5xl"
@@ -529,7 +529,7 @@ useHead({
                         :initial="{ opacity: 0, x: -50 }"
                         :whileInView="{ opacity: 1, x: 0 }"
                         :transition="{ duration: 0.8, delay: 0.2 }"
-            :inViewOptions="{ once: true }"
+                        :inViewOptions="{ once: true }"
                     >
                         <div class="relative group">
                             <div
@@ -555,7 +555,7 @@ useHead({
                         :initial="{ opacity: 0, x: 50 }"
                         :whileInView="{ opacity: 1, x: 0 }"
                         :transition="{ duration: 0.8, delay: 0.4 }"
-            :inViewOptions="{ once: true }"
+                        :inViewOptions="{ once: true }"
                     >
                         <div class="inline-block">
                             <span
@@ -695,7 +695,7 @@ useHead({
                         :initial="{ opacity: 0, x: -50 }"
                         :whileInView="{ opacity: 1, x: 0 }"
                         :transition="{ duration: 0.8, delay: 0.2 }"
-            :inViewOptions="{ once: true }"
+                        :inViewOptions="{ once: true }"
                     >
                         <div class="inline-block">
                             <span
@@ -746,7 +746,7 @@ useHead({
                         :initial="{ opacity: 0, x: 50 }"
                         :whileInView="{ opacity: 1, x: 0 }"
                         :transition="{ duration: 0.8, delay: 0.4 }"
-            :inViewOptions="{ once: true }"
+                        :inViewOptions="{ once: true }"
                     >
                         <div class="relative max-w-xs group">
                             <div
@@ -834,7 +834,7 @@ useHead({
                     :initial="{ opacity: 0, scale: 0.95 }"
                     :whileInView="{ opacity: 1, scale: 1 }"
                     :transition="{ duration: 0.6, delay: 0.2 }"
-            :inViewOptions="{ once: true }"
+                    :inViewOptions="{ once: true }"
                 >
                     <div class="overflow-hidden">
                         <div
@@ -986,7 +986,7 @@ useHead({
                         :initial="{ opacity: 0, y: -30 }"
                         :animate="{ opacity: 1, y: 0 }"
                         :transition="{ duration: 0.6, delay: 0.2 }"
-            :inViewOptions="{ once: true }"
+                        :inViewOptions="{ once: true }"
                     >
                         <span
                             class="px-8 py-3 text-xl font-bold tracking-widest text-center uppercase rounded-full md:text-2xl"
@@ -1641,7 +1641,7 @@ useHead({
                 :initial="{ opacity: 0, scale: 0.8 }"
                 :animate="{ opacity: 1, scale: 1 }"
                 :transition="{ duration: 0.6, delay: 0.2 }"
-            :inViewOptions="{ once: true }"
+                :inViewOptions="{ once: true }"
             >
                 <span
                     class="px-8 py-3 text-xl font-bold tracking-widest uppercase rounded-full md:text-2xl"
@@ -1708,7 +1708,7 @@ useHead({
                     :initial="{ opacity: 0, scale: 0.8 }"
                     :animate="{ opacity: 1, scale: 1 }"
                     :transition="{ duration: 0.6, delay: 0.2 }"
-            :inViewOptions="{ once: true }"
+                    :inViewOptions="{ once: true }"
                 >
                     Informasi & Berita
                 </motion.div>
@@ -1751,7 +1751,7 @@ useHead({
                         :initial="{ opacity: 0, y: 20 }"
                         :whileInView="{ opacity: 1, y: 0 }"
                         :transition="{ duration: 0.6 }"
-            :inViewOptions="{ once: true }"
+                        :inViewOptions="{ once: true }"
                     >
                         <NuxtLink
                             :to="`/berita/${news.slug}`"

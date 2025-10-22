@@ -65,8 +65,8 @@
 </template>
 
 <script setup lang="ts">
-import { Motion } from "motion-v";
 import { computed, onMounted, ref, watch } from "vue";
+
 // No isClient import needed; use typeof window !== 'undefined' for client check
 
 declare global {
@@ -206,7 +206,7 @@ const videoCards: VideoCard[] = [
 ];
 
 onMounted(() => {
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     if (!window.YT) {
       const tag = document.createElement("script");
       tag.src = "https://www.youtube.com/iframe_api";
@@ -226,17 +226,17 @@ onMounted(() => {
   }
 });
 const initializePlayers = () => {
-  if (typeof window === 'undefined') return;
+  if (typeof window === "undefined") return;
 
   currentSlideCards.value.forEach((card) => {
-    if (card.videoType === 'youtube' && !youtubePlayers.value[card.id]) {
+    if (card.videoType === "youtube" && !youtubePlayers.value[card.id]) {
       createPlayer(card.id, card.videoUrl);
     }
   });
 };
 
 const createPlayer = (id: number, videoId: string) => {
-  if (typeof window === 'undefined' || !window.YT || !window.YT.Player) return;
+  if (typeof window === "undefined" || !window.YT || !window.YT.Player) return;
   youtubePlayers.value[id] = new window.YT.Player(`youtube-player-${id}`, {
     videoId: videoId,
     playerVars: {
@@ -254,16 +254,16 @@ const createPlayer = (id: number, videoId: string) => {
       onReady: (event: unknown) => {
         playersReady.value[id] = true;
         const ytEvent = event as { target: any };
-        ytEvent.target.setPlaybackQuality('sd360');
-        ytEvent.target.getIframe().style.width = '100%';
-        ytEvent.target.getIframe().style.height = '100%';
+        ytEvent.target.setPlaybackQuality("sd360");
+        ytEvent.target.getIframe().style.width = "100%";
+        ytEvent.target.getIframe().style.height = "100%";
       },
     },
   });
 };
 
 watch(currentSlide, () => {
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     setTimeout(() => {
       if (apiLoaded) {
         initializePlayers();
@@ -273,7 +273,7 @@ watch(currentSlide, () => {
 });
 
 const handleMouseEnter = (id: number) => {
-  if (typeof window === 'undefined') return;
+  if (typeof window === "undefined") return;
   const player = youtubePlayers.value[id];
   const card = videoCards.find((c) => c.id === id);
 
@@ -298,7 +298,7 @@ const handleMouseEnter = (id: number) => {
 };
 
 const handleMouseLeave = (id: number) => {
-  if (typeof window === 'undefined') return;
+  if (typeof window === "undefined") return;
   const player = youtubePlayers.value[id];
   const card = videoCards.find((c) => c.id === id);
 
@@ -314,7 +314,7 @@ const handleMouseLeave = (id: number) => {
 };
 
 const handleTouchStart = (id: number) => {
-  if (typeof window === 'undefined') return;
+  if (typeof window === "undefined") return;
   const player = youtubePlayers.value[id];
   const card = videoCards.find((c) => c.id === id);
 
@@ -339,7 +339,7 @@ const handleTouchStart = (id: number) => {
 };
 
 const handleTouchEnd = (id: number) => {
-  if (typeof window === 'undefined') return;
+  if (typeof window === "undefined") return;
   const player = youtubePlayers.value[id];
   const card = videoCards.find((c) => c.id === id);
 

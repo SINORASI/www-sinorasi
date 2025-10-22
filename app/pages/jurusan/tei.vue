@@ -1,7 +1,4 @@
 <script lang="ts" setup>
-import { motion } from "motion-v";
-import KaproCarousel from "~/components/Major/KaproCarousel.vue";
-import ReferenceCareers from "~/components/Major/ReferenceCareers.vue";
 import type { MajorData } from "~/models/MajorData";
 import type { MajorName } from "~/models/MajorName";
 import { majorColorSchemes } from "~/utils/majorColors";
@@ -9,12 +6,12 @@ import { majorColorSchemes } from "~/utils/majorColors";
 definePageMeta({
   layout: "major",
   pageTransition: {
-    enterActiveClass: 'page-enter-active',
-    enterFromClass: 'page-enter-from',
-    enterToClass: 'page-enter-to',
-    leaveActiveClass: 'page-leave-active',
-    leaveFromClass: 'page-leave-from',
-    leaveToClass: 'page-leave-to',
+    enterActiveClass: "page-enter-active",
+    enterFromClass: "page-enter-from",
+    enterToClass: "page-enter-to",
+    leaveActiveClass: "page-leave-active",
+    leaveFromClass: "page-leave-from",
+    leaveToClass: "page-leave-to",
   },
 });
 
@@ -35,7 +32,7 @@ const majorColor = computed(
       border: "#059451",
       headerBg: "rgba(5, 148, 81, 0.3)",
       gradient: "linear-gradient(135deg, #059451, #047B42)",
-    }
+    },
 );
 
 const showBackToTop = ref(false);
@@ -159,7 +156,7 @@ onMounted(() => {
         </div>
 
         <div class="w-full p-6 bg-white rounded-3xl md:p-10">
-          <KaproCarousel :major="major" />
+          <MajorKaproCarousel :major="major" />
         </div>
       </div>
     </motion.section>
@@ -243,7 +240,7 @@ onMounted(() => {
         </div>
 
         <div class="flex flex-col items-center justify-center w-full">
-          <ReferenceCareers :major="major" />
+          <MajorReferenceCareers :major="major" />
         </div>
       </div>
     </motion.section>
