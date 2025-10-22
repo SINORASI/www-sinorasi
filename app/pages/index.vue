@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { motion, animate } from "motion-v";
+import { motion, animate, AnimatePresence } from "motion-v";
 import type { News } from "~/models/News";
 
 definePageMeta({
