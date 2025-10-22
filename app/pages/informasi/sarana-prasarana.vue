@@ -8,8 +8,7 @@ useHead({
   meta: [
     {
       name: "description",
-      content:
-        "Fasilitas sarana dan prasarana yang tersedia di SMK Negeri 2 Singosari untuk mendukung pembelajaran.",
+      content: "Fasilitas sarana dan prasarana yang tersedia di SMK Negeri 2 Singosari untuk mendukung pembelajaran.",
     },
   ],
 });
@@ -17,10 +16,8 @@ useHead({
 
 <template>
   <div class="min-h-screen bg-gradient-to-b from-white via-blue-50 to-white">
-    
     <section class="py-20 pt-32">
       <div class="container max-w-6xl px-4 mx-auto sm:px-6">
-        
         <div class="mb-12">
           <div
             class="inline-block px-10 py-6 mb-6 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
@@ -40,7 +37,6 @@ useHead({
           </div>
         </div>
 
-        
         <div class="mb-12">
           <div
             class="inline-block px-10 py-6 mb-6 border border-orange-200 shadow-xl bg-gradient-to-r from-orange-500 to-orange-600 backdrop-blur-2xl rounded-2xl"
@@ -62,10 +58,8 @@ useHead({
       </div>
     </section>
 
-    
     <section class="py-20">
       <div class="container px-4 mx-auto sm:px-6">
-        
         <div class="mb-12 text-center">
           <div
             class="inline-block px-10 py-6 mb-6 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
@@ -74,7 +68,6 @@ useHead({
           </div>
         </div>
 
-        
         <div class="flex flex-wrap justify-center gap-4 mb-10">
           <button
             class="px-8 py-3 font-semibold transition-all bg-white border-2 border-blue-100 shadow-md hover:border-blue-600 hover:text-blue-600 rounded-xl hover:shadow-lg"
@@ -88,7 +81,6 @@ useHead({
           </button>
         </div>
 
-        
         <div class="max-w-2xl mx-auto mb-12">
           <div class="relative">
             <Icon name="lucide:search" size="20" class="absolute text-gray-400 -translate-y-1/2 left-4 top-1/2" />
@@ -101,7 +93,6 @@ useHead({
           </div>
         </div>
 
-        
         <div class="max-w-6xl gap-6 mx-auto space-y-6">
           <div
             v-for="index in 3"
