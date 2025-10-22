@@ -324,6 +324,10 @@ const props = withDefaults(defineProps<{
   isOpen: false,
 });
 
+defineEmits<{
+  close: [];
+}>();
+
 const { locales, setLocale } = useI18n();
 const currentLanguage = computed(() => {
   const { $i18n } = useNuxtApp();
