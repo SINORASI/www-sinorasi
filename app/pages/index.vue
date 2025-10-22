@@ -1261,9 +1261,6 @@ useHead({
       <div class="absolute bottom-20 right left-0 z-0">
         <Icon name="lucide:route" size="150" class="text-orange-300 opacity-8 jurusan-ornament-2" />
       </div>
-      <div class="absolute top-1/2 left-16 z-0">
-        <Icon name="lucide:books" size="195" class="text-blue-400 opacity-12 jurusan-ornament-3" />
-      </div>
 
       <div
         class="absolute top-32 left-12 w-12 h-6 bg-gradient-to-r from-pink-300 to-pink-500 rounded-full opacity-20 abstract-1"

@@ -1,294 +1,298 @@
 <template>
-  <Motion
-    v-if="isOpen"
-    :initial="{ opacity: 0 }"
-    :animate="{ opacity: 1 }"
-    :exit="{ opacity: 0 }"
-    :transition="{ duration: 0.3, ease: 'easeInOut' }"
-    class="z-[99999]"
-  >
-    <div class="fixed inset-0 z-[99999] flex">
-      <Motion
-        :initial="{ opacity: 0 }"
-        :animate="{ opacity: 0.5 }"
-        :exit="{ opacity: 0 }"
-        :transition="{ duration: 0.3, ease: 'easeInOut' }"
-        class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[100000]"
-        @click="$emit('close')"
-      ></Motion>
+  <AnimatePresence>
+    <motion.div
+      v-if="isOpen"
+      :initial="{ opacity: 0 }"
+      :animate="{ opacity: 1 }"
+      :exit="{ opacity: 0 }"
+      :transition="{ duration: 0.3, ease: 'easeInOut' }"
+      class="z-[99999]"
+    >
+      <div class="fixed inset-0 z-[99999] flex">
+        <motion.div
+          :initial="{ opacity: 0 }"
+          :animate="{ opacity: 0.5 }"
+          :exit="{ opacity: 0 }"
+          :transition="{ duration: 0.3, ease: 'easeInOut' }"
+          class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[100000]"
+          @click="$emit('close')"
+        ></motion.div>
 
-      <Motion
-        :initial="{ x: '100%' }"
-        :animate="{ x: '0%' }"
-        :exit="{ x: '100%', opacity: 0 }"
-        :transition="{ duration: 0.3, ease: 'easeInOut' }"
-        class="relative flex flex-col w-full h-full bg-white shadow-2xl sm:ml-auto sm:w-96 z-[100001]"
-      >
-        <div class="flex items-center justify-between flex-shrink-0 gap-3 p-4 border-b border-gray-200">
-          <div class="flex-1 min-w-0">
-            <h2 class="text-lg font-semibold text-gray-800 truncate">{{ pageSubtitle }}</h2>
-            <p class="text-sm text-gray-500 truncate">{{ pageSubtitle }}</p>
-          </div>
-          <button
-            @click="$emit('close')"
-            class="flex-shrink-0 p-2 transition-colors duration-200 rounded-full hover:bg-gray-100"
-          >
-            <Icon name="lucide:x" size="20" class="text-gray-600" />
-          </button>
-        </div>
-
-        <div class="flex-1 p-4 overflow-y-auto">
-          <div class="mb-6">
-            <div class="p-4 bg-gradient-to-r from-gray-500 to-gray-600 rounded-xl shadow-lg">
-              <div class="flex items-center gap-3 mb-3">
-                <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
-                  <Icon name="lucide:user-x" size="20" class="text-white" />
-                </div>
-                <div>
-                  <p class="text-white font-semibold">{{ $t("sidebar.profile.disabled") }}</p>
-                  <p class="text-gray-100 text-sm">{{ $t("sidebar.profile.disabledDesc") }}</p>
-                </div>
-              </div>
-              <div class="text-center">
-                <p class="text-gray-200 text-sm">{{ $t("sidebar.profile.comingSoon") }}</p>
-              </div>
+        <motion.div
+          :initial="{ x: '100%' }"
+          :animate="{ x: '0%' }"
+          :exit="{ x: '100%' }"
+          :transition="{ duration: 0.3, ease: 'easeInOut' }"
+          class="relative flex flex-col w-full h-full bg-white shadow-2xl sm:ml-auto sm:w-96 z-[100001]"
+        >
+          <div class="flex items-center justify-between flex-shrink-0 gap-3 p-4 border-b border-gray-200">
+            <div class="flex-1 min-w-0">
+              <h2 class="text-lg font-semibold text-gray-800 truncate">Navigasi</h2>
+              <p class="text-sm text-gray-500 truncate">{{ pageSubtitle }}</p>
             </div>
+            <button
+              @click="$emit('close')"
+              class="flex-shrink-0 p-2 transition-colors duration-200 rounded-full hover:bg-gray-100"
+            >
+              <Icon name="lucide:x" size="20" class="text-gray-600" />
+            </button>
           </div>
 
-          <div class="relative mb-4">
-            <div class="relative">
-              <input
-                type="text"
-                :placeholder="$t('sidebar.search.placeholder')"
-                v-model="searchQuery"
-                class="w-full px-3 py-3 pr-10 text-lg text-gray-800 transition-all duration-200 border border-gray-200 rounded-lg outline-none bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-              <button
-                v-if="searchQuery.trim()"
-                @click="searchQuery = ''"
-                class="absolute p-1 text-gray-400 transition-colors transform -translate-y-1/2 rounded-full right-3 top-1/2 hover:text-gray-600 hover:bg-gray-200"
-              >
-                <Icon name="lucide:x" size="20" />
-              </button>
-              <Icon
-                v-else
-                name="lucide:search"
-                size="20"
-                class="absolute text-gray-400 transform -translate-y-1/2 pointer-events-none right-3 top-1/2"
-              />
-            </div>
-
-            <NuxtLink v-if="menuItems !== currentMenuItems" to="/" @click="$emit('close')" class="block mt-3">
-              <div
-                class="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg px-4 py-3 hover:from-blue-700 hover:to-blue-800 transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
-              >
-                <div class="flex items-center gap-3">
-                  <Icon name="lucide:home" size="24" class="flex-shrink-0" />
-                  <div class="flex-1">
-                    <p class="text-base font-semibold">{{ $t("sidebar.homeButton.title") }}</p>
-                    <p class="text-xs text-blue-100">{{ $t("sidebar.homeButton.subtitle") }}</p>
+          <div class="flex-1 p-4 overflow-y-auto">
+            <div class="mb-6">
+              <div class="p-4 bg-gradient-to-r from-gray-500 to-gray-600 rounded-xl shadow-lg">
+                <div class="flex items-center gap-3 mb-3">
+                  <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+                    <Icon name="lucide:user-x" size="20" class="text-white" />
                   </div>
-                  <Icon name="lucide:arrow-right" size="20" class="flex-shrink-0" />
+                  <div>
+                    <p class="text-white font-semibold">{{ $t("sidebar.profile.disabled") }}</p>
+                    <p class="text-gray-100 text-sm">{{ $t("sidebar.profile.disabledDesc") }}</p>
+                  </div>
+                </div>
+                <div class="text-center">
+                  <p class="text-gray-200 text-sm">{{ $t("sidebar.profile.comingSoon") }}</p>
                 </div>
               </div>
-            </NuxtLink>
+            </div>
 
-            <!-- Temporarily hidden language switcher -->
-            <div v-if="false" class="relative mt-3">
-              <button
-                @click="showLanguageMenu = !showLanguageMenu"
-                class="flex items-center justify-between w-full px-4 py-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors duration-200"
-              >
-                <div class="flex items-center gap-3">
-                  <Icon name="lucide:languages" size="20" class="text-gray-600" />
-                  <span class="text-sm font-medium text-gray-800">{{ $t("sidebar.languageSwitcher.label") }}</span>
-                </div>
-                <Icon
-                  name="lucide:chevron-down"
-                  size="16"
-                  class="text-gray-500 transition-transform"
-                  :class="{ 'rotate-180': showLanguageMenu }"
+            <div class="relative mb-4">
+              <div class="relative">
+                <input
+                  type="text"
+                  :placeholder="$t('sidebar.search.placeholder')"
+                  v-model="searchQuery"
+                  class="w-full px-3 py-3 pr-10 text-lg text-gray-800 transition-all duration-200 border border-gray-200 rounded-lg outline-none bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
-              </button>
-
-              <transition name="dropdown" class="transition-all duration-200 ease-in-out">
-                <div
-                  v-if="showLanguageMenu"
-                  class="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50"
+                <button
+                  v-if="searchQuery.trim()"
+                  @click="searchQuery = ''"
+                  class="absolute p-1 text-gray-400 transition-colors transform -translate-y-1/2 rounded-full right-3 top-1/2 hover:text-gray-600 hover:bg-gray-200"
                 >
-                  <button
-                    v-for="lang in languages"
-                    :key="lang.code"
-                    @click="switchLanguage(lang.code)"
-                    class="flex items-center justify-between w-full px-4 py-3 text-left hover:bg-gray-50 transition-colors duration-200 first:rounded-t-lg last:rounded-b-lg"
-                    :class="{ 'bg-blue-50 text-blue-700': currentLanguage === lang.code }"
-                  >
-                    <div class="flex items-center gap-3">
-                      <span class="text-lg">{{ lang.flag }}</span>
-                      <span class="text-sm font-medium">{{ lang.name }}</span>
-                    </div>
-                    <Icon v-if="currentLanguage === lang.code" name="lucide:check" size="16" class="text-blue-600" />
-                  </button>
-                </div>
-              </transition>
-            </div>
-
-            <div
-              class="flex items-center justify-between px-4 py-3 mt-3 border border-gray-200 rounded-lg cursor-not-allowed bg-gray-50 opacity-60"
-            >
-              <div class="flex items-center gap-3">
-                <Icon name="lucide:moon" size="20" class="text-gray-500" />
-                <span class="text-sm font-medium text-gray-600">Mode Gelap</span>
-              </div>
-              <div class="flex items-center gap-2">
-                <span class="px-2 py-1 text-xs text-gray-500 bg-gray-200 rounded">Segera Hadir</span>
-                <div class="relative inline-block w-12 h-6 bg-gray-300 rounded-full">
-                  <div class="absolute w-4 h-4 transition-transform bg-white rounded-full left-1 top-1"></div>
-                </div>
-              </div>
-            </div>
-
-            <div
-              v-if="searchQuery.trim() && filteredMenuItems.length === 0"
-              class="p-3 mt-2 border border-yellow-200 rounded-lg bg-yellow-50"
-            >
-              <p class="text-sm text-yellow-700">
-                <Icon name="lucide:info" size="16" class="inline mr-1" />
-                {{ $t("sidebar.search.noResults", { query: searchQuery }) }}
-              </p>
-            </div>
-            <div
-              v-if="searchQuery.trim() && filteredMenuItems.length > 0"
-              class="p-2 mt-2 border border-green-200 rounded-lg bg-green-50"
-            >
-              <p class="text-xs text-green-700">
-                <Icon name="lucide:check-circle" size="14" class="inline mr-1" />
-                {{
-                  $t("sidebar.search.resultsCount", {
-                    count: (filteredMenuItems as Record<string, unknown>[]).reduce((total: number, section: Record<string, unknown>) => total + ((section.submenu as unknown[]).length), 0),
-                  })
-                }}
-              </p>
-            </div>
-          </div>
-          <div v-for="(item, index) in filteredMenuItems" :key="index" class="mb-6">
-            <h3
-              @click="toggleSection((item as Record<string, unknown>).title as string)"
-              class="flex items-center justify-between mb-3 text-base font-semibold text-gray-800 cursor-pointer"
-            >
-              {{ $t(`sidebar.sections.${((item as Record<string, unknown>).title as string).toLowerCase().replace(/\s+/g, "")}`) }}
-              <div class="flex items-center gap-2">
-                <span v-if="searchQuery.trim()" class="px-2 py-1 text-xs text-blue-700 bg-blue-100 rounded-full">
-                  {{ ((item as Record<string, unknown>).submenu as unknown[]).length }}
-                </span>
+                  <Icon name="lucide:x" size="20" />
+                </button>
                 <Icon
-                  name="lucide:chevron-down"
-                  size="16"
-                  class="transition-transform"
-                  :class="{ 'rotate-180': openSections[(item as Record<string, unknown>).title as string] ?? false }"
+                  v-else
+                  name="lucide:search"
+                  size="20"
+                  class="absolute text-gray-400 transform -translate-y-1/2 pointer-events-none right-3 top-1/2"
                 />
               </div>
-            </h3>
-            <Motion
-              v-if="(openSections[(item as Record<string, unknown>).title as string] ?? false) || searchQuery.trim()"
-              :initial="{ opacity: 0, height: 0 }"
-              :animate="{ opacity: 1, height: 'auto' }"
-              :exit="{ opacity: 0, height: 0 }"
-              :transition="{ duration: 0.3, ease: 'easeInOut' }"
-            >
-              <div
-                v-for="(sub, subIndex) in (item as Record<string, unknown>).submenu"
-                :key="subIndex"
-                class="mb-3 ml-4 transition-colors duration-200 border-l-2 border-gray-200 hover:border-blue-300"
-              >
-                <a v-if="(sub as Record<string, unknown>).external" :href="(sub as Record<string, unknown>).to as string" target="_blank" class="block" @click="$emit('close')">
-                  <div
-                    class="flex items-start gap-3 p-2 transition-colors duration-200 rounded cursor-pointer hover:bg-gray-50"
-                    :class="{ 'bg-blue-50 border border-blue-200': searchQuery.trim() && ((sub as Record<string, unknown>).score as number) > 80 }"
-                  >
-                    <Icon :name="(sub as Record<string, unknown>).icon as string" size="18" class="mt-0.5 flex-shrink-0" :style="{ color: '#000000' }" />
+
+              <NuxtLink v-if="menuItems !== currentMenuItems" to="/" @click="$emit('close')" class="block mt-3">
+                <div
+                  class="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg px-4 py-3 hover:from-blue-700 hover:to-blue-800 transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+                >
+                  <div class="flex items-center gap-3">
+                    <Icon name="lucide:home" size="24" class="flex-shrink-0" />
                     <div class="flex-1">
-                      <div class="flex items-center gap-2">
-                        <p
-                          class="text-sm font-medium text-gray-900"
-                          v-html="highlightSearchTerm((sub as Record<string, unknown>).title as string, searchQuery)"
-                        ></p>
-                        <span
-                          v-if="((item as Record<string, unknown>).title as string) === 'Berita' && ((sub as Record<string, unknown>).title as string) !== 'Semua Berita'"
-                          class="text-xs bg-red-100 text-red-700 px-1.5 py-0.5 rounded"
-                        >
-                          {{ $t("sidebar.matches.news") }}
-                        </span>
-                        <span
-                          v-if="searchQuery.trim() && ((sub as Record<string, unknown>).score as number) > 90"
-                          class="text-xs bg-green-100 text-green-700 px-1.5 py-0.5 rounded"
-                        >
-                          {{ $t("sidebar.matches.perfect") }}
-                        </span>
-                        <span
-                          v-else-if="searchQuery.trim() && ((sub as Record<string, unknown>).score as number) > 70"
-                          class="text-xs bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded"
-                        >
-                          {{ $t("sidebar.matches.good") }}
-                        </span>
-                      </div>
-                      <p
-                        class="text-xs leading-relaxed text-gray-600"
-                        v-html="highlightSearchTerm((sub as Record<string, unknown>).desc as string, searchQuery)"
-                      ></p>
+                      <p class="text-base font-semibold">{{ $t("sidebar.homeButton.title") }}</p>
+                      <p class="text-xs text-blue-100">{{ $t("sidebar.homeButton.subtitle") }}</p>
                     </div>
+                    <Icon name="lucide:arrow-right" size="20" class="flex-shrink-0" />
                   </div>
-                </a>
-                <NuxtLink v-else :to="((sub as Record<string, unknown>).to as string) || '#'" class="block" @click="$emit('close')">
+                </div>
+              </NuxtLink>
+
+              <div v-if="false" class="relative mt-3">
+                <button
+                  @click="showLanguageMenu = !showLanguageMenu"
+                  class="flex items-center justify-between w-full px-4 py-3 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+                >
+                  <div class="flex items-center gap-3">
+                    <Icon name="lucide:languages" size="20" class="text-gray-600" />
+                    <span class="text-sm font-medium text-gray-800">{{ $t("sidebar.languageSwitcher.label") }}</span>
+                  </div>
+                  <Icon
+                    name="lucide:chevron-down"
+                    size="16"
+                    class="text-gray-500 transition-transform"
+                    :class="{ 'rotate-180': showLanguageMenu }"
+                  />
+                </button>
+
+                <transition name="dropdown" class="transition-all duration-200 ease-in-out">
                   <div
-                    class="flex items-start gap-3 p-2 transition-colors duration-200 rounded cursor-pointer hover:bg-gray-50"
-                    :class="{ 'bg-blue-50 border border-blue-200': searchQuery.trim() && ((sub as Record<string, unknown>).score as number) > 80 }"
+                    v-if="showLanguageMenu"
+                    class="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50"
                   >
-                    <Icon
-                      :name="(sub as Record<string, unknown>).icon as string"
-                      size="18"
-                      class="mt-0.5 flex-shrink-0"
-                      :style="{ color: ((item as Record<string, unknown>).title as string) === 'Konsentrasi Keahlian' ? getIconColor((sub as Record<string, unknown>).title as string) : '#000000' }"
-                    />
-                    <div class="flex-1">
-                      <div class="flex items-center gap-2">
-                        <p
-                          class="text-sm font-medium text-gray-900"
-                          v-html="highlightSearchTerm((sub as Record<string, unknown>).title as string, searchQuery)"
-                        ></p>
-                        <span
-                          v-if="((item as Record<string, unknown>).title as string) === 'Berita' && ((sub as Record<string, unknown>).title as string) !== 'Semua Berita'"
-                          class="text-xs bg-red-100 text-red-700 px-1.5 py-0.5 rounded"
-                        >
-                          {{ $t("sidebar.matches.news") }}
-                        </span>
-                        <span
-                          v-if="searchQuery.trim() && ((sub as Record<string, unknown>).score as number) > 90"
-                          class="text-xs bg-green-100 text-green-700 px-1.5 py-0.5 rounded"
-                        >
-                          {{ $t("sidebar.matches.perfect") }}
-                        </span>
-                        <span
-                          v-else-if="searchQuery.trim() && ((sub as Record<string, unknown>).score as number) > 70"
-                          class="text-xs bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded"
-                        >
-                          {{ $t("sidebar.matches.good") }}
-                        </span>
+                    <button
+                      v-for="lang in languages"
+                      :key="lang.code"
+                      @click="switchLanguage(lang.code)"
+                      class="flex items-center justify-between w-full px-4 py-3 text-left hover:bg-gray-50 transition-colors duration-200 first:rounded-t-lg last:rounded-b-lg"
+                      :class="{ 'bg-blue-50 text-blue-700': currentLanguage === lang.code }"
+                    >
+                      <div class="flex items-center gap-3">
+                        <span class="text-lg">{{ lang.flag }}</span>
+                        <span class="text-sm font-medium">{{ lang.name }}</span>
                       </div>
-                      <p
-                        class="text-xs leading-relaxed text-gray-600"
-                        v-html="highlightSearchTerm((sub as Record<string, unknown>).desc as string, searchQuery)"
-                      ></p>
-                    </div>
+                      <Icon v-if="currentLanguage === lang.code" name="lucide:check" size="16" class="text-blue-600" />
+                    </button>
                   </div>
-                </NuxtLink>
+                </transition>
               </div>
-            </Motion>
+
+              <div
+                class="flex items-center justify-between px-4 py-3 mt-3 border border-gray-200 rounded-lg cursor-not-allowed bg-gray-50 opacity-60"
+              >
+                <div class="flex items-center gap-3">
+                  <Icon name="lucide:moon" size="20" class="text-gray-500" />
+                  <span class="text-sm font-medium text-gray-600">Mode Gelap</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="px-2 py-1 text-xs text-gray-500 bg-gray-200 rounded">Segera Hadir</span>
+                  <div class="relative inline-block w-12 h-6 bg-gray-300 rounded-full">
+                    <div class="absolute w-4 h-4 transition-transform bg-white rounded-full left-1 top-1"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                v-if="searchQuery.trim() && filteredMenuItems.length === 0"
+                class="p-3 mt-2 border border-yellow-200 rounded-lg bg-yellow-50"
+              >
+                <p class="text-sm text-yellow-700">
+                  <Icon name="lucide:info" size="16" class="inline mr-1" />
+                  {{ $t("sidebar.search.noResults", { query: searchQuery }) }}
+                </p>
+              </div>
+              <div
+                v-if="searchQuery.trim() && filteredMenuItems.length > 0"
+                class="p-2 mt-2 border border-green-200 rounded-lg bg-green-50"
+              >
+                <p class="text-xs text-green-700">
+                  <Icon name="lucide:check-circle" size="14" class="inline mr-1" />
+                  {{
+                    $t("sidebar.search.resultsCount", {
+                      count: (filteredMenuItems as Record<string, unknown>[]).reduce((total: number, section: Record<string, unknown>) => total + ((section.submenu as unknown[]).length), 0),
+                    })
+                  }}
+                </p>
+              </div>
+            </div>
+            <div v-for="(item, index) in filteredMenuItems" :key="index" class="mb-6">
+              <h3
+                @click="toggleSection((item as Record<string, unknown>).title as string)"
+                class="flex items-center justify-between mb-3 text-base font-semibold text-gray-800 cursor-pointer"
+              >
+                {{ $t(`sidebar.sections.${((item as Record<string, unknown>).title as string).toLowerCase().replace(/\s+/g, "")}`) }}
+                <div class="flex items-center gap-2">
+                  <span v-if="searchQuery.trim()" class="px-2 py-1 text-xs text-blue-700 bg-blue-100 rounded-full">
+                    {{ ((item as Record<string, unknown>).submenu as unknown[]).length }}
+                  </span>
+                  <Icon
+                    name="lucide:chevron-down"
+                    size="16"
+                    class="transition-transform"
+                    :class="{ 'rotate-180': openSections[(item as Record<string, unknown>).title as string] ?? false }"
+                  />
+                </div>
+              </h3>
+
+              <AnimatePresence>
+                <motion.div
+                  v-if="(openSections[(item as Record<string, unknown>).title as string] ?? false) || searchQuery.trim()"
+                  :initial="{ opacity: 0, height: 0 }"
+                  :animate="{ opacity: 1, height: 'auto' }"
+                  :exit="{ opacity: 0, height: 0 }"
+                  :transition="{ duration: 0.3, ease: 'easeInOut' }"
+                  class="overflow-hidden" >
+                  <div
+                    v-for="(sub, subIndex) in (item as Record<string, unknown>).submenu"
+                    :key="subIndex"
+                    class="mb-3 ml-4 transition-colors duration-200 border-l-2 border-gray-200 hover:border-blue-300"
+                  >
+                    <a v-if="(sub as Record<string, unknown>).external" :href="(sub as Record<string, unknown>).to as string" target="_blank" class="block" @click="$emit('close')">
+                      <div
+                        class="flex items-start gap-3 p-2 transition-colors duration-200 rounded cursor-pointer hover:bg-gray-50"
+                        :class="{ 'bg-blue-50 border border-blue-200': searchQuery.trim() && ((sub as Record<string, unknown>).score as number) > 80 }"
+                      >
+                        <Icon :name="(sub as Record<string, unknown>).icon as string" size="18" class="mt-0.5 flex-shrink-0 text-gray-900" />
+                        <div class="flex-1">
+                          <div class="flex items-center gap-2">
+                            <p
+                              class="text-sm font-medium text-gray-900"
+                              v-html="highlightSearchTerm((sub as Record<string, unknown>).title as string, searchQuery)"
+                            ></p>
+                            <span
+                              v-if="((item as Record<string, unknown>).title as string) === 'Berita' && ((sub as Record<string, unknown>).title as string) !== 'Semua Berita'"
+                              class="text-xs bg-red-100 text-red-700 px-1.5 py-0.5 rounded"
+                            >
+                              {{ $t("sidebar.matches.news") }}
+                            </span>
+                            <span
+                              v-if="searchQuery.trim() && ((sub as Record<string, unknown>).score as number) > 90"
+                              class="text-xs bg-green-100 text-green-700 px-1.5 py-0.5 rounded"
+                            >
+                              {{ $t("sidebar.matches.perfect") }}
+                            </span>
+                            <span
+                              v-else-if="searchQuery.trim() && ((sub as Record<string, unknown>).score as number) > 70"
+                              class="text-xs bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded"
+                            >
+                              {{ $t("sidebar.matches.good") }}
+                            </span>
+                          </div>
+                          <p
+                            class="text-xs leading-relaxed text-gray-600"
+                            v-html="highlightSearchTerm((sub as Record<string, unknown>).desc as string, searchQuery)"
+                          ></p>
+                        </div>
+                      </div>
+                    </a>
+                    <NuxtLink v-else :to="((sub as Record<string, unknown>).to as string) || '#'" class="block" @click="$emit('close')">
+                      <div
+                        class="flex items-start gap-3 p-2 transition-colors duration-200 rounded cursor-pointer hover:bg-gray-50"
+                        :class="{ 'bg-blue-50 border border-blue-200': searchQuery.trim() && ((sub as Record<string, unknown>).score as number) > 80 }"
+                      >
+                        <Icon
+                          :name="(sub as Record<string, unknown>).icon as string"
+                          size="18"
+                          class="mt-0.5 flex-shrink-0 text-gray-900"
+                          :style="{ color: ((item as Record<string, unknown>).title as string) === 'Konsentrasi Keahlian' ? getIconColor((sub as Record<string, unknown>).title as string) : undefined }"
+                        />
+                        <div class="flex-1">
+                          <div class="flex items-center gap-2">
+                            <p
+                              class="text-sm font-medium text-gray-900"
+                              v-html="highlightSearchTerm((sub as Record<string, unknown>).title as string, searchQuery)"
+                            ></p>
+                            <span
+                              v-if="((item as Record<string, unknown>).title as string) === 'Berita' && ((sub as Record<string, unknown>).title as string) !== 'Semua Berita'"
+                              class="text-xs bg-red-100 text-red-700 px-1.5 py-0.5 rounded"
+                            >
+                              {{ $t("sidebar.matches.news") }}
+                            </span>
+                            <span
+                              v-if="searchQuery.trim() && ((sub as Record<string, unknown>).score as number) > 90"
+                              class="text-xs bg-green-100 text-green-700 px-1.5 py-0.5 rounded"
+                            >
+                              {{ $t("sidebar.matches.perfect") }}
+                            </span>
+                            <span
+                              v-else-if="searchQuery.trim() && ((sub as Record<string, unknown>).score as number) > 70"
+                              class="text-xs bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded"
+                            >
+                              {{ $t("sidebar.matches.good") }}
+                            </span>
+                          </div>
+                          <p
+                            class="text-xs leading-relaxed text-gray-600"
+                            v-html="highlightSearchTerm((sub as Record<string, unknown>).desc as string, searchQuery)"
+                          ></p>
+                        </div>
+                      </div>
+                    </NuxtLink>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
           </div>
-        </div>
-      </Motion>
-    </div>
-  </Motion>
+        </motion.div>
+      </div>
+    </motion.div>
+  </AnimatePresence>
 </template>
 
 <style scoped>
@@ -305,8 +309,8 @@
 </style>
 
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
-import { Motion } from "motion-v";
+import { computed, ref } from "vue";
+import { motion, AnimatePresence } from "motion-v";
 import type { Extracurricular } from "~/models/Extracurricular";
 import type { MajorName } from "~/models/MajorName";
 import type { News } from "~/models/News";
@@ -326,12 +330,6 @@ const currentLanguage = computed(() => {
   return $i18n.locale.value;
 });
 const showLanguageMenu = ref(false);
-
-// Debug logging for sidebar animation
-watch(() => props.isOpen, (newVal, oldVal) => {
-  console.log('Sidebar isOpen changed:', { oldVal, newVal });
-  console.log('Animation should trigger:', newVal ? 'enter' : 'exit');
-}, { immediate: true });
 
 const languages = computed(() => locales.value);
 

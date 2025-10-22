@@ -2,6 +2,10 @@
 import type { MajorData } from "~/models/MajorData";
 import type { MajorName } from "~/models/MajorName";
 
+definePageMeta({
+  layout: "default",
+});
+
 const { data: majorDatas } = await useFetch<Record<MajorName, MajorData>>("/api/majors");
 
 const showBackToTop = ref(false);

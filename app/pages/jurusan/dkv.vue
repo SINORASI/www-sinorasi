@@ -8,6 +8,14 @@ import { majorColorSchemes } from "~/utils/majorColors";
 
 definePageMeta({
   layout: "major",
+  pageTransition: {
+    enterActiveClass: 'page-enter-active',
+    enterFromClass: 'page-enter-from',
+    enterToClass: 'page-enter-to',
+    leaveActiveClass: 'page-leave-active',
+    leaveFromClass: 'page-leave-from',
+    leaveToClass: 'page-leave-to',
+  },
 });
 
 const major: MajorName = "dkv";
