@@ -1,40 +1,116 @@
 <template>
-  <section class="relative w-full py-30 h-screen" style="background-image: url('/images/guru/foto-guru-bersama.jpeg'); background-size: cover; background-position: bottom;">
-    <div class="absolute bottom-0 left-0 right-0 flex flex-col md:flex-row justify-around items-center w-full p-4 bg-neutral-200 h-fit gap-4 md:gap-0">
-      <div class="flex flex-col items-center justify-center">
+  <motion.section
+    class="relative w-full py-30 h-screen"
+    style="
+      background-image: url('/images/guru/foto-guru-bersama.jpeg');
+      background-size: cover;
+      background-position: bottom;
+    "
+    :initial="{ opacity: 0, scale: 1.1 }"
+    :whileInView="{ opacity: 1, scale: 1 }"
+    :transition="{ duration: 1.2, ease: 'easeOut' }"
+    :inViewOptions="{ once: true }"
+  >
+    <div
+      class="absolute bottom-0 left-0 right-0 flex flex-col md:flex-row justify-around items-center w-full p-4 bg-neutral-200 h-fit gap-4 md:gap-0"
+    >
+      <motion.div
+        class="flex flex-col items-center justify-center"
+        :initial="{ x: -50, opacity: 0, scale: 0.8 }"
+        :whileInView="{ x: 0, opacity: 1, scale: 1 }"
+        :transition="{ duration: 0.6, delay: 0.2, type: 'spring', stiffness: 100 }"
+        :inViewOptions="{ once: true }"
+      >
         <h1 class="text-2xl md:text-4xl font-bold">56+</h1>
         <p class="text-sm md:text-base">Guru Pengajar</p>
-      </div>
-      <div class="flex flex-col items-center justify-center">
+      </motion.div>
+      <motion.div
+        class="flex flex-col items-center justify-center"
+        :initial="{ y: 50, opacity: 0, rotate: -10 }"
+        :whileInView="{ y: 0, opacity: 1, rotate: 0 }"
+        :transition="{ duration: 0.6, delay: 0.4, type: 'spring', stiffness: 100 }"
+        :inViewOptions="{ once: true }"
+      >
         <h1 class="text-2xl md:text-4xl font-bold">14+</h1>
         <p class="text-sm md:text-base">Karyawan</p>
-      </div>
-      <div class="flex flex-col items-center justify-center">
+      </motion.div>
+      <motion.div
+        class="flex flex-col items-center justify-center"
+        :initial="{ x: 50, opacity: 0, scale: 0.8 }"
+        :whileInView="{ x: 0, opacity: 1, scale: 1 }"
+        :transition="{ duration: 0.6, delay: 0.6, type: 'spring', stiffness: 100 }"
+        :inViewOptions="{ once: true }"
+      >
         <h1 class="text-2xl md:text-4xl font-bold">12+</h1>
         <p class="text-sm md:text-base">Staff</p>
-      </div>
-      <div class="flex flex-col items-center justify-center">
+      </motion.div>
+      <motion.div
+        class="flex flex-col items-center justify-center"
+        :initial="{ y: -50, opacity: 0, rotate: 10 }"
+        :whileInView="{ y: 0, opacity: 1, rotate: 0 }"
+        :transition="{ duration: 0.6, delay: 0.8, type: 'spring', stiffness: 100 }"
+        :inViewOptions="{ once: true }"
+      >
         <h1 class="text-2xl md:text-4xl font-bold">80+</h1>
         <p class="text-sm md:text-base">Lainnya</p>
-      </div>
+      </motion.div>
     </div>
-  </section>
+  </motion.section>
   <section class="container flex flex-col items-center justify-center gap-5 mx-auto py-30">
-    <h1 class="p-4 text-3xl font-bold text-center rounded-lg shadow-sm bg-neutral-200">Guru Pengajar</h1>
-    <p class="p-4 text-lg font-bold text-center rounded-lg shadow-sm bg-neutral-200">SMK Negeri 2 Singosari</p>
+    <motion.h1
+      class="p-4 text-3xl font-bold text-center rounded-lg shadow-sm bg-neutral-200"
+      :initial="{ x: -100, opacity: 0, scale: 0.9 }"
+      :whileInView="{ x: 0, opacity: 1, scale: 1 }"
+      :transition="{ duration: 0.7, delay: 0.1, type: 'spring', stiffness: 80 }"
+      :inViewOptions="{ once: true }"
+    >
+      Guru Pengajar
+    </motion.h1>
+    <motion.p
+      class="p-4 text-lg font-bold text-center rounded-lg shadow-sm bg-neutral-200"
+      :initial="{ x: 100, opacity: 0, scale: 0.9 }"
+      :whileInView="{ x: 0, opacity: 1, scale: 1 }"
+      :transition="{ duration: 0.7, delay: 0.3, type: 'spring', stiffness: 80 }"
+      :inViewOptions="{ once: true }"
+    >
+      SMK Negeri 2 Singosari
+    </motion.p>
 
-    <TeacherCategoryCarousel
-      v-for="category in teacherCategories"
+    <motion.div
+      v-for="(category, index) in teacherCategories"
       :key="category.title"
-      :title="category.title"
-      :pagination="category.pagination"
-      :teachers="category.teachers"
-      :description="category.description"
-      :classes="category.classes"
-      :materials-by-class="category.materialsByClass"
-      :teaching-focus="category.teachingFocus"
-      @open-modal="handleOpenModal"
-    />
+      :initial="{
+        opacity: 0,
+        x: index % 2 === 0 ? -100 : 100,
+        y: 50,
+        rotateY: index % 2 === 0 ? -15 : 15,
+      }"
+      :whileInView="{
+        opacity: 1,
+        x: 0,
+        y: 0,
+        rotateY: 0,
+      }"
+      :transition="{
+        duration: 0.8,
+        delay: index * 0.15,
+        type: 'spring',
+        stiffness: 70,
+        damping: 20,
+      }"
+      :inViewOptions="{ once: true }"
+    >
+      <TeacherCategoryCarousel
+        :title="category.title"
+        :pagination="category.pagination"
+        :teachers="category.teachers"
+        :description="category.description"
+        :classes="category.classes"
+        :materials-by-class="category.materialsByClass"
+        :teaching-focus="category.teachingFocus"
+        @open-modal="handleOpenModal"
+      />
+    </motion.div>
   </section>
 
   <TeacherDetailModal
@@ -47,6 +123,7 @@
 </template>
 
 <script setup>
+import { motion } from "motion-v";
 import { ref } from "vue";
 
 const isModalVisible = ref(false);
@@ -60,8 +137,7 @@ useHead({
   meta: [
     {
       name: "description",
-      content:
-        "Daftar guru pengajar di SMK Negeri 2 Singosari. Tenaga pendidik profesional dan berpengalaman.",
+      content: "Daftar guru pengajar di SMK Negeri 2 Singosari. Tenaga pendidik profesional dan berpengalaman.",
     },
   ],
 });
@@ -99,8 +175,7 @@ const teacherCategories = ref([
         degree: "S.Sn",
         image: "/images/guru/PNS/FAUZI RAHMADANI, S.Sn.jpg",
         university: "",
-        quote:
-          '"Seorang terpelajar harus sudah berbuat adil sejak dalam pikiran, apalagi dalam perbuatan"',
+        quote: '"Seorang terpelajar harus sudah berbuat adil sejak dalam pikiran, apalagi dalam perbuatan"',
       },
       {
         id: "pns-4",
@@ -292,8 +367,7 @@ const teacherCategories = ref([
         degree: "S.Pd., M.Pd.",
         image: "/images/guru/Foto - foto pns/Wiwin/wiwin 2.jpg",
         university: "",
-        quote:
-          "Tidak keberhasilan tanpa perjuangan, kegagalan adalah hal biasa bangkit terus semangat untuk berjuang",
+        quote: "Tidak keberhasilan tanpa perjuangan, kegagalan adalah hal biasa bangkit terus semangat untuk berjuang",
       },
       {
         id: "pns-34",
@@ -301,8 +375,7 @@ const teacherCategories = ref([
         degree: "S.Kom",
         image: "/images/guru/Foto - foto pns/Zulkifli/zulkfli 2.jpg",
         university: "",
-        quote:
-          "Keberhasilan dan kesuksesan tidak akan mungkin didapat tanpa usaha keras dan tak kenal lelah",
+        quote: "Keberhasilan dan kesuksesan tidak akan mungkin didapat tanpa usaha keras dan tak kenal lelah",
       },
       {
         id: "pns-35",
@@ -317,8 +390,7 @@ const teacherCategories = ref([
   {
     title: "P3K",
     pagination: "01/19",
-    description:
-      "Pengawas/Pembina di SMK Negeri 02 Singosari yang bertugas mengawasi dan membina proses pendidikan.",
+    description: "Pengawas/Pembina di SMK Negeri 02 Singosari yang bertugas mengawasi dan membina proses pendidikan.",
     classes: [],
     materialsByClass: [],
     teachingFocus: "Berperan aktif dalam mendukung visi misi SMK Negeri 02 Singosari.",
@@ -485,8 +557,7 @@ const teacherCategories = ref([
   {
     title: "GTT",
     pagination: "01/07",
-    description:
-      "Guru Tetap di SMK Negeri 02 Singosari yang fokus pada pengembangan kompetensi siswa.",
+    description: "Guru Tetap di SMK Negeri 02 Singosari yang fokus pada pengembangan kompetensi siswa.",
     classes: [],
     materialsByClass: [],
     teachingFocus: "Berperan aktif dalam mendukung visi misi SMK Negeri 02 Singosari.",
@@ -622,8 +693,7 @@ const teacherCategories = ref([
         degree: "",
         image: "/images/guru/KARYAWAN/LULUK RENANINGTYAS.jpg",
         university: "",
-        quote:
-          "Ingat! Setiap kamu malas-malasan, teman-teman kamu diluar sana terus berproses dan bertumbuh.",
+        quote: "Ingat! Setiap kamu malas-malasan, teman-teman kamu diluar sana terus berproses dan bertumbuh.",
       },
       {
         id: "karyawan-11",
@@ -679,8 +749,7 @@ const teacherCategories = ref([
   {
     title: "Kapro",
     pagination: "01/08",
-    description:
-      "Kepala Program Keahlian yang memimpin konsentrasi keahlian di SMK Negeri 02 Singosari.",
+    description: "Kepala Program Keahlian yang memimpin konsentrasi keahlian di SMK Negeri 02 Singosari.",
     classes: [],
     materialsByClass: [],
     teachingFocus: "Berperan aktif dalam mendukung visi misi SMK Negeri 02 Singosari.",
@@ -775,8 +844,7 @@ const teacherCategories = ref([
         degree: "S.Pd, M.Pd",
         image: "/images/guru/Korlabid/KESISWAAN/WIWIN WINANGSIH, S.Pd,M.Pd.jpg",
         university: "",
-        quote:
-          "Tidak keberhasilan tanpa perjuangan, kegagalan adalah hal biasa bangkit terus semangat untuk berjuang",
+        quote: "Tidak keberhasilan tanpa perjuangan, kegagalan adalah hal biasa bangkit terus semangat untuk berjuang",
       },
       {
         id: "korlabid-4",

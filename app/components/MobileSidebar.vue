@@ -569,14 +569,6 @@ const menuItems = [
     title: "Informasi",
     submenu: [
       {
-        title: "Berita",
-        desc: "Berita terbaru sekolah",
-        icon: "lucide:newspaper",
-        to: "/berita",
-        external: false,
-        tags: ["berita", "news"],
-      },
-      {
         title: "Events",
         desc: "Acara yang sedang/akan berlansung di sekolah",
         icon: "lucide:hand-metal",

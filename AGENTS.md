@@ -8,8 +8,6 @@
 - **Preview**: `nuxt preview`
 - **Postinstall setup**: `nuxt prepare`
 - **Lint**: `bun run lint` (Biome JS)
-- **Lint fix**: `bun run lint:fix` (Biome JS)
-- **Format**: `bun run format` (Biome JS)
 - **Test**: No test framework configured
 
 ## Code Style Guidelines
