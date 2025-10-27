@@ -1144,6 +1144,7 @@ useHead({
               :initial="{ opacity: 0, y: -100 }"
               :whileInView="{ opacity: 1, y: 0 }"
               :transition="{ duration: 0.8, delay: 0 }"
+              :inViewOptions="{ once: true }"
             >
               <div
                 class="w-full p-6 text-center transition-all duration-300 bg-white border-2 border-blue-100 shadow-xl rounded-2xl hover:border-blue-300 hover:shadow-2xl hover:-translate-y-1"
@@ -1190,6 +1191,7 @@ useHead({
               :initial="{ opacity: 0, y: -100 }"
               :whileInView="{ opacity: 1, y: 0 }"
               :transition="{ duration: 0.8, delay: 0 }"
+              :inViewOptions="{ once: true }"
             >
               <div
                 :class="[
@@ -1502,18 +1504,17 @@ useHead({
       </div>
     </motion.section>
 
-    <motion.button
-      v-show="showBackToTop"
-      @click="scrollToTop"
-      class="fixed z-50 flex items-center justify-center transition-all duration-300 transform rounded-full bottom-8 right-8 w-14 h-14 hover:scale-110 group cursor-pointer"
-      :style="{ background: `linear-gradient(135deg, #3b82f6, #1d4ed8)` }"
-      :initial="{ opacity: 0, y: 20 }"
-      :animate="{
-        opacity: showBackToTop ? 1 : 0,
-        y: showBackToTop ? 0 : 20,
-      }"
-      :transition="{ duration: 0.3, ease: 'easeInOut' }"
-    >
+    <AnimatePresence>
+      <motion.button
+        v-if="showBackToTop"
+        @click="scrollToTop"
+        class="fixed z-50 flex items-center justify-center transition-all duration-300 transform rounded-full bottom-8 right-8 w-14 h-14 hover:scale-110 group cursor-pointer"
+        :style="{ background: `linear-gradient(135deg, #3b82f6, #1d4ed8)` }"
+        :initial="{ opacity: 0, y: 20 }"
+        :animate="{ opacity: 1, y: 0 }"
+        :exit="{ opacity: 0, y: 20 }"
+        :transition="{ duration: 0.3, ease: 'easeInOut' }"
+      >
       <svg
         class="w-6 h-6 text-white transition-transform group-hover:-translate-y-1"
         fill="none"
@@ -1522,7 +1523,8 @@ useHead({
       >
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
       </svg>
-    </motion.button>
+      </motion.button>
+    </AnimatePresence>
   </main>
 </template>
 
@@ -1628,11 +1630,6 @@ useHead({
     opacity: 0.6;
   }
 }
-
-/* PERBAIKAN 6:
-  Keyframe '.hero-shape-1' dihapus dari sini karena
-  animasinya sekarang ditangani oleh motion-v di template.
-*/
 
 .hero-shape-2 {
   animation: float-delayed 8s ease-in-out infinite;
