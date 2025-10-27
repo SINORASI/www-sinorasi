@@ -33,8 +33,7 @@ useHead({
   meta: [
     {
       name: "description",
-      content:
-        "Profil lengkap SMK Negeri 2 Singosari. Sejarah, visi misi, dan sambutan kepala sekolah.",
+      content: "Profil lengkap SMK Negeri 2 Singosari. Sejarah, visi misi, dan sambutan kepala sekolah.",
     },
   ],
 });
@@ -42,7 +41,6 @@ useHead({
 
 <template>
   <div class="min-h-screen bg-gradient-to-b from-white via-blue-50 to-white">
-    
     <section class="py-32">
       <div class="container w-max-[1200px] px-4 mx-auto sm:px-6">
         <div class="mb-12 text-center">
@@ -56,10 +54,9 @@ useHead({
 
         <div class="mx-auto">
           <div class="flex flex-col gap-8">
-            
             <div class="flex flex-col items-center justify-center lg:flex-row lg:items-center lg:gap-8">
               <div class="p-6 bg-white border-2 border-blue-100 shadow-xl rounded-2xl w-fit">
-                <img src="/images/kepsek.webp" alt="Kepala Sekolah" class="w-64 rounded-xl md:w-80" />
+                <NuxtImg src="/images/kepsek.webp" alt="Kepala Sekolah" class="w-64 rounded-xl md:w-80" />
               </div>
               <div class="max-w-xl mx-5 p-6 mt-6 border-2 border-blue-100 shadow-xl bg-blue-50 rounded-2xl lg:mt-0">
                 <blockquote class="italic text-center text-2xl text-gray-700 lg:text-left">
@@ -72,7 +69,6 @@ useHead({
               </div>
             </div>
 
-            
             <div class="flex items-center justify-center">
               <div
                 class="w-full max-w-5xl p-8 space-y-6 leading-relaxed text-gray-700 bg-white border-2 border-blue-100 shadow-xl rounded-2xl md:p-12"
@@ -101,11 +97,9 @@ useHead({
       </div>
     </section>
 
-    
     <section class="py-20">
       <div class="container max-w-[1200px] px-4 mx-auto sm:px-6">
         <div class="max-w-5xl mx-auto">
-          
           <button v-if="!isVisionMissionExpanded" @click="toggleVisionMission" class="w-full group">
             <div
               class="p-8 transition-all duration-300 bg-white border-2 border-orange-100 shadow-xl rounded-2xl md:p-10 hover:border-orange-300 hover:shadow-2xl"
@@ -124,12 +118,10 @@ useHead({
             </div>
           </button>
 
-          
           <div
             v-else
             class="overflow-hidden border-2 border-orange-100 shadow-xl rounded-2xl animate-expand backdrop-blur-xl bg-white/95"
           >
-            
             <button @click="toggleVisionMission" class="w-full group">
               <div class="p-8 md:p-10">
                 <div class="flex items-center justify-between">
@@ -146,7 +138,6 @@ useHead({
               </div>
             </button>
 
-            
             <div class="px-8 pb-8 md:px-10 md:pb-10 animate-slide-down">
               <div class="grid gap-6 md:grid-cols-2">
                 <div class="p-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
@@ -186,9 +177,7 @@ useHead({
       </div>
     </section>
 
-    
     <section class="relative py-20">
-
       <div class="container px-4 mx-auto">
         <div class="text-center mb-12">
           <div
@@ -203,107 +192,158 @@ useHead({
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-0 w-full mx-auto">
-          
-           <div class="rounded-tl-lg rounded-bl-lg shadow-lg overflow-hidden cursor-pointer transition-transform" @click="expandCard(0)">
-             <div class="relative w-full h-96 overflow-hidden">
-               <img src="/images/thumbnail/profile-thumbnail.webp" alt="Video Profil Thumbnail" class="absolute inset-0 w-full h-full object-cover" />
-              <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-4 backdrop-blur-sm">
+          <div
+            class="rounded-tl-lg rounded-bl-lg shadow-lg overflow-hidden cursor-pointer transition-transform"
+            @click="expandCard(0)"
+          >
+            <div class="relative w-full h-96 overflow-hidden">
+              <NuxtImg
+                src="/images/thumbnail/profile-thumbnail.webp"
+                alt="Video Profil Thumbnail"
+                class="absolute inset-0 w-full h-full object-cover"
+              />
+              <div
+                class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-4 backdrop-blur-sm"
+              >
                 <h3 class="text-xl font-bold text-white font-sans">Video Profil</h3>
                 <p class="text-sm text-gray-200 mt-2 font-sans">
-                  Temukan lebih dalam tentang visi, misi, dan program unggulan SMK Negeri 2 Singosari melalui video profil
-                  kami.
+                  Temukan lebih dalam tentang visi, misi, dan program unggulan SMK Negeri 2 Singosari melalui video
+                  profil kami.
                 </p>
               </div>
             </div>
           </div>
 
-          
-           <div class="shadow-lg overflow-hidden cursor-pointer transition-transform" @click="expandCard(1)">
-             <div class="relative w-full h-96 overflow-hidden">
-               <img src="/images/thumbnail/mars-thumbnail.webp" alt="Mars SMK Thumbnail" class="absolute inset-0 w-full h-full object-cover" />
-              <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-4 backdrop-blur-sm">
+          <div class="shadow-lg overflow-hidden cursor-pointer transition-transform" @click="expandCard(1)">
+            <div class="relative w-full h-96 overflow-hidden">
+              <NuxtImg
+                src="/images/thumbnail/mars-thumbnail.webp"
+                alt="Mars SMK Thumbnail"
+                class="absolute inset-0 w-full h-full object-cover"
+              />
+              <div
+                class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-4 backdrop-blur-sm"
+              >
                 <h3 class="text-xl font-bold text-white font-sans">Mars SMK</h3>
                 <p class="text-sm text-gray-200 mt-2 font-sans">
-                  Dengarkan mars sekolah yang penuh semangat dan identitas kami sebagai komunitas SMK Negeri 2 Singosari.
+                  Dengarkan mars sekolah yang penuh semangat dan identitas kami sebagai komunitas SMK Negeri 2
+                  Singosari.
                 </p>
               </div>
             </div>
           </div>
 
-          
-           <div class="rounded-tr-lg rounded-br-lg shadow-lg overflow-hidden cursor-pointer transition-transform" @click="expandCard(2)">
+          <div
+            class="rounded-tr-lg rounded-br-lg shadow-lg overflow-hidden cursor-pointer transition-transform"
+            @click="expandCard(2)"
+          >
             <div class="relative w-full h-96 overflow-hidden">
-              <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d53004.90227511139!2d112.61905412163591!3d-7.903971658482226!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd62a2690b713bb%3A0x61a43c4cb3de3ff0!2sSMK%20Negeri%202%20Singosari!5e0!3m2!1sid!2sid!4v1760870911351!5m2!1sid!2sid" style="border:0;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="absolute inset-0 w-full h-full"></iframe>
-              <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-4 backdrop-blur-sm">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d53004.90227511139!2d112.61905412163591!3d-7.903971658482226!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd62a2690b713bb%3A0x61a43c4cb3de3ff0!2sSMK%20Negeri%202%20Singosari!5e0!3m2!1sid!2sid!4v1760870911351!5m2!1sid!2sid"
+                style="border: 0"
+                allowfullscreen
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                class="absolute inset-0 w-full h-full"
+              ></iframe>
+              <div
+                class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-4 backdrop-blur-sm"
+              >
                 <h3 class="text-xl font-bold text-white font-sans">Maps Lokasi</h3>
                 <p class="text-sm text-gray-200 mt-2 font-sans">
-                  Jelajahi lokasi sekolah kami melalui peta interaktif dan temukan cara mudah untuk mengunjungi SMK Negeri
-                  2 Singosari.
+                  Jelajahi lokasi sekolah kami melalui peta interaktif dan temukan cara mudah untuk mengunjungi SMK
+                  Negeri 2 Singosari.
                 </p>
               </div>
             </div>
           </div>
         </div>
 
-        
-        <div v-if="expandedCard !== null" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm" @click="closeCard">
+        <div
+          v-if="expandedCard !== null"
+          class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm"
+          @click="closeCard"
+        >
           <div class="relative w-3/5 h-4/6 mx-auto" @click.stop>
-            
-            <button @click="closeCard" class="absolute top-4 right-4 z-10 w-12 h-12 bg-gray-600 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-gray-500 transition-colors">
+            <button
+              @click="closeCard"
+              class="absolute top-4 right-4 z-10 w-12 h-12 bg-gray-600 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-gray-500 transition-colors"
+            >
               <Icon name="lucide:x" size="24" />
             </button>
 
-            
-            <button @click="prevCard" class="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-gray-600 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-gray-500 transition-colors">
+            <button
+              @click="prevCard"
+              class="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-gray-600 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-gray-500 transition-colors"
+            >
               <Icon name="lucide:chevron-left" size="24" />
             </button>
-            <button @click="nextCard" class="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-gray-600 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-gray-500 transition-colors">
+            <button
+              @click="nextCard"
+              class="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-12 h-12 bg-gray-600 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-gray-500 transition-colors"
+            >
               <Icon name="lucide:chevron-right" size="24" />
             </button>
 
-            
             <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
-              
               <div v-if="expandedCard === 0" class="relative">
                 <div class="aspect-video">
-                  <iframe src="https://www.youtube.com/embed/Kks6HnhPzVQ" class="absolute inset-0 w-full h-full" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen title="Video Profil SMK Negeri 2 Singosari"></iframe>
+                  <iframe
+                    src="https://www.youtube.com/embed/Kks6HnhPzVQ"
+                    class="absolute inset-0 w-full h-full"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                    title="Video Profil SMK Negeri 2 Singosari"
+                  ></iframe>
                 </div>
                 <div class="p-8">
                   <h3 class="text-2xl font-bold text-gray-800 mb-4">Video Profil</h3>
                   <p class="text-gray-700 leading-relaxed">
-                    Temukan lebih dalam tentang visi, misi, dan program unggulan SMK Negeri 2 Singosari melalui video profil
-                    kami. Video ini menampilkan kegiatan sehari-hari, fasilitas, dan prestasi yang telah diraih oleh sekolah kami.
+                    Temukan lebih dalam tentang visi, misi, dan program unggulan SMK Negeri 2 Singosari melalui video
+                    profil kami. Video ini menampilkan kegiatan sehari-hari, fasilitas, dan prestasi yang telah diraih
+                    oleh sekolah kami.
                   </p>
                 </div>
               </div>
 
-              
               <div v-if="expandedCard === 1" class="relative">
                 <div class="aspect-video">
                   <video class="absolute inset-0 w-full h-full object-cover" controls autoplay>
-                    <source src="https://smkn2-singosari.sch.id/wp-content/uploads/2023/10/marssmkn2.mp4" type="video/mp4">
+                    <source
+                      src="https://smkn2-singosari.sch.id/wp-content/uploads/2023/10/marssmkn2.mp4"
+                      type="video/mp4"
+                    />
                     Your browser does not support the video tag.
                   </video>
                 </div>
                 <div class="p-8">
                   <h3 class="text-2xl font-bold text-gray-800 mb-4">Mars SMK</h3>
                   <p class="text-gray-700 leading-relaxed">
-                    Dengarkan mars sekolah yang penuh semangat dan identitas kami sebagai komunitas SMK Negeri 2 Singosari.
-                    Mars ini menjadi simbol kebersamaan dan semangat juang siswa-siswi dalam menjalani pendidikan.
+                    Dengarkan mars sekolah yang penuh semangat dan identitas kami sebagai komunitas SMK Negeri 2
+                    Singosari. Mars ini menjadi simbol kebersamaan dan semangat juang siswa-siswi dalam menjalani
+                    pendidikan.
                   </p>
                 </div>
               </div>
 
-              
               <div v-if="expandedCard === 2" class="relative">
                 <div class="aspect-video">
-                  <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d53004.90227511139!2d112.61905412163591!3d-7.903971658482226!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd62a2690b713bb%3A0x61a43c4cb3de3ff0!2sSMK%20Negeri%202%20Singosari!5e0!3m2!1sid!2sid!4v1760870911351!5m2!1sid!2sid" style="border:0;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="absolute inset-0 w-full h-full"></iframe>
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d53004.90227511139!2d112.61905412163591!3d-7.903971658482226!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd62a2690b713bb%3A0x61a43c4cb3de3ff0!2sSMK%20Negeri%202%20Singosari!5e0!3m2!1sid!2sid!4v1760870911351!5m2!1sid!2sid"
+                    style="border: 0"
+                    allowfullscreen
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    class="absolute inset-0 w-full h-full"
+                  ></iframe>
                 </div>
                 <div class="p-8">
                   <h3 class="text-2xl font-bold text-gray-800 mb-4">Maps Lokasi</h3>
                   <p class="text-gray-700 leading-relaxed">
-                    Jelajahi lokasi sekolah kami melalui peta interaktif dan temukan cara mudah untuk mengunjungi SMK Negeri
-                    2 Singosari. Sekolah kami terletak di daerah strategis dengan akses transportasi yang mudah dijangkau.
+                    Jelajahi lokasi sekolah kami melalui peta interaktif dan temukan cara mudah untuk mengunjungi SMK
+                    Negeri 2 Singosari. Sekolah kami terletak di daerah strategis dengan akses transportasi yang mudah
+                    dijangkau.
                   </p>
                 </div>
               </div>
@@ -313,7 +353,6 @@ useHead({
       </div>
     </section>
 
-    
     <section class="py-20">
       <div class="container px-4 mx-auto sm:px-6">
         <div class="mb-12 text-center">
@@ -324,20 +363,20 @@ useHead({
           </div>
         </div>
 
-         <div class="max-w-5xl mx-auto">
-           <div class="overflow-hidden bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
-             <div class="p-8 md:p-10">
-               <h3 class="mb-4 text-2xl font-bold text-gray-800">Sejarah SMK Negeri 2 Singosari</h3>
-               <p class="leading-relaxed text-justify text-gray-700">
-                 Didirikan berdasarkan surat Perjanjian Kerjasama antara Bupati Malang dengan Direktur Pendidikan
-                 Sekolah Menengah Kejuruan No.0570ax/C5.4/Kep/KU/2007 Tanggal 25 Mei 2007. Sebagai Pengembangan dari
-                 Program Keahlian Teknik Audio Video, Teknik Elektronika Industri, dan Teknik Informatika (Rekayasa
-                 Perangkat Lunak) yang berasal dari SMK Negeri 1 Singosari yang telah meraih prestasi sebagai Juara
-                 Lomba Kompetensi Siswa baik tingkat Propinsi Jawa Timur maupun Tingkat Nasional.
-               </p>
-             </div>
-           </div>
-         </div>
+        <div class="max-w-5xl mx-auto">
+          <div class="overflow-hidden bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
+            <div class="p-8 md:p-10">
+              <h3 class="mb-4 text-2xl font-bold text-gray-800">Sejarah SMK Negeri 2 Singosari</h3>
+              <p class="leading-relaxed text-justify text-gray-700">
+                Didirikan berdasarkan surat Perjanjian Kerjasama antara Bupati Malang dengan Direktur Pendidikan Sekolah
+                Menengah Kejuruan No.0570ax/C5.4/Kep/KU/2007 Tanggal 25 Mei 2007. Sebagai Pengembangan dari Program
+                Keahlian Teknik Audio Video, Teknik Elektronika Industri, dan Teknik Informatika (Rekayasa Perangkat
+                Lunak) yang berasal dari SMK Negeri 1 Singosari yang telah meraih prestasi sebagai Juara Lomba
+                Kompetensi Siswa baik tingkat Propinsi Jawa Timur maupun Tingkat Nasional.
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   </div>

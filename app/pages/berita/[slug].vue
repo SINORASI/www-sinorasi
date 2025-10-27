@@ -1,8 +1,7 @@
-  <template>
+<template>
   <div class="min-h-screen py-24 bg-gradient-to-b from-white via-blue-50 to-white">
     <div class="container px-4 py-8 mx-auto sm:px-6">
       <div v-if="news" class="max-w-5xl mx-auto">
-        
         <nav class="mb-8">
           <ol class="flex items-center space-x-2 text-sm text-gray-600">
             <li><NuxtLink to="/" class="font-medium hover:text-blue-600">Beranda</NuxtLink></li>
@@ -13,16 +12,22 @@
           </ol>
         </nav>
 
-        
         <div class="mb-10">
           <div class="mb-6">
-            <img :src="news.thumbnail" :alt="news.title" class="w-full h-80 md:h-[500px] object-cover rounded-2xl shadow-2xl border-4 border-white" />
+            <NuxtImg
+              :src="news.thumbnail"
+              :alt="news.title"
+              class="w-full h-80 md:h-[500px] object-cover rounded-2xl shadow-2xl border-4 border-white"
+            />
           </div>
 
           <div class="p-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
             <div class="flex flex-wrap gap-2 mb-4">
-              <span v-for="tag in news.tags" :key="tag"
-                    class="px-4 py-2 text-xs font-semibold text-white rounded-full bg-gradient-to-r from-blue-500 to-blue-600">
+              <span
+                v-for="tag in news.tags"
+                :key="tag"
+                class="px-4 py-2 text-xs font-semibold text-white rounded-full bg-gradient-to-r from-blue-500 to-blue-600"
+              >
                 {{ tag }}
               </span>
             </div>
@@ -44,19 +49,19 @@
           </div>
         </div>
 
-        
         <article class="p-8 mb-12 bg-white border-2 border-blue-100 shadow-xl rounded-2xl md:p-12">
           <div class="prose prose-lg max-w-none">
             <MDC :value="news.content" />
           </div>
         </article>
 
-        
         <section id="berita-lainnya" class="mt-12">
-          <div class="p-6 mb-8 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl">
+          <div
+            class="p-6 mb-8 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
+          >
             <h2 class="text-2xl font-bold text-white md:text-3xl">Berita Lainnya</h2>
           </div>
-          
+
           <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             <NuxtLink
               v-for="relatedNews in relatedNews"
@@ -65,13 +70,21 @@
               class="relative flex flex-col overflow-hidden transition-all duration-300 bg-white border border-gray-100 shadow-lg cursor-pointer rounded-2xl group hover:shadow-2xl hover:border-blue-200"
             >
               <div class="h-40 overflow-hidden">
-                <img :src="relatedNews.thumbnail" class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105" :alt="relatedNews.title">
+                <NuxtImg
+                  :src="relatedNews.thumbnail"
+                  class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
+                  :alt="relatedNews.title"
+                />
               </div>
               <div class="flex flex-col flex-grow p-4">
                 <span class="px-3 py-1 mb-2 text-xs font-semibold text-blue-600 bg-blue-100 rounded-full w-fit">
                   {{ relatedNews.tags[0] }}
                 </span>
-                <h3 class="flex-grow mb-2 font-bold text-gray-800 transition-colors group-hover:text-blue-600 line-clamp-2">{{ relatedNews.title }}</h3>
+                <h3
+                  class="flex-grow mb-2 font-bold text-gray-800 transition-colors group-hover:text-blue-600 line-clamp-2"
+                >
+                  {{ relatedNews.title }}
+                </h3>
                 <p class="text-xs text-gray-500">{{ formatDate(relatedNews.publishedAt) }}</p>
               </div>
             </NuxtLink>
@@ -79,12 +92,14 @@
         </section>
       </div>
 
-      
       <div v-else class="max-w-2xl p-12 mx-auto text-center bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
         <Icon name="lucide:file-x" size="64" class="mx-auto mb-4 text-gray-300" />
         <h1 class="mb-4 text-3xl font-bold text-gray-900">Berita Tidak Ditemukan</h1>
         <p class="mb-8 text-gray-600">Maaf, berita yang Anda cari tidak tersedia.</p>
-        <NuxtLink to="/berita" class="inline-flex items-center gap-2 px-6 py-3 font-semibold text-white transition-colors bg-blue-600 rounded-lg shadow-md hover:bg-blue-700">
+        <NuxtLink
+          to="/berita"
+          class="inline-flex items-center gap-2 px-6 py-3 font-semibold text-white transition-colors bg-blue-600 rounded-lg shadow-md hover:bg-blue-700"
+        >
           <Icon name="lucide:arrow-left" size="18" />
           Kembali ke Berita
         </NuxtLink>
@@ -138,7 +153,9 @@ useHead({
 </script>
 
 <style scoped>
-.prose :deep(h1), .prose :deep(h2), .prose :deep(h3) {
+.prose :deep(h1),
+.prose :deep(h2),
+.prose :deep(h3) {
   color: #1f2937;
 }
 

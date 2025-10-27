@@ -5,11 +5,7 @@ import type { Extracurricular } from "~/models/Extracurricular";
 const route = useRoute();
 const extraSlug = computed(() => route.params.extra as string);
 
-const {
-  data: extraResponse,
-  pending,
-  error,
-} = await useFetch(`/api/extracurriculars/${extraSlug.value}`);
+const { data: extraResponse, pending, error } = await useFetch(`/api/extracurriculars/${extraSlug.value}`);
 const extra = computed(() => extraResponse.value as Extracurricular | null);
 
 const { data: relatedResponse } = await useFetch("/api/extracurriculars", {
@@ -21,9 +17,7 @@ const relatedExtras = computed(() => {
 });
 
 useHead({
-  title: computed(() =>
-    extra.value ? `${extra.value.name} - Ekstrakurikuler SMKN 2 Singosari` : "Ekstrakurikuler",
-  ),
+  title: computed(() => (extra.value ? `${extra.value.name} - Ekstrakurikuler SMKN 2 Singosari` : "Ekstrakurikuler")),
   meta: [
     {
       name: "description",
@@ -35,7 +29,6 @@ useHead({
 
 <template>
   <div class="min-h-screen py-30 bg-gradient-to-br from-blue-50 via-white to-orange-50">
-    
     <div v-if="pending" class="container px-4 py-8 mx-auto">
       <div class="p-8 mb-8 bg-white shadow-xl rounded-2xl animate-pulse">
         <div class="w-1/3 h-8 mb-4 bg-gray-200 rounded"></div>
@@ -52,7 +45,6 @@ useHead({
       </div>
     </div>
 
-    
     <div v-else-if="error || !extra" class="container px-4 py-8 mx-auto">
       <div class="p-12 text-center bg-white border-2 border-red-100 shadow-xl rounded-2xl">
         <Icon name="lucide:alert-circle" size="64" class="mx-auto mb-4 text-red-400" />
@@ -77,7 +69,6 @@ useHead({
         <span class="font-semibold text-gray-800">{{ extra.name }}</span>
       </nav>
 
-      
       <div class="p-8 mb-8 text-white shadow-2xl bg-gradient-to-r from-blue-600 to-blue-800 rounded-2xl md:p-12">
         <div class="flex items-center mb-4">
           <div class="p-3 mr-4 rounded-full bg-white/20 backdrop-blur-sm">
@@ -91,7 +82,6 @@ useHead({
         <p class="text-lg text-blue-50">{{ extra.description }}</p>
       </div>
 
-      
       <div class="max-w-4xl p-8 mx-auto mb-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
         <div class="grid grid-cols-2 gap-6 md:grid-cols-4 md:gap-8">
           <div v-if="extra.memberCount" class="text-center">
@@ -115,14 +105,17 @@ useHead({
         </div>
       </div>
 
-      
       <div
         v-if="extra.fullDescription"
         class="max-w-6xl mx-auto mb-8 overflow-hidden bg-white border-2 border-blue-100 shadow-xl rounded-2xl"
       >
         <div class="grid gap-0 lg:grid-cols-2">
           <div class="h-80 lg:h-auto">
-            <img :src="extra.image || '/images/placeholder.jpg'" :alt="extra.name" class="object-cover w-full h-full" />
+            <NuxtImg
+              :src="extra.image || '/images/placeholder.jpg'"
+              :alt="extra.name"
+              class="object-cover w-full h-full"
+            />
           </div>
           <div class="flex flex-col justify-center p-8 md:p-10">
             <div
@@ -138,9 +131,7 @@ useHead({
         </div>
       </div>
 
-      
       <div class="grid max-w-6xl gap-8 mx-auto mb-8 md:grid-cols-2">
-        
         <div class="p-6 bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
           <h2 class="flex items-center mb-4 text-2xl font-bold text-gray-800">
             <Icon name="lucide:info" size="24" class="mr-2 text-blue-600" />
@@ -171,7 +162,6 @@ useHead({
           </div>
         </div>
 
-        
         <div
           v-if="extra.requirements && extra.requirements.length > 0"
           class="p-6 bg-white border-2 border-blue-100 shadow-xl rounded-2xl"
@@ -189,7 +179,6 @@ useHead({
         </div>
       </div>
 
-      
       <div v-if="extra.activities && extra.activities.length > 0" class="max-w-6xl mx-auto mb-8">
         <div class="mb-12 text-center">
           <div
@@ -206,7 +195,7 @@ useHead({
             :key="idx"
             class="overflow-hidden transition-all duration-300 bg-white border border-gray-100 shadow-lg rounded-2xl hover:shadow-2xl hover:border-blue-200"
           >
-            <img
+            <NuxtImg
               :src="activity.image || '/images/placeholder.jpg'"
               :alt="activity.title"
               class="object-cover w-full h-56"
@@ -223,7 +212,6 @@ useHead({
         </div>
       </div>
 
-      
       <div v-if="extra.registrationOpen" class="max-w-5xl mx-auto mb-8">
         <div class="mb-12 text-center">
           <div
@@ -258,7 +246,6 @@ useHead({
         </div>
       </div>
 
-      
       <div v-if="relatedExtras.length > 0" class="p-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
         <h2 class="flex items-center mb-6 text-2xl font-bold text-gray-800">
           <Icon name="lucide:sparkles" size="24" class="mr-2 text-blue-600" />

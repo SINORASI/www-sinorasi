@@ -90,7 +90,7 @@ onMounted(() => {
             class="flex items-center justify-center transition-all duration-500 ease-in-out"
             :class="sizeClass === 'full' ? 'gap-5' : 'gap-3'"
           >
-            <img
+            <NuxtImg
               :src="'/images/logo-smk.webp'"
               :style="{ width: sizeClass === 'full' ? '80px' : '50px', transition: 'width 0.5s ease-in-out' }"
               alt="Logo SMKN 2 Singosari"

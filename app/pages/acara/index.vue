@@ -37,7 +37,6 @@ const filterOptions = [
 <template>
   <div class="min-h-screen py-24 bg-gradient-to-b from-white via-blue-50 to-white">
     <div class="container px-4 py-8 mx-auto sm:px-6">
-      
       <div class="flex flex-col items-center mb-12">
         <div
           class="p-6 px-10 py-6 mb-4 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
@@ -49,7 +48,6 @@ const filterOptions = [
         </p>
       </div>
 
-      
       <div class="p-6 mb-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
         <div class="flex flex-wrap justify-center gap-3">
           <button
@@ -81,7 +79,6 @@ const filterOptions = [
         </div>
       </div>
 
-      
       <div class="mb-6 text-center">
         <p class="text-gray-600">
           Menampilkan <span class="font-bold text-blue-600">{{ events.length }}</span> dari
@@ -89,7 +86,6 @@ const filterOptions = [
         </p>
       </div>
 
-      
       <div v-if="pending" class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
         <div
           v-for="i in 6"
@@ -105,7 +101,6 @@ const filterOptions = [
         </div>
       </div>
 
-      
       <div v-else-if="error" class="p-12 text-center bg-white border-2 border-red-200 shadow-xl rounded-2xl">
         <Icon name="lucide:alert-circle" size="64" class="mx-auto mb-4 text-red-400" />
         <h3 class="mb-2 text-xl font-bold text-red-800">Terjadi Kesalahan</h3>
@@ -118,7 +113,6 @@ const filterOptions = [
         </button>
       </div>
 
-      
       <div
         v-else-if="events.length === 0"
         class="p-12 text-center bg-white border-2 border-blue-100 shadow-xl rounded-2xl"
@@ -143,7 +137,6 @@ const filterOptions = [
         </button>
       </div>
 
-      
       <div v-else class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
         <NuxtLink
           v-for="event in events"
@@ -151,36 +144,30 @@ const filterOptions = [
           :to="`/acara/${event.slug}`"
           class="flex flex-col overflow-hidden transition-all duration-300 bg-white border-2 border-blue-100 shadow-lg group rounded-2xl hover:shadow-2xl hover:border-blue-300 hover:-translate-y-2"
         >
-          
           <div class="h-48 overflow-hidden bg-gradient-to-br from-gray-200 to-gray-300">
-            <img
+            <NuxtImg
               :src="event.imageUrl"
               :alt="event.title"
               class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110"
             />
           </div>
 
-          
           <div class="flex flex-col flex-grow p-6">
-            
             <div class="flex items-center gap-2 mb-3 font-semibold text-blue-600">
               <Icon name="lucide:calendar" size="16" />
               <span class="text-sm">{{ event.date }}</span>
             </div>
 
-            
             <h3
               class="flex-grow mb-3 text-xl font-bold text-gray-800 transition-colors line-clamp-2 group-hover:text-blue-600"
             >
               {{ event.title }}
             </h3>
 
-            
             <p class="mb-4 text-sm text-gray-600 line-clamp-2">
               {{ event.details }}
             </p>
 
-            
             <div
               class="flex items-center pt-4 font-semibold text-blue-600 transition-all border-t border-gray-200 group-hover:gap-2"
             >

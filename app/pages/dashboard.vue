@@ -70,17 +70,15 @@ const formatDate = (dateString: string) => {
   <div class="min-h-screen py-24 bg-gradient-to-b from-white via-blue-50 to-white">
     <div class="container px-4 mx-auto sm:px-6">
       <div class="max-w-6xl mx-auto">
-        
         <div class="mb-8">
           <h1 class="text-3xl font-bold text-gray-800 md:text-4xl">Dashboard</h1>
           <p class="mt-2 text-gray-600">Selamat datang kembali, {{ user.name }}!</p>
         </div>
 
-        
         <div class="p-6 mb-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl md:p-8">
           <div class="flex flex-col items-center gap-6 md:flex-row md:items-start">
             <div class="flex-shrink-0">
-              <img
+              <NuxtImg
                 :src="user.avatar"
                 :alt="user.name"
                 class="object-cover w-24 h-24 border-4 border-blue-200 rounded-full shadow-lg md:w-32 md:h-32"
@@ -102,11 +100,11 @@ const formatDate = (dateString: string) => {
               <div class="flex flex-col gap-2 mt-4 md:flex-row md:gap-6">
                 <div class="flex items-center gap-2">
                   <Icon name="lucide:calendar" size="18" class="text-gray-500" />
-                  <span class="text-sm text-gray-500">Bergabung: {{ formatDate(user.joinDate || '') }}</span>
+                  <span class="text-sm text-gray-500">Bergabung: {{ formatDate(user.joinDate || "") }}</span>
                 </div>
                 <div class="flex items-center gap-2">
                   <Icon name="lucide:clock" size="18" class="text-gray-500" />
-                  <span class="text-sm text-gray-500">Login terakhir: {{ formatDate(user.lastLogin || '') }}</span>
+                  <span class="text-sm text-gray-500">Login terakhir: {{ formatDate(user.lastLogin || "") }}</span>
                 </div>
               </div>
             </div>
@@ -127,7 +125,6 @@ const formatDate = (dateString: string) => {
           </div>
         </div>
 
-        
         <div class="mb-8">
           <h3 class="mb-4 text-xl font-bold text-gray-800 md:text-2xl">Aksi Cepat</h3>
           <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
@@ -143,7 +140,6 @@ const formatDate = (dateString: string) => {
           </div>
         </div>
 
-        
         <div class="mb-8">
           <div class="p-6 bg-white border-2 border-gray-100 shadow-xl rounded-2xl md:p-8">
             <h3 class="mb-4 text-xl font-bold text-gray-800 md:text-2xl">Cari Informasi</h3>
@@ -160,13 +156,10 @@ const formatDate = (dateString: string) => {
                 class="absolute text-gray-400 transform -translate-y-1/2 right-4 top-1/2"
               />
             </div>
-            <p class="mt-3 text-sm text-gray-500">
-              Temukan informasi yang Anda butuhkan dengan cepat
-            </p>
+            <p class="mt-3 text-sm text-gray-500">Temukan informasi yang Anda butuhkan dengan cepat</p>
           </div>
         </div>
 
-        
         <div>
           <h3 class="mb-4 text-xl font-bold text-gray-800 md:text-2xl">Fitur Utilitas</h3>
           <div class="grid gap-6 md:grid-cols-3">
@@ -178,10 +171,7 @@ const formatDate = (dateString: string) => {
               :class="`border-${feature.color}-100 hover:border-${feature.color}-300`"
             >
               <div class="flex items-center gap-4 mb-4">
-                <div
-                  class="flex items-center justify-center w-12 h-12 rounded-xl"
-                  :class="`bg-${feature.color}-100`"
-                >
+                <div class="flex items-center justify-center w-12 h-12 rounded-xl" :class="`bg-${feature.color}-100`">
                   <Icon :name="feature.icon" :size="24" :class="`text-${feature.color}-600`" />
                 </div>
                 <h4 class="text-lg font-bold text-gray-800">{{ feature.title }}</h4>

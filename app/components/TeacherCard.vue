@@ -4,7 +4,7 @@
     @click="$emit('showDetails', teacher)"
   >
     <div class="relative aspect-[3/4]">
-      <img :src="teacher.image" :alt="teacher.name" class="object-cover w-full h-full" />
+      <NuxtImg :src="teacher.image" :alt="teacher.name" class="object-cover w-full h-full" />
 
       <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/70 to-transparent">
         <p class="text-sm font-semibold text-center text-white">

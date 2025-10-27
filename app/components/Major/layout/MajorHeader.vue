@@ -9,9 +9,7 @@ const major = (route.params.majorName as MajorName) || (route.path.split("/").po
 const { data: majorDatas } = await useFetch<Record<MajorName, MajorData>>("/api/majors");
 const { data: majorMenus } = await useFetch("/api/majors/menus");
 
-const headerClass = ref(
-  "bg-white/20 backdrop-blur-[8px] border-b-white/20 shadow-lg shadow-orange-500/10",
-);
+const headerClass = ref("bg-white/20 backdrop-blur-[8px] border-b-white/20 shadow-lg shadow-orange-500/10");
 const sizeClass = ref("compact");
 const isOpen = ref(false);
 
@@ -20,12 +18,10 @@ const menuItems = computed(() => majorMenus.value?.[major] || []);
 onMounted(() => {
   const handleScroll = () => {
     if (window.scrollY > window.innerHeight) {
-      headerClass.value =
-        "bg-white/30 backdrop-blur-[8px] border-b-white/30 shadow-lg shadow-orange-500/10";
+      headerClass.value = "bg-white/30 backdrop-blur-[8px] border-b-white/30 shadow-lg shadow-orange-500/10";
       sizeClass.value = "compact";
     } else {
-      headerClass.value =
-        "bg-white/20 backdrop-blur-[8px] border-b-white/20 shadow-lg shadow-orange-500/10";
+      headerClass.value = "bg-white/20 backdrop-blur-[8px] border-b-white/20 shadow-lg shadow-orange-500/10";
       sizeClass.value = "compact";
     }
   };
@@ -55,7 +51,7 @@ if (!majorDatas.value?.[major]) {
           ' flex justify-center items-center transition-all duration-500 ease-in-out'
         "
       >
-        <img
+        <NuxtImg
           :src="majorDatas?.[major]?.logo"
           :style="{ width: sizeClass === 'full' ? '60px' : '40px', transition: 'width 0.5s ease-in-out' }"
           alt="Logo Jurusan"

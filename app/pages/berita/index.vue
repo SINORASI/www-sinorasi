@@ -97,11 +97,7 @@ const paginationRange = computed(() => {
   const delta = 2;
 
   for (let i = 1; i <= totalPages.value; i++) {
-    if (
-      i === 1 ||
-      i === totalPages.value ||
-      (i >= currentPage.value - delta && i <= currentPage.value + delta)
-    ) {
+    if (i === 1 || i === totalPages.value || (i >= currentPage.value - delta && i <= currentPage.value + delta)) {
       range.push(i);
     } else if (range[range.length - 1] !== "...") {
       range.push("...");
@@ -129,7 +125,6 @@ const formatDate = (dateString: string) => {
 <template>
   <div class="min-h-screen py-24 bg-gradient-to-b from-white via-blue-50 to-white">
     <div class="container px-4 py-8 mx-auto sm:px-6 sm:py-12">
-      
       <div class="flex flex-col items-center mb-12">
         <div
           class="p-6 px-10 py-6 mb-4 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
@@ -139,9 +134,7 @@ const formatDate = (dateString: string) => {
         <p class="max-w-2xl text-center text-gray-600">Informasi dan berita terbaru dari SMK Negeri 2 Singosari</p>
       </div>
 
-      
       <div class="p-6 mb-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl sm:p-8">
-        
         <div class="mb-6">
           <div class="relative">
             <input
@@ -154,7 +147,6 @@ const formatDate = (dateString: string) => {
           </div>
         </div>
 
-        
         <div class="mb-4">
           <h3 class="mb-4 text-sm font-semibold text-gray-700">Filter berdasarkan kategori:</h3>
           <div class="flex flex-wrap gap-3">
@@ -177,13 +169,15 @@ const formatDate = (dateString: string) => {
               class="px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 bg-gray-100 text-gray-700 hover:bg-gray-200 border-2 border-gray-200"
             >
               <Icon :name="showAllTags ? 'lucide:chevron-up' : 'lucide:chevron-down'" size="16" class="inline mr-1" />
-              {{ showAllTags ? 'Tampilkan Lebih Sedikit' : `Tampilkan ${availableTags.length - 10} Lagi` }}
+              {{ showAllTags ? "Tampilkan Lebih Sedikit" : `Tampilkan ${availableTags.length - 10} Lagi` }}
             </button>
           </div>
         </div>
 
-        
-        <div v-if="searchQuery || selectedTags.length > 0" class="flex flex-wrap items-center gap-2 pt-4 border-t border-gray-200">
+        <div
+          v-if="searchQuery || selectedTags.length > 0"
+          class="flex flex-wrap items-center gap-2 pt-4 border-t border-gray-200"
+        >
           <span class="text-sm font-medium text-gray-600">Filter aktif:</span>
           <span
             v-if="searchQuery"
@@ -212,7 +206,6 @@ const formatDate = (dateString: string) => {
         </div>
       </div>
 
-      
       <div class="mb-6">
         <p class="text-center text-gray-600">
           Menampilkan <span class="font-bold text-blue-600">{{ newsList.length }}</span> dari
@@ -220,7 +213,6 @@ const formatDate = (dateString: string) => {
         </p>
       </div>
 
-      
       <div v-if="pending" class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         <div
           v-for="i in itemsPerPage"
@@ -234,7 +226,6 @@ const formatDate = (dateString: string) => {
         </div>
       </div>
 
-      
       <div v-else-if="error" class="p-12 text-center bg-white border-2 border-red-200 shadow-xl rounded-2xl">
         <Icon name="lucide:alert-circle" size="64" class="mx-auto mb-4 text-red-400" />
         <h3 class="mb-2 text-xl font-bold text-red-800">Terjadi Kesalahan</h3>
@@ -247,7 +238,6 @@ const formatDate = (dateString: string) => {
         </button>
       </div>
 
-      
       <div v-else-if="!hasResults" class="p-12 text-center bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
         <Icon name="lucide:inbox" size="64" class="mx-auto mb-4 text-gray-300" />
         <h3 class="mb-2 text-xl font-bold text-gray-700">Tidak Ada Hasil</h3>
@@ -260,7 +250,6 @@ const formatDate = (dateString: string) => {
         </button>
       </div>
 
-      
       <div v-else class="grid grid-cols-1 gap-6 mb-12 sm:grid-cols-2 lg:grid-cols-3">
         <NuxtLink
           v-for="news in newsList"
@@ -269,7 +258,7 @@ const formatDate = (dateString: string) => {
           class="relative flex flex-col overflow-hidden transition-all duration-300 bg-white border border-gray-100 shadow-lg cursor-pointer rounded-2xl group hover:shadow-2xl hover:border-blue-200"
         >
           <div class="h-48 overflow-hidden">
-            <img
+            <NuxtImg
               :src="news.thumbnail"
               class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
               :alt="news.title"
@@ -297,9 +286,7 @@ const formatDate = (dateString: string) => {
         </NuxtLink>
       </div>
 
-      
       <div v-if="totalPages > 1 && hasResults" class="flex items-center justify-center gap-2 mt-12">
-        
         <button
           @click="goToPage(currentPage - 1)"
           :disabled="currentPage === 1"
@@ -313,7 +300,6 @@ const formatDate = (dateString: string) => {
           <Icon name="lucide:chevron-left" size="18" />
         </button>
 
-        
         <template v-for="(page, index) in paginationRange" :key="index">
           <span v-if="page === '...'" class="px-3 py-2 font-bold text-gray-400">...</span>
           <button
@@ -347,4 +333,3 @@ const formatDate = (dateString: string) => {
     </div>
   </div>
 </template>
-

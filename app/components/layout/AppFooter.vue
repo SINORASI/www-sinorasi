@@ -16,7 +16,7 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
       <div class="grid grid-cols-1 gap-8 md:grid-cols-4">
         <div class="md:col-span-1">
           <div class="flex items-center gap-4 mb-4">
-            <img src="/images/logo-smk.webp" width="60" alt="Logo SMKN 2 Singosari" class="rounded-full" />
+            <NuxtImg src="/images/logo-smk.webp" width="60" alt="Logo SMKN 2 Singosari" class="rounded-full" />
             <div>
               <h3 :class="['text-xl font-bold', isColoredBackground ? 'text-white' : 'text-white']">
                 SMKN 2 Singosari
@@ -497,7 +497,7 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
           <h5 :class="['mb-1 text-lg font-semibold', isColoredBackground ? 'text-white' : 'text-neutral-300']">
             Didukung Oleh
           </h5>
-          <img
+          <NuxtImg
             src="/images/Logo-Jagoan-Hosting-Komdigi-Maspion-IT-Garuda-Spark.png"
             alt="Sponsor Logos"
             class="mx-auto h-16 mb-1"

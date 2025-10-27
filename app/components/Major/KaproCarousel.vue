@@ -259,11 +259,8 @@ const getTransitionClasses = () => {
 <template>
   <div class="w-full max-w-6xl px-4 py-8 mx-auto">
     <div class="overflow-hidden">
-      
       <div class="grid grid-cols-1 gap-8 p-6 lg:grid-cols-5 md:p-8 lg:p-10">
-        
         <div class="flex flex-col items-center justify-center space-y-6 lg:col-span-2">
-          
           <div class="relative w-full max-w-xs aspect-[3/4]">
             <div class="absolute inset-0 overflow-hidden rounded-2xl" :style="{ backgroundColor: majorColor.light }">
               <Transition
@@ -276,7 +273,7 @@ const getTransitionClasses = () => {
                 :leave-from-class="getTransitionClasses().leaveFrom"
                 :leave-to-class="getTransitionClasses().leaveTo"
               >
-                <img
+                <NuxtImg
                   :key="current"
                   :src="kapro[current]?.image"
                   :alt="kapro[current]?.kaproName"
@@ -286,7 +283,6 @@ const getTransitionClasses = () => {
             </div>
           </div>
 
-          
           <div class="text-center space-y-2 w-full px-4 min-h-[120px] flex flex-col justify-center">
             <Transition
               name="fade"
@@ -327,9 +323,7 @@ const getTransitionClasses = () => {
           </div>
         </div>
 
-        
         <div class="lg:col-span-3 flex flex-col justify-between min-h-[400px] lg:min-h-[500px]">
-          
           <div class="flex items-center justify-center flex-1 p-6 md:p-8">
             <Transition
               name="fade"
@@ -342,7 +336,6 @@ const getTransitionClasses = () => {
               leave-to-class="opacity-0"
             >
               <div :key="current" class="space-y-6 text-center">
-                
                 <div class="flex justify-center">
                   <div
                     class="flex items-center justify-center rounded-full w-14 h-14 md:w-16 md:h-16"
@@ -352,7 +345,6 @@ const getTransitionClasses = () => {
                   </div>
                 </div>
 
-                
                 <p class="text-2xl font-bold leading-relaxed text-gray-800 md:text-3xl lg:text-4xl">
                   {{ kapro[current]?.quote }}
                 </p>
@@ -360,9 +352,7 @@ const getTransitionClasses = () => {
             </Transition>
           </div>
 
-          
           <div class="pt-4 space-y-6">
-            
             <div class="flex justify-center items-center gap-2 min-h-[16px]">
               <button
                 v-for="(item, idx) in kapro"
@@ -380,9 +370,7 @@ const getTransitionClasses = () => {
               ></button>
             </div>
 
-            
             <div class="flex items-center justify-between px-4">
-              
               <button
                 @click="prev"
                 :style="{
@@ -395,7 +383,6 @@ const getTransitionClasses = () => {
                 <span class="text-sm">Previous</span>
               </button>
 
-              
               <div class="flex items-baseline gap-1">
                 <span :style="{ color: majorColor.text }" class="text-2xl font-bold md:text-3xl">
                   {{ String(current + 1).padStart(2, "0") }}
@@ -403,7 +390,6 @@ const getTransitionClasses = () => {
                 <span class="text-lg text-gray-400 md:text-xl"> /{{ String(kapro.length).padStart(2, "0") }} </span>
               </div>
 
-              
               <button
                 @click="next"
                 :style="{

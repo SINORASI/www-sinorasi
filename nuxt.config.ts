@@ -47,4 +47,17 @@ export default defineNuxtConfig({
       { code: "en", name: "English", file: "en.json" },
     ],
   },
+  image: {
+    quality: 80,
+    format: ["webp", "avif", "png", "jpg"],
+    sizes: "320,640,768,1024,1280,1536",
+    screens: {
+      xs: 320,
+      sm: 640,
+      md: 768,
+      lg: 1024,
+      xl: 1280,
+      xxl: 1536,
+    },
+  },
 });

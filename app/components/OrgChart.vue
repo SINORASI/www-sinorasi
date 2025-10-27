@@ -61,8 +61,7 @@ const teacherCategories = ref<TeacherCategory[]>([
         degree: "S.Sn",
         image: "/images/guru/PNS/FAUZI RAHMADANI, S.Sn.jpg",
         university: "",
-        quote:
-          '"Seorang terpelajar harus sudah berbuat adil sejak dalam pikiran, apalagi dalam perbuatan"',
+        quote: '"Seorang terpelajar harus sudah berbuat adil sejak dalam pikiran, apalagi dalam perbuatan"',
       },
       {
         id: "pns-4",
@@ -254,8 +253,7 @@ const teacherCategories = ref<TeacherCategory[]>([
         degree: "",
         image: "/images/guru/Foto - foto pns/Wiwin/wiwin 2.jpg",
         university: "",
-        quote:
-          "Tidak keberhasilan tanpa perjuangan, kegagalan adalah hal biasa bangkit terus semangat untuk berjuang",
+        quote: "Tidak keberhasilan tanpa perjuangan, kegagalan adalah hal biasa bangkit terus semangat untuk berjuang",
       },
       {
         id: "pns-34",
@@ -263,8 +261,7 @@ const teacherCategories = ref<TeacherCategory[]>([
         degree: "",
         image: "/images/guru/Foto - foto pns/Zulkifli/zulkfli 2.jpg",
         university: "",
-        quote:
-          "Keberhasilan dan kesuksesan tidak akan mungkin didapat tanpa usaha keras dan tak kenal lelah",
+        quote: "Keberhasilan dan kesuksesan tidak akan mungkin didapat tanpa usaha keras dan tak kenal lelah",
       },
       {
         id: "pns-35",
@@ -279,8 +276,7 @@ const teacherCategories = ref<TeacherCategory[]>([
   {
     title: "P3K",
     pagination: "01/19",
-    description:
-      "Pengawas/Pembina di SMK Negeri 02 Singosari yang bertugas mengawasi dan membina proses pendidikan.",
+    description: "Pengawas/Pembina di SMK Negeri 02 Singosari yang bertugas mengawasi dan membina proses pendidikan.",
     classes: [],
     materialsByClass: [],
     teachingFocus: "Berperan aktif dalam mendukung visi misi SMK Negeri 02 Singosari.",
@@ -447,8 +443,7 @@ const teacherCategories = ref<TeacherCategory[]>([
   {
     title: "GTT",
     pagination: "01/07",
-    description:
-      "Guru Tetap di SMK Negeri 02 Singosari yang fokus pada pengembangan kompetensi siswa.",
+    description: "Guru Tetap di SMK Negeri 02 Singosari yang fokus pada pengembangan kompetensi siswa.",
     classes: [],
     materialsByClass: [],
     teachingFocus: "Berperan aktif dalam mendukung visi misi SMK Negeri 02 Singosari.",
@@ -584,8 +579,7 @@ const teacherCategories = ref<TeacherCategory[]>([
         degree: "",
         image: "/images/guru/KARYAWAN/LULUK RENANINGTYAS.jpg",
         university: "",
-        quote:
-          "Ingat! Setiap kamu malas-malasan, teman-teman kamu diluar sana terus berproses dan bertumbuh.",
+        quote: "Ingat! Setiap kamu malas-malasan, teman-teman kamu diluar sana terus berproses dan bertumbuh.",
       },
       {
         id: "karyawan-11",
@@ -641,8 +635,7 @@ const teacherCategories = ref<TeacherCategory[]>([
   {
     title: "Kapro",
     pagination: "01/08",
-    description:
-      "Kepala Program Keahlian yang memimpin konsentrasi keahlian di SMK Negeri 02 Singosari.",
+    description: "Kepala Program Keahlian yang memimpin konsentrasi keahlian di SMK Negeri 02 Singosari.",
     classes: [],
     materialsByClass: [],
     teachingFocus: "Berperan aktif dalam mendukung visi misi SMK Negeri 02 Singosari.",
@@ -737,8 +730,7 @@ const teacherCategories = ref<TeacherCategory[]>([
         degree: "S.Pd, M.Pd",
         image: "/images/guru/Korlabid/KESISWAAN/WIWIN WINANGSIH, S.Pd,M.Pd.jpg",
         university: "",
-        quote:
-          "Tidak keberhasilan tanpa perjuangan, kegagalan adalah hal biasa bangkit terus semangat untuk berjuang",
+        quote: "Tidak keberhasilan tanpa perjuangan, kegagalan adalah hal biasa bangkit terus semangat untuk berjuang",
       },
       {
         id: "korlabid-4",
@@ -966,39 +958,42 @@ const connectingLines = computed(() => {
 
 <template>
   <div ref="chartContainer" class="relative w-full overflow-hidden">
-    
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
       <div class="absolute top-10 left-10 w-32 h-32 bg-blue-200/20 rounded-full blur-3xl animate-pulse"></div>
-      <div class="absolute top-40 right-20 w-24 h-24 bg-purple-200/20 rounded-full blur-2xl animate-pulse delay-1000"></div>
-      <div class="absolute bottom-20 left-1/4 w-20 h-20 bg-green-200/20 rounded-full blur-xl animate-pulse delay-2000"></div>
+      <div
+        class="absolute top-40 right-20 w-24 h-24 bg-purple-200/20 rounded-full blur-2xl animate-pulse delay-1000"
+      ></div>
+      <div
+        class="absolute bottom-20 left-1/4 w-20 h-20 bg-green-200/20 rounded-full blur-xl animate-pulse delay-2000"
+      ></div>
     </div>
 
-    
     <div class="relative z-10 py-16">
-      
-      <svg class="absolute inset-0 w-full h-full pointer-events-none z-0" style="overflow: visible;">
+      <svg class="absolute inset-0 w-full h-full pointer-events-none z-0" style="overflow: visible">
         <defs>
           <linearGradient id="line-gradient-1" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#8B5CF6" stop-opacity="0.8"/>
-            <stop offset="100%" stop-color="#3B82F6" stop-opacity="0.6"/>
+            <stop offset="0%" stop-color="#8B5CF6" stop-opacity="0.8" />
+            <stop offset="100%" stop-color="#3B82F6" stop-opacity="0.6" />
           </linearGradient>
           <linearGradient id="line-gradient-2" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#3B82F6" stop-opacity="0.8"/>
-            <stop offset="100%" stop-color="#10B981" stop-opacity="0.6"/>
+            <stop offset="0%" stop-color="#3B82F6" stop-opacity="0.8" />
+            <stop offset="100%" stop-color="#10B981" stop-opacity="0.6" />
           </linearGradient>
         </defs>
         <g v-for="line in connectingLines" :key="`line-${line.from.x}-${line.from.y}-${line.to.x}-${line.to.y}`">
           <path
-            :d="`M ${line.from.x} ${line.from.y} Q ${line.from.x} ${(line.from.y + line.to.y) / 2} ${line.to.x} ${line.to.y}`"
+            :d="`M ${line.from.x} ${line.from.y} Q ${line.from.x} ${(line.from.y + line.to.y) / 2} ${line.to.x} ${
+              line.to.y
+            }`"
             :stroke="`url(#line-gradient-${line.level})`"
             stroke-width="2"
             fill="none"
             class="opacity-0 animate-fade-in"
-            style="animation-delay: 1.2s; animation-duration: 1s;"
+            style="animation-delay: 1.2s; animation-duration: 1s"
           />
         </g>
       </svg>
-      
+
       <div class="flex justify-center mb-16">
         <div
           v-for="node in orgData"
@@ -1007,70 +1002,76 @@ const connectingLines = computed(() => {
           class="relative group"
           :class="{
             'opacity-0 scale-75': !visibleNodes.has(node.id),
-            'opacity-100 scale-100': visibleNodes.has(node.id)
+            'opacity-100 scale-100': visibleNodes.has(node.id),
           }"
           style="transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1)"
         >
-          
-          <div class="absolute top-full left-1/2 transform -translate-x-1/2 w-0.5 h-16 bg-gradient-to-b from-purple-400 to-transparent"></div>
+          <div
+            class="absolute top-full left-1/2 transform -translate-x-1/2 w-0.5 h-16 bg-gradient-to-b from-purple-400 to-transparent"
+          ></div>
 
-          
           <div
             class="relative bg-white/90 backdrop-blur-sm border-2 border-white/50 rounded-2xl p-4 shadow-2xl hover:shadow-3xl transition-all duration-500 hover:-translate-y-2 cursor-pointer"
             @mouseenter="hoveredNode = node.id"
             @mouseleave="hoveredNode = null"
           >
-            
             <div class="flex justify-center mb-3">
-              <div :class="`relative ${getNodeSize(node.level)} rounded-full overflow-hidden border-4 border-white ${getNodeShadow(node.level)}`">
-                <img
+              <div
+                :class="`relative ${getNodeSize(
+                  node.level
+                )} rounded-full overflow-hidden border-4 border-white ${getNodeShadow(node.level)}`"
+              >
+                <NuxtImg
                   :src="node.image"
                   :alt="node.name"
                   class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
-                <div :class="`absolute inset-0 bg-gradient-to-t ${getNodeColor(node.level)} opacity-0 group-hover:opacity-20 transition-opacity duration-300`"></div>
+                <div
+                  :class="`absolute inset-0 bg-gradient-to-t ${getNodeColor(
+                    node.level
+                  )} opacity-0 group-hover:opacity-20 transition-opacity duration-300`"
+                ></div>
               </div>
             </div>
 
-            
             <div class="text-center">
               <h3 class="font-bold text-gray-800 text-sm leading-tight mb-1">{{ node.name }}</h3>
               <p class="text-xs text-gray-600 leading-tight">{{ node.position }}</p>
             </div>
 
-            
-            <div class="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div
+              class="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            ></div>
           </div>
         </div>
       </div>
 
-      
-      <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl pointer-events-none">
+      <div
+        class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-4xl pointer-events-none"
+      >
         <svg class="w-full h-32" viewBox="0 0 600 128" preserveAspectRatio="none">
-          
-          <line x1="300" y1="64" x2="75" y2="64" stroke="url(#gradient1)" stroke-width="2" class="opacity-60"/>
-          <line x1="300" y1="64" x2="525" y2="64" stroke="url(#gradient1)" stroke-width="2" class="opacity-60"/>
-          
-          <line x1="75" y1="64" x2="75" y2="128" stroke="url(#gradient2)" stroke-width="2" class="opacity-60"/>
-          <line x1="187.5" y1="64" x2="187.5" y2="128" stroke="url(#gradient2)" stroke-width="2" class="opacity-60"/>
-          <line x1="300" y1="64" x2="300" y2="128" stroke="url(#gradient2)" stroke-width="2" class="opacity-60"/>
-          <line x1="412.5" y1="64" x2="412.5" y2="128" stroke="url(#gradient2)" stroke-width="2" class="opacity-60"/>
-          <line x1="525" y1="64" x2="525" y2="128" stroke="url(#gradient2)" stroke-width="2" class="opacity-60"/>
+          <line x1="300" y1="64" x2="75" y2="64" stroke="url(#gradient1)" stroke-width="2" class="opacity-60" />
+          <line x1="300" y1="64" x2="525" y2="64" stroke="url(#gradient1)" stroke-width="2" class="opacity-60" />
+
+          <line x1="75" y1="64" x2="75" y2="128" stroke="url(#gradient2)" stroke-width="2" class="opacity-60" />
+          <line x1="187.5" y1="64" x2="187.5" y2="128" stroke="url(#gradient2)" stroke-width="2" class="opacity-60" />
+          <line x1="300" y1="64" x2="300" y2="128" stroke="url(#gradient2)" stroke-width="2" class="opacity-60" />
+          <line x1="412.5" y1="64" x2="412.5" y2="128" stroke="url(#gradient2)" stroke-width="2" class="opacity-60" />
+          <line x1="525" y1="64" x2="525" y2="128" stroke="url(#gradient2)" stroke-width="2" class="opacity-60" />
           <defs>
             <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#8B5CF6" stop-opacity="0.6"/>
-              <stop offset="50%" stop-color="#3B82F6" stop-opacity="0.8"/>
-              <stop offset="100%" stop-color="#8B5CF6" stop-opacity="0.6"/>
+              <stop offset="0%" stop-color="#8B5CF6" stop-opacity="0.6" />
+              <stop offset="50%" stop-color="#3B82F6" stop-opacity="0.8" />
+              <stop offset="100%" stop-color="#8B5CF6" stop-opacity="0.6" />
             </linearGradient>
             <linearGradient id="gradient2" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="#3B82F6" stop-opacity="0.8"/>
-              <stop offset="100%" stop-color="#10B981" stop-opacity="0.6"/>
+              <stop offset="0%" stop-color="#3B82F6" stop-opacity="0.8" />
+              <stop offset="100%" stop-color="#10B981" stop-opacity="0.6" />
             </linearGradient>
           </defs>
         </svg>
       </div>
 
-      
       <div class="flex justify-center flex-wrap gap-8 mb-16 relative">
         <div
           v-for="(node, index) in orgData[0]?.children || []"
@@ -1079,44 +1080,50 @@ const connectingLines = computed(() => {
           class="relative group"
           :class="{
             'opacity-0 scale-75 translate-y-8': !visibleNodes.has(node.id),
-            'opacity-100 scale-100 translate-y-0': visibleNodes.has(node.id)
+            'opacity-100 scale-100 translate-y-0': visibleNodes.has(node.id),
           }"
           style="transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1)"
         >
-          
-          <div class="absolute top-full left-1/2 transform -translate-x-1/2 w-0.5 h-12 bg-gradient-to-b from-blue-400 to-transparent"></div>
+          <div
+            class="absolute top-full left-1/2 transform -translate-x-1/2 w-0.5 h-12 bg-gradient-to-b from-blue-400 to-transparent"
+          ></div>
 
-          
           <div
             class="relative bg-white/90 backdrop-blur-sm border-2 border-white/50 rounded-xl p-3 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 cursor-pointer"
             @mouseenter="hoveredNode = node.id"
             @mouseleave="hoveredNode = null"
           >
-            
             <div class="flex justify-center mb-2">
-              <div :class="`relative ${getNodeSize(node.level)} rounded-full overflow-hidden border-3 border-white ${getNodeShadow(node.level)}`">
-                <img
+              <div
+                :class="`relative ${getNodeSize(
+                  node.level
+                )} rounded-full overflow-hidden border-3 border-white ${getNodeShadow(node.level)}`"
+              >
+                <NuxtImg
                   :src="node.image"
                   :alt="node.name"
                   class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                 />
-                <div :class="`absolute inset-0 bg-gradient-to-t ${getNodeColor(node.level)} opacity-0 group-hover:opacity-20 transition-opacity duration-300`"></div>
+                <div
+                  :class="`absolute inset-0 bg-gradient-to-t ${getNodeColor(
+                    node.level
+                  )} opacity-0 group-hover:opacity-20 transition-opacity duration-300`"
+                ></div>
               </div>
             </div>
 
-            
             <div class="text-center">
               <h3 class="font-semibold text-gray-800 text-xs leading-tight mb-1">{{ node.name }}</h3>
               <p class="text-xs text-gray-600 leading-tight">{{ node.position }}</p>
             </div>
 
-            
-            <div class="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div
+              class="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            ></div>
           </div>
         </div>
       </div>
 
-      
       <div class="flex justify-center flex-wrap gap-4">
         <div
           v-for="parent in orgData[0]?.children || []"
@@ -1130,36 +1137,42 @@ const connectingLines = computed(() => {
             class="relative group"
             :class="{
               'opacity-0 scale-75 translate-y-4': !visibleNodes.has(node.id),
-              'opacity-100 scale-100 translate-y-0': visibleNodes.has(node.id)
+              'opacity-100 scale-100 translate-y-0': visibleNodes.has(node.id),
             }"
             style="transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1)"
           >
-            
             <div
               class="relative bg-white/90 backdrop-blur-sm border-2 border-white/50 rounded-lg p-2 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-0.5 cursor-pointer"
               @mouseenter="hoveredNode = node.id"
               @mouseleave="hoveredNode = null"
             >
-              
               <div class="flex justify-center mb-1">
-                <div :class="`relative ${getNodeSize(node.level)} rounded-full overflow-hidden border-2 border-white ${getNodeShadow(node.level)}`">
-                  <img
+                <div
+                  :class="`relative ${getNodeSize(
+                    node.level
+                  )} rounded-full overflow-hidden border-2 border-white ${getNodeShadow(node.level)}`"
+                >
+                  <NuxtImg
                     :src="node.image"
                     :alt="node.name"
                     class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                   />
-                  <div :class="`absolute inset-0 bg-gradient-to-t ${getNodeColor(node.level)} opacity-0 group-hover:opacity-20 transition-opacity duration-300`"></div>
+                  <div
+                    :class="`absolute inset-0 bg-gradient-to-t ${getNodeColor(
+                      node.level
+                    )} opacity-0 group-hover:opacity-20 transition-opacity duration-300`"
+                  ></div>
                 </div>
               </div>
 
-              
               <div class="text-center">
                 <h3 class="font-medium text-gray-800 text-xs leading-tight mb-0.5">{{ node.name }}</h3>
                 <p class="text-xs text-gray-600 leading-tight">{{ node.position }}</p>
               </div>
 
-              
-              <div class="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div
+                class="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              ></div>
             </div>
           </div>
         </div>

@@ -40,7 +40,7 @@ const formData = ref<NewsForm>({
   subtitle: "",
   content: "",
   tags: "",
-  publishedAt: new Date().toISOString().split("T")[0],
+  publishedAt: new Date().toISOString().slice(0, 10),
 });
 
 const errors = ref<Record<string, string[]>>({});
@@ -78,7 +78,7 @@ const filteredNews = computed(() => {
     (news) =>
       news.title.toLowerCase().includes(query) ||
       news.subtitle.toLowerCase().includes(query) ||
-      news.tags.some((tag) => tag.toLowerCase().includes(query)),
+      news.tags.some((tag) => tag.toLowerCase().includes(query))
   );
 });
 
@@ -88,7 +88,7 @@ const openCreateModal = () => {
     subtitle: "",
     content: "",
     tags: "",
-    publishedAt: new Date().toISOString().split("T")[0],
+    publishedAt: new Date().toISOString().slice(0, 10),
   };
   errors.value = {};
   showCreateModal.value = true;
@@ -101,7 +101,7 @@ const openEditModal = (news: News) => {
     subtitle: news.subtitle,
     content: news.content,
     tags: news.tags.join(", "),
-    publishedAt: new Date(news.publishedAt).toISOString().split("T")[0],
+    publishedAt: new Date(news.publishedAt).toISOString().slice(0, 10),
   };
   errors.value = {};
   showEditModal.value = true;
@@ -133,14 +133,14 @@ const submitNews = async () => {
           .split(",")
           .map((tag) => tag.trim())
           .filter((tag) => tag);
-        newsList.value[index] = {
-          ...newsList.value[index],
+        // mutate the existing object to preserve required fields (id, slug, thumbnail)
+        Object.assign(newsList.value[index]!, {
           title: formData.value.title,
           subtitle: formData.value.subtitle,
           content: formData.value.content,
           tags,
           publishedAt: new Date(formData.value.publishedAt).toISOString(),
-        };
+        });
       }
       showEditModal.value = false;
       editingNews.value = null;
@@ -171,7 +171,7 @@ const submitNews = async () => {
       subtitle: "",
       content: "",
       tags: "",
-      publishedAt: new Date().toISOString().split("T")[0],
+      publishedAt: new Date().toISOString().slice(0, 10),
     };
   } catch (error) {
     alert("Terjadi kesalahan saat menyimpan berita");
@@ -214,7 +214,6 @@ const formatDate = (dateString: string) => {
   <div class="min-h-screen py-24 bg-gradient-to-b from-white via-red-50 to-white">
     <div class="container px-4 mx-auto sm:px-6">
       <div class="max-w-7xl mx-auto">
-        
         <div class="flex flex-col gap-4 mb-8 md:flex-row md:items-center md:justify-between">
           <div>
             <h1 class="text-3xl font-bold text-gray-800 md:text-4xl">Kelola Berita</h1>
@@ -229,7 +228,6 @@ const formatDate = (dateString: string) => {
           </button>
         </div>
 
-        
         <div class="grid grid-cols-1 gap-6 mb-8 md:grid-cols-4">
           <div class="md:col-span-3">
             <div class="relative">
@@ -263,7 +261,7 @@ const formatDate = (dateString: string) => {
             <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
               <div class="flex-1">
                 <div class="flex items-start gap-4">
-                  <img
+                  <NuxtImg
                     :src="news.thumbnail"
                     :alt="news.title"
                     class="object-cover w-16 h-16 rounded-lg flex-shrink-0"
@@ -283,10 +281,7 @@ const formatDate = (dateString: string) => {
                         >
                           {{ tag }}
                         </span>
-                        <span
-                          v-if="news.tags.length > 3"
-                          class="px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded"
-                        >
+                        <span v-if="news.tags.length > 3" class="px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded">
                           +{{ news.tags.length - 3 }}
                         </span>
                       </div>
@@ -313,7 +308,10 @@ const formatDate = (dateString: string) => {
             </div>
           </div>
 
-          <div v-if="filteredNews.length === 0" class="p-12 text-center bg-white border-2 border-gray-100 shadow-xl rounded-xl">
+          <div
+            v-if="filteredNews.length === 0"
+            class="p-12 text-center bg-white border-2 border-gray-100 shadow-xl rounded-xl"
+          >
             <Icon name="lucide:file-x" size="48" class="mx-auto mb-4 text-gray-400" />
             <h3 class="text-lg font-semibold text-gray-600 mb-2">Tidak ada berita ditemukan</h3>
             <p class="text-gray-500">Coba ubah kata kunci pencarian atau tambah berita baru</p>
@@ -323,13 +321,15 @@ const formatDate = (dateString: string) => {
     </div>
   </div>
 
-  
   <Teleport to="body">
     <Transition name="modal">
       <div
         v-if="showCreateModal || showEditModal"
         class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
-        @click="showCreateModal = false; showEditModal = false"
+        @click="
+          showCreateModal = false;
+          showEditModal = false;
+        "
       >
         <div
           class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border-2 border-red-100"
@@ -339,11 +339,14 @@ const formatDate = (dateString: string) => {
             <div class="flex items-center justify-between mb-6">
               <div class="px-6 py-3 border border-red-200 bg-gradient-to-r from-red-600 to-red-800 rounded-xl">
                 <h3 class="text-lg font-bold text-white">
-                  {{ editingNews ? 'Edit Berita' : 'Tambah Berita Baru' }}
+                  {{ editingNews ? "Edit Berita" : "Tambah Berita Baru" }}
                 </h3>
               </div>
               <button
-                @click="showCreateModal = false; showEditModal = false"
+                @click="
+                  showCreateModal = false;
+                  showEditModal = false;
+                "
                 class="p-2 text-gray-500 transition-colors bg-gray-100 rounded-full hover:text-gray-700 hover:bg-gray-200"
               >
                 <Icon name="lucide:x" size="24" />
@@ -362,7 +365,7 @@ const formatDate = (dateString: string) => {
                   type="text"
                   :class="[
                     'w-full px-4 py-3 transition border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500',
-                    errors.title ? 'border-red-500' : 'border-gray-200'
+                    errors.title ? 'border-red-500' : 'border-gray-200',
                   ]"
                   placeholder="Masukkan judul berita"
                   required
@@ -385,7 +388,7 @@ const formatDate = (dateString: string) => {
                   type="text"
                   :class="[
                     'w-full px-4 py-3 transition border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500',
-                    errors.subtitle ? 'border-red-500' : 'border-gray-200'
+                    errors.subtitle ? 'border-red-500' : 'border-gray-200',
                   ]"
                   placeholder="Masukkan subjudul berita"
                   required
@@ -408,7 +411,7 @@ const formatDate = (dateString: string) => {
                   rows="8"
                   :class="[
                     'w-full px-4 py-3 transition border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 resize-vertical',
-                    errors.content ? 'border-red-500' : 'border-gray-200'
+                    errors.content ? 'border-red-500' : 'border-gray-200',
                   ]"
                   placeholder="Masukkan konten berita (Markdown supported)"
                   required
@@ -431,7 +434,7 @@ const formatDate = (dateString: string) => {
                   type="text"
                   :class="[
                     'w-full px-4 py-3 transition border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500',
-                    errors.tags ? 'border-red-500' : 'border-gray-200'
+                    errors.tags ? 'border-red-500' : 'border-gray-200',
                   ]"
                   placeholder="Contoh: prestasi, kompetisi, juara (pisahkan dengan koma)"
                   required
@@ -454,7 +457,7 @@ const formatDate = (dateString: string) => {
                   type="date"
                   :class="[
                     'w-full px-4 py-3 transition border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500',
-                    errors.publishedAt ? 'border-red-500' : 'border-gray-200'
+                    errors.publishedAt ? 'border-red-500' : 'border-gray-200',
                   ]"
                   required
                   @input="clearFieldError('publishedAt')"
@@ -473,11 +476,16 @@ const formatDate = (dateString: string) => {
                 >
                   <Icon v-if="isSubmitting" name="lucide:loader-2" class="animate-spin" size="20" />
                   <Icon v-else name="lucide:save" size="20" />
-                  <span>{{ isSubmitting ? 'Menyimpan...' : (editingNews ? 'Simpan Perubahan' : 'Publikasikan Berita') }}</span>
+                  <span>{{
+                    isSubmitting ? "Menyimpan..." : editingNews ? "Simpan Perubahan" : "Publikasikan Berita"
+                  }}</span>
                 </button>
                 <button
                   type="button"
-                  @click="showCreateModal = false; showEditModal = false"
+                  @click="
+                    showCreateModal = false;
+                    showEditModal = false;
+                  "
                   class="px-6 py-3 font-semibold text-gray-600 transition-colors bg-gray-100 rounded-xl hover:bg-gray-200"
                 >
                   Batal
@@ -490,7 +498,6 @@ const formatDate = (dateString: string) => {
     </Transition>
   </Teleport>
 
-  
   <Teleport to="body">
     <Transition name="modal">
       <div
@@ -498,10 +505,7 @@ const formatDate = (dateString: string) => {
         class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
         @click="showDeleteModal = false"
       >
-        <div
-          class="bg-white rounded-2xl max-w-md w-full shadow-2xl border-2 border-red-100"
-          @click.stop
-        >
+        <div class="bg-white rounded-2xl max-w-md w-full shadow-2xl border-2 border-red-100" @click.stop>
           <div class="p-8">
             <div class="flex items-center gap-3 mb-4">
               <div class="flex items-center justify-center w-12 h-12 bg-red-100 rounded-full">
@@ -510,8 +514,8 @@ const formatDate = (dateString: string) => {
               <h3 class="text-lg font-bold text-gray-800">Hapus Berita</h3>
             </div>
             <p class="text-gray-600 mb-6">
-              Apakah Anda yakin ingin menghapus berita "<strong>{{ deletingNews?.title }}</strong>"?
-              Tindakan ini tidak dapat dibatalkan.
+              Apakah Anda yakin ingin menghapus berita "<strong>{{ deletingNews?.title }}</strong
+              >"? Tindakan ini tidak dapat dibatalkan.
             </p>
             <div class="flex gap-3">
               <button

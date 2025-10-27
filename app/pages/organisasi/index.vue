@@ -167,7 +167,7 @@ const organizations = computed(() => organizationsResponse.value?.data || []);
                 visible: { opacity: 1, scale: 1, transition: { duration: 0.4, delay: 0.1 } },
               }"
             >
-              <img
+              <NuxtImg
                 :src="org.logo"
                 :alt="`Logo ${org.name}`"
                 :class="[

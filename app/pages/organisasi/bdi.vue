@@ -3,9 +3,7 @@ import type { Organization } from "~/models/Organization";
 
 const { data: organizationsResponse } = await useFetch("/api/organizations");
 const organizations = computed(() => organizationsResponse.value?.data || []);
-const organization = computed(
-  () => organizations.value.find((org) => org.slug === "bdi") || ({} as Organization),
-);
+const organization = computed(() => organizations.value.find((org) => org.slug === "bdi") || ({} as Organization));
 
 const activeTab = ref("overview");
 
@@ -24,10 +22,9 @@ useHead({
   <div class="min-h-screen py-24 bg-gradient-to-b from-white via-blue-50 to-white">
     <div class="container px-4 mx-auto sm:px-6">
       <div class="max-w-6xl mx-auto">
-        
         <div class="mb-8">
           <div class="flex flex-col gap-6 md:flex-row md:items-center">
-            <img
+            <NuxtImg
               :src="organization.logo"
               :alt="organization.name"
               class="object-cover w-24 h-24 rounded-2xl border-4 border-blue-200 shadow-lg md:w-32 md:h-32 bg-transparent"
@@ -54,7 +51,6 @@ useHead({
           </div>
         </div>
 
-        
         <div class="mb-8">
           <div class="flex border-b border-gray-200">
             <button
@@ -64,7 +60,7 @@ useHead({
                 { id: 'leadership', label: 'Pengurus', icon: 'lucide:crown' },
                 { id: 'sections', label: 'Bidang', icon: 'lucide:grid-3x3' },
                 { id: 'activities', label: 'Kegiatan', icon: 'lucide:activity' },
-                { id: 'contact', label: 'Kontak', icon: 'lucide:phone' }
+                { id: 'contact', label: 'Kontak', icon: 'lucide:phone' },
               ]"
               :key="tab.id"
               @click="activeTab = tab.id"
@@ -72,7 +68,7 @@ useHead({
                 'flex items-center gap-2 px-6 py-3 font-semibold transition-colors border-b-2',
                 activeTab === tab.id
                   ? 'border-blue-600 text-blue-600'
-                  : 'border-transparent text-gray-500 hover:text-gray-700'
+                  : 'border-transparent text-gray-500 hover:text-gray-700',
               ]"
             >
               <Icon :name="tab.icon" size="18" />
@@ -81,21 +77,17 @@ useHead({
           </div>
         </div>
 
-        
         <div v-if="activeTab === 'overview'" class="space-y-8">
-          
           <div class="p-6 bg-white border-2 border-blue-100 shadow-xl rounded-2xl md:p-8">
             <h2 class="mb-4 text-2xl font-bold text-gray-800">Deskripsi Logo</h2>
             <p class="text-gray-600 leading-relaxed">{{ organization.logoDescription }}</p>
           </div>
 
-          
           <div class="p-6 bg-white border-2 border-blue-100 shadow-xl rounded-2xl md:p-8">
             <h2 class="mb-4 text-2xl font-bold text-gray-800">Sejarah</h2>
             <p class="text-gray-600 leading-relaxed">{{ organization.history }}</p>
           </div>
 
-          
           <div class="grid grid-cols-2 gap-6 md:grid-cols-4">
             <div class="p-6 text-center bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
               <Icon name="lucide:users" size="32" class="mx-auto mb-3 text-blue-600" />
@@ -119,11 +111,10 @@ useHead({
             </div>
           </div>
 
-          
           <div class="p-6 bg-white border-2 border-blue-100 shadow-xl rounded-2xl md:p-8">
             <h2 class="mb-4 text-2xl font-bold text-gray-800">Poster Pendaftaran</h2>
             <div class="text-center">
-              <img
+              <NuxtImg
                 :src="organization.recruitmentPoster"
                 :alt="`Poster Pendaftaran ${organization.name}`"
                 class="max-w-md mx-auto rounded-xl shadow-lg"
@@ -133,7 +124,6 @@ useHead({
           </div>
         </div>
 
-        
         <div v-if="activeTab === 'photos'" class="space-y-6">
           <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             <div
@@ -141,7 +131,7 @@ useHead({
               :key="index"
               class="overflow-hidden bg-white border-2 border-gray-100 shadow-xl rounded-2xl"
             >
-              <img
+              <NuxtImg
                 :src="photo"
                 :alt="`Foto ${organization.name} ${index + 1}`"
                 class="object-cover w-full h-48 transition-transform duration-300 hover:scale-105"
@@ -150,17 +140,15 @@ useHead({
           </div>
         </div>
 
-        
         <div v-if="activeTab === 'leadership'" class="space-y-6">
           <div class="grid gap-6 md:grid-cols-2">
-            
             <div
               v-for="leader in organization.leadership.ketua"
               :key="leader.id"
               class="p-6 bg-white border-2 border-yellow-100 shadow-xl rounded-2xl"
             >
               <div class="flex items-center gap-4 mb-4">
-                <img
+                <NuxtImg
                   :src="leader.image"
                   :alt="leader.name"
                   class="object-cover w-16 h-16 rounded-full border-4 border-yellow-200"
@@ -172,14 +160,13 @@ useHead({
               </div>
             </div>
 
-            
             <div
               v-for="leader in organization.leadership.sekretaris"
               :key="leader.id"
               class="p-6 bg-white border-2 border-green-100 shadow-xl rounded-2xl"
             >
               <div class="flex items-center gap-4 mb-4">
-                <img
+                <NuxtImg
                   :src="leader.image"
                   :alt="leader.name"
                   class="object-cover w-16 h-16 rounded-full border-4 border-green-200"
@@ -193,7 +180,6 @@ useHead({
           </div>
         </div>
 
-        
         <div v-if="activeTab === 'sections'" class="space-y-6">
           <div
             v-for="section in organization.sections"
@@ -201,7 +187,7 @@ useHead({
             class="p-6 bg-white border-2 border-gray-100 shadow-xl rounded-2xl md:p-8"
           >
             <div class="flex flex-col gap-6 md:flex-row">
-              <img
+              <NuxtImg
                 :src="section.image"
                 :alt="section.name"
                 class="object-cover w-full h-48 rounded-xl md:w-48 md:h-48 flex-shrink-0"
@@ -245,7 +231,7 @@ useHead({
                       :key="member.id"
                       class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg"
                     >
-                      <img
+                      <NuxtImg
                         :src="member.image"
                         :alt="member.name"
                         class="w-10 h-10 rounded-full border-2 border-gray-200"
@@ -262,7 +248,6 @@ useHead({
           </div>
         </div>
 
-        
         <div v-if="activeTab === 'activities'" class="space-y-6">
           <div class="grid gap-6 md:grid-cols-2">
             <div
@@ -270,11 +255,7 @@ useHead({
               :key="activity.id"
               class="overflow-hidden bg-white border-2 border-gray-100 shadow-xl rounded-2xl"
             >
-              <img
-                :src="activity.image"
-                :alt="activity.title"
-                class="object-cover w-full h-48"
-              />
+              <NuxtImg :src="activity.image" :alt="activity.title" class="object-cover w-full h-48" />
               <div class="p-6">
                 <h3 class="mb-2 text-xl font-bold text-gray-800">{{ activity.title }}</h3>
                 <p class="mb-4 text-gray-600">{{ activity.description }}</p>
@@ -287,7 +268,6 @@ useHead({
           </div>
         </div>
 
-        
         <div v-if="activeTab === 'contact'" class="space-y-6">
           <div class="p-12 text-center bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
             <Icon name="lucide:phone" size="64" class="mx-auto mb-4 text-gray-300" />

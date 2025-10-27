@@ -83,7 +83,7 @@ onMounted(() => {
           <div class="grid items-center grid-cols-1 gap-12 lg:grid-cols-2">
             <div class="flex flex-col items-start justify-center">
               <div class="w-full max-w-md lg:max-w-lg">
-                <img
+                <NuxtImg
                   src="/images/majorIcon/logo-an.webp"
                   alt="Animasi Logo"
                   class="object-contain w-full h-auto drop-shadow-2xl"
@@ -101,7 +101,7 @@ onMounted(() => {
               </div>
 
               <div class="relative w-full max-w-sm lg:max-w-md">
-                <img
+                <NuxtImg
                   src="/images/major/hero-major-ornament/an/drawing-tab.webp"
                   alt="Animasi Ornament"
                   class="object-contain w-full h-auto drop-shadow-2xl"
@@ -408,15 +408,15 @@ onMounted(() => {
         :exit="{ opacity: 0, y: 20 }"
         :transition="{ duration: 0.3, ease: 'easeInOut' }"
       >
-      <svg
-        class="w-6 h-6 text-white transition-transform group-hover:-translate-y-1"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-      </svg>
-    </motion.button>
+        <svg
+          class="w-6 h-6 text-white transition-transform group-hover:-translate-y-1"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+        </svg>
+      </motion.button>
     </AnimatePresence>
   </main>
 </template>

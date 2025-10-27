@@ -16,7 +16,7 @@
         @click="navigateToJurusan(card.slug)"
       >
         <div class="video-card">
-          <img v-show="hoveredCard !== card.id" :src="card.thumbnail" :alt="card.title" class="thumbnail" />
+          <NuxtImg v-show="hoveredCard !== card.id" :src="card.thumbnail" :alt="card.title" class="thumbnail" />
 
           <div
             v-if="card.videoType === 'youtube'"
@@ -28,7 +28,7 @@
           <div :class="['card-header', { 'card-header-hidden': hoveredCard === card.id }]">
             <div class="card-header-content">
               <div class="card-logo">
-                <img :src="card.logo" alt="Logo Jurusan" width="32" height="32" />
+                <NuxtImg :src="card.logo" alt="Logo Jurusan" width="32" height="32" />
               </div>
               <h4 class="card-title">{{ card.title }}</h4>
             </div>
@@ -42,7 +42,7 @@
                 <button @click.stop="navigateToJurusan(card.slug)" class="learn-more-btn">Pelajari Lebih</button>
               </div>
               <div class="logo">
-                <img :src="card.logo" alt="Logo Jurusan" width="60" height="60" />
+                <NuxtImg :src="card.logo" alt="Logo Jurusan" width="60" height="60" />
               </div>
             </div>
           </div>

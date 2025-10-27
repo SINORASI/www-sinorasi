@@ -7,7 +7,6 @@ definePageMeta({
   keepalive: false,
 });
 
-// Control content visibility to force proper motion-v initialization
 const showContent = ref(false);
 
 interface CounterProps {
@@ -359,7 +358,7 @@ useHead({
           :inViewOptions="{ once: true }"
         >
           <div class="relative group">
-            <img
+            <NuxtImg
               src="/images/seragam/putih-putih/10-putih-putih-l/DSC04123.webp"
               alt="Student"
               class="object-cover transition-transform duration-300 rounded-lg shadow-lg w-60 md:w-150 h-100 md:h-150 group-hover:scale-105"
@@ -462,7 +461,7 @@ useHead({
               <div
                 class="relative overflow-hidden transition-all duration-500 transform border-4 border-white shadow-2xl rounded-2xl group-hover:scale-105 group-hover:shadow-3xl"
               >
-                <img
+                <NuxtImg
                   src="/images/aula-drone.webp"
                   alt="Drone view of SMK Negeri 2 Singosari"
                   class="object-cover w-full h-auto"
@@ -609,7 +608,7 @@ useHead({
               <div
                 class="relative overflow-hidden transition-all duration-500 transform border-4 border-white shadow-2xl rounded-2xl group-hover:scale-105 group-hover:shadow-3xl"
               >
-                <img
+                <NuxtImg
                   src="/images/kepsek.webp"
                   width="600"
                   height="600"
@@ -679,7 +678,7 @@ useHead({
               <div v-for="(achievement, index) in achievements" :key="index" class="flex-shrink-0 w-full">
                 <NuxtLink v-if="achievement.slug" :to="`/berita/${achievement.slug}`" class="block cursor-pointer">
                   <div class="flex flex-col items-center gap-8 md:flex-row md:h-80">
-                    <img
+                    <NuxtImg
                       :src="achievement.image"
                       class="object-cover w-full rounded-lg shadow-md aspect-square md:w-1/3"
                       alt="Achievement"
@@ -695,7 +694,7 @@ useHead({
                   </div>
                 </NuxtLink>
                 <div v-else class="flex flex-col items-center gap-8 md:flex-row md:h-80">
-                  <img
+                  <NuxtImg
                     :src="achievement.image"
                     class="object-cover w-full rounded-lg shadow-md aspect-square md:w-1/3"
                     alt="Achievement"
@@ -1427,7 +1426,7 @@ useHead({
               class="relative flex flex-col overflow-hidden transition-all duration-300 bg-white border border-gray-100 shadow-lg cursor-pointer rounded-2xl group hover:shadow-xl"
             >
               <div class="h-48 overflow-hidden">
-                <img
+                <NuxtImg
                   :src="news.thumbnail"
                   class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
                   :alt="news.title"
@@ -1515,14 +1514,14 @@ useHead({
         :exit="{ opacity: 0, y: 20 }"
         :transition="{ duration: 0.3, ease: 'easeInOut' }"
       >
-      <svg
-        class="w-6 h-6 text-white transition-transform group-hover:-translate-y-1"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-      </svg>
+        <svg
+          class="w-6 h-6 text-white transition-transform group-hover:-translate-y-1"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+        </svg>
       </motion.button>
     </AnimatePresence>
   </main>

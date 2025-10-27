@@ -116,13 +116,11 @@ const handleLogout = async () => {
   <div class="min-h-screen py-24 bg-gradient-to-b from-white via-blue-50 to-white">
     <div class="container px-4 mx-auto sm:px-6">
       <div class="max-w-4xl mx-auto">
-        
         <div class="mb-8">
           <h1 class="text-3xl font-bold text-gray-800 md:text-4xl">Edit Profil</h1>
           <p class="mt-2 text-gray-600">Kelola informasi dan pengaturan akun Anda</p>
         </div>
 
-        
         <div class="mb-8">
           <div class="flex border-b border-gray-200">
             <button
@@ -133,7 +131,7 @@ const handleLogout = async () => {
                 'flex items-center gap-2 px-6 py-3 font-semibold transition-colors border-b-2',
                 activeTab === tab.id
                   ? 'border-blue-600 text-blue-600'
-                  : 'border-transparent text-gray-500 hover:text-gray-700'
+                  : 'border-transparent text-gray-500 hover:text-gray-700',
               ]"
             >
               <Icon :name="tab.icon" size="18" />
@@ -142,13 +140,11 @@ const handleLogout = async () => {
           </div>
         </div>
 
-        
         <div v-if="activeTab === 'profile'" class="space-y-8">
-          
           <div class="p-6 bg-white border-2 border-blue-100 shadow-xl rounded-2xl md:p-8">
             <h3 class="mb-6 text-xl font-bold text-gray-800">Foto Profil</h3>
             <div class="flex items-center gap-6">
-              <img
+              <NuxtImg
                 :src="previewUrl || '/images/profile-placeholder.png'"
                 alt="Profile"
                 class="object-cover w-24 h-24 border-4 border-blue-200 rounded-full shadow-lg md:w-32 md:h-32"
@@ -157,13 +153,7 @@ const handleLogout = async () => {
                 <h4 class="mb-2 text-lg font-semibold text-gray-800">Foto Profil</h4>
                 <p class="mb-4 text-gray-600">Upload foto profil baru. Format yang didukung: JPG, PNG, maksimal 5MB.</p>
                 <div class="flex gap-3">
-                  <input
-                    type="file"
-                    accept="image/*"
-                    @change="handleFileSelect"
-                    class="hidden"
-                    id="photo-upload"
-                  />
+                  <input type="file" accept="image/*" @change="handleFileSelect" class="hidden" id="photo-upload" />
                   <label
                     for="photo-upload"
                     class="px-4 py-2 text-sm font-semibold text-blue-600 transition-colors bg-blue-100 rounded-lg hover:bg-blue-200 cursor-pointer"
@@ -179,7 +169,9 @@ const handleLogout = async () => {
                     <Icon v-if="isUploading" name="lucide:loader-2" class="animate-spin" size="16" />
                     <span v-else>{{ isUploading ? "Mengupload..." : "Simpan Foto" }}</span>
                   </button>
-                  <button class="px-4 py-2 text-sm font-semibold text-red-600 transition-colors bg-red-100 rounded-lg hover:bg-red-200">
+                  <button
+                    class="px-4 py-2 text-sm font-semibold text-red-600 transition-colors bg-red-100 rounded-lg hover:bg-red-200"
+                  >
                     Hapus Foto
                   </button>
                 </div>
@@ -187,7 +179,6 @@ const handleLogout = async () => {
             </div>
           </div>
 
-          
           <div class="p-6 bg-white border-2 border-blue-100 shadow-xl rounded-2xl md:p-8">
             <h3 class="mb-6 text-xl font-bold text-gray-800">Informasi Pribadi</h3>
 
@@ -204,7 +195,7 @@ const handleLogout = async () => {
                     type="text"
                     :class="[
                       'w-full px-4 py-3 transition border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
-                      errors.name ? 'border-red-500' : 'border-gray-200'
+                      errors.name ? 'border-red-500' : 'border-gray-200',
                     ]"
                     placeholder="Masukkan nama lengkap Anda"
                     required
@@ -226,7 +217,7 @@ const handleLogout = async () => {
                     type="text"
                     :class="[
                       'w-full px-4 py-3 transition border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
-                      errors.username ? 'border-red-500' : 'border-gray-200'
+                      errors.username ? 'border-red-500' : 'border-gray-200',
                     ]"
                     placeholder="Masukkan username Anda"
                     required
@@ -248,7 +239,7 @@ const handleLogout = async () => {
                     type="email"
                     :class="[
                       'w-full px-4 py-3 transition border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
-                      errors.email ? 'border-red-500' : 'border-gray-200'
+                      errors.email ? 'border-red-500' : 'border-gray-200',
                     ]"
                     placeholder="Masukkan email Anda"
                     required
@@ -311,9 +302,7 @@ const handleLogout = async () => {
           </div>
         </div>
 
-        
         <div v-if="activeTab === 'security'" class="space-y-8">
-          
           <div class="p-6 bg-white border-2 border-orange-100 shadow-xl rounded-2xl md:p-8">
             <h3 class="mb-6 text-xl font-bold text-gray-800">Ubah Password</h3>
 
@@ -329,7 +318,7 @@ const handleLogout = async () => {
                   type="password"
                   :class="[
                     'w-full px-4 py-3 transition border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500',
-                    errors.currentPassword ? 'border-red-500' : 'border-gray-200'
+                    errors.currentPassword ? 'border-red-500' : 'border-gray-200',
                   ]"
                   placeholder="Masukkan password saat ini"
                   @input="errors.currentPassword = undefined"
@@ -350,7 +339,7 @@ const handleLogout = async () => {
                   type="password"
                   :class="[
                     'w-full px-4 py-3 transition border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500',
-                    errors.newPassword ? 'border-red-500' : 'border-gray-200'
+                    errors.newPassword ? 'border-red-500' : 'border-gray-200',
                   ]"
                   placeholder="Masukkan password baru"
                   @input="errors.newPassword = undefined"
@@ -372,7 +361,7 @@ const handleLogout = async () => {
                   type="password"
                   :class="[
                     'w-full px-4 py-3 transition border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500',
-                    errors.confirmNewPassword ? 'border-red-500' : 'border-gray-200'
+                    errors.confirmNewPassword ? 'border-red-500' : 'border-gray-200',
                   ]"
                   placeholder="Konfirmasi password baru"
                   @input="errors.confirmNewPassword = undefined"
@@ -402,7 +391,6 @@ const handleLogout = async () => {
             </form>
           </div>
 
-          
           <div class="p-6 bg-white border-2 border-green-100 shadow-xl rounded-2xl md:p-8">
             <h3 class="mb-6 text-xl font-bold text-gray-800">Tips Keamanan</h3>
             <div class="space-y-4">
@@ -431,7 +419,6 @@ const handleLogout = async () => {
           </div>
         </div>
 
-        
         <Teleport to="body">
           <Transition name="dialog">
             <div

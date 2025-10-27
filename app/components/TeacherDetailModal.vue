@@ -22,7 +22,7 @@
         <div
           class="flex items-center justify-center w-48 h-48 md:w-64 md:h-64 rounded-lg bg-neutral-200 overflow-hidden"
         >
-          <img :src="teacher.image" :alt="teacher.name" class="object-cover w-full h-full" />
+          <NuxtImg :src="teacher.image" :alt="teacher.name" class="object-cover w-full h-full" />
         </div>
       </div>
 
