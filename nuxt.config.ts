@@ -60,4 +60,7 @@ export default defineNuxtConfig({
       xxl: 1536,
     },
   },
+  experimental: {
+    viteEnvironmentApi: true,
+  },
 });

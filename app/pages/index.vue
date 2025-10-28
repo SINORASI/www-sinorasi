@@ -747,9 +747,6 @@ useHead({
       :transition="{ duration: 0.8 }"
       :inViewOptions="{ once: true }"
     >
-      <div class="absolute top-20 left-16 w-3 h-3 bg-yellow-300 rounded-full opacity-70 sparkle-1"></div>
-      <div class="absolute top-40 right-24 w-4 h-4 bg-blue-300 rounded-full opacity-60 sparkle-2"></div>
-      <div class="absolute bottom-32 left-12 w-2 h-2 bg-pink-300 rounded-full opacity-80 sparkle-3"></div>
 
       <div class="absolute bottom-20 right-12 z-0">
         <Icon name="lucide:badge" size="165" class="text-orange-300 opacity-8 seragam-ornament-2" />
