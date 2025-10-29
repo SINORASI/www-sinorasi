@@ -285,12 +285,12 @@ useHead({
 </script>
 
 <template>
-  <div class="min-h-screen py-24 bg-gradient-to-b from-white via-blue-50 to-white">
+  <div class="min-h-screen py-24 bg-linear-to-b from-white via-blue-50 to-white">
     <div class="container px-4 mx-auto sm:px-6">
       
       <div class="mb-12 text-center">
         <div
-          class="inline-block px-10 py-6 mb-4 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
+          class="inline-block px-10 py-6 mb-4 border border-blue-200 shadow-xl bg-linear-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
         >
           <h1 class="text-3xl font-bold text-white md:text-4xl">Traffic Tracker</h1>
         </div>
@@ -344,7 +344,7 @@ useHead({
         
         <div v-if="error" class="p-4 mt-6 border-l-4 border-red-600 bg-red-50 rounded-r-xl">
           <div class="flex items-start">
-            <Icon name="lucide:alert-circle" size="20" class="text-red-600 mr-3 mt-0.5 flex-shrink-0" />
+            <Icon name="lucide:alert-circle" size="20" class="text-red-600 mr-3 mt-0.5 shrink-0" />
             <p class="text-red-700">{{ error }}</p>
           </div>
         </div>
@@ -537,7 +537,7 @@ useHead({
         
         <div class="p-8 mb-8 text-center bg-white border-2 border-orange-100 shadow-xl rounded-2xl">
           <div
-            class="inline-block px-6 py-3 mb-4 border border-orange-200 bg-gradient-to-r from-orange-500 to-orange-600 rounded-xl"
+            class="inline-block px-6 py-3 mb-4 border border-orange-200 bg-linear-to-r from-orange-500 to-orange-600 rounded-xl"
           >
             <h3 class="text-xl font-bold text-white">Rekomendasi</h3>
           </div>
@@ -559,27 +559,27 @@ useHead({
         <div class="grid grid-cols-1 gap-6 mb-8 md:grid-cols-2">
           <div class="p-8 bg-white border-2 border-green-100 shadow-xl rounded-2xl">
             <div
-              class="inline-block px-6 py-3 mb-6 border border-green-200 bg-gradient-to-r from-green-600 to-green-700 rounded-xl"
+              class="inline-block px-6 py-3 mb-6 border border-green-200 bg-linear-to-r from-green-600 to-green-700 rounded-xl"
             >
               <h3 class="text-xl font-bold text-white">Proximity Analytics</h3>
             </div>
             <ul class="space-y-4 text-gray-700">
               <li class="flex items-start gap-3 p-4 border-l-4 border-green-600 bg-green-50 rounded-xl">
-                <Icon name="lucide:map-pin" size="20" class="text-green-600 mt-0.5 flex-shrink-0" />
+                <Icon name="lucide:map-pin" size="20" class="text-green-600 mt-0.5 shrink-0" />
                 <div>
                   <span class="font-semibold">Jarak ke sekolah:</span>
                   <p class="mt-1 text-gray-600">{{ results.analytics.proximity.distanceToSchool }}</p>
                 </div>
               </li>
               <li class="flex items-start gap-3 p-4 border-l-4 border-green-600 bg-green-50 rounded-xl">
-                <Icon name="lucide:clock" size="20" class="text-green-600 mt-0.5 flex-shrink-0" />
+                <Icon name="lucide:clock" size="20" class="text-green-600 mt-0.5 shrink-0" />
                 <div>
                   <span class="font-semibold">Estimasi tiba:</span>
                   <p class="mt-1 text-gray-600">{{ results.analytics.proximity.estimatedArrival }}</p>
                 </div>
               </li>
               <li class="flex items-start gap-3 p-4 border-l-4 border-green-600 bg-green-50 rounded-xl">
-                <Icon name="lucide:route" size="20" class="text-green-600 mt-0.5 flex-shrink-0" />
+                <Icon name="lucide:route" size="20" class="text-green-600 mt-0.5 shrink-0" />
                 <div>
                   <span class="font-semibold">Waktu tempuh:</span>
                   <p class="mt-1 text-gray-600">{{ results.analytics.proximity.timeToSchool }}</p>
@@ -590,34 +590,34 @@ useHead({
 
           <div class="p-8 bg-white border-2 border-purple-100 shadow-xl rounded-2xl">
             <div
-              class="inline-block px-6 py-3 mb-6 border border-purple-200 bg-gradient-to-r from-purple-600 to-purple-700 rounded-xl"
+              class="inline-block px-6 py-3 mb-6 border border-purple-200 bg-linear-to-r from-purple-600 to-purple-700 rounded-xl"
             >
               <h3 class="text-xl font-bold text-white">Time Analytics</h3>
             </div>
             <ul class="space-y-4 text-gray-700">
               <li class="flex items-start gap-3 p-4 border-l-4 border-purple-600 bg-purple-50 rounded-xl">
-                <Icon name="lucide:traffic-cone" size="20" class="text-purple-600 mt-0.5 flex-shrink-0" />
+                <Icon name="lucide:traffic-cone" size="20" class="text-purple-600 mt-0.5 shrink-0" />
                 <div>
                   <span class="font-semibold">Kepadatan saat ini:</span>
                   <p class="mt-1 text-gray-600">{{ results.analytics.timeAnalytics.currentCongestion }}</p>
                 </div>
               </li>
               <li class="flex items-start gap-3 p-4 border-l-4 border-purple-600 bg-purple-50 rounded-xl">
-                <Icon name="lucide:alarm-clock" size="20" class="text-purple-600 mt-0.5 flex-shrink-0" />
+                <Icon name="lucide:alarm-clock" size="20" class="text-purple-600 mt-0.5 shrink-0" />
                 <div>
                   <span class="font-semibold">Jam sibuk:</span>
                   <p class="mt-1 text-gray-600">{{ results.analytics.timeAnalytics.peakHours.join(', ') }}</p>
                 </div>
               </li>
               <li class="flex items-start gap-3 p-4 border-l-4 border-purple-600 bg-purple-50 rounded-xl">
-                <Icon name="lucide:calendar-check" size="20" class="text-purple-600 mt-0.5 flex-shrink-0" />
+                <Icon name="lucide:calendar-check" size="20" class="text-purple-600 mt-0.5 shrink-0" />
                 <div>
                   <span class="font-semibold">Rekomendasi keberangkatan:</span>
                   <p class="mt-1 text-gray-600">{{ results.analytics.timeAnalytics.recommendedDeparture }}</p>
                 </div>
               </li>
               <li class="flex items-start gap-3 p-4 border-l-4 border-purple-600 bg-purple-50 rounded-xl">
-                <Icon name="lucide:git-branch" size="20" class="text-purple-600 mt-0.5 flex-shrink-0" />
+                <Icon name="lucide:git-branch" size="20" class="text-purple-600 mt-0.5 shrink-0" />
                 <div>
                   <span class="font-semibold">Rute alternatif:</span>
                   <p class="mt-1 text-gray-600">{{ results.analytics.timeAnalytics.alternativeRoutes }} tersedia</p>
@@ -630,7 +630,7 @@ useHead({
         
         <div class="p-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
           <div
-            class="inline-block px-6 py-3 mb-6 border border-blue-200 bg-gradient-to-r from-blue-600 to-blue-800 rounded-xl"
+            class="inline-block px-6 py-3 mb-6 border border-blue-200 bg-linear-to-r from-blue-600 to-blue-800 rounded-xl"
           >
             <h3 class="text-xl font-bold text-white">Informasi Berguna</h3>
           </div>
@@ -662,27 +662,27 @@ useHead({
         
         <div class="p-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
           <div
-            class="inline-block px-6 py-3 mb-6 border border-blue-200 bg-gradient-to-r from-blue-600 to-blue-800 rounded-xl"
+            class="inline-block px-6 py-3 mb-6 border border-blue-200 bg-linear-to-r from-blue-600 to-blue-800 rounded-xl"
           >
             <h3 class="text-xl font-bold text-white">Informasi Tambahan</h3>
           </div>
           <ul class="space-y-4 text-gray-700">
             <li class="flex items-start gap-3 p-4 border-l-4 border-blue-600 bg-blue-50 rounded-xl">
-              <Icon name="lucide:route" size="20" class="text-blue-600 mt-0.5 flex-shrink-0" />
+              <Icon name="lucide:route" size="20" class="text-blue-600 mt-0.5 shrink-0" />
               <div>
                 <span class="font-semibold">Rute terbaik:</span>
                 <p class="mt-1 text-gray-600">{{ results.route }}</p>
               </div>
             </li>
             <li class="flex items-start gap-3 p-4 border-l-4 border-orange-600 bg-orange-50 rounded-xl">
-              <Icon name="lucide:calendar-clock" size="20" class="text-orange-600 mt-0.5 flex-shrink-0" />
+              <Icon name="lucide:calendar-clock" size="20" class="text-orange-600 mt-0.5 shrink-0" />
               <div>
                 <span class="font-semibold">Waktu keberangkatan optimal:</span>
                 <p class="mt-1 text-gray-600">{{ results.bestTime }}</p>
               </div>
             </li>
             <li class="flex items-start gap-3 p-4 border-l-4 border-blue-600 bg-blue-50 rounded-xl">
-              <Icon name="lucide:lightbulb" size="20" class="text-blue-600 mt-0.5 flex-shrink-0" />
+              <Icon name="lucide:lightbulb" size="20" class="text-blue-600 mt-0.5 shrink-0" />
               <div>
                 <span class="font-semibold">Tips:</span>
                 <p class="mt-1 text-gray-600">{{ results.tips }}</p>

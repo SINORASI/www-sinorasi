@@ -24,12 +24,12 @@ useHead({
 </script>
 
 <template>
-  <div class="min-h-screen py-24 bg-gradient-to-b from-white via-blue-50 to-white">
+  <div class="min-h-screen py-24 bg-linear-to-b from-white via-blue-50 to-white">
     <div class="container px-4 mx-auto sm:px-6">
       
       <div class="mb-12 text-center">
         <div
-          class="inline-block px-10 py-6 mb-4 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
+          class="inline-block px-10 py-6 mb-4 border border-blue-200 shadow-xl bg-linear-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
         >
           <h1 class="text-3xl font-bold text-white md:text-4xl">Hubungi Kami</h1>
         </div>
@@ -75,7 +75,7 @@ useHead({
       
       <div class="max-w-5xl mx-auto">
         <div
-          class="inline-block px-10 py-6 mb-8 border border-orange-200 shadow-xl bg-gradient-to-r from-orange-500 to-orange-600 backdrop-blur-2xl rounded-2xl"
+          class="inline-block px-10 py-6 mb-8 border border-orange-200 shadow-xl bg-linear-to-r from-orange-500 to-orange-600 backdrop-blur-2xl rounded-2xl"
         >
           <h2 class="text-2xl font-bold text-white">Lokasi Sekolah</h2>
         </div>
@@ -90,7 +90,7 @@ useHead({
       
       <div class="max-w-5xl mx-auto mt-16">
         <div
-          class="inline-block px-10 py-6 mb-8 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
+          class="inline-block px-10 py-6 mb-8 border border-blue-200 shadow-xl bg-linear-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
         >
           <h2 class="text-2xl font-bold text-white">Galeri Sekolah</h2>
         </div>

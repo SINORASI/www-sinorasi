@@ -110,7 +110,7 @@ onMounted(() => {
 
               <div class="px-6 py-3 bg-white shadow-2xl rounded-2xl lg:px-8 lg:py-4">
                 <p
-                  class="text-xl font-bold text-transparent sm:text-2xl lg:text-3xl bg-clip-text bg-gradient-to-r"
+                  class="text-xl font-bold text-transparent sm:text-2xl lg:text-3xl bg-clip-text bg-linear-to-r"
                   :style="`background-image: linear-gradient(135deg, ${majorColor.primary}, ${majorColor.secondary})`"
                 >
                   SMK Negeri 02 Singosari
@@ -182,7 +182,7 @@ onMounted(() => {
             </span>
           </div>
           <h2
-            class="text-3xl font-extrabold text-transparent md:text-5xl bg-gradient-to-r bg-clip-text"
+            class="text-3xl font-extrabold text-transparent md:text-5xl bg-linear-to-r bg-clip-text"
             :style="`background-image: linear-gradient(135deg, ${majorColor.primary}, ${majorColor.accent})`"
           >
             Materi Pembelajaran
@@ -267,7 +267,7 @@ onMounted(() => {
               </span>
             </div>
             <h2
-              class="text-3xl font-extrabold text-transparent md:text-5xl bg-gradient-to-r bg-clip-text"
+              class="text-3xl font-extrabold text-transparent md:text-5xl bg-linear-to-r bg-clip-text"
               :style="`background-image: linear-gradient(135deg, ${majorColor.primary}, ${majorColor.accent})`"
             >
               Mitra Industri
@@ -296,7 +296,7 @@ onMounted(() => {
         <div class="space-y-4 text-center">
           <div class="inline-block">
             <span
-              class="px-4 py-2 text-sm font-bold tracking-widest text-white uppercase rounded-full md:text-base bg-gradient-to-r"
+              class="px-4 py-2 text-sm font-bold tracking-widest text-white uppercase rounded-full md:text-base bg-linear-to-r"
               :style="`background-image: linear-gradient(135deg, ${majorColor.primary}, ${majorColor.accent})`"
             >
               Interaktif
@@ -316,7 +316,7 @@ onMounted(() => {
             :style="`background: linear-gradient(135deg, ${majorColor.primary}, ${majorColor.accent})`"
           >
             <div class="absolute inset-0 opacity-10">
-              <div class="absolute inset-0 bg-gradient-to-br from-white to-transparent animate-pulse"></div>
+              <div class="absolute inset-0 bg-linear-to-br from-white to-transparent animate-pulse"></div>
             </div>
 
             <div class="relative z-10 space-y-6 text-center">
@@ -381,7 +381,7 @@ onMounted(() => {
             </span>
           </div>
           <h2
-            class="text-3xl font-extrabold text-transparent md:text-5xl bg-gradient-to-r bg-clip-text"
+            class="text-3xl font-extrabold text-transparent md:text-5xl bg-linear-to-r bg-clip-text"
             :style="`background-image: linear-gradient(135deg, ${majorColor.primary}, ${majorColor.accent})`"
           >
             Prestasi Jurusan

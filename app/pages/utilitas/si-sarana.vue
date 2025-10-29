@@ -123,13 +123,13 @@ const submitReport = async () => {
 </script>
 
 <template>
-  <div class="min-h-screen py-24 bg-gradient-to-br from-slate-50 via-orange-50 to-orange-100">
+  <div class="min-h-screen py-24 bg-linear-to-br from-slate-50 via-orange-50 to-orange-100">
     <div class="container px-4 mx-auto sm:px-6 lg:px-8">
       <div class="max-w-5xl mx-auto">
         
         <div class="mb-16 text-center animate-fade-in-up">
           <div
-            class="inline-block px-8 py-6 mb-6 border border-orange-200 shadow-2xl bg-gradient-to-r from-orange-600 to-orange-800 backdrop-blur-2xl rounded-3xl transform hover:scale-105 transition-all duration-300 sm:px-12 sm:py-8"
+            class="inline-block px-8 py-6 mb-6 border border-orange-200 shadow-2xl bg-linear-to-r from-orange-600 to-orange-800 backdrop-blur-2xl rounded-3xl transform hover:scale-105 transition-all duration-300 sm:px-12 sm:py-8"
           >
             <h1 class="text-3xl font-bold text-white sm:text-4xl md:text-5xl tracking-tight">SI Sarana</h1>
           </div>
@@ -165,7 +165,7 @@ const submitReport = async () => {
                 <div class="p-10">
                   <div class="flex items-center justify-between mb-8">
                     <div
-                      class="px-8 py-4 border border-orange-200 bg-gradient-to-r from-orange-600 to-orange-800 rounded-2xl shadow-lg"
+                      class="px-8 py-4 border border-orange-200 bg-linear-to-r from-orange-600 to-orange-800 rounded-2xl shadow-lg"
                     >
                       <h3 class="text-xl font-bold text-white">Panduan Pelaporan</h3>
                     </div>
@@ -178,30 +178,30 @@ const submitReport = async () => {
                   </div>
                   <ul class="space-y-5 text-gray-700">
                     <li class="flex items-start gap-4">
-                      <Icon name="lucide:circle-dot" size="20" class="text-orange-600 mt-0.5 flex-shrink-0" />
+                      <Icon name="lucide:circle-dot" size="20" class="text-orange-600 mt-0.5 shrink-0" />
                       <span class="leading-relaxed">Jelaskan masalah dengan detail dan spesifik untuk memudahkan tim maintenance</span>
                     </li>
                     <li class="flex items-start gap-4">
-                      <Icon name="lucide:circle-dot" size="20" class="text-orange-600 mt-0.5 flex-shrink-0" />
+                      <Icon name="lucide:circle-dot" size="20" class="text-orange-600 mt-0.5 shrink-0" />
                       <span class="leading-relaxed">Sertakan lokasi yang jelas (nama ruangan, lantai, gedung, dll)</span>
                     </li>
                     <li class="flex items-start gap-4">
-                      <Icon name="lucide:circle-dot" size="20" class="text-orange-600 mt-0.5 flex-shrink-0" />
+                      <Icon name="lucide:circle-dot" size="20" class="text-orange-600 mt-0.5 shrink-0" />
                       <span class="leading-relaxed">Upload foto untuk memperjelas kondisi kerusakan (opsional)</span>
                     </li>
                     <li class="flex items-start gap-4">
-                      <Icon name="lucide:circle-dot" size="20" class="text-orange-600 mt-0.5 flex-shrink-0" />
+                      <Icon name="lucide:circle-dot" size="20" class="text-orange-600 mt-0.5 shrink-0" />
                       <span class="leading-relaxed">Pilih kategori yang sesuai dengan jenis masalah yang dilaporkan</span>
                     </li>
                     <li class="flex items-start gap-4">
-                      <Icon name="lucide:circle-dot" size="20" class="text-orange-600 mt-0.5 flex-shrink-0" />
+                      <Icon name="lucide:circle-dot" size="20" class="text-orange-600 mt-0.5 shrink-0" />
                       <span class="leading-relaxed">Informasi tanggal kejadian membantu prioritas penanganan</span>
                     </li>
                   </ul>
                   <div class="mt-10 text-center">
                     <button
                       @click="showGuidelines = false"
-                      class="px-10 py-4 font-semibold text-white transition-all bg-gradient-to-r from-orange-600 to-orange-800 rounded-xl shadow-lg hover:shadow-xl hover:scale-105"
+                      class="px-10 py-4 font-semibold text-white transition-all bg-linear-to-r from-orange-600 to-orange-800 rounded-xl shadow-lg hover:shadow-xl hover:scale-105"
                     >
                       Mengerti
                     </button>
@@ -407,7 +407,7 @@ const submitReport = async () => {
             <button
               type="submit"
               :disabled="isSubmitting"
-              class="flex items-center justify-center w-full gap-3 px-6 py-5 font-bold text-white transition-all duration-300 bg-gradient-to-r from-orange-600 to-orange-800 shadow-xl hover:shadow-2xl disabled:opacity-70 disabled:cursor-not-allowed rounded-2xl hover:scale-105 transform"
+              class="flex items-center justify-center w-full gap-3 px-6 py-5 font-bold text-white transition-all duration-300 bg-linear-to-r from-orange-600 to-orange-800 shadow-xl hover:shadow-2xl disabled:opacity-70 disabled:cursor-not-allowed rounded-2xl hover:scale-105 transform"
             >
               <Icon v-if="isSubmitting" name="lucide:loader-2" class="animate-spin" size="22" />
               <Icon v-else name="lucide:send" size="22" />
@@ -416,7 +416,7 @@ const submitReport = async () => {
           </form>
 
           <div class="mt-8 text-center">
-            <div class="p-6 bg-gradient-to-r from-orange-600 to-orange-800 rounded-3xl shadow-lg">
+            <div class="p-6 bg-linear-to-r from-orange-600 to-orange-800 rounded-3xl shadow-lg">
               <p class="flex items-center justify-center gap-3 text-base text-white font-medium">
                 <Icon name="lucide:clock" size="20" />
                 Tim maintenance akan merespon dalam 1-2 hari kerja

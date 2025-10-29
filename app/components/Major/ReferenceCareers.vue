@@ -50,7 +50,7 @@ const toggleExpanded = (id: number): void => {
             class="flex items-center w-full gap-3 px-4 py-4 transition-all duration-200 md:gap-4 md:px-5 md:py-5 lg:px-6 lg:py-5 hover:brightness-110"
           >
             
-            <div class="flex-shrink-0">
+            <div class="shrink-0">
               <div
                 class="flex items-center justify-center overflow-hidden md:h-12 md:w-12 lg:h-16 lg:w-16 xl:h-16 xl:w-16"
               >
@@ -59,7 +59,7 @@ const toggleExpanded = (id: number): void => {
             </div>
 
             
-            <span class="flex-1 text-lg font-semibold text-left text-white break-words md:text-xl lg:text-2xl">
+            <span class="flex-1 text-lg font-semibold text-left text-white wrap-break-words md:text-xl lg:text-2xl">
               {{ career.title }}
             </span>
 
@@ -67,7 +67,7 @@ const toggleExpanded = (id: number): void => {
             <svg
               v-if="career.description"
               :class="[
-                'w-5 h-5 sm:w-6 sm:h-6 text-white transition-transform duration-300 flex-shrink-0',
+                'w-5 h-5 sm:w-6 sm:h-6 text-white transition-transform duration-300 shrink-0',
                 items[idx] ? 'rotate-180' : 'rotate-0',
               ]"
               fill="none"
@@ -88,7 +88,7 @@ const toggleExpanded = (id: number): void => {
             ]"
           >
             <div class="px-4 py-4 border-t border-gray-200 md:px-5 md:py-5 lg:px-6 lg:py-6">
-              <p class="text-base leading-relaxed text-justify text-gray-700 break-words whitespace-pre-line md:text-lg lg:text-xl">
+              <p class="text-base leading-relaxed text-justify text-gray-700 wrap-break-words whitespace-pre-line md:text-lg lg:text-xl">
                 {{ career.description }}
               </p>
             </div>

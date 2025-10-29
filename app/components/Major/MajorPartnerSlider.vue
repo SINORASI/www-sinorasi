@@ -53,7 +53,7 @@ onMounted(() => {
             :key="`${company.id}-${index}`"
             class="flex flex-col items-center transition-transform duration-300 slide-item shrink-0"
           >
-            <div class="company-card p-6 rounded-[1rem] transition-all duration-300 hover:-translate-y-1">
+            <div class="company-card p-6 rounded-2xl transition-all duration-300 hover:-translate-y-1">
               <NuxtImg
                 :src="company.logo"
                 :alt="`${company.name} logo`"

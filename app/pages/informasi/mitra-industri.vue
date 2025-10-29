@@ -67,17 +67,17 @@ const partners = computed(() => {
 
 <template>
   <main>
-    <div class="min-h-screen py-24 bg-gradient-to-br from-gray-50 via-white to-gray-100">
+    <div class="min-h-screen py-24 bg-linear-to-br from-gray-50 via-white to-gray-100">
       <div class="container px-4 mx-auto sm:px-6">
         <div
           class="max-w-7xl mx-auto bg-white shadow-2xl shadow-gray-300/20 rounded-3xl overflow-hidden border border-gray-200 animate-fade-in"
         >
           <div
-            class="relative px-8 py-20 text-center bg-gradient-to-r from-slate-800 via-slate-700 to-slate-900 overflow-hidden"
+            class="relative px-8 py-20 text-center bg-linear-to-r from-slate-800 via-slate-700 to-slate-900 overflow-hidden"
           >
             <div class="absolute inset-0 bg-black/20"></div>
             <div class="absolute inset-0 opacity-10">
-              <div class="absolute inset-0 bg-gradient-to-br from-orange-400/20 to-transparent"></div>
+              <div class="absolute inset-0 bg-linear-to-br from-orange-400/20 to-transparent"></div>
             </div>
             <div
               class="absolute top-0 left-0 w-32 h-32 bg-orange-400/10 rounded-full -translate-x-16 -translate-y-16"
@@ -117,7 +117,7 @@ const partners = computed(() => {
             </div>
           </div>
 
-          <div class="px-8 py-12 bg-gradient-to-r from-slate-50 to-gray-100 border-b border-gray-200">
+          <div class="px-8 py-12 bg-linear-to-r from-slate-50 to-gray-100 border-b border-gray-200">
             <div class="grid gap-8 md:grid-cols-3">
               <div class="text-center">
                 <div class="inline-flex items-center justify-center w-16 h-16 mb-4 bg-orange-400/20 rounded-full">
@@ -145,7 +145,7 @@ const partners = computed(() => {
             </div>
           </div>
 
-          <div class="px-8 py-16 bg-gradient-to-b from-white to-slate-50">
+          <div class="px-8 py-16 bg-linear-to-b from-white to-slate-50">
             <div class="mb-8 text-center">
               <h2 class="mb-4 text-2xl font-bold text-gray-800">Daftar Mitra Industri</h2>
               <p class="text-gray-600">Klik pada kartu perusahaan untuk melihat detail kemitraan</p>
@@ -159,11 +159,11 @@ const partners = computed(() => {
                 :style="{ animationDelay: `${index * 0.1}s` }"
               >
                 <div
-                  class="absolute inset-0 bg-gradient-to-br from-orange-50/50 to-slate-50/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  class="absolute inset-0 bg-linear-to-br from-orange-50/50 to-slate-50/50 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                 ></div>
 
                 <div
-                  class="relative mb-4 overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl aspect-video group-hover:shadow-md transition-all duration-500 border border-gray-100"
+                  class="relative mb-4 overflow-hidden bg-linear-to-br from-gray-50 to-gray-100 rounded-xl aspect-video group-hover:shadow-md transition-all duration-500 border border-gray-100"
                 >
                   <NuxtImg
                     :src="partner.logo"
@@ -171,7 +171,7 @@ const partners = computed(() => {
                     class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
                   />
                   <div
-                    class="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                    class="absolute inset-0 bg-linear-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                   ></div>
                   <div
                     class="absolute top-3 right-3 px-2 py-1 bg-slate-700/90 backdrop-blur-sm rounded-lg text-xs font-semibold text-white"
@@ -234,11 +234,11 @@ const partners = computed(() => {
             <div class="grid gap-8 md:grid-cols-2 md:gap-12">
               <div class="flex flex-col">
                 <div
-                  class="overflow-hidden bg-gradient-to-br from-gray-50 to-slate-100 border border-gray-200 shadow-xl shadow-slate-500/10 rounded-2xl"
+                  class="overflow-hidden bg-linear-to-br from-gray-50 to-slate-100 border border-gray-200 shadow-xl shadow-slate-500/10 rounded-2xl"
                 >
                   <div class="relative aspect-square">
                     <div
-                      class="flex items-center justify-center w-full h-full p-8 bg-gradient-to-br from-white to-gray-50"
+                      class="flex items-center justify-center w-full h-full p-8 bg-linear-to-br from-white to-gray-50"
                     >
                       <NuxtImg
                         :src="selectedPartner.images[currentImageIndex]"
@@ -314,7 +314,7 @@ const partners = computed(() => {
                     <Icon name="lucide:handshake" size="20" class="mr-2 text-orange-600" />
                     Ringkasan Kemitraan
                   </h3>
-                  <div class="p-6 bg-gradient-to-r from-slate-50 to-gray-50 rounded-xl border border-slate-200">
+                  <div class="p-6 bg-linear-to-r from-slate-50 to-gray-50 rounded-xl border border-slate-200">
                     <p class="leading-relaxed text-gray-700">
                       {{ selectedPartner.description }}
                     </p>
@@ -344,7 +344,7 @@ const partners = computed(() => {
 
                   <NuxtLink
                     to="/"
-                    class="flex items-center gap-3 px-6 py-3 font-semibold text-white transition-all duration-300 bg-gradient-to-r from-slate-700 to-slate-800 rounded-xl hover:from-slate-800 hover:to-slate-900 hover:scale-105 shadow-lg"
+                    class="flex items-center gap-3 px-6 py-3 font-semibold text-white transition-all duration-300 bg-linear-to-r from-slate-700 to-slate-800 rounded-xl hover:from-slate-800 hover:to-slate-900 hover:scale-105 shadow-lg"
                   >
                     <Icon name="lucide:home" size="18" />
                     Beranda

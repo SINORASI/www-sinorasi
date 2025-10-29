@@ -38,7 +38,7 @@ if (!majorDatas.value?.[major]) {
 </script>
 
 <template>
-  <header :class="['z-100 border-b-1 fixed top-0 left-0 right-0 transition-all duration-500 ease-in-out', headerClass]">
+  <header :class="['z-100 border-b fixed top-0 left-0 right-0 transition-all duration-500 ease-in-out', headerClass]">
     <div
       :class="
         (sizeClass === 'full' ? 'p-4 gap-5' : 'p-3 gap-4') +

@@ -40,12 +40,12 @@ useHead({
 </script>
 
 <template>
-  <div class="min-h-screen bg-gradient-to-b from-white via-blue-50 to-white">
+  <div class="min-h-screen bg-linear-to-b from-white via-blue-50 to-white">
     <section class="py-32">
       <div class="container w-max-[1200px] px-4 mx-auto sm:px-6">
         <div class="mb-12 text-center">
           <div
-            class="inline-block px-10 py-6 mb-4 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
+            class="inline-block px-10 py-6 mb-4 border border-blue-200 shadow-xl bg-linear-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
           >
             <h2 class="text-3xl font-bold text-white md:text-4xl">Sambutan Kepala Sekolah</h2>
           </div>
@@ -157,15 +157,15 @@ useHead({
                   <h3 class="mb-4 text-2xl font-bold text-gray-800">Misi</h3>
                   <ul class="space-y-3 text-gray-700">
                     <li class="flex items-start">
-                      <Icon name="lucide:check-circle" size="20" class="text-orange-600 mr-2 mt-0.5 flex-shrink-0" />
+                      <Icon name="lucide:check-circle" size="20" class="text-orange-600 mr-2 mt-0.5 shrink-0" />
                       <span>Menyelenggarakan pendidikan berkualitas</span>
                     </li>
                     <li class="flex items-start">
-                      <Icon name="lucide:check-circle" size="20" class="text-orange-600 mr-2 mt-0.5 flex-shrink-0" />
+                      <Icon name="lucide:check-circle" size="20" class="text-orange-600 mr-2 mt-0.5 shrink-0" />
                       <span>Mengembangkan kompetensi siswa</span>
                     </li>
                     <li class="flex items-start">
-                      <Icon name="lucide:check-circle" size="20" class="text-orange-600 mr-2 mt-0.5 flex-shrink-0" />
+                      <Icon name="lucide:check-circle" size="20" class="text-orange-600 mr-2 mt-0.5 shrink-0" />
                       <span>Membentuk karakter unggul</span>
                     </li>
                   </ul>
@@ -181,7 +181,7 @@ useHead({
       <div class="container px-4 mx-auto">
         <div class="text-center mb-12">
           <div
-            class="inline-block px-10 py-6 mb-4 border border-orange-200 shadow-xl bg-gradient-to-r from-orange-500 to-orange-600 backdrop-blur-2xl rounded-2xl"
+            class="inline-block px-10 py-6 mb-4 border border-orange-200 shadow-xl bg-linear-to-r from-orange-500 to-orange-600 backdrop-blur-2xl rounded-2xl"
           >
             <h2 class="text-3xl font-bold text-white md:text-4xl">Video Profil Sekolah</h2>
           </div>
@@ -203,7 +203,7 @@ useHead({
                 class="absolute inset-0 w-full h-full object-cover"
               />
               <div
-                class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-4 backdrop-blur-sm"
+                class="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/90 via-black/70 to-transparent p-4 backdrop-blur-sm"
               >
                 <h3 class="text-xl font-bold text-white font-sans">Video Profil</h3>
                 <p class="text-sm text-gray-200 mt-2 font-sans">
@@ -222,7 +222,7 @@ useHead({
                 class="absolute inset-0 w-full h-full object-cover"
               />
               <div
-                class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-4 backdrop-blur-sm"
+                class="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/90 via-black/70 to-transparent p-4 backdrop-blur-sm"
               >
                 <h3 class="text-xl font-bold text-white font-sans">Mars SMK</h3>
                 <p class="text-sm text-gray-200 mt-2 font-sans">
@@ -247,7 +247,7 @@ useHead({
                 class="absolute inset-0 w-full h-full"
               ></iframe>
               <div
-                class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-4 backdrop-blur-sm"
+                class="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/90 via-black/70 to-transparent p-4 backdrop-blur-sm"
               >
                 <h3 class="text-xl font-bold text-white font-sans">Maps Lokasi</h3>
                 <p class="text-sm text-gray-200 mt-2 font-sans">
@@ -357,7 +357,7 @@ useHead({
       <div class="container px-4 mx-auto sm:px-6">
         <div class="mb-12 text-center">
           <div
-            class="inline-block px-10 py-6 mb-4 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
+            class="inline-block px-10 py-6 mb-4 border border-blue-200 shadow-xl bg-linear-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
           >
             <h2 class="text-3xl font-bold text-white md:text-4xl">Sejarah Sekolah</h2>
           </div>

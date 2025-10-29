@@ -19,7 +19,7 @@ useHead({
 </script>
 
 <template>
-  <div class="min-h-screen py-24 bg-gradient-to-b from-white via-blue-50 to-white">
+  <div class="min-h-screen py-24 bg-linear-to-b from-white via-blue-50 to-white">
     <div class="container px-4 mx-auto sm:px-6">
       <div class="max-w-6xl mx-auto">
         <div class="mb-8">
@@ -190,7 +190,7 @@ useHead({
               <NuxtImg
                 :src="section.image"
                 :alt="section.name"
-                class="object-cover w-full h-48 rounded-xl md:w-48 md:h-48 flex-shrink-0"
+                class="object-cover w-full h-48 rounded-xl md:w-48 md:h-48 shrink-0"
               />
               <div class="flex-1">
                 <h3 class="mb-3 text-xl font-bold text-gray-800">{{ section.name }}</h3>

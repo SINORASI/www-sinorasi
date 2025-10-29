@@ -152,7 +152,7 @@ const submitStory = async () => {
 </script>
 
 <template>
-  <div class="min-h-screen py-24 bg-gradient-to-br from-orange-50 via-blue-50 to-indigo-50">
+  <div class="min-h-screen py-24 bg-linear-to-br from-orange-50 via-blue-50 to-indigo-50">
     <div class="container px-4 mx-auto sm:px-6 lg:px-8">
       <div class="max-w-4xl mx-auto">
         
@@ -252,7 +252,7 @@ const submitStory = async () => {
               >
                 <div class="p-8">
                   <div class="flex items-center justify-between mb-6">
-                    <div class="px-6 py-3 border border-orange-200 bg-gradient-to-r from-blue-500 to-cyan-600 rounded-xl">
+                    <div class="px-6 py-3 border border-orange-200 bg-linear-to-r from-blue-500 to-cyan-600 rounded-xl">
                       <h3 id="guidelines-title" class="text-lg font-bold text-white">Panduan Penggunaan</h3>
                     </div>
                     <button
@@ -265,26 +265,26 @@ const submitStory = async () => {
                   </div>
                   <ul class="space-y-4 text-gray-700" role="list">
                     <li class="flex items-start gap-3" role="listitem">
-                      <Icon name="lucide:check-circle" size="20" class="text-orange-600 mt-0.5 flex-shrink-0" />
+                      <Icon name="lucide:check-circle" size="20" class="text-orange-600 mt-0.5 shrink-0" />
                       <span>Jaga kerahasiaan identitas Anda - jangan sebutkan nama atau detail pribadi</span>
                     </li>
                     <li class="flex items-start gap-3" role="listitem">
-                      <Icon name="lucide:check-circle" size="20" class="text-blue-600 mt-0.5 flex-shrink-0" />
+                      <Icon name="lucide:check-circle" size="20" class="text-blue-600 mt-0.5 shrink-0" />
                       <span>Tuliskan cerita dengan jelas dan lengkap</span>
                     </li>
                     <li class="flex items-start gap-3" role="listitem">
-                      <Icon name="lucide:check-circle" size="20" class="text-orange-600 mt-0.5 flex-shrink-0" />
+                      <Icon name="lucide:check-circle" size="20" class="text-orange-600 mt-0.5 shrink-0" />
                       <span>Gunakan tag untuk membantu mengkategorikan cerita Anda</span>
                     </li>
                     <li class="flex items-start gap-3" role="listitem">
-                      <Icon name="lucide:check-circle" size="20" class="text-blue-600 mt-0.5 flex-shrink-0" />
+                      <Icon name="lucide:check-circle" size="20" class="text-blue-600 mt-0.5 shrink-0" />
                       <span>Pengiriman sepenuhnya anonim dan rahasia</span>
                     </li>
                   </ul>
                   <div class="mt-8 text-center">
                     <button
                       @click="showGuidelines = false"
-                      class="px-8 py-3 font-semibold text-white transition-colors bg-gradient-to-r from-blue-500 to-cyan-600 rounded-lg shadow-md hover:shadow-lg"
+                      class="px-8 py-3 font-semibold text-white transition-colors bg-linear-to-r from-blue-500 to-cyan-600 rounded-lg shadow-md hover:shadow-lg"
                       aria-label="Tutup panduan dan kembali ke form"
                     >
                       Mengerti
@@ -331,7 +331,7 @@ const submitStory = async () => {
                 <button
                   @click="validateAndProceed(1)"
                   :disabled="!validateStep(1)"
-                  class="px-8 py-3 bg-gradient-to-r from-orange-600 to-orange-700 text-white font-semibold rounded-xl shadow-md hover:shadow-lg hover:cursor-pointer transition-all duration-200 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  class="px-8 py-3 bg-linear-to-r from-orange-600 to-orange-700 text-white font-semibold rounded-xl shadow-md hover:shadow-lg hover:cursor-pointer transition-all duration-200 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <span>Lanjut ke Kategori</span>
                   <Icon name="lucide:arrow-right" size="18" />
@@ -388,7 +388,7 @@ const submitStory = async () => {
                 </button>
                 <button
                   @click="validateAndProceed(2)"
-                  class="px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-xl shadow-md hover:shadow-lg hover:cursor-pointer transition-all duration-200 flex items-center gap-2"
+                  class="px-8 py-3 bg-linear-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-xl shadow-md hover:shadow-lg hover:cursor-pointer transition-all duration-200 flex items-center gap-2"
                 >
                   <span>Lanjut ke Kontak</span>
                   <Icon name="lucide:arrow-right" size="18" />
@@ -470,7 +470,7 @@ const submitStory = async () => {
                 </button>
                 <button
                   @click="validateStep(3) && nextStep()"
-                  class="px-8 py-3 bg-gradient-to-r from-indigo-600 to-indigo-700 text-white font-semibold rounded-xl shadow-md hover:shadow-lg hover:cursor-pointer transition-all duration-200 flex items-center gap-2"
+                  class="px-8 py-3 bg-linear-to-r from-indigo-600 to-indigo-700 text-white font-semibold rounded-xl shadow-md hover:shadow-lg hover:cursor-pointer transition-all duration-200 flex items-center gap-2"
                   :disabled="!validateStep(3)"
                 >
                   <span>Konfirmasi & Kirim</span>
@@ -538,7 +538,7 @@ const submitStory = async () => {
               <button
                 @click="submitStory"
                 :disabled="isSubmitting"
-                class="px-8 py-3 bg-gradient-to-r from-orange-600 to-orange-700 text-white font-semibold rounded-xl shadow-md hover:shadow-lg hover:cursor-pointer transition-all duration-200 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                class="px-8 py-3 bg-linear-to-r from-orange-600 to-orange-700 text-white font-semibold rounded-xl shadow-md hover:shadow-lg hover:cursor-pointer transition-all duration-200 flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <Icon v-if="isSubmitting" name="lucide:loader-2" class="animate-spin" size="18" />
                 <Icon v-else name="lucide:send" size="18" />
@@ -558,7 +558,7 @@ const submitStory = async () => {
           <div class="flex flex-col sm:flex-row gap-3 justify-center">
             <a
               href="tel:+62215551234"
-              class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-orange-600 to-orange-700 text-white font-semibold rounded-xl shadow-md hover:shadow-lg hover:cursor-pointer transition-all duration-200"
+              class="inline-flex items-center gap-2 px-6 py-3 bg-linear-to-r from-orange-600 to-orange-700 text-white font-semibold rounded-xl shadow-md hover:shadow-lg hover:cursor-pointer transition-all duration-200"
             >
               <Icon name="lucide:phone" size="18" />
               <span>Hotline BK</span>

@@ -120,7 +120,7 @@ const toggleRightExpanded = (id: string): void => {
               </div>
 
               
-              <div class="flex-shrink-0">
+              <div class="shrink-0">
                 <div
                   class="flex items-center justify-center w-8 h-8 transition-transform duration-300 rounded-lg md:w-9 md:h-9 bg-white/20 group-hover:rotate-90"
                 >
@@ -148,7 +148,7 @@ const toggleRightExpanded = (id: string): void => {
                 </div>
 
                 
-                <div class="flex-shrink-0">
+                <div class="shrink-0">
                   <div
                     class="flex items-center justify-center w-8 h-8 transition-transform duration-300 rounded-lg md:w-9 md:h-9 bg-white/20 group-hover:rotate-180"
                   >
@@ -187,7 +187,7 @@ const toggleRightExpanded = (id: string): void => {
               </div>
 
               
-              <div class="flex-shrink-0">
+              <div class="shrink-0">
                 <div
                   class="flex items-center justify-center w-8 h-8 transition-transform duration-300 rounded-lg md:w-9 md:h-9 bg-white/20 group-hover:rotate-90"
                 >
@@ -215,7 +215,7 @@ const toggleRightExpanded = (id: string): void => {
                 </div>
 
                 
-                <div class="flex-shrink-0">
+                <div class="shrink-0">
                   <div
                     class="flex items-center justify-center w-8 h-8 transition-transform duration-300 rounded-lg md:w-9 md:h-9 bg-white/20 group-hover:rotate-180"
                   >

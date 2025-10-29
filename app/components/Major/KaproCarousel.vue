@@ -261,7 +261,7 @@ const getTransitionClasses = () => {
     <div class="overflow-hidden">
       <div class="grid grid-cols-1 gap-8 p-6 lg:grid-cols-5 md:p-8 lg:p-10">
         <div class="flex flex-col items-center justify-center space-y-6 lg:col-span-2">
-          <div class="relative w-full max-w-xs aspect-[3/4]">
+          <div class="relative w-full max-w-xs aspect-3/4">
             <div class="absolute inset-0 overflow-hidden rounded-2xl" :style="{ backgroundColor: majorColor.light }">
               <Transition
                 name="slide"
@@ -315,7 +315,7 @@ const getTransitionClasses = () => {
               <p
                 :key="current"
                 :style="{ color: majorColor.text }"
-                class="text-sm md:text-base font-semibold min-h-[40px] flex items-center justify-center"
+                class="text-sm md:text-base font-semibold min-h-10 flex items-center justify-center"
               >
                 {{ kapro[current]?.jabatan }}
               </p>
@@ -353,7 +353,7 @@ const getTransitionClasses = () => {
           </div>
 
           <div class="pt-4 space-y-6">
-            <div class="flex justify-center items-center gap-2 min-h-[16px]">
+            <div class="flex justify-center items-center gap-2 min-h-4">
               <button
                 v-for="(item, idx) in kapro"
                 :key="idx"

@@ -99,7 +99,7 @@ const closeModal = (): void => {
     <div class="relative flex flex-col items-center gap-6 px-2 md:gap-8 md:px-4">
       <div class="relative flex items-center justify-center w-full gap-3 md:gap-6 lg:gap-8">
         <button
-          class="z-10 flex items-center justify-center flex-shrink-0 w-10 h-10 transition-all duration-300 rounded-full shadow-lg md:w-12 md:h-12 hover:scale-110 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed"
+          class="z-10 flex items-center justify-center shrink-0 w-10 h-10 transition-all duration-300 rounded-full shadow-lg md:w-12 md:h-12 hover:scale-110 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed"
           :style="`background: linear-gradient(135deg, ${majorColor.primary}, ${majorColor.accent})`"
           @click.prevent="previousSlide"
           :disabled="achievements.length === 0"
@@ -111,14 +111,14 @@ const closeModal = (): void => {
 
         <div
           v-if="leftAchievement && !isAnimating"
-          class="flex-shrink-0 hidden w-40 scale-90 pointer-events-none lg:block xl:w-48 opacity-30"
+          class="shrink-0 hidden w-40 scale-90 pointer-events-none lg:block xl:w-48 opacity-30"
         >
           <div
             class="overflow-hidden bg-white border-4 shadow-lg rounded-xl"
             :style="`border-color: ${majorColor.primary}`"
           >
             <div
-              class="relative flex items-center justify-center h-44 xl:h-52 bg-gradient-to-br from-gray-100 to-gray-200"
+              class="relative flex items-center justify-center h-44 xl:h-52 bg-linear-to-br from-gray-100 to-gray-200"
             >
               <div class="relative">
                 <div
@@ -140,7 +140,7 @@ const closeModal = (): void => {
 
         <div
           v-if="currentAchievement"
-          class="flex-shrink-0 w-full max-w-[200px] sm:max-w-[240px] md:max-w-[280px] lg:max-w-[320px] cursor-pointer"
+          class="shrink-0 w-full max-w-[200px] sm:max-w-60 md:max-w-[280px] lg:max-w-[320px] cursor-pointer"
           @click="openModal(currentAchievement)"
         >
           <Motion
@@ -159,7 +159,7 @@ const closeModal = (): void => {
               :style="`border-color: ${majorColor.primary}`"
             >
               <div
-                class="relative flex items-center justify-center h-56 overflow-hidden sm:h-64 md:h-72 lg:h-80 bg-gradient-to-br from-gray-100 to-gray-200"
+                class="relative flex items-center justify-center h-56 overflow-hidden sm:h-64 md:h-72 lg:h-80 bg-linear-to-br from-gray-100 to-gray-200"
               >
                 <div class="relative z-10 flex flex-col items-center">
                   <Motion
@@ -204,14 +204,14 @@ const closeModal = (): void => {
 
         <div
           v-if="rightAchievement && !isAnimating"
-          class="flex-shrink-0 hidden w-40 scale-90 pointer-events-none lg:block xl:w-48 opacity-30"
+          class="shrink-0 hidden w-40 scale-90 pointer-events-none lg:block xl:w-48 opacity-30"
         >
           <div
             class="overflow-hidden bg-white border-4 shadow-lg rounded-xl"
             :style="`border-color: ${majorColor.primary}`"
           >
             <div
-              class="relative flex items-center justify-center h-44 xl:h-52 bg-gradient-to-br from-gray-100 to-gray-200"
+              class="relative flex items-center justify-center h-44 xl:h-52 bg-linear-to-br from-gray-100 to-gray-200"
             >
               <div class="relative">
                 <div
@@ -232,7 +232,7 @@ const closeModal = (): void => {
         </div>
 
         <button
-          class="z-10 flex items-center justify-center flex-shrink-0 w-10 h-10 transition-all duration-300 rounded-full shadow-lg md:w-12 md:h-12 hover:scale-110 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed"
+          class="z-10 flex items-center justify-center shrink-0 w-10 h-10 transition-all duration-300 rounded-full shadow-lg md:w-12 md:h-12 hover:scale-110 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed"
           :style="`background: linear-gradient(135deg, ${majorColor.primary}, ${majorColor.accent})`"
           @click.prevent="nextSlide"
           :disabled="achievements.length === 0"

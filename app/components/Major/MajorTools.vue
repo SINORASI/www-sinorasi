@@ -288,7 +288,7 @@ const tools = computed(() => toolsData[props.major] || []);
           </span>
         </div>
         <h2
-          class="text-3xl font-extrabold text-transparent md:text-5xl bg-gradient-to-r bg-clip-text"
+          class="text-3xl font-extrabold text-transparent md:text-5xl bg-linear-to-r bg-clip-text"
           :style="`background-image: linear-gradient(135deg, ${majorColor.primary}, ${majorColor.accent})`"
         >
           Alat dan Peralatan
