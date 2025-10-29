@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { motion, animate, AnimatePresence } from "motion-v";
 import type { News } from "~/models/News";
+import { smoothScrollTo } from "~/utils/scrollUtils";
 
 definePageMeta({
   layout: "default",
@@ -288,9 +289,7 @@ onMounted(() => {
 });
 
 const scrollToTop = () => {
-  if (import.meta.client && window) {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
+  smoothScrollTo(0);
 };
 
 useHead({
@@ -385,15 +384,15 @@ useHead({
           </p>
           <div class="flex flex-col items-center gap-4 mt-4 sm:flex-row">
             <a
-              href="#profil-sekolah"
-              class="flex items-center gap-2 px-6 py-3 text-sm font-semibold text-white transition-all duration-300 bg-blue-600 rounded-lg hover:bg-blue-700"
+              @click.prevent="smoothScrollTo('#profil-sekolah')"
+              class="flex items-center gap-2 px-6 py-3 text-sm font-semibold text-white transition-all duration-300 bg-blue-600 rounded-lg hover:bg-blue-700 cursor-pointer"
             >
               Pelajari Lebih Dalam
               <Icon name="lucide:book-open" size="16" />
             </a>
             <a
-              href="#berita"
-              class="flex items-center gap-2 px-6 py-3 text-sm font-semibold text-blue-600 transition-all duration-300 border-2 border-blue-600 rounded-lg hover:bg-blue-600 hover:text-white"
+              @click.prevent="smoothScrollTo('#berita')"
+              class="flex items-center gap-2 px-6 py-3 text-sm font-semibold text-blue-600 transition-all duration-300 border-2 border-blue-600 rounded-lg hover:bg-blue-600 hover:text-white cursor-pointer"
             >
               Berita Terbaru
               <Icon name="lucide:newspaper" size="16" />

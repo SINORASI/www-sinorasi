@@ -35,26 +35,3 @@ const backgroundStyle = computed(() => {
     <LayoutAppFooter :bg-color="majorColor.primary" class="mt-auto" />
   </div>
 </template>
-
-<style scoped>
-.page-enter-active,
-.page-leave-active {
-  transition: opacity 0.6s ease-in-out, filter 0.6s ease-in-out;
-}
-.page-enter-from {
-  opacity: 0;
-  filter: blur(1rem);
-}
-.page-enter-to {
-  opacity: 1;
-  filter: blur(0);
-}
-.page-leave-from {
-  opacity: 1;
-  filter: blur(0);
-}
-.page-leave-to {
-  opacity: 0;
-  filter: blur(1rem);
-}
-</style>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { nextTick, onMounted, ref, watch } from "vue";
+import { smoothScrollTo } from "~/utils/scrollUtils";
 
 const headerClass = ref("bg-white/20 backdrop-blur-[8px] border-b-white/20 shadow-lg shadow-orange-500/10");
 const sizeClass = ref("compact");
@@ -8,7 +9,7 @@ const route = useRoute();
 const scrollItems = ref<Array<{ id: string; label: string }>>([]);
 
 const scrollToSection = (id: string) => {
-  document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  smoothScrollTo(`#${id}`);
 };
 
 const populateScrollItems = async () => {
