@@ -104,7 +104,7 @@ const animationStarted = ref(false);
 const lineScale = ref(0.1);
 const cardVisibility = ref([false, false, false, false, false]);
 
-
+// Reset animation states
 const resetAnimationStates = () => {
   clickedMarkers.value = [true, false, false, false, false];
   showAllIcons.value = false;
@@ -115,14 +115,14 @@ const resetAnimationStates = () => {
 };
 
 const startStaggeredAnimation = () => {
-  
+  // Prevent animation if page is not fully mounted or elements are null
   if (typeof window === "undefined") return;
 
   animationStarted.value = true;
   showAllIcons.value = true;
 
   animate(0.1, 1.0, {
-    duration: 3, 
+    duration: 3, // 3000ms
     ease: "easeInOut",
     onUpdate: (latest) => (lineScale.value = latest),
   });
@@ -152,7 +152,7 @@ const toggleMarker = (index: number) => {
 
     const startScale = lineScale.value;
     animate(startScale, 0.1, {
-      duration: 5, 
+      duration: 5, // 5000ms
       ease: "easeInOut",
       onUpdate: (latest) => (lineScale.value = latest),
     });
@@ -217,17 +217,17 @@ const heroImages = ref([
 const currentHeroImage = ref(0);
 
 onMounted(() => {
-  
+  // Scroll to top on mount
   if (import.meta.client) {
     window.scrollTo(0, 0);
   }
 
-  
+  // Show content after a brief delay to ensure proper motion-v initialization
   setTimeout(() => {
     showContent.value = true;
   }, 50);
 
-  
+  // Only run animations on client side
   if (import.meta.client) {
     setTimeout(() => {
       const durationInSeconds = props.duration / 1000;
@@ -312,125 +312,77 @@ useHead({
     >
       <!-- Particle Background -->
       <div class="absolute inset-0 overflow-hidden">
-        <div
-          v-for="i in 50"
-          :key="i"
-          class="absolute rounded-full pointer-events-none bg-radial-[circle_at_center] from-blue-400/30 to-orange-400/20"
-          :class="[
-            i % 5 === 1 ? 'w-1 h-1 top-[20%] left-[10%] animate-pulse' : '',
-            i % 5 === 2 ? 'w-1.5 h-1.5 top-[60%] right-[15%] animate-pulse' : '',
-            i % 5 === 3 ? 'w-0.5 h-0.5 top-[40%] left-[70%] animate-pulse' : '',
-            i % 5 === 4 ? 'w-1.25 h-1.25 bottom-[30%] left-[20%] animate-pulse' : '',
-            i % 5 === 0 ? 'w-1 h-1 top-[70%] right-[30%] animate-pulse' : '',
-          ]"
-          :style="{
-            animation: `particle-float-${(i % 5) + 1} ${15 + (i % 5) * 3}s ease-in-out infinite`,
-            animationDelay: `${i * 0.1}s`,
-          }"
-        ></div>
+        <div v-for="i in 50" :key="i" class="particle" :class="`particle-${i % 5 + 1}`"></div>
       </div>
 
       <!-- Floating Decorative Elements -->
       <motion.div
         class="absolute top-20 left-10 w-16 h-16 bg-linear-to-br from-blue-400 to-blue-600 rounded-full opacity-20 shadow-lg"
-        :animate="{
-          y: [0, -20, 0],
-          rotate: [0, 180, 360],
-          scale: [1, 1.05, 1],
-        }"
+        :animate="{ y: [0, -20, 0], rotate: [0, 180, 360] }"
         :transition="{
           duration: 6,
           ease: 'easeInOut',
           repeat: Infinity,
-          scale: { duration: 3, repeat: Infinity },
         }"
       />
       <motion.div
-        class="absolute top-40 right-20 w-12 h-12 bg-linear-to-br from-orange-400 to-orange-600 rotate-45 opacity-25 shadow-lg"
-        :animate="{
-          y: [0, -15, 0],
-          scale: [1, 1.1, 1],
-          rotate: [45, 135, 225, 315, 45],
-        }"
+        class="absolute top-40 right-20 w-12 h-12 bg-linear-to-br from-orange-400 to-orange-600 transform rotate-45 opacity-25 shadow-lg"
+        :animate="{ y: [0, -15, 0], scale: [1, 1.1, 1] }"
         :transition="{
           duration: 8,
           ease: 'easeInOut',
           repeat: Infinity,
           delay: 1,
-          rotate: { duration: 12, repeat: Infinity },
         }"
       />
       <motion.div
         class="absolute bottom-40 left-20 w-20 h-20 bg-linear-to-br from-blue-300 to-orange-400 rounded-lg opacity-15 shadow-lg"
-        :animate="{
-          y: [0, -25, 0],
-          rotate: [0, -180, -360],
-          scale: [1, 0.95, 1.05, 1],
-        }"
+        :animate="{ y: [0, -25, 0], rotate: [0, -180, -360] }"
         :transition="{
           duration: 7,
           ease: 'easeInOut',
           repeat: Infinity,
           delay: 2,
-          scale: { duration: 4, repeat: Infinity },
         }"
       />
 
       <!-- Large Background Shapes -->
       <motion.div
         class="absolute top-16 right-1/4 w-32 h-32 bg-linear-to-br from-purple-400 to-pink-400 rounded-full opacity-10 shadow-2xl"
-        :animate="{
-          scale: [1, 1.2, 1],
-          rotate: [0, 180, 360],
-          x: [0, 10, -10, 0],
-          y: [0, -5, 5, 0],
-        }"
+        :animate="{ scale: [1, 1.2, 1], rotate: [0, 180, 360] }"
         :transition="{
           duration: 15,
           ease: 'easeInOut',
           repeat: Infinity,
-          x: { duration: 8, repeat: Infinity },
-          y: { duration: 6, repeat: Infinity },
         }"
       />
       <motion.div
-        class="absolute bottom-32 right-16 w-40 h-40 bg-linear-to-br from-green-400 to-blue-400 rotate-45 opacity-8 shadow-2xl"
-        :animate="{
-          scale: [1, 1.15, 1],
-          rotate: [45, 225, 405],
-          skewX: ['0deg', '5deg', '-5deg', '0deg'],
-        }"
+        class="absolute bottom-32 right-16 w-40 h-40 bg-linear-to-br from-green-400 to-blue-400 transform rotate-45 opacity-8 shadow-2xl"
+        :animate="{ scale: [1, 1.15, 1], rotate: [45, 225, 405] }"
         :transition="{
           duration: 18,
           ease: 'easeInOut',
           repeat: Infinity,
           delay: 1,
-          skewX: { duration: 12, repeat: Infinity },
         }"
       />
       <motion.div
         class="absolute top-1/2 left-8 w-28 h-28 bg-linear-to-br from-yellow-400 to-orange-400 rounded-lg opacity-12 shadow-2xl"
-        :animate="{
-          y: [0, -20, 0],
-          scale: [1, 1.1, 1],
-          rotate: [0, 90, 180, 270, 360],
-        }"
+        :animate="{ y: [0, -20, 0], scale: [1, 1.1, 1] }"
         :transition="{
           duration: 13,
           ease: 'easeInOut',
           repeat: Infinity,
           delay: 2,
-          rotate: { duration: 20, repeat: Infinity },
         }"
       />
 
+
       <!-- Main Hero Grid -->
-      <div
-        class="grid grid-cols-[1fr_2fr_1fr] grid-rows-1 gap-8 min-h-[80vh] items-center py-8 max-w-7xl mx-auto relative z-10 lg:grid-cols-1 lg:gap-4 lg:py-4 md:gap-2 md:py-2"
-      >
+      <div class="hero-grid-container max-w-7xl mx-auto relative z-10">
         <!-- Left Panel -->
         <motion.div
-          class="relative rounded-xl overflow-hidden shadow-2xl transition-all duration-300 ease-in-out hero-panel-left"
+          class="hero-panel hero-panel-left"
           :initial="{ opacity: 0, x: -100 }"
           :whileInView="{ opacity: 1, x: 0 }"
           :transition="{ duration: 0.8 }"
@@ -449,7 +401,7 @@ useHead({
 
         <!-- Center Panel -->
         <motion.div
-          class="z-10 p-12 bg-white/5 backdrop-blur-[10px] border border-white/10 rounded-xl shadow-xl flex flex-col justify-center items-center text-center lg:items-start lg:text-left gap-8 text-white relative lg:order-2 lg:p-8 lg:m-4"
+          class="hero-panel hero-panel-center flex flex-col justify-center items-center text-center lg:items-start lg:text-left gap-8 text-white relative z-20"
           :initial="{ opacity: 0, y: 50 }"
           :whileInView="{ opacity: 1, y: 0 }"
           :transition="{ duration: 0.8, delay: 0.2 }"
@@ -461,8 +413,8 @@ useHead({
             :whileInView="{ opacity: 1, y: 0 }"
             :transition="{ duration: 0.8, delay: 0.4 }"
           >
-            FUTURE READY.<br />
-            <span class="text-orange-400">INNOVATE.</span><br />
+            FUTURE READY.<br>
+            <span class="text-orange-400">INNOVATE.</span><br>
             LEAD. THRIVE.
           </motion.h1>
           <motion.p
@@ -528,7 +480,7 @@ useHead({
 
         <!-- Right Panel -->
         <motion.div
-          class="relative rounded-xl overflow-hidden shadow-2xl transition-all duration-300 ease-in-out hero-panel-right"
+          class="hero-panel hero-panel-right"
           :initial="{ opacity: 0, x: 100 }"
           :whileInView="{ opacity: 1, x: 0 }"
           :transition="{ duration: 0.8, delay: 0.4 }"
@@ -875,6 +827,7 @@ useHead({
       :transition="{ duration: 0.8 }"
       :inViewOptions="{ once: true }"
     >
+
       <div class="absolute bottom-20 right-12 z-0">
         <Icon name="lucide:badge" size="165" class="text-orange-300 opacity-8 seragam-ornament-2" />
       </div>
@@ -1652,9 +1605,9 @@ useHead({
 </template>
 
 <style scoped>
+/* Particle Animations */
 @keyframes particle-float-1 {
-  0%,
-  100% {
+  0%, 100% {
     transform: translateY(0px) translateX(0px) rotate(0deg);
     opacity: 0.1;
   }
@@ -1673,8 +1626,7 @@ useHead({
 }
 
 @keyframes particle-float-2 {
-  0%,
-  100% {
+  0%, 100% {
     transform: translateY(0px) translateX(0px) scale(1);
     opacity: 0.15;
   }
@@ -1689,8 +1641,7 @@ useHead({
 }
 
 @keyframes particle-float-3 {
-  0%,
-  100% {
+  0%, 100% {
     transform: translateY(0px) rotate(0deg);
     opacity: 0.2;
   }
@@ -1701,8 +1652,7 @@ useHead({
 }
 
 @keyframes particle-float-4 {
-  0%,
-  100% {
+  0%, 100% {
     transform: translateX(0px) scale(1);
     opacity: 0.1;
   }
@@ -1713,8 +1663,7 @@ useHead({
 }
 
 @keyframes particle-float-5 {
-  0%,
-  100% {
+  0%, 100% {
     transform: translateY(0px) translateX(0px) rotate(0deg) scale(1);
     opacity: 0.25;
   }
@@ -1726,93 +1675,250 @@ useHead({
     transform: translateY(-30px) translateX(-5px) rotate(270deg) scale(0.9);
     opacity: 0.35;
   }
+}
+
+/* Hero Grid Layout */
+.hero-grid-container {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-rows: 1fr;
+  gap: 2rem;
+  min-height: 80vh;
+  align-items: center;
+  padding: 2rem 0;
+}
+
+.hero-panel {
+  position: relative;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease;
 }
 
 .hero-panel-left {
   clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
   transform: translateX(-2rem);
+  z-index: 5;
+}
+
+.hero-panel-center {
+  z-index: 10;
+  padding: 3rem;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
 .hero-panel-right {
   clip-path: polygon(15% 0, 100% 0, 100% 100%, 0 100%);
   transform: translateX(2rem);
+  z-index: 5;
 }
 
+/* Particles */
+.particle {
+  position: absolute;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, rgba(249, 115, 22, 0.2) 100%);
+  border-radius: 50%;
+  pointer-events: none;
+}
 
+.particle-1 {
+  width: 4px;
+  height: 4px;
+  animation: particle-float-1 15s ease-in-out infinite;
+  top: 20%;
+  left: 10%;
+}
 
-@keyframes particle-float-1 {
+.particle-2 {
+  width: 6px;
+  height: 6px;
+  animation: particle-float-2 18s ease-in-out infinite;
+  top: 60%;
+  right: 15%;
+}
+
+.particle-3 {
+  width: 3px;
+  height: 3px;
+  animation: particle-float-3 12s ease-in-out infinite;
+  top: 40%;
+  left: 70%;
+}
+
+.particle-4 {
+  width: 5px;
+  height: 5px;
+  animation: particle-float-4 20s ease-in-out infinite;
+  bottom: 30%;
+  left: 20%;
+}
+
+.particle-5 {
+  width: 4px;
+  height: 4px;
+  animation: particle-float-5 16s ease-in-out infinite;
+  top: 70%;
+  right: 30%;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .hero-grid-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .hero-panel-left,
+  .hero-panel-right {
+    clip-path: none;
+    transform: none;
+    order: 1;
+    min-height: 300px;
+  }
+
+  .hero-panel-center {
+    order: 2;
+    padding: 2rem;
+    margin: 1rem 0;
+  }
+
+  .hero-panel-left {
+    order: 1;
+  }
+
+  .hero-panel-right {
+    order: 3;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-grid-container {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    padding: 0.5rem;
+  }
+
+  .hero-panel {
+    border-radius: 0.5rem;
+  }
+
+  .hero-panel-center {
+    padding: 1.5rem;
+    margin: 0.5rem 0;
+  }
+
+  .hero-panel-left,
+  .hero-panel-right {
+    min-height: 250px;
+  }
+}
+
+@keyframes float {
   0%,
   100% {
-    transform: translateY(0px) translateX(0px) rotate(0deg);
-    opacity: 0.1;
-  }
-  25% {
-    transform: translateY(-20px) translateX(10px) rotate(90deg);
-    opacity: 0.3;
+    transform: translateY(0px);
   }
   50% {
-    transform: translateY(-40px) translateX(20px) rotate(180deg);
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes float-delayed {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes rotate-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+@keyframes pulse-slow {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+@keyframes bounce-gentle {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes rotate-very-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes float-very-slow {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes fade-in-out {
+  0%,
+  100% {
     opacity: 0.2;
   }
-  75% {
-    transform: translateY(-20px) translateX(10px) rotate(270deg);
-    opacity: 0.4;
-  }
-}
-
-@keyframes particle-float-2 {
-  0%,
-  100% {
-    transform: translateY(0px) translateX(0px) scale(1);
-    opacity: 0.15;
-  }
-  33% {
-    transform: translateY(-30px) translateX(-15px) scale(1.2);
-    opacity: 0.35;
-  }
-  66% {
-    transform: translateY(-15px) translateX(25px) scale(0.8);
-    opacity: 0.25;
-  }
-}
-
-@keyframes particle-float-3 {
-  0%,
-  100% {
-    transform: translateY(0px) rotate(0deg);
-    opacity: 0.2;
-  }
   50% {
-    transform: translateY(-25px) rotate(180deg);
-    opacity: 0.4;
-  }
-}
-
-@keyframes particle-float-4 {
-  0%,
-  100% {
-    transform: translateX(0px) scale(1);
-    opacity: 0.1;
-  }
-  50% {
-    transform: translateX(20px) scale(1.3);
-    opacity: 0.3;
-  }
-}
-
-@keyframes particle-float-5 {
-  0%,
-  100% {
-    transform: translateY(0px) translateX(0px) rotate(0deg) scale(1);
-    opacity: 0.25;
-  }
-  25% {
-    transform: translateY(-15px) translateX(10px) rotate(90deg) scale(1.1);
-    opacity: 0.4;
-  }
-  75% {
-    transform: translateY(-30px) translateX(-5px) rotate(270deg) scale(0.9);
-    opacity: 0.35;
+    opacity: 0.6;
   }
 }
 
@@ -1844,12 +1950,103 @@ useHead({
   background: url("data:image/svg+xml,%3Csvg width='100' height='20' viewBox='0 0 100 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 10 Q25 0 50 10 T100 10' stroke='%23dbeafe' stroke-width='2' fill='none' opacity='0.3'/%3E%3C/svg%3E");
 }
 
+.sparkle-1 {
+  animation: twinkle 2s ease-in-out infinite;
+}
 
+.sparkle-2 {
+  animation: twinkle 2.5s ease-in-out infinite 0.5s;
+}
+
+.sparkle-3 {
+  animation: twinkle 1.8s ease-in-out infinite 1s;
+}
+
+.large-profil-shape-1 {
+  animation: float-very-slow 14s ease-in-out infinite;
+}
+
+.large-profil-shape-2 {
+  animation: float-very-slow 16s ease-in-out infinite reverse;
+}
+
+.large-profil-shape-3 {
+  animation: float-slow 11s ease-in-out infinite 1s;
+}
+
+.large-prestasi-shape-1 {
+  animation: float-very-slow 13s ease-in-out infinite;
+}
+
+.large-prestasi-shape-2 {
+  animation: float-very-slow 17s ease-in-out infinite reverse;
+}
+
+.large-berita-shape-1 {
+  animation: float-very-slow 15s ease-in-out infinite;
+}
+
+.large-berita-shape-2 {
+  animation: float-very-slow 18s ease-in-out infinite reverse;
+}
+
+.large-berita-shape-3 {
+  animation: float-slow 12s ease-in-out infinite 2s;
+}
+
+.large-timeline-shape-1 {
+  animation: float-very-slow 14s ease-in-out infinite;
+}
+
+.large-timeline-shape-2 {
+  animation: float-very-slow 16s ease-in-out infinite reverse;
+}
+
+.large-timeline-shape-3 {
+  animation: float-slow 11s ease-in-out infinite 1s;
+}
+
+.large-faq-shape-1 {
+  animation: float-very-slow 13s ease-in-out infinite;
+}
+
+.large-faq-shape-2 {
+  animation: float-very-slow 17s ease-in-out infinite reverse;
+}
+
+.large-faq-shape-3 {
+  animation: float-slow 10s ease-in-out infinite 2s;
+}
+
+.large-icon-4 {
+  animation: float 8s ease-in-out infinite, rotate-very-slow 32s linear infinite;
+}
+
+.large-icon-5 {
+  animation: float 9s ease-in-out infinite, rotate-very-slow 28s linear infinite reverse;
+}
+
+.large-svg-1 {
+  animation: float 6s ease-in-out infinite, rotate-very-slow 22s linear infinite;
+}
+
+.large-svg-jurusan {
+  animation: float 7s ease-in-out infinite, rotate-very-slow 30s linear infinite reverse;
+}
+
+.abstract-1 {
+  animation: float 5s ease-in-out infinite;
+}
+
+.abstract-2 {
+  animation: fade-in-out 4.5s ease-in-out infinite 1s;
+}
 
 .faq-pattern {
   background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23dbeafe' fill-opacity='0.15'%3E%3Ctext x='40' y='25' font-family='Arial' font-size='20' text-anchor='middle'%3E%3F%3C/text%3E%3Ctext x='10' y='55' font-family='Arial' font-size='16' text-anchor='middle'%3E%F0%9F%92%A1%3C/text%3E%3Ctext x='70' y='15' font-family='Arial' font-size='18' text-anchor='middle'%3E%3F%3C/text%3E%3Ctext x='40' y='75' font-family='Arial' font-size='14' text-anchor='middle'%3E%F0%9F%92%A1%3C/text%3E%3C/g%3E%3C/svg%3E");
 }
 
+/* Thematic ornament animations */
 .hero-ornament-1 {
   animation: float 6s ease-in-out infinite, rotate-very-slow 35s linear infinite;
 }
