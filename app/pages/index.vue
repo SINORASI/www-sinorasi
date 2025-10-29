@@ -9,6 +9,7 @@ definePageMeta({
 });
 
 const showContent = ref(false);
+const prefersReducedMotion = ref(false);
 
 interface CounterProps {
   jurusanTarget?: number;
@@ -218,6 +219,8 @@ const currentHeroImage = ref(0);
 onMounted(() => {
   if (import.meta.client) {
     window.scrollTo(0, 0);
+    // Check for reduced motion preference
+    prefersReducedMotion.value = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   }
 
   setTimeout(() => {
@@ -304,13 +307,28 @@ useHead({
   <main v-if="showContent" class="flex flex-col gap-52">
     <section
       id="hero"
-      class="relative min-h-screen px-4 pt-24 pb-10 md:pt-20 overflow-hidden bg-linear-to-br from-blue-900 via-blue-800 to-blue-900"
+      class="relative min-h-screen px-4 pt-24 pb-10 md:pt-20 overflow-hidden bg-linear-to-br from-blue-700 via-blue-600 to-blue-900"
     >
-      <div class="absolute inset-0 overflow-hidden">
+      <video
+        v-if="!prefersReducedMotion"
+        class="absolute inset-0 w-full h-full object-cover z-0"
+        autoplay
+        muted
+        loop
+        playsinline
+        poster="/images/guru/foto-guru-bersama.jpeg"
+        aria-hidden="true"
+      >
+        <source src="https://youtu.be/Kks6HnhPzVQ?si=-UG3hgWuKk-qB9Xk" type="video/mp4">
+      </video>
+
+      <div class="absolute inset-0 bg-black/40 z-5"></div>
+
+      <div v-if="!prefersReducedMotion" class="absolute inset-0 overflow-hidden">
         <div
-          v-for="i in 50"
+          v-for="i in isMobile ? 10 : 30"
           :key="i"
-          class="absolute rounded-full pointer-events-none"
+          class="absolute rounded-full pointer-events-none will-change-transform"
           :class="[
             'bg-radial-[circle_at_center,rgba(59,130,246,0.3)_0%,rgba(249,115,22,0.2)_100%]',
             i % 5 === 0
@@ -327,8 +345,14 @@ useHead({
       </div>
 
       <motion.div
-        class="absolute top-20 left-10 w-16 h-16 bg-white rounded-full opacity-20 shadow-lg"
-        :animate="{ y: [0, -20, 0], rotate: [0, 180, 360] }"
+        v-if="!prefersReducedMotion"
+        class="absolute top-20 left-10 w-16 h-16 bg-white rounded-full opacity-20 shadow-lg will-change-transform"
+        :animate="{
+          y: [0, -20, 0],
+          rotate: [0, 180, 360],
+          scale: [1, 1.1, 1],
+          transform: 'translateZ(0)'
+        }"
         :transition="{
           duration: 6,
           ease: 'easeInOut',
@@ -336,8 +360,14 @@ useHead({
         }"
       />
       <motion.div
-        class="absolute bottom-40 right-20 w-12 h-12 bg-white transform rotate-45 opacity-25 shadow-lg"
-        :animate="{ y: [0, -15, 0], scale: [1, 1.1, 1] }"
+        v-if="!prefersReducedMotion"
+        class="absolute bottom-40 right-20 w-12 h-12 bg-white transform rotate-45 opacity-25 shadow-lg will-change-transform"
+        :animate="{
+          y: [0, -15, 0],
+          scale: [1, 1.1, 1],
+          rotate: [45, 225, 405],
+          transform: 'translateZ(0)'
+        }"
         :transition="{
           duration: 8,
           ease: 'easeInOut',
@@ -346,8 +376,14 @@ useHead({
         }"
       />
       <motion.div
-        class="absolute bottom-40 left-20 w-20 h-20 bg-white rounded-lg opacity-15 shadow-lg"
-        :animate="{ y: [0, -25, 0], rotate: [0, -180, -360] }"
+        v-if="!prefersReducedMotion"
+        class="absolute bottom-40 left-20 w-20 h-20 bg-white rounded-lg opacity-15 shadow-lg will-change-transform"
+        :animate="{
+          y: [0, -25, 0],
+          rotate: [0, -180, -360],
+          scale: [1, 1.05, 1],
+          transform: 'translateZ(0)'
+        }"
         :transition="{
           duration: 7,
           ease: 'easeInOut',
@@ -357,8 +393,14 @@ useHead({
       />
 
       <motion.div
-        class="absolute top-16 right-1/4 w-32 h-32 bg-white rounded-full opacity-10 shadow-2xl"
-        :animate="{ scale: [1, 1.2, 1], rotate: [0, 180, 360] }"
+        v-if="!prefersReducedMotion"
+        class="absolute top-16 right-1/4 w-32 h-32 bg-white rounded-full opacity-10 shadow-2xl will-change-transform"
+        :animate="{
+          scale: [1, 1.2, 1],
+          rotate: [0, 180, 360],
+          y: [0, -10, 0],
+          transform: 'translateZ(0)'
+        }"
         :transition="{
           duration: 15,
           ease: 'easeInOut',
@@ -366,8 +408,14 @@ useHead({
         }"
       />
       <motion.div
-        class="absolute bottom-20 left-140 w-28 h-28 bg-white rounded-full opacity-12 shadow-2xl"
-        :animate="{ y: [0, -20, 0], scale: [1, 1.1, 1] }"
+        v-if="!prefersReducedMotion"
+        class="absolute bottom-20 left-140 w-28 h-28 bg-white rounded-full opacity-12 shadow-2xl will-change-transform"
+        :animate="{
+          y: [0, -20, 0],
+          scale: [1, 1.1, 1],
+          rotate: [0, 120, 240],
+          transform: 'translateZ(0)'
+        }"
         :transition="{
           duration: 13,
           ease: 'easeInOut',
@@ -389,8 +437,8 @@ useHead({
           <div class="relative group overflow-hidden">
             <NuxtImg
               src="/images/seragam/putih-putih/10-putih-putih-jas-l/DSC04215.webp"
-              alt="Aspirational student image"
-              class="w-full h-full object-cover"
+              alt="Aspirational student image showing motivated students in school uniform"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 will-change-transform"
             />
             <div class="absolute inset-0 bg-linear-to-tr from-blue-900/40 via-transparent to-orange-900/20"></div>
             <div class="absolute inset-0 bg-linear-to-t from-black/50 to-transparent"></div>
@@ -398,13 +446,16 @@ useHead({
         </motion.div>
 
         <motion.div
-          class="flex flex-col justify-center items-center text-center lg:items-start lg:text-left gap-8 text-white relative z-20 order-2 lg:order-[unset] p-6 lg:p-12 bg-white/5 backdrop-blur-[10px] border border-white/10 rounded-xl shadow-2xl"
+          class="flex flex-col justify-center items-center text-center lg:items-start lg:text-left gap-8 text-white relative z-20 order-2 lg:order-[unset] p-6 lg:p-12 bg-white/10 backdrop-blur-[15px] border border-white/20 rounded-xl shadow-2xl"
           :initial="{ opacity: 0, y: 50 }"
           :whileInView="{ opacity: 1, y: 0 }"
           :transition="{ duration: 0.8, delay: 0.2 }"
           :inViewOptions="{ once: true }"
+          role="main"
+          aria-labelledby="hero-title"
         >
           <motion.h1
+            id="hero-title"
             class="text-3xl font-bold md:text-5xl lg:text-6xl font-oswald tracking-wide leading-tight"
             :initial="{ opacity: 0, y: 30 }"
             :whileInView="{ opacity: 1, y: 0 }"
@@ -412,7 +463,14 @@ useHead({
             :inViewOptions="{ once: true }"
           >
             INORASI - <span class="text-orange-500">Inovasi</span> Raih
-            <motion.span class="text-yellow-500 font-bold" :animate="{ textShadow: ['0 0 10px #fbbf24, 0 0 20px #fbbf24', 'none', '0 0 10px #fbbf24, 0 0 20px #fbbf24'] }" :transition="{ duration: 2, ease: 'easeInOut', repeat: Infinity }">Prestasi</motion.span>
+            <motion.span
+              class="text-yellow-500 font-bold"
+              :animate="{
+                textShadow: ['0 0 10px #fbbf24, 0 0 20px #fbbf24', 'none', '0 0 10px #fbbf24, 0 0 20px #fbbf24'],
+                transform: 'translateZ(0)'
+              }"
+              :transition="{ duration: 2, ease: 'easeInOut', repeat: Infinity }"
+            >Prestasi</motion.span>
           </motion.h1>
           <motion.p
             class="text-lg md:text-xl lg:text-2xl font-nunito leading-relaxed tracking-wide max-w-2xl"
@@ -442,17 +500,21 @@ useHead({
           >
             <a
               @click.prevent="smoothScrollTo('#jurusan')"
-              class="flex items-center gap-2 px-8 py-4 text-lg font-semibold text-white transition-all duration-300 bg-orange-500 rounded-lg hover:bg-orange-600 cursor-pointer shadow-xl hover:shadow-2xl hover:scale-105"
+              class="flex items-center gap-2 px-8 py-4 text-lg font-semibold text-white transition-all duration-300 bg-orange-500 rounded-lg hover:bg-orange-600 cursor-pointer shadow-xl hover:shadow-2xl hover:scale-105 hover:shadow-orange-500/50 hover:rotate-1 hover:-translate-y-1"
+              aria-label="Explore academic programs and majors"
+              role="button"
             >
               Jelajahi Program
-              <Icon name="lucide:graduation-cap" size="18" />
+              <Icon name="lucide:graduation-cap" size="18" aria-hidden="true" />
             </a>
             <a
               @click.prevent="smoothScrollTo('#profil-sekolah')"
-              class="flex items-center gap-2 px-6 py-3 text-sm font-semibold text-orange-500 transition-all duration-300 border-2 border-orange-500 rounded-lg hover:bg-orange-500 hover:text-white cursor-pointer shadow-lg hover:shadow-xl hover:scale-105"
+              class="flex items-center gap-2 px-6 py-3 text-sm font-semibold text-orange-500 transition-all duration-300 border-2 border-orange-500 rounded-lg hover:bg-orange-500 hover:text-white cursor-pointer shadow-lg hover:shadow-xl hover:scale-105 hover:shadow-orange-500/50 hover:rotate-1 hover:-translate-y-1"
+              aria-label="Take virtual tour of the school"
+              role="button"
             >
               Tur Virtual
-              <Icon name="lucide:map" size="16" />
+              <Icon name="lucide:map" size="16" aria-hidden="true" />
             </a>
           </motion.div>
           <motion.div
@@ -462,17 +524,29 @@ useHead({
             :transition="{ duration: 0.8, delay: 1.2 }"
             :inViewOptions="{ once: true }"
           >
-            <div class="flex flex-col items-center bg-white/10 backdrop-blur-sm rounded-lg p-4 shadow-lg">
+            <div
+              class="flex flex-col items-center bg-white/10 backdrop-blur-sm rounded-lg p-4 shadow-lg transition-all duration-300 hover:bg-white/20 hover:scale-105 hover:shadow-xl cursor-pointer hover:rotate-2 hover:-translate-y-2"
+              role="region"
+              aria-label="Number of academic concentrations"
+            >
               <div class="text-2xl md:text-3xl font-bold text-white">
                 {{ jurusanCount }}
               </div>
               <div class="text-sm md:text-base text-gray-200">Konsentrasi Keahlian</div>
             </div>
-            <div class="flex flex-col items-center bg-white/10 backdrop-blur-sm rounded-lg p-4 shadow-lg">
+            <div
+              class="flex flex-col items-center bg-white/10 backdrop-blur-sm rounded-lg p-4 shadow-lg transition-all duration-300 hover:bg-white/20 hover:scale-105 hover:shadow-xl cursor-pointer hover:rotate-2 hover:-translate-y-2"
+              role="region"
+              aria-label="Number of students"
+            >
               <div class="text-2xl md:text-3xl font-bold text-white">{{ siswaCount }}+</div>
               <div class="text-sm md:text-base text-gray-200">Siswa</div>
             </div>
-            <div class="flex flex-col items-center bg-white/10 backdrop-blur-sm rounded-lg p-4 shadow-lg">
+            <div
+              class="flex flex-col items-center bg-white/10 backdrop-blur-sm rounded-lg p-4 shadow-lg transition-all duration-300 hover:bg-white/20 hover:scale-105 hover:shadow-xl cursor-pointer hover:rotate-2 hover:-translate-y-2"
+              role="region"
+              aria-label="Number of achievements"
+            >
               <div class="text-2xl md:text-3xl font-bold text-white">{{ prestasiCount }}+</div>
               <div class="text-sm md:text-base text-gray-200">Prestasi</div>
             </div>
@@ -489,8 +563,8 @@ useHead({
           <div class="relative group overflow-hidden">
             <NuxtImg
               src="/images/seragam/putih-putih/11-putih-putih-jas-l/DSC04320.webp"
-              alt="Diverse students"
-              class="w-full h-full object-cover"
+              alt="Diverse students collaborating and learning together"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 will-change-transform"
             />
             <div class="absolute inset-0 bg-linear-to-tl from-orange-900/40 via-transparent to-blue-900/20"></div>
             <div class="absolute inset-0 bg-linear-to-t from-black/50 to-transparent"></div>
@@ -1608,19 +1682,19 @@ useHead({
 @keyframes particle-float-1 {
   0%,
   100% {
-    transform: translateY(0px) translateX(0px) rotate(0deg);
+    transform: translateY(0px) translateX(0px) rotate(0deg) scale(1);
     opacity: 0.1;
   }
   25% {
-    transform: translateY(-20px) translateX(10px) rotate(90deg);
+    transform: translateY(-20px) translateX(10px) rotate(90deg) scale(1.1);
     opacity: 0.3;
   }
   50% {
-    transform: translateY(-40px) translateX(20px) rotate(180deg);
+    transform: translateY(-40px) translateX(20px) rotate(180deg) scale(0.9);
     opacity: 0.2;
   }
   75% {
-    transform: translateY(-20px) translateX(10px) rotate(270deg);
+    transform: translateY(-20px) translateX(10px) rotate(270deg) scale(1.05);
     opacity: 0.4;
   }
 }
@@ -1628,15 +1702,15 @@ useHead({
 @keyframes particle-float-2 {
   0%,
   100% {
-    transform: translateY(0px) translateX(0px) scale(1);
+    transform: translateY(0px) translateX(0px) scale(1) rotate(0deg);
     opacity: 0.15;
   }
   33% {
-    transform: translateY(-30px) translateX(-15px) scale(1.2);
+    transform: translateY(-30px) translateX(-15px) scale(1.2) rotate(120deg);
     opacity: 0.35;
   }
   66% {
-    transform: translateY(-15px) translateX(25px) scale(0.8);
+    transform: translateY(-15px) translateX(25px) scale(0.8) rotate(240deg);
     opacity: 0.25;
   }
 }
@@ -1644,11 +1718,11 @@ useHead({
 @keyframes particle-float-3 {
   0%,
   100% {
-    transform: translateY(0px) rotate(0deg);
+    transform: translateY(0px) rotate(0deg) scale(1);
     opacity: 0.2;
   }
   50% {
-    transform: translateY(-25px) rotate(180deg);
+    transform: translateY(-25px) rotate(180deg) scale(1.15);
     opacity: 0.4;
   }
 }
@@ -1656,11 +1730,11 @@ useHead({
 @keyframes particle-float-4 {
   0%,
   100% {
-    transform: translateX(0px) scale(1);
+    transform: translateX(0px) scale(1) rotate(0deg);
     opacity: 0.1;
   }
   50% {
-    transform: translateX(20px) scale(1.3);
+    transform: translateX(20px) scale(1.3) rotate(180deg);
     opacity: 0.3;
   }
 }
@@ -1674,6 +1748,10 @@ useHead({
   25% {
     transform: translateY(-15px) translateX(10px) rotate(90deg) scale(1.1);
     opacity: 0.4;
+  }
+  50% {
+    transform: translateY(-25px) translateX(5px) rotate(180deg) scale(0.95);
+    opacity: 0.3;
   }
   75% {
     transform: translateY(-30px) translateX(-5px) rotate(270deg) scale(0.9);
