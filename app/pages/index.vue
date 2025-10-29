@@ -115,14 +115,13 @@ const resetAnimationStates = () => {
 };
 
 const startStaggeredAnimation = () => {
-  // Prevent animation if page is not fully mounted or elements are null
   if (typeof window === "undefined") return;
 
   animationStarted.value = true;
   showAllIcons.value = true;
 
   animate(0.1, 1.0, {
-    duration: 3, // 3000ms
+    duration: 3,
     ease: "easeInOut",
     onUpdate: (latest) => (lineScale.value = latest),
   });
@@ -152,7 +151,7 @@ const toggleMarker = (index: number) => {
 
     const startScale = lineScale.value;
     animate(startScale, 0.1, {
-      duration: 5, // 5000ms
+      duration: 5,
       ease: "easeInOut",
       onUpdate: (latest) => (lineScale.value = latest),
     });
@@ -217,17 +216,14 @@ const heroImages = ref([
 const currentHeroImage = ref(0);
 
 onMounted(() => {
-  // Scroll to top on mount
   if (import.meta.client) {
     window.scrollTo(0, 0);
   }
 
-  // Show content after a brief delay to ensure proper motion-v initialization
   setTimeout(() => {
     showContent.value = true;
   }, 50);
 
-  // Only run animations on client side
   if (import.meta.client) {
     setTimeout(() => {
       const durationInSeconds = props.duration / 1000;
@@ -310,14 +306,28 @@ useHead({
       id="hero"
       class="relative min-h-screen px-4 pt-24 pb-10 md:pt-20 overflow-hidden bg-linear-to-br from-blue-900 via-blue-800 to-blue-900"
     >
-      <!-- Particle Background -->
       <div class="absolute inset-0 overflow-hidden">
-        <div v-for="i in 50" :key="i" class="particle" :class="`particle-${i % 5 + 1}`"></div>
+        <div
+          v-for="i in 50"
+          :key="i"
+          class="absolute rounded-full pointer-events-none"
+          :class="[
+            'bg-radial-[circle_at_center,rgba(59,130,246,0.3)_0%,rgba(249,115,22,0.2)_100%]',
+            i % 5 === 0
+              ? 'w-1 h-1 animate-[particle-float-1_15s_ease-in-out_infinite] top-[20%] left-[10%]'
+              : i % 5 === 1
+              ? 'w-1.5 h-1.5 animate-[particle-float-2_18s_ease-in-out_infinite] top-[60%] right-[15%]'
+              : i % 5 === 2
+              ? 'w-1 h-1 animate-[particle-float-3_12s_ease-in-out_infinite] top-[40%] left-[70%]'
+              : i % 5 === 3
+              ? 'w-1.25 h-1.25 animate-[particle-float-4_20s_ease-in-out_infinite] bottom-[30%] left-[20%]'
+              : 'w-1 h-1 animate-[particle-float-5_16s_ease-in-out_infinite] top-[70%] right-[30%]',
+          ]"
+        ></div>
       </div>
 
-      <!-- Floating Decorative Elements -->
       <motion.div
-        class="absolute top-20 left-10 w-16 h-16 bg-linear-to-br from-blue-400 to-blue-600 rounded-full opacity-20 shadow-lg"
+        class="absolute top-20 left-10 w-16 h-16 bg-white rounded-full opacity-20 shadow-lg"
         :animate="{ y: [0, -20, 0], rotate: [0, 180, 360] }"
         :transition="{
           duration: 6,
@@ -326,7 +336,7 @@ useHead({
         }"
       />
       <motion.div
-        class="absolute top-40 right-20 w-12 h-12 bg-linear-to-br from-orange-400 to-orange-600 transform rotate-45 opacity-25 shadow-lg"
+        class="absolute bottom-40 right-20 w-12 h-12 bg-white transform rotate-45 opacity-25 shadow-lg"
         :animate="{ y: [0, -15, 0], scale: [1, 1.1, 1] }"
         :transition="{
           duration: 8,
@@ -336,7 +346,7 @@ useHead({
         }"
       />
       <motion.div
-        class="absolute bottom-40 left-20 w-20 h-20 bg-linear-to-br from-blue-300 to-orange-400 rounded-lg opacity-15 shadow-lg"
+        class="absolute bottom-40 left-20 w-20 h-20 bg-white rounded-lg opacity-15 shadow-lg"
         :animate="{ y: [0, -25, 0], rotate: [0, -180, -360] }"
         :transition="{
           duration: 7,
@@ -346,9 +356,8 @@ useHead({
         }"
       />
 
-      <!-- Large Background Shapes -->
       <motion.div
-        class="absolute top-16 right-1/4 w-32 h-32 bg-linear-to-br from-purple-400 to-pink-400 rounded-full opacity-10 shadow-2xl"
+        class="absolute top-16 right-1/4 w-32 h-32 bg-white rounded-full opacity-10 shadow-2xl"
         :animate="{ scale: [1, 1.2, 1], rotate: [0, 180, 360] }"
         :transition="{
           duration: 15,
@@ -357,17 +366,7 @@ useHead({
         }"
       />
       <motion.div
-        class="absolute bottom-32 right-16 w-40 h-40 bg-linear-to-br from-green-400 to-blue-400 transform rotate-45 opacity-8 shadow-2xl"
-        :animate="{ scale: [1, 1.15, 1], rotate: [45, 225, 405] }"
-        :transition="{
-          duration: 18,
-          ease: 'easeInOut',
-          repeat: Infinity,
-          delay: 1,
-        }"
-      />
-      <motion.div
-        class="absolute top-1/2 left-8 w-28 h-28 bg-linear-to-br from-yellow-400 to-orange-400 rounded-lg opacity-12 shadow-2xl"
+        class="absolute bottom-20 left-140 w-28 h-28 bg-white rounded-full opacity-12 shadow-2xl"
         :animate="{ y: [0, -20, 0], scale: [1, 1.1, 1] }"
         :transition="{
           duration: 13,
@@ -377,12 +376,11 @@ useHead({
         }"
       />
 
-
-      <!-- Main Hero Grid -->
-      <div class="hero-grid-container max-w-7xl mx-auto relative z-10">
-        <!-- Left Panel -->
+      <div
+        class="grid grid-cols-1 lg:grid-cols-[1fr_2fr_1fr] lg:grid-rows-1 gap-4 lg:gap-8 min-h-[80vh] items-center py-4 lg:py-8 max-w-7xl mx-auto relative z-10"
+      >
         <motion.div
-          class="hero-panel hero-panel-left"
+          class="relative rounded-l-xl overflow-hidden shadow-2xl transition-all duration-300 ease lg:[clip-path:polygon(0_0,100%_0,85%_100%,0_100%)] lg:-translate-x-8 lg:z-5 order-1 min-h-[300px] lg:min-h-0 lg:order-[unset]"
           :initial="{ opacity: 0, x: -100 }"
           :whileInView="{ opacity: 1, x: 0 }"
           :transition="{ duration: 0.8 }"
@@ -399,9 +397,8 @@ useHead({
           </div>
         </motion.div>
 
-        <!-- Center Panel -->
         <motion.div
-          class="hero-panel hero-panel-center flex flex-col justify-center items-center text-center lg:items-start lg:text-left gap-8 text-white relative z-20"
+          class="flex flex-col justify-center items-center text-center lg:items-start lg:text-left gap-8 text-white relative z-20 order-2 lg:order-[unset] p-6 lg:p-12 bg-white/5 backdrop-blur-[10px] border border-white/10 rounded-xl shadow-2xl"
           :initial="{ opacity: 0, y: 50 }"
           :whileInView="{ opacity: 1, y: 0 }"
           :transition="{ duration: 0.8, delay: 0.2 }"
@@ -412,24 +409,26 @@ useHead({
             :initial="{ opacity: 0, y: 30 }"
             :whileInView="{ opacity: 1, y: 0 }"
             :transition="{ duration: 0.8, delay: 0.4 }"
+            :inViewOptions="{ once: true }"
           >
-            FUTURE READY.<br>
-            <span class="text-orange-400">INNOVATE.</span><br>
-            LEAD. THRIVE.
+            INORASI - <span class="text-orange-500">Inovasi</span> Raih
+            <motion.span class="text-yellow-500 font-bold" :animate="{ textShadow: ['0 0 10px #fbbf24, 0 0 20px #fbbf24', 'none', '0 0 10px #fbbf24, 0 0 20px #fbbf24'] }" :transition="{ duration: 2, ease: 'easeInOut', repeat: Infinity }">Prestasi</motion.span>
           </motion.h1>
           <motion.p
             class="text-lg md:text-xl lg:text-2xl font-nunito leading-relaxed tracking-wide max-w-2xl"
             :initial="{ opacity: 0, y: 30 }"
             :whileInView="{ opacity: 1, y: 0 }"
             :transition="{ duration: 0.8, delay: 0.6 }"
+            :inViewOptions="{ once: true }"
           >
-            Pioneering education for tomorrow's leaders. Discover our dynamic programs and vibrant community.
+            Pendidikan inovatif untuk pemimpin masa depan. Temukan program-program dinamis kami dan komunitas yang bersemangat.
           </motion.p>
           <motion.p
             class="max-w-2xl text-base md:text-lg leading-relaxed text-gray-200"
             :initial="{ opacity: 0, y: 30 }"
             :whileInView="{ opacity: 1, y: 0 }"
             :transition="{ duration: 0.8, delay: 0.8 }"
+            :inViewOptions="{ once: true }"
           >
             SMK Negeri 2 Singosari - Tempat di mana inovasi bertemu dengan prestasi. Kami berkomitmen untuk membentuk
             generasi muda yang siap menghadapi tantangan masa depan melalui pendidikan kejuruan berkualitas.
@@ -439,19 +438,20 @@ useHead({
             :initial="{ opacity: 0, y: 30 }"
             :whileInView="{ opacity: 1, y: 0 }"
             :transition="{ duration: 0.8, delay: 1 }"
+            :inViewOptions="{ once: true }"
           >
             <a
               @click.prevent="smoothScrollTo('#jurusan')"
               class="flex items-center gap-2 px-8 py-4 text-lg font-semibold text-white transition-all duration-300 bg-orange-500 rounded-lg hover:bg-orange-600 cursor-pointer shadow-xl hover:shadow-2xl hover:scale-105"
             >
-              Discover Programs
+              Jelajahi Program
               <Icon name="lucide:graduation-cap" size="18" />
             </a>
             <a
               @click.prevent="smoothScrollTo('#profil-sekolah')"
               class="flex items-center gap-2 px-6 py-3 text-sm font-semibold text-orange-500 transition-all duration-300 border-2 border-orange-500 rounded-lg hover:bg-orange-500 hover:text-white cursor-pointer shadow-lg hover:shadow-xl hover:scale-105"
             >
-              Virtual Tour
+              Tur Virtual
               <Icon name="lucide:map" size="16" />
             </a>
           </motion.div>
@@ -460,6 +460,7 @@ useHead({
             :initial="{ opacity: 0, y: 30 }"
             :whileInView="{ opacity: 1, y: 0 }"
             :transition="{ duration: 0.8, delay: 1.2 }"
+            :inViewOptions="{ once: true }"
           >
             <div class="flex flex-col items-center bg-white/10 backdrop-blur-sm rounded-lg p-4 shadow-lg">
               <div class="text-2xl md:text-3xl font-bold text-white">
@@ -478,9 +479,8 @@ useHead({
           </motion.div>
         </motion.div>
 
-        <!-- Right Panel -->
         <motion.div
-          class="hero-panel hero-panel-right"
+          class="relative rounded-r-xl overflow-hidden shadow-2xl transition-all duration-300 ease lg:[clip-path:polygon(15%_0,100%_0,100%_100%,0_100%)] lg:translate-x-8 lg:z-5 order-3 min-h-[300px] lg:min-h-0 lg:order-[unset]"
           :initial="{ opacity: 0, x: 100 }"
           :whileInView="{ opacity: 1, x: 0 }"
           :transition="{ duration: 0.8, delay: 0.4 }"
@@ -827,7 +827,6 @@ useHead({
       :transition="{ duration: 0.8 }"
       :inViewOptions="{ once: true }"
     >
-
       <div class="absolute bottom-20 right-12 z-0">
         <Icon name="lucide:badge" size="165" class="text-orange-300 opacity-8 seragam-ornament-2" />
       </div>
@@ -1605,9 +1604,10 @@ useHead({
 </template>
 
 <style scoped>
-/* Particle Animations */
+
 @keyframes particle-float-1 {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px) translateX(0px) rotate(0deg);
     opacity: 0.1;
   }
@@ -1626,7 +1626,8 @@ useHead({
 }
 
 @keyframes particle-float-2 {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px) translateX(0px) scale(1);
     opacity: 0.15;
   }
@@ -1641,7 +1642,8 @@ useHead({
 }
 
 @keyframes particle-float-3 {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px) rotate(0deg);
     opacity: 0.2;
   }
@@ -1652,7 +1654,8 @@ useHead({
 }
 
 @keyframes particle-float-4 {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateX(0px) scale(1);
     opacity: 0.1;
   }
@@ -1663,7 +1666,8 @@ useHead({
 }
 
 @keyframes particle-float-5 {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px) translateX(0px) rotate(0deg) scale(1);
     opacity: 0.25;
   }
@@ -1674,149 +1678,6 @@ useHead({
   75% {
     transform: translateY(-30px) translateX(-5px) rotate(270deg) scale(0.9);
     opacity: 0.35;
-  }
-}
-
-/* Hero Grid Layout */
-.hero-grid-container {
-  display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
-  grid-template-rows: 1fr;
-  gap: 2rem;
-  min-height: 80vh;
-  align-items: center;
-  padding: 2rem 0;
-}
-
-.hero-panel {
-  position: relative;
-  border-radius: 1rem;
-  overflow: hidden;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-  transition: all 0.3s ease;
-}
-
-.hero-panel-left {
-  clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
-  transform: translateX(-2rem);
-  z-index: 5;
-}
-
-.hero-panel-center {
-  z-index: 10;
-  padding: 3rem;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 1rem;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-}
-
-.hero-panel-right {
-  clip-path: polygon(15% 0, 100% 0, 100% 100%, 0 100%);
-  transform: translateX(2rem);
-  z-index: 5;
-}
-
-/* Particles */
-.particle {
-  position: absolute;
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, rgba(249, 115, 22, 0.2) 100%);
-  border-radius: 50%;
-  pointer-events: none;
-}
-
-.particle-1 {
-  width: 4px;
-  height: 4px;
-  animation: particle-float-1 15s ease-in-out infinite;
-  top: 20%;
-  left: 10%;
-}
-
-.particle-2 {
-  width: 6px;
-  height: 6px;
-  animation: particle-float-2 18s ease-in-out infinite;
-  top: 60%;
-  right: 15%;
-}
-
-.particle-3 {
-  width: 3px;
-  height: 3px;
-  animation: particle-float-3 12s ease-in-out infinite;
-  top: 40%;
-  left: 70%;
-}
-
-.particle-4 {
-  width: 5px;
-  height: 5px;
-  animation: particle-float-4 20s ease-in-out infinite;
-  bottom: 30%;
-  left: 20%;
-}
-
-.particle-5 {
-  width: 4px;
-  height: 4px;
-  animation: particle-float-5 16s ease-in-out infinite;
-  top: 70%;
-  right: 30%;
-}
-
-/* Responsive Design */
-@media (max-width: 1024px) {
-  .hero-grid-container {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto;
-    gap: 1rem;
-    padding: 1rem;
-  }
-
-  .hero-panel-left,
-  .hero-panel-right {
-    clip-path: none;
-    transform: none;
-    order: 1;
-    min-height: 300px;
-  }
-
-  .hero-panel-center {
-    order: 2;
-    padding: 2rem;
-    margin: 1rem 0;
-  }
-
-  .hero-panel-left {
-    order: 1;
-  }
-
-  .hero-panel-right {
-    order: 3;
-  }
-}
-
-@media (max-width: 768px) {
-  .hero-grid-container {
-    grid-template-columns: 1fr;
-    gap: 0.5rem;
-    padding: 0.5rem;
-  }
-
-  .hero-panel {
-    border-radius: 0.5rem;
-  }
-
-  .hero-panel-center {
-    padding: 1.5rem;
-    margin: 0.5rem 0;
-  }
-
-  .hero-panel-left,
-  .hero-panel-right {
-    min-height: 250px;
   }
 }
 
@@ -2046,7 +1907,6 @@ useHead({
   background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23dbeafe' fill-opacity='0.15'%3E%3Ctext x='40' y='25' font-family='Arial' font-size='20' text-anchor='middle'%3E%3F%3C/text%3E%3Ctext x='10' y='55' font-family='Arial' font-size='16' text-anchor='middle'%3E%F0%9F%92%A1%3C/text%3E%3Ctext x='70' y='15' font-family='Arial' font-size='18' text-anchor='middle'%3E%3F%3C/text%3E%3Ctext x='40' y='75' font-family='Arial' font-size='14' text-anchor='middle'%3E%F0%9F%92%A1%3C/text%3E%3C/g%3E%3C/svg%3E");
 }
 
-/* Thematic ornament animations */
 .hero-ornament-1 {
   animation: float 6s ease-in-out infinite, rotate-very-slow 35s linear infinite;
 }

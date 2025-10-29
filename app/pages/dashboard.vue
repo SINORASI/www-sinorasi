@@ -67,9 +67,9 @@ const formatDate = (dateString: string) => {
 </script>
 
 <template>
-  <div class="min-h-screen py-24 bg-gradient-to-b from-white via-blue-50 to-white">
+  <div class="min-h-screen py-24 bg-linear-to-b from-white via-blue-50 to-white">
     <div class="container px-4 mx-auto sm:px-6">
-      <div class="max-w-6xl mx-auto">
+      <div class="max-w-6xl mx-auto">m
         <div class="mb-8">
           <h1 class="text-3xl font-bold text-gray-800 md:text-4xl">Dashboard</h1>
           <p class="mt-2 text-gray-600">Selamat datang kembali, {{ user.name }}!</p>
@@ -77,7 +77,7 @@ const formatDate = (dateString: string) => {
 
         <div class="p-6 mb-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl md:p-8">
           <div class="flex flex-col items-center gap-6 md:flex-row md:items-start">
-            <div class="flex-shrink-0">
+            <div class="shrink-0">
               <NuxtImg
                 :src="user.avatar"
                 :alt="user.name"
