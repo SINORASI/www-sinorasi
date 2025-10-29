@@ -66,7 +66,7 @@
 <script setup lang="ts">
 import { Motion } from "motion-v";
 import { computed, onMounted, ref, watch } from "vue";
-// No isClient import needed; use typeof window !== 'undefined' for client check
+
 
 declare global {
   interface Window {

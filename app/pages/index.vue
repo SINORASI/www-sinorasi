@@ -104,7 +104,7 @@ const animationStarted = ref(false);
 const lineScale = ref(0.1);
 const cardVisibility = ref([false, false, false, false, false]);
 
-// Reset animation states
+
 const resetAnimationStates = () => {
   clickedMarkers.value = [true, false, false, false, false];
   showAllIcons.value = false;
@@ -115,14 +115,14 @@ const resetAnimationStates = () => {
 };
 
 const startStaggeredAnimation = () => {
-  // Prevent animation if page is not fully mounted or elements are null
+  
   if (typeof window === "undefined") return;
 
   animationStarted.value = true;
   showAllIcons.value = true;
 
   animate(0.1, 1.0, {
-    duration: 3, // 3000ms
+    duration: 3, 
     ease: "easeInOut",
     onUpdate: (latest) => (lineScale.value = latest),
   });
@@ -152,7 +152,7 @@ const toggleMarker = (index: number) => {
 
     const startScale = lineScale.value;
     animate(startScale, 0.1, {
-      duration: 5, // 5000ms
+      duration: 5, 
       ease: "easeInOut",
       onUpdate: (latest) => (lineScale.value = latest),
     });
@@ -217,17 +217,17 @@ const heroImages = ref([
 const currentHeroImage = ref(0);
 
 onMounted(() => {
-  // Scroll to top on mount
+  
   if (import.meta.client) {
     window.scrollTo(0, 0);
   }
 
-  // Show content after a brief delay to ensure proper motion-v initialization
+  
   setTimeout(() => {
     showContent.value = true;
   }, 50);
 
-  // Only run animations on client side
+  
   if (import.meta.client) {
     setTimeout(() => {
       const durationInSeconds = props.duration / 1000;
@@ -1652,7 +1652,6 @@ useHead({
 </template>
 
 <style scoped>
-/* Particle Animations */
 @keyframes particle-float-1 {
   0%,
   100% {
@@ -1729,7 +1728,6 @@ useHead({
   }
 }
 
-/* Hero Panel Styles - Keeping clip-path and transforms as they require custom CSS */
 .hero-panel-left {
   clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
   transform: translateX(-2rem);
@@ -1740,11 +1738,8 @@ useHead({
   transform: translateX(2rem);
 }
 
-/* Particles - Converted to Tailwind classes in template */
 
-/* Responsive Design - Converted to Tailwind responsive utilities in template */
 
-/* Essential keyframes for complex animations not available in Tailwind */
 @keyframes particle-float-1 {
   0%,
   100% {
@@ -1841,7 +1836,6 @@ useHead({
   animation: float-slow 10s ease-in-out infinite 2s;
 }
 
-/* Background patterns - keeping as they are complex SVG patterns */
 .wave-pattern {
   background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23dbeafe' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
@@ -1850,16 +1844,12 @@ useHead({
   background: url("data:image/svg+xml,%3Csvg width='100' height='20' viewBox='0 0 100 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 10 Q25 0 50 10 T100 10' stroke='%23dbeafe' stroke-width='2' fill='none' opacity='0.3'/%3E%3C/svg%3E");
 }
 
-/* Sparkle animations - converted to Tailwind animate classes in template */
 
-/* Shape animations - converted to Tailwind animate classes in template */
 
-/* FAQ pattern - keeping as complex SVG pattern */
 .faq-pattern {
   background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23dbeafe' fill-opacity='0.15'%3E%3Ctext x='40' y='25' font-family='Arial' font-size='20' text-anchor='middle'%3E%3F%3C/text%3E%3Ctext x='10' y='55' font-family='Arial' font-size='16' text-anchor='middle'%3E%F0%9F%92%A1%3C/text%3E%3Ctext x='70' y='15' font-family='Arial' font-size='18' text-anchor='middle'%3E%3F%3C/text%3E%3Ctext x='40' y='75' font-family='Arial' font-size='14' text-anchor='middle'%3E%F0%9F%92%A1%3C/text%3E%3C/g%3E%3C/svg%3E");
 }
 
-/* Thematic ornament animations */
 .hero-ornament-1 {
   animation: float 6s ease-in-out infinite, rotate-very-slow 35s linear infinite;
 }
