@@ -13,6 +13,12 @@ export default defineNuxtConfig({
     "motion-v/nuxt",
     "@nuxtjs/i18n",
   ],
+  fonts: {
+    families: [
+      { name: 'Oswald', provider: 'google', weights: [700] },
+      { name: 'Nunito', provider: 'google', weights: [400, 600] }
+    ]
+  },
   app: {
     pageTransition: { name: "page", mode: "out-in" },
     head: {
@@ -63,4 +69,7 @@ export default defineNuxtConfig({
   experimental: {
     viteEnvironmentApi: true,
   },
+  nitro: {
+    preset: "bun"
+  }
 });

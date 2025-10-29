@@ -6,15 +6,15 @@
       :animate="{ opacity: 1 }"
       :exit="{ opacity: 0 }"
       :transition="{ duration: 0.3, ease: 'easeInOut' }"
-      class="z-[99999]"
+      class="z-99999"
     >
-      <div class="fixed inset-0 z-[99999] flex">
+      <div class="fixed inset-0 z-99999 flex">
         <motion.div
           :initial="{ opacity: 0 }"
           :animate="{ opacity: 0.5 }"
           :exit="{ opacity: 0 }"
           :transition="{ duration: 0.3, ease: 'easeInOut' }"
-          class="fixed inset-0 bg-black/50 backdrop-blur-sm z-[100000]"
+          class="fixed inset-0 bg-black/50 backdrop-blur-sm z-100000"
           @click="$emit('close')"
         ></motion.div>
 
@@ -23,16 +23,16 @@
           :animate="{ x: '0%' }"
           :exit="{ x: '100%' }"
           :transition="{ duration: 0.3, ease: 'easeInOut' }"
-          class="relative flex flex-col w-full h-full bg-white shadow-2xl sm:ml-auto sm:w-96 z-[100001]"
+          class="relative flex flex-col w-full h-full bg-white shadow-2xl sm:ml-auto sm:w-96 z-100001"
         >
-          <div class="flex items-center justify-between flex-shrink-0 gap-3 p-4 border-b border-gray-200">
+          <div class="flex items-center justify-between shrink-0 gap-3 p-4 border-b border-gray-200">
             <div class="flex-1 min-w-0">
               <h2 class="text-lg font-semibold text-gray-800 truncate">Navigasi</h2>
               <p class="text-sm text-gray-500 truncate">{{ pageSubtitle }}</p>
             </div>
             <button
               @click="$emit('close')"
-              class="flex-shrink-0 p-2 transition-colors duration-200 rounded-full hover:bg-gray-100"
+              class="shrink-0 p-2 transition-colors duration-200 rounded-full hover:bg-gray-100"
             >
               <Icon name="lucide:x" size="20" class="text-gray-600" />
             </button>
@@ -40,7 +40,7 @@
 
           <div class="flex-1 p-4 overflow-y-auto">
             <div class="mb-6">
-              <div class="p-4 bg-gradient-to-r from-gray-500 to-gray-600 rounded-xl shadow-lg">
+              <div class="p-4 bg-linear-to-r from-gray-500 to-gray-600 rounded-xl shadow-lg">
                 <div class="flex items-center gap-3 mb-3">
                   <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
                     <Icon name="lucide:user-x" size="20" class="text-white" />
@@ -81,15 +81,15 @@
 
               <NuxtLink v-if="menuItems !== currentMenuItems" to="/" @click="$emit('close')" class="block mt-3">
                 <div
-                  class="bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg px-4 py-3 hover:from-blue-700 hover:to-blue-800 transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+                  class="bg-linear-to-r from-blue-600 to-blue-700 text-white rounded-lg px-4 py-3 hover:from-blue-700 hover:to-blue-800 transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
                 >
                   <div class="flex items-center gap-3">
-                    <Icon name="lucide:home" size="24" class="flex-shrink-0" />
+                    <Icon name="lucide:home" size="24" class="shrink-0" />
                     <div class="flex-1">
                       <p class="text-base font-semibold">{{ $t("sidebar.homeButton.title") }}</p>
                       <p class="text-xs text-blue-100">{{ $t("sidebar.homeButton.subtitle") }}</p>
                     </div>
-                    <Icon name="lucide:arrow-right" size="20" class="flex-shrink-0" />
+                    <Icon name="lucide:arrow-right" size="20" class="shrink-0" />
                   </div>
                 </div>
               </NuxtLink>
@@ -208,7 +208,8 @@
                         class="flex items-start gap-3 p-2 transition-colors duration-200 rounded cursor-pointer hover:bg-gray-50"
                         :class="{ 'bg-blue-50 border border-blue-200': searchQuery.trim() && ((sub as Record<string, unknown>).score as number) > 80 }"
                       >
-                        <Icon :name="(sub as Record<string, unknown>).icon as string" size="18" class="mt-0.5 flex-shrink-0 text-gray-900" />
+                        <Icon 
+                        :name="(sub as Record<string, unknown>).icon as string" size="18" class="mt-0.5 shrink-0 text-gray-900" />
                         <div class="flex-1">
                           <div class="flex items-center gap-2">
                             <p
@@ -249,7 +250,7 @@
                         <Icon
                           :name="(sub as Record<string, unknown>).icon as string"
                           size="18"
-                          class="mt-0.5 flex-shrink-0 text-gray-900"
+                          class="mt-0.5 shrink-0 text-gray-900"
                           :style="{ color: ((item as Record<string, unknown>).title as string) === 'Konsentrasi Keahlian' ? getIconColor((sub as Record<string, unknown>).title as string) : undefined }"
                         />
                         <div class="flex-1">

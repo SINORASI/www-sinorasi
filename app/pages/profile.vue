@@ -113,7 +113,7 @@ const handleLogout = async () => {
 </script>
 
 <template>
-  <div class="min-h-screen py-24 bg-gradient-to-b from-white via-blue-50 to-white">
+  <div class="min-h-screen py-24 bg-linear-to-b from-white via-blue-50 to-white">
     <div class="container px-4 mx-auto sm:px-6">
       <div class="max-w-4xl mx-auto">
         <div class="mb-8">
@@ -395,21 +395,21 @@ const handleLogout = async () => {
             <h3 class="mb-6 text-xl font-bold text-gray-800">Tips Keamanan</h3>
             <div class="space-y-4">
               <div class="flex items-start gap-3">
-                <Icon name="lucide:check-circle" size="20" class="text-green-600 mt-0.5 flex-shrink-0" />
+                <Icon name="lucide:check-circle" size="20" class="text-green-600 mt-0.5 shrink-0" />
                 <div>
                   <p class="font-semibold text-gray-800">Gunakan Password yang Kuat</p>
                   <p class="text-sm text-gray-600">Kombinasikan huruf besar, kecil, angka, dan simbol</p>
                 </div>
               </div>
               <div class="flex items-start gap-3">
-                <Icon name="lucide:check-circle" size="20" class="text-green-600 mt-0.5 flex-shrink-0" />
+                <Icon name="lucide:check-circle" size="20" class="text-green-600 mt-0.5 shrink-0" />
                 <div>
                   <p class="font-semibold text-gray-800">Jangan Bagikan Password</p>
                   <p class="text-sm text-gray-600">Password Anda bersifat pribadi dan rahasia</p>
                 </div>
               </div>
               <div class="flex items-start gap-3">
-                <Icon name="lucide:check-circle" size="20" class="text-green-600 mt-0.5 flex-shrink-0" />
+                <Icon name="lucide:check-circle" size="20" class="text-green-600 mt-0.5 shrink-0" />
                 <div>
                   <p class="font-semibold text-gray-800">Logout Setelah Selesai</p>
                   <p class="text-sm text-gray-600">Selalu logout dari perangkat bersama</p>
@@ -432,7 +432,7 @@ const handleLogout = async () => {
               >
                 <div class="p-8">
                   <div class="flex items-center justify-between mb-6">
-                    <div class="px-6 py-3 border border-blue-200 bg-gradient-to-r from-blue-600 to-blue-800 rounded-xl">
+                    <div class="px-6 py-3 border border-blue-200 bg-linear-to-r from-blue-600 to-blue-800 rounded-xl">
                       <h3 class="text-lg font-bold text-white">Panduan Edit Profil</h3>
                     </div>
                     <button
@@ -444,19 +444,19 @@ const handleLogout = async () => {
                   </div>
                   <ul class="space-y-4 text-gray-700">
                     <li class="flex items-start gap-3">
-                      <Icon name="lucide:check-circle" size="20" class="text-blue-600 mt-0.5 flex-shrink-0" />
+                      <Icon name="lucide:check-circle" size="20" class="text-blue-600 mt-0.5 shrink-0" />
                       <span>Pastikan informasi yang Anda masukkan akurat dan terkini</span>
                     </li>
                     <li class="flex items-start gap-3">
-                      <Icon name="lucide:check-circle" size="20" class="text-orange-600 mt-0.5 flex-shrink-0" />
+                      <Icon name="lucide:check-circle" size="20" class="text-orange-600 mt-0.5 shrink-0" />
                       <span>Upload foto profil dengan format JPG atau PNG, maksimal 5MB</span>
                     </li>
                     <li class="flex items-start gap-3">
-                      <Icon name="lucide:check-circle" size="20" class="text-blue-600 mt-0.5 flex-shrink-0" />
+                      <Icon name="lucide:check-circle" size="20" class="text-blue-600 mt-0.5 shrink-0" />
                       <span>Gunakan password yang kuat untuk keamanan akun</span>
                     </li>
                     <li class="flex items-start gap-3">
-                      <Icon name="lucide:check-circle" size="20" class="text-orange-600 mt-0.5 flex-shrink-0" />
+                      <Icon name="lucide:check-circle" size="20" class="text-orange-600 mt-0.5 shrink-0" />
                       <span>Simpan perubahan secara berkala untuk menghindari kehilangan data</span>
                     </li>
                   </ul>

@@ -105,7 +105,7 @@ const toggleFAQ = (index: number) => {
               <Icon
                 name="lucide:chevron-down"
                 size="24"
-                class="flex-shrink-0 text-blue-600 transition-transform duration-300"
+                class="shrink-0 text-blue-600 transition-transform duration-300"
                 :class="{ 'rotate-180': item.isOpen }"
               />
             </button>

@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen py-24 bg-gradient-to-b from-white via-blue-50 to-white">
+  <div class="min-h-screen py-24 bg-linear-to-b from-white via-blue-50 to-white">
     <div class="container px-4 py-8 mx-auto sm:px-6">
       <div v-if="news" class="max-w-5xl mx-auto">
         <nav class="mb-8">
@@ -26,7 +26,7 @@
               <span
                 v-for="tag in news.tags"
                 :key="tag"
-                class="px-4 py-2 text-xs font-semibold text-white rounded-full bg-gradient-to-r from-blue-500 to-blue-600"
+                class="px-4 py-2 text-xs font-semibold text-white rounded-full bg-linear-to-r from-blue-500 to-blue-600"
               >
                 {{ tag }}
               </span>
@@ -57,7 +57,7 @@
 
         <section id="berita-lainnya" class="mt-12">
           <div
-            class="p-6 mb-8 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
+            class="p-6 mb-8 border border-blue-200 shadow-xl bg-linear-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
           >
             <h2 class="text-2xl font-bold text-white md:text-3xl">Berita Lainnya</h2>
           </div>
@@ -76,12 +76,12 @@
                   :alt="relatedNews.title"
                 />
               </div>
-              <div class="flex flex-col flex-grow p-4">
+              <div class="flex flex-col grow p-4">
                 <span class="px-3 py-1 mb-2 text-xs font-semibold text-blue-600 bg-blue-100 rounded-full w-fit">
                   {{ relatedNews.tags[0] }}
                 </span>
                 <h3
-                  class="flex-grow mb-2 font-bold text-gray-800 transition-colors group-hover:text-blue-600 line-clamp-2"
+                  class="grow mb-2 font-bold text-gray-800 transition-colors group-hover:text-blue-600 line-clamp-2"
                 >
                   {{ relatedNews.title }}
                 </h3>

@@ -9,7 +9,7 @@
     :animate="{ opacity: 1, scale: 1, y: 0 }"
     :transition="{ duration: 0.5, delay: 0.1 }"
   >
-    <div class="relative overflow-hidden aspect-[4/5]">
+    <div class="relative overflow-hidden aspect-4/5">
       <div :class="['absolute inset-0', bgGradientClass]"></div>
 
       <div class="relative w-full h-full">
@@ -69,7 +69,7 @@
                   :class="[
                     'flex-1 px-3 py-2 rounded-lg text-sm font-bold transition-all duration-200',
                     selectedGrade === 'X'
-                      ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-md'
+                      ? 'bg-linear-to-r from-blue-500 to-blue-600 text-white shadow-md'
                       : 'bg-gray-100 text-gray-600 hover:bg-gray-200',
                   ]"
                 >
@@ -80,7 +80,7 @@
                   :class="[
                     'flex-1 px-3 py-2 rounded-lg text-sm font-bold transition-all duration-200',
                     selectedGrade === 'XI'
-                      ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-md'
+                      ? 'bg-linear-to-r from-blue-500 to-blue-600 text-white shadow-md'
                       : 'bg-gray-100 text-gray-600 hover:bg-gray-200',
                   ]"
                 >
@@ -97,7 +97,7 @@
                   :class="[
                     'w-full px-3 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center gap-2',
                     selectedGender === 'L'
-                      ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-md'
+                      ? 'bg-linear-to-r from-blue-500 to-blue-600 text-white shadow-md'
                       : 'bg-gray-100 text-gray-600 hover:bg-gray-200',
                   ]"
                 >
@@ -110,7 +110,7 @@
                   :class="[
                     'w-full px-3 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center gap-2',
                     selectedGender === 'P'
-                      ? 'bg-gradient-to-r from-pink-500 to-pink-600 text-white shadow-md'
+                      ? 'bg-linear-to-r from-pink-500 to-pink-600 text-white shadow-md'
                       : 'bg-gray-100 text-gray-600 hover:bg-gray-200',
                   ]"
                 >
@@ -127,7 +127,7 @@
                 :class="[
                   'w-full px-3 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center gap-2',
                   useAlmamater
-                    ? 'bg-gradient-to-r from-purple-500 to-purple-600 text-white shadow-md'
+                    ? 'bg-linear-to-r from-purple-500 to-purple-600 text-white shadow-md'
                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200',
                 ]"
               >

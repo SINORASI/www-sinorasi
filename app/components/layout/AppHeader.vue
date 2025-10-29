@@ -70,10 +70,10 @@ onMounted(() => {
     :initial="{ y: -100, opacity: 0 }"
     :animate="{ y: 0, opacity: 1 }"
     :transition="{ duration: 0.8, ease: 'easeOut' }"
-    class="z-[999] fixed top-0 left-0 right-0"
+    class="z-999 fixed top-0 left-0 right-0"
   >
     <header
-      :class="['z-[999] border-b-1 fixed top-0 left-0 right-0 transition-all duration-500 ease-in-out', headerClass]"
+      :class="['z-999 border-b fixed top-0 left-0 right-0 transition-all duration-500 ease-in-out', headerClass]"
     >
       <div
         :class="

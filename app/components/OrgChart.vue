@@ -1007,7 +1007,7 @@ const connectingLines = computed(() => {
           style="transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1)"
         >
           <div
-            class="absolute top-full left-1/2 transform -translate-x-1/2 w-0.5 h-16 bg-gradient-to-b from-purple-400 to-transparent"
+            class="absolute top-full left-1/2 transform -translate-x-1/2 w-0.5 h-16 bg-linear-to-b from-purple-400 to-transparent"
           ></div>
 
           <div
@@ -1027,7 +1027,7 @@ const connectingLines = computed(() => {
                   class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
                 <div
-                  :class="`absolute inset-0 bg-gradient-to-t ${getNodeColor(
+                  :class="`absolute inset-0 bg-linear-to-t ${getNodeColor(
                     node.level
                   )} opacity-0 group-hover:opacity-20 transition-opacity duration-300`"
                 ></div>
@@ -1040,7 +1040,7 @@ const connectingLines = computed(() => {
             </div>
 
             <div
-              class="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              class="absolute inset-0 bg-linear-to-r from-blue-500/10 to-purple-500/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
             ></div>
           </div>
         </div>
@@ -1085,7 +1085,7 @@ const connectingLines = computed(() => {
           style="transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1)"
         >
           <div
-            class="absolute top-full left-1/2 transform -translate-x-1/2 w-0.5 h-12 bg-gradient-to-b from-blue-400 to-transparent"
+            class="absolute top-full left-1/2 transform -translate-x-1/2 w-0.5 h-12 bg-linear-to-b from-blue-400 to-transparent"
           ></div>
 
           <div
@@ -1105,7 +1105,7 @@ const connectingLines = computed(() => {
                   class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                 />
                 <div
-                  :class="`absolute inset-0 bg-gradient-to-t ${getNodeColor(
+                  :class="`absolute inset-0 bg-linear-to-t ${getNodeColor(
                     node.level
                   )} opacity-0 group-hover:opacity-20 transition-opacity duration-300`"
                 ></div>
@@ -1118,7 +1118,7 @@ const connectingLines = computed(() => {
             </div>
 
             <div
-              class="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              class="absolute inset-0 bg-linear-to-r from-blue-500/10 to-purple-500/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
             ></div>
           </div>
         </div>
@@ -1158,7 +1158,7 @@ const connectingLines = computed(() => {
                     class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                   />
                   <div
-                    :class="`absolute inset-0 bg-gradient-to-t ${getNodeColor(
+                    :class="`absolute inset-0 bg-linear-to-t ${getNodeColor(
                       node.level
                     )} opacity-0 group-hover:opacity-20 transition-opacity duration-300`"
                   ></div>
@@ -1171,7 +1171,7 @@ const connectingLines = computed(() => {
               </div>
 
               <div
-                class="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                class="absolute inset-0 bg-linear-to-r from-blue-500/10 to-purple-500/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
               ></div>
             </div>
           </div>

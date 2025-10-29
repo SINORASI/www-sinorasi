@@ -123,11 +123,11 @@ const formatDate = (dateString: string) => {
 </script>
 
 <template>
-  <div class="min-h-screen py-24 bg-gradient-to-b from-white via-blue-50 to-white">
+  <div class="min-h-screen py-24 bg-linear-to-b from-white via-blue-50 to-white">
     <div class="container px-4 py-8 mx-auto sm:px-6 sm:py-12">
       <div class="flex flex-col items-center mb-12">
         <div
-          class="p-6 px-10 py-6 mb-4 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
+          class="p-6 px-10 py-6 mb-4 border border-blue-200 shadow-xl bg-linear-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
         >
           <h1 class="text-3xl font-bold text-white sm:text-4xl">Berita & Informasi</h1>
         </div>
@@ -264,7 +264,7 @@ const formatDate = (dateString: string) => {
               :alt="news.title"
             />
           </div>
-          <div class="flex flex-col flex-grow p-5">
+          <div class="flex flex-col grow p-5">
             <div class="flex flex-wrap gap-2 mb-3">
               <span
                 v-for="(tag, index) in news.tags.slice(0, 2)"
@@ -274,7 +274,7 @@ const formatDate = (dateString: string) => {
                 {{ tag }}
               </span>
             </div>
-            <h3 class="flex-grow mb-2 text-lg font-bold text-gray-800 transition-colors group-hover:text-blue-600">
+            <h3 class="grow mb-2 text-lg font-bold text-gray-800 transition-colors group-hover:text-blue-600">
               {{ news.title }}
             </h3>
             <p class="mb-3 text-sm text-gray-600 line-clamp-2">{{ news.subtitle }}</p>

@@ -18,7 +18,7 @@
         <p class="mt-2 text-base md:text-lg text-neutral-400">{{ teacher.university }}</p>
       </div>
 
-      <div class="flex justify-center order-first md:order-none">
+      <div class="flex justify-center order-first md:order-0">
         <div
           class="flex items-center justify-center w-48 h-48 md:w-64 md:h-64 rounded-lg bg-neutral-200 overflow-hidden"
         >

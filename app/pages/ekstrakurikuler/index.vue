@@ -72,11 +72,11 @@ useHead({
 </script>
 
 <template>
-  <div class="min-h-screen py-24 bg-gradient-to-br from-blue-50 via-white to-blue-50 relative overflow-hidden">
+  <div class="min-h-screen py-24 bg-linear-to-br from-blue-50 via-white to-blue-50 relative overflow-hidden">
     
     <div class="absolute inset-0">
       <div
-        class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-200/30 via-cyan-200/30 to-orange-200/30 animate-gradient-shift"
+        class="absolute top-0 left-0 w-full h-full bg-linear-to-br from-blue-200/30 via-cyan-200/30 to-orange-200/30 animate-gradient-shift"
       ></div>
       <div class="absolute top-20 left-10 w-72 h-72 bg-blue-300/20 rounded-full blur-3xl animate-float"></div>
       <div
@@ -124,7 +124,7 @@ useHead({
           
           <div class="relative">
             <h1
-              class="text-5xl sm:text-6xl lg:text-7xl text-center font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-cyan-600 to-orange-600 animate-gradient-shift drop-shadow-2xl"
+              class="text-5xl sm:text-6xl lg:text-7xl text-center font-black text-transparent bg-clip-text bg-linear-to-r from-blue-600 via-cyan-600 to-orange-600 animate-gradient-shift drop-shadow-2xl"
             >
               EKSTRAKURIKULER
             </h1>
@@ -148,9 +148,9 @@ useHead({
             </p>
             
             <div class="flex justify-center items-center gap-6 mt-6">
-              <div class="w-20 h-px bg-gradient-to-r from-transparent to-blue-600 animate-shimmer"></div>
+              <div class="w-20 h-px bg-linear-to-r from-transparent to-blue-600 animate-shimmer"></div>
               <div class="w-3 h-3 bg-blue-600 rounded-full animate-pulse"></div>
-              <div class="w-20 h-px bg-gradient-to-l from-transparent to-orange-600 animate-shimmer"></div>
+              <div class="w-20 h-px bg-linear-to-l from-transparent to-orange-600 animate-shimmer"></div>
             </div>
           </div>
         </div>
@@ -161,19 +161,19 @@ useHead({
         <div class="relative group">
           
           <div
-            class="bg-gradient-to-br from-white/90 to-gray-50/90 backdrop-blur-xl border border-blue-300/50 rounded-2xl p-8 text-center hover-lift stagger-1 animate-scale-in overflow-hidden shadow-lg"
+            class="bg-linear-to-br from-white/90 to-gray-50/90 backdrop-blur-xl border border-blue-300/50 rounded-2xl p-8 text-center hover-lift stagger-1 animate-scale-in overflow-hidden shadow-lg"
           >
             
             <div
-              class="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-200/30 via-cyan-200/30 to-orange-200/30 animate-gradient-shift"
+              class="absolute inset-0 rounded-2xl bg-linear-to-r from-blue-200/30 via-cyan-200/30 to-orange-200/30 animate-gradient-shift"
             ></div>
-            <div class="absolute inset-[1px] bg-gradient-to-br from-white to-gray-50 rounded-2xl"></div>
+            <div class="absolute inset-px bg-linear-to-br from-white to-gray-50 rounded-2xl"></div>
 
             
             <div class="relative z-10">
               
               <div
-                class="inline-block p-6 mb-6 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-2xl shadow-2xl animate-bounce-in relative"
+                class="inline-block p-6 mb-6 bg-linear-to-br from-blue-500 to-cyan-600 rounded-2xl shadow-2xl animate-bounce-in relative"
               >
                 <Icon name="lucide:trophy" size="40" class="text-white animate-pulse" />
                 <div class="absolute inset-0 bg-blue-400/20 rounded-2xl blur-xl animate-pulse-glow"></div>
@@ -182,7 +182,7 @@ useHead({
               
               <div class="mb-4">
                 <h2
-                  class="text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-600 animate-gradient-shift drop-shadow-lg"
+                  class="text-7xl font-black text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-cyan-600 animate-gradient-shift drop-shadow-lg"
                 >
                   {{ allowedExtracurricularNames.length }}
                 </h2>
@@ -196,7 +196,7 @@ useHead({
 
               <p class="text-xl font-bold text-gray-800 mb-4 tracking-wider">EKSTRAKURIKULER</p>
               <div
-                class="w-24 h-px bg-gradient-to-r from-transparent via-blue-600 to-transparent mx-auto animate-shimmer"
+                class="w-24 h-px bg-linear-to-r from-transparent via-blue-600 to-transparent mx-auto animate-shimmer"
               ></div>
             </div>
 
@@ -214,19 +214,19 @@ useHead({
         <div class="relative group">
           
           <div
-            class="bg-gradient-to-br from-white/90 to-gray-50/90 backdrop-blur-xl border border-blue-300/50 rounded-2xl p-8 text-center hover-lift stagger-2 animate-scale-in overflow-hidden shadow-lg"
+            class="bg-linear-to-br from-white/90 to-gray-50/90 backdrop-blur-xl border border-blue-300/50 rounded-2xl p-8 text-center hover-lift stagger-2 animate-scale-in overflow-hidden shadow-lg"
           >
             
             <div
-              class="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-200/30 via-cyan-200/30 to-orange-200/30 animate-gradient-shift"
+              class="absolute inset-0 rounded-2xl bg-linear-to-r from-blue-200/30 via-cyan-200/30 to-orange-200/30 animate-gradient-shift"
             ></div>
-            <div class="absolute inset-[1px] bg-gradient-to-br from-white to-gray-50 rounded-2xl"></div>
+            <div class="absolute inset-px bg-linear-to-br from-white to-gray-50 rounded-2xl"></div>
 
             
             <div class="relative z-10">
               
               <div
-                class="inline-block p-6 mb-6 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-2xl shadow-2xl animate-bounce-in relative"
+                class="inline-block p-6 mb-6 bg-linear-to-br from-blue-500 to-cyan-600 rounded-2xl shadow-2xl animate-bounce-in relative"
               >
                 <Icon name="lucide:activity" size="40" class="text-white animate-pulse" />
                 <div class="absolute inset-0 bg-blue-400/20 rounded-2xl blur-xl animate-pulse-glow"></div>
@@ -235,7 +235,7 @@ useHead({
               
               <div class="mb-4">
                 <h2
-                  class="text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-600 animate-gradient-shift drop-shadow-lg"
+                  class="text-7xl font-black text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-cyan-600 animate-gradient-shift drop-shadow-lg"
                 >
                   {{ allowedExtracurricularNames.length }}
                 </h2>
@@ -249,7 +249,7 @@ useHead({
 
               <p class="text-xl font-bold text-gray-800 mb-4 tracking-wider">AKTIVITAS</p>
               <div
-                class="w-24 h-px bg-gradient-to-r from-transparent via-blue-600 to-transparent mx-auto animate-shimmer"
+                class="w-24 h-px bg-linear-to-r from-transparent via-blue-600 to-transparent mx-auto animate-shimmer"
               ></div>
             </div>
 
@@ -271,13 +271,13 @@ useHead({
           
           <div class="relative mb-8">
             <h2
-              class="text-4xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-cyan-600 to-orange-600 animate-gradient-shift"
+              class="text-4xl sm:text-5xl font-black text-transparent bg-clip-text bg-linear-to-r from-blue-600 via-cyan-600 to-orange-600 animate-gradient-shift"
             >
               PILIH EKSTRAKURIKULER
             </h2>
             
             <div
-              class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-full animate-shimmer"
+              class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-linear-to-r from-blue-600 to-cyan-600 rounded-full animate-shimmer"
             ></div>
             
             <div class="absolute inset-0 text-4xl sm:text-5xl font-black text-blue-600/30 blur-lg animate-pulse">
@@ -294,9 +294,9 @@ useHead({
 
           
           <div class="flex justify-center items-center gap-8 mt-8">
-            <div class="w-12 h-px bg-gradient-to-r from-transparent to-blue-600 animate-shimmer"></div>
+            <div class="w-12 h-px bg-linear-to-r from-transparent to-blue-600 animate-shimmer"></div>
             <div class="w-4 h-4 border-2 border-blue-600 rotate-45 animate-spin"></div>
-            <div class="w-12 h-px bg-gradient-to-l from-transparent to-cyan-600 animate-shimmer"></div>
+            <div class="w-12 h-px bg-linear-to-l from-transparent to-cyan-600 animate-shimmer"></div>
           </div>
         </div>
 
@@ -309,7 +309,7 @@ useHead({
             :class="[
               'px-8 py-4 rounded-xl text-sm font-bold tracking-wider transition-all duration-500 border-2 hover-lift animate-scale-in relative overflow-hidden',
               selectedCategory === category
-                ? 'bg-gradient-to-r from-blue-500 to-cyan-600 text-white border-blue-400 shadow-2xl animate-pulse-glow'
+                ? 'bg-linear-to-r from-blue-500 to-cyan-600 text-white border-blue-400 shadow-2xl animate-pulse-glow'
                 : 'bg-white/90 backdrop-blur-sm text-gray-700 hover:text-gray-900 border-gray-300/50 hover:border-blue-400 hover:from-blue-500/20 hover:to-cyan-500/20',
             ]"
           >
@@ -317,7 +317,7 @@ useHead({
             <span class="relative z-10">{{ category }}</span>
             <div
               v-if="selectedCategory === category"
-              class="absolute inset-0 bg-gradient-to-r from-blue-400/20 to-cyan-400/20 animate-gradient-shift"
+              class="absolute inset-0 bg-linear-to-r from-blue-400/20 to-cyan-400/20 animate-gradient-shift"
             ></div>
             
             <div
@@ -333,9 +333,9 @@ useHead({
             :key="i"
             class="bg-white/90 backdrop-blur-xl border border-gray-300/50 p-8 text-center rounded-2xl animate-pulse shadow-lg"
           >
-            <div class="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-gray-200 to-gray-300 rounded-2xl"></div>
-            <div class="w-4/5 h-8 mx-auto mb-4 bg-gradient-to-r from-gray-200 to-gray-300 rounded-lg"></div>
-            <div class="w-3/5 h-4 mx-auto bg-gradient-to-r from-gray-200 to-gray-300 rounded"></div>
+            <div class="w-24 h-24 mx-auto mb-6 bg-linear-to-br from-gray-200 to-gray-300 rounded-2xl"></div>
+            <div class="w-4/5 h-8 mx-auto mb-4 bg-linear-to-r from-gray-200 to-gray-300 rounded-lg"></div>
+            <div class="w-3/5 h-4 mx-auto bg-linear-to-r from-gray-200 to-gray-300 rounded"></div>
           </div>
         </div>
 
@@ -354,13 +354,13 @@ useHead({
           >
             
             <div
-              class="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+              class="absolute inset-0 bg-linear-to-br from-blue-500/5 to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
             ></div>
 
             
             <div class="relative mb-6">
               <div
-                class="inline-block p-6 bg-gradient-to-br from-gray-200 to-gray-300 rounded-2xl group-hover:from-blue-500 group-hover:to-cyan-600 transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 shadow-xl"
+                class="inline-block p-6 bg-linear-to-br from-gray-200 to-gray-300 rounded-2xl group-hover:from-blue-500 group-hover:to-cyan-600 transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 shadow-xl"
               >
                 <Icon
                   :name="extra.icon || 'lucide:activity'"
@@ -398,7 +398,7 @@ useHead({
             
             <div
               v-if="extra.category"
-              class="inline-block px-4 py-2 text-xs font-bold bg-gradient-to-r from-blue-500/20 to-cyan-500/20 text-blue-600 border border-blue-400/30 rounded-full mb-4 group-hover:from-blue-500/30 group-hover:to-cyan-500/30 transition-all duration-300"
+              class="inline-block px-4 py-2 text-xs font-bold bg-linear-to-r from-blue-500/20 to-cyan-500/20 text-blue-600 border border-blue-400/30 rounded-full mb-4 group-hover:from-blue-500/30 group-hover:to-cyan-500/30 transition-all duration-300"
             >
               {{ extra.category }}
             </div>
@@ -443,11 +443,11 @@ useHead({
       <section class="max-w-5xl p-12 mx-auto text-center animate-fade-in-on-scroll relative">
         
         <div
-          class="bg-gradient-to-br from-white/95 to-gray-50/95 backdrop-blur-xl border border-blue-300/50 rounded-3xl p-12 hover-lift overflow-hidden relative group shadow-xl"
+          class="bg-linear-to-br from-white/95 to-gray-50/95 backdrop-blur-xl border border-blue-300/50 rounded-3xl p-12 hover-lift overflow-hidden relative group shadow-xl"
         >
           
           <div
-            class="absolute inset-0 bg-gradient-to-r from-blue-200/20 via-cyan-200/20 to-orange-200/20 animate-gradient-shift"
+            class="absolute inset-0 bg-linear-to-r from-blue-200/20 via-cyan-200/20 to-orange-200/20 animate-gradient-shift"
           ></div>
 
           
@@ -464,7 +464,7 @@ useHead({
           <div class="relative z-10">
             
             <div
-              class="inline-block p-8 mb-8 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-3xl shadow-2xl animate-bounce-in relative"
+              class="inline-block p-8 mb-8 bg-linear-to-br from-blue-500 to-cyan-600 rounded-3xl shadow-2xl animate-bounce-in relative"
             >
               <Icon name="lucide:lightbulb" size="56" class="text-white animate-pulse" />
               
@@ -473,7 +473,7 @@ useHead({
 
             
             <h2
-              class="mb-8 text-4xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-cyan-600 to-orange-600 animate-gradient-shift"
+              class="mb-8 text-4xl sm:text-5xl font-black text-transparent bg-clip-text bg-linear-to-r from-blue-600 via-cyan-600 to-orange-600 animate-gradient-shift"
             >
               BUAT EKSTRAKURIKULER BARU
             </h2>
@@ -487,11 +487,11 @@ useHead({
             
             <button
               @click="openDialog"
-              class="inline-flex items-center gap-4 px-10 py-5 font-bold text-white transition-all duration-500 bg-gradient-to-r from-blue-500 to-cyan-600 rounded-2xl shadow-2xl hover:shadow-3xl hover:scale-105 animate-pulse-glow relative overflow-hidden group/btn"
+              class="inline-flex items-center gap-4 px-10 py-5 font-bold text-white transition-all duration-500 bg-linear-to-r from-blue-500 to-cyan-600 rounded-2xl shadow-2xl hover:shadow-3xl hover:scale-105 animate-pulse-glow relative overflow-hidden group/btn"
             >
               
               <div
-                class="absolute inset-0 bg-gradient-to-r from-blue-400 to-cyan-400 opacity-0 group-hover/btn:opacity-20 transition-opacity duration-300 pointer-events-none"
+                class="absolute inset-0 bg-linear-to-r from-blue-400 to-cyan-400 opacity-0 group-hover/btn:opacity-20 transition-opacity duration-300 pointer-events-none"
               ></div>
 
               <span class="relative z-10 text-lg tracking-wider">MULAI SEKARANG</span>
@@ -534,7 +534,7 @@ useHead({
           >
             
             <div
-              class="flex items-center justify-between p-6 border-b border-gray-200 bg-gradient-to-r from-blue-600 to-blue-800 rounded-t-2xl"
+              class="flex items-center justify-between p-6 border-b border-gray-200 bg-linear-to-r from-blue-600 to-blue-800 rounded-t-2xl"
             >
               <h2 class="text-2xl font-bold text-white">Cara Membuat Ekstrakurikuler Baru</h2>
               <button @click="closeDialog" class="text-white transition-colors hover:text-gray-200">
@@ -546,7 +546,7 @@ useHead({
             <div class="p-6 space-y-6">
               
               <div class="flex gap-4">
-                <div class="flex items-center justify-center flex-shrink-0 w-10 h-10 bg-blue-600 rounded-full">
+                <div class="flex items-center justify-center shrink-0 w-10 h-10 bg-blue-600 rounded-full">
                   <span class="text-lg font-bold text-white">1</span>
                 </div>
                 <div>
@@ -560,7 +560,7 @@ useHead({
 
               
               <div class="flex gap-4">
-                <div class="flex items-center justify-center flex-shrink-0 w-10 h-10 bg-blue-600 rounded-full">
+                <div class="flex items-center justify-center shrink-0 w-10 h-10 bg-blue-600 rounded-full">
                   <span class="text-lg font-bold text-white">2</span>
                 </div>
                 <div>
@@ -574,7 +574,7 @@ useHead({
 
               
               <div class="flex gap-4">
-                <div class="flex items-center justify-center flex-shrink-0 w-10 h-10 bg-blue-600 rounded-full">
+                <div class="flex items-center justify-center shrink-0 w-10 h-10 bg-blue-600 rounded-full">
                   <span class="text-lg font-bold text-white">3</span>
                 </div>
                 <div>

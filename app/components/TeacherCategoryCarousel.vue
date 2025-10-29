@@ -20,7 +20,7 @@
           :whileInView="{ opacity: 1, y: 0 }"
           :transition="{ delay: index * 0.1, duration: 0.5 }"
           :inViewOptions="{ once: true }"
-          class="flex-shrink-0 w-48 md:w-64"
+          class="shrink-0 w-48 md:w-64"
         >
           <TeacherCard :teacher="teacher" @show-details="(teacher) => $emit('open-modal', teacher, teachers, title)" />
         </motion.div>

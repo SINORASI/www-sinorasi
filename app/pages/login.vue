@@ -48,13 +48,13 @@ const submitLogin = async () => {
 </script>
 
 <template>
-  <div class="min-h-screen py-24 bg-gradient-to-b from-white via-blue-50 to-white">
+  <div class="min-h-screen py-24 bg-linear-to-b from-white via-blue-50 to-white">
     <div class="container px-4 mx-auto sm:px-6">
       <div class="max-w-md mx-auto">
         
         <div class="mb-12 text-center">
           <div
-            class="inline-block px-10 py-6 mb-4 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
+            class="inline-block px-10 py-6 mb-4 border border-blue-200 shadow-xl bg-linear-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
           >
             <h1 class="text-3xl font-bold text-white md:text-4xl">Login</h1>
           </div>
@@ -88,7 +88,7 @@ const submitLogin = async () => {
               >
                 <div class="p-8">
                   <div class="flex items-center justify-between mb-6">
-                    <div class="px-6 py-3 border border-blue-200 bg-gradient-to-r from-blue-600 to-blue-800 rounded-xl">
+                    <div class="px-6 py-3 border border-blue-200 bg-linear-to-r from-blue-600 to-blue-800 rounded-xl">
                       <h3 class="text-lg font-bold text-white">Bantuan Login</h3>
                     </div>
                     <button
@@ -100,19 +100,19 @@ const submitLogin = async () => {
                   </div>
                   <ul class="space-y-4 text-gray-700">
                     <li class="flex items-start gap-3">
-                      <Icon name="lucide:check-circle" size="20" class="text-blue-600 mt-0.5 flex-shrink-0" />
+                      <Icon name="lucide:check-circle" size="20" class="text-blue-600 mt-0.5 shrink-0" />
                       <span>Gunakan username dan password yang telah diberikan</span>
                     </li>
                     <li class="flex items-start gap-3">
-                      <Icon name="lucide:check-circle" size="20" class="text-orange-600 mt-0.5 flex-shrink-0" />
+                      <Icon name="lucide:check-circle" size="20" class="text-orange-600 mt-0.5 shrink-0" />
                       <span>Pastikan koneksi internet stabil</span>
                     </li>
                     <li class="flex items-start gap-3">
-                      <Icon name="lucide:check-circle" size="20" class="text-blue-600 mt-0.5 flex-shrink-0" />
+                      <Icon name="lucide:check-circle" size="20" class="text-blue-600 mt-0.5 shrink-0" />
                       <span>Jika lupa password, hubungi admin sekolah</span>
                     </li>
                     <li class="flex items-start gap-3">
-                      <Icon name="lucide:check-circle" size="20" class="text-orange-600 mt-0.5 flex-shrink-0" />
+                      <Icon name="lucide:check-circle" size="20" class="text-orange-600 mt-0.5 shrink-0" />
                       <span>Login hanya untuk siswa dan guru terdaftar</span>
                     </li>
                   </ul>

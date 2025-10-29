@@ -35,11 +35,11 @@ const filterOptions = [
 </script>
 
 <template>
-  <div class="min-h-screen py-24 bg-gradient-to-b from-white via-blue-50 to-white">
+  <div class="min-h-screen py-24 bg-linear-to-b from-white via-blue-50 to-white">
     <div class="container px-4 py-8 mx-auto sm:px-6">
       <div class="flex flex-col items-center mb-12">
         <div
-          class="p-6 px-10 py-6 mb-4 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
+          class="p-6 px-10 py-6 mb-4 border border-blue-200 shadow-xl bg-linear-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
         >
           <h1 class="text-3xl font-bold text-white sm:text-4xl">Acara & Kegiatan</h1>
         </div>
@@ -144,7 +144,7 @@ const filterOptions = [
           :to="`/acara/${event.slug}`"
           class="flex flex-col overflow-hidden transition-all duration-300 bg-white border-2 border-blue-100 shadow-lg group rounded-2xl hover:shadow-2xl hover:border-blue-300 hover:-translate-y-2"
         >
-          <div class="h-48 overflow-hidden bg-gradient-to-br from-gray-200 to-gray-300">
+          <div class="h-48 overflow-hidden bg-linear-to-br from-gray-200 to-gray-300">
             <NuxtImg
               :src="event.imageUrl"
               :alt="event.title"
@@ -152,14 +152,14 @@ const filterOptions = [
             />
           </div>
 
-          <div class="flex flex-col flex-grow p-6">
+          <div class="flex flex-col grow p-6">
             <div class="flex items-center gap-2 mb-3 font-semibold text-blue-600">
               <Icon name="lucide:calendar" size="16" />
               <span class="text-sm">{{ event.date }}</span>
             </div>
 
             <h3
-              class="flex-grow mb-3 text-xl font-bold text-gray-800 transition-colors line-clamp-2 group-hover:text-blue-600"
+              class="grow mb-3 text-xl font-bold text-gray-800 transition-colors line-clamp-2 group-hover:text-blue-600"
             >
               {{ event.title }}
             </h3>

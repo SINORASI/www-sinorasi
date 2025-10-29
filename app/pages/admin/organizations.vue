@@ -201,7 +201,7 @@ const filteredOrganizations = computed(() => {
 </script>
 
 <template>
-  <div class="min-h-screen py-24 bg-gradient-to-b from-white via-purple-50 to-white">
+  <div class="min-h-screen py-24 bg-linear-to-b from-white via-purple-50 to-white">
     <div class="container px-4 mx-auto sm:px-6">
       <div class="max-w-7xl mx-auto">
         <div class="flex flex-col gap-4 mb-8 md:flex-row md:items-center md:justify-between">

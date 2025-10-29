@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen py-24 bg-gradient-to-b from-white via-blue-50 to-white">
+  <div class="min-h-screen py-24 bg-linear-to-b from-white via-blue-50 to-white">
     <div class="container px-4 mx-auto sm:px-6">
       <div v-if="event" class="max-w-4xl mx-auto">
         <nav class="mb-8">
@@ -54,7 +54,7 @@
 
         <section id="acara-lainnya" class="mt-12">
           <div
-            class="inline-block px-10 py-6 mb-8 border border-orange-200 shadow-xl bg-gradient-to-r from-orange-500 to-orange-600 backdrop-blur-2xl rounded-2xl"
+            class="inline-block px-10 py-6 mb-8 border border-orange-200 shadow-xl bg-linear-to-r from-orange-500 to-orange-600 backdrop-blur-2xl rounded-2xl"
           >
             <h2 class="text-2xl font-bold text-white">Acara Lainnya</h2>
           </div>

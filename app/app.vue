@@ -30,7 +30,7 @@ useSeoMeta({
   <Transition name="loading">
     <div v-if="loading" class="loading-overlay">
       <div class="flex flex-col items-center justify-center min-h-screen bg-white">
-        <img src="/images/sinorasi-logo-transparent.png" alt="SMK Negeri 2 Singosari" class="w-48 h-48 mb-4" />
+        <img src="/images/logo-smk.webp" alt="SMK Negeri 2 Singosari" class="w-48 h-48 mb-4" />
         <p class="text-xl text-gray-600">Loading...</p>
       </div>
     </div>

@@ -28,7 +28,7 @@ useHead({
 </script>
 
 <template>
-  <div class="min-h-screen py-30 bg-gradient-to-br from-blue-50 via-white to-orange-50">
+  <div class="min-h-screen py-30 bg-linear-to-br from-blue-50 via-white to-orange-50">
     <div v-if="pending" class="container px-4 py-8 mx-auto">
       <div class="p-8 mb-8 bg-white shadow-xl rounded-2xl animate-pulse">
         <div class="w-1/3 h-8 mb-4 bg-gray-200 rounded"></div>
@@ -69,7 +69,7 @@ useHead({
         <span class="font-semibold text-gray-800">{{ extra.name }}</span>
       </nav>
 
-      <div class="p-8 mb-8 text-white shadow-2xl bg-gradient-to-r from-blue-600 to-blue-800 rounded-2xl md:p-12">
+      <div class="p-8 mb-8 text-white shadow-2xl bg-linear-to-r from-blue-600 to-blue-800 rounded-2xl md:p-12">
         <div class="flex items-center mb-4">
           <div class="p-3 mr-4 rounded-full bg-white/20 backdrop-blur-sm">
             <Icon :name="extra.icon || 'lucide:activity'" size="32" />
@@ -119,7 +119,7 @@ useHead({
           </div>
           <div class="flex flex-col justify-center p-8 md:p-10">
             <div
-              class="inline-block px-6 py-3 mb-6 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-xl w-fit"
+              class="inline-block px-6 py-3 mb-6 border border-blue-200 shadow-xl bg-linear-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-xl w-fit"
             >
               <h2 class="text-2xl font-bold text-white md:text-3xl">Tentang</h2>
             </div>
@@ -172,7 +172,7 @@ useHead({
           </h2>
           <ul class="space-y-3">
             <li v-for="(req, idx) in extra.requirements" :key="idx" class="flex items-start text-gray-700">
-              <Icon name="lucide:check-circle" size="20" class="text-blue-600 mr-3 mt-0.5 flex-shrink-0" />
+              <Icon name="lucide:check-circle" size="20" class="text-blue-600 mr-3 mt-0.5 shrink-0" />
               <span>{{ req }}</span>
             </li>
           </ul>
@@ -182,7 +182,7 @@ useHead({
       <div v-if="extra.activities && extra.activities.length > 0" class="max-w-6xl mx-auto mb-8">
         <div class="mb-12 text-center">
           <div
-            class="inline-block px-10 py-6 mb-4 border border-orange-200 shadow-xl bg-gradient-to-r from-orange-500 to-orange-600 backdrop-blur-2xl rounded-2xl"
+            class="inline-block px-10 py-6 mb-4 border border-orange-200 shadow-xl bg-linear-to-r from-orange-500 to-orange-600 backdrop-blur-2xl rounded-2xl"
           >
             <h2 class="text-3xl font-bold text-white md:text-4xl">Aktivitas Terkait</h2>
           </div>
@@ -215,7 +215,7 @@ useHead({
       <div v-if="extra.registrationOpen" class="max-w-5xl mx-auto mb-8">
         <div class="mb-12 text-center">
           <div
-            class="inline-block px-10 py-6 mb-4 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
+            class="inline-block px-10 py-6 mb-4 border border-blue-200 shadow-xl bg-linear-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
           >
             <h2 class="text-3xl font-bold text-white md:text-4xl">Informasi Pendaftaran</h2>
           </div>
@@ -227,7 +227,7 @@ useHead({
         <div class="p-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl md:p-12">
           <div
             v-if="extra.registrationPeriod"
-            class="p-6 mb-8 text-center border-2 border-blue-200 bg-gradient-to-r from-blue-50 to-orange-50 rounded-xl"
+            class="p-6 mb-8 text-center border-2 border-blue-200 bg-linear-to-r from-blue-50 to-orange-50 rounded-xl"
           >
             <p class="mb-2 text-2xl font-bold text-blue-800">{{ extra.registrationPeriod }}</p>
             <p v-if="extra.contactInfo" class="mb-4 text-gray-700">Untuk informasi lebih lanjut, hubungi:</p>
@@ -256,7 +256,7 @@ useHead({
             v-for="related in relatedExtras"
             :key="related.id"
             :to="`/ekstrakurikuler/${related.slug}`"
-            class="p-6 text-center transition-all duration-300 border-2 border-blue-100 shadow-lg bg-gradient-to-br from-blue-50 to-white rounded-2xl hover:shadow-2xl hover:border-blue-300 group"
+            class="p-6 text-center transition-all duration-300 border-2 border-blue-100 shadow-lg bg-linear-to-br from-blue-50 to-white rounded-2xl hover:shadow-2xl hover:border-blue-300 group"
           >
             <div class="inline-block p-4 mb-4 transition-colors bg-blue-100 rounded-full group-hover:bg-blue-200">
               <Icon :name="related.icon || 'lucide:activity'" size="32" class="text-blue-600" />

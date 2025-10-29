@@ -5,7 +5,7 @@
         <div
           v-for="(_, index) in slidesCount"
           :key="index"
-          class="flex items-center justify-center flex-shrink-0 w-full gap-5 h-130"
+          class="flex items-center justify-center shrink-0 w-full gap-5 h-130"
         >
           <slot :name="`slide-${index}`" :index="index" />
         </div>
@@ -13,13 +13,13 @@
 
       <button
         @click="prev"
-        class="absolute left-0 flex items-center justify-center p-2 m-5 transition rounded-full cursor-pointer border-neutral-400 top-60 border-1 bg-neutral-300 hover:bg-blue-600 hover:border-blue-600 hover:text-white hover:scale-110"
+        class="absolute left-0 flex items-center justify-center p-2 m-5 transition rounded-full cursor-pointer border-neutral-400 top-60 border bg-neutral-300 hover:bg-blue-600 hover:border-blue-600 hover:text-white hover:scale-110"
       >
         <Icon name="lucide:chevron-left" size="24" />
       </button>
       <button
         @click="next"
-        class="absolute right-0 flex items-center justify-center p-2 m-5 transition rounded-full cursor-pointer top-60 border-neutral-400 border-1 bg-neutral-300 hover:bg-blue-600 hover:border-blue-600 hover:text-white hover:scale-110"
+        class="absolute right-0 flex items-center justify-center p-2 m-5 transition rounded-full cursor-pointer top-60 border-neutral-400 border bg-neutral-300 hover:bg-blue-600 hover:border-blue-600 hover:text-white hover:scale-110"
       >
         <Icon name="lucide:chevron-right" size="24" />
       </button>

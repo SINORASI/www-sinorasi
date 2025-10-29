@@ -308,111 +308,240 @@ useHead({
   <main v-if="showContent" class="flex flex-col gap-52">
     <section
       id="hero"
-      class="relative flex items-center justify-center min-h-screen px-4 pt-24 pb-10 md:pt-20 overflow-hidden"
+      class="relative min-h-screen px-4 pt-24 pb-10 md:pt-20 overflow-hidden bg-linear-to-br from-blue-900 via-blue-800 to-blue-900"
     >
+      <!-- Particle Background -->
+      <div class="absolute inset-0 overflow-hidden">
+        <div
+          v-for="i in 50"
+          :key="i"
+          class="absolute rounded-full pointer-events-none bg-radial-[circle_at_center] from-blue-400/30 to-orange-400/20"
+          :class="[
+            i % 5 === 1 ? 'w-1 h-1 top-[20%] left-[10%] animate-pulse' : '',
+            i % 5 === 2 ? 'w-1.5 h-1.5 top-[60%] right-[15%] animate-pulse' : '',
+            i % 5 === 3 ? 'w-0.5 h-0.5 top-[40%] left-[70%] animate-pulse' : '',
+            i % 5 === 4 ? 'w-1.25 h-1.25 bottom-[30%] left-[20%] animate-pulse' : '',
+            i % 5 === 0 ? 'w-1 h-1 top-[70%] right-[30%] animate-pulse' : '',
+          ]"
+          :style="{
+            animation: `particle-float-${(i % 5) + 1} ${15 + (i % 5) * 3}s ease-in-out infinite`,
+            animationDelay: `${i * 0.1}s`,
+          }"
+        ></div>
+      </div>
+
+      <!-- Floating Decorative Elements -->
       <motion.div
-        class="absolute top-20 left-10 w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full opacity-20"
-        :animate="{ y: [0, -20, 0] }"
+        class="absolute top-20 left-10 w-16 h-16 bg-linear-to-br from-blue-400 to-blue-600 rounded-full opacity-20 shadow-lg"
+        :animate="{
+          y: [0, -20, 0],
+          rotate: [0, 180, 360],
+          scale: [1, 1.05, 1],
+        }"
         :transition="{
           duration: 6,
           ease: 'easeInOut',
           repeat: Infinity,
+          scale: { duration: 3, repeat: Infinity },
         }"
       />
-      <div
-        class="absolute top-40 right-20 w-12 h-12 bg-gradient-to-br from-orange-400 to-orange-600 transform rotate-45 opacity-25 hero-shape-2"
-      ></div>
-      <div
-        class="absolute bottom-40 left-20 w-20 h-20 bg-gradient-to-br from-blue-300 to-orange-400 rounded-lg opacity-15 hero-shape-3"
-      ></div>
+      <motion.div
+        class="absolute top-40 right-20 w-12 h-12 bg-linear-to-br from-orange-400 to-orange-600 rotate-45 opacity-25 shadow-lg"
+        :animate="{
+          y: [0, -15, 0],
+          scale: [1, 1.1, 1],
+          rotate: [45, 135, 225, 315, 45],
+        }"
+        :transition="{
+          duration: 8,
+          ease: 'easeInOut',
+          repeat: Infinity,
+          delay: 1,
+          rotate: { duration: 12, repeat: Infinity },
+        }"
+      />
+      <motion.div
+        class="absolute bottom-40 left-20 w-20 h-20 bg-linear-to-br from-blue-300 to-orange-400 rounded-lg opacity-15 shadow-lg"
+        :animate="{
+          y: [0, -25, 0],
+          rotate: [0, -180, -360],
+          scale: [1, 0.95, 1.05, 1],
+        }"
+        :transition="{
+          duration: 7,
+          ease: 'easeInOut',
+          repeat: Infinity,
+          delay: 2,
+          scale: { duration: 4, repeat: Infinity },
+        }"
+      />
 
-      <div class="absolute top-100 right-30 z-0">
-        <Icon name="lucide:lightbulb" size="120" class="text-blue-300 opacity-10 hero-ornament-1" />
-      </div>
-      <div class="absolute bottom-59 right-130 z-0">
-        <Icon name="lucide:rocket" size="140" class="text-orange-300 opacity-8 hero-ornament-2" />
-      </div>
-      <div class="absolute top-50 left-100 z-0">
-        <Icon name="lucide:star" size="110" class="text-blue-400 opacity-12 hero-ornament-3" />
-      </div>
+      <!-- Large Background Shapes -->
+      <motion.div
+        class="absolute top-16 right-1/4 w-32 h-32 bg-linear-to-br from-purple-400 to-pink-400 rounded-full opacity-10 shadow-2xl"
+        :animate="{
+          scale: [1, 1.2, 1],
+          rotate: [0, 180, 360],
+          x: [0, 10, -10, 0],
+          y: [0, -5, 5, 0],
+        }"
+        :transition="{
+          duration: 15,
+          ease: 'easeInOut',
+          repeat: Infinity,
+          x: { duration: 8, repeat: Infinity },
+          y: { duration: 6, repeat: Infinity },
+        }"
+      />
+      <motion.div
+        class="absolute bottom-32 right-16 w-40 h-40 bg-linear-to-br from-green-400 to-blue-400 rotate-45 opacity-8 shadow-2xl"
+        :animate="{
+          scale: [1, 1.15, 1],
+          rotate: [45, 225, 405],
+          skewX: ['0deg', '5deg', '-5deg', '0deg'],
+        }"
+        :transition="{
+          duration: 18,
+          ease: 'easeInOut',
+          repeat: Infinity,
+          delay: 1,
+          skewX: { duration: 12, repeat: Infinity },
+        }"
+      />
+      <motion.div
+        class="absolute top-1/2 left-8 w-28 h-28 bg-linear-to-br from-yellow-400 to-orange-400 rounded-lg opacity-12 shadow-2xl"
+        :animate="{
+          y: [0, -20, 0],
+          scale: [1, 1.1, 1],
+          rotate: [0, 90, 180, 270, 360],
+        }"
+        :transition="{
+          duration: 13,
+          ease: 'easeInOut',
+          repeat: Infinity,
+          delay: 2,
+          rotate: { duration: 20, repeat: Infinity },
+        }"
+      />
 
+      <!-- Main Hero Grid -->
       <div
-        class="absolute top-10 right-1/4 w-32 h-32 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full opacity-10 large-hero-shape-1"
-      ></div>
-      <div
-        class="absolute bottom-20 right-10 w-40 h-40 bg-gradient-to-br from-green-400 to-blue-400 transform rotate-45 opacity-8 large-hero-shape-2"
-      ></div>
-      <div
-        class="absolute top-1/2 left-5 w-28 h-28 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-lg opacity-12 large-hero-shape-3"
-      ></div>
-
-      <div
-        class="container flex flex-col justify-center items-center max-w-5xl mx-auto gap-18 lg:flex-row relative z-10"
+        class="grid grid-cols-[1fr_2fr_1fr] grid-rows-1 gap-8 min-h-[80vh] items-center py-8 max-w-7xl mx-auto relative z-10 lg:grid-cols-1 lg:gap-4 lg:py-4 md:gap-2 md:py-2"
       >
+        <!-- Left Panel -->
         <motion.div
-          class="flex flex-col justify-center items-center w-full lg:w-1/3"
-          :initial="{ opacity: 0, x: -50 }"
+          class="relative rounded-xl overflow-hidden shadow-2xl transition-all duration-300 ease-in-out hero-panel-left"
+          :initial="{ opacity: 0, x: -100 }"
           :whileInView="{ opacity: 1, x: 0 }"
           :transition="{ duration: 0.8 }"
           :inViewOptions="{ once: true }"
         >
-          <div class="relative group">
+          <div class="relative group overflow-hidden">
             <NuxtImg
-              src="/images/seragam/putih-putih/10-putih-putih-l/DSC04123.webp"
-              alt="Student"
-              class="object-cover transition-transform duration-300 rounded-lg shadow-lg w-60 md:w-150 h-100 md:h-150 group-hover:scale-105"
+              src="/images/seragam/putih-putih/10-putih-putih-jas-l/DSC04215.webp"
+              alt="Aspirational student image"
+              class="w-full h-full object-cover"
             />
+            <div class="absolute inset-0 bg-linear-to-tr from-blue-900/40 via-transparent to-orange-900/20"></div>
+            <div class="absolute inset-0 bg-linear-to-t from-black/50 to-transparent"></div>
           </div>
         </motion.div>
 
+        <!-- Center Panel -->
         <motion.div
-          class="flex flex-col items-center w-full gap-8 text-center text-black lg:w-2/3 lg:items-start lg:text-left"
-          :initial="{ opacity: 0, x: 50 }"
-          :whileInView="{ opacity: 1, x: 0 }"
+          class="z-10 p-12 bg-white/5 backdrop-blur-[10px] border border-white/10 rounded-xl shadow-xl flex flex-col justify-center items-center text-center lg:items-start lg:text-left gap-8 text-white relative lg:order-2 lg:p-8 lg:m-4"
+          :initial="{ opacity: 0, y: 50 }"
+          :whileInView="{ opacity: 1, y: 0 }"
           :transition="{ duration: 0.8, delay: 0.2 }"
           :inViewOptions="{ once: true }"
         >
-          <h1 class="text-3xl font-black transition-all duration-700 ease-out md:text-4xl lg:text-5xl">
-            SMK NEGERI 2 SINGOSARI
-          </h1>
-          <p class="text-lg font-semibold transition-all duration-700 ease-out md:text-xl lg:text-2xl">
-            INORASI - Inovasi Raih Prestasi
-          </p>
-          <p class="max-w-2xl text-sm leading-relaxed transition-all duration-700 ease-out md:text-lg">
+          <motion.h1
+            class="text-3xl font-bold md:text-5xl lg:text-6xl font-oswald tracking-wide leading-tight"
+            :initial="{ opacity: 0, y: 30 }"
+            :whileInView="{ opacity: 1, y: 0 }"
+            :transition="{ duration: 0.8, delay: 0.4 }"
+          >
+            FUTURE READY.<br />
+            <span class="text-orange-400">INNOVATE.</span><br />
+            LEAD. THRIVE.
+          </motion.h1>
+          <motion.p
+            class="text-lg md:text-xl lg:text-2xl font-nunito leading-relaxed tracking-wide max-w-2xl"
+            :initial="{ opacity: 0, y: 30 }"
+            :whileInView="{ opacity: 1, y: 0 }"
+            :transition="{ duration: 0.8, delay: 0.6 }"
+          >
+            Pioneering education for tomorrow's leaders. Discover our dynamic programs and vibrant community.
+          </motion.p>
+          <motion.p
+            class="max-w-2xl text-base md:text-lg leading-relaxed text-gray-200"
+            :initial="{ opacity: 0, y: 30 }"
+            :whileInView="{ opacity: 1, y: 0 }"
+            :transition="{ duration: 0.8, delay: 0.8 }"
+          >
             SMK Negeri 2 Singosari - Tempat di mana inovasi bertemu dengan prestasi. Kami berkomitmen untuk membentuk
             generasi muda yang siap menghadapi tantangan masa depan melalui pendidikan kejuruan berkualitas.
-          </p>
-          <div class="flex flex-col items-center gap-4 mt-4 sm:flex-row">
+          </motion.p>
+          <motion.div
+            class="flex flex-col items-center gap-4 mt-6 sm:flex-row"
+            :initial="{ opacity: 0, y: 30 }"
+            :whileInView="{ opacity: 1, y: 0 }"
+            :transition="{ duration: 0.8, delay: 1 }"
+          >
+            <a
+              @click.prevent="smoothScrollTo('#jurusan')"
+              class="flex items-center gap-2 px-8 py-4 text-lg font-semibold text-white transition-all duration-300 bg-orange-500 rounded-lg hover:bg-orange-600 cursor-pointer shadow-xl hover:shadow-2xl hover:scale-105"
+            >
+              Discover Programs
+              <Icon name="lucide:graduation-cap" size="18" />
+            </a>
             <a
               @click.prevent="smoothScrollTo('#profil-sekolah')"
-              class="flex items-center gap-2 px-6 py-3 text-sm font-semibold text-white transition-all duration-300 bg-blue-600 rounded-lg hover:bg-blue-700 cursor-pointer"
+              class="flex items-center gap-2 px-6 py-3 text-sm font-semibold text-orange-500 transition-all duration-300 border-2 border-orange-500 rounded-lg hover:bg-orange-500 hover:text-white cursor-pointer shadow-lg hover:shadow-xl hover:scale-105"
             >
-              Pelajari Lebih Dalam
-              <Icon name="lucide:book-open" size="16" />
+              Virtual Tour
+              <Icon name="lucide:map" size="16" />
             </a>
-            <a
-              @click.prevent="smoothScrollTo('#berita')"
-              class="flex items-center gap-2 px-6 py-3 text-sm font-semibold text-blue-600 transition-all duration-300 border-2 border-blue-600 rounded-lg hover:bg-blue-600 hover:text-white cursor-pointer"
-            >
-              Berita Terbaru
-              <Icon name="lucide:newspaper" size="16" />
-            </a>
-          </div>
-          <div class="flex justify-center w-full gap-8 mt-6 lg:justify-start">
-            <div class="flex flex-col items-center">
-              <div class="text-xl font-bold transition-all duration-700 ease-out md:text-3xl">
+          </motion.div>
+          <motion.div
+            class="flex justify-center w-full gap-8 mt-8 lg:justify-start"
+            :initial="{ opacity: 0, y: 30 }"
+            :whileInView="{ opacity: 1, y: 0 }"
+            :transition="{ duration: 0.8, delay: 1.2 }"
+          >
+            <div class="flex flex-col items-center bg-white/10 backdrop-blur-sm rounded-lg p-4 shadow-lg">
+              <div class="text-2xl md:text-3xl font-bold text-white">
                 {{ jurusanCount }}
               </div>
-              <div class="text-sm transition-all duration-700 ease-out md:text-lg">Konsentrasi Keahlian</div>
+              <div class="text-sm md:text-base text-gray-200">Konsentrasi Keahlian</div>
             </div>
-            <div class="flex flex-col items-center">
-              <div class="text-xl font-bold transition-all duration-700 ease-out md:text-3xl">{{ siswaCount }}+</div>
-              <div class="text-sm transition-all duration-700 ease-out md:text-lg">Siswa</div>
+            <div class="flex flex-col items-center bg-white/10 backdrop-blur-sm rounded-lg p-4 shadow-lg">
+              <div class="text-2xl md:text-3xl font-bold text-white">{{ siswaCount }}+</div>
+              <div class="text-sm md:text-base text-gray-200">Siswa</div>
             </div>
-            <div class="flex flex-col items-center">
-              <div class="text-xl font-bold transition-all duration-700 ease-out md:text-3xl">{{ prestasiCount }}+</div>
-              <div class="text-sm transition-all duration-700 ease-out md:text-lg">Prestasi</div>
+            <div class="flex flex-col items-center bg-white/10 backdrop-blur-sm rounded-lg p-4 shadow-lg">
+              <div class="text-2xl md:text-3xl font-bold text-white">{{ prestasiCount }}+</div>
+              <div class="text-sm md:text-base text-gray-200">Prestasi</div>
             </div>
+          </motion.div>
+        </motion.div>
+
+        <!-- Right Panel -->
+        <motion.div
+          class="relative rounded-xl overflow-hidden shadow-2xl transition-all duration-300 ease-in-out hero-panel-right"
+          :initial="{ opacity: 0, x: 100 }"
+          :whileInView="{ opacity: 1, x: 0 }"
+          :transition="{ duration: 0.8, delay: 0.4 }"
+          :inViewOptions="{ once: true }"
+        >
+          <div class="relative group overflow-hidden">
+            <NuxtImg
+              src="/images/seragam/putih-putih/11-putih-putih-jas-l/DSC04320.webp"
+              alt="Diverse students"
+              class="w-full h-full object-cover"
+            />
+            <div class="absolute inset-0 bg-linear-to-tl from-orange-900/40 via-transparent to-blue-900/20"></div>
+            <div class="absolute inset-0 bg-linear-to-t from-black/50 to-transparent"></div>
           </div>
         </motion.div>
       </div>
@@ -420,7 +549,7 @@ useHead({
 
     <motion.section
       id="profil-sekolah"
-      class="relative py-20 h-min-screen bg-gradient-to-b from-white via-blue-50 to-white overflow-hidden"
+      class="relative py-20 h-min-screen bg-linear-to-b from-white via-blue-50 to-white overflow-hidden"
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8 }"
@@ -437,14 +566,14 @@ useHead({
       </div>
 
       <div
-        class="absolute bottom-10 left-20 w-44 h-44 bg-gradient-to-br from-orange-400 to-red-400 transform rotate-45 opacity-6 large-profil-shape-2"
+        class="absolute bottom-10 left-20 w-44 h-44 bg-linear-to-br from-orange-400 to-red-400 transform rotate-45 opacity-6 large-profil-shape-2"
       ></div>
 
       <div
-        class="absolute top-[-50] left-1/4 w-40 h-40 bg-gradient-to-br from-cyan-400 to-blue-400 rounded-full opacity-8 large-profil-shape-1"
+        class="absolute top-[-50] left-1/4 w-40 h-40 bg-linear-to-br from-cyan-400 to-blue-400 rounded-full opacity-8 large-profil-shape-1"
       ></div>
       <div
-        class="absolute bottom-10 right-1/3 w-48 h-48 bg-gradient-to-br from-orange-400 to-red-400 transform rotate-45 opacity-6 large-profil-shape-2"
+        class="absolute bottom-10 right-1/3 w-48 h-48 bg-linear-to-br from-orange-400 to-red-400 transform rotate-45 opacity-6 large-profil-shape-2"
       ></div>
 
       <div class="container px-4 mx-auto md:px-10 relative z-10">
@@ -466,11 +595,11 @@ useHead({
                   class="object-cover w-full h-auto"
                 />
                 <div
-                  class="absolute inset-0 transition-opacity duration-500 opacity-0 bg-gradient-to-t from-blue-900/50 to-transparent group-hover:opacity-100"
+                  class="absolute inset-0 transition-opacity duration-500 opacity-0 bg-linear-to-t from-blue-900/50 to-transparent group-hover:opacity-100"
                 ></div>
               </div>
               <div
-                class="absolute w-32 h-32 rounded-full -bottom-4 -left-4 bg-gradient-to-br from-orange-500 to-orange-700 opacity-20 blur-2xl -z-10"
+                class="absolute w-32 h-32 rounded-full -bottom-4 -left-4 bg-linear-to-br from-orange-500 to-orange-700 opacity-20 blur-2xl -z-10"
               ></div>
             </div>
           </motion.div>
@@ -615,7 +744,7 @@ useHead({
                   class="w-full h-auto"
                 />
                 <div
-                  class="absolute inset-0 transition-opacity duration-500 bg-gradient-to-t from-blue-900/70 to-transparent"
+                  class="absolute inset-0 transition-opacity duration-500 bg-linear-to-t from-blue-900/70 to-transparent"
                 ></div>
 
                 <div class="absolute bottom-0 left-0 right-0 p-4">
@@ -624,7 +753,7 @@ useHead({
                 </div>
               </div>
               <div
-                class="absolute w-32 h-32 rounded-full -bottom-4 -left-4 bg-gradient-to-br from-orange-500 to-orange-700 opacity-20 blur-2xl -z-10"
+                class="absolute w-32 h-32 rounded-full -bottom-4 -left-4 bg-linear-to-br from-orange-500 to-orange-700 opacity-20 blur-2xl -z-10"
               ></div>
             </div>
           </motion.div>
@@ -643,10 +772,10 @@ useHead({
       <div class="absolute inset-0 wave-pattern opacity-50 z-0"></div>
 
       <div
-        class="absolute bottom-0 left-80 w-42 h-42 bg-gradient-to-br from-violet-400 to-purple-400 rounded-full opacity-9 large-prestasi-shape-1"
+        class="absolute bottom-0 left-80 w-42 h-42 bg-linear-to-br from-violet-400 to-purple-400 rounded-full opacity-9 large-prestasi-shape-1"
       ></div>
       <div
-        class="absolute bottom-0 right-80 w-48 h-48 bg-gradient-to-br from-pink-400 to-rose-400 transform rotate-45 opacity-7 large-prestasi-shape-2"
+        class="absolute bottom-0 right-80 w-48 h-48 bg-linear-to-br from-pink-400 to-rose-400 transform rotate-45 opacity-7 large-prestasi-shape-2"
       ></div>
 
       <div class="absolute bottom-20 left-10 z-0">
@@ -674,7 +803,7 @@ useHead({
                 transform: `translateX(-${currentAchievement * 100}%)`,
               }"
             >
-              <div v-for="(achievement, index) in achievements" :key="index" class="flex-shrink-0 w-full">
+              <div v-for="(achievement, index) in achievements" :key="index" class="shrink-0 w-full">
                 <NuxtLink v-if="achievement.slug" :to="`/berita/${achievement.slug}`" class="block cursor-pointer">
                   <div class="flex flex-col items-center gap-8 md:flex-row md:h-80">
                     <NuxtImg
@@ -746,7 +875,6 @@ useHead({
       :transition="{ duration: 0.8 }"
       :inViewOptions="{ once: true }"
     >
-
       <div class="absolute bottom-20 right-12 z-0">
         <Icon name="lucide:badge" size="165" class="text-orange-300 opacity-8 seragam-ornament-2" />
       </div>
@@ -755,13 +883,13 @@ useHead({
       </div>
 
       <div
-        class="absolute top-5 left-1/6 w-40 h-40 bg-gradient-to-br from-indigo-400 to-blue-400 rounded-full opacity-10 large-berita-shape-1"
+        class="absolute top-5 left-1/6 w-40 h-40 bg-linear-to-br from-indigo-400 to-blue-400 rounded-full opacity-10 large-berita-shape-1"
       ></div>
       <div
-        class="absolute bottom-10 right-1/5 w-45 h-45 bg-gradient-to-br from-teal-400 to-cyan-400 transform rotate-45 opacity-8 large-berita-shape-2"
+        class="absolute bottom-10 right-1/5 w-45 h-45 bg-linear-to-br from-teal-400 to-cyan-400 transform rotate-45 opacity-8 large-berita-shape-2"
       ></div>
       <div
-        class="absolute top-1/2 right-1/4 w-35 h-35 bg-gradient-to-br from-amber-400 to-yellow-400 rounded-lg opacity-9 large-berita-shape-3"
+        class="absolute top-1/2 right-1/4 w-35 h-35 bg-linear-to-br from-amber-400 to-yellow-400 rounded-lg opacity-9 large-berita-shape-3"
       ></div>
 
       <div class="container px-4 mx-auto md:px-10 relative z-10">
@@ -1014,7 +1142,7 @@ useHead({
 
           <div class="w-full max-w-4xl p-6 bg-white shadow-lg rounded-2xl">
             <div class="flex gap-4">
-              <Icon name="lucide:info" size="24" class="text-orange-600 flex-shrink-0 mt-0.5" />
+              <Icon name="lucide:info" size="24" class="text-orange-600 shrink-0 mt-0.5" />
               <div>
                 <h4 class="mb-2 font-bold text-gray-800">Catatan Penting</h4>
                 <ul class="space-y-1 text-sm text-gray-600 list-disc list-inside">
@@ -1049,13 +1177,13 @@ useHead({
       </div>
 
       <div
-        class="absolute top-10 left-1/4 w-38 h-38 bg-gradient-to-br from-green-400 to-teal-400 rounded-full opacity-8 large-timeline-shape-1"
+        class="absolute top-10 left-1/4 w-38 h-38 bg-linear-to-br from-green-400 to-teal-400 rounded-full opacity-8 large-timeline-shape-1"
       ></div>
       <div
-        class="absolute bottom-20 right-1/3 w-42 h-42 bg-gradient-to-br from-orange-400 to-red-400 transform rotate-45 opacity-6 large-timeline-shape-2"
+        class="absolute bottom-20 right-1/3 w-42 h-42 bg-linear-to-br from-orange-400 to-red-400 transform rotate-45 opacity-6 large-timeline-shape-2"
       ></div>
       <div
-        class="absolute top-1/3 right-5 w-36 h-36 bg-gradient-to-br from-blue-400 to-indigo-400 rounded-lg opacity-10 large-timeline-shape-3"
+        class="absolute top-1/3 right-5 w-36 h-36 bg-linear-to-br from-blue-400 to-indigo-400 rounded-lg opacity-10 large-timeline-shape-3"
       ></div>
 
       <div class="absolute top-1/4 left-10 z-0">
@@ -1090,7 +1218,7 @@ useHead({
 
         <div v-if="isMobile" class="relative flex flex-col items-center w-full py-10">
           <motion.div
-            class="absolute top-0 w-1 h-full transform rounded-full shadow-lg left-1/2 bg-gradient-to-b from-blue-400 via-blue-600 to-blue-400"
+            class="absolute top-0 w-1 h-full transform rounded-full shadow-lg left-1/2 bg-linear-to-b from-blue-400 via-blue-600 to-blue-400"
             :initial="{ scaleY: 0.1 }"
             :animate="{ scaleY: lineScale }"
             :transition="{ duration: 3, ease: 'easeInOut' }"
@@ -1106,7 +1234,7 @@ useHead({
           >
             <motion.div
               v-if="showAllIcons || index === 0"
-              class="absolute top-0 w-1 h-8 transform -translate-x-1/2 left-1/2 bg-gradient-to-b from-transparent to-blue-600"
+              class="absolute top-0 w-1 h-8 transform -translate-x-1/2 left-1/2 bg-linear-to-b from-transparent to-blue-600"
               :initial="{ scaleY: index === 0 ? 1 : 0 }"
               :animate="{ scaleY: clickedMarkers[index] ? 1 : 0 }"
               :transition="{ duration: 3, delay: index * 0.2 }"
@@ -1116,7 +1244,7 @@ useHead({
             <motion.div
               v-if="showAllIcons || index === 0"
               :class="[
-                'z-20 flex items-center justify-center w-16 h-16 mb-6 transition-all duration-300 border-4 border-white rounded-full shadow-xl bg-gradient-to-br from-blue-500 to-blue-700 group-hover:scale-110',
+                'z-20 flex items-center justify-center w-16 h-16 mb-6 transition-all duration-300 border-4 border-white rounded-full shadow-xl bg-linear-to-br from-blue-500 to-blue-700 group-hover:scale-110',
                 clickedMarkers[index] ? 'ring-4 ring-yellow-400' : '',
                 'cursor-pointer pointer-events-auto',
               ]"
@@ -1148,8 +1276,8 @@ useHead({
                   :class="[
                     'inline-block px-6 py-3 rounded-full mb-4 font-bold text-lg',
                     index % 2 === 0
-                      ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white'
-                      : 'bg-gradient-to-r from-orange-500 to-orange-600 text-white',
+                      ? 'bg-linear-to-r from-blue-500 to-blue-600 text-white'
+                      : 'bg-linear-to-r from-orange-500 to-orange-600 text-white',
                   ]"
                 >
                   {{ item.year }}
@@ -1198,8 +1326,8 @@ useHead({
                   :class="[
                     'inline-block px-6 py-3 rounded-full mb-4 font-bold text-lg shadow-lg',
                     index % 2 === 0
-                      ? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white'
-                      : 'bg-gradient-to-r from-orange-500 to-orange-600 text-white',
+                      ? 'bg-linear-to-r from-blue-500 to-blue-600 text-white'
+                      : 'bg-linear-to-r from-orange-500 to-orange-600 text-white',
                   ]"
                 >
                   {{ item.year }}
@@ -1240,10 +1368,10 @@ useHead({
             >
               <div
                 :class="[
-                  'w-16 h-16 rounded-full flex items-center justify-center shadow-[0_8px_24px_rgba(59,130,246,0.15)] border-[5px] border-white/80 backdrop-blur-sm transition-all duration-500 ease-in-out group-hover:scale-115 group-hover:rotate-[10deg] group-hover:shadow-[0_16px_40px_rgba(59,130,246,0.3)] cursor-pointer pointer-events-auto',
+                  'w-16 h-16 rounded-full flex items-center justify-center shadow-[0_8px_24px_rgba(59,130,246,0.15)] border-[5px] border-white/80 backdrop-blur-sm transition-all duration-500 ease-in-out group-hover:scale-115 group-hover:rotate-10 group-hover:shadow-[0_16px_40px_rgba(59,130,246,0.3)] cursor-pointer pointer-events-auto',
                   index % 2 === 0
-                    ? 'bg-gradient-to-br from-blue-500 to-blue-700'
-                    : 'bg-gradient-to-br from-orange-500 to-orange-700',
+                    ? 'bg-linear-to-br from-blue-500 to-blue-700'
+                    : 'bg-linear-to-br from-orange-500 to-orange-700',
                   clickedMarkers[index],
                 ]"
                 @click="index === 0 && toggleMarker(index)"
@@ -1255,10 +1383,10 @@ useHead({
             <motion.div
               v-if="cardVisibility[index]"
               :class="[
-                'absolute top-1/2 w-[60px] h-[3px] -translate-y-1/2 z-1 transition-all duration-500 ease-in-out group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.6)] group-hover:h-[4px]',
+                'absolute top-1/2 w-[60px] h-[3px] -translate-y-1/2 z-1 transition-all duration-500 ease-in-out group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(59,130,246,0.6)] group-hover:h-1',
                 index % 2 === 0
-                  ? 'right-1/2 mr-8 bg-gradient-to-r from-transparent via-blue-500 to-blue-600 rounded-full'
-                  : 'left-1/2 ml-8 bg-gradient-to-l from-transparent via-blue-500 to-blue-600 rounded-full',
+                  ? 'right-1/2 mr-8 bg-linear-to-r from-transparent via-blue-500 to-blue-600 rounded-full'
+                  : 'left-1/2 ml-8 bg-linear-to-l from-transparent via-blue-500 to-blue-600 rounded-full',
               ]"
               :initial="{ scaleX: 0 }"
               :animate="{ scaleX: cardVisibility[index] ? 1 : 0 }"
@@ -1271,7 +1399,7 @@ useHead({
         </div>
 
         <div
-          class="max-w-2xl px-8 py-6 mt-10 text-white shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 rounded-2xl"
+          class="max-w-2xl px-8 py-6 mt-10 text-white shadow-xl bg-linear-to-r from-blue-600 to-blue-800 rounded-2xl"
         >
           <div class="flex flex-wrap items-center justify-between gap-6">
             <div class="flex-1 min-w-[200px]">
@@ -1315,10 +1443,10 @@ useHead({
       </div>
 
       <div
-        class="absolute top-32 left-12 w-12 h-6 bg-gradient-to-r from-pink-300 to-pink-500 rounded-full opacity-20 abstract-1"
+        class="absolute top-32 left-12 w-12 h-6 bg-linear-to-r from-pink-300 to-pink-500 rounded-full opacity-20 abstract-1"
       ></div>
       <div
-        class="absolute bottom-20 right-12 w-16 h-8 bg-gradient-to-r from-cyan-300 to-cyan-500 rounded-full opacity-25 abstract-2"
+        class="absolute bottom-20 right-12 w-16 h-8 bg-linear-to-r from-cyan-300 to-cyan-500 rounded-full opacity-25 abstract-2"
       ></div>
 
       <motion.div
@@ -1351,13 +1479,13 @@ useHead({
       <div class="absolute inset-0 curve-pattern opacity-40 z-0"></div>
 
       <div
-        class="absolute top-5 left-1/6 w-35 h-35 bg-gradient-to-br from-indigo-400 to-blue-400 rounded-full opacity-10 large-berita-shape-1"
+        class="absolute top-5 left-1/6 w-35 h-35 bg-linear-to-br from-indigo-400 to-blue-400 rounded-full opacity-10 large-berita-shape-1"
       ></div>
       <div
-        class="absolute bottom-10 right-1/5 w-40 h-40 bg-gradient-to-br from-teal-400 to-cyan-400 transform rotate-45 opacity-8 large-berita-shape-2"
+        class="absolute bottom-10 right-1/5 w-40 h-40 bg-linear-to-br from-teal-400 to-cyan-400 transform rotate-45 opacity-8 large-berita-shape-2"
       ></div>
       <div
-        class="absolute top-1/2 right-1/4 w-30 h-30 bg-gradient-to-br from-amber-400 to-yellow-400 rounded-lg opacity-9 large-berita-shape-3"
+        class="absolute top-1/2 right-1/4 w-30 h-30 bg-linear-to-br from-amber-400 to-yellow-400 rounded-lg opacity-9 large-berita-shape-3"
       ></div>
 
       <div class="absolute top-20 right-1/4 z-0">
@@ -1428,11 +1556,11 @@ useHead({
                   :alt="news.title"
                 />
               </div>
-              <div class="flex flex-col flex-grow p-5">
+              <div class="flex flex-col grow p-5">
                 <p class="mb-2 text-xs font-semibold text-blue-600">
                   {{ news.tags.join(", ") }}
                 </p>
-                <h3 class="flex-grow mb-2 font-bold text-gray-800">
+                <h3 class="grow mb-2 font-bold text-gray-800">
                   {{ news.title }}
                 </h3>
                 <p class="text-sm text-gray-500 line-clamp-2">
@@ -1471,13 +1599,13 @@ useHead({
       <div class="absolute inset-0 faq-pattern opacity-30 z-0"></div>
 
       <div
-        class="absolute top-5 left-1/5 w-40 h-40 bg-gradient-to-br from-cyan-400 to-blue-400 rounded-full opacity-8 large-faq-shape-1"
+        class="absolute top-5 left-1/5 w-40 h-40 bg-linear-to-br from-cyan-400 to-blue-400 rounded-full opacity-8 large-faq-shape-1"
       ></div>
       <div
-        class="absolute bottom-10 right-1/4 w-45 h-45 bg-gradient-to-br from-pink-400 to-purple-400 transform rotate-45 opacity-6 large-faq-shape-2"
+        class="absolute bottom-10 right-1/4 w-45 h-45 bg-linear-to-br from-pink-400 to-purple-400 transform rotate-45 opacity-6 large-faq-shape-2"
       ></div>
       <div
-        class="absolute top-1/2 right-1/3 w-35 h-35 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-lg opacity-10 large-faq-shape-3"
+        class="absolute top-1/2 right-1/3 w-35 h-35 bg-linear-to-br from-yellow-400 to-orange-400 rounded-lg opacity-10 large-faq-shape-3"
       ></div>
 
       <div class="absolute top-1/4 left-10 z-0">
@@ -1524,105 +1652,172 @@ useHead({
 </template>
 
 <style scoped>
-@keyframes float {
+/* Particle Animations */
+@keyframes particle-float-1 {
   0%,
   100% {
-    transform: translateY(0px);
+    transform: translateY(0px) translateX(0px) rotate(0deg);
+    opacity: 0.1;
   }
-  50% {
-    transform: translateY(-20px);
-  }
-}
-
-@keyframes float-delayed {
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-15px);
-  }
-}
-
-@keyframes float-slow {
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-@keyframes rotate-slow {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes twinkle {
-  0%,
-  100% {
+  25% {
+    transform: translateY(-20px) translateX(10px) rotate(90deg);
     opacity: 0.3;
-    transform: scale(1);
   }
   50% {
-    opacity: 1;
-    transform: scale(1.2);
+    transform: translateY(-40px) translateX(20px) rotate(180deg);
+    opacity: 0.2;
   }
-}
-
-@keyframes pulse-slow {
-  0%,
-  100% {
-    transform: scale(1);
+  75% {
+    transform: translateY(-20px) translateX(10px) rotate(270deg);
     opacity: 0.4;
   }
-  50% {
-    transform: scale(1.1);
-    opacity: 0.8;
-  }
 }
 
-@keyframes bounce-gentle {
+@keyframes particle-float-2 {
   0%,
   100% {
-    transform: translateY(0px);
+    transform: translateY(0px) translateX(0px) scale(1);
+    opacity: 0.15;
   }
-  50% {
-    transform: translateY(-5px);
+  33% {
+    transform: translateY(-30px) translateX(-15px) scale(1.2);
+    opacity: 0.35;
   }
-}
-
-@keyframes rotate-very-slow {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
+  66% {
+    transform: translateY(-15px) translateX(25px) scale(0.8);
+    opacity: 0.25;
   }
 }
 
-@keyframes float-very-slow {
+@keyframes particle-float-3 {
   0%,
   100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-5px);
-  }
-}
-
-@keyframes fade-in-out {
-  0%,
-  100% {
+    transform: translateY(0px) rotate(0deg);
     opacity: 0.2;
   }
   50% {
-    opacity: 0.6;
+    transform: translateY(-25px) rotate(180deg);
+    opacity: 0.4;
+  }
+}
+
+@keyframes particle-float-4 {
+  0%,
+  100% {
+    transform: translateX(0px) scale(1);
+    opacity: 0.1;
+  }
+  50% {
+    transform: translateX(20px) scale(1.3);
+    opacity: 0.3;
+  }
+}
+
+@keyframes particle-float-5 {
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px) rotate(0deg) scale(1);
+    opacity: 0.25;
+  }
+  25% {
+    transform: translateY(-15px) translateX(10px) rotate(90deg) scale(1.1);
+    opacity: 0.4;
+  }
+  75% {
+    transform: translateY(-30px) translateX(-5px) rotate(270deg) scale(0.9);
+    opacity: 0.35;
+  }
+}
+
+/* Hero Panel Styles - Keeping clip-path and transforms as they require custom CSS */
+.hero-panel-left {
+  clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
+  transform: translateX(-2rem);
+}
+
+.hero-panel-right {
+  clip-path: polygon(15% 0, 100% 0, 100% 100%, 0 100%);
+  transform: translateX(2rem);
+}
+
+/* Particles - Converted to Tailwind classes in template */
+
+/* Responsive Design - Converted to Tailwind responsive utilities in template */
+
+/* Essential keyframes for complex animations not available in Tailwind */
+@keyframes particle-float-1 {
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px) rotate(0deg);
+    opacity: 0.1;
+  }
+  25% {
+    transform: translateY(-20px) translateX(10px) rotate(90deg);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-40px) translateX(20px) rotate(180deg);
+    opacity: 0.2;
+  }
+  75% {
+    transform: translateY(-20px) translateX(10px) rotate(270deg);
+    opacity: 0.4;
+  }
+}
+
+@keyframes particle-float-2 {
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px) scale(1);
+    opacity: 0.15;
+  }
+  33% {
+    transform: translateY(-30px) translateX(-15px) scale(1.2);
+    opacity: 0.35;
+  }
+  66% {
+    transform: translateY(-15px) translateX(25px) scale(0.8);
+    opacity: 0.25;
+  }
+}
+
+@keyframes particle-float-3 {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translateY(-25px) rotate(180deg);
+    opacity: 0.4;
+  }
+}
+
+@keyframes particle-float-4 {
+  0%,
+  100% {
+    transform: translateX(0px) scale(1);
+    opacity: 0.1;
+  }
+  50% {
+    transform: translateX(20px) scale(1.3);
+    opacity: 0.3;
+  }
+}
+
+@keyframes particle-float-5 {
+  0%,
+  100% {
+    transform: translateY(0px) translateX(0px) rotate(0deg) scale(1);
+    opacity: 0.25;
+  }
+  25% {
+    transform: translateY(-15px) translateX(10px) rotate(90deg) scale(1.1);
+    opacity: 0.4;
+  }
+  75% {
+    transform: translateY(-30px) translateX(-5px) rotate(270deg) scale(0.9);
+    opacity: 0.35;
   }
 }
 
@@ -1646,6 +1841,7 @@ useHead({
   animation: float-slow 10s ease-in-out infinite 2s;
 }
 
+/* Background patterns - keeping as they are complex SVG patterns */
 .wave-pattern {
   background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23dbeafe' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
@@ -1654,98 +1850,11 @@ useHead({
   background: url("data:image/svg+xml,%3Csvg width='100' height='20' viewBox='0 0 100 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 10 Q25 0 50 10 T100 10' stroke='%23dbeafe' stroke-width='2' fill='none' opacity='0.3'/%3E%3C/svg%3E");
 }
 
-.sparkle-1 {
-  animation: twinkle 2s ease-in-out infinite;
-}
+/* Sparkle animations - converted to Tailwind animate classes in template */
 
-.sparkle-2 {
-  animation: twinkle 2.5s ease-in-out infinite 0.5s;
-}
+/* Shape animations - converted to Tailwind animate classes in template */
 
-.sparkle-3 {
-  animation: twinkle 1.8s ease-in-out infinite 1s;
-}
-
-.large-profil-shape-1 {
-  animation: float-very-slow 14s ease-in-out infinite;
-}
-
-.large-profil-shape-2 {
-  animation: float-very-slow 16s ease-in-out infinite reverse;
-}
-
-.large-profil-shape-3 {
-  animation: float-slow 11s ease-in-out infinite 1s;
-}
-
-.large-prestasi-shape-1 {
-  animation: float-very-slow 13s ease-in-out infinite;
-}
-
-.large-prestasi-shape-2 {
-  animation: float-very-slow 17s ease-in-out infinite reverse;
-}
-
-.large-berita-shape-1 {
-  animation: float-very-slow 15s ease-in-out infinite;
-}
-
-.large-berita-shape-2 {
-  animation: float-very-slow 18s ease-in-out infinite reverse;
-}
-
-.large-berita-shape-3 {
-  animation: float-slow 12s ease-in-out infinite 2s;
-}
-
-.large-timeline-shape-1 {
-  animation: float-very-slow 14s ease-in-out infinite;
-}
-
-.large-timeline-shape-2 {
-  animation: float-very-slow 16s ease-in-out infinite reverse;
-}
-
-.large-timeline-shape-3 {
-  animation: float-slow 11s ease-in-out infinite 1s;
-}
-
-.large-faq-shape-1 {
-  animation: float-very-slow 13s ease-in-out infinite;
-}
-
-.large-faq-shape-2 {
-  animation: float-very-slow 17s ease-in-out infinite reverse;
-}
-
-.large-faq-shape-3 {
-  animation: float-slow 10s ease-in-out infinite 2s;
-}
-
-.large-icon-4 {
-  animation: float 8s ease-in-out infinite, rotate-very-slow 32s linear infinite;
-}
-
-.large-icon-5 {
-  animation: float 9s ease-in-out infinite, rotate-very-slow 28s linear infinite reverse;
-}
-
-.large-svg-1 {
-  animation: float 6s ease-in-out infinite, rotate-very-slow 22s linear infinite;
-}
-
-.large-svg-jurusan {
-  animation: float 7s ease-in-out infinite, rotate-very-slow 30s linear infinite reverse;
-}
-
-.abstract-1 {
-  animation: float 5s ease-in-out infinite;
-}
-
-.abstract-2 {
-  animation: fade-in-out 4.5s ease-in-out infinite 1s;
-}
-
+/* FAQ pattern - keeping as complex SVG pattern */
 .faq-pattern {
   background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23dbeafe' fill-opacity='0.15'%3E%3Ctext x='40' y='25' font-family='Arial' font-size='20' text-anchor='middle'%3E%3F%3C/text%3E%3Ctext x='10' y='55' font-family='Arial' font-size='16' text-anchor='middle'%3E%F0%9F%92%A1%3C/text%3E%3Ctext x='70' y='15' font-family='Arial' font-size='18' text-anchor='middle'%3E%3F%3C/text%3E%3Ctext x='40' y='75' font-family='Arial' font-size='14' text-anchor='middle'%3E%F0%9F%92%A1%3C/text%3E%3C/g%3E%3C/svg%3E");
 }

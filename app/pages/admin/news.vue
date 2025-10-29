@@ -211,7 +211,7 @@ const formatDate = (dateString: string) => {
 </script>
 
 <template>
-  <div class="min-h-screen py-24 bg-gradient-to-b from-white via-red-50 to-white">
+  <div class="min-h-screen py-24 bg-linear-to-b from-white via-red-50 to-white">
     <div class="container px-4 mx-auto sm:px-6">
       <div class="max-w-7xl mx-auto">
         <div class="flex flex-col gap-4 mb-8 md:flex-row md:items-center md:justify-between">
@@ -264,7 +264,7 @@ const formatDate = (dateString: string) => {
                   <NuxtImg
                     :src="news.thumbnail"
                     :alt="news.title"
-                    class="object-cover w-16 h-16 rounded-lg flex-shrink-0"
+                    class="object-cover w-16 h-16 rounded-lg shrink-0"
                   />
                   <div class="flex-1">
                     <h3 class="text-lg font-bold text-gray-800 line-clamp-1">{{ news.title }}</h3>
@@ -337,7 +337,7 @@ const formatDate = (dateString: string) => {
         >
           <div class="p-8">
             <div class="flex items-center justify-between mb-6">
-              <div class="px-6 py-3 border border-red-200 bg-gradient-to-r from-red-600 to-red-800 rounded-xl">
+              <div class="px-6 py-3 border border-red-200 bg-linear-to-r from-red-600 to-red-800 rounded-xl">
                 <h3 class="text-lg font-bold text-white">
                   {{ editingNews ? "Edit Berita" : "Tambah Berita Baru" }}
                 </h3>

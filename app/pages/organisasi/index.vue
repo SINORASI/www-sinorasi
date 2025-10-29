@@ -17,7 +17,7 @@ const organizations = computed(() => organizationsResponse.value?.data || []);
 </script>
 
 <template>
-  <div class="min-h-screen py-24 bg-gradient-to-b from-white via-blue-50 to-white">
+  <div class="min-h-screen py-24 bg-linear-to-b from-white via-blue-50 to-white">
     <div class="container px-4 py-8 mx-auto sm:px-6">
       <motion.div
         class="flex flex-col items-center mb-12"
@@ -30,7 +30,7 @@ const organizations = computed(() => organizationsResponse.value?.data || []);
         }"
       >
         <motion.div
-          class="p-6 px-10 py-6 mb-4 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
+          class="p-6 px-10 py-6 mb-4 border border-blue-200 shadow-xl bg-linear-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
           :variants="{
             hidden: { opacity: 0, x: -100 },
             visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: 'easeOut' } },
@@ -161,7 +161,7 @@ const organizations = computed(() => organizationsResponse.value?.data || []);
             }"
           >
             <motion.div
-              class="flex items-center justify-center p-8 border-b-2 border-blue-100 bg-gradient-to-br from-blue-50 to-white"
+              class="flex items-center justify-center p-8 border-b-2 border-blue-100 bg-linear-to-br from-blue-50 to-white"
               :variants="{
                 hidden: { opacity: 0, scale: 0.8 },
                 visible: { opacity: 1, scale: 1, transition: { duration: 0.4, delay: 0.1 } },
