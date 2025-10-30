@@ -169,31 +169,45 @@ const toggleMarker = (index: number) => {
   }
 };
 
-const achievements = computed(() => {
-  const filtered = newsData.value
-    .filter((news) => {
-      const content = news.content ? news.content.toLowerCase() : "";
-      return content.includes("juara") || content.includes("prestasi");
-    })
-    .slice(0, 5)
-    .map((news) => ({
-      image: news.thumbnail || "/images/placeholder.jpg",
-      title: news.title,
-      description: news.content
-        ? news.content.replace(/<[^>]*>/g, "").slice(0, Math.floor(news.content.replace(/<[^>]*>/g, "").length / 2)) +
-          "..."
-        : news.subtitle,
-      slug: news.slug,
-    }));
+type Achievement = {
+  image: string;
+  title: string;
+  description: string;
+  slug: string | null;
+  studentName?: string;
+  year?: number;
+  majorName?: string;
+};
 
-  if (filtered.length === 0) {
-    return [
+const achievements = ref<Achievement[]>([]);
+
+const loadAchievements = async () => {
+  try {
+    const response = await $fetch("/api/achievements");
+    const achievementsData = response as any[];
+
+    achievements.value = achievementsData.slice(0, 5).map((achievement) => ({
+      image: "/images/placeholder.jpg", // You can add thumbnail logic here if available
+      title: achievement.title,
+      description: achievement.description,
+      slug: null, // Since this comes from API, no slug
+      studentName: achievement.studentName,
+      year: achievement.year,
+      majorName: achievement.majorName,
+    }));
+  } catch (error) {
+    console.error("Error fetching achievements:", error);
+    // Fallback to static data if API fails
+    achievements.value = [
       {
         image: "/images/placeholder.jpg",
         title: "LKS 2023 Kab. Malang : Kami Lolos Enam Bidang Lomba untuk Menuju Tingkat Provinsi",
         description:
           "SMKN 2 Singosari sukses menggelar Lomba Kompetensi Siswa (LKS) SMK tingkat Kabupaten Malang selama dua hari sejak Senin (6/3). Hasilnya, 13 siswa berhasil meraih prestasi dengan 6 bidang lomba lolos ke tingkat Provinsi Jawa Timur.",
         slug: null,
+        studentName: "",
+        year: 2023,
+        majorName: "",
       },
       {
         image: "/images/placeholder.jpg",
@@ -201,23 +215,74 @@ const achievements = computed(() => {
         description:
           "Tim siswa SMKN 2 Singosari berhasil meraih juara 1 dalam Lomba Karya Tulis Ilmiah yang diselenggarakan oleh Kementerian Pendidikan dan Kebudayaan dengan tema Inovasi Teknologi untuk Masa Depan.",
         slug: null,
+        studentName: "",
+        year: 2023,
+        majorName: "",
       },
     ];
   }
-
-  return filtered;
-});
+};
 
 const currentAchievement = ref(0);
+const isAutoPlaying = ref(true);
+const autoPlayInterval = ref<ReturnType<typeof setInterval> | null>(null);
+const progressValue = ref(0);
+const progressInterval = ref<ReturnType<typeof setInterval> | null>(null);
+
+const startAutoPlay = () => {
+  if (autoPlayInterval.value) clearInterval(autoPlayInterval.value);
+  autoPlayInterval.value = setInterval(() => {
+    if (isAutoPlaying.value) {
+      nextAchievement();
+    }
+  }, 5000);
+};
+
+const stopAutoPlay = () => {
+  if (autoPlayInterval.value) {
+    clearInterval(autoPlayInterval.value);
+    autoPlayInterval.value = null;
+  }
+};
+
+const resetProgress = () => {
+  progressValue.value = 0;
+  if (progressInterval.value) clearInterval(progressInterval.value);
+  progressInterval.value = setInterval(() => {
+    if (progressValue.value < 100) {
+      progressValue.value += 2;
+    } else {
+      progressValue.value = 100;
+    }
+  }, 100);
+};
+
+const toggleAutoPlay = () => {
+  isAutoPlaying.value = !isAutoPlaying.value;
+  if (isAutoPlaying.value) {
+    startAutoPlay();
+  } else {
+    stopAutoPlay();
+  }
+};
+
 const prevAchievement = () => {
-  const len = (achievements.value && achievements.value.length) || 0;
+  const len = achievements.value.length || 0;
   if (len === 0) return;
   currentAchievement.value = (currentAchievement.value - 1 + len) % len;
+  resetProgress();
 };
+
 const nextAchievement = () => {
-  const len = (achievements.value && achievements.value.length) || 0;
+  const len = achievements.value.length || 0;
   if (len === 0) return;
   currentAchievement.value = (currentAchievement.value + 1) % len;
+  resetProgress();
+};
+
+const goToAchievement = (index: number) => {
+  currentAchievement.value = index;
+  resetProgress();
 };
 
 const heroImages = ref([
@@ -249,18 +314,24 @@ onMounted(() => {
       animate(0, props.siswaTarget, {
         duration: durationInSeconds,
         ease: ease,
+        delay: 0.1,
         onUpdate: (latest) => (siswaCount.value = Math.floor(latest)),
       });
-      animate(0, props.prestasiTarget, {
-        duration: durationInSeconds,
-        ease: ease,
-        onUpdate: (latest) => (prestasiCount.value = Math.floor(latest)),
-      });
-      animate(0, props.tahunTarget, {
-        duration: durationInSeconds,
-        ease: ease,
-        onUpdate: (latest) => (tahunCount.value = Math.floor(latest)),
-      });
+
+    fetchNews();
+    loadAchievements();
+
+    // Start auto-play for achievements carousel
+    startAutoPlay();
+    resetProgress();
+
+    const checkMobile = () => {
+      if (window) {
+        isMobile.value = window.innerWidth < 768;
+      }
+    };
+    checkMobile();
+    window?.addEventListener("resize", checkMobile);
     }, 100);
 
     fetchNews();
@@ -292,6 +363,8 @@ onMounted(() => {
       window?.removeEventListener("resize", checkMobile);
       window?.removeEventListener("scroll", handleScroll);
       clearInterval(heroInterval);
+      stopAutoPlay();
+      if (progressInterval.value) clearInterval(progressInterval.value);
     });
   }
 });
@@ -456,7 +529,7 @@ useHead({
         class="grid grid-cols-1 lg:grid-cols-[1fr_2fr_1fr] lg:grid-rows-1 gap-4 lg:gap-8 min-h-[80vh] items-center py-4 lg:py-8 max-w-7xl mx-auto relative z-10"
       >
         <motion.div
-          class="relative rounded-l-xl overflow-hidden shadow-2xl transition-all duration-300 ease lg:[clip-path:polygon(0_0,100%_0,85%_100%,0_100%)] lg:-translate-x-8 lg:z-5 order-1 min-h-[300px] lg:min-h-0 lg:order-[unset]"
+          class="relative rounded-l-xl overflow-hidden shadow-2xl transition-all duration-300 ease lg:[clip-path:polygon(0_0,100%_0,85%_100%,0_100%)] lg:-translate-x-8 lg:z-5 order-1 min-h-[300px] lg:min-h-0 lg:order-[unset] bg-white/10 backdrop-blur-[15px] border border-white/20"
           :initial="{ opacity: 0, x: -100 }"
           :whileInView="{ opacity: 1, x: 0 }"
           :transition="{ duration: 0.8 }"
@@ -582,7 +655,7 @@ useHead({
         </motion.div>
 
         <motion.div
-          class="relative rounded-r-xl overflow-hidden shadow-2xl transition-all duration-300 ease lg:[clip-path:polygon(15%_0,100%_0,100%_100%,0_100%)] lg:translate-x-8 lg:z-5 order-3 min-h-[300px] lg:min-h-0 lg:order-[unset]"
+          class="relative rounded-r-xl overflow-hidden shadow-2xl transition-all duration-300 ease lg:[clip-path:polygon(15%_0,100%_0,100%_100%,0_100%)] lg:translate-x-8 lg:z-5 order-3 min-h-[300px] lg:min-h-0 lg:order-[unset] bg-white/10 backdrop-blur-[15px] border border-white/20"
           :initial="{ opacity: 0, x: 100 }"
           :whileInView="{ opacity: 1, x: 0 }"
           :transition="{ duration: 0.8, delay: 0.4 }"
@@ -932,12 +1005,15 @@ useHead({
 
       <div class="container flex flex-col items-center gap-8 mx-auto relative z-10">
         <motion.div
-          class="relative flex flex-col w-full max-w-5xl gap-6 p-8 mx-auto bg-white border-2 border-blue-100 shadow-xl rounded-2xl"
+          class="relative flex flex-col w-full max-w-5xl gap-6 p-8 mx-auto bg-white border-2 border-blue-100 shadow-xl rounded-2xl overflow-hidden"
           :initial="{ opacity: 0, scale: 0.95 }"
           :whileInView="{ opacity: 1, scale: 1 }"
           :transition="{ duration: 0.6, delay: 0.2 }"
           :inViewOptions="{ once: true }"
         >
+          <!-- Background decoration -->
+          <div class="absolute top-0 right-0 w-32 h-32 bg-blue-100 rounded-full opacity-20 -translate-y-16 translate-x-16"></div>
+          <div class="absolute bottom-0 left-0 w-24 h-24 bg-yellow-100 rounded-full opacity-20 translate-y-12 -translate-x-12"></div>
           <div class="overflow-hidden">
             <div
               class="flex transition-transform duration-500 ease-in-out"
@@ -946,13 +1022,62 @@ useHead({
               }"
             >
               <div v-for="(achievement, index) in achievements" :key="index" class="shrink-0 w-full">
-                <NuxtLink v-if="achievement.slug" :to="`/berita/${achievement.slug}`" class="block cursor-pointer">
-                  <div class="flex flex-col items-center gap-8 md:flex-row md:h-80">
-                    <NuxtImg
-                      :src="achievement.image"
-                      class="object-cover w-full rounded-lg shadow-md aspect-square md:w-1/3"
-                      alt="Achievement"
-                    />
+                <motion.div
+                  :initial="{ opacity: 0, x: index === currentAchievement ? 0 : 50 }"
+                  :animate="{ opacity: index === currentAchievement ? 1 : 0, x: index === currentAchievement ? 0 : 50 }"
+                  :transition="{ duration: 0.5 }"
+                  class="absolute inset-0"
+                >
+                  <NuxtLink v-if="achievement.slug" :to="`/berita/${achievement.slug}`" class="block cursor-pointer">
+                    <div class="flex flex-col items-center gap-8 md:flex-row md:h-80">
+                      <div class="relative md:w-1/3">
+                        <NuxtImg
+                          :src="achievement.image"
+                          class="object-cover w-full rounded-lg shadow-md aspect-square transition-transform duration-300 hover:scale-105"
+                          alt="Achievement"
+                        />
+                        <div class="absolute top-2 right-2 flex gap-1">
+                          <div class="px-2 py-1 bg-yellow-500 text-white text-xs font-bold rounded-full flex items-center gap-1">
+                            <Icon name="lucide:medal" size="10" />
+                            <span>Juara</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="flex flex-col gap-4 text-center md:text-left md:w-2/3 md:pr-5 md:justify-center">
+                        <div class="flex items-center gap-2 justify-center md:justify-start">
+                          <h3 class="text-xl md:text-2xl font-bold text-gray-800 hover:text-blue-600 transition-colors">
+                            {{ achievement.title }}
+                          </h3>
+                          <Icon name="lucide:external-link" size="16" class="text-blue-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        </div>
+                        <p class="leading-relaxed text-gray-600 text-sm md:text-base line-clamp-4">
+                          {{ achievement.description }}
+                        </p>
+                        <div class="flex flex-wrap gap-2 justify-center md:justify-start">
+                          <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full">
+                            Prestasi
+                          </span>
+                          <span class="px-2 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full">
+                            LKS
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </NuxtLink>
+                  <div v-else class="flex flex-col items-center gap-8 md:flex-row md:h-80">
+                    <div class="relative md:w-1/3">
+                      <NuxtImg
+                        :src="achievement.image"
+                        class="object-cover w-full rounded-lg shadow-md aspect-square transition-transform duration-300 hover:scale-105"
+                        alt="Achievement"
+                      />
+                      <div class="absolute top-2 right-2 flex gap-1">
+                        <div class="px-2 py-1 bg-yellow-500 text-white text-xs font-bold rounded-full flex items-center gap-1">
+                          <Icon name="lucide:medal" size="10" />
+                          <span>Juara</span>
+                        </div>
+                      </div>
+                    </div>
                     <div class="flex flex-col gap-4 text-center md:text-left md:w-2/3 md:pr-5 md:justify-center">
                       <h3 class="text-xl md:text-2xl font-bold text-gray-800">
                         {{ achievement.title }}
@@ -960,49 +1085,87 @@ useHead({
                       <p class="leading-relaxed text-gray-600 text-sm md:text-base line-clamp-4">
                         {{ achievement.description }}
                       </p>
+                      <div class="flex flex-wrap gap-2 justify-center md:justify-start">
+                        <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full">
+                          Prestasi
+                        </span>
+                        <span class="px-2 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full">
+                          LKS
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </NuxtLink>
-                <div v-else class="flex flex-col items-center gap-8 md:flex-row md:h-80">
-                  <NuxtImg
-                    :src="achievement.image"
-                    class="object-cover w-full rounded-lg shadow-md aspect-square md:w-1/3"
-                    alt="Achievement"
-                  />
-                  <div class="flex flex-col gap-4 text-center md:text-left md:w-2/3 md:pr-5 md:justify-center">
-                    <h3 class="text-xl md:text-2xl font-bold text-gray-800">
-                      {{ achievement.title }}
-                    </h3>
-                    <p class="leading-relaxed text-gray-600 text-sm md:text-base line-clamp-4">
-                      {{ achievement.description }}
-                    </p>
-                  </div>
-                </div>
+                </motion.div>
               </div>
             </div>
           </div>
 
           <div class="border-t border-gray-200"></div>
 
-          <div class="flex items-center justify-between">
-            <div class="flex gap-4">
+          <div class="flex flex-col gap-4">
+            <!-- Progress Indicator -->
+            <div class="flex items-center justify-center gap-2">
+              <div class="flex gap-1">
+                <div
+                  v-for="(achievement, index) in achievements"
+                  :key="index"
+                  class="w-2 h-2 rounded-full transition-all duration-300 cursor-pointer"
+                  :class="index === currentAchievement ? 'bg-blue-600 w-6' : 'bg-gray-300 hover:bg-gray-400'"
+                  @click="goToAchievement(index)"
+                ></div>
+              </div>
               <button
-                @click="prevAchievement"
-                class="flex items-center justify-center p-3 transition bg-gray-100 border border-gray-200 rounded-full shadow-md cursor-pointer hover:bg-blue-600 hover:text-white hover:scale-110"
+                @click="toggleAutoPlay"
+                class="ml-4 p-2 rounded-full transition-all duration-300"
+                :class="isAutoPlaying ? 'bg-blue-100 text-blue-600 hover:bg-blue-200' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'"
+                :aria-label="isAutoPlaying ? 'Pause auto-play' : 'Start auto-play'"
               >
-                <Icon name="lucide:chevron-left" size="20" />
-              </button>
-              <button
-                @click="nextAchievement"
-                class="flex items-center justify-center p-3 transition bg-gray-100 border border-gray-200 rounded-full shadow-md cursor-pointer hover:bg-blue-600 hover:text-white hover:scale-110"
-              >
-                <Icon name="lucide:chevron-right" size="20" />
+                <Icon :name="isAutoPlaying ? 'lucide:pause' : 'lucide:play'" size="16" />
               </button>
             </div>
-            <div class="font-bold text-gray-700">
-              <span class="text-2xl text-blue-600">{{ String(currentAchievement + 1).padStart(2, "0") }}</span>
-              <span class="mx-1 text-gray-400">/</span>
-              <span class="text-lg">{{ String(achievements.length).padStart(2, "0") }}</span>
+
+            <!-- Progress Bar -->
+            <div class="w-full bg-gray-200 rounded-full h-1 overflow-hidden">
+              <motion.div
+                class="h-full bg-linear-to-r from-blue-500 to-blue-600 rounded-full"
+                :style="{ width: `${progressValue}%` }"
+                :transition="{ duration: 0.1 }"
+              ></motion.div>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <div class="flex gap-4">
+                <motion.button
+                  @click="prevAchievement"
+                  class="flex items-center justify-center p-3 transition bg-gray-100 border border-gray-200 rounded-full shadow-md cursor-pointer hover:bg-blue-600 hover:text-white hover:scale-110"
+                  :whileHover="{ scale: 1.1 }"
+                  :whileTap="{ scale: 0.95 }"
+                  aria-label="Previous achievement"
+                >
+                  <Icon name="lucide:chevron-left" size="20" />
+                </motion.button>
+                <motion.button
+                  @click="nextAchievement"
+                  class="flex items-center justify-center p-3 transition bg-gray-100 border border-gray-200 rounded-full shadow-md cursor-pointer hover:bg-blue-600 hover:text-white hover:scale-110"
+                  :whileHover="{ scale: 1.1 }"
+                  :whileTap="{ scale: 0.95 }"
+                  aria-label="Next achievement"
+                >
+                  <Icon name="lucide:chevron-right" size="20" />
+                </motion.button>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="font-bold text-gray-700">
+                  <span class="text-2xl text-blue-600">{{ String(currentAchievement + 1).padStart(2, "0") }}</span>
+                  <span class="mx-1 text-gray-400">/</span>
+                  <span class="text-lg">{{ String(achievements.length).padStart(2, "0") }}</span>
+                </div>
+                <!-- Achievement Badge -->
+                <div class="flex items-center gap-1 px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-semibold">
+                  <Icon name="lucide:trophy" size="12" />
+                  <span>Prestasi</span>
+                </div>
+              </div>
             </div>
           </div>
         </motion.div>
