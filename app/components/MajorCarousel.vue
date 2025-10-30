@@ -5,6 +5,7 @@
         v-for="card in currentSlideCards"
         :key="card.id"
         class="video-card-wrapper"
+        :data-card-id="card.id"
         :initial="{ opacity: 0, y: 50 }"
         :whileInView="{ opacity: 1, y: 0 }"
         :transition="{ duration: 0.6 }"
@@ -64,8 +65,9 @@
 </template>
 
 <script setup lang="ts">
-import { Motion } from "motion-v";
-import { computed, onMounted, ref, watch } from "vue";
+// Code-split the carousel logic for better performance
+const { Motion } = await import("motion-v");
+import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 
 
 declare global {
@@ -94,6 +96,7 @@ const hoveredCard = ref<number | null>(null);
 const currentSlide = ref(0);
 const cardsPerSlide = 4;
 let apiLoaded = false;
+let youtubeApiPromise: Promise<void> | null = null;
 type YTPlayer = {
   seekTo: (seconds: number, allowSeekAhead: boolean) => void;
   setPlaybackRate: (rate: number) => void;
@@ -101,11 +104,14 @@ type YTPlayer = {
   pauseVideo: () => void;
   getCurrentTime: () => number;
   getIframe: () => HTMLIFrameElement;
+  destroy: () => void;
 };
 
 const youtubePlayers = ref<Record<number, YTPlayer>>({});
 const playersReady = ref<Record<number, boolean>>({});
 const playbackIntervals = ref<Record<number, number>>({});
+const slideObservers = ref<Record<number, IntersectionObserver>>({});
+const cardObservers = ref<Record<number, IntersectionObserver>>({});
 
 const videoCards: VideoCard[] = [
   {
@@ -200,36 +206,58 @@ const videoCards: VideoCard[] = [
 
 onMounted(() => {
   if (typeof window !== "undefined") {
-    if (!window.YT) {
-      const tag = document.createElement("script");
-      tag.src = "https://www.youtube.com/iframe_api";
-      const firstScriptTag = document.getElementsByTagName("script")[0];
-      if (firstScriptTag?.parentNode) {
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-      }
-
-      window.onYouTubeIframeAPIReady = () => {
-        apiLoaded = true;
-        initializePlayers();
-      };
-    } else {
-      apiLoaded = true;
-      initializePlayers();
-    }
+    setupSlideIntersectionObserver();
   }
 });
+
+onUnmounted(() => {
+  cleanupAllObservers();
+  cleanupAllPlayers();
+});
+const loadYouTubeAPI = async (): Promise<void> => {
+  if (apiLoaded) return;
+  if (youtubeApiPromise) return youtubeApiPromise;
+
+  youtubeApiPromise = new Promise((resolve) => {
+    if (window.YT) {
+      apiLoaded = true;
+      resolve();
+      return;
+    }
+
+    const tag = document.createElement("script");
+    tag.src = "https://www.youtube.com/iframe_api";
+    const firstScriptTag = document.getElementsByTagName("script")[0];
+    if (firstScriptTag?.parentNode) {
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+    }
+
+    window.onYouTubeIframeAPIReady = () => {
+      apiLoaded = true;
+      resolve();
+    };
+  });
+
+  return youtubeApiPromise;
+};
+
 const initializePlayers = () => {
   if (typeof window === "undefined") return;
 
   currentSlideCards.value.forEach((card) => {
     if (card.videoType === "youtube" && !youtubePlayers.value[card.id]) {
-      createPlayer(card.id, card.videoUrl);
+      setupCardIntersectionObserver(card.id);
     }
   });
 };
 
-const createPlayer = (id: number, videoId: string) => {
-  if (typeof window === "undefined" || !window.YT || !window.YT.Player) return;
+const createPlayer = async (id: number, videoId: string) => {
+  if (typeof window === "undefined") return;
+
+  await loadYouTubeAPI();
+
+  if (!window.YT || !window.YT.Player) return;
+
   youtubePlayers.value[id] = new window.YT.Player(`youtube-player-${id}`, {
     videoId: videoId,
     playerVars: {
@@ -255,35 +283,105 @@ const createPlayer = (id: number, videoId: string) => {
   });
 };
 
+const setupSlideIntersectionObserver = () => {
+  if (typeof window === "undefined") return;
+
+  const container = document.querySelector('.container');
+  if (!container) return;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          initializePlayers();
+          observer.disconnect();
+        }
+      });
+    },
+    { threshold: 0.1 }
+  );
+
+  observer.observe(container);
+  slideObservers.value[currentSlide.value] = observer;
+};
+
+const setupCardIntersectionObserver = (cardId: number) => {
+  if (typeof window === "undefined") return;
+
+  const cardElement = document.querySelector(`[data-card-id="${cardId}"]`);
+  if (!cardElement) return;
+
+  const observer = new IntersectionObserver(
+    async (entries) => {
+      entries.forEach(async (entry) => {
+        if (entry.isIntersecting && !youtubePlayers.value[cardId]) {
+          await createPlayer(cardId, videoCards.find(c => c.id === cardId)?.videoUrl || '');
+          observer.disconnect();
+          delete cardObservers.value[cardId];
+        }
+      });
+    },
+    { threshold: 0.5, rootMargin: '50px' }
+  );
+
+  observer.observe(cardElement);
+  cardObservers.value[cardId] = observer;
+};
+
+const cleanupAllObservers = () => {
+  Object.values(slideObservers.value).forEach(observer => observer.disconnect());
+  Object.values(cardObservers.value).forEach(observer => observer.disconnect());
+  slideObservers.value = {};
+  cardObservers.value = {};
+};
+
+const cleanupAllPlayers = () => {
+  Object.values(youtubePlayers.value).forEach(player => {
+    if (player && typeof player.destroy === 'function') {
+      player.destroy();
+    }
+  });
+  Object.values(playbackIntervals.value).forEach(interval => clearInterval(interval));
+  youtubePlayers.value = {};
+  playersReady.value = {};
+  playbackIntervals.value = {};
+};
+
 watch(currentSlide, () => {
   if (typeof window !== "undefined") {
     setTimeout(() => {
-      if (apiLoaded) {
-        initializePlayers();
-      }
+      initializePlayers();
     }, 100);
   }
 });
 
-const handleMouseEnter = (id: number) => {
+const handleMouseEnter = async (id: number) => {
   if (typeof window === "undefined") return;
+
+  hoveredCard.value = id;
+
   const player = youtubePlayers.value[id];
   const card = videoCards.find((c) => c.id === id);
 
-  if (player && playersReady.value[id] && card) {
-    player.seekTo(card.startTime, true);
-    player.setPlaybackRate(0.75);
-    player.playVideo();
+  if (!player && card) {
+    await createPlayer(id, card.videoUrl);
+  }
+
+  const activePlayer = youtubePlayers.value[id];
+  if (activePlayer && playersReady.value[id] && card) {
+    activePlayer.seekTo(card.startTime, true);
+    activePlayer.setPlaybackRate(0.75);
+    activePlayer.playVideo();
 
     if (playbackIntervals.value[id]) {
       clearInterval(playbackIntervals.value[id]);
     }
 
     playbackIntervals.value[id] = window.setInterval(() => {
-      if (hoveredCard.value === id && player.getCurrentTime) {
-        const currentTime = player.getCurrentTime();
+      if (hoveredCard.value === id && activePlayer.getCurrentTime) {
+        const currentTime = activePlayer.getCurrentTime();
         if (currentTime >= card.startTime + 15) {
-          player.seekTo(card.startTime, true);
+          activePlayer.seekTo(card.startTime, true);
         }
       }
     }, 100);
@@ -292,6 +390,9 @@ const handleMouseEnter = (id: number) => {
 
 const handleMouseLeave = (id: number) => {
   if (typeof window === "undefined") return;
+
+  hoveredCard.value = null;
+
   const player = youtubePlayers.value[id];
   const card = videoCards.find((c) => c.id === id);
 
@@ -306,25 +407,33 @@ const handleMouseLeave = (id: number) => {
   }
 };
 
-const handleTouchStart = (id: number) => {
+const handleTouchStart = async (id: number) => {
   if (typeof window === "undefined") return;
+
+  hoveredCard.value = id;
+
   const player = youtubePlayers.value[id];
   const card = videoCards.find((c) => c.id === id);
 
-  if (player && playersReady.value[id] && card) {
-    player.seekTo(card.startTime, true);
-    player.setPlaybackRate(0.75);
-    player.playVideo();
+  if (!player && card) {
+    await createPlayer(id, card.videoUrl);
+  }
+
+  const activePlayer = youtubePlayers.value[id];
+  if (activePlayer && playersReady.value[id] && card) {
+    activePlayer.seekTo(card.startTime, true);
+    activePlayer.setPlaybackRate(0.75);
+    activePlayer.playVideo();
 
     if (playbackIntervals.value[id]) {
       clearInterval(playbackIntervals.value[id]);
     }
 
     playbackIntervals.value[id] = window.setInterval(() => {
-      if (hoveredCard.value === id && player.getCurrentTime) {
-        const currentTime = player.getCurrentTime();
+      if (hoveredCard.value === id && activePlayer.getCurrentTime) {
+        const currentTime = activePlayer.getCurrentTime();
         if (currentTime >= card.startTime + 15) {
-          player.seekTo(card.startTime, true);
+          activePlayer.seekTo(card.startTime, true);
         }
       }
     }, 100);
@@ -333,6 +442,9 @@ const handleTouchStart = (id: number) => {
 
 const handleTouchEnd = (id: number) => {
   if (typeof window === "undefined") return;
+
+  hoveredCard.value = null;
+
   const player = youtubePlayers.value[id];
   const card = videoCards.find((c) => c.id === id);
 
@@ -750,3 +862,5 @@ const navigateToMajorsList = () => {
   }
 }
 </style>
+
+

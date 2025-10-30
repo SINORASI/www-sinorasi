@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { motion } from "motion-v";
 import type { JobTitle } from "~/models/JobTitle";
 import type { MajorData } from "~/models/MajorData";
 import type { MajorName } from "~/models/MajorName";
@@ -31,95 +30,115 @@ const toggleExpanded = (id: number): void => {
     [id]: !items.value[id],
   };
 };
+
+// Lazy loading with IntersectionObserver
+const visibleItems = ref<Set<number>>(new Set());
+const observer = ref<IntersectionObserver | null>(null);
+
+onMounted(() => {
+  observer.value = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const idx = parseInt(entry.target.getAttribute('data-idx') || '0');
+        if (entry.isIntersecting) {
+          visibleItems.value.add(idx);
+        }
+      });
+    },
+    { threshold: 0.1 }
+  );
+});
+
+onUnmounted(() => {
+  observer.value?.disconnect();
+});
+
+const observeElement = (el: Element, idx: number) => {
+  if (observer.value) {
+    el.setAttribute('data-idx', idx.toString());
+    observer.value.observe(el);
+  }
+};
 </script>
 
 <template>
   <div class="w-full">
     <div class="mx-auto max-w-7xl">
       <div class="space-y-4 md:space-y-6">
-        <motion.div
+        <div
           v-for="(career, idx) in careers"
           :key="idx"
-          :initial="{ opacity: 0, y: 50 }"
-          :animate="{ opacity: 1, y: 0 }"
-          :transition="{ duration: 0.6, delay: idx * 0.1 }"
-          class="overflow-hidden shadow-md rounded-2xl"
-          :whileHover="{ scale: 1.02 }"
+          ref="observeElement($el, idx)"
+          v-memo="[career.title, career.icon, majorColor.primary, majorColor.light]"
+          :class="[
+            'overflow-hidden shadow-md rounded-2xl transition-all duration-300 ease-in-out',
+            visibleItems.has(idx) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          ]"
+          :style="{ transitionDelay: `${idx * 100}ms` }"
         >
-          <motion.button
+          <button
             @click="toggleExpanded(idx)"
             :style="{
               backgroundColor: majorColor.primary,
             }"
-            class="flex items-center w-full gap-3 px-4 py-4 md:gap-4 md:px-5 md:py-5 lg:px-6 lg:py-5"
-            :whileHover="{ scale: 1.01 }"
-            :whileTap="{ scale: 0.99 }"
+            class="flex items-center w-full gap-3 px-4 py-4 md:gap-4 md:px-5 md:py-5 lg:px-6 lg:py-5 transition-transform duration-200 ease-in-out hover:scale-105 active:scale-95"
           >
-            <motion.div
-              class="absolute top-3 right-3 w-1.5 h-1.5 rounded-full bg-white/50"
-              :animate="{
-                scale: [1, 1.5, 1],
-                opacity: [0.5, 1, 0.5],
-              }"
-              :transition="{ duration: 2, repeat: Infinity, delay: idx * 0.3 }"
-            ></motion.div>
+            <div
+              class="absolute top-3 right-3 w-1.5 h-1.5 rounded-full bg-white/50 animate-pulse"
+              :style="{ animationDelay: `${idx * 300}ms` }"
+            ></div>
 
-            <motion.div
-              class="shrink-0"
-              :whileHover="{ rotate: [0, -10, 10, 0] }"
-              :transition="{ type: 'spring', stiffness: 300 }"
+            <div
+              class="shrink-0 transition-transform duration-300 ease-in-out hover:rotate-12"
             >
               <div
                 class="flex items-center justify-center overflow-hidden md:h-12 md:w-12 lg:h-16 lg:w-16 xl:h-16 xl:w-16 rounded-full bg-white/10"
               >
                 <Icon :name="`lucide:${career.icon}`" class="text-white" size="30" />
               </div>
-            </motion.div>
+            </div>
 
             <span class="flex-1 text-lg font-semibold text-left text-white wrap-break-words md:text-xl lg:text-2xl">
               {{ career.title }}
             </span>
 
-            <motion.svg
+            <svg
               v-if="career.description"
-              :class="['w-5 h-5 sm:w-6 sm:h-6 text-white shrink-0']"
+              :class="[
+                'w-5 h-5 sm:w-6 sm:h-6 text-white shrink-0 transition-all duration-300 ease-in-out',
+                items[idx] ? 'rotate-180' : 'rotate-0'
+              ]"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
-              :animate="{ rotate: items[idx] ? 180 : 0 }"
-              :transition="{ type: 'spring', stiffness: 300 }"
-              :whileHover="{ scale: 1.2 }"
             >
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
-            </motion.svg>
-          </motion.button>
+            </svg>
+          </button>
 
-          <motion.div
+          <div
             v-if="career.description"
             :style="{ backgroundColor: majorColor.light }"
-            :initial="{ height: 0, opacity: 0 }"
-            :animate="{
-              height: items[idx] ? 'auto' : 0,
-              opacity: items[idx] ? 1 : 0,
-            }"
-            :transition="{ duration: 0.4, ease: 'easeInOut' }"
+            :class="[
+              'transition-all duration-400 ease-in-out overflow-hidden',
+              items[idx] ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+            ]"
           >
-            <motion.div
-              class="px-4 py-4 border-t border-gray-200 md:px-5 md:py-5 lg:px-6 lg:py-6"
-              :initial="{ y: 20, opacity: 0 }"
-              :animate="{ y: 0, opacity: 1 }"
-              :transition="{ delay: 0.1, duration: 0.3 }"
+            <div
+              class="px-4 py-4 border-t border-gray-200 md:px-5 md:py-5 lg:px-6 lg:py-6 transition-all duration-300 ease-in-out"
+              :class="items[idx] ? 'translate-y-0 opacity-100' : 'translate-y-5 opacity-0'"
+              :style="{ transitionDelay: items[idx] ? '100ms' : '0ms' }"
             >
               <p
                 class="text-base leading-relaxed text-justify text-gray-700 wrap-break-words whitespace-pre-line md:text-lg lg:text-xl"
               >
                 {{ career.description }}
               </p>
-            </motion.div>
-          </motion.div>
-        </motion.div>
+            </div>
+          </div>
+        </div>
 
-        <div v-if="careers.length === 0" class="py-12 text-center">
+        <div v-if="careers.length === 0" v-memo="true" class="py-12 text-center">
           <p class="text-base text-gray-500 sm:text-lg">
             Tidak ada data karir tersedia untuk konsentrasi keahlian ini.
           </p>

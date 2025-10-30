@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, nextTick } from "vue";
 import type { MajorName } from "~/models/MajorName";
 import { majorColorSchemes } from "~/utils/majorColors";
 
@@ -30,13 +30,37 @@ const duplicatedCompanies = computed(() => {
 });
 
 const sliderRef = ref<HTMLElement>();
+const imageRefs = ref<(HTMLElement | null)[]>([]);
 
-onMounted(() => {
+onMounted(async () => {
   if (sliderRef.value && currentCompanies.value.length > 0) {
     const count = currentCompanies.value.length;
     const duration = count * 3;
     sliderRef.value.style.setProperty("--animation-duration", `${duration}s`);
   }
+
+  await nextTick();
+
+  // Implement lazy loading with IntersectionObserver
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const img = entry.target as HTMLImageElement;
+          img.src = img.dataset.src || '';
+          img.classList.remove('lazy');
+          observer.unobserve(img);
+        }
+      });
+    },
+    { rootMargin: '50px' }
+  );
+
+  imageRefs.value.forEach((img) => {
+    if (img) {
+      observer.observe(img);
+    }
+  });
 });
 </script>
 
@@ -57,7 +81,10 @@ onMounted(() => {
               <NuxtImg
                 :src="company.logo"
                 :alt="`${company.name} logo`"
+                loading="lazy"
                 class="object-contain h-20 transition-all duration-300 w-28 sm:w-36 sm:h-24 grayscale hover:grayscale-0"
+                ref="imageRefs"
+                :data-src="company.logo"
               />
             </div>
             <p class="mt-3 text-xs font-semibold text-center text-gray-700 sm:text-sm">

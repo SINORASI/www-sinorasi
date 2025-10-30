@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { motion } from "motion-v";
 import type { MajorName } from "~/models/MajorName";
 import { majorColorSchemes } from "~/utils/majorColors";
+import toolsData from "~/data/toolsData.json";
 
 const props = defineProps<{
   major: MajorName;
@@ -9,266 +9,35 @@ const props = defineProps<{
 
 const majorColor = computed(() => majorColorSchemes[props.major]);
 
-const toolsData = {
-  rpl: [
-    {
-      name: "Visual Studio Code",
-      icon: "vscode-icons:file-type-vscode",
-      description: "Integrated Development Environment (IDE) untuk pengembangan web dan aplikasi",
-    },
-    {
-      name: "Node.js",
-      icon: "logos:nodejs",
-      description: "Runtime JavaScript untuk pengembangan backend dan server-side",
-    },
-    {
-      name: "React",
-      icon: "logos:react",
-      description: "Library JavaScript untuk membangun antarmuka pengguna interaktif",
-    },
-    {
-      name: "Python",
-      icon: "logos:python",
-      description: "Bahasa pemrograman untuk analisis data dan machine learning",
-    },
-    {
-      name: "MySQL",
-      icon: "logos:mysql",
-      description: "Sistem manajemen basis data relasional",
-    },
-    {
-      name: "Git",
-      icon: "logos:git",
-      description: "Sistem kontrol versi untuk kolaborasi pengembangan perangkat lunak",
-    },
-  ],
-  dkv: [
-    {
-      name: "Adobe Photoshop",
-      icon: "logos:adobe-photoshop",
-      description: "Software editing gambar dan desain grafis profesional",
-    },
-    {
-      name: "Adobe Illustrator",
-      icon: "logos:adobe-illustrator",
-      description: "Software vektor untuk desain logo dan ilustrasi",
-    },
-    {
-      name: "Figma",
-      icon: "logos:figma",
-      description: "Platform kolaboratif untuk desain antarmuka dan prototipe",
-    },
-    {
-      name: "Adobe InDesign",
-      icon: "logos:adobe-indesign",
-      description: "Software untuk desain layout dan penerbitan",
-    },
-    {
-      name: "Blender",
-      icon: "logos:blender",
-      description: "Software 3D modeling dan animasi open-source",
-    },
-    {
-      name: "Sketch",
-      icon: "logos:sketch",
-      description: "Alat desain vektor untuk UI/UX design",
-    },
-  ],
-  animasi: [
-    {
-      name: "Blender",
-      icon: "simple-icons:blender",
-      description: "Software 3D modeling, animasi, dan rendering",
-    },
-    {
-      name: "Adobe After Effects",
-      icon: "lucide:film",
-      description: "Software untuk motion graphics dan efek visual",
-    },
-    {
-      name: "Autodesk Maya",
-      icon: "lucide:box",
-      description: "Software 3D modeling dan animasi profesional",
-    },
-    {
-      name: "Cinema 4D",
-      icon: "lucide:video",
-      description: "Software 3D modeling dan animasi untuk film dan TV",
-    },
-    {
-      name: "Toon Boom Harmony",
-      icon: "lucide:palette",
-      description: "Software animasi 2D untuk produksi kartun",
-    },
-    {
-      name: "ZBrush",
-      icon: "lucide:brush",
-      description: "Software sculpting digital untuk karakter dan model 3D",
-    },
-  ],
-  tkj: [
-    {
-      name: "Cisco Packet Tracer",
-      icon: "lucide:network",
-      description: "Simulator jaringan untuk latihan konfigurasi Cisco",
-    },
-    {
-      name: "Wireshark",
-      icon: "lucide:search",
-      description: "Analisis paket jaringan untuk troubleshooting",
-    },
-    {
-      name: "Router Cisco",
-      icon: "lucide:server",
-      description: "Perangkat routing untuk menghubungkan jaringan",
-    },
-    {
-      name: "Switch Network",
-      icon: "lucide:network",
-      description: "Perangkat switching untuk distribusi data dalam LAN",
-    },
-    {
-      name: "Kabel UTP",
-      icon: "lucide:network",
-      description: "Kabel twisted pair untuk koneksi Ethernet",
-    },
-    {
-      name: "Access Point",
-      icon: "lucide:wifi",
-      description: "Perangkat untuk menghubungkan perangkat ke jaringan Wi-Fi",
-    },
-  ],
-  tei: [
-    {
-      name: "Multimeter Digital",
-      icon: "lucide:zap",
-      description: "Alat ukur tegangan, arus, dan resistansi",
-    },
-    {
-      name: "Oscilloscope",
-      icon: "lucide:activity",
-      description: "Alat untuk mengukur dan menampilkan sinyal listrik",
-    },
-    {
-      name: "Soldering Iron",
-      icon: "lucide:flame",
-      description: "Alat untuk menyolder komponen elektronik",
-    },
-    {
-      name: "PLC (Programmable Logic Controller)",
-      icon: "lucide:cpu",
-      description: "Controller untuk otomasi sistem industri",
-    },
-    {
-      name: "Arduino Board",
-      icon: "logos:arduino",
-      description: "Platform prototyping elektronik berbasis mikrokontroler",
-    },
-    {
-      name: "Breadboard",
-      icon: "lucide:circuit-board",
-      description: "Papan prototyping untuk merakit sirkuit elektronik",
-    },
-  ],
-  mekatronika: [
-    {
-      name: "CNC Machine",
-      icon: "lucide:cog",
-      description: "Mesin CNC untuk pemotongan dan pembentukan presisi",
-    },
-    {
-      name: "Sensor Proximity",
-      icon: "lucide:eye",
-      description: "Sensor untuk mendeteksi keberadaan objek tanpa kontak",
-    },
-    {
-      name: "Actuator Linear",
-      icon: "lucide:move",
-      description: "Aktuator untuk gerakan linear dalam sistem mekanik",
-    },
-    {
-      name: "PLC Controller",
-      icon: "lucide:cpu",
-      description: "Controller untuk mengontrol proses otomasi",
-    },
-    {
-      name: "CAD Software (AutoCAD)",
-      icon: "lucide:compass",
-      description: "Software desain asisten untuk model mekanik",
-    },
-    {
-      name: "Servo Motor",
-      icon: "lucide:rotate-cw",
-      description: "Motor servo untuk kontrol posisi presisi",
-    },
-  ],
-  tav: [
-    {
-      name: "Kamera DSLR",
-      icon: "lucide:camera",
-      description: "Kamera digital untuk produksi video profesional",
-    },
-    {
-      name: "Mikrofon Kondensor",
-      icon: "lucide:mic",
-      description: "Mikrofon untuk rekaman audio berkualitas tinggi",
-    },
-    {
-      name: "Lighting Equipment",
-      icon: "lucide:lightbulb",
-      description: "Peralatan pencahayaan untuk produksi video",
-    },
-    {
-      name: "Adobe Premiere Pro",
-      icon: "logos:adobe-premiere",
-      description: "Software editing video profesional",
-    },
-    {
-      name: "DaVinci Resolve",
-      icon: "logos:davinci-resolve",
-      description: "Software color grading dan finishing video",
-    },
-    {
-      name: "Tripod",
-      icon: "lucide:video",
-      description: "Kaki tiga untuk stabilisasi kamera",
-    },
-  ],
-  broadcasting: [
-    {
-      name: "Transmitter FM",
-      icon: "lucide:radio",
-      description: "Peralatan untuk transmisi siaran radio FM",
-    },
-    {
-      name: "Antena Yagi",
-      icon: "lucide:antenna",
-      description: "Antena directional untuk siaran televisi",
-    },
-    {
-      name: "Audio Mixer",
-      icon: "lucide:volume-2",
-      description: "Konsol mixing untuk kontrol audio siaran",
-    },
-    {
-      name: "Kamera Broadcast",
-      icon: "lucide:video",
-      description: "Kamera profesional untuk produksi siaran",
-    },
-    {
-      name: "Video Switcher",
-      icon: "lucide:switch-camera",
-      description: "Perangkat untuk switching sumber video",
-    },
-    {
-      name: "Editing Software",
-      icon: "lucide:edit",
-      description: "Software untuk editing dan post-produksi siaran",
-    },
-  ],
-};
-
 const tools = computed(() => toolsData[props.major] || []);
+
+// Lazy loading with IntersectionObserver
+const visibleCards = ref(new Set<number>());
+const cardRefs = ref<any[]>([]);
+
+onMounted(() => {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const index = parseInt(entry.target.getAttribute('data-index') || '0');
+        if (entry.isIntersecting) {
+          visibleCards.value.add(index);
+        } else {
+          visibleCards.value.delete(index);
+        }
+      });
+    },
+    { threshold: 0.1 }
+  );
+
+  cardRefs.value.forEach((card) => {
+    if (card) observer.observe(card);
+  });
+
+  onUnmounted(() => {
+    observer.disconnect();
+  });
+});
 </script>
 
 <template>
@@ -278,77 +47,64 @@ const tools = computed(() => toolsData[props.major] || []);
     :style="{ background: `linear-gradient(135deg, ${majorColor.primary}05, ${majorColor.accent}05)` }"
   >
     <div class="container flex flex-col items-center justify-center gap-10 px-4 mx-auto md:gap-12">
-      <div class="max-w-3xl space-y-4 text-center">
-        <div class="inline-block">
-          <span
-            class="px-4 py-2 text-sm font-bold tracking-widest uppercase rounded-full md:text-base"
-            :style="{ background: majorColor.primary, color: 'white' }"
-          >
-            Tools & Equipment
-          </span>
-        </div>
-        <h2
-          class="text-3xl font-extrabold text-transparent md:text-5xl bg-linear-to-r bg-clip-text"
-          :style="{ backgroundImage: `linear-gradient(135deg, ${majorColor.primary}, ${majorColor.accent})` }"
-        >
-          Alat dan Peralatan
-        </h2>
-        <p class="max-w-2xl mx-auto text-sm text-gray-600 md:text-lg">
-          Berbagai tools dan equipment yang digunakan dalam pembelajaran konsentrasi keahlian {{ major }}
-        </p>
-      </div>
+      <div v-memo="[majorColor.primary, majorColor.accent, major]" class="max-w-3xl space-y-4 text-center">
+         <div class="inline-block">
+           <span
+             class="px-4 py-2 text-sm font-bold tracking-widest uppercase rounded-full md:text-base"
+             :style="{ background: majorColor.primary, color: 'white' }"
+           >
+             Tools & Equipment
+           </span>
+         </div>
+         <h2
+           class="text-3xl font-extrabold text-transparent md:text-5xl bg-linear-to-r bg-clip-text"
+           :style="{ backgroundImage: `linear-gradient(135deg, ${majorColor.primary}, ${majorColor.accent})` }"
+         >
+           Alat dan Peralatan
+         </h2>
+         <p class="max-w-2xl mx-auto text-sm text-gray-600 md:text-lg">
+           Berbagai tools dan equipment yang digunakan dalam pembelajaran konsentrasi keahlian {{ major }}
+         </p>
+       </div>
 
       <div class="grid w-full max-w-6xl grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <motion.div
+        <div
           v-for="(tool, index) in tools"
           :key="tool.name"
-          :initial="{ opacity: 0, y: 50, scale: 0.9 }"
-          :animate="{ opacity: 1, y: 0, scale: 1 }"
-          :transition="{ duration: 0.6, delay: index * 0.1 }"
-          class="flex flex-col items-center p-6 bg-white shadow-lg rounded-2xl"
-          :whileHover="{
-            scale: 1.05,
-            y: -5,
-            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15)',
-          }"
+          :ref="(el) => { if (el) cardRefs[index] = el; }"
+          :data-index="index"
+          class="tool-card flex flex-col items-center p-6 bg-white shadow-lg rounded-2xl transition-all duration-600 ease-out hover:scale-105 hover:-translate-y-1 hover:shadow-2xl"
+          :class="{ 'opacity-0 translate-y-12 scale-90': !visibleCards.has(index), 'opacity-100 translate-y-0 scale-100': visibleCards.has(index) }"
+          :style="{ transitionDelay: `${index * 100}ms` }"
         >
-          <motion.div
-            class="absolute top-4 right-4 w-1 h-1 rounded-full opacity-60"
-            :style="{ background: majorColor.primary }"
-            :animate="{
-              scale: [1, 1.5, 1],
-              opacity: [0.6, 1, 0.6],
-            }"
-            :transition="{ duration: 2, repeat: Infinity, delay: index * 0.2 }"
-          ></motion.div>
+          <div
+            class="absolute top-4 right-4 w-1 h-1 rounded-full opacity-60 animate-pulse"
+            :style="{ background: majorColor.primary, animationDelay: `${index * 200}ms` }"
+          ></div>
 
-          <motion.div
-            class="flex items-center justify-center w-16 h-16 mb-4 rounded-full shadow-md"
+          <div
+            class="icon-container flex items-center justify-center w-16 h-16 mb-4 rounded-full shadow-md transition-transform duration-300 hover:rotate-12 hover:scale-110"
             :style="{ background: majorColor.light, color: majorColor.primary }"
-            :whileHover="{ rotate: [0, -10, 10, 0], scale: 1.1 }"
-            :transition="{ type: 'spring', stiffness: 300 }"
           >
             <Icon :name="tool.icon" :size="32" />
-          </motion.div>
+          </div>
 
-          <motion.h3
-            class="mb-2 text-lg font-bold text-center text-gray-800 md:text-xl"
-            :initial="{ opacity: 0 }"
-            :animate="{ opacity: 1 }"
-            :transition="{ delay: 0.3, duration: 0.4 }"
+          <h3
+            class="mb-2 text-lg font-bold text-center text-gray-800 md:text-xl transition-opacity duration-400"
+            :class="{ 'opacity-0': !visibleCards.has(index), 'opacity-100': visibleCards.has(index) }"
+            :style="{ transitionDelay: `${index * 100 + 300}ms` }"
           >
             {{ tool.name }}
-          </motion.h3>
+          </h3>
 
-          <motion.p
-            class="text-sm text-center text-gray-600 md:text-base"
-            :initial="{ opacity: 0 }"
-            :animate="{ opacity: 1 }"
-            :transition="{ delay: 0.5, duration: 0.4 }"
+          <p
+            class="text-sm text-center text-gray-600 md:text-base transition-opacity duration-400"
+            :class="{ 'opacity-0': !visibleCards.has(index), 'opacity-100': visibleCards.has(index) }"
+            :style="{ transitionDelay: `${index * 100 + 500}ms` }"
           >
             {{ tool.description }}
-          </motion.p>
-        </motion.div>
+          </p>
+        </div>
       </div>
     </div>
   </section>

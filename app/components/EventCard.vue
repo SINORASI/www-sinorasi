@@ -18,7 +18,7 @@
       </div>
 
       <div class="shrink-0">
-        <NuxtImg :src="event.imageUrl" alt="Event Image" class="object-cover w-64 h-64 shadow-lg rounded-xl" />
+        <NuxtImg :src="event.imageUrl" alt="Event Image" class="object-cover w-64 h-64 shadow-lg rounded-xl" loading="lazy" placeholder="blur" />
       </div>
     </div>
 

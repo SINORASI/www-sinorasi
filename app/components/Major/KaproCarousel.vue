@@ -1,10 +1,11 @@
 <script lang="ts" setup>
 import { motion } from "motion-v";
-import { computed, ref } from "vue";
+import { computed, ref, onMounted } from "vue";
 import type { KaproProfile } from "~/models/KaproProfile";
 import type { MajorData } from "~/models/MajorData";
 import type { MajorName } from "~/models/MajorName";
 import { majorColorSchemes } from "~/utils/majorColors";
+import kaprosData from "~/data/kaprosData.json";
 
 const props = defineProps<{
   major?: MajorName;
@@ -12,198 +13,7 @@ const props = defineProps<{
 
 const { data: _majorDatas } = await useFetch<Record<MajorName, MajorData>>("/api/majors");
 
-const kapros: Record<MajorName, KaproProfile[]> = {
-  rpl: [
-    {
-      image: "/images/profile-placeholder.png",
-      jabatan: "Kepala Jurusan Program RPL",
-      kaproName: "Alifah Diantebes Aindra, S.Pd",
-      quote: "Jadilah dirimu sendiri selagi dirimu masih mengenali dirimu",
-    },
-    {
-      image: "/images/profile-placeholder.png",
-      jabatan: "Guru Produktif RPL",
-      kaproName: "Zulkifli Abdillah, S.Kom",
-      quote: "Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri",
-    },
-    {
-      image: "/images/profile-placeholder.png",
-      jabatan: "Guru Produktif RPL",
-      kaproName: "RR. Henning Gratyanis A, S.Pd",
-      quote: "Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri",
-    },
-  ],
-  tkj: [
-    {
-      image: "/images/profile-placeholder.png",
-      jabatan: "Kepala Jurusan Program TKJ",
-      kaproName: "Chutman Efendi, S.Pd, Gr",
-      quote: "Jadilah dirimu sendiri selagi dirimu masih mengenali dirimu",
-    },
-    {
-      image: "/images/profile-placeholder.png",
-      jabatan: "Guru Produktif TKJ",
-      kaproName: "Gayan Laga, S.Pd",
-      quote: "Jadilah dirimu sendiri selagi dirimu masih mengenali dirimu",
-    },
-    {
-      image: "/images/profile-placeholder.png",
-      jabatan: "Guru Produktif TKJ",
-      kaproName: "Zulfa Rumailah, S.Pd",
-      quote: "Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri",
-    },
-    {
-      image: "/images/profile-placeholder.png",
-      jabatan: "Guru Produktif TKJ",
-      kaproName: "Imam Syafi'i, S.Pd",
-      quote: "Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri",
-    },
-  ],
-  dkv: [
-    {
-      image: "/images/profile-placeholder.png",
-      jabatan: "Kepala Jurusan Program DKV",
-      kaproName: "Ivan Satryana, S.Pd",
-      quote: "Jadilah dirimu sendiri selagi dirimu masih mengenali dirimu",
-    },
-    {
-      image: "/images/profile-placeholder.png",
-      jabatan: "Guru Produktif DKV",
-      kaproName: "Zoulfikar Ramsanjanie Aqsha, S.Kom",
-      quote: "Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri",
-    },
-    {
-      image: "/images/profile-placeholder.png",
-      jabatan: "Guru Produktif DKV",
-      kaproName: "Mira Ayu, S.Pd",
-      quote: "Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri",
-    },
-    {
-      image: "/images/profile-placeholder.png",
-      jabatan: "Guru Produktif DKV",
-      kaproName: "Nurrudin Septiawan, S.Kom",
-      quote: "Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri",
-    },
-    {
-      image: "/images/profile-placeholder.png",
-      jabatan: "Guru Produktif DKV",
-      kaproName: "Aang Noeraries Wahyupidasa, S.Si",
-      quote: "Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri",
-    },
-  ],
-  animasi: [
-    {
-      image: "/images/profile-placeholder.png",
-      jabatan: "Kepala Jurusan Program Animasi",
-      kaproName: "Dimas Maharendra Oktendima, S.Pd",
-      quote: "Jadilah dirimu sendiri selagi dirimu masih mengenali dirimu",
-    },
-    {
-      image: "/images/profile-placeholder.png",
-      jabatan: "Guru Produktif Animasi",
-      kaproName: "Wardatul Maulidiyah, S.Pd",
-      quote: "Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri",
-    },
-    {
-      image: "/images/profile-placeholder.png",
-      jabatan: "Guru Produktif Animasi",
-      kaproName: "Moh. Khamdan Syaifuddin, A.Md",
-      quote: "Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri",
-    },
-  ],
-  broadcasting: [
-    {
-      image: "/images/profile-placeholder.png",
-      jabatan: "Kepala Jurusan Program Broadcasting",
-      kaproName: "Febrina Candra Cahyaning Dian, S.Sn",
-      quote: "Jadilah dirimu sendiri selagi dirimu masih mengenali dirimu",
-    },
-    {
-      image: "/images/profile-placeholder.png",
-      jabatan: "Guru Produktif Broadcasting",
-      kaproName: "Sofianasari, S.Sn",
-      quote: "Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri",
-    },
-    {
-      image: "/images/profile-placeholder.png",
-      jabatan: "Guru Produktif Broadcasting",
-      kaproName: "Fauzi Rahmadani, S.Sn",
-      quote: "Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri",
-    },
-  ],
-  tei: [
-    {
-      image: "/images/profile-placeholder.png",
-      jabatan: "Kepala Jurusan Program TEI",
-      kaproName: "Mokhamad Amrul Sadat, ST, M.Pd",
-      quote: "Jadilah dirimu sendiri selagi dirimu masih mengenali dirimu",
-    },
-    {
-      image: "/images/profile-placeholder.png",
-      jabatan: "Guru Produktif TEI",
-      kaproName: "Anjar Afif Afandi, ST, M.Pd",
-      quote: "Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri",
-    },
-    {
-      image: "/images/profile-placeholder.png",
-      jabatan: "Guru Produktif TEI",
-      kaproName: "Bambang Ishartanto, ST",
-      quote: "Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri",
-    },
-    {
-      image: "/images/profile-placeholder.png",
-      jabatan: "Guru Produktif TEI",
-      kaproName: "Dyah Ayu Komala, ST",
-      quote: "Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri",
-    },
-  ],
-  mekatronika: [
-    {
-      image: "/images/profile-placeholder.png",
-      jabatan: "Kepala Jurusan Program Mekatronika",
-      kaproName: "Hermawan, ST, M.Pd",
-      quote: "Jadilah dirimu sendiri selagi dirimu masih mengenali dirimu",
-    },
-    {
-      image: "/images/profile-placeholder.png",
-      jabatan: "Guru Produktif Mekatronika",
-      kaproName: "Anjar Afif Afandi, ST, M.Pd",
-      quote: "Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri",
-    },
-    {
-      image: "/images/profile-placeholder.png",
-      jabatan: "Guru Produktif TEI",
-      kaproName: "Bambang Ishartanto, ST",
-      quote: "Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri",
-    },
-    {
-      image: "/images/profile-placeholder.png",
-      jabatan: "Guru Produktif TEI",
-      kaproName: "Ewit Irniyah, S.Pd",
-      quote: "Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri",
-    },
-  ],
-  tav: [
-    {
-      image: "/images/profile-placeholder.png",
-      jabatan: "Kepala Jurusan Program TAV",
-      kaproName: "Falkudin, S.T",
-      quote: "Jadilah dirimu sendiri selagi dirimu masih mengenali dirimu sendiri",
-    },
-    {
-      image: "/images/profile-placeholder.png",
-      jabatan: "Guru Produktif TAV",
-      kaproName: "Drs. H. Ahmad Maksum, M.Pd",
-      quote: "Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri",
-    },
-    {
-      image: "/images/profile-placeholder.png",
-      jabatan: "Guru Produktif TAV",
-      kaproName: "Yoke Kurnia Dewanto H.H.P, ST",
-      quote: "Berusahalah untuk dirimu sendiri, karena itu dirimu sendiri",
-    },
-  ],
-};
+const kapros: Record<MajorName, KaproProfile[]> = kaprosData;
 
 const route = useRoute();
 const major = props.major || (route.params.majorName as MajorName);
@@ -227,6 +37,7 @@ const majorColor = computed(() => {
 
 const current = ref(0);
 const direction = ref("next");
+const isVisible = ref(false);
 
 const prev = () => {
   direction.value = "prev";
@@ -255,10 +66,29 @@ const getTransitionClasses = () => {
     };
   }
 };
+
+onMounted(() => {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          isVisible.value = true;
+          observer.disconnect();
+        }
+      });
+    },
+    { threshold: 0.1 }
+  );
+
+  const element = document.querySelector('.kapro-carousel-container');
+  if (element) {
+    observer.observe(element);
+  }
+});
 </script>
 
 <template>
-  <div class="w-full max-w-6xl px-4 py-8 mx-auto">
+  <div class="w-full max-w-6xl px-4 py-8 mx-auto kapro-carousel-container">
     <div class="overflow-hidden">
       <div class="grid grid-cols-1 gap-8 p-6 lg:grid-cols-5 md:p-8 lg:p-10">
         <motion.div
@@ -302,6 +132,7 @@ const getTransitionClasses = () => {
                   :src="kapro[current]?.image"
                   :alt="kapro[current]?.kaproName"
                   class="object-cover w-full h-full"
+                  loading="lazy"
                 />
               </motion.div>
             </div>

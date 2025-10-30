@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { motion, AnimatePresence } from "motion-v";
-
 interface FAQItem {
   question: string;
   answer: string;
@@ -58,6 +56,11 @@ const faqItems = ref<FAQItem[]>([
   },
 ]);
 
+// Lazy loading: render only first 5 items initially, load more on scroll or button
+const visibleItems = ref(5);
+const loadMore = () => {
+  visibleItems.value = Math.min(visibleItems.value + 5, faqItems.value.length);
+};
 
 const toggleFAQ = (item: FAQItem) => {
   item.isOpen = !item.isOpen;
@@ -68,74 +71,66 @@ const toggleFAQ = (item: FAQItem) => {
   <section id="faq">
     <div class="container py-28 px-4 mx-auto md:px-10">
       <div class="flex flex-col items-center gap-8">
-        <motion.div
-          class="px-8 py-4 rounded-lg shadow-md bg-secondary backdrop-blur-2xl"
-          :initial="{ opacity: 0, y: -30 }"
-          :animate="{ opacity: 1, y: 0 }"
-          :transition="{ duration: 0.6 }"
+        <div
+          class="px-8 py-4 rounded-lg shadow-md bg-secondary backdrop-blur-2xl animate-fade-in-up"
         >
           <h2 class="text-3xl font-bold">Pertanyaan yang Sering Diajukan</h2>
-        </motion.div>
+        </div>
 
-        <motion.div
-          class="max-w-2xl text-center text-gray-600"
-          :initial="{ opacity: 0, y: 30 }"
-          :animate="{ opacity: 1, y: 0 }"
-          :transition="{ duration: 0.6, delay: 0.2 }"
+        <div
+          class="max-w-2xl text-center text-gray-600 animate-fade-in-up animation-delay-200"
         >
           Temukan jawaban atas pertanyaan umum tentang SMK Negeri 2 Singosari
-        </motion.div>
+        </div>
 
-        <motion.div
-          class="w-full max-w-4xl"
-          :initial="{ opacity: 0, y: 20 }"
-          :animate="{ opacity: 1, y: 0 }"
-          :transition="{ duration: 0.6, delay: 0.4 }"
+        <div
+          class="w-full max-w-4xl animate-fade-in-up animation-delay-400"
         >
 
           <div class="space-y-4">
-            <motion.div
-              v-for="(item, index) in faqItems"
+            <div
+              v-for="(item, index) in faqItems.slice(0, visibleItems)"
               :key="item.question"
-              class="overflow-hidden transition-shadow duration-300 bg-white border border-gray-300 rounded-lg shadow-sm hover:shadow-md"
-              :initial="{ opacity: 0, y: 50 }"
-              :whileInView="{ opacity: 1, y: 0 }"
-              :transition="{ duration: 0.5, delay: index * 0.1 }"
-              :inViewOptions="{ once: true }"
+              class="overflow-hidden transition-shadow duration-300 bg-white border border-gray-300 rounded-lg shadow-sm hover:shadow-md animate-fade-in-up"
+              :style="{ animationDelay: `${index * 0.1}s` }"
             >
               <button
                 @click="toggleFAQ(item)"
                 class="flex items-center justify-between w-full px-6 py-4 text-left transition-colors duration-200 hover:bg-gray-50"
               >
                 <span class="pr-4 font-semibold text-gray-800">{{ item.question }}</span>
-                <motion.div :animate="{ rotate: item.isOpen ? 180 : 0 }" :transition="{ duration: 0.3 }">
-                  <Icon name="lucide:chevron-down" size="24" class="shrink-0 text-blue-600" />
-                </motion.div>
+                <div
+                  class="shrink-0 text-blue-600 transition-transform duration-300"
+                  :class="{ 'rotate-180': item.isOpen }"
+                >
+                  <Icon name="lucide:chevron-down" size="24" />
+                </div>
               </button>
 
-              <AnimatePresence>
-                <motion.div
-                  v-if="item.isOpen"
-                  :initial="{ height: 0, opacity: 0 }"
-                  :animate="{ height: 'auto', opacity: 1 }"
-                  :exit="{ height: 0, opacity: 0 }"
-                  :transition="{ duration: 0.3, ease: 'easeInOut' }"
-                  class="overflow-hidden"
-                >
-                  <div class="px-6 py-4 border-t border-gray-200 bg-gray-50">
-                    <p class="leading-relaxed text-gray-700">{{ item.answer }}</p>
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-            </motion.div>
+              <div
+                class="overflow-hidden transition-all duration-300 ease-in-out"
+                :class="{ 'max-h-0 opacity-0': !item.isOpen, 'max-h-screen opacity-100': item.isOpen }"
+              >
+                <div class="px-6 py-4 border-t border-gray-200 bg-gray-50">
+                  <p class="leading-relaxed text-gray-700">{{ item.answer }}</p>
+                </div>
+              </div>
+            </div>
           </div>
-        </motion.div>
 
-        <motion.div
-          class="mt-8 text-center"
-          :initial="{ opacity: 0, y: 30 }"
-          :animate="{ opacity: 1, y: 0 }"
-          :transition="{ duration: 0.6, delay: 0.8 }"
+          <!-- Load More Button -->
+          <div v-if="visibleItems < faqItems.length" class="text-center mt-8">
+            <button
+              @click="loadMore"
+              class="px-6 py-3 font-semibold text-white transition-colors duration-200 bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 hover:shadow-lg"
+            >
+              Load More FAQs
+            </button>
+          </div>
+        </div>
+
+        <div
+          class="mt-8 text-center animate-fade-in-up animation-delay-800"
         >
           <p class="mb-4 text-gray-600">Masih ada pertanyaan lain?</p>
           <NuxtLink
@@ -145,8 +140,37 @@ const toggleFAQ = (item: FAQItem) => {
             Hubungi Kami
             <Icon name="lucide:arrow-right" size="18" />
           </NuxtLink>
-        </motion.div>
+        </div>
       </div>
     </div>
   </section>
 </template>
+
+<style scoped>
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out forwards;
+}
+
+.animation-delay-200 {
+  animation-delay: 0.2s;
+}
+
+.animation-delay-400 {
+  animation-delay: 0.4s;
+}
+
+.animation-delay-800 {
+  animation-delay: 0.8s;
+}
+</style>

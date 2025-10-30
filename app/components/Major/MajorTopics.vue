@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { motion } from "motion-v";
 import type { MajorData } from "~/models/MajorData";
 import type { MajorName } from "~/models/MajorName";
 import type { MajorTopic } from "~/models/MajorTopic";
 import { majorColorSchemes } from "~/utils/majorColors";
+
+// Dynamic import for motion components to reduce initial bundle size
+const { motion } = await import("motion-v");
 
 const props = defineProps<{
   major?: MajorName;
@@ -21,20 +23,45 @@ const expandedRightItems = ref<ExpandedItems>({});
 const leftOpenOrder = ref<string[]>([]);
 const rightOpenOrder = ref<string[]>([]);
 
+const leftVisible = ref<Record<string, boolean>>({});
+const rightVisible = ref<Record<string, boolean>>({});
+const refs = ref<(Element | ComponentPublicInstance | null)[]>([]);
+
+const setRef = (el: Element | ComponentPublicInstance | null) => {
+  if (el) refs.value.push(el);
+};
+
+onMounted(() => {
+  const obs = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute("data-id");
+          if (id) {
+            if (leftColumnTopics.value.some((t) => t.id === id)) {
+              leftVisible.value[id] = true;
+            } else if (rightColumnTopics.value.some((t) => t.id === id)) {
+              rightVisible.value[id] = true;
+            }
+            obs.unobserve(entry.target);
+          }
+        }
+      });
+    },
+    { threshold: 0.1 }
+  );
+  refs.value.forEach((el) => {
+    if (el instanceof Element) obs.observe(el);
+  });
+});
+
 const route = useRoute();
 const major = props.major || (route.params.majorName as MajorName);
 
 const majorColor = computed(() => majorColorSchemes[major]);
 
-const hexToRgb = (hex: string) => {
-  const r = parseInt(hex.slice(1, 3), 16);
-  const g = parseInt(hex.slice(3, 5), 16);
-  const b = parseInt(hex.slice(5, 7), 16);
-  return { r, g, b };
-};
-
+// Memoize static computed values
 const majorColorRgb = computed(() => hexToRgb(majorColor.value.primary));
-
 const leftColumnTopics = computed(() => {
   const topics = majorTopics.value?.[major] || [];
   return topics.filter((_, idx) => idx % 2 === 0);
@@ -44,6 +71,13 @@ const rightColumnTopics = computed(() => {
   const topics = majorTopics.value?.[major] || [];
   return topics.filter((_, idx) => idx % 2 === 1);
 });
+
+const hexToRgb = (hex: string) => {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return { r, g, b };
+};
 
 const toggleLeftExpanded = (id: string): void => {
   if (expandedLeftItems.value[id]) {
@@ -107,8 +141,10 @@ const toggleRightExpanded = (id: string): void => {
         <motion.div
           v-for="(topic, index) in leftColumnTopics"
           :key="topic.id"
-          :initial="{ opacity: 0, x: -50 }"
-          :animate="{ opacity: 1, x: 0 }"
+          :ref="setRef"
+          :data-id="topic.id"
+          :initial="leftVisible[topic.id] ? { opacity: 0, x: -50 } : {}"
+          :animate="leftVisible[topic.id] ? { opacity: 1, x: 0 } : {}"
           :transition="{ duration: 0.6, delay: index * 0.1 }"
           class="transition-all duration-300"
         >
@@ -206,8 +242,10 @@ const toggleRightExpanded = (id: string): void => {
         <motion.div
           v-for="(topic, index) in rightColumnTopics"
           :key="topic.id"
-          :initial="{ opacity: 0, x: 50 }"
-          :animate="{ opacity: 1, x: 0 }"
+          :ref="setRef"
+          :data-id="topic.id"
+          :initial="rightVisible[topic.id] ? { opacity: 0, x: 50 } : {}"
+          :animate="rightVisible[topic.id] ? { opacity: 1, x: 0 } : {}"
           :transition="{ duration: 0.6, delay: index * 0.1 }"
           class="transition-all duration-300"
         >
@@ -302,7 +340,7 @@ const toggleRightExpanded = (id: string): void => {
       </div>
     </div>
 
-    <div v-if="leftColumnTopics.length === 0 && rightColumnTopics.length === 0" class="py-16 text-center md:py-20">
+    <div v-if="leftColumnTopics.length === 0 && rightColumnTopics.length === 0" v-memo="[majorColor.light, majorColor.primary]" class="py-16 text-center md:py-20">
       <div
         class="flex items-center justify-center w-20 h-20 mx-auto mb-6 rounded-full shadow-lg md:w-24 md:h-24"
         :style="{ background: majorColor.light }"
