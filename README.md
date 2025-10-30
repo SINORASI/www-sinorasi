@@ -1,3 +1,2 @@
 # www-sinorasi
-Production Sinorasi Web Using Nuxt 
-deploy
+Production Sinorasi Web Using Nuxt

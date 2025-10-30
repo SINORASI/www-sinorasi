@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
+import { useNuxtApp } from '#app';
 
+const nuxtApp = useNuxtApp();
 const loading = ref(true);
 
-onMounted(() => {
+nuxtApp.hook('page:loading:end', () => {
   loading.value = false;
 });
 
@@ -27,15 +29,15 @@ useSeoMeta({
 </script>
 
 <template>
-  <Transition name="loading">
-    <div v-if="loading" class="loading-overlay">
-      <div class="flex flex-col items-center justify-center min-h-screen bg-white">
-        <img src="/images/logo-smk.webp" alt="SMK Negeri 2 Singosari" class="w-48 h-48 mb-4" />
-        <p class="text-xl text-gray-600">Loading...</p>
+  <NuxtLayout>
+    <Transition name="loading">
+      <div v-if="loading">
+        <div class="flex flex-col items-center justify-center min-h-screen bg-white">
+          <img src="/images/logo-smk.webp" alt="SMK Negeri 2 Singosari" class="w-48 h-48 mb-4" />
+          <p class="text-xl text-gray-600">Loading...</p>
+        </div>
       </div>
-    </div>
-  </Transition>
-  <NuxtLayout v-if="!loading">
+    </Transition>
     <NuxtPage />
   </NuxtLayout>
 </template>

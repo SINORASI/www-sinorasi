@@ -69,7 +69,4 @@ export default defineNuxtConfig({
   experimental: {
     viteEnvironmentApi: true,
   },
-  nitro: {
-    preset: "bun"
-  }
 });
