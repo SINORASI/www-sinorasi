@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { motion } from "motion-v";
 import type { MajorData } from "~/models/MajorData";
 import type { MajorName } from "~/models/MajorName";
 import type { MajorTopic } from "~/models/MajorTopic";
@@ -101,152 +102,214 @@ const toggleRightExpanded = (id: string): void => {
 
 <template>
   <div class="w-full">
-    
     <div class="grid grid-cols-1 gap-4 lg:grid-cols-2 md:gap-5 lg:gap-6">
-      
       <div class="space-y-4">
-        <div v-for="(topic, index) in leftColumnTopics" :key="topic.id" class="transition-all duration-300">
-          
-          <button v-if="!expandedLeftItems[topic.id]" @click="toggleLeftExpanded(topic.id)" class="w-full group">
-            <div
-              class="relative flex items-center justify-between gap-3 px-5 py-4 md:px-6 md:py-5 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5"
-              :style="`background: ${majorColor.primary}`"
+        <motion.div
+          v-for="(topic, index) in leftColumnTopics"
+          :key="topic.id"
+          :initial="{ opacity: 0, x: -50 }"
+          :animate="{ opacity: 1, x: 0 }"
+          :transition="{ duration: 0.6, delay: index * 0.1 }"
+          class="transition-all duration-300"
+        >
+          <motion.button
+            v-if="!expandedLeftItems[topic.id]"
+            @click="toggleLeftExpanded(topic.id)"
+            class="w-full group"
+            :whileHover="{ scale: 1.02 }"
+            :whileTap="{ scale: 0.98 }"
+          >
+            <motion.div
+              class="relative flex items-center justify-between gap-3 px-5 py-4 md:px-6 md:py-5 rounded-xl shadow-md hover:shadow-lg transition-all duration-300"
+              :style="{ background: majorColor.primary }"
+              :whileHover="{ y: -2, boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.2)' }"
             >
-              
+              <motion.div
+                class="absolute top-2 right-2 w-1 h-1 rounded-full bg-white/40"
+                :animate="{
+                  scale: [1, 1.5, 1],
+                  opacity: [0.4, 1, 0.4],
+                }"
+                :transition="{ duration: 2, repeat: Infinity, delay: index * 0.2 }"
+              ></motion.div>
+
               <div class="flex-1 min-w-0 text-left">
                 <h3 class="pr-2 text-sm font-semibold leading-snug text-white md:text-base line-clamp-2">
                   {{ topic.title }}
                 </h3>
               </div>
 
-              
               <div class="shrink-0">
-                <div
-                  class="flex items-center justify-center w-8 h-8 transition-transform duration-300 rounded-lg md:w-9 md:h-9 bg-white/20 group-hover:rotate-90"
+                <motion.div
+                  class="flex items-center justify-center w-8 h-8 rounded-lg md:w-9 md:h-9 bg-white/20"
+                  :animate="{ rotate: expandedLeftItems[topic.id] ? 180 : 0 }"
+                  :transition="{ type: 'spring', stiffness: 300 }"
+                  :whileHover="{ rotate: expandedLeftItems[topic.id] ? 225 : 90 }"
                 >
                   <svg class="w-4 h-4 text-white md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" />
                   </svg>
-                </div>
+                </motion.div>
               </div>
-            </div>
-          </button>
+            </motion.div>
+          </motion.button>
 
-          
-          <div v-else class="overflow-hidden border shadow-lg rounded-xl animate-expand backdrop-blur-xl border-white/20" :style="`background: rgba(${majorColorRgb.r}, ${majorColorRgb.g}, ${majorColorRgb.b}, 0.2);`">
-            
-            <button @click="toggleLeftExpanded(topic.id)" class="w-full group">
+          <motion.div
+            v-else
+            class="overflow-hidden border shadow-lg rounded-xl backdrop-blur-xl border-white/20"
+            :style="{ background: `rgba(${majorColorRgb.r}, ${majorColorRgb.g}, ${majorColorRgb.b}, 0.2)` }"
+            :initial="{ height: 0, opacity: 0 }"
+            :animate="{ height: 'auto', opacity: 1 }"
+            :transition="{ duration: 0.4, ease: 'easeOut' }"
+          >
+            <motion.button @click="toggleLeftExpanded(topic.id)" class="w-full group" :whileHover="{ scale: 1.01 }">
               <div
                 class="relative flex items-center justify-between gap-3 px-5 py-4 md:px-6 md:py-5"
-                :style="`background: ${majorColor.primary}`"
+                :style="{ background: majorColor.primary }"
               >
-                
                 <div class="flex-1 min-w-0 text-left">
                   <h3 class="pr-2 text-sm font-semibold leading-snug text-white md:text-base">
                     {{ topic.title }}
                   </h3>
                 </div>
 
-                
                 <div class="shrink-0">
-                  <div
-                    class="flex items-center justify-center w-8 h-8 transition-transform duration-300 rounded-lg md:w-9 md:h-9 bg-white/20 group-hover:rotate-180"
+                  <motion.div
+                    class="flex items-center justify-center w-8 h-8 rounded-lg md:w-9 md:h-9 bg-white/20"
+                    :animate="{ rotate: 180 }"
+                    :transition="{ type: 'spring', stiffness: 300 }"
+                    :whileHover="{ rotate: 225 }"
                   >
                     <svg class="w-4 h-4 text-white md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M20 12H4" />
                     </svg>
-                  </div>
+                  </motion.div>
                 </div>
               </div>
-            </button>
+            </motion.button>
 
-            
-            <div class="p-4 md:p-5 lg:p-6 animate-slide-down" >
+            <motion.div
+              class="p-4 md:p-5 lg:p-6"
+              :initial="{ opacity: 0, y: 20 }"
+              :animate="{ opacity: 1, y: 0 }"
+              :transition="{ delay: 0.2, duration: 0.4 }"
+            >
               <p class="text-sm leading-relaxed text-justify text-gray-700 md:text-base">
                 {{ topic.description }}
               </p>
-            </div>
-          </div>
-        </div>
+            </motion.div>
+          </motion.div>
+        </motion.div>
       </div>
 
-      
       <div class="space-y-4">
-        <div v-for="(topic, index) in rightColumnTopics" :key="topic.id" class="transition-all duration-300">
-          
-          <button v-if="!expandedRightItems[topic.id]" @click="toggleRightExpanded(topic.id)" class="w-full group">
-            <div
-              class="relative flex items-center justify-between gap-3 px-5 py-4 md:px-6 md:py-5 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5"
-              :style="`background: ${majorColor.primary}`"
+        <motion.div
+          v-for="(topic, index) in rightColumnTopics"
+          :key="topic.id"
+          :initial="{ opacity: 0, x: 50 }"
+          :animate="{ opacity: 1, x: 0 }"
+          :transition="{ duration: 0.6, delay: index * 0.1 }"
+          class="transition-all duration-300"
+        >
+          <motion.button
+            v-if="!expandedRightItems[topic.id]"
+            @click="toggleRightExpanded(topic.id)"
+            class="w-full group"
+            :whileHover="{ scale: 1.02 }"
+            :whileTap="{ scale: 0.98 }"
+          >
+            <motion.div
+              class="relative flex items-center justify-between gap-3 px-5 py-4 md:px-6 md:py-5 rounded-xl shadow-md hover:shadow-lg transition-all duration-300"
+              :style="{ background: majorColor.primary }"
+              :whileHover="{ y: -2, boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.2)' }"
             >
-              
+              <motion.div
+                class="absolute top-2 right-2 w-1 h-1 rounded-full bg-white/40"
+                :animate="{
+                  scale: [1, 1.5, 1],
+                  opacity: [0.4, 1, 0.4],
+                }"
+                :transition="{ duration: 2, repeat: Infinity, delay: index * 0.2 }"
+              ></motion.div>
+
               <div class="flex-1 min-w-0 text-left">
                 <h3 class="pr-2 text-sm font-semibold leading-snug text-white md:text-base line-clamp-2">
                   {{ topic.title }}
                 </h3>
               </div>
 
-              
               <div class="shrink-0">
-                <div
-                  class="flex items-center justify-center w-8 h-8 transition-transform duration-300 rounded-lg md:w-9 md:h-9 bg-white/20 group-hover:rotate-90"
+                <motion.div
+                  class="flex items-center justify-center w-8 h-8 rounded-lg md:w-9 md:h-9 bg-white/20"
+                  :animate="{ rotate: expandedRightItems[topic.id] ? 180 : 0 }"
+                  :transition="{ type: 'spring', stiffness: 300 }"
+                  :whileHover="{ rotate: expandedRightItems[topic.id] ? 225 : 90 }"
                 >
                   <svg class="w-4 h-4 text-white md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" />
                   </svg>
-                </div>
+                </motion.div>
               </div>
-            </div>
-          </button>
+            </motion.div>
+          </motion.button>
 
-          
-          <div v-else class="overflow-hidden border shadow-lg rounded-xl animate-expand backdrop-blur-xl border-white/20" :style="`background: rgba(${majorColorRgb.r}, ${majorColorRgb.g}, ${majorColorRgb.b}, 0.2);`">
-            
-            <button @click="toggleRightExpanded(topic.id)" class="w-full group">
+          <motion.div
+            v-else
+            class="overflow-hidden border shadow-lg rounded-xl backdrop-blur-xl border-white/20"
+            :style="{ background: `rgba(${majorColorRgb.r}, ${majorColorRgb.g}, ${majorColorRgb.b}, 0.2)` }"
+            :initial="{ height: 0, opacity: 0 }"
+            :animate="{ height: 'auto', opacity: 1 }"
+            :transition="{ duration: 0.4, ease: 'easeOut' }"
+          >
+            <motion.button @click="toggleRightExpanded(topic.id)" class="w-full group" :whileHover="{ scale: 1.01 }">
               <div
                 class="relative flex items-center justify-between gap-3 px-5 py-4 md:px-6 md:py-5"
-                :style="`background: ${majorColor.primary}`"
+                :style="{ background: majorColor.primary }"
               >
-                
                 <div class="flex-1 min-w-0 text-left">
                   <h3 class="pr-2 text-sm font-semibold leading-snug text-white md:text-base">
                     {{ topic.title }}
                   </h3>
                 </div>
 
-                
                 <div class="shrink-0">
-                  <div
-                    class="flex items-center justify-center w-8 h-8 transition-transform duration-300 rounded-lg md:w-9 md:h-9 bg-white/20 group-hover:rotate-180"
+                  <motion.div
+                    class="flex items-center justify-center w-8 h-8 rounded-lg md:w-9 md:h-9 bg-white/20"
+                    :animate="{ rotate: 180 }"
+                    :transition="{ type: 'spring', stiffness: 300 }"
+                    :whileHover="{ rotate: 225 }"
                   >
                     <svg class="w-4 h-4 text-white md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M20 12H4" />
                     </svg>
-                  </div>
+                  </motion.div>
                 </div>
               </div>
-            </button>
+            </motion.button>
 
-            
-            <div class="p-4 md:p-5 lg:p-6 animate-slide-down">
+            <motion.div
+              class="p-4 md:p-5 lg:p-6"
+              :initial="{ opacity: 0, y: 20 }"
+              :animate="{ opacity: 1, y: 0 }"
+              :transition="{ delay: 0.2, duration: 0.4 }"
+            >
               <p class="text-sm leading-relaxed text-justify text-gray-700 md:text-base">
                 {{ topic.description }}
               </p>
-            </div>
-          </div>
-        </div>
+            </motion.div>
+          </motion.div>
+        </motion.div>
       </div>
     </div>
 
-    
     <div v-if="leftColumnTopics.length === 0 && rightColumnTopics.length === 0" class="py-16 text-center md:py-20">
       <div
         class="flex items-center justify-center w-20 h-20 mx-auto mb-6 rounded-full shadow-lg md:w-24 md:h-24"
-        :style="`background: ${majorColor.light}`"
+        :style="{ background: majorColor.light }"
       >
         <svg
           class="w-10 h-10 md:w-12 md:h-12"
-          :style="`color: ${majorColor.primary}`"
+          :style="{ color: majorColor.primary }"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -266,4 +329,3 @@ const toggleRightExpanded = (id: string): void => {
     </div>
   </div>
 </template>
-

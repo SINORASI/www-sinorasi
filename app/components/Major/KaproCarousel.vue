@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { motion } from "motion-v";
 import { computed, ref } from "vue";
 import type { KaproProfile } from "~/models/KaproProfile";
 import type { MajorData } from "~/models/MajorData";
@@ -260,101 +261,132 @@ const getTransitionClasses = () => {
   <div class="w-full max-w-6xl px-4 py-8 mx-auto">
     <div class="overflow-hidden">
       <div class="grid grid-cols-1 gap-8 p-6 lg:grid-cols-5 md:p-8 lg:p-10">
-        <div class="flex flex-col items-center justify-center space-y-6 lg:col-span-2">
-          <div class="relative w-full max-w-xs aspect-3/4">
+        <motion.div
+          class="flex flex-col items-center justify-center space-y-6 lg:col-span-2"
+          :initial="{ opacity: 0, x: -50 }"
+          :animate="{ opacity: 1, x: 0 }"
+          :transition="{ duration: 0.8 }"
+        >
+          <motion.div
+            class="relative w-full max-w-xs aspect-3/4"
+            :whileHover="{ scale: 1.05 }"
+            :transition="{ type: 'spring', stiffness: 300 }"
+          >
             <div class="absolute inset-0 overflow-hidden rounded-2xl" :style="{ backgroundColor: majorColor.light }">
-              <Transition
-                name="slide"
-                mode="out-in"
-                enter-active-class="transition-all duration-500 ease-out"
-                :enter-from-class="getTransitionClasses().enterFrom"
-                :enter-to-class="getTransitionClasses().enterTo"
-                leave-active-class="transition-all duration-500 ease-in"
-                :leave-from-class="getTransitionClasses().leaveFrom"
-                :leave-to-class="getTransitionClasses().leaveTo"
+              <motion.div
+                class="absolute top-4 right-4 w-2 h-2 rounded-full opacity-60"
+                :style="{ background: majorColor.primary }"
+                :animate="{
+                  scale: [1, 1.5, 1],
+                  opacity: [0.6, 1, 0.6],
+                }"
+                :transition="{ duration: 2, repeat: Infinity }"
+              ></motion.div>
+              <motion.div
+                class="absolute bottom-6 left-6 w-1.5 h-1.5 rounded-full opacity-50"
+                :style="{ background: majorColor.accent }"
+                :animate="{
+                  scale: [1, 1.3, 1],
+                  opacity: [0.5, 0.8, 0.5],
+                }"
+                :transition="{ duration: 3, repeat: Infinity, delay: 1 }"
+              ></motion.div>
+
+              <motion.div
+                :key="current"
+                :initial="{ scale: 0.8, opacity: 0 }"
+                :animate="{ scale: 1, opacity: 1 }"
+                :transition="{ duration: 0.5 }"
               >
                 <NuxtImg
-                  :key="current"
                   :src="kapro[current]?.image"
                   :alt="kapro[current]?.kaproName"
                   class="object-cover w-full h-full"
                 />
-              </Transition>
+              </motion.div>
             </div>
-          </div>
+          </motion.div>
 
-          <div class="text-center space-y-2 w-full px-4 min-h-[120px] flex flex-col justify-center">
-            <Transition
-              name="fade"
-              mode="out-in"
-              enter-active-class="transition-opacity duration-300"
-              enter-from-class="opacity-0"
-              enter-to-class="opacity-100"
-              leave-active-class="transition-opacity duration-200"
-              leave-from-class="opacity-100"
-              leave-to-class="opacity-0"
+          <motion.div
+            class="text-center space-y-2 w-full px-4 min-h-[120px] flex flex-col justify-center"
+            :initial="{ opacity: 0, y: 20 }"
+            :animate="{ opacity: 1, y: 0 }"
+            :transition="{ duration: 0.6, delay: 0.3 }"
+          >
+            <motion.h2
+              :key="current"
+              class="text-xl md:text-2xl font-bold text-gray-900 min-h-[60px] flex items-center justify-center"
+              :initial="{ opacity: 0, y: 10 }"
+              :animate="{ opacity: 1, y: 0 }"
+              :transition="{ duration: 0.4 }"
             >
-              <h2
-                :key="current"
-                class="text-xl md:text-2xl font-bold text-gray-900 min-h-[60px] flex items-center justify-center"
+              {{ kapro[current]?.kaproName }}
+            </motion.h2>
+
+            <motion.p
+              :key="current"
+              :style="{ color: majorColor.text }"
+              class="text-sm md:text-base font-semibold min-h-10 flex items-center justify-center"
+              :initial="{ opacity: 0 }"
+              :animate="{ opacity: 1 }"
+              :transition="{ duration: 0.4, delay: 0.2 }"
+            >
+              {{ kapro[current]?.jabatan }}
+            </motion.p>
+          </motion.div>
+        </motion.div>
+
+        <motion.div
+          class="lg:col-span-3 flex flex-col justify-between min-h-[400px] lg:min-h-[500px]"
+          :initial="{ opacity: 0, x: 50 }"
+          :animate="{ opacity: 1, x: 0 }"
+          :transition="{ duration: 0.8, delay: 0.2 }"
+        >
+          <motion.div
+            class="flex items-center justify-center flex-1 p-6 md:p-8"
+            :initial="{ opacity: 0, scale: 0.9 }"
+            :animate="{ opacity: 1, scale: 1 }"
+            :transition="{ duration: 0.6, delay: 0.4 }"
+          >
+            <motion.div
+              :key="current"
+              class="space-y-6 text-center"
+              :initial="{ opacity: 0, y: 20 }"
+              :animate="{ opacity: 1, y: 0 }"
+              :transition="{ duration: 0.5 }"
+            >
+              <motion.div
+                class="flex justify-center"
+                :whileHover="{ scale: 1.1, rotate: 5 }"
+                :transition="{ type: 'spring', stiffness: 300 }"
               >
-                {{ kapro[current]?.kaproName }}
-              </h2>
-            </Transition>
-
-            <Transition
-              name="fade"
-              mode="out-in"
-              enter-active-class="transition-opacity duration-300 delay-75"
-              enter-from-class="opacity-0"
-              enter-to-class="opacity-100"
-              leave-active-class="transition-opacity duration-200"
-              leave-from-class="opacity-100"
-              leave-to-class="opacity-0"
-            >
-              <p
-                :key="current"
-                :style="{ color: majorColor.text }"
-                class="text-sm md:text-base font-semibold min-h-10 flex items-center justify-center"
-              >
-                {{ kapro[current]?.jabatan }}
-              </p>
-            </Transition>
-          </div>
-        </div>
-
-        <div class="lg:col-span-3 flex flex-col justify-between min-h-[400px] lg:min-h-[500px]">
-          <div class="flex items-center justify-center flex-1 p-6 md:p-8">
-            <Transition
-              name="fade"
-              mode="out-in"
-              enter-active-class="transition-opacity duration-400"
-              enter-from-class="opacity-0"
-              enter-to-class="opacity-100"
-              leave-active-class="transition-opacity duration-300"
-              leave-from-class="opacity-100"
-              leave-to-class="opacity-0"
-            >
-              <div :key="current" class="space-y-6 text-center">
-                <div class="flex justify-center">
-                  <div
-                    class="flex items-center justify-center rounded-full w-14 h-14 md:w-16 md:h-16"
-                    :style="{ backgroundColor: majorColor.bg }"
-                  >
-                    <Icon name="lucide:quote" class="text-white w-7 h-7 md:w-8 md:h-8" />
-                  </div>
+                <div
+                  class="flex items-center justify-center rounded-full w-14 h-14 md:w-16 md:h-16"
+                  :style="{ backgroundColor: majorColor.bg }"
+                >
+                  <Icon name="lucide:quote" class="text-white w-7 h-7 md:w-8 md:h-8" />
                 </div>
+              </motion.div>
 
-                <p class="text-2xl font-bold leading-relaxed text-gray-800 md:text-3xl lg:text-4xl">
-                  {{ kapro[current]?.quote }}
-                </p>
-              </div>
-            </Transition>
-          </div>
+              <motion.p
+                class="text-2xl font-bold leading-relaxed text-gray-800 md:text-3xl lg:text-4xl"
+                :initial="{ opacity: 0, y: 10 }"
+                :animate="{ opacity: 1, y: 0 }"
+                :transition="{ duration: 0.5, delay: 0.2 }"
+              >
+                {{ kapro[current]?.quote }}
+              </motion.p>
+            </motion.div>
+          </motion.div>
 
-          <div class="pt-4 space-y-6">
+          <motion.div
+            class="pt-4 space-y-6"
+            :initial="{ opacity: 0, y: 20 }"
+            :animate="{ opacity: 1, y: 0 }"
+            :transition="{ duration: 0.6, delay: 0.6 }"
+          >
             <div class="flex justify-center items-center gap-2 min-h-4">
-              <button
+              <motion.button
                 v-for="(item, idx) in kapro"
                 :key="idx"
                 @click="current = idx"
@@ -366,44 +398,55 @@ const getTransitionClasses = () => {
                   current === idx ? 'w-12' : 'w-2',
                   current === idx ? '' : 'bg-gray-300 hover:bg-gray-400',
                 ]"
+                :whileHover="{ scale: 1.2 }"
+                :whileTap="{ scale: 0.9 }"
                 :aria-label="`Go to profile ${idx + 1}`"
-              ></button>
+              ></motion.button>
             </div>
 
             <div class="flex items-center justify-between px-4">
-              <button
+              <motion.button
                 @click="prev"
                 :style="{
                   backgroundColor: majorColor.primary,
                 }"
                 class="flex items-center gap-2 px-5 py-3 font-semibold text-white transition-all duration-300 transform rounded-xl hover:-translate-x-1 hover:brightness-110"
+                :whileHover="{ scale: 1.05, x: -2 }"
+                :whileTap="{ scale: 0.95 }"
                 aria-label="Previous"
               >
                 <Icon name="lucide:chevron-left" class="w-5 h-5" />
                 <span class="text-sm">Previous</span>
-              </button>
+              </motion.button>
 
-              <div class="flex items-baseline gap-1">
+              <motion.div
+                class="flex items-baseline gap-1"
+                :initial="{ scale: 0 }"
+                :animate="{ scale: 1 }"
+                :transition="{ delay: 0.8, type: 'spring', stiffness: 200 }"
+              >
                 <span :style="{ color: majorColor.text }" class="text-2xl font-bold md:text-3xl">
                   {{ String(current + 1).padStart(2, "0") }}
                 </span>
                 <span class="text-lg text-gray-400 md:text-xl"> /{{ String(kapro.length).padStart(2, "0") }} </span>
-              </div>
+              </motion.div>
 
-              <button
+              <motion.button
                 @click="next"
                 :style="{
                   backgroundColor: majorColor.primary,
                 }"
                 class="flex items-center gap-2 px-5 py-3 font-semibold text-white transition-all duration-300 transform rounded-xl hover:translate-x-1 hover:brightness-110"
+                :whileHover="{ scale: 1.05, x: 2 }"
+                :whileTap="{ scale: 0.95 }"
                 aria-label="Next"
               >
                 <span class="text-sm">Next</span>
                 <Icon name="lucide:chevron-right" class="w-5 h-5" />
-              </button>
+              </motion.button>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </div>
   </div>

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { motion } from "motion-v";
 import type { MajorName } from "~/models/MajorName";
 import { majorColorSchemes } from "~/utils/majorColors";
 
@@ -274,22 +275,21 @@ const tools = computed(() => toolsData[props.major] || []);
   <section
     id="tools"
     class="min-h-screen py-16 md:py-24"
-    :style="`background: linear-gradient(135deg, ${majorColor.primary}05, ${majorColor.accent}05)`"
+    :style="{ background: `linear-gradient(135deg, ${majorColor.primary}05, ${majorColor.accent}05)` }"
   >
     <div class="container flex flex-col items-center justify-center gap-10 px-4 mx-auto md:gap-12">
-      
       <div class="max-w-3xl space-y-4 text-center">
         <div class="inline-block">
           <span
             class="px-4 py-2 text-sm font-bold tracking-widest uppercase rounded-full md:text-base"
-            :style="`background: ${majorColor.primary}; color: white`"
+            :style="{ background: majorColor.primary, color: 'white' }"
           >
             Tools & Equipment
           </span>
         </div>
         <h2
           class="text-3xl font-extrabold text-transparent md:text-5xl bg-linear-to-r bg-clip-text"
-          :style="`background-image: linear-gradient(135deg, ${majorColor.primary}, ${majorColor.accent})`"
+          :style="{ backgroundImage: `linear-gradient(135deg, ${majorColor.primary}, ${majorColor.accent})` }"
         >
           Alat dan Peralatan
         </h2>
@@ -298,31 +298,57 @@ const tools = computed(() => toolsData[props.major] || []);
         </p>
       </div>
 
-      
       <div class="grid w-full max-w-6xl grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <div
-          v-for="tool in tools"
+        <motion.div
+          v-for="(tool, index) in tools"
           :key="tool.name"
-          class="flex flex-col items-center p-6 transition-all duration-300 bg-white shadow-lg rounded-2xl hover:shadow-xl hover:-translate-y-1"
+          :initial="{ opacity: 0, y: 50, scale: 0.9 }"
+          :animate="{ opacity: 1, y: 0, scale: 1 }"
+          :transition="{ duration: 0.6, delay: index * 0.1 }"
+          class="flex flex-col items-center p-6 bg-white shadow-lg rounded-2xl"
+          :whileHover="{
+            scale: 1.05,
+            y: -5,
+            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15)',
+          }"
         >
-          
-          <div
+          <motion.div
+            class="absolute top-4 right-4 w-1 h-1 rounded-full opacity-60"
+            :style="{ background: majorColor.primary }"
+            :animate="{
+              scale: [1, 1.5, 1],
+              opacity: [0.6, 1, 0.6],
+            }"
+            :transition="{ duration: 2, repeat: Infinity, delay: index * 0.2 }"
+          ></motion.div>
+
+          <motion.div
             class="flex items-center justify-center w-16 h-16 mb-4 rounded-full shadow-md"
-            :style="`background: ${majorColor.light}; color: ${majorColor.primary}`"
+            :style="{ background: majorColor.light, color: majorColor.primary }"
+            :whileHover="{ rotate: [0, -10, 10, 0], scale: 1.1 }"
+            :transition="{ type: 'spring', stiffness: 300 }"
           >
             <Icon :name="tool.icon" :size="32" />
-          </div>
+          </motion.div>
 
-          
-          <h3 class="mb-2 text-lg font-bold text-center text-gray-800 md:text-xl">
+          <motion.h3
+            class="mb-2 text-lg font-bold text-center text-gray-800 md:text-xl"
+            :initial="{ opacity: 0 }"
+            :animate="{ opacity: 1 }"
+            :transition="{ delay: 0.3, duration: 0.4 }"
+          >
             {{ tool.name }}
-          </h3>
+          </motion.h3>
 
-          
-          <p class="text-sm text-center text-gray-600 md:text-base">
+          <motion.p
+            class="text-sm text-center text-gray-600 md:text-base"
+            :initial="{ opacity: 0 }"
+            :animate="{ opacity: 1 }"
+            :transition="{ delay: 0.5, duration: 0.4 }"
+          >
             {{ tool.description }}
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
       </div>
     </div>
   </section>

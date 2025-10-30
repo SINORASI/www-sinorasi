@@ -64,12 +64,10 @@ const fetchNews = async (category: string = "all") => {
   }
 };
 
-
 const filterByCategory = (category: string) => {
   selectedCategory.value = category;
   fetchNews(category);
 };
-
 
 const isMobile = ref(false);
 const timelineItems = [
@@ -115,7 +113,7 @@ const animationStarted = ref(false);
 const lineScale = ref(0.1);
 const cardVisibility = ref([false, false, false, false, false]);
 const showModal = ref(false);
-const selectedTimelineItem = ref<typeof timelineItems[0] | null>(null);
+const selectedTimelineItem = ref<(typeof timelineItems)[0] | null>(null);
 
 const resetAnimationStates = () => {
   clickedMarkers.value = [true, false, false, false, false];
@@ -294,7 +292,7 @@ const currentHeroImage = ref(0);
 onMounted(() => {
   if (import.meta.client) {
     window.scrollTo(0, 0);
-    prefersReducedMotion.value = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    prefersReducedMotion.value = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   }
 
   setTimeout(() => {
@@ -318,20 +316,19 @@ onMounted(() => {
         onUpdate: (latest) => (siswaCount.value = Math.floor(latest)),
       });
 
-    fetchNews();
-    loadAchievements();
+      fetchNews();
+      loadAchievements();
 
-    // Start auto-play for achievements carousel
-    startAutoPlay();
-    resetProgress();
+      startAutoPlay();
+      resetProgress();
 
-    const checkMobile = () => {
-      if (window) {
-        isMobile.value = window.innerWidth < 768;
-      }
-    };
-    checkMobile();
-    window?.addEventListener("resize", checkMobile);
+      const checkMobile = () => {
+        if (window) {
+          isMobile.value = window.innerWidth < 768;
+        }
+      };
+      checkMobile();
+      window?.addEventListener("resize", checkMobile);
     }, 100);
 
     fetchNews();
@@ -381,7 +378,7 @@ const resetCounter = (type: keyof typeof hoveredCounters.value) => {
   hoveredCounters.value[type] = false;
 };
 
-const openModal = (item: typeof timelineItems[0]) => {
+const openModal = (item: (typeof timelineItems)[0]) => {
   selectedTimelineItem.value = item;
   showModal.value = true;
 };
@@ -452,7 +449,7 @@ useHead({
           y: [0, -20, 0],
           rotate: [0, 180, 360],
           scale: [1, 1.1, 1],
-          transform: 'translateZ(0)'
+          transform: 'translateZ(0)',
         }"
         :transition="{
           duration: 6,
@@ -467,7 +464,7 @@ useHead({
           y: [0, -15, 0],
           scale: [1, 1.1, 1],
           rotate: [45, 225, 405],
-          transform: 'translateZ(0)'
+          transform: 'translateZ(0)',
         }"
         :transition="{
           duration: 8,
@@ -483,7 +480,7 @@ useHead({
           y: [0, -25, 0],
           rotate: [0, -180, -360],
           scale: [1, 1.05, 1],
-          transform: 'translateZ(0)'
+          transform: 'translateZ(0)',
         }"
         :transition="{
           duration: 7,
@@ -500,7 +497,7 @@ useHead({
           scale: [1, 1.2, 1],
           rotate: [0, 180, 360],
           y: [0, -10, 0],
-          transform: 'translateZ(0)'
+          transform: 'translateZ(0)',
         }"
         :transition="{
           duration: 15,
@@ -515,7 +512,7 @@ useHead({
           y: [0, -20, 0],
           scale: [1, 1.1, 1],
           rotate: [0, 120, 240],
-          transform: 'translateZ(0)'
+          transform: 'translateZ(0)',
         }"
         :transition="{
           duration: 13,
@@ -557,21 +554,14 @@ useHead({
         >
           <motion.h1
             id="hero-title"
-            class="text-3xl font-bold md:text-5xl lg:text-6xl font-oswald tracking-wide leading-tight"
+            class="text-3xl font-bold md:text-5xl lg:text-6xl text-center font-oswald tracking-wide leading-tight"
             :initial="{ opacity: 0, y: 30 }"
             :whileInView="{ opacity: 1, y: 0 }"
             :transition="{ duration: 0.8, delay: 0.4 }"
             :inViewOptions="{ once: true }"
           >
             INORASI - <span class="text-orange-500">Inovasi</span> Raih
-            <motion.span
-              class="text-yellow-500 font-bold"
-              :animate="{
-                textShadow: ['0 0 10px #fbbf24, 0 0 20px #fbbf24', 'none', '0 0 10px #fbbf24, 0 0 20px #fbbf24'],
-                transform: 'translateZ(0)'
-              }"
-              :transition="{ duration: 2, ease: 'easeInOut', repeat: Infinity }"
-            >Prestasi</motion.span>
+            <motion.span class="text-yellow-500 font-bold">Prestasi</motion.span>
           </motion.h1>
           <motion.p
             class="text-lg md:text-xl lg:text-2xl font-nunito leading-relaxed tracking-wide max-w-2xl"
@@ -580,7 +570,8 @@ useHead({
             :transition="{ duration: 0.8, delay: 0.6 }"
             :inViewOptions="{ once: true }"
           >
-            Pendidikan inovatif untuk pemimpin masa depan. Temukan program-program dinamis kami dan komunitas yang bersemangat.
+            Pendidikan inovatif untuk pemimpin masa depan. Temukan program-program dinamis kami dan komunitas yang
+            bersemangat.
           </motion.p>
           <motion.p
             class="max-w-2xl text-base md:text-lg leading-relaxed text-gray-200"
@@ -947,7 +938,7 @@ useHead({
             :transition="{ duration: 0.8, delay: 0.4 }"
             :inViewOptions="{ once: true }"
           >
-            <div class="relative max-w-xs group">
+            <div class="relative max-w-md group">
               <div
                 class="relative overflow-hidden transition-all duration-500 transform border-4 border-white shadow-2xl rounded-2xl group-hover:scale-105 group-hover:shadow-3xl"
               >
@@ -1012,8 +1003,12 @@ useHead({
           :inViewOptions="{ once: true }"
         >
           <!-- Background decoration -->
-          <div class="absolute top-0 right-0 w-32 h-32 bg-blue-100 rounded-full opacity-20 -translate-y-16 translate-x-16"></div>
-          <div class="absolute bottom-0 left-0 w-24 h-24 bg-yellow-100 rounded-full opacity-20 translate-y-12 -translate-x-12"></div>
+          <div
+            class="absolute top-0 right-0 w-32 h-32 bg-blue-100 rounded-full opacity-20 -translate-y-16 translate-x-16"
+          ></div>
+          <div
+            class="absolute bottom-0 left-0 w-24 h-24 bg-yellow-100 rounded-full opacity-20 translate-y-12 -translate-x-12"
+          ></div>
           <div class="overflow-hidden">
             <div
               class="flex transition-transform duration-500 ease-in-out"
@@ -1037,7 +1032,9 @@ useHead({
                           alt="Achievement"
                         />
                         <div class="absolute top-2 right-2 flex gap-1">
-                          <div class="px-2 py-1 bg-yellow-500 text-white text-xs font-bold rounded-full flex items-center gap-1">
+                          <div
+                            class="px-2 py-1 bg-yellow-500 text-white text-xs font-bold rounded-full flex items-center gap-1"
+                          >
                             <Icon name="lucide:medal" size="10" />
                             <span>Juara</span>
                           </div>
@@ -1048,7 +1045,11 @@ useHead({
                           <h3 class="text-xl md:text-2xl font-bold text-gray-800 hover:text-blue-600 transition-colors">
                             {{ achievement.title }}
                           </h3>
-                          <Icon name="lucide:external-link" size="16" class="text-blue-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+                          <Icon
+                            name="lucide:external-link"
+                            size="16"
+                            class="text-blue-500 opacity-0 group-hover:opacity-100 transition-opacity"
+                          />
                         </div>
                         <p class="leading-relaxed text-gray-600 text-sm md:text-base line-clamp-4">
                           {{ achievement.description }}
@@ -1072,7 +1073,9 @@ useHead({
                         alt="Achievement"
                       />
                       <div class="absolute top-2 right-2 flex gap-1">
-                        <div class="px-2 py-1 bg-yellow-500 text-white text-xs font-bold rounded-full flex items-center gap-1">
+                        <div
+                          class="px-2 py-1 bg-yellow-500 text-white text-xs font-bold rounded-full flex items-center gap-1"
+                        >
                           <Icon name="lucide:medal" size="10" />
                           <span>Juara</span>
                         </div>
@@ -1117,7 +1120,11 @@ useHead({
               <button
                 @click="toggleAutoPlay"
                 class="ml-4 p-2 rounded-full transition-all duration-300"
-                :class="isAutoPlaying ? 'bg-blue-100 text-blue-600 hover:bg-blue-200' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'"
+                :class="
+                  isAutoPlaying
+                    ? 'bg-blue-100 text-blue-600 hover:bg-blue-200'
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                "
                 :aria-label="isAutoPlaying ? 'Pause auto-play' : 'Start auto-play'"
               >
                 <Icon :name="isAutoPlaying ? 'lucide:pause' : 'lucide:play'" size="16" />
@@ -1161,7 +1168,9 @@ useHead({
                   <span class="text-lg">{{ String(achievements.length).padStart(2, "0") }}</span>
                 </div>
                 <!-- Achievement Badge -->
-                <div class="flex items-center gap-1 px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-semibold">
+                <div
+                  class="flex items-center gap-1 px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-semibold"
+                >
                   <Icon name="lucide:trophy" size="12" />
                   <span>Prestasi</span>
                 </div>
@@ -1213,7 +1222,6 @@ useHead({
               Seragam Sekolah
             </span>
             <p class="max-w-2xl text-lg text-center text-white">Koleksi seragam sekolah SMK Negeri 2 Singosari</p>
-
           </motion.div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 w-full max-w-[1600px]">
@@ -1767,9 +1775,7 @@ useHead({
                 </div>
 
                 <div class="flex items-center justify-between pt-6 border-t border-gray-200">
-                  <div class="text-sm text-gray-500">
-                    Klik di luar modal untuk menutup
-                  </div>
+                  <div class="text-sm text-gray-500">Klik di luar modal untuk menutup</div>
                   <button
                     @click="closeModal"
                     class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
@@ -1883,10 +1889,10 @@ useHead({
                     <span class="text-sm font-semibold text-yellow-400 uppercase tracking-wide">Berita Utama</span>
                   </div>
                   <h3 class="text-2xl md:text-3xl font-bold mb-4 leading-tight">
-                    {{ newsData[0]?.title || '' }}
+                    {{ newsData[0]?.title || "" }}
                   </h3>
                   <p class="text-blue-100 mb-6 line-clamp-3">
-                    {{ newsData[0]?.subtitle || '' }}
+                    {{ newsData[0]?.subtitle || "" }}
                   </p>
                   <NuxtLink
                     :to="`/berita/${newsData[0]?.slug || ''}`"
@@ -1906,9 +1912,7 @@ useHead({
               </div>
             </div>
             <div class="absolute top-4 right-4">
-              <div class="px-3 py-1 bg-yellow-500 text-black text-xs font-bold rounded-full">
-                TERBARU
-              </div>
+              <div class="px-3 py-1 bg-yellow-500 text-black text-xs font-bold rounded-full">TERBARU</div>
             </div>
           </div>
         </motion.div>
@@ -1986,14 +1990,20 @@ useHead({
                     {{ news.tags[0] || "Berita" }}
                   </div>
                 </div>
-                <div class="absolute inset-0 bg-linear-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <div
+                  class="absolute inset-0 bg-linear-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                ></div>
               </div>
               <div class="flex flex-col grow p-5">
                 <div class="flex items-center justify-between mb-2">
                   <p class="text-xs font-semibold text-blue-600">
                     {{ news.tags.join(", ") }}
                   </p>
-                  <Icon name="lucide:arrow-right" size="16" class="text-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <Icon
+                    name="lucide:arrow-right"
+                    size="16"
+                    class="text-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  />
                 </div>
                 <h3 class="grow mb-2 font-bold text-gray-800 group-hover:text-blue-600 transition-colors line-clamp-2">
                   {{ news.title }}
@@ -2057,7 +2067,6 @@ useHead({
 </template>
 
 <style scoped>
-
 @keyframes particle-float-1 {
   0%,
   100% {
