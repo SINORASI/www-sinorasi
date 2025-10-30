@@ -66,12 +66,12 @@
   "animasi": [
     {
       "name": "Blender",
-      "icon": "simple-icons:blender",
+      "icon": "logos:blender",
       "description": "Software 3D modeling, animasi, dan rendering"
     },
     {
       "name": "Adobe After Effects",
-      "icon": "lucide:film",
+      "icon": "logos:adobe-after-effects",
       "description": "Software untuk motion graphics dan efek visual"
     },
     {
@@ -251,7 +251,7 @@
     },
     {
       "name": "Editing Software",
-      "icon": "lucide:edit",
+      "icon": "lucide:scissors",
       "description": "Software untuk editing dan post-produksi siaran"
     }
   ]

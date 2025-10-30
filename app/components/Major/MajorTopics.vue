@@ -1,17 +1,14 @@
 <script setup lang="ts">
-import type { MajorData } from "~/models/MajorData";
 import type { MajorName } from "~/models/MajorName";
 import type { MajorTopic } from "~/models/MajorTopic";
 import { majorColorSchemes } from "~/utils/majorColors";
 
-// Dynamic import for motion components to reduce initial bundle size
-const { motion } = await import("motion-v");
+const { motion, AnimatePresence } = await import("motion-v");
 
 const props = defineProps<{
   major?: MajorName;
 }>();
 
-const { data: majorDatas } = await useFetch<Record<MajorName, MajorData>>("/api/majors");
 const { data: majorTopics } = await useFetch<Record<MajorName, MajorTopic[]>>("/api/major-topics");
 
 interface ExpandedItems {
@@ -60,7 +57,6 @@ const major = props.major || (route.params.majorName as MajorName);
 
 const majorColor = computed(() => majorColorSchemes[major]);
 
-// Memoize static computed values
 const majorColorRgb = computed(() => hexToRgb(majorColor.value.primary));
 const leftColumnTopics = computed(() => {
   const topics = majorTopics.value?.[major] || [];
@@ -196,6 +192,7 @@ const toggleRightExpanded = (id: string): void => {
             :style="{ background: `rgba(${majorColorRgb.r}, ${majorColorRgb.g}, ${majorColorRgb.b}, 0.2)` }"
             :initial="{ height: 0, opacity: 0 }"
             :animate="{ height: 'auto', opacity: 1 }"
+            :exit="{ height: 0, opacity: 0 }"
             :transition="{ duration: 0.4, ease: 'easeOut' }"
           >
             <motion.button @click="toggleLeftExpanded(topic.id)" class="w-full group" :whileHover="{ scale: 1.01 }">
@@ -297,6 +294,7 @@ const toggleRightExpanded = (id: string): void => {
             :style="{ background: `rgba(${majorColorRgb.r}, ${majorColorRgb.g}, ${majorColorRgb.b}, 0.2)` }"
             :initial="{ height: 0, opacity: 0 }"
             :animate="{ height: 'auto', opacity: 1 }"
+            :exit="{ height: 0, opacity: 0 }"
             :transition="{ duration: 0.4, ease: 'easeOut' }"
           >
             <motion.button @click="toggleRightExpanded(topic.id)" class="w-full group" :whileHover="{ scale: 1.01 }">
@@ -340,7 +338,11 @@ const toggleRightExpanded = (id: string): void => {
       </div>
     </div>
 
-    <div v-if="leftColumnTopics.length === 0 && rightColumnTopics.length === 0" v-memo="[majorColor.light, majorColor.primary]" class="py-16 text-center md:py-20">
+    <div
+      v-if="leftColumnTopics.length === 0 && rightColumnTopics.length === 0"
+      v-memo="[majorColor.light, majorColor.primary]"
+      class="py-16 text-center md:py-20"
+    >
       <div
         class="flex items-center justify-center w-20 h-20 mx-auto mb-6 rounded-full shadow-lg md:w-24 md:h-24"
         :style="{ background: majorColor.light }"

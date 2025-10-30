@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import type { JobTitle } from "~/models/JobTitle";
-import type { MajorData } from "~/models/MajorData";
 import type { MajorName } from "~/models/MajorName";
 import { majorColorSchemes } from "~/utils/majorColors";
 
@@ -18,7 +17,6 @@ const route = useRoute();
 const major = props.major || (route.params.majorName as MajorName);
 
 const { data: jobTitles } = await useFetch<Record<MajorName, JobTitle[]>>("/api/job-titles");
-const { data: majorDatas } = await useFetch<Record<MajorName, MajorData>>("/api/majors");
 
 const careers = computed(() => jobTitles.value?.[major] || []);
 
