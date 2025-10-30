@@ -2,6 +2,7 @@
 import { motion, animate, AnimatePresence } from "motion-v";
 import type { News } from "~/models/News";
 import { smoothScrollTo } from "~/utils/scrollUtils";
+import FAQSection from "~/components/FAQSection.vue";
 
 definePageMeta({
   layout: "default",
@@ -38,6 +39,13 @@ const newsData = ref<News[]>([]);
 const isLoadingNews = ref(false);
 const showBackToTop = ref(false);
 
+const hoveredCounters = ref({
+  jurusan: false,
+  siswa: false,
+  prestasi: false,
+  tahun: false,
+});
+
 const fetchNews = async (category: string = "all") => {
   isLoadingNews.value = true;
   try {
@@ -56,10 +64,12 @@ const fetchNews = async (category: string = "all") => {
   }
 };
 
+
 const filterByCategory = (category: string) => {
   selectedCategory.value = category;
   fetchNews(category);
 };
+
 
 const isMobile = ref(false);
 const timelineItems = [
@@ -104,15 +114,15 @@ const showAllIcons = ref(false);
 const animationStarted = ref(false);
 const lineScale = ref(0.1);
 const cardVisibility = ref([false, false, false, false, false]);
+const showModal = ref(false);
+const selectedTimelineItem = ref<typeof timelineItems[0] | null>(null);
 
-// Reset animation states
 const resetAnimationStates = () => {
   clickedMarkers.value = [true, false, false, false, false];
   showAllIcons.value = false;
   animationStarted.value = false;
   lineScale.value = 0.1;
   cardVisibility.value = [false, false, false, false, false];
-  currentAchievement.value = 0;
 };
 
 const startStaggeredAnimation = () => {
@@ -199,15 +209,15 @@ const achievements = computed(() => {
 });
 
 const currentAchievement = ref(0);
-
-const nextAchievement = () => {
-  const len = achievements.value.length;
-  currentAchievement.value = (currentAchievement.value + 1) % len;
-};
-
 const prevAchievement = () => {
-  const len = achievements.value.length;
+  const len = (achievements.value && achievements.value.length) || 0;
+  if (len === 0) return;
   currentAchievement.value = (currentAchievement.value - 1 + len) % len;
+};
+const nextAchievement = () => {
+  const len = (achievements.value && achievements.value.length) || 0;
+  if (len === 0) return;
+  currentAchievement.value = (currentAchievement.value + 1) % len;
 };
 
 const heroImages = ref([
@@ -219,7 +229,6 @@ const currentHeroImage = ref(0);
 onMounted(() => {
   if (import.meta.client) {
     window.scrollTo(0, 0);
-    // Check for reduced motion preference
     prefersReducedMotion.value = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   }
 
@@ -291,6 +300,24 @@ const scrollToTop = () => {
   smoothScrollTo(0);
 };
 
+const animateCounter = (type: keyof typeof hoveredCounters.value) => {
+  hoveredCounters.value[type] = true;
+};
+
+const resetCounter = (type: keyof typeof hoveredCounters.value) => {
+  hoveredCounters.value[type] = false;
+};
+
+const openModal = (item: typeof timelineItems[0]) => {
+  selectedTimelineItem.value = item;
+  showModal.value = true;
+};
+
+const closeModal = () => {
+  showModal.value = false;
+  selectedTimelineItem.value = null;
+};
+
 useHead({
   title: "Beranda - SMKN 2 Singosari",
   meta: [
@@ -316,10 +343,11 @@ useHead({
         muted
         loop
         playsinline
+        preload="metadata"
         poster="/images/guru/foto-guru-bersama.jpeg"
         aria-hidden="true"
       >
-        <source src="https://youtu.be/Kks6HnhPzVQ?si=-UG3hgWuKk-qB9Xk" type="video/mp4">
+        <!-- <source src="https://videos.pexels.com/video-files/854148/854148-hd_1920_1080_25fps.mp4" type="video/mp4"> -->
       </video>
 
       <div class="absolute inset-0 bg-black/40 z-5"></div>
@@ -654,26 +682,114 @@ useHead({
                 </p>
 
                 <div class="grid grid-cols-2 gap-4">
-                  <div class="p-4 text-center rounded-lg bg-blue-50">
-                    <div class="text-2xl font-bold text-blue-600">
+                  <motion.div
+                    class="p-4 text-center rounded-lg bg-blue-50 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:bg-blue-100 cursor-pointer group"
+                    :initial="{ opacity: 0, scale: 0.8 }"
+                    :whileInView="{ opacity: 1, scale: 1 }"
+                    :transition="{ duration: 0.6, delay: 0.2 }"
+                    :inViewOptions="{ once: true }"
+                    @mouseenter="animateCounter('jurusan')"
+                    @mouseleave="resetCounter('jurusan')"
+                  >
+                    <motion.div
+                      class="text-2xl font-bold text-blue-600 transition-colors group-hover:text-blue-700"
+                      :animate="{ scale: hoveredCounters.jurusan ? 1.1 : 1 }"
+                      :transition="{ duration: 0.3 }"
+                    >
                       {{ jurusanCount }}
-                    </div>
-                    <div class="text-sm text-gray-600">Konsentrasi Keahlian</div>
-                  </div>
-                  <div class="p-4 text-center rounded-lg bg-orange-50">
-                    <div class="text-2xl font-bold text-orange-600">{{ siswaCount }}+</div>
-                    <div class="text-sm text-gray-600">Siswa Aktif</div>
-                  </div>
-                  <div class="p-4 text-center rounded-lg bg-green-50">
-                    <div class="text-2xl font-bold text-green-600">{{ prestasiCount }}+</div>
-                    <div class="text-sm text-gray-600">Prestasi</div>
-                  </div>
-                  <div class="p-4 text-center rounded-lg bg-purple-50">
-                    <div class="text-2xl font-bold text-purple-600">
+                    </motion.div>
+                    <div class="text-sm text-gray-600 group-hover:text-gray-700">Konsentrasi Keahlian</div>
+                    <motion.div
+                      class="w-full h-1 bg-blue-200 rounded-full mt-2 overflow-hidden"
+                      :initial="{ scaleX: 0 }"
+                      :animate="{ scaleX: hoveredCounters.jurusan ? 1 : 0 }"
+                      :transition="{ duration: 0.5 }"
+                      style="transform-origin: left"
+                    >
+                      <div class="w-full h-full bg-blue-500 rounded-full"></div>
+                    </motion.div>
+                  </motion.div>
+                  <motion.div
+                    class="p-4 text-center rounded-lg bg-orange-50 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:bg-orange-100 cursor-pointer group"
+                    :initial="{ opacity: 0, scale: 0.8 }"
+                    :whileInView="{ opacity: 1, scale: 1 }"
+                    :transition="{ duration: 0.6, delay: 0.4 }"
+                    :inViewOptions="{ once: true }"
+                    @mouseenter="animateCounter('siswa')"
+                    @mouseleave="resetCounter('siswa')"
+                  >
+                    <motion.div
+                      class="text-2xl font-bold text-orange-600 transition-colors group-hover:text-orange-700"
+                      :animate="{ scale: hoveredCounters.siswa ? 1.1 : 1 }"
+                      :transition="{ duration: 0.3 }"
+                    >
+                      {{ siswaCount }}+
+                    </motion.div>
+                    <div class="text-sm text-gray-600 group-hover:text-gray-700">Siswa Aktif</div>
+                    <motion.div
+                      class="w-full h-1 bg-orange-200 rounded-full mt-2 overflow-hidden"
+                      :initial="{ scaleX: 0 }"
+                      :animate="{ scaleX: hoveredCounters.siswa ? 1 : 0 }"
+                      :transition="{ duration: 0.5 }"
+                      style="transform-origin: left"
+                    >
+                      <div class="w-full h-full bg-orange-500 rounded-full"></div>
+                    </motion.div>
+                  </motion.div>
+                  <motion.div
+                    class="p-4 text-center rounded-lg bg-green-50 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:bg-green-100 cursor-pointer group"
+                    :initial="{ opacity: 0, scale: 0.8 }"
+                    :whileInView="{ opacity: 1, scale: 1 }"
+                    :transition="{ duration: 0.6, delay: 0.6 }"
+                    :inViewOptions="{ once: true }"
+                    @mouseenter="animateCounter('prestasi')"
+                    @mouseleave="resetCounter('prestasi')"
+                  >
+                    <motion.div
+                      class="text-2xl font-bold text-green-600 transition-colors group-hover:text-green-700"
+                      :animate="{ scale: hoveredCounters.prestasi ? 1.1 : 1 }"
+                      :transition="{ duration: 0.3 }"
+                    >
+                      {{ prestasiCount }}+
+                    </motion.div>
+                    <div class="text-sm text-gray-600 group-hover:text-gray-700">Prestasi</div>
+                    <motion.div
+                      class="w-full h-1 bg-green-200 rounded-full mt-2 overflow-hidden"
+                      :initial="{ scaleX: 0 }"
+                      :animate="{ scaleX: hoveredCounters.prestasi ? 1 : 0 }"
+                      :transition="{ duration: 0.5 }"
+                      style="transform-origin: left"
+                    >
+                      <div class="w-full h-full bg-green-500 rounded-full"></div>
+                    </motion.div>
+                  </motion.div>
+                  <motion.div
+                    class="p-4 text-center rounded-lg bg-purple-50 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:bg-purple-100 cursor-pointer group"
+                    :initial="{ opacity: 0, scale: 0.8 }"
+                    :whileInView="{ opacity: 1, scale: 1 }"
+                    :transition="{ duration: 0.6, delay: 0.8 }"
+                    :inViewOptions="{ once: true }"
+                    @mouseenter="animateCounter('tahun')"
+                    @mouseleave="resetCounter('tahun')"
+                  >
+                    <motion.div
+                      class="text-2xl font-bold text-purple-600 transition-colors group-hover:text-purple-700"
+                      :animate="{ scale: hoveredCounters.tahun ? 1.1 : 1 }"
+                      :transition="{ duration: 0.3 }"
+                    >
                       {{ tahunCount }}
-                    </div>
-                    <div class="text-sm text-gray-600">Tahun Berdiri</div>
-                  </div>
+                    </motion.div>
+                    <div class="text-sm text-gray-600 group-hover:text-gray-700">Tahun Berdiri</div>
+                    <motion.div
+                      class="w-full h-1 bg-purple-200 rounded-full mt-2 overflow-hidden"
+                      :initial="{ scaleX: 0 }"
+                      :animate="{ scaleX: hoveredCounters.tahun ? 1 : 0 }"
+                      :transition="{ duration: 0.5 }"
+                      style="transform-origin: left"
+                    >
+                      <div class="w-full h-full bg-purple-500 rounded-full"></div>
+                    </motion.div>
+                  </motion.div>
                 </div>
 
                 <p class="leading-relaxed text-gray-600">
@@ -934,6 +1050,7 @@ useHead({
               Seragam Sekolah
             </span>
             <p class="max-w-2xl text-lg text-center text-white">Koleksi seragam sekolah SMK Negeri 2 Singosari</p>
+
           </motion.div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 w-full max-w-[1600px]">
@@ -1284,6 +1401,8 @@ useHead({
               }"
               :transition="{ duration: 0.8, delay: index * 0.2 }"
               @click="index === 0 && toggleMarker(index)"
+              @dblclick="openModal(item)"
+              :aria-label="`View details for ${item.title}`"
             >
               <Icon :name="item.icon" size="28" class="text-white" />
             </motion.div>
@@ -1401,6 +1520,8 @@ useHead({
                   clickedMarkers[index],
                 ]"
                 @click="index === 0 && toggleMarker(index)"
+                @dblclick="openModal(item)"
+                :aria-label="`View details for ${item.title}`"
               >
                 <Icon :name="item.icon" size="28" class="text-white" />
               </div>
@@ -1441,6 +1562,62 @@ useHead({
             </NuxtLink>
           </div>
         </div>
+
+        <AnimatePresence>
+          <motion.div
+            v-if="showModal && selectedTimelineItem"
+            class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+            :initial="{ opacity: 0 }"
+            :animate="{ opacity: 1 }"
+            :exit="{ opacity: 0 }"
+            @click="closeModal"
+          >
+            <motion.div
+              class="relative max-w-2xl w-full max-h-[80vh] overflow-y-auto bg-white rounded-2xl shadow-2xl"
+              :initial="{ scale: 0.9, opacity: 0 }"
+              :animate="{ scale: 1, opacity: 1 }"
+              :exit="{ scale: 0.9, opacity: 0 }"
+              @click.stop
+            >
+              <div class="p-8">
+                <div class="flex items-center justify-between mb-6">
+                  <div class="flex items-center gap-4">
+                    <div class="p-3 rounded-full bg-blue-100">
+                      <Icon :name="selectedTimelineItem.icon" size="32" class="text-blue-600" />
+                    </div>
+                    <div>
+                      <h3 class="text-2xl font-bold text-gray-800">{{ selectedTimelineItem.title }}</h3>
+                      <p class="text-lg font-semibold text-blue-600">{{ selectedTimelineItem.year }}</p>
+                    </div>
+                  </div>
+                  <button
+                    @click="closeModal"
+                    class="p-2 rounded-full hover:bg-gray-100 transition-colors"
+                    :aria-label="'Close modal'"
+                  >
+                    <Icon name="lucide:x" size="24" class="text-gray-500" />
+                  </button>
+                </div>
+
+                <div class="prose prose-lg max-w-none">
+                  <p class="text-gray-700 leading-relaxed mb-6">{{ selectedTimelineItem.description }}</p>
+                </div>
+
+                <div class="flex items-center justify-between pt-6 border-t border-gray-200">
+                  <div class="text-sm text-gray-500">
+                    Klik di luar modal untuk menutup
+                  </div>
+                  <button
+                    @click="closeModal"
+                    class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  >
+                    Tutup
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        </AnimatePresence>
       </div>
     </motion.section>
 
@@ -1526,6 +1703,54 @@ useHead({
 
       <div class="container flex flex-col items-center gap-8 mx-auto relative z-10">
         <motion.div
+          v-if="newsData.length > 0"
+          class="w-full max-w-6xl mb-8"
+          :initial="{ opacity: 0, y: -30 }"
+          :whileInView="{ opacity: 1, y: 0 }"
+          :transition="{ duration: 0.6 }"
+          :inViewOptions="{ once: true }"
+        >
+          <div class="relative overflow-hidden rounded-2xl shadow-2xl bg-linear-to-r from-blue-600 to-blue-800">
+            <div class="absolute inset-0 bg-black/20"></div>
+            <div class="relative p-8 md:p-12 text-white">
+              <div class="flex flex-col md:flex-row items-center gap-6">
+                <div class="flex-1">
+                  <div class="flex items-center gap-2 mb-4">
+                    <Icon name="lucide:newspaper" size="24" class="text-yellow-400" />
+                    <span class="text-sm font-semibold text-yellow-400 uppercase tracking-wide">Berita Utama</span>
+                  </div>
+                  <h3 class="text-2xl md:text-3xl font-bold mb-4 leading-tight">
+                    {{ newsData[0]?.title || '' }}
+                  </h3>
+                  <p class="text-blue-100 mb-6 line-clamp-3">
+                    {{ newsData[0]?.subtitle || '' }}
+                  </p>
+                  <NuxtLink
+                    :to="`/berita/${newsData[0]?.slug || ''}`"
+                    class="inline-flex items-center gap-2 px-6 py-3 bg-white text-blue-600 font-semibold rounded-lg hover:bg-blue-50 transition-colors shadow-lg"
+                  >
+                    Baca Selengkapnya
+                    <Icon name="lucide:arrow-right" size="16" />
+                  </NuxtLink>
+                </div>
+                <div class="w-full md:w-80 h-48 md:h-56">
+                  <NuxtImg
+                    :src="newsData[0]?.thumbnail || '/images/placeholder.jpg'"
+                    class="w-full h-full object-cover rounded-lg shadow-lg"
+                    :alt="newsData[0]?.title || ''"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="absolute top-4 right-4">
+              <div class="px-3 py-1 bg-yellow-500 text-black text-xs font-bold rounded-full">
+                TERBARU
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        <motion.div
           class="px-8 py-3 text-xl font-bold tracking-widest text-center uppercase rounded-full md:text-2xl"
           style="background: #eff6ff; color: #1d4ed8"
           :initial="{ opacity: 0, scale: 0.8 }"
@@ -1537,19 +1762,31 @@ useHead({
         </motion.div>
 
         <div class="flex flex-wrap justify-center gap-3">
-          <button
+          <motion.button
             v-for="category in newsCategories"
             :key="category"
             @click="filterByCategory(category)"
             :class="[
-              'font-semibold px-6 py-3 rounded-full transition-all duration-300 text-sm',
+              'font-semibold px-6 py-3 rounded-full transition-all duration-300 text-sm relative overflow-hidden',
               selectedCategory === category
                 ? 'bg-blue-600 text-white shadow-md'
-                : 'bg-white text-gray-700 hover:bg-blue-50 border border-gray-200',
+                : 'bg-white text-gray-700 hover:bg-blue-50 border border-gray-200 hover:border-blue-300',
             ]"
+            :initial="{ opacity: 0, scale: 0.8 }"
+            :whileInView="{ opacity: 1, scale: 1 }"
+            :transition="{ duration: 0.4, delay: 0.1 }"
+            :inViewOptions="{ once: true }"
+            :whileHover="{ scale: 1.05 }"
+            :whileTap="{ scale: 0.95 }"
           >
-            {{ category === "all" ? "Semua" : category }}
-          </button>
+            <span class="relative z-10">{{ category === "all" ? "Semua" : category }}</span>
+            <motion.div
+              v-if="selectedCategory === category"
+              class="absolute inset-0 bg-blue-600 rounded-full"
+              layoutId="activeTab"
+              :transition="{ type: 'spring', bounce: 0.2, duration: 0.6 }"
+            ></motion.div>
+          </motion.button>
         </div>
 
         <div v-if="isLoadingNews" class="flex items-center justify-center py-20">
@@ -1568,30 +1805,46 @@ useHead({
             :key="news.id"
             :initial="{ opacity: 0, y: 20 }"
             :whileInView="{ opacity: 1, y: 0 }"
-            :transition="{ duration: 0.6 }"
+            :transition="{ duration: 0.6, delay: index * 0.1 }"
             :inViewOptions="{ once: true }"
           >
             <NuxtLink
               :to="`/berita/${news.slug}`"
-              class="relative flex flex-col overflow-hidden transition-all duration-300 bg-white border border-gray-100 shadow-lg cursor-pointer rounded-2xl group hover:shadow-xl"
+              class="relative flex flex-col overflow-hidden transition-all duration-300 bg-white border border-gray-100 shadow-lg cursor-pointer rounded-2xl group hover:shadow-xl hover:-translate-y-1"
             >
-              <div class="h-48 overflow-hidden">
+              <div class="relative h-48 overflow-hidden">
                 <NuxtImg
                   :src="news.thumbnail"
                   class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
                   :alt="news.title"
                 />
+                <div class="absolute top-3 left-3">
+                  <div class="px-2 py-1 bg-blue-600 text-white text-xs font-semibold rounded-full">
+                    {{ news.tags[0] || "Berita" }}
+                  </div>
+                </div>
+                <div class="absolute inset-0 bg-linear-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
               <div class="flex flex-col grow p-5">
-                <p class="mb-2 text-xs font-semibold text-blue-600">
-                  {{ news.tags.join(", ") }}
-                </p>
-                <h3 class="grow mb-2 font-bold text-gray-800">
+                <div class="flex items-center justify-between mb-2">
+                  <p class="text-xs font-semibold text-blue-600">
+                    {{ news.tags.join(", ") }}
+                  </p>
+                  <Icon name="lucide:arrow-right" size="16" class="text-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+                <h3 class="grow mb-2 font-bold text-gray-800 group-hover:text-blue-600 transition-colors line-clamp-2">
                   {{ news.title }}
                 </h3>
-                <p class="text-sm text-gray-500 line-clamp-2">
+                <p class="text-sm text-gray-500 line-clamp-2 group-hover:text-gray-700 transition-colors">
                   {{ news.subtitle }}
                 </p>
+                <div class="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
+                  <span class="text-xs text-gray-400">Baca lebih lanjut</span>
+                  <div class="flex items-center gap-1 text-blue-500">
+                    <Icon name="lucide:eye" size="12" />
+                    <span class="text-xs">Detail</span>
+                  </div>
+                </div>
               </div>
             </NuxtLink>
           </motion.div>
@@ -1614,44 +1867,7 @@ useHead({
       </div>
     </motion.section>
 
-    <motion.section
-      id="faq"
-      class="relative overflow-hidden"
-      :initial="{ opacity: 0, y: 50 }"
-      :whileInView="{ opacity: 1, y: 0 }"
-      :transition="{ duration: 0.8 }"
-      :inViewOptions="{ once: true }"
-    >
-      <div class="absolute inset-0 faq-pattern opacity-30 z-0"></div>
-
-      <div
-        class="absolute top-5 left-1/5 w-40 h-40 bg-linear-to-br from-cyan-400 to-blue-400 rounded-full opacity-8 large-faq-shape-1"
-      ></div>
-      <div
-        class="absolute bottom-10 right-1/4 w-45 h-45 bg-linear-to-br from-pink-400 to-purple-400 transform rotate-45 opacity-6 large-faq-shape-2"
-      ></div>
-      <div
-        class="absolute top-1/2 right-1/3 w-35 h-35 bg-linear-to-br from-yellow-400 to-orange-400 rounded-lg opacity-10 large-faq-shape-3"
-      ></div>
-
-      <div class="absolute top-1/4 left-10 z-0">
-        <Icon name="lucide:help-circle" size="70" class="text-indigo-300 opacity-25 large-icon-5" />
-      </div>
-
-      <div class="absolute top-20 right-50 z-0">
-        <Icon name="lucide:help-circle" size="230" class="text-blue-300 opacity-10 faq-ornament-1" />
-      </div>
-      <div class="absolute bottom-20 right-12 z-0">
-        <Icon name="lucide:lightbulb" size="170" class="text-orange-300 opacity-8 faq-ornament-2" />
-      </div>
-      <div class="absolute top-1/2 left-16 z-0">
-        <Icon name="lucide:message-square" size="190" class="text-blue-400 opacity-12 faq-ornament-3" />
-      </div>
-
-      <div class="relative z-10">
-        <FAQSection />
-      </div>
-    </motion.section>
+    <FAQSection />
 
     <AnimatePresence>
       <motion.button

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Motion } from "motion-v";
+import { motion, AnimatePresence } from "motion-v";
 
 interface FAQItem {
   question: string;
@@ -58,10 +58,9 @@ const faqItems = ref<FAQItem[]>([
   },
 ]);
 
-const toggleFAQ = (index: number) => {
-  if (faqItems.value[index]) {
-    faqItems.value[index].isOpen = !faqItems.value[index].isOpen;
-  }
+
+const toggleFAQ = (item: FAQItem) => {
+  item.isOpen = !item.isOpen;
 };
 </script>
 
@@ -69,65 +68,70 @@ const toggleFAQ = (index: number) => {
   <section id="faq">
     <div class="container py-28 px-4 mx-auto md:px-10">
       <div class="flex flex-col items-center gap-8">
-        <Motion
+        <motion.div
           class="px-8 py-4 rounded-lg shadow-md bg-secondary backdrop-blur-2xl"
           :initial="{ opacity: 0, y: -30 }"
           :animate="{ opacity: 1, y: 0 }"
           :transition="{ duration: 0.6 }"
         >
           <h2 class="text-3xl font-bold">Pertanyaan yang Sering Diajukan</h2>
-        </Motion>
+        </motion.div>
 
-        <Motion
+        <motion.div
           class="max-w-2xl text-center text-gray-600"
           :initial="{ opacity: 0, y: 30 }"
           :animate="{ opacity: 1, y: 0 }"
           :transition="{ duration: 0.6, delay: 0.2 }"
         >
           Temukan jawaban atas pertanyaan umum tentang SMK Negeri 2 Singosari
-        </Motion>
+        </motion.div>
 
-        <div class="w-full max-w-4xl space-y-4">
-          <Motion
-            v-for="(item, index) in faqItems"
-            :key="index"
-            class="overflow-hidden transition-shadow duration-300 bg-white border border-gray-300 rounded-lg shadow-sm hover:shadow-md"
-            :initial="{ opacity: 0, y: 50 }"
-            :whileInView="{ opacity: 1, y: 0 }"
-            :transition="{ duration: 0.5 }"
-            :inViewOptions="{ once: true }"
-          >
-            <button
-              @click="toggleFAQ(index)"
-              class="flex items-center justify-between w-full px-6 py-4 text-left transition-colors duration-200 hover:bg-gray-50"
+        <motion.div
+          class="w-full max-w-4xl"
+          :initial="{ opacity: 0, y: 20 }"
+          :animate="{ opacity: 1, y: 0 }"
+          :transition="{ duration: 0.6, delay: 0.4 }"
+        >
+
+          <div class="space-y-4">
+            <motion.div
+              v-for="(item, index) in faqItems"
+              :key="item.question"
+              class="overflow-hidden transition-shadow duration-300 bg-white border border-gray-300 rounded-lg shadow-sm hover:shadow-md"
+              :initial="{ opacity: 0, y: 50 }"
+              :whileInView="{ opacity: 1, y: 0 }"
+              :transition="{ duration: 0.5, delay: index * 0.1 }"
+              :inViewOptions="{ once: true }"
             >
-              <span class="pr-4 font-semibold text-gray-800">{{ item.question }}</span>
-              <Icon
-                name="lucide:chevron-down"
-                size="24"
-                class="shrink-0 text-blue-600 transition-transform duration-300"
-                :class="{ 'rotate-180': item.isOpen }"
-              />
-            </button>
+              <button
+                @click="toggleFAQ(item)"
+                class="flex items-center justify-between w-full px-6 py-4 text-left transition-colors duration-200 hover:bg-gray-50"
+              >
+                <span class="pr-4 font-semibold text-gray-800">{{ item.question }}</span>
+                <motion.div :animate="{ rotate: item.isOpen ? 180 : 0 }" :transition="{ duration: 0.3 }">
+                  <Icon name="lucide:chevron-down" size="24" class="shrink-0 text-blue-600" />
+                </motion.div>
+              </button>
 
-            <Transition
-              enter-active-class="transition-all duration-300 ease-out"
-              enter-from-class="opacity-0 max-h-0"
-              enter-to-class="opacity-100 max-h-96"
-              leave-active-class="transition-all duration-300 ease-in"
-              leave-from-class="opacity-100 max-h-96"
-              leave-to-class="opacity-0 max-h-0"
-            >
-              <div v-show="item.isOpen" class="overflow-hidden">
-                <div class="px-6 py-4 border-t border-gray-200 bg-gray-50">
-                  <p class="leading-relaxed text-gray-700">{{ item.answer }}</p>
-                </div>
-              </div>
-            </Transition>
-          </Motion>
-        </div>
+              <AnimatePresence>
+                <motion.div
+                  v-if="item.isOpen"
+                  :initial="{ height: 0, opacity: 0 }"
+                  :animate="{ height: 'auto', opacity: 1 }"
+                  :exit="{ height: 0, opacity: 0 }"
+                  :transition="{ duration: 0.3, ease: 'easeInOut' }"
+                  class="overflow-hidden"
+                >
+                  <div class="px-6 py-4 border-t border-gray-200 bg-gray-50">
+                    <p class="leading-relaxed text-gray-700">{{ item.answer }}</p>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </motion.div>
+          </div>
+        </motion.div>
 
-        <Motion
+        <motion.div
           class="mt-8 text-center"
           :initial="{ opacity: 0, y: 30 }"
           :animate="{ opacity: 1, y: 0 }"
@@ -141,7 +145,7 @@ const toggleFAQ = (index: number) => {
             Hubungi Kami
             <Icon name="lucide:arrow-right" size="18" />
           </NuxtLink>
-        </Motion>
+        </motion.div>
       </div>
     </div>
   </section>

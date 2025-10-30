@@ -19,7 +19,7 @@ interface Achievement {
 const route = useRoute();
 const major = props.major || (route.params.majorName as MajorName);
 
-const { data: achievementsData } = await useFetch<Achievement[]>(`/api/achievements?major=${major}`);
+const { data: achievementsData } = await useFetch<Achievement[]>(`/api/achievements${major ? `?major=${major}` : ''}`);
 const { data: _majorDatas } = await useFetch<Record<MajorName, MajorData>>("/api/majors");
 
 const currentIndex = ref<number>(0);
@@ -29,7 +29,22 @@ const slideDirection = ref<"left" | "right" | "">("");
 const achievements = computed(() => achievementsData.value || []);
 
 const majorColor = computed(() => {
-  return majorColorSchemes[major];
+  if (major && majorColorSchemes[major]) {
+    return majorColorSchemes[major];
+  }
+  // Default color scheme for general achievements
+  return {
+    primary: "#1d4ed8",
+    secondary: "#1e40af",
+    accent: "#3b82f6",
+    light: "#dbeafe",
+    text: "#1d4ed8",
+    bg: "#1d4ed8",
+    hoverBg: "#1e40af",
+    border: "#1d4ed8",
+    headerBg: "rgba(29, 78, 216, 0.3)",
+    gradient: "linear-gradient(135deg, #1d4ed8, #1e40af)",
+  };
 });
 
 const currentAchievement = computed(() => {
