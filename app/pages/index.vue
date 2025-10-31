@@ -180,44 +180,19 @@ type Achievement = {
 const achievements = ref<Achievement[]>([]);
 
 const loadAchievements = async () => {
-  try {
-    const response = await $fetch("/api/achievements");
-    const achievementsData = response as any[];
+  const response = await $fetch("/api/news", { query: { tag: "juara", limit: 10 } });
+  const newsData = response.data || [];
 
-    achievements.value = achievementsData.slice(0, 5).map((achievement) => ({
-      image: "/images/placeholder.jpg", // You can add thumbnail logic here if available
-      title: achievement.title,
-      description: achievement.description,
-      slug: null, // Since this comes from API, no slug
-      studentName: achievement.studentName,
-      year: achievement.year,
-      majorName: achievement.majorName,
+  if (newsData.length > 0) {
+    achievements.value = newsData.map((news: any) => ({
+      image: news.thumbnail || "/images/placeholder.jpg",
+      title: news.title,
+      description: news.subtitle || news.description || "",
+      slug: news.slug,
+      studentName: "",
+      year: news.createdAt ? new Date(news.createdAt).getFullYear() : new Date().getFullYear(),
+      majorName: "",
     }));
-  } catch (error) {
-    console.error("Error fetching achievements:", error);
-    // Fallback to static data if API fails
-    achievements.value = [
-      {
-        image: "/images/placeholder.jpg",
-        title: "LKS 2023 Kab. Malang : Kami Lolos Enam Bidang Lomba untuk Menuju Tingkat Provinsi",
-        description:
-          "SMKN 2 Singosari sukses menggelar Lomba Kompetensi Siswa (LKS) SMK tingkat Kabupaten Malang selama dua hari sejak Senin (6/3). Hasilnya, 13 siswa berhasil meraih prestasi dengan 6 bidang lomba lolos ke tingkat Provinsi Jawa Timur.",
-        slug: null,
-        studentName: "",
-        year: 2023,
-        majorName: "",
-      },
-      {
-        image: "/images/placeholder.jpg",
-        title: "Juara 1 Lomba Karya Tulis Ilmiah Tingkat Nasional",
-        description:
-          "Tim siswa SMKN 2 Singosari berhasil meraih juara 1 dalam Lomba Karya Tulis Ilmiah yang diselenggarakan oleh Kementerian Pendidikan dan Kebudayaan dengan tema Inovasi Teknologi untuk Masa Depan.",
-        slug: null,
-        studentName: "",
-        year: 2023,
-        majorName: "",
-      },
-    ];
   }
 };
 
@@ -523,10 +498,10 @@ useHead({
       />
 
       <div
-        class="grid grid-cols-1 lg:grid-cols-[1fr_2fr_1fr] lg:grid-rows-1 gap-4 lg:gap-8 min-h-[80vh] items-center py-4 lg:py-8 max-w-7xl mx-auto relative z-10"
+        class="grid grid-cols-1 lg:grid-cols-[1fr_2fr_1fr] lg:grid-rows-1 gap-2 md:gap-4 lg:gap-8 min-h-[70vh] md:min-h-[80vh] items-center py-2 md:py-4 lg:py-8 max-w-7xl mx-auto relative z-10"
       >
         <motion.div
-          class="relative rounded-l-xl overflow-hidden shadow-2xl transition-all duration-300 ease lg:[clip-path:polygon(0_0,100%_0,85%_100%,0_100%)] lg:-translate-x-8 lg:z-5 order-1 min-h-[300px] lg:min-h-0 lg:order-[unset] bg-white/10 backdrop-blur-[15px] border border-white/20"
+          class="relative rounded-l-xl overflow-hidden shadow-2xl transition-all duration-300 ease lg:[clip-path:polygon(0_0,100%_0,85%_100%,0_100%)] lg:-translate-x-8 lg:z-5 order-1 min-h-[200px] md:min-h-[300px] lg:min-h-0 lg:order-[unset] bg-white/10 backdrop-blur-[15px] border border-white/20"
           :initial="{ opacity: 0, x: -100 }"
           :whileInView="{ opacity: 1, x: 0 }"
           :transition="{ duration: 0.8 }"
@@ -544,7 +519,7 @@ useHead({
         </motion.div>
 
         <motion.div
-          class="flex flex-col justify-center items-center text-center lg:items-start lg:text-left gap-8 text-white relative z-20 order-2 lg:order-[unset] p-6 lg:p-12 bg-white/10 backdrop-blur-[15px] border border-white/20 rounded-xl shadow-2xl"
+          class="flex flex-col justify-center items-center text-center lg:items-start lg:text-left gap-4 md:gap-8 text-white relative z-20 order-2 lg:order-[unset] p-4 md:p-6 lg:p-12 bg-white/10 backdrop-blur-[15px] border border-white/20 rounded-xl shadow-2xl w-full"
           :initial="{ opacity: 0, y: 50 }"
           :whileInView="{ opacity: 1, y: 0 }"
           :transition="{ duration: 0.8, delay: 0.2 }"
@@ -554,7 +529,7 @@ useHead({
         >
           <motion.h1
             id="hero-title"
-            class="text-3xl font-bold md:text-5xl lg:text-6xl text-center font-oswald tracking-wide leading-tight"
+            class="text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-center font-oswald tracking-wide leading-tight"
             :initial="{ opacity: 0, y: 30 }"
             :whileInView="{ opacity: 1, y: 0 }"
             :transition="{ duration: 0.8, delay: 0.4 }"
@@ -564,7 +539,7 @@ useHead({
             <motion.span class="text-yellow-500 font-bold">Prestasi</motion.span>
           </motion.h1>
           <motion.p
-            class="text-lg md:text-xl lg:text-2xl font-nunito leading-relaxed tracking-wide max-w-2xl"
+            class="text-base sm:text-lg md:text-xl lg:text-2xl font-nunito leading-relaxed tracking-wide max-w-2xl"
             :initial="{ opacity: 0, y: 30 }"
             :whileInView="{ opacity: 1, y: 0 }"
             :transition="{ duration: 0.8, delay: 0.6 }"
@@ -574,7 +549,7 @@ useHead({
             bersemangat.
           </motion.p>
           <motion.p
-            class="max-w-2xl text-base md:text-lg leading-relaxed text-gray-200"
+            class="max-w-2xl text-sm sm:text-base md:text-lg leading-relaxed text-gray-200"
             :initial="{ opacity: 0, y: 30 }"
             :whileInView="{ opacity: 1, y: 0 }"
             :transition="{ duration: 0.8, delay: 0.8 }"
@@ -584,7 +559,7 @@ useHead({
             generasi muda yang siap menghadapi tantangan masa depan melalui pendidikan kejuruan berkualitas.
           </motion.p>
           <motion.div
-            class="flex flex-col items-center gap-4 mt-6 sm:flex-row"
+            class="flex flex-col items-center gap-3 md:gap-4 mt-4 md:mt-6 sm:flex-row"
             :initial="{ opacity: 0, y: 30 }"
             :whileInView="{ opacity: 1, y: 0 }"
             :transition="{ duration: 0.8, delay: 1 }"
@@ -592,61 +567,61 @@ useHead({
           >
             <a
               @click.prevent="smoothScrollTo('#jurusan')"
-              class="flex items-center gap-2 px-8 py-4 text-lg font-semibold text-white transition-all duration-300 bg-orange-500 rounded-lg hover:bg-orange-600 cursor-pointer shadow-xl hover:shadow-2xl hover:scale-105 hover:shadow-orange-500/50 hover:rotate-1 hover:-translate-y-1"
+              class="flex items-center gap-2 px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-semibold text-white transition-all duration-300 bg-orange-500 rounded-lg hover:bg-orange-600 cursor-pointer shadow-xl hover:shadow-2xl hover:scale-105 hover:shadow-orange-500/50 hover:rotate-1 hover:-translate-y-1"
               aria-label="Explore academic programs and majors"
               role="button"
             >
               Jelajahi Program
-              <Icon name="lucide:graduation-cap" size="18" aria-hidden="true" />
+              <Icon name="lucide:graduation-cap" size="16 md:18" aria-hidden="true" />
             </a>
             <a
               @click.prevent="smoothScrollTo('#profil-sekolah')"
-              class="flex items-center gap-2 px-6 py-3 text-sm font-semibold text-orange-500 transition-all duration-300 border-2 border-orange-500 rounded-lg hover:bg-orange-500 hover:text-white cursor-pointer shadow-lg hover:shadow-xl hover:scale-105 hover:shadow-orange-500/50 hover:rotate-1 hover:-translate-y-1"
+              class="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 text-sm md:text-sm font-semibold text-orange-500 transition-all duration-300 border-2 border-orange-500 rounded-lg hover:bg-orange-500 hover:text-white cursor-pointer shadow-lg hover:shadow-xl hover:scale-105 hover:shadow-orange-500/50 hover:rotate-1 hover:-translate-y-1"
               aria-label="Take virtual tour of the school"
               role="button"
             >
               Tur Virtual
-              <Icon name="lucide:map" size="16" aria-hidden="true" />
+              <Icon name="lucide:map" size="14 md:16" aria-hidden="true" />
             </a>
           </motion.div>
           <motion.div
-            class="flex justify-center w-full gap-8 mt-8 lg:justify-start"
+            class="flex justify-center w-full gap-4 md:gap-8 mt-6 md:mt-8 lg:justify-start"
             :initial="{ opacity: 0, y: 30 }"
             :whileInView="{ opacity: 1, y: 0 }"
             :transition="{ duration: 0.8, delay: 1.2 }"
             :inViewOptions="{ once: true }"
           >
             <div
-              class="flex flex-col items-center bg-white/10 backdrop-blur-sm rounded-lg p-4 shadow-lg transition-all duration-300 hover:bg-white/20 hover:scale-105 hover:shadow-xl cursor-pointer hover:rotate-2 hover:-translate-y-2"
+              class="flex flex-col items-center bg-white/10 backdrop-blur-sm rounded-lg p-3 md:p-4 shadow-lg transition-all duration-300 hover:bg-white/20 hover:scale-105 hover:shadow-xl cursor-pointer hover:rotate-2 hover:-translate-y-2"
               role="region"
               aria-label="Number of academic concentrations"
             >
-              <div class="text-2xl md:text-3xl font-bold text-white">
+              <div class="text-xl md:text-2xl lg:text-3xl font-bold text-white">
                 {{ jurusanCount }}
               </div>
-              <div class="text-sm md:text-base text-gray-200">Konsentrasi Keahlian</div>
+              <div class="text-xs md:text-sm lg:text-base text-gray-200">Konsentrasi Keahlian</div>
             </div>
             <div
-              class="flex flex-col items-center bg-white/10 backdrop-blur-sm rounded-lg p-4 shadow-lg transition-all duration-300 hover:bg-white/20 hover:scale-105 hover:shadow-xl cursor-pointer hover:rotate-2 hover:-translate-y-2"
+              class="flex flex-col items-center bg-white/10 backdrop-blur-sm rounded-lg p-3 md:p-4 shadow-lg transition-all duration-300 hover:bg-white/20 hover:scale-105 hover:shadow-xl cursor-pointer hover:rotate-2 hover:-translate-y-2"
               role="region"
               aria-label="Number of students"
             >
-              <div class="text-2xl md:text-3xl font-bold text-white">{{ siswaCount }}+</div>
-              <div class="text-sm md:text-base text-gray-200">Siswa</div>
+              <div class="text-xl md:text-2xl lg:text-3xl font-bold text-white">{{ siswaCount }}+</div>
+              <div class="text-xs md:text-sm lg:text-base text-gray-200">Siswa</div>
             </div>
             <div
-              class="flex flex-col items-center bg-white/10 backdrop-blur-sm rounded-lg p-4 shadow-lg transition-all duration-300 hover:bg-white/20 hover:scale-105 hover:shadow-xl cursor-pointer hover:rotate-2 hover:-translate-y-2"
+              class="flex flex-col items-center bg-white/10 backdrop-blur-sm rounded-lg p-3 md:p-4 shadow-lg transition-all duration-300 hover:bg-white/20 hover:scale-105 hover:shadow-xl cursor-pointer hover:rotate-2 hover:-translate-y-2"
               role="region"
               aria-label="Number of achievements"
             >
-              <div class="text-2xl md:text-3xl font-bold text-white">{{ prestasiCount }}+</div>
-              <div class="text-sm md:text-base text-gray-200">Prestasi</div>
+              <div class="text-xl md:text-2xl lg:text-3xl font-bold text-white">{{ prestasiCount }}+</div>
+              <div class="text-xs md:text-sm lg:text-base text-gray-200">Prestasi</div>
             </div>
           </motion.div>
         </motion.div>
 
         <motion.div
-          class="relative rounded-r-xl overflow-hidden shadow-2xl transition-all duration-300 ease lg:[clip-path:polygon(15%_0,100%_0,100%_100%,0_100%)] lg:translate-x-8 lg:z-5 order-3 min-h-[300px] lg:min-h-0 lg:order-[unset] bg-white/10 backdrop-blur-[15px] border border-white/20"
+          class="relative rounded-r-xl overflow-hidden shadow-2xl transition-all duration-300 ease lg:[clip-path:polygon(15%_0,100%_0,100%_100%,0_100%)] lg:translate-x-8 lg:z-5 order-3 min-h-[200px] md:min-h-[300px] lg:min-h-0 lg:order-[unset] bg-white/10 backdrop-blur-[15px] border border-white/20"
           :initial="{ opacity: 0, x: 100 }"
           :whileInView="{ opacity: 1, x: 0 }"
           :transition="{ duration: 0.8, delay: 0.4 }"
@@ -976,14 +951,8 @@ useHead({
       :inViewOptions="{ once: true }"
     >
       <div class="absolute inset-0 wave-pattern opacity-50 z-0"></div>
-
-      <div
-        class="absolute bottom-0 left-80 w-42 h-42 bg-linear-to-br from-violet-400 to-purple-400 rounded-full opacity-9 large-prestasi-shape-1"
-      ></div>
-      <div
-        class="absolute bottom-0 right-80 w-48 h-48 bg-linear-to-br from-pink-400 to-rose-400 transform rotate-45 opacity-7 large-prestasi-shape-2"
-      ></div>
-
+      <div class="absolute bottom-0 left-80 w-42 h-42 bg-linear-to-br from-violet-400 to-purple-400 rounded-full opacity-9 large-prestasi-shape-1"></div>
+      <div class="absolute bottom-0 right-80 w-48 h-48 bg-linear-to-br from-pink-400 to-rose-400 transform rotate-45 opacity-7 large-prestasi-shape-2"></div>
       <div class="absolute bottom-20 left-10 z-0">
         <Icon name="lucide:trophy" size="120" class="text-orange-300 opacity-10 prestasi-ornament-1" />
       </div>
@@ -1002,129 +971,74 @@ useHead({
           :transition="{ duration: 0.6, delay: 0.2 }"
           :inViewOptions="{ once: true }"
         >
-          <!-- Background decoration -->
-          <div
-            class="absolute top-0 right-0 w-32 h-32 bg-blue-100 rounded-full opacity-20 -translate-y-16 translate-x-16"
-          ></div>
-          <div
-            class="absolute bottom-0 left-0 w-24 h-24 bg-yellow-100 rounded-full opacity-20 translate-y-12 -translate-x-12"
-          ></div>
+          <div class="absolute top-0 right-0 w-32 h-32 bg-blue-100 rounded-full opacity-20 -translate-y-16 translate-x-16"></div>
+          <div class="absolute bottom-0 left-0 w-24 h-24 bg-yellow-100 rounded-full opacity-20 translate-y-12 -translate-x-12"></div>
+
           <div class="overflow-hidden">
             <div
               class="flex transition-transform duration-500 ease-in-out"
-              :style="{
-                transform: `translateX(-${currentAchievement * 100}%)`,
-              }"
+              :style="{ transform: `translateX(-${currentAchievement * 100}%)` }"
             >
-              <div v-for="(achievement, index) in achievements" :key="index" class="shrink-0 w-full">
-                <motion.div
-                  :initial="{ opacity: 0, x: index === currentAchievement ? 0 : 50 }"
-                  :animate="{ opacity: index === currentAchievement ? 1 : 0, x: index === currentAchievement ? 0 : 50 }"
-                  :transition="{ duration: 0.5 }"
-                  class="absolute inset-0"
-                >
-                  <NuxtLink v-if="achievement.slug" :to="`/berita/${achievement.slug}`" class="block cursor-pointer">
-                    <div class="flex flex-col items-center gap-8 md:flex-row md:h-80">
-                      <div class="relative md:w-1/3">
-                        <NuxtImg
-                          :src="achievement.image"
-                          class="object-cover w-full rounded-lg shadow-md aspect-square transition-transform duration-300 hover:scale-105"
-                          alt="Achievement"
-                        />
-                        <div class="absolute top-2 right-2 flex gap-1">
-                          <div
-                            class="px-2 py-1 bg-yellow-500 text-white text-xs font-bold rounded-full flex items-center gap-1"
-                          >
-                            <Icon name="lucide:medal" size="10" />
-                            <span>Juara</span>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="flex flex-col gap-4 text-center md:text-left md:w-2/3 md:pr-5 md:justify-center">
-                        <div class="flex items-center gap-2 justify-center md:justify-start">
-                          <h3 class="text-xl md:text-2xl font-bold text-gray-800 hover:text-blue-600 transition-colors">
-                            {{ achievement.title }}
-                          </h3>
-                          <Icon
-                            name="lucide:external-link"
-                            size="16"
-                            class="text-blue-500 opacity-0 group-hover:opacity-100 transition-opacity"
-                          />
-                        </div>
-                        <p class="leading-relaxed text-gray-600 text-sm md:text-base line-clamp-4">
-                          {{ achievement.description }}
-                        </p>
-                        <div class="flex flex-wrap gap-2 justify-center md:justify-start">
-                          <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full">
-                            Prestasi
-                          </span>
-                          <span class="px-2 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full">
-                            LKS
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </NuxtLink>
-                  <div v-else class="flex flex-col items-center gap-8 md:flex-row md:h-80">
-                    <div class="relative md:w-1/3">
-                      <NuxtImg
-                        :src="achievement.image"
-                        class="object-cover w-full rounded-lg shadow-md aspect-square transition-transform duration-300 hover:scale-105"
-                        alt="Achievement"
-                      />
-                      <div class="absolute top-2 right-2 flex gap-1">
-                        <div
-                          class="px-2 py-1 bg-yellow-500 text-white text-xs font-bold rounded-full flex items-center gap-1"
-                        >
-                          <Icon name="lucide:medal" size="10" />
-                          <span>Juara</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="flex flex-col gap-4 text-center md:text-left md:w-2/3 md:pr-5 md:justify-center">
-                      <h3 class="text-xl md:text-2xl font-bold text-gray-800">
-                        {{ achievement.title }}
-                      </h3>
-                      <p class="leading-relaxed text-gray-600 text-sm md:text-base line-clamp-4">
-                        {{ achievement.description }}
-                      </p>
-                      <div class="flex flex-wrap gap-2 justify-center md:justify-start">
-                        <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full">
-                          Prestasi
-                        </span>
-                        <span class="px-2 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full">
-                          LKS
-                        </span>
+              <div
+                v-for="achievement in achievements"
+                :key="achievement.title"
+                class="flex-shrink-0 w-full px-2"
+              >
+                <div class="flex flex-col items-center gap-8 md:flex-row md:min-h-[320px]">
+                  <div class="relative w-full md:w-1/3">
+                    <NuxtImg
+                      :src="achievement.image"
+                      class="object-cover w-full rounded-lg shadow-md aspect-square transition-transform duration-300 hover:scale-105"
+                      alt="Achievement Photo"
+                    />
+                    <div class="absolute top-2 right-2 flex gap-1">
+                      <div class="px-2 py-1 bg-yellow-500 text-white text-xs font-bold rounded-full flex items-center gap-1">
+                        <Icon name="lucide:medal" size="10" />
+                        <span>Juara</span>
                       </div>
                     </div>
                   </div>
-                </motion.div>
+                  <div class="flex flex-col gap-4 text-center md:text-left md:w-2/3 md:pr-5 md:justify-center">
+                    <h3 class="text-xl md:text-2xl font-bold text-gray-800">
+                      {{ achievement.title }}
+                    </h3>
+                    <p class="leading-relaxed text-gray-600 text-sm md:text-base line-clamp-4">
+                      {{ achievement.description }}
+                    </p>
+                    <div class="flex flex-wrap gap-2 justify-center md:justify-start">
+                      <span class="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full">
+                        Prestasi
+                      </span>
+                      <span class="px-2 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded-full">
+                        LKS
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
           <div class="border-t border-gray-200"></div>
 
+          <!-- Controls Section (Unchanged) -->
           <div class="flex flex-col gap-4">
             <!-- Progress Indicator -->
             <div class="flex items-center justify-center gap-2">
               <div class="flex gap-1">
-                <div
+                <button
                   v-for="(achievement, index) in achievements"
                   :key="index"
-                  class="w-2 h-2 rounded-full transition-all duration-300 cursor-pointer"
-                  :class="index === currentAchievement ? 'bg-blue-600 w-6' : 'bg-gray-300 hover:bg-gray-400'"
                   @click="goToAchievement(index)"
-                ></div>
+                  class="h-2 rounded-full transition-all duration-300 cursor-pointer"
+                  :class="index === currentAchievement ? 'bg-blue-600 w-6' : 'bg-gray-300 hover:bg-gray-400 w-2'"
+                  :aria-label="`Go to achievement ${index + 1}`"
+                ></button>
               </div>
               <button
                 @click="toggleAutoPlay"
                 class="ml-4 p-2 rounded-full transition-all duration-300"
-                :class="
-                  isAutoPlaying
-                    ? 'bg-blue-100 text-blue-600 hover:bg-blue-200'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                "
+                :class="isAutoPlaying ? 'bg-blue-100 text-blue-600 hover:bg-blue-200' : 'bg-gray-100 text-gray-600 hover:bg-gray-200'"
                 :aria-label="isAutoPlaying ? 'Pause auto-play' : 'Start auto-play'"
               >
                 <Icon :name="isAutoPlaying ? 'lucide:pause' : 'lucide:play'" size="16" />
@@ -1167,10 +1081,7 @@ useHead({
                   <span class="mx-1 text-gray-400">/</span>
                   <span class="text-lg">{{ String(achievements.length).padStart(2, "0") }}</span>
                 </div>
-                <!-- Achievement Badge -->
-                <div
-                  class="flex items-center gap-1 px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-semibold"
-                >
+                <div class="flex items-center gap-1 px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-semibold">
                   <Icon name="lucide:trophy" size="12" />
                   <span>Prestasi</span>
                 </div>
