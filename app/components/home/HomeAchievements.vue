@@ -43,12 +43,10 @@ const { data: achievements, pending } = await useAsyncData(
 );
 
 const startAutoPlay = () => {
-  if (!carouselInView.value) return;
-
   if (autoPlayInterval.value) clearInterval(autoPlayInterval.value);
 
   autoPlayInterval.value = setInterval(() => {
-    if (isAutoPlaying.value && carouselInView.value) {
+    if (isAutoPlaying.value) {
       nextAchievement();
     }
   }, 5000);
@@ -106,28 +104,13 @@ const goToAchievement = (index: number) => {
   resetProgress();
 };
 
+onUnmounted(() => {
+  stopAutoPlay();
+});
+
 onMounted(() => {
-  const checkVisibility = () => {
-    if (carouselRef.value && typeof carouselRef.value.getBoundingClientRect === 'function') {
-      const rect = carouselRef.value.getBoundingClientRect();
-      carouselInView.value = rect.top < window.innerHeight && rect.bottom > 0;
-
-      if (carouselInView.value) {
-        startAutoPlay();
-        resetProgress();
-      } else {
-        stopAutoPlay();
-      }
-    }
-  };
-
-  window.addEventListener("scroll", checkVisibility, { passive: true });
-  checkVisibility(); // Check initial state
-
-  onUnmounted(() => {
-    window.removeEventListener("scroll", checkVisibility);
-    stopAutoPlay();
-  });
+  startAutoPlay();
+  resetProgress();
 });
 </script>
 

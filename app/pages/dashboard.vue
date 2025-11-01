@@ -52,7 +52,6 @@ const utilityFeatures = [
 
 const quickActions = [
   { title: "Berita Terbaru", href: "/berita", icon: "lucide:newspaper" },
-  { title: "Jadwal Pelajaran", href: "#", icon: "lucide:calendar" },
   { title: "Ekstrakurikuler", href: "/ekstrakurikuler", icon: "lucide:workflow" },
 ];
 
@@ -69,7 +68,7 @@ const formatDate = (dateString: string) => {
 <template>
   <div class="min-h-screen py-24 bg-linear-to-b from-white via-blue-50 to-white">
     <div class="container px-4 mx-auto sm:px-6">
-      <div class="max-w-6xl mx-auto">m
+      <div class="max-w-6xl mx-auto">
         <div class="mb-8">
           <h1 class="text-3xl font-bold text-gray-800 md:text-4xl">Dashboard</h1>
           <p class="mt-2 text-gray-600">Selamat datang kembali, {{ user.name }}!</p>
@@ -137,26 +136,6 @@ const formatDate = (dateString: string) => {
               <Icon :name="action.icon" size="32" class="text-blue-600" />
               <span class="text-sm font-semibold text-center text-gray-700">{{ action.title }}</span>
             </NuxtLink>
-          </div>
-        </div>
-
-        <div class="mb-8">
-          <div class="p-6 bg-white border-2 border-gray-100 shadow-xl rounded-2xl md:p-8">
-            <h3 class="mb-4 text-xl font-bold text-gray-800 md:text-2xl">Cari Informasi</h3>
-            <div class="relative max-w-md">
-              <input
-                v-model="searchQuery"
-                type="text"
-                placeholder="Cari berita, ekstrakurikuler, atau informasi lainnya..."
-                class="w-full px-4 py-3 pr-12 text-lg transition border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-              />
-              <Icon
-                name="lucide:search"
-                size="24"
-                class="absolute text-gray-400 transform -translate-y-1/2 right-4 top-1/2"
-              />
-            </div>
-            <p class="mt-3 text-sm text-gray-500">Temukan informasi yang Anda butuhkan dengan cepat</p>
           </div>
         </div>
 
