@@ -124,7 +124,7 @@ const toggleFAQ = (item: FAQItem) => {
               @click="loadMore"
               class="px-6 py-3 font-semibold text-white transition-colors duration-200 bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 hover:shadow-lg"
             >
-              Load More FAQs
+              Muat Lebih Banyak
             </button>
           </div>
         </div>

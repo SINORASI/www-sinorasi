@@ -27,21 +27,8 @@ const startAnimation = async () => {
 };
 
 onMounted(() => {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      const entry = entries[0];
-      if (!entry) return;
-      sectionInView.value = entry.isIntersecting;
-      if (entry.isIntersecting && (stats.value[0]?.current ?? 0) === 0) {
-        startAnimation();
-      }
-    },
-    { threshold: 0.3 }
-  );
-
-  if (sectionRef.value) observer.observe(sectionRef.value);
-
-  onUnmounted(() => observer.disconnect());
+  // Start animation immediately when component mounts
+  startAnimation();
 });
 </script>
 

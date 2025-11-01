@@ -41,26 +41,24 @@ onMounted(async () => {
 
   await nextTick();
 
-  // Implement lazy loading with IntersectionObserver
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const img = entry.target as HTMLImageElement;
-          img.src = img.dataset.src || '';
+  // Simple lazy loading with scroll detection
+  const checkVisibility = () => {
+    imageRefs.value.forEach((img) => {
+      if (img && img.dataset && img.dataset.src && typeof img.getBoundingClientRect === 'function') {
+        const rect = img.getBoundingClientRect();
+        if (rect.top < window.innerHeight + 50 && rect.bottom > -50) {
+          img.src = img.dataset.src;
           img.classList.remove('lazy');
-          observer.unobserve(img);
+          // Remove from array to avoid checking again
+          const index = imageRefs.value.indexOf(img);
+          if (index > -1) imageRefs.value.splice(index, 1);
         }
-      });
-    },
-    { rootMargin: '50px' }
-  );
+      }
+    });
+  };
 
-  imageRefs.value.forEach((img) => {
-    if (img) {
-      observer.observe(img);
-    }
-  });
+  window.addEventListener('scroll', checkVisibility, { passive: true });
+  checkVisibility(); // Check initial visibility
 });
 </script>
 

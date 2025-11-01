@@ -62,24 +62,25 @@ onMounted(() => {
   checkMobile();
   window.addEventListener("resize", checkMobile, { passive: true });
 
-  const observer = new IntersectionObserver(
-    (entries: IntersectionObserverEntry[]) => {
-      const entry = entries[0];
-      if (!entry) return;
-
-      heroInView.value = entry.isIntersecting;
-      if (entry.isIntersecting && jurusanCount.value === 0) {
+  // Simple scroll-based trigger instead of IntersectionObserver
+  const checkVisibility = () => {
+    if (heroRef.value) {
+      const rect = heroRef.value.getBoundingClientRect();
+      const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+      heroInView.value = isVisible;
+      if (isVisible && jurusanCount.value === 0) {
         startCounterAnimation();
+        window.removeEventListener("scroll", checkVisibility);
       }
-    },
-    { threshold: 0.3 }
-  );
+    }
+  };
 
-  if (heroRef.value) observer.observe(heroRef.value);
+  window.addEventListener("scroll", checkVisibility, { passive: true });
+  checkVisibility(); // Check initial state
 
   onUnmounted(() => {
-    observer.disconnect();
     window.removeEventListener("resize", checkMobile);
+    window.removeEventListener("scroll", checkVisibility);
   });
 });
 </script>

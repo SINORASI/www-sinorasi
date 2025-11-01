@@ -107,27 +107,25 @@ const goToAchievement = (index: number) => {
 };
 
 onMounted(() => {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      const entry = entries[0];
-      if (!entry) return;
+  const checkVisibility = () => {
+    if (carouselRef.value && typeof carouselRef.value.getBoundingClientRect === 'function') {
+      const rect = carouselRef.value.getBoundingClientRect();
+      carouselInView.value = rect.top < window.innerHeight && rect.bottom > 0;
 
-      carouselInView.value = entry.isIntersecting;
-
-      if (entry.isIntersecting) {
+      if (carouselInView.value) {
         startAutoPlay();
         resetProgress();
       } else {
         stopAutoPlay();
       }
-    },
-    { threshold: 0.5 }
-  );
+    }
+  };
 
-  if (carouselRef.value) observer.observe(carouselRef.value);
+  window.addEventListener("scroll", checkVisibility, { passive: true });
+  checkVisibility(); // Check initial state
 
   onUnmounted(() => {
-    observer.disconnect();
+    window.removeEventListener("scroll", checkVisibility);
     stopAutoPlay();
   });
 });

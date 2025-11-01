@@ -110,24 +110,22 @@ onMounted(() => {
   checkMobile();
   window.addEventListener("resize", checkMobile, { passive: true });
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      const entry = entries[0];
-      if (!entry) return;
-
-      timelineInView.value = entry.isIntersecting;
-      if (entry.isIntersecting && !animationStarted.value) {
+  const checkVisibility = () => {
+    if (timelineRef.value && typeof timelineRef.value.getBoundingClientRect === 'function') {
+      const rect = timelineRef.value.getBoundingClientRect();
+      timelineInView.value = rect.top < window.innerHeight && rect.bottom > 0;
+      if (timelineInView.value && !animationStarted.value) {
         setTimeout(() => startStaggeredAnimation(), 500);
       }
-    },
-    { threshold: 0.2 }
-  );
+    }
+  };
 
-  if (timelineRef.value) observer.observe(timelineRef.value);
+  window.addEventListener("scroll", checkVisibility, { passive: true });
+  checkVisibility(); // Check initial state
 
   onUnmounted(() => {
-    observer.disconnect();
     window.removeEventListener("resize", checkMobile);
+    window.removeEventListener("scroll", checkVisibility);
   });
 });
 </script>

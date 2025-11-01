@@ -28,28 +28,32 @@ const setRef = (el: Element | ComponentPublicInstance | null) => {
   if (el) refs.value.push(el);
 };
 
-onMounted(() => {
-  const obs = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const id = entry.target.getAttribute("data-id");
-          if (id) {
-            if (leftColumnTopics.value.some((t) => t.id === id)) {
-              leftVisible.value[id] = true;
-            } else if (rightColumnTopics.value.some((t) => t.id === id)) {
-              rightVisible.value[id] = true;
-            }
-            obs.unobserve(entry.target);
+const checkVisibility = () => {
+  refs.value.forEach((el) => {
+    if (el instanceof Element) {
+      const id = el.getAttribute("data-id");
+      if (id) {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          if (leftColumnTopics.value.some((t) => t.id === id)) {
+            leftVisible.value[id] = true;
+          } else if (rightColumnTopics.value.some((t) => t.id === id)) {
+            rightVisible.value[id] = true;
           }
         }
-      });
-    },
-    { threshold: 0.1 }
-  );
-  refs.value.forEach((el) => {
-    if (el instanceof Element) obs.observe(el);
+      }
+    }
   });
+};
+
+onMounted(() => {
+  window.addEventListener('scroll', checkVisibility, { passive: true });
+  // Check initial visibility
+  nextTick(() => checkVisibility());
+});
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', checkVisibility);
 });
 
 const route = useRoute();

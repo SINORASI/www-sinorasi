@@ -11,32 +11,29 @@ const majorColor = computed(() => majorColorSchemes[props.major]);
 
 const tools = computed(() => toolsData[props.major] || []);
 
-// Lazy loading with IntersectionObserver
+// Simple scroll-based visibility detection
 const visibleCards = ref(new Set<number>());
 const cardRefs = ref<any[]>([]);
 
+const checkVisibility = () => {
+  cardRefs.value.forEach((card, index) => {
+    if (card) {
+      const rect = card.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        visibleCards.value.add(index);
+      }
+    }
+  });
+};
+
 onMounted(() => {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        const index = parseInt(entry.target.getAttribute('data-index') || '0');
-        if (entry.isIntersecting) {
-          visibleCards.value.add(index);
-        } else {
-          visibleCards.value.delete(index);
-        }
-      });
-    },
-    { threshold: 0.1 }
-  );
+  window.addEventListener('scroll', checkVisibility, { passive: true });
+  // Check initial visibility
+  nextTick(() => checkVisibility());
+});
 
-  cardRefs.value.forEach((card) => {
-    if (card) observer.observe(card);
-  });
-
-  onUnmounted(() => {
-    observer.disconnect();
-  });
+onUnmounted(() => {
+  window.removeEventListener('scroll', checkVisibility);
 });
 </script>
 

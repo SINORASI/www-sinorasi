@@ -110,8 +110,8 @@ type YTPlayer = {
 const youtubePlayers = ref<Record<number, YTPlayer>>({});
 const playersReady = ref<Record<number, boolean>>({});
 const playbackIntervals = ref<Record<number, number>>({});
-const slideObservers = ref<Record<number, IntersectionObserver>>({});
-const cardObservers = ref<Record<number, IntersectionObserver>>({});
+const slideObservers = ref<Record<number, any>>({});
+const cardObservers = ref<Record<number, any>>({});
 
 const videoCards: VideoCard[] = [
   {
@@ -289,20 +289,16 @@ const setupSlideIntersectionObserver = () => {
   const container = document.querySelector('.container');
   if (!container) return;
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          initializePlayers();
-          observer.disconnect();
-        }
-      });
-    },
-    { threshold: 0.1 }
-  );
+  const checkVisibility = () => {
+    const rect = container.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      initializePlayers();
+      window.removeEventListener('scroll', checkVisibility);
+    }
+  };
 
-  observer.observe(container);
-  slideObservers.value[currentSlide.value] = observer;
+  window.addEventListener('scroll', checkVisibility, { passive: true });
+  checkVisibility(); // Check initial visibility
 };
 
 const setupCardIntersectionObserver = (cardId: number) => {
@@ -311,28 +307,20 @@ const setupCardIntersectionObserver = (cardId: number) => {
   const cardElement = document.querySelector(`[data-card-id="${cardId}"]`);
   if (!cardElement) return;
 
-  const observer = new IntersectionObserver(
-    async (entries) => {
-      entries.forEach(async (entry) => {
-        if (entry.isIntersecting && !youtubePlayers.value[cardId]) {
-          await createPlayer(cardId, videoCards.find(c => c.id === cardId)?.videoUrl || '');
-          observer.disconnect();
-          delete cardObservers.value[cardId];
-        }
-      });
-    },
-    { threshold: 0.5, rootMargin: '50px' }
-  );
+  const checkCardVisibility = async () => {
+    const rect = cardElement.getBoundingClientRect();
+    if (rect.top < window.innerHeight + 50 && rect.bottom > -50 && !youtubePlayers.value[cardId]) {
+      await createPlayer(cardId, videoCards.find(c => c.id === cardId)?.videoUrl || '');
+      window.removeEventListener('scroll', checkCardVisibility);
+    }
+  };
 
-  observer.observe(cardElement);
-  cardObservers.value[cardId] = observer;
+  window.addEventListener('scroll', checkCardVisibility, { passive: true });
+  checkCardVisibility(); // Check initial visibility
 };
 
 const cleanupAllObservers = () => {
-  Object.values(slideObservers.value).forEach(observer => observer.disconnect());
-  Object.values(cardObservers.value).forEach(observer => observer.disconnect());
-  slideObservers.value = {};
-  cardObservers.value = {};
+  // No observers to clean up since we switched to scroll listeners
 };
 
 const cleanupAllPlayers = () => {

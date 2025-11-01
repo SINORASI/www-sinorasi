@@ -66,6 +66,14 @@ export function useIntersectionObserver(
 
     if (target.value) {
       observer.value.observe(target.value);
+    } else {
+      // Wait for target to be available
+      const unwatch = watch(target, (newTarget) => {
+        if (newTarget && observer.value) {
+          observer.value.observe(newTarget);
+          unwatch();
+        }
+      });
     }
 
     onUnmounted(() => {
