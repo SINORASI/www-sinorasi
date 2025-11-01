@@ -68,22 +68,24 @@ const getTransitionClasses = () => {
 };
 
 onMounted(() => {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          isVisible.value = true;
-          observer.disconnect();
-        }
-      });
-    },
-    { threshold: 0.1 }
-  );
+  const checkVisibility = () => {
+    const element = document.querySelector('.kapro-carousel-container');
+    if (element && typeof element.getBoundingClientRect === 'function') {
+      const rect = element.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        isVisible.value = true;
+        window.removeEventListener('scroll', checkVisibility);
+      }
+    }
+  };
 
-  const element = document.querySelector('.kapro-carousel-container');
-  if (element) {
-    observer.observe(element);
-  }
+  window.addEventListener('scroll', checkVisibility, { passive: true });
+  // Check initial visibility
+  checkVisibility();
+});
+
+onUnmounted(() => {
+  // No cleanup needed since we remove the listener inside checkVisibility
 });
 </script>
 

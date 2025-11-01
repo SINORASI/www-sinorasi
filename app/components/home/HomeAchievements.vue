@@ -27,8 +27,8 @@ const { data: achievements, pending } = await useAsyncData(
     }),
   {
     server: true,
-    default: () => [],
     transform: (response: any) => {
+      console.log('HomeAchievements API response:', response);
       const transformed = (response.data || []).map((news: any) => ({
         image: news.thumbnail || "/images/placeholder.jpg",
         title: news.title,
@@ -36,6 +36,7 @@ const { data: achievements, pending } = await useAsyncData(
         slug: news.slug,
         year: news.createdAt ? new Date(news.createdAt).getFullYear() : new Date().getFullYear(),
       }));
+      console.log('HomeAchievements transformed data:', transformed);
       return transformed;
     },
   }
@@ -106,30 +107,26 @@ const goToAchievement = (index: number) => {
 };
 
 onMounted(() => {
-  nextTick(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        if (!entry) return;
+  const checkVisibility = () => {
+    if (carouselRef.value && typeof carouselRef.value.getBoundingClientRect === 'function') {
+      const rect = carouselRef.value.getBoundingClientRect();
+      carouselInView.value = rect.top < window.innerHeight && rect.bottom > 0;
 
-        carouselInView.value = entry.isIntersecting;
+      if (carouselInView.value) {
+        startAutoPlay();
+        resetProgress();
+      } else {
+        stopAutoPlay();
+      }
+    }
+  };
 
-        if (entry.isIntersecting) {
-          startAutoPlay();
-          resetProgress();
-        } else {
-          stopAutoPlay();
-        }
-      },
-      { threshold: 0.5 }
-    );
+  window.addEventListener("scroll", checkVisibility, { passive: true });
+  checkVisibility(); // Check initial state
 
-    if (carouselRef.value) observer.observe(carouselRef.value);
-
-    onUnmounted(() => {
-      observer.disconnect();
-      stopAutoPlay();
-    });
+  onUnmounted(() => {
+    window.removeEventListener("scroll", checkVisibility);
+    stopAutoPlay();
   });
 });
 </script>

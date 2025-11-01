@@ -29,33 +29,18 @@ const toggleExpanded = (id: number): void => {
   };
 };
 
-// Lazy loading with IntersectionObserver
+// Simple visibility - show all items immediately
 const visibleItems = ref<Set<number>>(new Set());
-const observer = ref<IntersectionObserver | null>(null);
 
 onMounted(() => {
-  observer.value = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        const idx = parseInt(entry.target.getAttribute('data-idx') || '0');
-        if (entry.isIntersecting) {
-          visibleItems.value.add(idx);
-        }
-      });
-    },
-    { threshold: 0.1 }
-  );
-});
-
-onUnmounted(() => {
-  observer.value?.disconnect();
+  // Show all items immediately without scroll detection
+  careers.value.forEach((_, idx) => {
+    visibleItems.value.add(idx);
+  });
 });
 
 const observeElement = (el: Element, idx: number) => {
-  if (observer.value) {
-    el.setAttribute('data-idx', idx.toString());
-    observer.value.observe(el);
-  }
+  el.setAttribute('data-idx', idx.toString());
 };
 </script>
 
@@ -68,10 +53,7 @@ const observeElement = (el: Element, idx: number) => {
           :key="idx"
           ref="observeElement($el, idx)"
           v-memo="[career.title, career.icon, majorColor.primary, majorColor.light]"
-          :class="[
-            'overflow-hidden shadow-md rounded-2xl transition-all duration-300 ease-in-out',
-            visibleItems.has(idx) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-          ]"
+          class="overflow-hidden shadow-md rounded-2xl transition-all duration-300 ease-in-out opacity-100 translate-y-0"
           :style="{ transitionDelay: `${idx * 100}ms` }"
         >
           <button

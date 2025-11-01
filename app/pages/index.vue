@@ -4,8 +4,6 @@ definePageMeta({
   keepalive: false,
 });
 
-const showContent = ref(true);
-
 useHead({
   title: "Beranda - SMKN 2 Singosari",
   meta: [
@@ -19,7 +17,7 @@ useHead({
 </script>
 
 <template>
-  <main v-if="showContent" class="flex flex-col gap-52">
+  <main class="flex flex-col gap-52">
     <LazyHomeHero />
     <LazyHomeProfile />
     <LazyHomeWelcome />
