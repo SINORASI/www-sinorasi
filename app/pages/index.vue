@@ -4,15 +4,7 @@ definePageMeta({
   keepalive: false,
 });
 
-const showContent = ref(false);
-
-onMounted(() => {
-  console.log('index.vue onMounted called');
-  requestAnimationFrame(() => {
-    console.log('Setting showContent to true');
-    showContent.value = true;
-  });
-});
+const showContent = ref(true);
 
 useHead({
   title: "Beranda - SMKN 2 Singosari",

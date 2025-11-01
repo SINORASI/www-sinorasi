@@ -27,8 +27,8 @@ const { data: achievements, pending } = await useAsyncData(
     }),
   {
     server: true,
+    default: () => [],
     transform: (response: any) => {
-      console.log('HomeAchievements API response:', response);
       const transformed = (response.data || []).map((news: any) => ({
         image: news.thumbnail || "/images/placeholder.jpg",
         title: news.title,
@@ -36,7 +36,6 @@ const { data: achievements, pending } = await useAsyncData(
         slug: news.slug,
         year: news.createdAt ? new Date(news.createdAt).getFullYear() : new Date().getFullYear(),
       }));
-      console.log('HomeAchievements transformed data:', transformed);
       return transformed;
     },
   }
@@ -107,28 +106,30 @@ const goToAchievement = (index: number) => {
 };
 
 onMounted(() => {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      const entry = entries[0];
-      if (!entry) return;
+  nextTick(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (!entry) return;
 
-      carouselInView.value = entry.isIntersecting;
+        carouselInView.value = entry.isIntersecting;
 
-      if (entry.isIntersecting) {
-        startAutoPlay();
-        resetProgress();
-      } else {
-        stopAutoPlay();
-      }
-    },
-    { threshold: 0.5 }
-  );
+        if (entry.isIntersecting) {
+          startAutoPlay();
+          resetProgress();
+        } else {
+          stopAutoPlay();
+        }
+      },
+      { threshold: 0.5 }
+    );
 
-  if (carouselRef.value) observer.observe(carouselRef.value);
+    if (carouselRef.value) observer.observe(carouselRef.value);
 
-  onUnmounted(() => {
-    observer.disconnect();
-    stopAutoPlay();
+    onUnmounted(() => {
+      observer.disconnect();
+      stopAutoPlay();
+    });
   });
 });
 </script>

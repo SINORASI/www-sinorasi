@@ -27,21 +27,26 @@ const startAnimation = async () => {
 };
 
 onMounted(() => {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      const entry = entries[0];
-      if (!entry) return;
-      sectionInView.value = entry.isIntersecting;
-      if (entry.isIntersecting && (stats.value[0]?.current ?? 0) === 0) {
-        startAnimation();
-      }
-    },
-    { threshold: 0.3 }
-  );
+  // Use nextTick to ensure DOM is ready
+  nextTick(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (!entry) return;
+        sectionInView.value = entry.isIntersecting;
+        if (entry.isIntersecting && (stats.value[0]?.current ?? 0) === 0) {
+          startAnimation();
+        }
+      },
+      { threshold: 0.3 }
+    );
 
-  if (sectionRef.value) observer.observe(sectionRef.value);
+    if (sectionRef.value) {
+      observer.observe(sectionRef.value);
+    }
 
-  onUnmounted(() => observer.disconnect());
+    onUnmounted(() => observer.disconnect());
+  });
 });
 </script>
 
@@ -53,7 +58,7 @@ onMounted(() => {
     :initial="{ opacity: 0, y: 50 }"
     :whileInView="{ opacity: 1, y: 0 }"
     :transition="{ duration: 0.8 }"
-    :inViewOptions="{ once: true }"
+    :inViewOptions="{ once: true, margin: '-100px' }"
   >
     <!-- Decorative Elements -->
     <div class="absolute top-0 left-1/2 w-72 h-72 bg-blue-200 rounded-full opacity-20 blur-3xl"></div>
@@ -67,7 +72,7 @@ onMounted(() => {
           :initial="{ opacity: 0, x: -50 }"
           :whileInView="{ opacity: 1, x: 0 }"
           :transition="{ duration: 0.8, delay: 0.2 }"
-          :inViewOptions="{ once: true }"
+          :inViewOptions="{ once: true, margin: '-50px' }"
         >
           <div class="relative group">
             <div
@@ -96,7 +101,7 @@ onMounted(() => {
           :initial="{ opacity: 0, x: 50 }"
           :whileInView="{ opacity: 1, x: 0 }"
           :transition="{ duration: 0.8, delay: 0.4 }"
-          :inViewOptions="{ once: true }"
+          :inViewOptions="{ once: true, margin: '-50px' }"
         >
           <div class="inline-block">
             <span
@@ -123,7 +128,7 @@ onMounted(() => {
                   :initial="{ opacity: 0, scale: 0.8 }"
                   :whileInView="{ opacity: 1, scale: 1 }"
                   :transition="{ duration: 0.6, delay: index * 0.1 }"
-                  :inViewOptions="{ once: true }"
+                  :inViewOptions="{ once: true, margin: '-50px' }"
                   @mouseenter="hoveredIndex = index"
                   @mouseleave="hoveredIndex = null"
                 >

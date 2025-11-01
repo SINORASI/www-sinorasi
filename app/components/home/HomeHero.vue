@@ -57,29 +57,31 @@ const startCounterAnimation = async () => {
 };
 
 onMounted(() => {
-  prefersReducedMotion.value = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  nextTick(() => {
+    prefersReducedMotion.value = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  checkMobile();
-  window.addEventListener("resize", checkMobile, { passive: true });
+    checkMobile();
+    window.addEventListener("resize", checkMobile, { passive: true });
 
-  const observer = new IntersectionObserver(
-    (entries: IntersectionObserverEntry[]) => {
-      const entry = entries[0];
-      if (!entry) return;
+    const observer = new IntersectionObserver(
+      (entries: IntersectionObserverEntry[]) => {
+        const entry = entries[0];
+        if (!entry) return;
 
-      heroInView.value = entry.isIntersecting;
-      if (entry.isIntersecting && jurusanCount.value === 0) {
-        startCounterAnimation();
-      }
-    },
-    { threshold: 0.3 }
-  );
+        heroInView.value = entry.isIntersecting;
+        if (entry.isIntersecting && jurusanCount.value === 0) {
+          startCounterAnimation();
+        }
+      },
+      { threshold: 0.3 }
+    );
 
-  if (heroRef.value) observer.observe(heroRef.value);
+    if (heroRef.value) observer.observe(heroRef.value);
 
-  onUnmounted(() => {
-    observer.disconnect();
-    window.removeEventListener("resize", checkMobile);
+    onUnmounted(() => {
+      observer.disconnect();
+      window.removeEventListener("resize", checkMobile);
+    });
   });
 });
 </script>
