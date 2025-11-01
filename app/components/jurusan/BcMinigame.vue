@@ -63,16 +63,16 @@ const shutterMin = 0;
 const shutterMax = shutterValues.length - 1;
 
 // Current scenario
-const currentScenario = computed(() => scenarios[currentScenarioIndex.value]);
+const currentScenario = computed(() => scenarios[currentScenarioIndex.value]!);
 
 // Calculate exposure value (EV) - simplified photography formula
 // EV = log2(N² / t) where N = aperture, t = shutter time in seconds
 // Adjusted for ISO sensitivity
 const calculateEV = (isoVal: number, apertureVal: number, shutterVal: number) => {
   // Convert slider values to actual camera settings
-  const isoActual = isoValues[Math.round(isoVal)];
-  const apertureActual = apertureValues[Math.round(apertureVal)];
-  const shutterActual = shutterValues[Math.round(shutterVal)];
+  const isoActual = isoValues[Math.round(isoVal)]!;
+  const apertureActual = apertureValues[Math.round(apertureVal)]!;
+  const shutterActual = shutterValues[Math.round(shutterVal)]!;
 
   // Simple EV calculation (normalized for game purposes)
   const isoFactor = isoActual / 100;
@@ -87,7 +87,7 @@ const currentEV = computed(() => {
 });
 
 const targetEV = computed(() => {
-  const scenario = currentScenario.value;
+  const scenario = currentScenario.value!;
   const targetIsoIndex = isoValues.indexOf(scenario.targetISO);
   const targetApertureIndex = apertureValues.indexOf(scenario.targetAperture);
   const targetShutterIndex = shutterValues.indexOf(scenario.targetShutter);
