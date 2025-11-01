@@ -4,12 +4,32 @@ export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: false },
   css: ["~/assets/css/main.css"],
-  modules: ["@nuxt/fonts", "@nuxt/icon", "@nuxt/scripts", "@nuxtjs/mdc", "@nuxt/image", "motion-v/nuxt", "@nuxtjs/i18n", "@nuxtjs/color-mode"],
+  modules: [
+    "@nuxt/fonts",
+    "@nuxt/icon",
+    "@nuxt/scripts",
+    "@nuxtjs/mdc",
+    "@nuxt/image",
+    "motion-v/nuxt",
+    "@nuxtjs/i18n",
+    "@nuxtjs/color-mode",
+  ],
+  runtimeConfig: {
+    // Server-side only keys
+    googleMapsApiKey: process.env.NUXT_GOOGLE_MAPS_API_KEY,
+
+    // Public keys exposed to client
+    public: {
+      googleMapsApiKey: process.env.NUXT_PUBLIC_GOOGLE_MAPS_API_KEY,
+      supabaseUrl: process.env.NUXT_PUBLIC_SUPABASE_URL,
+      supabaseKey: process.env.NUXT_PUBLIC_SUPABASE_ANON_KEY,
+    },
+  },
   fonts: {
     families: [
-      { name: 'Oswald', provider: 'google', weights: [700] },
-      { name: 'Nunito', provider: 'google', weights: [400, 600] }
-    ]
+      { name: "Oswald", provider: "google", weights: [700] },
+      { name: "Nunito", provider: "google", weights: [400, 600] },
+    ],
   },
   app: {
     pageTransition: { name: "page", mode: "out-in" },
