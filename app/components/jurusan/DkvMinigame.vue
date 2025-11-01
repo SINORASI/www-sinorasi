@@ -100,29 +100,39 @@ const colorPalette = [
 ];
 
 const currentSketch = computed(() => sketches[currentSketchIndex.value]!);
+const isFullscreen = ref(false);
 
-// Fullscreen management
-const enterFullscreen = () => {
-  const element = document.documentElement as any;
-  if (element.requestFullscreen) {
-    element.requestFullscreen();
-  } else if (element.webkitRequestFullscreen) {
-    element.webkitRequestFullscreen();
-  } else if (element.msRequestFullscreen) {
-    element.msRequestFullscreen();
+// Exit fullscreen
+const exitFullscreen = async () => {
+  try {
+    if (document.fullscreenElement) {
+      await document.exitFullscreen();
+    }
+  } catch (error) {
+    console.error("Error exiting fullscreen:", error);
   }
 };
 
-const exitFullscreen = () => {
-  const doc = document as any;
-  if (doc.exitFullscreen) {
-    doc.exitFullscreen();
-  } else if (doc.webkitExitFullscreen) {
-    doc.webkitExitFullscreen();
-  } else if (doc.msExitFullscreen) {
-    doc.msExitFullscreen();
+// Handle fullscreen change
+const handleFullscreenChange = () => {
+  isFullscreen.value = !!document.fullscreenElement;
+  if (!isFullscreen.value) {
+    // Emit event to parent when fullscreen is exited
+    emit("close");
   }
-  emit("close");
+};
+
+// Enter fullscreen on mount
+const enterFullscreen = async () => {
+  const container = document.documentElement;
+  if (container) {
+    try {
+      await container.requestFullscreen();
+      isFullscreen.value = true;
+    } catch (error) {
+      console.error("Error entering fullscreen:", error);
+    }
+  }
 };
 
 // Load sketch image
@@ -340,10 +350,12 @@ onMounted(() => {
   enterFullscreen();
   loadSketch();
   window.addEventListener("keydown", handleKeyPress);
+  document.addEventListener("fullscreenchange", handleFullscreenChange);
 });
 
 onUnmounted(() => {
   window.removeEventListener("keydown", handleKeyPress);
+  document.removeEventListener("fullscreenchange", handleFullscreenChange);
 });
 </script>
 

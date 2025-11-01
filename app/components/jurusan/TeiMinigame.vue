@@ -83,28 +83,38 @@ const validCircuits = [
   },
 ];
 
-// Fullscreen management
-const enterFullscreen = () => {
-  const element = document.documentElement as any;
-  if (element.requestFullscreen) {
-    element.requestFullscreen();
-  } else if (element.webkitRequestFullscreen) {
-    element.webkitRequestFullscreen();
-  } else if (element.msRequestFullscreen) {
-    element.msRequestFullscreen();
+const isFullscreen = ref(false);
+
+// Exit fullscreen
+const exitFullscreen = async () => {
+  try {
+    if (document.fullscreenElement) {
+      await document.exitFullscreen();
+    }
+  } catch (error) {
+    console.error("Error exiting fullscreen:", error);
   }
 };
 
-const exitFullscreen = () => {
-  const doc = document as any;
-  if (doc.exitFullscreen) {
-    doc.exitFullscreen();
-  } else if (doc.webkitExitFullscreen) {
-    doc.webkitExitFullscreen();
-  } else if (doc.msExitFullscreen) {
-    doc.msExitFullscreen();
+// Handle fullscreen change
+const handleFullscreenChange = () => {
+  isFullscreen.value = !!document.fullscreenElement;
+  if (!isFullscreen.value) {
+    emit("close");
   }
-  emit("close");
+};
+
+// Enter fullscreen
+const enterFullscreen = async () => {
+  const container = document.documentElement;
+  if (container) {
+    try {
+      await container.requestFullscreen();
+      isFullscreen.value = true;
+    } catch (error) {
+      console.error("Error entering fullscreen:", error);
+    }
+  }
 };
 
 // Wire drawing logic
@@ -295,12 +305,14 @@ onMounted(() => {
   window.addEventListener("mousemove", handleDrag);
   window.addEventListener("mouseup", stopDrag);
   window.addEventListener("keydown", handleKeyPress);
+  document.addEventListener("fullscreenchange", handleFullscreenChange);
 });
 
 onUnmounted(() => {
   window.removeEventListener("mousemove", handleDrag);
   window.removeEventListener("mouseup", stopDrag);
   window.removeEventListener("keydown", handleKeyPress);
+  document.removeEventListener("fullscreenchange", handleFullscreenChange);
 });
 </script>
 

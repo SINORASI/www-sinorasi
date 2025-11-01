@@ -377,26 +377,16 @@ const restartGame = () => {
   };
 };
 
-// Fullscreen management
-const enterFullscreen = () => {
-  const element = document.documentElement as any;
-  if (element.requestFullscreen) {
-    element.requestFullscreen();
-  } else if (element.webkitRequestFullscreen) {
-    element.webkitRequestFullscreen();
-  } else if (element.msRequestFullscreen) {
-    element.msRequestFullscreen();
-  }
-};
+const isFullscreen = ref(false);
 
-const exitFullscreen = () => {
-  const doc = document as any;
-  if (doc.exitFullscreen) {
-    doc.exitFullscreen();
-  } else if (doc.webkitExitFullscreen) {
-    doc.webkitExitFullscreen();
-  } else if (doc.msExitFullscreen) {
-    doc.msExitFullscreen();
+// Exit fullscreen
+const exitFullscreen = async () => {
+  try {
+    if (document.fullscreenElement) {
+      await document.exitFullscreen();
+    }
+  } catch (error) {
+    console.error("Error exiting fullscreen:", error);
   }
 
   // Cleanup Pixi
@@ -406,6 +396,27 @@ const exitFullscreen = () => {
   }
 
   emit("close");
+};
+
+// Handle fullscreen change
+const handleFullscreenChange = () => {
+  isFullscreen.value = !!document.fullscreenElement;
+  if (!isFullscreen.value) {
+    emit("close");
+  }
+};
+
+// Enter fullscreen
+const enterFullscreen = async () => {
+  const container = document.documentElement;
+  if (container) {
+    try {
+      await container.requestFullscreen();
+      isFullscreen.value = true;
+    } catch (error) {
+      console.error("Error entering fullscreen:", error);
+    }
+  }
 };
 
 // Get grade from score
@@ -424,12 +435,14 @@ const overallGrade = computed(() => getGrade((accuracyScore.value + speedScore.v
 onMounted(() => {
   enterFullscreen();
   initPixi();
+  document.addEventListener("fullscreenchange", handleFullscreenChange);
 });
 
 onUnmounted(() => {
   if (pixiApp.value) {
     pixiApp.value.destroy(true, { children: true });
   }
+  document.removeEventListener("fullscreenchange", handleFullscreenChange);
 });
 </script>
 

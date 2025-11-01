@@ -309,26 +309,16 @@ const startVisualizer = () => {
   draw();
 };
 
-// Fullscreen management
-const enterFullscreen = () => {
-  const element = document.documentElement as any;
-  if (element.requestFullscreen) {
-    element.requestFullscreen();
-  } else if (element.webkitRequestFullscreen) {
-    element.webkitRequestFullscreen();
-  } else if (element.msRequestFullscreen) {
-    element.msRequestFullscreen();
-  }
-};
+const isFullscreen = ref(false);
 
-const exitFullscreen = () => {
-  const doc = document as any;
-  if (doc.exitFullscreen) {
-    doc.exitFullscreen();
-  } else if (doc.webkitExitFullscreen) {
-    doc.webkitExitFullscreen();
-  } else if (doc.msExitFullscreen) {
-    doc.msExitFullscreen();
+// Exit fullscreen
+const exitFullscreen = async () => {
+  try {
+    if (document.fullscreenElement) {
+      await document.exitFullscreen();
+    }
+  } catch (error) {
+    console.error("Error exiting fullscreen:", error);
   }
 
   // Cleanup audio
@@ -338,6 +328,27 @@ const exitFullscreen = () => {
   }
 
   emit("close");
+};
+
+// Handle fullscreen change
+const handleFullscreenChange = () => {
+  isFullscreen.value = !!document.fullscreenElement;
+  if (!isFullscreen.value) {
+    emit("close");
+  }
+};
+
+// Enter fullscreen
+const enterFullscreen = async () => {
+  const container = document.documentElement;
+  if (container) {
+    try {
+      await container.requestFullscreen();
+      isFullscreen.value = true;
+    } catch (error) {
+      console.error("Error entering fullscreen:", error);
+    }
+  }
 };
 
 // Format dB value
@@ -357,6 +368,7 @@ const qualityGrade = computed(() => {
 onMounted(() => {
   enterFullscreen();
   initAudio();
+  document.addEventListener("fullscreenchange", handleFullscreenChange);
 });
 
 onUnmounted(() => {
@@ -364,6 +376,7 @@ onUnmounted(() => {
   if (audioContext.value) {
     audioContext.value.close();
   }
+  document.removeEventListener("fullscreenchange", handleFullscreenChange);
   if (animationFrameId.value) {
     cancelAnimationFrame(animationFrameId.value);
   }
