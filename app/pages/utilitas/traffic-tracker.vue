@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { ref, onMounted, watch } from "vue";
+import { ref } from "vue";
 import { type TrafficTrackerForm, trafficTrackerSchema } from "~/utils/schema";
-import { useGoogleMaps } from "~/composables/useGoogleMaps";
 
 interface TrafficResults {
   time: string;
@@ -54,18 +53,8 @@ interface TrafficReportForm {
   };
 }
 
-const {
-  mapInstance,
-  isMapLoaded,
-  error: mapError,
-  initializeMap,
-  calculateGoogleRoute,
-  addReportMarker,
-  getFormattedETA,
-  getEstimatedArrivalTime,
-} = useGoogleMaps();
-
-const schoolAddress = "SMK Negeri 2 Singosari, Jl. Raya Singosari, Singosari, Malang, Jawa Timur, Indonesia";
+const schoolAddress =
+  "SMK Negeri 2 Singosari, Jl. Raya Singosari, Singosari, Malang, Jawa Timur, Indonesia";
 
 const form = ref<TrafficTrackerForm>({
   origin: "",
@@ -97,26 +86,6 @@ const reportSuccess = ref("");
 const validationErrors = ref<Record<string, string>>({});
 const showReportForm = ref(false);
 const showTrafficIncidents = ref(false);
-const userLocation = ref<{ lat: number; lng: number } | null>(null);
-const routeMarkers = ref<any[]>([]);
-
-// Initialize map on component mount
-onMounted(() => {
-  // Load Google Maps API script dynamically
-  const config = useRuntimeConfig();
-  if (!window.google) {
-    const script = document.createElement("script");
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${config.public.googleMapsApiKey}&libraries=places,directions,geocoding`;
-    script.async = true;
-    script.defer = true;
-    script.onload = () => {
-      initializeMap("traffic-map", 13);
-    };
-    document.head.appendChild(script);
-  } else {
-    initializeMap("traffic-map", 13);
-  }
-});
 
 const getCurrentLocation = () => {
   if (navigator.geolocation) {
@@ -125,106 +94,15 @@ const getCurrentLocation = () => {
         const lat = position.coords.latitude;
         const lng = position.coords.longitude;
         form.value.origin = `${lat},${lng}`;
-        userLocation.value = { lat, lng };
+
         reportForm.value.location = { lat, lng };
       },
       (_err) => {
         error.value = "Tidak dapat mendapatkan lokasi saat ini. Pastikan izin lokasi diaktifkan.";
-      }
+      },
     );
   } else {
     error.value = "Geolokasi tidak didukung oleh browser ini.";
-  }
-};
-
-const calculateRouteWithBackend = async () => {
-  const validation = trafficTrackerSchema.safeParse(form.value);
-  if (!validation.success) {
-    validationErrors.value = {};
-    validation.error.issues.forEach((err) => {
-      if (err.path[0]) {
-        validationErrors.value[err.path[0] as string] = err.message;
-      }
-    });
-    return;
-  }
-
-  validationErrors.value = {};
-  loading.value = true;
-  error.value = "";
-  results.value = null;
-
-  try {
-    const response = await $fetch("/api/traffic-tracker", {
-      method: "POST",
-      body: form.value,
-    });
-
-    results.value = response;
-  } catch (err: any) {
-    error.value = err.message || "Terjadi kesalahan saat menghitung rute.";
-  } finally {
-    loading.value = false;
-  }
-};
-
-const calculateRouteWithGoogleMaps = async () => {
-  if (!userLocation.value) {
-    error.value = "Lokasi pengguna tidak tersedia. Harap gunakan 'Gunakan Lokasi Saat Ini' terlebih dahulu.";
-    return;
-  }
-
-  loading.value = true;
-  error.value = "";
-  results.value = null;
-
-  try {
-    const routeResult = await calculateGoogleRoute(userLocation.value.lat, userLocation.value.lng);
-
-    if (!routeResult) {
-      error.value = mapError.value || "Gagal menghitung rute dengan Google Maps";
-      return;
-    }
-
-    // Format the results from Google Maps
-    const distanceKm = (routeResult.distance.value / 1000).toFixed(1);
-    const durationInTraffic = routeResult.duration_in_traffic || routeResult.duration;
-
-    results.value = {
-      time: durationInTraffic.text,
-      distance: `${distanceKm} km`,
-      traffic: getTrafficStatusFromDuration(durationInTraffic, routeResult.duration),
-      route: "Google Maps Route",
-      bestTime: getBestTime(),
-      tips: getTips(getTrafficStatusFromDuration(durationInTraffic, routeResult.duration), durationInTraffic.text),
-      recommendation: getRecommendation(
-        durationInTraffic.text,
-        getTrafficStatusFromDuration(durationInTraffic, routeResult.duration)
-      ),
-      analytics: {
-        proximity: {
-          distanceToSchool: `${distanceKm} km`,
-          estimatedArrival: getEstimatedArrivalTime(durationInTraffic),
-          timeToSchool: durationInTraffic.text,
-        },
-        timeAnalytics: {
-          currentCongestion: getTrafficStatusFromDuration(durationInTraffic, routeResult.duration),
-          peakHours: ["07:00-09:00", "16:00-18:00"],
-          recommendedDeparture: getRecommendedDeparture(),
-          alternativeRoutes: 1,
-        },
-        usefulInfo: {
-          fuelEstimate: calculateFuelEstimate(`${distanceKm} km`),
-          carbonFootprint: calculateCarbonFootprint(`${distanceKm} km`),
-          safetyRating: getSafetyRating(getTrafficStatusFromDuration(durationInTraffic, routeResult.duration)),
-        },
-      },
-    };
-  } catch (err: any) {
-    error.value = "Gagal menggunakan Google Maps. Coba gunakan backend fallback.";
-    console.error(err);
-  } finally {
-    loading.value = false;
   }
 };
 
@@ -399,7 +277,8 @@ useHead({
   meta: [
     {
       name: "description",
-      content: "Cek estimasi waktu tempuh ke SMK Negeri 2 Singosari dari lokasi Anda dengan traffic tracker.",
+      content:
+        "Cek estimasi waktu tempuh ke SMK Negeri 2 Singosari dari lokasi Anda dengan traffic tracker.",
     },
   ],
 });
@@ -408,6 +287,7 @@ useHead({
 <template>
   <div class="min-h-screen py-24 bg-linear-to-b from-white via-blue-50 to-white">
     <div class="container px-4 mx-auto sm:px-6">
+      
       <div class="mb-12 text-center">
         <div
           class="inline-block px-10 py-6 mb-4 border border-blue-200 shadow-xl bg-linear-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
@@ -420,6 +300,7 @@ useHead({
         </p>
       </div>
 
+      
       <div class="max-w-md mx-auto mb-12">
         <form @submit.prevent="calculateRoute" class="p-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
           <div class="mb-6">
@@ -460,6 +341,7 @@ useHead({
           </button>
         </form>
 
+        
         <div v-if="error" class="p-4 mt-6 border-l-4 border-red-600 bg-red-50 rounded-r-xl">
           <div class="flex items-start">
             <Icon name="lucide:alert-circle" size="20" class="text-red-600 mr-3 mt-0.5 shrink-0" />
@@ -468,8 +350,10 @@ useHead({
         </div>
       </div>
 
+      
       <div class="max-w-4xl mx-auto mb-12">
         <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+          
           <div class="p-6 bg-white border-2 border-orange-100 shadow-xl rounded-2xl">
             <div class="flex items-center justify-between mb-4">
               <h3 class="text-lg font-bold text-gray-800">Laporkan Kondisi Lalu Lintas</h3>
@@ -477,7 +361,7 @@ useHead({
                 @click="showReportForm = !showReportForm"
                 class="px-3 py-1 text-sm font-semibold text-orange-600 bg-orange-100 rounded-lg hover:bg-orange-200"
               >
-                {{ showReportForm ? "Tutup" : "Buka" }}
+                {{ showReportForm ? 'Tutup' : 'Buka' }}
               </button>
             </div>
 
@@ -530,10 +414,7 @@ useHead({
                 Kirim Laporan
               </button>
 
-              <div
-                v-if="reportSuccess"
-                class="p-3 text-sm text-green-700 bg-green-50 border border-green-200 rounded-lg"
-              >
+              <div v-if="reportSuccess" class="p-3 text-sm text-green-700 bg-green-50 border border-green-200 rounded-lg">
                 {{ reportSuccess }}
               </div>
 
@@ -543,6 +424,7 @@ useHead({
             </div>
           </div>
 
+          
           <div class="p-6 bg-white border-2 border-green-100 shadow-xl rounded-2xl">
             <div class="flex items-center justify-between mb-4">
               <h3 class="text-lg font-bold text-gray-800">Kondisi Lalu Lintas Terkini</h3>
@@ -560,41 +442,30 @@ useHead({
             <div v-if="currentTraffic" class="space-y-3">
               <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                 <span class="font-semibold">Tingkat Kemacetan:</span>
-                <span
-                  :class="getSeverityColor(currentTraffic.congestionLevel)"
-                  class="px-2 py-1 text-sm font-bold rounded"
-                >
+                <span :class="getSeverityColor(currentTraffic.congestionLevel)" class="px-2 py-1 text-sm font-bold rounded">
                   {{ currentTraffic.congestionLevel.toUpperCase() }}
                 </span>
               </div>
 
               <div class="text-sm text-gray-600">
-                Terakhir diperbarui: {{ new Date(currentTraffic.lastUpdated).toLocaleString("id-ID") }}
+                Terakhir diperbarui: {{ new Date(currentTraffic.lastUpdated).toLocaleString('id-ID') }}
               </div>
 
               <div v-if="currentTraffic.incidents.length > 0" class="space-y-2">
                 <h4 class="font-semibold text-gray-700">Insiden Terkini:</h4>
-                <div
-                  v-for="incident in currentTraffic.incidents"
-                  :key="incident.timestamp"
-                  class="p-3 border border-gray-200 rounded-lg"
-                >
+                <div v-for="incident in currentTraffic.incidents" :key="incident.timestamp" class="p-3 border border-gray-200 rounded-lg">
                   <div class="flex items-start gap-3">
-                    <Icon
-                      :name="getIncidentIcon(incident.type)"
-                      :class="getSeverityColor(incident.severity)"
-                      size="20"
-                    />
+                    <Icon :name="getIncidentIcon(incident.type)" :class="getSeverityColor(incident.severity)" size="20" />
                     <div class="flex-1">
                       <div class="flex items-center justify-between">
-                        <span class="font-semibold capitalize">{{ incident.type?.replace("_", " ") }}</span>
+                        <span class="font-semibold capitalize">{{ incident.type?.replace('_', ' ') }}</span>
                         <span :class="getSeverityColor(incident.severity)" class="px-2 py-1 text-xs font-bold rounded">
                           {{ incident.severity?.toUpperCase() }}
                         </span>
                       </div>
                       <p class="text-sm text-gray-600 mt-1">{{ incident.congestion }} congestion</p>
                       <p class="text-xs text-gray-500 mt-1">
-                        {{ new Date(incident.timestamp).toLocaleString("id-ID") }}
+                        {{ new Date(incident.timestamp).toLocaleString('id-ID') }}
                       </p>
                     </div>
                   </div>
@@ -613,7 +484,10 @@ useHead({
         </div>
       </div>
 
+
+      
       <div v-if="results" class="max-w-6xl mx-auto">
+        
         <div class="grid grid-cols-1 gap-6 mb-8 md:grid-cols-3">
           <div
             class="p-8 text-center transition-shadow bg-white border-2 border-blue-100 shadow-xl rounded-2xl hover:shadow-2xl"
@@ -660,6 +534,7 @@ useHead({
           </div>
         </div>
 
+        
         <div class="p-8 mb-8 text-center bg-white border-2 border-orange-100 shadow-xl rounded-2xl">
           <div
             class="inline-block px-6 py-3 mb-4 border border-orange-200 bg-linear-to-r from-orange-500 to-orange-600 rounded-xl"
@@ -680,6 +555,7 @@ useHead({
           </p>
         </div>
 
+        
         <div class="grid grid-cols-1 gap-6 mb-8 md:grid-cols-2">
           <div class="p-8 bg-white border-2 border-green-100 shadow-xl rounded-2xl">
             <div
@@ -730,7 +606,7 @@ useHead({
                 <Icon name="lucide:alarm-clock" size="20" class="text-purple-600 mt-0.5 shrink-0" />
                 <div>
                   <span class="font-semibold">Jam sibuk:</span>
-                  <p class="mt-1 text-gray-600">{{ results.analytics.timeAnalytics.peakHours.join(", ") }}</p>
+                  <p class="mt-1 text-gray-600">{{ results.analytics.timeAnalytics.peakHours.join(', ') }}</p>
                 </div>
               </li>
               <li class="flex items-start gap-3 p-4 border-l-4 border-purple-600 bg-purple-50 rounded-xl">
@@ -751,6 +627,7 @@ useHead({
           </div>
         </div>
 
+        
         <div class="p-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
           <div
             class="inline-block px-6 py-3 mb-6 border border-blue-200 bg-linear-to-r from-blue-600 to-blue-800 rounded-xl"
@@ -782,6 +659,7 @@ useHead({
           </div>
         </div>
 
+        
         <div class="p-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
           <div
             class="inline-block px-6 py-3 mb-6 border border-blue-200 bg-linear-to-r from-blue-600 to-blue-800 rounded-xl"
@@ -813,12 +691,12 @@ useHead({
           </ul>
         </div>
 
+        
         <div class="p-6 bg-gray-50 border-2 border-gray-200 shadow-xl rounded-2xl">
           <div class="text-center">
             <h4 class="text-lg font-bold text-gray-800 mb-2">Dukungan Teknologi Open Source</h4>
             <p class="text-sm text-gray-600 mb-4">
-              Sistem ini menggunakan teknologi open source untuk memberikan layanan navigasi yang bebas biaya dan dapat
-              diandalkan.
+              Sistem ini menggunakan teknologi open source untuk memberikan layanan navigasi yang bebas biaya dan dapat diandalkan.
             </p>
             <div class="flex justify-center gap-4 text-xs text-gray-500">
               <span class="flex items-center gap-1">
