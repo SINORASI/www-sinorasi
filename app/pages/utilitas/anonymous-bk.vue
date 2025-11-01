@@ -729,7 +729,7 @@ const submitStory = async () => {
                   class="w-full px-4 py-3 transition border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500"
                   :placeholder="formData.contactMethod === 'email' ? 'contoh@email.com' : '+62 8xx-xxxx-xxxx'"
                   required
-                  :while-focus="{ scale: 1.02 }"
+                  :whileFocus="{ scale: 1.02 }"
                 />
                 <p v-if="errors.contactInfo" class="mt-1 text-sm text-red-600" role="alert">{{ errors.contactInfo }}</p>
               </motion.div>

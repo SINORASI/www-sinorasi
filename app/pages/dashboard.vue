@@ -69,7 +69,7 @@ const formatDate = (dateString: string) => {
 <template>
   <div class="min-h-screen py-24 bg-linear-to-b from-white via-blue-50 to-white">
     <div class="container px-4 mx-auto sm:px-6">
-      <div class="max-w-6xl mx-auto">m
+      <div class="max-w-6xl mx-auto">
         <div class="mb-8">
           <h1 class="text-3xl font-bold text-gray-800 md:text-4xl">Dashboard</h1>
           <p class="mt-2 text-gray-600">Selamat datang kembali, {{ user.name }}!</p>
