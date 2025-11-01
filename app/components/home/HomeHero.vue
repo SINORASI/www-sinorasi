@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { onMounted, onUnmounted } from "vue";
 import { motion } from "motion-v";
 import { smoothScrollTo } from "~/utils/scrollUtils";
 
@@ -6,6 +7,7 @@ const heroRef = ref<HTMLElement | null>(null);
 const heroInView = ref(false);
 const prefersReducedMotion = ref(false);
 const isMobile = ref(false);
+let checkVisibility: (() => void) | null = null;
 
 interface Props {
   jurusanTarget?: number;
@@ -63,26 +65,31 @@ onMounted(() => {
     checkMobile();
     window.addEventListener("resize", checkMobile, { passive: true });
 
-  // Simple scroll-based trigger instead of IntersectionObserver
-  const checkVisibility = () => {
-    if (heroRef.value) {
-      const rect = heroRef.value.getBoundingClientRect();
-      const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
-      heroInView.value = isVisible;
-      if (isVisible && jurusanCount.value === 0) {
-        startCounterAnimation();
-        window.removeEventListener("scroll", checkVisibility);
+    // Simple scroll-based trigger instead of IntersectionObserver
+    checkVisibility = () => {
+      if (heroRef.value) {
+        const rect = heroRef.value.getBoundingClientRect();
+        const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+        heroInView.value = isVisible;
+        if (isVisible && jurusanCount.value === 0) {
+          startCounterAnimation();
+          if (checkVisibility) {
+            window.removeEventListener("scroll", checkVisibility);
+          }
+        }
       }
-    }
-  };
+    };
 
-  window.addEventListener("scroll", checkVisibility, { passive: true });
-  checkVisibility(); // Check initial state
-
-  onUnmounted(() => {
-    window.removeEventListener("resize", checkMobile);
-    window.removeEventListener("scroll", checkVisibility);
+    window.addEventListener("scroll", checkVisibility, { passive: true });
+    checkVisibility(); // Check initial state
   });
+});
+
+onUnmounted(() => {
+  window.removeEventListener("resize", checkMobile);
+  if (checkVisibility) {
+    window.removeEventListener("scroll", checkVisibility);
+  }
 });
 </script>
 

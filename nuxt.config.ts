@@ -4,15 +4,7 @@ export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: false },
   css: ["~/assets/css/main.css"],
-  modules: [
-    "@nuxt/fonts",
-    "@nuxt/icon",
-    "@nuxt/scripts",
-    "@nuxtjs/mdc",
-    "@nuxt/image",
-    "motion-v/nuxt",
-    "@nuxtjs/i18n",
-  ],
+  modules: ["@nuxt/fonts", "@nuxt/icon", "@nuxt/scripts", "@nuxtjs/mdc", "@nuxt/image", "motion-v/nuxt", "@nuxtjs/i18n", "@nuxtjs/color-mode"],
   fonts: {
     families: [
       { name: 'Oswald', provider: 'google', weights: [700] },
