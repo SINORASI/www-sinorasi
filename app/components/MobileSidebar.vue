@@ -173,6 +173,7 @@
             </div>
             <div v-for="(item, index) in filteredMenuItems" :key="index" class="mb-6">
               <h3
+                v-if="((item as Record<string, unknown>).title as string) !== 'Beranda'"
                 @click="toggleSection((item as Record<string, unknown>).title as string)"
                 class="flex items-center justify-between mb-3 text-base font-semibold text-gray-800 cursor-pointer"
               >
@@ -189,10 +190,21 @@
                   />
                 </div>
               </h3>
+              <h3
+                v-else
+                class="flex items-center justify-between mb-3 text-base font-semibold text-gray-800"
+              >
+                {{ $t(`sidebar.sections.${((item as Record<string, unknown>).title as string).toLowerCase().replace(/\s+/g, "")}`) }}
+                <div class="flex items-center gap-2">
+                  <span v-if="searchQuery.trim()" class="px-2 py-1 text-xs text-blue-700 bg-blue-100 rounded-full">
+                    {{ ((item as Record<string, unknown>).submenu as unknown[]).length }}
+                  </span>
+                </div>
+              </h3>
 
               <AnimatePresence>
                 <motion.div
-                  v-if="(openSections[(item as Record<string, unknown>).title as string] ?? false) || searchQuery.trim()"
+                  v-if="((item as Record<string, unknown>).title as string) === 'Beranda' || (openSections[(item as Record<string, unknown>).title as string] ?? false) || searchQuery.trim()"
                   :initial="{ opacity: 0, height: 0 }"
                   :animate="{ opacity: 1, height: 'auto' }"
                   :exit="{ opacity: 0, height: 0 }"

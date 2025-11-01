@@ -22,7 +22,7 @@ const progressInterval = ref<ReturnType<typeof setInterval> | null>(null);
 const { data: achievements, pending } = await useAsyncData(
   "homepage-achievements",
   () =>
-    $fetch("/api/news", {
+    ($fetch as any)("/api/news", {
       query: { tag: "juara", limit: 10 },
     }),
   {
