@@ -39,6 +39,15 @@ const majorColor = computed(
 );
 
 const showBackToTop = ref(false);
+const showGame = ref(false);
+
+const startGame = () => {
+  showGame.value = true;
+};
+
+const closeGame = () => {
+  showGame.value = false;
+};
 
 useHead({
   title: () =>
@@ -329,27 +338,20 @@ onMounted(() => {
                     stroke-linecap="round"
                     stroke-linejoin="round"
                     stroke-width="2"
-                    d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
-                  />
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
                   />
                 </svg>
               </div>
-              <h3 class="text-2xl font-bold text-white md:text-4xl drop-shadow-lg">
-                Game {{ majorDatas?.[major]?.short }}
-              </h3>
+              <h3 class="text-2xl font-bold text-white md:text-4xl drop-shadow-lg">DKV Coloring Book</h3>
               <p class="max-w-md mx-auto text-sm text-white/90 md:text-lg">
-                Segera hadir! Game interaktif untuk mengenal lebih jauh tentang dunia {{ majorDatas?.[major]?.short }}
+                Warnai sketsa digital dan pelajari konsep desain grafis dengan alat pewarnaan profesional
               </p>
               <button
+                @click="startGame"
                 class="px-8 py-3 text-sm font-bold transition-all duration-300 transform bg-white rounded-full shadow-lg md:text-base hover:shadow-xl hover:-translate-y-1"
                 :style="`color: ${majorColor.primary}`"
               >
-                Coming Soon
+                Play Game
               </button>
             </div>
 
@@ -362,6 +364,9 @@ onMounted(() => {
         </div>
       </div>
     </motion.section>
+
+    <!-- Lazy-loaded Minigame Component -->
+    <LazyJurusanDkvMinigame v-if="showGame" @close="closeGame" />
 
     <motion.section
       id="prestasi"
