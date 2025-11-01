@@ -39,6 +39,15 @@ const majorColor = computed(
 );
 
 const showBackToTop = ref(false);
+const showGame = ref(false);
+
+const startGame = () => {
+  showGame.value = true;
+};
+
+const closeGame = () => {
+  showGame.value = false;
+};
 
 useHead({
   title: () =>
@@ -302,11 +311,9 @@ onMounted(() => {
               Interaktif
             </span>
           </div>
-          <h2 class="text-3xl font-extrabold md:text-5xl" :style="`color: ${majorColor.primary}`">
-            Mini Game Edukatif
-          </h2>
+          <h2 class="text-3xl font-extrabold md:text-5xl" :style="`color: ${majorColor.primary}`">ANM Sprite Sorter</h2>
           <p class="max-w-2xl mx-auto text-sm text-gray-600 md:text-lg">
-            Pelajari {{ majorDatas?.[major]?.short }} dengan cara yang menyenangkan!
+            Belajar sequencing animasi! Susun sprite frames dalam urutan yang benar untuk membuat animasi yang smooth.
           </p>
         </div>
 
@@ -328,27 +335,28 @@ onMounted(() => {
                     stroke-linecap="round"
                     stroke-linejoin="round"
                     stroke-width="2"
-                    d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
+                    d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"
                   />
+                </svg>
+              </div>
+              <h3 class="text-2xl font-bold text-white md:text-4xl drop-shadow-lg">Sprite Sorter Game</h3>
+              <p class="max-w-md mx-auto text-sm text-white/90 md:text-lg">
+                Latih pemahamanmu tentang animation sequencing! Susun frame-frame sprite menjadi animasi yang sempurna.
+              </p>
+              <button
+                @click="startGame"
+                class="px-8 py-3 text-sm font-bold transition-all duration-300 transform bg-white rounded-full shadow-lg md:text-base hover:shadow-xl hover:-translate-y-1 flex items-center gap-2 mx-auto"
+                :style="`color: ${majorColor.primary}`"
+              >
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     stroke-linecap="round"
                     stroke-linejoin="round"
                     stroke-width="2"
-                    d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                   />
                 </svg>
-              </div>
-              <h3 class="text-2xl font-bold text-white md:text-4xl drop-shadow-lg">
-                Game {{ majorDatas?.[major]?.short }}
-              </h3>
-              <p class="max-w-md mx-auto text-sm text-white/90 md:text-lg">
-                Segera hadir! Game interaktif untuk mengenal lebih jauh tentang dunia {{ majorDatas?.[major]?.short }}
-              </p>
-              <button
-                class="px-8 py-3 text-sm font-bold transition-all duration-300 transform bg-white rounded-full shadow-lg md:text-base hover:shadow-xl hover:-translate-y-1"
-                :style="`color: ${majorColor.primary}`"
-              >
-                Coming Soon
+                Play Game
               </button>
             </div>
 
@@ -360,6 +368,9 @@ onMounted(() => {
           </div>
         </div>
       </div>
+
+      <!-- Game Component (Lazy Loaded) -->
+      <LazyJurusanAnmMinigame v-if="showGame" @close="closeGame" />
     </motion.section>
 
     <motion.section

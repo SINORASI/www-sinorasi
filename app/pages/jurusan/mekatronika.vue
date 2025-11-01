@@ -39,6 +39,7 @@ const majorColor = computed(
 );
 
 const showBackToTop = ref(false);
+const showGame = ref(false);
 
 useHead({
   title: () =>
@@ -58,6 +59,14 @@ useHead({
 
 const scrollToTop = () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
+};
+
+const startGame = () => {
+  showGame.value = true;
+};
+
+const closeGame = () => {
+  showGame.value = false;
 };
 
 onMounted(() => {
@@ -86,7 +95,7 @@ onMounted(() => {
               <div class="w-full max-w-md lg:max-w-lg">
                 <NuxtImg
                   src="/images/majorIcon/logo-mt.webp"
-                  alt="Mekatronika Logo"
+                  alt="TMT Logo"
                   class="object-contain w-full h-auto drop-shadow-2xl"
                 />
               </div>
@@ -104,7 +113,7 @@ onMounted(() => {
               <div class="relative w-full max-w-sm lg:max-w-md">
                 <NuxtImg
                   src="/images/major/hero-major-ornament/mt/welding.webp"
-                  alt="Mekatronika Ornament"
+                  alt="TMT Ornament"
                   class="object-contain w-full h-auto drop-shadow-2xl"
                 />
               </div>
@@ -211,7 +220,7 @@ onMounted(() => {
 
     <motion.section
       id="kesempatan-kerja"
-      class="relative min-h-screen py-16 overflow-hidden:py-24"
+      class="relative min-h-screen py-16 overflow-hidden md:py-24"
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8, delay: 0.4 }"
@@ -307,7 +316,7 @@ onMounted(() => {
             Mini Game Edukatif
           </h2>
           <p class="max-w-2xl mx-auto text-sm text-gray-600 md:text-lg">
-            Pelajari {{ majorDatas?.[major]?.short }} dengan cara yang menyenangkan!
+            Pelajari teknik pengelasan dengan simulator interaktif!
           </p>
         </div>
 
@@ -329,27 +338,20 @@ onMounted(() => {
                     stroke-linecap="round"
                     stroke-linejoin="round"
                     stroke-width="2"
-                    d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
-                  />
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    d="M13 10V3L4 14h7v7l9-11h-7z"
                   />
                 </svg>
               </div>
-              <h3 class="text-2xl font-bold text-white md:text-4xl drop-shadow-lg">
-                Game {{ majorDatas?.[major]?.short }}
-              </h3>
+              <h3 class="text-2xl font-bold text-white md:text-4xl drop-shadow-lg">Welding Simulator</h3>
               <p class="max-w-md mx-auto text-sm text-white/90 md:text-lg">
-                Segera hadir! Game interaktif untuk mengenal lebih jauh tentang dunia {{ majorDatas?.[major]?.short }}
+                Praktikkan teknik pengelasan virtual! Belajar akurasi dan kecepatan las dengan simulator 2D interaktif
               </p>
               <button
+                @click="startGame"
                 class="px-8 py-3 text-sm font-bold transition-all duration-300 transform bg-white rounded-full shadow-lg md:text-base hover:shadow-xl hover:-translate-y-1"
                 :style="`color: ${majorColor.primary}`"
               >
-                Coming Soon
+                🎮 Play Game
               </button>
             </div>
 
@@ -419,5 +421,8 @@ onMounted(() => {
         </svg>
       </motion.button>
     </AnimatePresence>
+
+    <!-- Minigame Component -->
+    <LazyJurusanTmtMinigame v-if="showGame" @close="closeGame" />
   </main>
 </template>

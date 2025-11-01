@@ -39,6 +39,7 @@ const majorColor = computed(
 );
 
 const showBackToTop = ref(false);
+const showGame = ref(false);
 
 useHead({
   title: () =>
@@ -58,6 +59,14 @@ useHead({
 
 const scrollToTop = () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
+};
+
+const startGame = () => {
+  showGame.value = true;
+};
+
+const closeGame = () => {
+  showGame.value = false;
 };
 
 onMounted(() => {
@@ -305,7 +314,7 @@ onMounted(() => {
           </div>
           <h2 class="text-3xl font-extrabold md:text-5xl" :style="{ color: majorColor.primary }">Mini Game Edukatif</h2>
           <p class="max-w-2xl mx-auto text-sm text-gray-600 md:text-lg">
-            Pelajari {{ majorDatas?.[major]?.short }} dengan cara yang menyenangkan!
+            Master audio mixing dengan EQ Challenge interaktif!
           </p>
         </div>
 
@@ -327,27 +336,21 @@ onMounted(() => {
                     stroke-linecap="round"
                     stroke-linejoin="round"
                     stroke-width="2"
-                    d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"
-                  />
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"
                   />
                 </svg>
               </div>
-              <h3 class="text-2xl font-bold text-white md:text-4xl drop-shadow-lg">
-                Game {{ majorDatas?.[major]?.short }}
-              </h3>
+              <h3 class="text-2xl font-bold text-white md:text-4xl drop-shadow-lg">Sound EQ Challenge</h3>
               <p class="max-w-md mx-auto text-sm text-white/90 md:text-lg">
-                Segera hadir! Game interaktif untuk mengenal lebih jauh tentang dunia {{ majorDatas?.[major]?.short }}
+                Atur equalizer audio untuk menciptakan mix yang sempurna! Pelajari teknik audio mastering secara
+                interaktif
               </p>
               <button
+                @click="startGame"
                 class="px-8 py-3 text-sm font-bold transition-all duration-300 transform bg-white rounded-full shadow-lg md:text-base hover:shadow-xl hover:-translate-y-1"
                 :style="{ color: majorColor.primary }"
               >
-                Coming Soon
+                🎮 Play Game
               </button>
             </div>
 
@@ -417,5 +420,8 @@ onMounted(() => {
         </svg>
       </motion.button>
     </AnimatePresence>
+
+    <!-- Minigame Component -->
+    <LazyJurusanTavMinigame v-if="showGame" @close="closeGame" />
   </main>
 </template>
