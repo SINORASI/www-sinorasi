@@ -341,7 +341,7 @@ onMounted(async () => {
     <div class="min-h-screen p-4 md:p-8">
       <!-- Header -->
       <div class="flex items-center justify-between mb-6">
-        <h1 class="text-2xl md:text-4xl font-black text-white drop-shadow-lg">🎮 RPL Maze Coder</h1>
+        <h1 class="text-2xl md:text-4xl font-black text-white drop-shadow-lg">🎮 Koder Labirin RPL</h1>
         <button
           @click="exitFullscreen"
           class="px-4 py-2 md:px-6 md:py-3 bg-red-500 hover:bg-red-600 text-white font-bold rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center gap-2"
@@ -349,7 +349,7 @@ onMounted(async () => {
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
-          Exit
+          Keluar
         </button>
       </div>
 
@@ -359,7 +359,7 @@ onMounted(async () => {
         <div class="space-y-6">
           <!-- Maze Container -->
           <div class="bg-white rounded-2xl shadow-2xl p-6 md:p-8">
-            <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-4 text-center">Navigate to the Goal! 🎯</h2>
+            <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-4 text-center">Arahkan ke Tujuan! 🎯</h2>
 
             <!-- Maze Grid -->
             <div class="flex items-center justify-center">
@@ -396,8 +396,7 @@ onMounted(async () => {
             <!-- Instructions -->
             <div class="mt-4 p-4 bg-blue-50 rounded-lg">
               <p class="text-sm md:text-base text-gray-700">
-                <strong>📝 Instructions:</strong> Use the blocks on the right to navigate the robot (🤖) from the green
-                square to the trophy (🏆). Avoid the dark walls!
+                <strong>📝 Petunjuk:</strong> Gunakan blok di sebelah kanan untuk menavigasi robot (🤖) dari kotak hijau ke trofi (🏆). Hindari dinding gelap!
               </p>
             </div>
           </div>
@@ -423,7 +422,7 @@ onMounted(async () => {
                   d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
-              Run Code
+              Jalankan Kode
             </button>
 
             <button
@@ -438,7 +437,7 @@ onMounted(async () => {
                   d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
                 />
               </svg>
-              Reset
+              Atur Ulang
             </button>
           </div>
 
@@ -452,12 +451,12 @@ onMounted(async () => {
             leave-to-class="opacity-0 scale-90"
           >
             <div v-if="gameStatus === 'win'" class="p-6 bg-green-100 border-4 border-green-500 rounded-2xl shadow-xl">
-              <h3 class="text-2xl md:text-3xl font-black text-green-700 text-center mb-2">🎉 Success! 🎉</h3>
-              <p class="text-center text-gray-700">You solved the maze! Great job, future programmer!</p>
+              <h3 class="text-2xl md:text-3xl font-black text-green-700 text-center mb-2">🎉 Berhasil! 🎉</h3>
+              <p class="text-center text-gray-700">Kamu berhasil menyelesaikan labirin! Kerja bagus, programmer masa depan!</p>
             </div>
             <div v-else-if="gameStatus === 'lose'" class="p-6 bg-red-100 border-4 border-red-500 rounded-2xl shadow-xl">
-              <h3 class="text-2xl md:text-3xl font-black text-red-700 text-center mb-2">❌ Try Again! ❌</h3>
-              <p class="text-center text-gray-700">The robot didn't reach the goal. Adjust your code and try again!</p>
+              <h3 class="text-2xl md:text-3xl font-black text-red-700 text-center mb-2">❌ Coba Lagi! ❌</h3>
+              <p class="text-center text-gray-700">Robot tidak mencapai tujuan. Sesuaikan kode Anda dan coba lagi!</p>
             </div>
           </Transition>
         </div>
@@ -465,7 +464,7 @@ onMounted(async () => {
         <!-- Right Column: Blockly Workspace -->
         <div class="space-y-4">
           <div class="bg-white rounded-2xl shadow-2xl p-4 md:p-6">
-            <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-4 text-center">🧩 Build Your Code</h2>
+            <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-4 text-center">🧩 Bangun Kode Anda</h2>
             <div
               id="blocklyDiv"
               class="rounded-xl overflow-hidden border-4 border-gray-200"
@@ -475,19 +474,19 @@ onMounted(async () => {
 
           <!-- Legend -->
           <div class="bg-white rounded-2xl shadow-xl p-4 md:p-6">
-            <h3 class="text-lg font-bold text-gray-800 mb-3">📚 Block Reference</h3>
+            <h3 class="text-lg font-bold text-gray-800 mb-3">📚 Referensi Blok</h3>
             <div class="space-y-2 text-sm md:text-base">
               <div class="flex items-center gap-3">
                 <div class="w-8 h-8 bg-blue-500 rounded shrink-0"></div>
-                <span><strong>Move Forward:</strong> Move one step in current direction</span>
+                <span><strong>Maju:</strong> Maju satu langkah dengan arah saat ini</span>
               </div>
               <div class="flex items-center gap-3">
                 <div class="w-8 h-8 bg-green-600 rounded shrink-0"></div>
-                <span><strong>Turn Left:</strong> Rotate 90° counter-clockwise</span>
+                <span><strong>Belok Kiri:</strong> Putar 90° berlawanan arah jarum jam</span>
               </div>
               <div class="flex items-center gap-3">
                 <div class="w-8 h-8 bg-purple-500 rounded shrink-0"></div>
-                <span><strong>Turn Right:</strong> Rotate 90° clockwise</span>
+                <span><strong>Belok Kanan:</strong> Putar 90° searah jarum jam</span>
               </div>
             </div>
           </div>

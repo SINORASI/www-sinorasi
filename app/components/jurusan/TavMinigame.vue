@@ -421,8 +421,8 @@ onUnmounted(() => {
           </svg>
         </div>
         <div>
-          <h1 class="text-lg font-bold text-white md:text-2xl">TAV EQ Challenge</h1>
-          <p class="text-xs text-gray-400 md:text-sm">Master the Audio Mix</p>
+          <h1 class="text-lg font-bold text-white md:text-2xl">Tantangan EQ TAV</h1>
+          <p class="text-xs text-gray-400 md:text-sm">Kuasai Pencampuran Audio</p>
         </div>
       </div>
 
@@ -433,7 +433,7 @@ onUnmounted(() => {
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
         </svg>
-        <span class="hidden md:inline">Exit</span>
+        <span class="hidden md:inline">Keluar</span>
       </button>
     </div>
 
@@ -452,19 +452,19 @@ onUnmounted(() => {
 
           <!-- Instructions -->
           <div class="p-4 rounded-lg bg-slate-700">
-            <h3 class="mb-2 text-sm font-bold text-white">🎯 Your Mission</h3>
+            <h3 class="mb-2 text-sm font-bold text-white">🎯 Misi Anda</h3>
             <ol class="space-y-2 text-xs text-gray-300 list-decimal list-inside">
-              <li>Play the audio track</li>
-              <li>Adjust the EQ sliders (Bass, Mid, Treble)</li>
-              <li>Listen to the changes</li>
-              <li>Click "Check My Mix" to see your score</li>
-              <li>Score 80% or higher to pass!</li>
+              <li>Putar trek audio</li>
+              <li>Sesuaikan slider EQ (Bass, Mid, Treble)</li>
+              <li>Dengarkan perubahannya</li>
+              <li>Klik "Periksa Pencampuran Saya" untuk melihat skor</li>
+              <li>Dapatkan skor 80% atau lebih untuk lulus!</li>
             </ol>
           </div>
 
           <!-- Hint -->
           <div class="p-4 border-2 border-yellow-500 rounded-lg bg-yellow-500 bg-opacity-10">
-            <h3 class="mb-2 text-sm font-bold text-yellow-400">💡 Hint</h3>
+            <h3 class="mb-2 text-sm font-bold text-yellow-400">💡 Petunjuk</h3>
             <p class="text-xs text-gray-300">
               {{ currentLevelData.hint }}
             </p>
@@ -472,35 +472,35 @@ onUnmounted(() => {
 
           <!-- EQ Guide -->
           <div class="p-4 rounded-lg bg-slate-700">
-            <h3 class="mb-2 text-sm font-bold text-white">🎚️ EQ Guide</h3>
+            <h3 class="mb-2 text-sm font-bold text-white">🎚️ Panduan EQ</h3>
             <div class="space-y-2 text-xs text-gray-300">
               <div class="flex items-center gap-2">
                 <div class="w-4 h-4 rounded-full bg-red-500 shrink-0"></div>
-                <span><strong>Bass:</strong> 20-200 Hz (Warmth, Power)</span>
+                <span><strong>Bass:</strong> 20-200 Hz (Kehangatan, Kekuatan)</span>
               </div>
               <div class="flex items-center gap-2">
                 <div class="w-4 h-4 rounded-full bg-yellow-500 shrink-0"></div>
-                <span><strong>Mid:</strong> 200-3200 Hz (Presence)</span>
+                <span><strong>Mid:</strong> 200-3200 Hz (Kehadiran)</span>
               </div>
               <div class="flex items-center gap-2">
                 <div class="w-4 h-4 rounded-full bg-blue-500 shrink-0"></div>
-                <span><strong>Treble:</strong> 3200+ Hz (Clarity)</span>
+                <span><strong>Treble:</strong> 3200+ Hz (Kejernihan)</span>
               </div>
             </div>
           </div>
 
           <!-- Progress -->
           <div class="p-4 rounded-lg bg-slate-700">
-            <h3 class="mb-2 text-sm font-bold text-white">📈 Progress</h3>
+            <h3 class="mb-2 text-sm font-bold text-white">📈 Progres</h3>
             <div class="space-y-2 text-xs">
               <div class="flex justify-between">
                 <span class="text-gray-400">Level:</span>
                 <span class="font-bold text-white">{{ currentLevel + 1 }} / {{ levels.length }}</span>
               </div>
               <div class="flex justify-between">
-                <span class="text-gray-400">Quality Score:</span>
+                <span class="text-gray-400">Skor Kualitas:</span>
                 <span class="font-bold" :style="{ color: hasChecked ? qualityGrade.color : '#fff' }">
-                  {{ hasChecked ? `${qualityScore}%` : "Not checked" }}
+                  {{ hasChecked ? `${qualityScore}%` : "Belum diperiksa" }}
                 </span>
               </div>
             </div>
@@ -560,7 +560,7 @@ onUnmounted(() => {
             </button>
 
             <div class="text-white">
-              <p class="text-sm font-bold">{{ isPlaying ? "Playing" : "Paused" }}</p>
+              <p class="text-sm font-bold">{{ isPlaying ? "Memutar" : "Dijeda" }}</p>
               <p class="text-xs text-gray-400">{{ currentLevelData.name }}</p>
             </div>
           </div>
@@ -668,19 +668,19 @@ onUnmounted(() => {
             :disabled="!isPlaying && !hasChecked"
             class="w-full py-4 text-lg font-bold text-white transition-all duration-300 transform rounded-lg shadow-lg bg-linear-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            🎚️ Check My Mix
+            🎚️ Periksa Pencampuran Saya
           </button>
 
           <button
             @click="resetLevel"
             class="w-full py-2 text-sm font-semibold text-white transition-all rounded-lg bg-slate-700 hover:bg-slate-600"
           >
-            🔄 Reset EQ
+            🔄 Atur Ulang EQ
           </button>
 
           <!-- Current Settings -->
           <div class="p-4 rounded-lg bg-slate-700">
-            <h3 class="mb-2 text-sm font-bold text-white">⚙️ Current EQ</h3>
+            <h3 class="mb-2 text-sm font-bold text-white">⚙️ EQ Saat Ini</h3>
             <div class="space-y-2 text-xs">
               <div class="flex justify-between">
                 <span class="text-gray-400">Bass:</span>
@@ -699,46 +699,46 @@ onUnmounted(() => {
 
           <!-- Tips -->
           <div class="p-4 border-2 border-purple-500 rounded-lg bg-purple-500 bg-opacity-10">
-            <h3 class="mb-2 text-sm font-bold text-purple-400">🎓 EQ Tips</h3>
+            <h3 class="mb-2 text-sm font-bold text-purple-400">🎓 Tips EQ</h3>
             <ul class="space-y-1 text-xs text-gray-300">
-              <li>• Subtle changes often sound better</li>
-              <li>• Cut before you boost</li>
-              <li>• Use your ears, not your eyes</li>
-              <li>• Less is usually more</li>
-              <li>• Each track needs different EQ</li>
+              <li>• Perubahan halus sering terdengar lebih baik</li>
+              <li>• Potong sebelum Anda meningkatkan</li>
+              <li>• Gunakan telinga Anda, bukan mata Anda</li>
+              <li>• Kurang selalu lebih baik</li>
+              <li>• Setiap trek membutuhkan EQ yang berbeda</li>
             </ul>
           </div>
 
           <!-- Score Grading -->
           <div class="p-4 rounded-lg bg-slate-700">
-            <h3 class="mb-2 text-sm font-bold text-white">📊 Grading Scale</h3>
+            <h3 class="mb-2 text-sm font-bold text-white">📊 Skala Penilaian</h3>
             <div class="space-y-1 text-xs">
               <div class="flex justify-between">
                 <span class="text-gray-400">90-100%:</span>
-                <span class="font-bold text-green-400">A+ Perfect</span>
+                <span class="font-bold text-green-400">A+ Sempurna</span>
               </div>
               <div class="flex justify-between">
                 <span class="text-gray-400">80-89%:</span>
-                <span class="font-bold text-green-500">A Excellent</span>
+                <span class="font-bold text-green-500">A Sangat Bagus</span>
               </div>
               <div class="flex justify-between">
                 <span class="text-gray-400">70-79%:</span>
-                <span class="font-bold text-blue-400">B Good</span>
+                <span class="font-bold text-blue-400">B Bagus</span>
               </div>
               <div class="flex justify-between">
                 <span class="text-gray-400">60-69%:</span>
-                <span class="font-bold text-yellow-400">C Fair</span>
+                <span class="font-bold text-yellow-400">C Cukup</span>
               </div>
               <div class="flex justify-between">
                 <span class="text-gray-400">&lt;60%:</span>
-                <span class="font-bold text-red-400">D Try Again</span>
+                <span class="font-bold text-red-400">D Coba Lagi</span>
               </div>
             </div>
           </div>
 
           <!-- Level Select -->
           <div class="p-4 rounded-lg bg-slate-700">
-            <h3 class="mb-2 text-sm font-bold text-white">📚 Levels</h3>
+            <h3 class="mb-2 text-sm font-bold text-white">📚 Level</h3>
             <div class="space-y-2">
               <button
                 v-for="(level, index) in levels"

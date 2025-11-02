@@ -397,8 +397,8 @@ onUnmounted(() => {
           </svg>
         </div>
         <div>
-          <h1 class="text-lg font-bold text-gray-800 md:text-2xl">DKV Coloring Book</h1>
-          <p class="text-xs text-gray-500 md:text-sm">Digital Art & Design</p>
+          <h1 class="text-lg font-bold text-gray-800 md:text-2xl">Buku Pewarna DKV</h1>
+          <p class="text-xs text-gray-500 md:text-sm">Seni & Desain Digital</p>
         </div>
       </div>
 
@@ -409,7 +409,7 @@ onUnmounted(() => {
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
         </svg>
-        <span class="hidden md:inline">Exit</span>
+        <span class="hidden md:inline">Keluar</span>
       </button>
     </div>
 
@@ -417,7 +417,7 @@ onUnmounted(() => {
     <div class="flex flex-1 overflow-hidden">
       <!-- Left Sidebar - Sketch Selector -->
       <div class="w-48 p-4 overflow-y-auto bg-white border-r md:w-64">
-        <h3 class="mb-3 text-sm font-bold text-gray-700 md:text-base">Select Sketch</h3>
+        <h3 class="mb-3 text-sm font-bold text-gray-700 md:text-base">Pilih Sketsa</h3>
         <div class="space-y-2">
           <button
             v-for="(sketch, index) in sketches"
@@ -454,7 +454,7 @@ onUnmounted(() => {
             <button
               @click="downloadArtwork"
               class="flex items-center gap-2 px-3 py-2 text-sm font-semibold text-white transition-all rounded-lg bg-linear-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700"
-              title="Download your artwork"
+              title="Unduh karya seni Anda"
             >
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
@@ -464,12 +464,12 @@ onUnmounted(() => {
                   d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
                 />
               </svg>
-              <span class="hidden md:inline">Save</span>
+              <span class="hidden md:inline">Simpan</span>
             </button>
             <button
               @click="resetCanvas"
               class="flex items-center gap-2 px-3 py-2 text-sm font-semibold text-white transition-all rounded-lg bg-linear-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700"
-              title="Reset canvas (R key)"
+              title="Atur ulang kanvas (tombol R)"
             >
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
@@ -479,7 +479,7 @@ onUnmounted(() => {
                   d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
                 />
               </svg>
-              <span class="hidden md:inline">Reset</span>
+              <span class="hidden md:inline">Atur Ulang</span>
             </button>
           </div>
         </div>
@@ -492,7 +492,7 @@ onUnmounted(() => {
             <div
               class="w-16 h-16 mx-auto border-4 border-purple-200 rounded-full animate-spin border-t-purple-500"
             ></div>
-            <p class="mt-4 text-gray-600">Loading sketch...</p>
+            <p class="mt-4 text-gray-600">Memuat sketsa...</p>
           </div>
           <canvas
             v-else
@@ -508,7 +508,7 @@ onUnmounted(() => {
       <div class="w-48 p-4 overflow-y-auto bg-white border-l md:w-64">
         <!-- Tools -->
         <div class="mb-6">
-          <h3 class="mb-3 text-sm font-bold text-gray-700 md:text-base">Tools</h3>
+          <h3 class="mb-3 text-sm font-bold text-gray-700 md:text-base">Alat</h3>
           <div class="space-y-2">
             <button
               @click="activeTool = 'bucket'"
@@ -529,9 +529,9 @@ onUnmounted(() => {
               </svg>
               <div class="flex-1 min-w-0">
                 <p class="text-sm font-semibold" :class="activeTool === 'bucket' ? 'text-purple-700' : 'text-gray-800'">
-                  Paint Bucket
+                  Ember Cat
                 </p>
-                <p class="text-xs text-gray-500">Press B</p>
+                <p class="text-xs text-gray-500">Tekan B</p>
               </div>
             </button>
 
@@ -561,9 +561,9 @@ onUnmounted(() => {
                   class="text-sm font-semibold"
                   :class="activeTool === 'eyedropper' ? 'text-purple-700' : 'text-gray-800'"
                 >
-                  Eyedropper
+                  Pipet Warna
                 </p>
-                <p class="text-xs text-gray-500">Press I</p>
+                <p class="text-xs text-gray-500">Tekan I</p>
               </div>
             </button>
           </div>
@@ -571,7 +571,7 @@ onUnmounted(() => {
 
         <!-- Active Color -->
         <div class="mb-6">
-          <h3 class="mb-3 text-sm font-bold text-gray-700 md:text-base">Active Color</h3>
+          <h3 class="mb-3 text-sm font-bold text-gray-700 md:text-base">Warna Aktif</h3>
           <div class="flex items-center gap-3 p-3 border-2 border-gray-200 rounded-lg">
             <div
               class="shrink-0 w-12 h-12 border-2 border-gray-300 rounded-lg shadow-inner"
@@ -585,7 +585,7 @@ onUnmounted(() => {
 
         <!-- Color Palette -->
         <div>
-          <h3 class="mb-3 text-sm font-bold text-gray-700 md:text-base">Color Palette</h3>
+          <h3 class="mb-3 text-sm font-bold text-gray-700 md:text-base">Palet Warna</h3>
           <div class="grid grid-cols-5 gap-2">
             <button
               v-for="color in colorPalette"
@@ -619,12 +619,12 @@ onUnmounted(() => {
 
         <!-- Quick Tips -->
         <div class="p-3 mt-6 border-2 border-purple-200 rounded-lg bg-purple-50">
-          <h4 class="mb-2 text-xs font-bold text-purple-700">Quick Tips:</h4>
+          <h4 class="mb-2 text-xs font-bold text-purple-700">Tips Cepat:</h4>
           <ul class="space-y-1 text-xs text-purple-600">
-            <li>• Press <kbd class="px-1 bg-white rounded">B</kbd> for Bucket</li>
-            <li>• Press <kbd class="px-1 bg-white rounded">I</kbd> for Eyedropper</li>
-            <li>• Press <kbd class="px-1 bg-white rounded">R</kbd> to Reset</li>
-            <li>• Click areas to fill with color</li>
+            <li>• Tekan <kbd class="px-1 bg-white rounded">B</kbd> untuk Ember</li>
+            <li>• Tekan <kbd class="px-1 bg-white rounded">I</kbd> untuk Pipet</li>
+            <li>• Tekan <kbd class="px-1 bg-white rounded">R</kbd> untuk Atur Ulang</li>
+            <li>• Klik area untuk isi dengan warna</li>
           </ul>
         </div>
       </div>

@@ -261,7 +261,7 @@ onMounted(async () => {
     <div class="min-h-screen p-4 md:p-8">
       <!-- Header -->
       <div class="flex items-center justify-between mb-6">
-        <h1 class="text-2xl md:text-4xl font-black text-white drop-shadow-lg">🔌 TKJ LAN Cable Crimper</h1>
+        <h1 class="text-2xl md:text-4xl font-black text-white drop-shadow-lg">🔌 Pengkrimpit Kabel LAN TKJ</h1>
         <button
           @click="exitFullscreen"
           class="px-4 py-2 md:px-6 md:py-3 bg-red-500 hover:bg-red-600 text-white font-bold rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center gap-2"
@@ -269,7 +269,7 @@ onMounted(async () => {
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
-          Exit
+          Keluar
         </button>
       </div>
 
@@ -280,22 +280,22 @@ onMounted(async () => {
           <div class="space-y-6">
             <!-- Instructions -->
             <div class="bg-white rounded-2xl shadow-2xl p-6">
-              <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-4">📋 Instructions</h2>
+              <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-4">📋 Petunjuk</h2>
               <div class="space-y-3 text-sm md:text-base text-gray-700">
-                <p><strong>Goal:</strong> Arrange the 8 colored wires in the correct T568B standard order.</p>
-                <p><strong>How to Play:</strong></p>
+                <p><strong>Tujuan:</strong> Susun 8 kawat berwarna dalam urutan standar T568B yang benar.</p>
+                <p><strong>Cara Bermain:</strong></p>
                 <ol class="list-decimal list-inside space-y-1 ml-2">
-                  <li>Drag wires from the pool below</li>
-                  <li>Drop them into the RJ45 connector slots (1-8)</li>
-                  <li>Follow the T568B wiring standard</li>
-                  <li>Click "Crimp Cable" to check your work</li>
+                  <li>Seret kawat dari kumpulan di bawah</li>
+                  <li>Lepaskan ke slot konektor RJ45 (1-8)</li>
+                  <li>Ikuti standar kabel T568B</li>
+                  <li>Klik "Krimpit Kabel" untuk periksa pekerjaan Anda</li>
                 </ol>
               </div>
             </div>
 
             <!-- Wire Pool -->
             <div class="bg-white rounded-2xl shadow-2xl p-6">
-              <h3 class="text-lg md:text-xl font-bold text-gray-800 mb-4">🎨 Wire Pool</h3>
+              <h3 class="text-lg md:text-xl font-bold text-gray-800 mb-4">🎨 Kumpulan Kawat</h3>
               <div
                 class="min-h-[200px] p-4 bg-gray-50 rounded-xl border-2 border-dashed border-gray-300 grid grid-cols-2 gap-3"
                 @drop="handlePoolDrop"
@@ -327,7 +327,7 @@ onMounted(async () => {
 
             <!-- T568B Reference -->
             <div class="bg-blue-50 rounded-xl p-4 border-2 border-blue-200">
-              <h4 class="text-sm font-bold text-blue-900 mb-2">💡 T568B Standard Reference:</h4>
+              <h4 class="text-sm font-bold text-blue-900 mb-2">💡 Referensi Standar T568B:</h4>
               <div class="grid grid-cols-4 gap-2 text-xs">
                 <div v-for="(wire, index) in T568B_STANDARD" :key="index" class="text-center">
                   <div class="font-bold text-blue-900">{{ index + 1 }}</div>
@@ -342,7 +342,7 @@ onMounted(async () => {
           <div class="space-y-6">
             <!-- Connector Display -->
             <div class="bg-white rounded-2xl shadow-2xl p-6">
-              <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-4 text-center">🔌 RJ45 Connector</h2>
+              <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-4 text-center">🔌 Konektor RJ45</h2>
 
               <!-- RJ45 Visual -->
               <div class="relative bg-linear-to-b from-gray-700 to-gray-900 rounded-2xl p-8 shadow-inner">
@@ -373,7 +373,7 @@ onMounted(async () => {
                       <span v-if="slot" class="text-xs font-bold text-white drop-shadow-md">
                         {{ getWireLabel(slot) }}
                       </span>
-                      <span v-else class="text-xs text-white/50">Drop wire here</span>
+                      <span v-else class="text-xs text-white/50">Lepaskan kawat di sini</span>
                     </div>
                   </div>
                 </div>
@@ -395,7 +395,7 @@ onMounted(async () => {
                     d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                   />
                 </svg>
-                Crimp Cable
+                Krimpit Kabel
               </button>
 
               <button
@@ -410,7 +410,7 @@ onMounted(async () => {
                     d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
                   />
                 </svg>
-                Reset
+                Atur Ulang
               </button>
             </div>
 
@@ -425,19 +425,19 @@ onMounted(async () => {
             >
               <div v-if="gameStatus === 'win'" class="p-6 bg-green-100 border-4 border-green-500 rounded-2xl shadow-xl">
                 <h3 class="text-2xl md:text-3xl font-black text-green-700 text-center mb-2">
-                  ✅ Connection Successful!
+                  ✅ Koneksi Berhasil!
                 </h3>
                 <p class="text-center text-gray-700">
-                  Perfect! Your cable is crimped correctly according to T568B standard!
+                  Sempurna! Kabel Anda dikrimpit dengan benar sesuai standar T568B!
                 </p>
               </div>
               <div
                 v-else-if="gameStatus === 'lose'"
                 class="p-6 bg-red-100 border-4 border-red-500 rounded-2xl shadow-xl"
               >
-                <h3 class="text-2xl md:text-3xl font-black text-red-700 text-center mb-2">❌ Connection Failed!</h3>
+                <h3 class="text-2xl md:text-3xl font-black text-red-700 text-center mb-2">❌ Koneksi Gagal!</h3>
                 <p class="text-center text-gray-700">
-                  The wire order is incorrect. Check the T568B standard and try again!
+                  Urutan kawat tidak benar. Periksa standar T568B dan coba lagi!
                 </p>
               </div>
             </Transition>

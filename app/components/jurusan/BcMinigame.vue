@@ -21,33 +21,33 @@ const showResult = ref(false);
 const scenarios = [
   {
     id: 1,
-    name: "Bright Daylight",
+    name: "Siang Terang",
     image: "/images/major/hero-major-ornament/bc/camera.webp",
-    description: "Outdoor scene with full sun",
+    description: "Adegan outdoor dengan sinar matahari penuh",
     targetISO: 200,
     targetAperture: 11,
     targetShutter: 500,
-    difficulty: "Easy",
+    difficulty: "Mudah",
   },
   {
     id: 2,
     name: "Golden Hour",
     image: "/images/major/hero-major-ornament/bc/film-clip.webp",
-    description: "Warm sunset lighting",
+    description: "Pencahayaan matahari terbenam yang hangat",
     targetISO: 400,
     targetAperture: 5.6,
     targetShutter: 250,
-    difficulty: "Medium",
+    difficulty: "Sedang",
   },
   {
     id: 3,
-    name: "Indoor Studio",
+    name: "Studio Indoor",
     image: "/images/majorIcon/logo-bc.webp",
-    description: "Controlled artificial lighting",
+    description: "Pencahayaan buatan yang terkontrol",
     targetISO: 800,
     targetAperture: 4,
     targetShutter: 125,
-    difficulty: "Hard",
+    difficulty: "Sulit",
   },
 ];
 
@@ -138,11 +138,11 @@ const currentShutter = computed(() => shutterValues[Math.round(shutterSpeed.valu
 // Result message based on accuracy
 const resultMessage = computed(() => {
   const accuracy = exposureAccuracy.value;
-  if (accuracy >= 90) return { text: "Perfect Shot! 📸", color: "#10B981", grade: "A+" };
-  if (accuracy >= 75) return { text: "Great Exposure! 👍", color: "#3B82F6", grade: "A" };
-  if (accuracy >= 60) return { text: "Good Attempt! 😊", color: "#F59E0B", grade: "B" };
-  if (accuracy >= 40) return { text: "Needs Adjustment 🤔", color: "#EF4444", grade: "C" };
-  return { text: "Try Again! 💪", color: "#DC2626", grade: "D" };
+  if (accuracy >= 90) return { text: "Foto Sempurna! 📸", color: "#10B981", grade: "A+" };
+  if (accuracy >= 75) return { text: "Exposure Bagus! 👍", color: "#3B82F6", grade: "A" };
+  if (accuracy >= 60) return { text: "Cukup Baik! 😊", color: "#F59E0B", grade: "B" };
+  if (accuracy >= 40) return { text: "Perlu Penyesuaian 🤔", color: "#EF4444", grade: "C" };
+  return { text: "Coba Lagi! 💪", color: "#DC2626", grade: "D" };
 });
 
 const isFullscreen = ref(false);
@@ -288,8 +288,8 @@ onUnmounted(() => {
           </svg>
         </div>
         <div>
-          <h1 class="text-lg font-bold text-white md:text-2xl">BC Photo Simulator</h1>
-          <p class="text-xs text-gray-400 md:text-sm">Master the Exposure Triangle</p>
+          <h1 class="text-lg font-bold text-white md:text-2xl">Simulator Foto BC</h1>
+          <p class="text-xs text-gray-400 md:text-sm">Kuasai Segitiga Exposure</p>
         </div>
       </div>
 
@@ -318,9 +318,9 @@ onUnmounted(() => {
             <div
               class="px-3 py-1 text-xs font-bold text-white rounded-full"
               :class="{
-                'bg-green-500': currentScenario.difficulty === 'Easy',
-                'bg-yellow-500': currentScenario.difficulty === 'Medium',
-                'bg-red-500': currentScenario.difficulty === 'Hard',
+                'bg-green-500': currentScenario.difficulty === 'Mudah',
+                'bg-yellow-500': currentScenario.difficulty === 'Sedang',
+                'bg-red-500': currentScenario.difficulty === 'Sulit',
               }"
             >
               {{ currentScenario.difficulty }}
@@ -394,8 +394,8 @@ onUnmounted(() => {
 
           <!-- Exposure Meter Bar -->
           <div class="p-4 space-y-2 bg-gray-800 rounded-lg">
-            <div class="flex items-center justify-between">
-              <span class="text-sm font-semibold text-gray-300">Exposure Accuracy</span>
+              <div class="flex items-center justify-between">
+              <span class="text-sm font-semibold text-gray-300">Akurasi Exposure</span>
               <span class="text-lg font-bold text-white">{{ exposureAccuracy }}%</span>
             </div>
             <div class="h-6 overflow-hidden bg-gray-700 rounded-full">
@@ -451,7 +451,7 @@ onUnmounted(() => {
             />
             <div class="flex justify-between mt-2 text-xs text-gray-500">
               <span>100</span>
-              <span class="text-gray-400">Light Sensitivity</span>
+              <span class="text-gray-400">Sensitivitas Cahaya</span>
               <span>6400</span>
             </div>
           </div>
@@ -473,7 +473,7 @@ onUnmounted(() => {
             />
             <div class="flex justify-between mt-2 text-xs text-gray-500">
               <span>f/1.4</span>
-              <span class="text-gray-400">Depth of Field</span>
+              <span class="text-gray-400">Kedalaman Ruang</span>
               <span>f/22</span>
             </div>
           </div>
@@ -495,7 +495,7 @@ onUnmounted(() => {
             />
             <div class="flex justify-between mt-2 text-xs text-gray-500">
               <span>1/30s</span>
-              <span class="text-gray-400">Motion Freeze</span>
+              <span class="text-gray-400">Bekukan Gerakan</span>
               <span>1/4000s</span>
             </div>
           </div>
@@ -507,7 +507,7 @@ onUnmounted(() => {
               @click="takePhoto"
               class="w-full py-4 text-lg font-bold text-white transition-all duration-300 transform rounded-lg shadow-lg bg-linear-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 hover:scale-105 hover:shadow-xl"
             >
-              📸 Take Photo
+              📸 Ambil Foto
             </button>
 
             <button
@@ -515,7 +515,7 @@ onUnmounted(() => {
               @click="resetSettings"
               class="w-full py-4 text-lg font-bold text-white transition-all duration-300 transform rounded-lg shadow-lg bg-linear-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 hover:scale-105"
             >
-              🔄 Try Again
+              🔄 Coba Lagi
             </button>
 
             <div class="grid grid-cols-2 gap-3">
@@ -524,34 +524,34 @@ onUnmounted(() => {
                 :disabled="currentScenarioIndex === 0"
                 class="py-2 text-sm font-semibold text-white transition-all duration-200 bg-gray-700 rounded-lg hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                ← Previous
+                ← Sebelumnya
               </button>
               <button
                 @click="nextScenario"
                 :disabled="currentScenarioIndex === scenarios.length - 1"
                 class="py-2 text-sm font-semibold text-white transition-all duration-200 bg-gray-700 rounded-lg hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Next →
+                Berikutnya →
               </button>
             </div>
           </div>
 
           <!-- Tips -->
           <div class="p-4 border-2 border-red-500 rounded-lg bg-red-500 bg-opacity-10">
-            <h4 class="mb-2 text-sm font-bold text-red-400">💡 Pro Tips:</h4>
+            <h4 class="mb-2 text-sm font-bold text-red-400">💡 Tips Pro:</h4>
             <ul class="space-y-1 text-xs text-gray-300">
-              <li>• <strong>ISO:</strong> Higher = brighter, but more noise</li>
-              <li>• <strong>Aperture:</strong> Lower f-number = more light, shallow DOF</li>
-              <li>• <strong>Shutter:</strong> Faster = less light, freeze motion</li>
-              <li>• Watch the exposure meter for feedback!</li>
-              <li>• Press <kbd class="px-1 text-xs bg-gray-700 rounded">Space</kbd> to shoot</li>
+              <li>• <strong>ISO:</strong> Lebih tinggi = lebih terang, tapi lebih banyak noise</li>
+              <li>• <strong>Aperture:</strong> f-number rendah = lebih banyak cahaya, DOF dangkal</li>
+              <li>• <strong>Shutter:</strong> Lebih cepat = lebih sedikit cahaya, bekukan gerakan</li>
+              <li>• Perhatikan meteran exposure untuk feedback!</li>
+              <li>• Tekan <kbd class="px-1 text-xs bg-gray-700 rounded">Space</kbd> untuk jepret</li>
             </ul>
           </div>
 
           <!-- Scenario Progress -->
           <div class="p-4 bg-gray-800 rounded-lg">
             <div class="flex items-center justify-between mb-2">
-              <span class="text-sm font-semibold text-gray-300">Scenario Progress</span>
+              <span class="text-sm font-semibold text-gray-300">Progres Skenario</span>
               <span class="text-sm text-white">{{ currentScenarioIndex + 1 }} / {{ scenarios.length }}</span>
             </div>
             <div class="flex gap-2">

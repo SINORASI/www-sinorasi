@@ -17,7 +17,7 @@ interface Level {
 const levels: Level[] = [
   {
     id: 1,
-    name: "Ino Stand - Easy",
+    name: "Ino Berdiri - Mudah",
     character: "ino stand",
     totalFrames: 4,
     frameRate: 200,
@@ -25,7 +25,7 @@ const levels: Level[] = [
   },
   {
     id: 2,
-    name: "Ino Walk - Medium",
+    name: "Ino Berjalan - Sedang",
     character: "ino walk",
     totalFrames: 6,
     frameRate: 150,
@@ -33,7 +33,7 @@ const levels: Level[] = [
   },
   {
     id: 3,
-    name: "Rasi Stand - Easy",
+    name: "Rasi Berdiri - Mudah",
     character: "rasi stand",
     totalFrames: 4,
     frameRate: 200,
@@ -41,7 +41,7 @@ const levels: Level[] = [
   },
   {
     id: 4,
-    name: "Rasi Walk - Hard",
+    name: "Rasi Berjalan - Sulit",
     character: "rasi walk",
     totalFrames: 8,
     frameRate: 120,
@@ -104,7 +104,7 @@ const getFrameImage = (frameIndex: number, character?: string) => {
 // Play animation preview
 const playPreview = () => {
   if (timeline.value.length === 0) {
-    alert("Please add frames to the timeline first!");
+    alert("Silakan tambahkan frame ke timeline terlebih dahulu!");
     return;
   }
 
@@ -263,7 +263,7 @@ onMounted(async () => {
       <!-- Header -->
       <div class="flex items-center justify-between mb-6">
         <div>
-          <h1 class="text-2xl md:text-4xl font-black text-white drop-shadow-lg">🎬 ANM Sprite Sorter</h1>
+          <h1 class="text-2xl md:text-4xl font-black text-white drop-shadow-lg">🎬 Penyusun Sprite ANM</h1>
           <p class="text-sm md:text-base text-white/90 mt-1">Level {{ currentLevel + 1 }}: {{ level.name }}</p>
         </div>
         <button
@@ -273,7 +273,7 @@ onMounted(async () => {
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
-          Exit
+          Keluar
         </button>
       </div>
 
@@ -284,14 +284,14 @@ onMounted(async () => {
           <div class="lg:col-span-1 space-y-6">
             <!-- Instructions -->
             <div class="bg-white rounded-2xl shadow-2xl p-6">
-              <h2 class="text-xl font-bold text-gray-800 mb-4">📋 How to Play</h2>
+              <h2 class="text-xl font-bold text-gray-800 mb-4">📋 Cara Bermain</h2>
               <div class="space-y-2 text-sm text-gray-700">
-                <p><strong>Goal:</strong> Arrange sprite frames in the correct animation sequence.</p>
+                <p><strong>Tujuan:</strong> Susun frame sprite dalam urutan animasi yang benar.</p>
                 <ol class="list-decimal list-inside space-y-1 ml-2">
-                  <li>Drag frames from pool to timeline</li>
-                  <li>Arrange them in correct order</li>
-                  <li>Click "Play Preview" to test</li>
-                  <li>Click "Submit" when ready</li>
+                  <li>Seret frame dari kumpulan ke timeline</li>
+                  <li>Atur dalam urutan yang benar</li>
+                  <li>Klik "Putar Preview" untuk menguji</li>
+                  <li>Klik "Kirim" jika sudah siap</li>
                 </ol>
               </div>
             </div>
@@ -299,8 +299,8 @@ onMounted(async () => {
             <!-- Frame Pool -->
             <div class="bg-white rounded-2xl shadow-2xl p-6">
               <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
-                🎨 Frame Pool
-                <span class="text-sm font-normal text-gray-500">({{ framePool.length }} left)</span>
+                🎨 Kumpulan Frame
+                <span class="text-sm font-normal text-gray-500">({{ framePool.length }} tersisa)</span>
               </h3>
               <draggable
                 v-model="framePool"
@@ -321,7 +321,7 @@ onMounted(async () => {
 
             <!-- Level Selector -->
             <div class="bg-white rounded-2xl shadow-2xl p-6">
-              <h3 class="text-lg font-bold text-gray-800 mb-4">🎯 Levels</h3>
+              <h3 class="text-lg font-bold text-gray-800 mb-4">🎯 Level</h3>
               <div class="grid grid-cols-2 gap-2">
                 <button
                   v-for="(lvl, index) in levels"
@@ -342,7 +342,7 @@ onMounted(async () => {
           <div class="lg:col-span-2 space-y-6">
             <!-- Preview Window -->
             <div class="bg-white rounded-2xl shadow-2xl p-6">
-              <h2 class="text-xl font-bold text-gray-800 mb-4 text-center">🎥 Animation Preview</h2>
+              <h2 class="text-xl font-bold text-gray-800 mb-4 text-center">🎥 Pratinjau Animasi</h2>
               <div class="flex justify-center items-center">
                 <div class="relative bg-gray-900 rounded-xl p-8 min-h-[250px] flex items-center justify-center">
                   <div v-if="previewImage" class="w-48 h-48 flex items-center justify-center">
@@ -362,7 +362,7 @@ onMounted(async () => {
                         d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
                       />
                     </svg>
-                    <p class="text-sm">Add frames to timeline to preview</p>
+                    <p class="text-sm">Tambahkan frame ke timeline untuk pratinjau</p>
                   </div>
                 </div>
               </div>
@@ -384,7 +384,7 @@ onMounted(async () => {
                     />
                     <path v-else stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6" />
                   </svg>
-                  {{ isPlaying ? "Stop" : "Play" }} Preview
+                  {{ isPlaying ? "Stop" : "Putar" }} Pratinjau
                 </button>
               </div>
             </div>
@@ -435,7 +435,7 @@ onMounted(async () => {
                     d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                   />
                 </svg>
-                Submit Answer
+                Kirim Jawaban
               </button>
 
               <button
@@ -450,7 +450,7 @@ onMounted(async () => {
                     d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
                   />
                 </svg>
-                Reset
+                Atur Ulang
               </button>
             </div>
 
@@ -464,9 +464,9 @@ onMounted(async () => {
               leave-to-class="opacity-0 scale-90"
             >
               <div v-if="gameStatus === 'win'" class="p-6 bg-green-100 border-4 border-green-500 rounded-2xl shadow-xl">
-                <h3 class="text-2xl font-black text-green-700 text-center mb-2">✨ Perfect Animation! ✨</h3>
+                <h3 class="text-2xl font-black text-green-700 text-center mb-2">✨ Animasi Sempurna! ✨</h3>
                 <p class="text-center text-gray-700 mb-4">
-                  You've arranged the sprites correctly! The animation flows smoothly!
+                  Kamu telah menyusun sprite dengan benar! Animasinya berjalan lancar!
                 </p>
                 <div class="flex justify-center gap-4">
                   <button
@@ -474,13 +474,13 @@ onMounted(async () => {
                     @click="nextLevel"
                     class="px-6 py-2 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg transition-all duration-200"
                   >
-                    Next Level →
+                    Level Berikutnya →
                   </button>
                   <button
                     @click="resetLevel"
                     class="px-6 py-2 bg-gray-600 hover:bg-gray-700 text-white font-bold rounded-lg transition-all duration-200"
                   >
-                    Try Again
+                    Coba Lagi
                   </button>
                 </div>
               </div>
@@ -488,8 +488,8 @@ onMounted(async () => {
                 v-else-if="gameStatus === 'lose'"
                 class="p-6 bg-red-100 border-4 border-red-500 rounded-2xl shadow-xl"
               >
-                <h3 class="text-2xl font-black text-red-700 text-center mb-2">❌ Animation Broken!</h3>
-                <p class="text-center text-gray-700">The frame order isn't quite right. Try again!</p>
+                <h3 class="text-2xl font-black text-red-700 text-center mb-2">❌ Animasi Rusak!</h3>
+                <p class="text-center text-gray-700">Urutan frame belum benar. Coba lagi!</p>
               </div>
             </Transition>
           </div>

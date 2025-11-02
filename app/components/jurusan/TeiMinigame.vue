@@ -349,8 +349,8 @@ onUnmounted(() => {
           </svg>
         </div>
         <div>
-          <h1 class="text-lg font-bold text-white md:text-2xl">TEI Arduino Circuit</h1>
-          <p class="text-xs text-gray-400 md:text-sm">Build Your LED Circuit</p>
+          <h1 class="text-lg font-bold text-white md:text-2xl">Sirkuit Arduino TEI</h1>
+          <p class="text-xs text-gray-400 md:text-sm">Bangun Sirkuit LED Anda</p>
         </div>
       </div>
 
@@ -361,7 +361,7 @@ onUnmounted(() => {
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
         </svg>
-        <span class="hidden md:inline">Exit</span>
+        <span class="hidden md:inline">Keluar</span>
       </button>
     </div>
 
@@ -371,50 +371,50 @@ onUnmounted(() => {
       <div class="w-64 p-4 overflow-y-auto bg-gray-800">
         <div class="space-y-4">
           <div class="p-4 border-2 border-green-500 rounded-lg bg-green-500 bg-opacity-10">
-            <h3 class="mb-2 text-sm font-bold text-green-400">🎯 Goal</h3>
+            <h3 class="mb-2 text-sm font-bold text-green-400">🎯 Tujuan</h3>
             <p class="text-xs text-gray-300">
-              Connect the Arduino, LED, and Resistor to make the LED light up when Pin 13 is active!
+              Hubungkan Arduino, LED, dan Resistor agar LED menyala saat Pin 13 aktif!
             </p>
           </div>
 
           <div class="p-4 bg-gray-700 rounded-lg">
-            <h3 class="mb-2 text-sm font-bold text-white">📋 Instructions</h3>
+            <h3 class="mb-2 text-sm font-bold text-white">📋 Petunjuk</h3>
             <ol class="space-y-2 text-xs text-gray-300 list-decimal list-inside">
-              <li>Drag LED and Resistor to desired positions</li>
-              <li>Click a pin to start drawing a wire</li>
-              <li>Click another pin to complete the wire</li>
-              <li>Connect: <span class="font-mono text-green-400">GND → Resistor → LED → Pin 13</span></li>
-              <li>Click "Run Simulation" to test</li>
+              <li>Seret LED dan Resistor ke posisi yang diinginkan</li>
+              <li>Klik pin untuk mulai menggambar kawat</li>
+              <li>Klik pin lain untuk menyelesaikan kawat</li>
+              <li>Hubungkan: <span class="font-mono text-green-400">GND → Resistor → LED → Pin 13</span></li>
+              <li>Klik "Jalankan Simulasi" untuk menguji</li>
             </ol>
           </div>
 
           <div class="p-4 bg-gray-700 rounded-lg">
-            <h3 class="mb-2 text-sm font-bold text-white">🔌 Components</h3>
+            <h3 class="mb-2 text-sm font-bold text-white">🔌 Komponen</h3>
             <ul class="space-y-1 text-xs text-gray-300">
-              <li>• <span class="font-semibold text-blue-400">Arduino Uno</span> - Microcontroller</li>
-              <li>• <span class="font-semibold text-red-400">LED</span> - Light emitting diode</li>
-              <li>• <span class="font-semibold text-yellow-400">Resistor</span> - 220Ω (current limiter)</li>
-              <li>• <span class="font-semibold text-gray-400">Wires</span> - Connections</li>
+              <li>• <span class="font-semibold text-blue-400">Arduino Uno</span> - Mikrokontroler</li>
+              <li>• <span class="font-semibold text-red-400">LED</span> - Dioda pemancar cahaya</li>
+              <li>• <span class="font-semibold text-yellow-400">Resistor</span> - 220Ω (pembatas arus)</li>
+              <li>• <span class="font-semibold text-gray-400">Kawat</span> - Koneksi</li>
             </ul>
           </div>
 
           <div class="p-4 border-2 border-yellow-500 rounded-lg bg-yellow-500 bg-opacity-10">
-            <h3 class="mb-2 text-sm font-bold text-yellow-400">⚡ Circuit Rules</h3>
+            <h3 class="mb-2 text-sm font-bold text-yellow-400">⚡ Aturan Sirkuit</h3>
             <ul class="space-y-1 text-xs text-gray-300">
-              <li>• LED has polarity (+ and -)</li>
-              <li>• Always use resistor with LED</li>
-              <li>• GND must connect to circuit</li>
-              <li>• Pin 13 provides power</li>
+              <li>• LED memiliki polaritas (+ dan -)</li>
+              <li>• Selalu gunakan resistor dengan LED</li>
+              <li>• GND harus terhubung ke sirkuit</li>
+              <li>• Pin 13 menyediakan daya</li>
             </ul>
           </div>
 
           <div class="p-4 bg-gray-700 rounded-lg">
-            <h3 class="mb-2 text-sm font-bold text-white">⌨️ Shortcuts</h3>
+            <h3 class="mb-2 text-sm font-bold text-white">⌨️ Pintasan</h3>
             <ul class="space-y-1 text-xs text-gray-300">
-              <li>• <kbd class="px-1 bg-gray-600 rounded">Esc</kbd> Cancel wire</li>
-              <li>• <kbd class="px-1 bg-gray-600 rounded">Del</kbd> Remove last wire</li>
-              <li>• <kbd class="px-1 bg-gray-600 rounded">C</kbd> Clear all</li>
-              <li>• <kbd class="px-1 bg-gray-600 rounded">Enter</kbd> Run simulation</li>
+              <li>• <kbd class="px-1 bg-gray-600 rounded">Esc</kbd> Batalkan kawat</li>
+              <li>• <kbd class="px-1 bg-gray-600 rounded">Del</kbd> Hapus kawat terakhir</li>
+              <li>• <kbd class="px-1 bg-gray-600 rounded">C</kbd> Hapus semua</li>
+              <li>• <kbd class="px-1 bg-gray-600 rounded">Enter</kbd> Jalankan simulasi</li>
             </ul>
           </div>
 
@@ -422,19 +422,19 @@ onUnmounted(() => {
             <h3 class="mb-2 text-sm font-bold text-white">📊 Status</h3>
             <div class="space-y-2 text-xs">
               <div class="flex justify-between">
-                <span class="text-gray-400">Wires placed:</span>
+                <span class="text-gray-400">Kawat ditempatkan:</span>
                 <span class="font-bold text-white">{{ wires.length }}</span>
               </div>
               <div class="flex justify-between">
-                <span class="text-gray-400">Simulated:</span>
+                <span class="text-gray-400">Disimulasikan:</span>
                 <span :class="hasSimulated ? 'text-green-400' : 'text-gray-500'">
-                  {{ hasSimulated ? "Yes" : "No" }}
+                  {{ hasSimulated ? "Ya" : "Tidak" }}
                 </span>
               </div>
               <div class="flex justify-between">
-                <span class="text-gray-400">LED Status:</span>
+                <span class="text-gray-400">Status LED:</span>
                 <span :class="ledGlowing ? 'text-green-400 animate-pulse' : 'text-gray-500'">
-                  {{ ledGlowing ? "🔆 ON" : "⚫ OFF" }}
+                  {{ ledGlowing ? "🔆 NYALA" : "⚫ MATI" }}
                 </span>
               </div>
             </div>
@@ -592,7 +592,7 @@ onUnmounted(() => {
             :disabled="wires.length === 0"
             class="w-full py-4 text-lg font-bold text-white transition-all duration-300 transform rounded-lg shadow-lg bg-linear-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            ▶️ Run Simulation
+            ▶️ Jalankan Simulasi
           </button>
 
           <button
@@ -600,7 +600,7 @@ onUnmounted(() => {
             @click="clearAllWires"
             class="w-full py-4 text-lg font-bold text-white transition-all duration-300 transform rounded-lg shadow-lg bg-linear-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 hover:scale-105"
           >
-            🔄 Reset Circuit
+            🔄 Atur Ulang Sirkuit
           </button>
 
           <button
@@ -608,7 +608,7 @@ onUnmounted(() => {
             :disabled="wires.length === 0 && !hasSimulated"
             class="w-full py-2 text-sm font-semibold text-white transition-all bg-gray-700 rounded-lg hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            🗑️ Clear All Wires
+            🗑️ Hapus Semua Kawat
           </button>
 
           <!-- Result Display -->
@@ -623,35 +623,35 @@ onUnmounted(() => {
               {{ isSuccess ? "✅" : "❌" }}
             </div>
             <div class="text-lg font-bold mb-1" :class="isSuccess ? 'text-green-400' : 'text-red-400'">
-              {{ isSuccess ? "Success!" : "Circuit Error!" }}
+              {{ isSuccess ? "Berhasil!" : "Kesalahan Sirkuit!" }}
             </div>
             <div class="text-sm text-gray-300">
-              {{ isSuccess ? "LED is glowing! Perfect circuit!" : "Check your connections and try again." }}
+              {{ isSuccess ? "LED menyala! Sirkuit sempurna!" : "Periksa koneksi Anda dan coba lagi." }}
             </div>
           </div>
 
           <!-- Connection Hints -->
           <div class="p-4 bg-gray-700 rounded-lg">
-            <h3 class="mb-2 text-sm font-bold text-white">💡 Connection Guide</h3>
+            <h3 class="mb-2 text-sm font-bold text-white">💡 Panduan Koneksi</h3>
             <div class="space-y-2 text-xs text-gray-300">
               <div class="flex items-center gap-2">
                 <div class="w-4 h-4 bg-black rounded-full shrink-0"></div>
-                <span>GND (Ground) - Black wire</span>
+                <span>GND (Ground) - Kawat hitam</span>
               </div>
               <div class="flex items-center gap-2">
                 <div class="w-4 h-4 bg-red-500 rounded-full shrink-0"></div>
-                <span>Power/+ - Red wire</span>
+                <span>Daya/+ - Kawat merah</span>
               </div>
               <div class="flex items-center gap-2">
                 <div class="w-4 h-4 bg-blue-500 rounded-full shrink-0"></div>
-                <span>Signal - Blue wire</span>
+                <span>Sinyal - Kawat biru</span>
               </div>
             </div>
           </div>
 
           <!-- Valid Solutions -->
           <div class="p-4 bg-gray-700 rounded-lg">
-            <h3 class="mb-2 text-sm font-bold text-white">✓ Valid Circuits</h3>
+            <h3 class="mb-2 text-sm font-bold text-white">✓ Sirkuit Yang Valid</h3>
             <div class="space-y-3 text-xs text-gray-300">
               <div class="p-2 bg-gray-800 rounded">
                 <div class="font-mono text-green-400">GND → R → LED(-) → LED(+) → Pin13</div>
@@ -660,20 +660,20 @@ onUnmounted(() => {
                 <div class="font-mono text-green-400">Pin13 → LED(+) → LED(-) → R → GND</div>
               </div>
               <p class="text-xs text-gray-400 italic">
-                * Both directions work!<br />
-                * R = Resistor, LED(+/-) = LED pins
+                * Kedua arah berfungsi!<br />
+                * R = Resistor, LED(+/-) = Pin LED
               </p>
             </div>
           </div>
 
           <!-- Component Info -->
           <div class="p-4 bg-gray-700 rounded-lg">
-            <h3 class="mb-2 text-sm font-bold text-white">📖 Learn More</h3>
+            <h3 class="mb-2 text-sm font-bold text-white">📖 Pelajari Lebih Lanjut</h3>
             <div class="space-y-2 text-xs text-gray-300">
-              <p><strong>Pin 13:</strong> Digital output pin that provides 5V when HIGH</p>
-              <p><strong>LED:</strong> Light Emitting Diode. Current flows from anode (+) to cathode (-)</p>
-              <p><strong>Resistor:</strong> Limits current to protect LED from burning out</p>
-              <p><strong>GND:</strong> Ground reference point (0V)</p>
+              <p><strong>Pin 13:</strong> Pin output digital yang menyediakan 5V saat HIGH</p>
+              <p><strong>LED:</strong> Dioda Pemancar Cahaya. Arus mengalir dari anode (+) ke katode (-)</p>
+              <p><strong>Resistor:</strong> Membatasi arus untuk melindungi LED agar tidak terbakar</p>
+              <p><strong>GND:</strong> Titik referensi ground (0V)</p>
             </div>
           </div>
         </div>
