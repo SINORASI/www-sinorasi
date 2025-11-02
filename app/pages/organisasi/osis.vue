@@ -169,11 +169,11 @@ useHead({
               class="p-6 bg-white border-2 border-yellow-100 shadow-xl rounded-2xl"
             >
               <div class="flex items-center gap-4 mb-4">
-                <NuxtImg
-                  :src="leader.image"
-                  :alt="leader.name"
-                  class="object-cover w-16 h-16 rounded-full border-4 border-yellow-200"
-                />
+                <div
+                  class="w-16 h-16 rounded-full border-4 border-yellow-200 bg-yellow-100 flex items-center justify-center text-2xl font-bold text-yellow-600"
+                >
+                  ?
+                </div>
                 <div>
                   <h3 class="text-lg font-bold text-gray-800">{{ leader.name }}</h3>
                   <p class="text-yellow-600 font-semibold">{{ leader.position }}</p>
@@ -187,11 +187,11 @@ useHead({
               class="p-6 bg-white border-2 border-blue-100 shadow-xl rounded-2xl"
             >
               <div class="flex items-center gap-4 mb-4">
-                <NuxtImg
-                  :src="leader.image"
-                  :alt="leader.name"
-                  class="object-cover w-16 h-16 rounded-full border-4 border-blue-200"
-                />
+                <div
+                  class="w-16 h-16 rounded-full border-4 border-blue-200 bg-blue-100 flex items-center justify-center text-2xl font-bold text-blue-600"
+                >
+                  ?
+                </div>
                 <div>
                   <h3 class="text-lg font-bold text-gray-800">{{ leader.name }}</h3>
                   <p class="text-blue-600 font-semibold">{{ leader.position }}</p>
@@ -205,11 +205,11 @@ useHead({
               class="p-6 bg-white border-2 border-green-100 shadow-xl rounded-2xl"
             >
               <div class="flex items-center gap-4 mb-4">
-                <NuxtImg
-                  :src="leader.image"
-                  :alt="leader.name"
-                  class="object-cover w-16 h-16 rounded-full border-4 border-green-200"
-                />
+                <div
+                  class="w-16 h-16 rounded-full border-4 border-green-200 bg-green-100 flex items-center justify-center text-2xl font-bold text-green-600"
+                >
+                  ?
+                </div>
                 <div>
                   <h3 class="text-lg font-bold text-gray-800">{{ leader.name }}</h3>
                   <p class="text-green-600 font-semibold">{{ leader.position }}</p>
@@ -223,11 +223,11 @@ useHead({
               class="p-6 bg-white border-2 border-purple-100 shadow-xl rounded-2xl"
             >
               <div class="flex items-center gap-4 mb-4">
-                <NuxtImg
-                  :src="leader.image"
-                  :alt="leader.name"
-                  class="object-cover w-16 h-16 rounded-full border-4 border-purple-200"
-                />
+                <div
+                  class="w-16 h-16 rounded-full border-4 border-purple-200 bg-purple-100 flex items-center justify-center text-2xl font-bold text-purple-600"
+                >
+                  ?
+                </div>
                 <div>
                   <h3 class="text-lg font-bold text-gray-800">{{ leader.name }}</h3>
                   <p class="text-purple-600 font-semibold">{{ leader.position }}</p>
@@ -288,11 +288,11 @@ useHead({
                       :key="member.id"
                       class="flex items-center gap-3 p-3 bg-gray-50 rounded-lg"
                     >
-                      <NuxtImg
-                        :src="member.image"
-                        :alt="member.name"
-                        class="w-10 h-10 rounded-full border-2 border-gray-200"
-                      />
+                      <div
+                        class="w-10 h-10 rounded-full border-2 border-gray-200 bg-gray-200 flex items-center justify-center text-sm font-bold text-gray-600"
+                      >
+                        ?
+                      </div>
                       <div>
                         <p class="font-semibold text-gray-800">{{ member.name }}</p>
                         <p class="text-sm text-gray-600">{{ member.position }}</p>

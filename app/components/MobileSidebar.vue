@@ -582,7 +582,7 @@ const menuItems = [
     title: "Informasi",
     submenu: [
       {
-        title: "Events",
+        title: "Acara",
         desc: "Acara yang sedang/akan berlansung di sekolah",
         icon: "lucide:hand-metal",
         to: "/acara",
