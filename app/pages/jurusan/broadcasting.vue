@@ -149,7 +149,7 @@ onMounted(() => {
 
     <motion.section
       id="kepala-program"
-      class="relative py-16 md:py-24"
+      class="relative mt-8 py-16 lg:mt-12 md:py-24"
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8, delay: 0.1 }"
@@ -302,7 +302,7 @@ onMounted(() => {
 
     <motion.section
       id="minigame"
-      class="min-h-screen py-16 md:py-24"
+      class="py-16 md:py-24"
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8, delay: 0.6 }"
@@ -390,7 +390,7 @@ onMounted(() => {
 
     <motion.section
       id="prestasi"
-      class="py-16 mb-24 md:py-24"
+      class="py-16 md:py-24"
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8, delay: 0.7 }"
