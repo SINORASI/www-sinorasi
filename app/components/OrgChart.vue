@@ -801,10 +801,10 @@ const orgData = ref<OrgNode[]>([
 ]);
 
 const categoryMapping: Record<string, string[]> = {
-  kurikulum: ["PNS", "GTT", "Kapro", "Korlabid"],
-  kesiswaan: ["P3K"],
-  sapras: ["KARYAWAN"],
-  humas: ["KTU"],
+  kurikulum: [],
+  kesiswaan: [],
+  sapras: [],
+  humas: [],
 };
 
 const ktuTeacher = teacherCategories.value.find((cat) => cat.title === "KTU")?.teachers[0];
@@ -1024,7 +1024,7 @@ const connectingLines = computed(() => {
                 <NuxtImg
                   :src="node.image"
                   :alt="node.name"
-                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-110"
                 />
                 <div
                   :class="`absolute inset-0 bg-linear-to-t ${getNodeColor(
@@ -1102,7 +1102,7 @@ const connectingLines = computed(() => {
                 <NuxtImg
                   :src="node.image"
                   :alt="node.name"
-                  class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  class="w-full h-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
                 />
                 <div
                   :class="`absolute inset-0 bg-linear-to-t ${getNodeColor(
@@ -1155,7 +1155,7 @@ const connectingLines = computed(() => {
                   <NuxtImg
                     :src="node.image"
                     :alt="node.name"
-                    class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    class="w-full h-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
                   />
                   <div
                     :class="`absolute inset-0 bg-linear-to-t ${getNodeColor(
