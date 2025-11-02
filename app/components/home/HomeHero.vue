@@ -65,23 +65,20 @@ onMounted(() => {
     checkMobile();
     window.addEventListener("resize", checkMobile, { passive: true });
 
+    // Load hero immediately without waiting for scroll
+    heroInView.value = true;
+    startCounterAnimation();
+
     // Simple scroll-based trigger instead of IntersectionObserver
     checkVisibility = () => {
       if (heroRef.value) {
         const rect = heroRef.value.getBoundingClientRect();
         const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
         heroInView.value = isVisible;
-        if (isVisible && jurusanCount.value === 0) {
-          startCounterAnimation();
-          if (checkVisibility) {
-            window.removeEventListener("scroll", checkVisibility);
-          }
-        }
       }
     };
 
     window.addEventListener("scroll", checkVisibility, { passive: true });
-    checkVisibility(); // Check initial state
   });
 });
 

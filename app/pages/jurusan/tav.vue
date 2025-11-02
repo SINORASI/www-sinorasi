@@ -409,7 +409,7 @@ onMounted(() => {
 
     <AnimatePresence>
       <motion.button
-        v-if="showBackToTop"
+        v-if="showBackToTop && !showGame"
         @click="scrollToTop"
         class="fixed z-50 flex items-center justify-center transition-all duration-300 transform rounded-full bottom-8 right-8 w-14 h-14 hover:scale-110 group cursor-pointer"
         :style="{ background: `linear-gradient(135deg, ${majorColor.primary}, ${majorColor.accent})` }"
