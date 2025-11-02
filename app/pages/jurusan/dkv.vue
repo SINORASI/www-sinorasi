@@ -115,7 +115,7 @@ onMounted(() => {
 
               <div class="relative w-full max-w-sm lg:max-w-md">
                 <img
-                  src="/images/majorIcon/logo-dkv.webp"
+                  src="/images/major/hero-major-ornament/dkv/camera.webp"
                   alt="DKV Ornament"
                   class="object-contain w-full h-auto drop-shadow-2xl"
                 />
