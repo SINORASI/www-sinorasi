@@ -27,7 +27,7 @@ const formatDate = (dateString: string) => {
   >
     <div class="p-4">
       <div class="w-full h-32 mb-4 overflow-hidden bg-gray-200 rounded-md">
-        <NuxtImg :src="news.thumbnail" :alt="news.title" class="object-cover w-full h-full" />
+        <SmartImage :src="news.thumbnail" :alt="news.title" class="object-cover w-full h-full" />
       </div>
       <span
         v-if="news.tags.length > 0"

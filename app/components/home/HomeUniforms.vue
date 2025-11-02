@@ -64,7 +64,7 @@ import { motion } from "motion-v";
             dayNumber=""
             uniformType="Almamater (Jas)"
             uniformDay="Senin"
-            primaryColor="sky"
+            primaryColor="gray"
           />
 
           <UniformCard
@@ -178,7 +178,7 @@ import { motion } from "motion-v";
             dayNumber=""
             uniformType="Batik"
             uniformDay="Kamis"
-            primaryColor="blue"
+            primaryColor="gray"
           />
 
           <UniformCard
@@ -216,7 +216,7 @@ import { motion } from "motion-v";
             dayNumber=""
             uniformType="Pramuka"
             uniformDay="Jum'at"
-            primaryColor="brown"
+            primaryColor="gray"
           />
 
           <UniformCard
@@ -254,7 +254,7 @@ import { motion } from "motion-v";
             dayNumber=""
             uniformType="Olahraga"
             uniformDay="Sesuai Jadwal"
-            primaryColor="sky"
+            primaryColor="gray"
           />
         </div>
 

@@ -47,7 +47,7 @@ export default defineNuxtConfig({
   },
   image: {
     quality: 80,
-    format: ["webp", "avif", "png", "jpg"],
+    format: ["webp", "avif", "png", "jpg", "jpeg"],
     sizes: "320,640,768,1024,1280,1536",
     screens: {
       xs: 320,
@@ -67,7 +67,6 @@ export default defineNuxtConfig({
     presets: {
       default: {
         modifiers: {
-          format: "webp",
           quality: "80",
         }
       }
@@ -92,9 +91,28 @@ export default defineNuxtConfig({
     // Ensure public directory is included in the build
     prerender: {
       crawlLinks: true,
+      ignore: ['/admin']
     },
-    // Serve static files from public directory
+    // Serve static files from public directory with proper headers
     static: true,
+    // Ensure public assets are served correctly
+    publicAssets: [
+      {
+        baseURL: '/',
+        dir: './public'
+      }
+    ],
+    // Add cache headers for images
+    routeRules: {
+      '/images/**': {
+        cache: {
+          maxAge: 60 * 60 * 24 * 365 // 1 year cache for images
+        },
+        headers: {
+          'Cache-Control': 'public, max-age=31536000, immutable'
+        }
+      }
+    }
   },
   experimental: {
     viteEnvironmentApi: true,
