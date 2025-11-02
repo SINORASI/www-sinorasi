@@ -1,10 +1,15 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { motion } from "motion-v";
+import { motion, AnimatePresence } from "motion-v";
 
 const slides = ref([
-  { id: 1, text: "Photo" },
-  { id: 2, text: "Another Photo" },
+  { id: 1, src: "/images/infrastruktur/bkkdepan.jpg", alt: "Gedung BKK SMKN 2 Singosari" },
+  { id: 2, src: "/images/infrastruktur/depankaproav.jpg", alt: "Gedung Kapro AV SMKN 2 Singosari" },
+  { id: 3, src: "/images/infrastruktur/gedunggedungdroneview.jpg", alt: "Pemandangan SMKN 2 Singosari dari atas" },
+  { id: 4, src: "/images/infrastruktur/lapangan.jpg", alt: "Lapangan SMKN 2 Singosari" },
+  { id: 5, src: "/images/infrastruktur/lapanganvoli.jpg", alt: "Lapangan Voli SMKN 2 Singosari" },
+  { id: 6, src: "/images/infrastruktur/lobbydepan.jpg", alt: "Lobby depan SMKN 2 Singosari" },
+  { id: 7, src: "/images/infrastruktur/masjiddepan.jpg", alt: "Masjid SMKN 2 Singosari" },
 ]);
 
 const currentIndex = ref(0);
@@ -177,7 +182,7 @@ useHead({
           :inViewOptions="{ once: true, margin: '-50px' }"
         >
           <motion.div
-            class="relative flex items-center justify-center bg-gray-100 border-2 border-gray-200 rounded-xl aspect-video cursor-pointer"
+            class="relative flex items-center justify-center bg-gray-100 border-2 border-gray-200 rounded-xl aspect-video cursor-pointer overflow-hidden"
             :initial="{ opacity: 0, scale: 0.95 }"
             :whileInView="{ opacity: 1, scale: 1 }"
             :transition="{ duration: 0.6, delay: 2.4 }"
@@ -186,13 +191,18 @@ useHead({
             :inViewOptions="{ once: true, margin: '-30px' }"
             @click="goToSlide((currentIndex + 1) % slides.length)"
           >
-            <motion.span
-              class="text-xl font-semibold text-gray-500"
-              :animate="{ opacity: [0.7, 1, 0.7] }"
-              :transition="{ duration: 2, repeat: Infinity, ease: 'easeInOut' }"
-            >
-              {{ slides[currentIndex]?.text }}
-            </motion.span>
+            <AnimatePresence>
+              <motion.img
+                :key="slides[currentIndex].id"
+                :src="slides[currentIndex].src"
+                :alt="slides[currentIndex].alt"
+                class="absolute inset-0 w-full h-full object-cover"
+                :initial="{ opacity: 0, scale: 1.1 }"
+                :animate="{ opacity: 1, scale: 1 }"
+                :exit="{ opacity: 0, scale: 0.9 }"
+                :transition="{ duration: 0.5, ease: 'easeInOut' }"
+              />
+            </AnimatePresence>
             <div class="absolute inset-0 flex items-center justify-between px-4">
               <motion.button
                 @click.stop="goToSlide(currentIndex === 0 ? slides.length - 1 : currentIndex - 1)"
