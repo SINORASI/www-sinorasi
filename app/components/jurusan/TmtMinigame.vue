@@ -479,8 +479,8 @@ onUnmounted(() => {
           </svg>
         </div>
         <div>
-          <h1 class="text-lg font-bold text-white md:text-2xl">TMT Welding Simulator</h1>
-          <p class="text-xs text-gray-400 md:text-sm">Master the Perfect Weld</p>
+          <h1 class="text-lg font-bold text-white md:text-2xl">Simulator Las TMT</h1>
+          <p class="text-xs text-gray-400 md:text-sm">Kuasai Pengelasan Sempurna</p>
         </div>
       </div>
 
@@ -491,7 +491,7 @@ onUnmounted(() => {
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
         </svg>
-        <span class="hidden md:inline">Exit</span>
+        <span class="hidden md:inline">Keluar</span>
       </button>
     </div>
 
@@ -507,8 +507,8 @@ onUnmounted(() => {
         <div class="max-w-md p-8 border-2 border-orange-500 rounded-lg bg-gray-900">
           <div class="mb-6 text-center">
             <div class="mb-4 text-6xl">⚠️</div>
-            <h2 class="mb-2 text-2xl font-bold text-orange-400">Safety First!</h2>
-            <p class="text-gray-300">Put on your safety equipment before welding</p>
+            <h2 class="mb-2 text-2xl font-bold text-orange-400">Keselamatan Utama!</h2>
+            <p class="text-gray-300">Kenakan peralatan keselamatan Anda sebelum mengelas</p>
           </div>
 
           <div class="space-y-4 mb-6">
@@ -522,10 +522,10 @@ onUnmounted(() => {
                   : 'border-gray-600 bg-gray-800 hover:border-gray-500'
               "
             >
-              <img src="/images/minigame/tmt/welding-mask.png" alt="Welding Mask" class="w-12 h-12 object-contain" />
+              <img src="/images/minigame/tmt/welding-mask.png" alt="Topeng Las" class="w-12 h-12 object-contain" />
               <div class="flex-1">
-                <div class="font-bold text-white">Welding Helmet</div>
-                <div class="text-sm text-gray-400">Protects eyes from arc flash</div>
+                <div class="font-bold text-white">Helm Las</div>
+                <div class="text-sm text-gray-400">Melindungi mata dari kilatan las</div>
               </div>
               <div v-if="safetyItems.helmet" class="text-2xl text-green-500">✓</div>
             </div>
@@ -540,10 +540,10 @@ onUnmounted(() => {
                   : 'border-gray-600 bg-gray-800 hover:border-gray-500'
               "
             >
-              <img src="/images/minigame/tmt/glove.png" alt="Glove" class="w-12 h-12 object-contain" />
+              <img src="/images/minigame/tmt/glove.png" alt="Sarung Tangan" class="w-12 h-12 object-contain" />
               <div class="flex-1">
-                <div class="font-bold text-white">Welding Gloves</div>
-                <div class="text-sm text-gray-400">Protects hands from heat & sparks</div>
+                <div class="font-bold text-white">Sarung Tangan Las</div>
+                <div class="text-sm text-gray-400">Melindungi tangan dari panas & percikan api</div>
               </div>
               <div v-if="safetyItems.gloves" class="text-2xl text-green-500">✓</div>
             </div>
@@ -558,10 +558,10 @@ onUnmounted(() => {
                   : 'border-gray-600 bg-gray-800 hover:border-gray-500'
               "
             >
-              <img src="/images/minigame/tmt/welding-suit.png" alt="Welding Suit" class="w-12 h-12 object-contain" />
+              <img src="/images/minigame/tmt/welding-suit.png" alt="Baju Las" class="w-12 h-12 object-contain" />
               <div class="flex-1">
-                <div class="font-bold text-white">Leather Apron</div>
-                <div class="text-sm text-gray-400">Protects body from sparks</div>
+                <div class="font-bold text-white">Celemek Kulit</div>
+                <div class="text-sm text-gray-400">Melindungi tubuh dari percikan api</div>
               </div>
               <div v-if="safetyItems.apron" class="text-2xl text-green-500">✓</div>
             </div>
@@ -572,7 +572,7 @@ onUnmounted(() => {
             :disabled="!allSafetyChecked"
             class="w-full py-4 text-lg font-bold text-white transition-all duration-300 rounded-lg bg-linear-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {{ allSafetyChecked ? "✓ Start Welding" : "Put on Safety Gear" }}
+            {{ allSafetyChecked ? "✓ Mulai Mengelas" : "Kenakan Peralatan Keselamatan" }}
           </button>
         </div>
       </div>
@@ -587,21 +587,21 @@ onUnmounted(() => {
             <div class="mb-4 text-6xl">
               {{ overallGrade.grade === "A+" || overallGrade.grade === "A" ? "🏆" : "📊" }}
             </div>
-            <h2 class="mb-2 text-3xl font-bold text-orange-400">Weld Complete!</h2>
+            <h2 class="mb-2 text-3xl font-bold text-orange-400">Pengelasan Selesai!</h2>
             <div class="text-xl font-bold" :style="{ color: overallGrade.color }">
-              Overall Grade: {{ overallGrade.grade }}
+              Nilai Keseluruhan: {{ overallGrade.grade }}
             </div>
           </div>
 
           <div class="grid grid-cols-2 gap-6 mb-6">
             <!-- Accuracy Score -->
             <div class="p-6 border-2 rounded-lg bg-gray-800" :style="{ borderColor: accuracyGrade.color }">
-              <div class="mb-2 text-sm font-semibold text-gray-400">ACCURACY</div>
+              <div class="mb-2 text-sm font-semibold text-gray-400">AKURASI</div>
               <div class="mb-3 text-4xl font-bold" :style="{ color: accuracyGrade.color }">
                 {{ Math.round(accuracyScore) }}%
               </div>
               <div class="mb-2 text-lg font-bold" :style="{ color: accuracyGrade.color }">
-                Grade: {{ accuracyGrade.grade }}
+                Nilai: {{ accuracyGrade.grade }}
               </div>
               <div class="w-full h-3 overflow-hidden bg-gray-700 rounded-full">
                 <div
@@ -609,17 +609,17 @@ onUnmounted(() => {
                   :style="{ width: `${accuracyScore}%`, backgroundColor: accuracyGrade.color }"
                 ></div>
               </div>
-              <div class="mt-2 text-xs text-gray-400">How close you stayed to the seam</div>
+              <div class="mt-2 text-xs text-gray-400">Seberapa dekat Anda dengan garis las</div>
             </div>
 
             <!-- Speed Score -->
             <div class="p-6 border-2 rounded-lg bg-gray-800" :style="{ borderColor: speedGrade.color }">
-              <div class="mb-2 text-sm font-semibold text-gray-400">SPEED</div>
+              <div class="mb-2 text-sm font-semibold text-gray-400">KECEPATAN</div>
               <div class="mb-3 text-4xl font-bold" :style="{ color: speedGrade.color }">
                 {{ Math.round(speedScore) }}%
               </div>
               <div class="mb-2 text-lg font-bold" :style="{ color: speedGrade.color }">
-                Grade: {{ speedGrade.grade }}
+                Nilai: {{ speedGrade.grade }}
               </div>
               <div class="w-full h-3 overflow-hidden bg-gray-700 rounded-full">
                 <div
@@ -627,17 +627,17 @@ onUnmounted(() => {
                   :style="{ width: `${speedScore}%`, backgroundColor: speedGrade.color }"
                 ></div>
               </div>
-              <div class="mt-2 text-xs text-gray-400">Consistent welding pace</div>
+              <div class="mt-2 text-xs text-gray-400">Kecepatan mengelas yang konsisten</div>
             </div>
           </div>
 
           <div class="p-4 mb-6 border-2 border-blue-500 rounded-lg bg-blue-500 bg-opacity-10">
-            <h3 class="mb-2 text-sm font-bold text-blue-400">💡 Pro Tips</h3>
+            <h3 class="mb-2 text-sm font-bold text-blue-400">💡 Tips Pro</h3>
             <ul class="space-y-1 text-xs text-gray-300">
-              <li v-if="accuracyScore < 70">• Keep the torch steady and follow the yellow guide line</li>
-              <li v-if="speedScore < 70">• Maintain a consistent speed - not too fast, not too slow</li>
-              <li v-if="accuracyScore >= 70 && speedScore >= 70">• Excellent work! Your technique is improving!</li>
-              <li>• Practice makes perfect - real welding requires years of skill</li>
+              <li v-if="accuracyScore < 70">• Jaga obor tetap stabil dan ikuti garis panduan kuning</li>
+              <li v-if="speedScore < 70">• Pertahankan kecepatan yang konsisten - tidak terlalu cepat, tidak terlalu lambat</li>
+              <li v-if="accuracyScore >= 70 && speedScore >= 70">• Kerja bagus! Teknik Anda meningkat!</li>
+              <li>• Latihan membuat sempurna - pengelasan nyata membutuhkan keahlian bertahun-tahun</li>
             </ul>
           </div>
 
@@ -646,13 +646,13 @@ onUnmounted(() => {
               @click="resetGame"
               class="py-3 font-bold text-white transition-all rounded-lg bg-gray-700 hover:bg-gray-600"
             >
-              🔄 Try Again
+              🔄 Coba Lagi
             </button>
             <button
               @click="restartGame"
               class="py-3 font-bold text-white transition-all rounded-lg bg-linear-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700"
             >
-              🏠 New Session
+              🏠 Sesi Baru
             </button>
           </div>
         </div>
@@ -662,56 +662,55 @@ onUnmounted(() => {
       <div v-if="isGameStarted && !showScore" class="w-64 p-4 overflow-y-auto bg-gray-800">
         <div class="space-y-4">
           <div class="p-4 border-2 border-orange-500 rounded-lg bg-orange-500 bg-opacity-10">
-            <h3 class="mb-2 text-sm font-bold text-orange-400">🎯 Instructions</h3>
+            <h3 class="mb-2 text-sm font-bold text-orange-400">🎯 Instruksi</h3>
             <ol class="space-y-2 text-xs text-gray-300 list-decimal list-inside">
-              <li>Click and hold to start welding</li>
-              <li>Follow the yellow dashed line</li>
-              <li>Keep steady speed and accuracy</li>
-              <li>Release to finish and see score</li>
+              <li>Klik dan tahan untuk mulai mengelas</li>
+              <li>Ikuti garis putus-putus kuning</li>
+              <li>Jaga kecepatan dan akurasi yang stabil</li>
+              <li>Lepaskan untuk selesai dan lihat skor</li>
             </ol>
           </div>
 
           <div class="p-4 rounded-lg bg-gray-700">
-            <h3 class="mb-2 text-sm font-bold text-white">⚡ Welding Tips</h3>
+            <h3 class="mb-2 text-sm font-bold text-white">⚡ Tips Mengelas</h3>
             <ul class="space-y-1 text-xs text-gray-300">
-              <li>• Maintain consistent travel speed</li>
-              <li>• Keep the arc gap uniform</li>
-              <li>• Watch for proper penetration</li>
-              <li>• Follow the joint precisely</li>
+              <li>• Pertahankan kecepatan gerak yang konsisten</li>
+              <li>• Jaga jarak busur las tetap seragam</li>
+              <li>• Perhatikan penetrasi yang tepat</li>
+              <li>• Ikuti sambungan dengan tepat</li>
             </ul>
           </div>
 
           <div class="p-4 rounded-lg bg-gray-700">
-            <h3 class="mb-2 text-sm font-bold text-white">🎓 Grading</h3>
+            <h3 class="mb-2 text-sm font-bold text-white">🎓 Penilaian</h3>
             <div class="space-y-1 text-xs">
               <div class="flex justify-between">
                 <span class="text-gray-400">90-100%:</span>
-                <span class="font-bold text-green-400">A+ Expert</span>
+                <span class="font-bold text-green-400">A+ Ahli</span>
               </div>
               <div class="flex justify-between">
                 <span class="text-gray-400">80-89%:</span>
-                <span class="font-bold text-green-500">A Advanced</span>
+                <span class="font-bold text-green-500">A Mahir</span>
               </div>
               <div class="flex justify-between">
                 <span class="text-gray-400">70-79%:</span>
-                <span class="font-bold text-blue-400">B Good</span>
+                <span class="font-bold text-blue-400">B Baik</span>
               </div>
               <div class="flex justify-between">
                 <span class="text-gray-400">60-69%:</span>
-                <span class="font-bold text-yellow-400">C Practice</span>
+                <span class="font-bold text-yellow-400">C Berlatih</span>
               </div>
               <div class="flex justify-between">
                 <span class="text-gray-400">&lt;60%:</span>
-                <span class="font-bold text-red-400">D Keep Trying</span>
+                <span class="font-bold text-red-400">D Terus Coba</span>
               </div>
             </div>
           </div>
 
           <div class="p-4 border-2 border-yellow-500 rounded-lg bg-yellow-500 bg-opacity-10">
-            <h3 class="mb-2 text-sm font-bold text-yellow-400">⚠️ Safety Reminder</h3>
+            <h3 class="mb-2 text-sm font-bold text-yellow-400">⚠️ Pengingat Keselamatan</h3>
             <p class="text-xs text-gray-300">
-              Real welding requires proper training, certification, and strict safety protocols. Always wear appropriate
-              PPE.
+              Pengelasan nyata memerlukan pelatihan, sertifikasi, dan protokol keselamatan yang ketat. Selalu kenakan APD yang sesuai.
             </p>
           </div>
         </div>

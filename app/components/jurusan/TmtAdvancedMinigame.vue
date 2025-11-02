@@ -44,11 +44,11 @@ const allSafetyComplete = computed(() => {
 // ============================================================================
 
 const weldingLevels = [
-  { id: 1, name: "Flat Joint", difficulty: "Easy", completed: false },
-  { id: 2, name: "T-Joint", difficulty: "Medium", completed: false },
-  { id: 3, name: "Corner Joint", difficulty: "Medium", completed: false },
-  { id: 4, name: "Lap Joint", difficulty: "Hard", completed: false },
-  { id: 5, name: "Edge Joint", difficulty: "Hard", completed: false },
+  { id: 1, name: "Sambungan Datar", difficulty: "Easy", completed: false },
+  { id: 2, name: "Sambungan T", difficulty: "Medium", completed: false },
+  { id: 3, name: "Sambungan Sudut", difficulty: "Medium", completed: false },
+  { id: 4, name: "Sambungan Tumpang", difficulty: "Hard", completed: false },
+  { id: 5, name: "Sambungan Tepi", difficulty: "Hard", completed: false },
 ];
 
 const selectedLevel = ref(0);
@@ -489,10 +489,10 @@ const handleWelding = (event: PIXI.FederatedPointerEvent) => {
   // Check for electrode break conditions
   if (weldSpeed > 15) {
     // Too fast
-    breakElectrode("Moving too fast!");
+    breakElectrode("Bergerak terlalu cepat!");
   } else if (weldSpeed < 0.5 && weldSpeed > 0) {
     // Too slow (burning)
-    breakElectrode("Moving too slow - burning through!");
+    breakElectrode("Bergerak terlalu lambat - terbakar!");
   }
 
   // Draw weld bead
@@ -543,7 +543,7 @@ const breakElectrode = (reason: string) => {
   chances.value--;
 
   // Show notification
-  showNotification(`⚠️ Electrode broke! ${reason} — Chances left: ${chances.value}/4`, "error", 4000);
+  showNotification(`⚠️ Elektroda patah! ${reason} — Kesempatan tersisa: ${chances.value}/4`, "error", 4000);
 
   if (chances.value <= 0) {
     gameOver();
@@ -703,7 +703,7 @@ const animationLoop = (ticker: PIXI.Ticker) => {
 const levelResults: Array<{ accuracy: number; cleanliness: number; speed: number }> = [];
 
 gameOver = () => {
-  showNotification("💥 Game Over! No chances left. Better luck next time!", "error", 3000);
+  showNotification("💥 Game Over! Kesempatan habis. Coba lagi lain kali!", "error", 3000);
   // Delay exit to allow notification to be seen
   setTimeout(() => {
     exitFullscreen();
@@ -730,7 +730,7 @@ completeGame = () => {
     // proceed to next level
     const next = selectedLevel.value + 1;
     const nextLevel = weldingLevels[next];
-    showNotification(`✅ Level complete! Proceeding to next level: ${nextLevel?.name || "Next"}`, "success", 2000);
+    showNotification(`✅ Level selesai! Lanjut ke level berikutnya: ${nextLevel?.name || "Berikutnya"}`, "success", 2000);
     selectedLevel.value = next;
     weldPath.value = [];
     weldProgress.value = 0;
@@ -757,14 +757,14 @@ completeGame = () => {
 
 const grabElectrode = () => {
   if (electrodesInPack.value <= 0) {
-    showNotification("❌ No electrodes left in the pack!", "warning", 2000);
+    showNotification("❌ Tidak ada elektroda tersisa di dalam kotak!", "warning", 2000);
     return;
   }
 
   electrodesInPack.value--;
   currentElectrodeLength.value = 100;
   isElectrodeGrabbed.value = true;
-  showNotification("✓ Electrode grabbed! Ready to weld.", "success", 1500);
+  showNotification("✓ Elektroda diambil! Siap untuk mengelas.", "success", 1500);
   createElectrodeSprite();
 };
 
@@ -902,9 +902,9 @@ onUnmounted(() => {
           </svg>
         </div>
         <div>
-          <h1 class="text-lg font-bold text-white md:text-2xl">TMT Advanced Welding Simulator</h1>
+          <h1 class="text-lg font-bold text-white md:text-2xl">Simulator Las Lanjutan TMT</h1>
           <p class="text-xs text-gray-400 md:text-sm">
-            Stage
+            Tahap
             {{
               currentStage === "preparation"
                 ? "1"
@@ -912,16 +912,16 @@ onUnmounted(() => {
                 ? "2"
                 : currentStage === "cleaning"
                 ? "3"
-                : "Complete"
+                : "Selesai"
             }}:
             {{
               currentStage === "preparation"
-                ? "Preparation"
+                ? "Persiapan"
                 : currentStage === "execution"
-                ? "Execution"
+                ? "Eksekusi"
                 : currentStage === "cleaning"
-                ? "Cleaning"
-                : "Results"
+                ? "Pembersihan"
+                : "Hasil"
             }}
           </p>
         </div>
@@ -934,7 +934,7 @@ onUnmounted(() => {
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
         </svg>
-        <span class="hidden md:inline">Exit</span>
+        <span class="hidden md:inline">Keluar</span>
       </button>
     </div>
 
@@ -955,8 +955,8 @@ onUnmounted(() => {
         <div class="max-w-2xl p-8 border-2 border-orange-500 rounded-lg bg-gray-900">
           <div class="mb-6 text-center">
             <div class="mb-4 text-6xl">⚠️</div>
-            <h2 class="mb-2 text-3xl font-bold text-orange-400">Stage 1: Safety & Setup</h2>
-            <p class="text-gray-300">Complete all preparation steps before welding</p>
+            <h2 class="mb-2 text-3xl font-bold text-orange-400">Tahap 1: Keselamatan & Pengaturan</h2>
+            <p class="text-gray-300">Selesaikan semua langkah persiapan sebelum mengelas</p>
           </div>
 
           <div class="space-y-4 mb-6">
@@ -972,8 +972,8 @@ onUnmounted(() => {
             >
               <img src="/images/minigame/tmt/welding-suit.png" alt="Apron" class="w-12 h-12 object-contain" />
               <div class="flex-1">
-                <div class="font-bold text-white">Wear Leather Apron</div>
-                <div class="text-sm text-gray-400">Protects body from sparks</div>
+                <div class="font-bold text-white">Kenakan Celemek Kulit</div>
+                <div class="text-sm text-gray-400">Melindungi tubuh dari percikan api</div>
               </div>
               <div v-if="safetyChecklist.apron" class="text-2xl text-green-500">✓</div>
             </div>
@@ -987,10 +987,10 @@ onUnmounted(() => {
                   : 'border-gray-600 bg-gray-800 hover:border-gray-500'
               "
             >
-              <img src="/images/minigame/tmt/glove.png" alt="Gloves" class="w-12 h-12 object-contain" />
+              <img src="/images/minigame/tmt/glove.png" alt="Sarung Tangan" class="w-12 h-12 object-contain" />
               <div class="flex-1">
-                <div class="font-bold text-white">Wear Welding Gloves</div>
-                <div class="text-sm text-gray-400">Protects hands from heat</div>
+                <div class="font-bold text-white">Kenakan Sarung Tangan Las</div>
+                <div class="text-sm text-gray-400">Melindungi tangan dari panas</div>
               </div>
               <div v-if="safetyChecklist.gloves" class="text-2xl text-green-500">✓</div>
             </div>
@@ -1004,10 +1004,10 @@ onUnmounted(() => {
                   : 'border-gray-600 bg-gray-800 hover:border-gray-500'
               "
             >
-              <img src="/images/minigame/tmt/welding-mask.png" alt="Mask" class="w-12 h-12 object-contain" />
+              <img src="/images/minigame/tmt/welding-mask.png" alt="Topeng" class="w-12 h-12 object-contain" />
               <div class="flex-1">
-                <div class="font-bold text-white">Wear Welding Mask</div>
-                <div class="text-sm text-gray-400">Protects eyes from arc flash</div>
+                <div class="font-bold text-white">Kenakan Topeng Las</div>
+                <div class="text-sm text-gray-400">Melindungi mata dari kilatan las</div>
               </div>
               <div v-if="safetyChecklist.mask" class="text-2xl text-green-500">✓</div>
             </div>
@@ -1022,10 +1022,10 @@ onUnmounted(() => {
                   : 'border-gray-600 bg-gray-800 hover:border-gray-500'
               "
             >
-              <img src="/images/minigame/tmt/electrode-holder.png" alt="Cable" class="w-12 h-12 object-contain" />
+              <img src="/images/minigame/tmt/electrode-holder.png" alt="Kabel" class="w-12 h-12 object-contain" />
               <div class="flex-1">
-                <div class="font-bold text-white">Connect Electrode Holder Cable</div>
-                <div class="text-sm text-gray-400">Connect to welding machine</div>
+                <div class="font-bold text-white">Hubungkan Kabel Penjepit Elektroda</div>
+                <div class="text-sm text-gray-400">Hubungkan ke mesin las</div>
               </div>
               <div v-if="safetyChecklist.cableConnected" class="text-2xl text-green-500">✓</div>
             </div>
@@ -1036,7 +1036,7 @@ onUnmounted(() => {
             :disabled="!allSafetyComplete"
             class="w-full py-4 text-lg font-bold text-white transition-all duration-300 rounded-lg bg-linear-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {{ allSafetyComplete ? "✓ Start Welding" : "Complete All Safety Steps" }}
+            {{ allSafetyComplete ? "✓ Mulai Mengelas" : "Selesaikan Semua Langkah Keselamatan" }}
           </button>
         </div>
       </div>
@@ -1054,19 +1054,19 @@ onUnmounted(() => {
             <h3 class="mb-3 text-lg font-bold text-orange-400">Status</h3>
             <div class="space-y-2 text-sm text-white">
               <div class="flex justify-between">
-                <span>Chances:</span>
+                <span>Kesempatan:</span>
                 <span class="font-bold">{{ chances }}/4</span>
               </div>
               <div class="flex justify-between">
-                <span>Electrodes in Pack:</span>
+                <span>Elektroda di Kotak:</span>
                 <span class="font-bold">{{ electrodesInPack }}</span>
               </div>
               <div class="flex justify-between">
-                <span>Electrode Length:</span>
+                <span>Panjang Elektroda:</span>
                 <span class="font-bold">{{ Math.round(currentElectrodeLength) }}%</span>
               </div>
               <div class="flex justify-between">
-                <span>Progress:</span>
+                <span>Progres:</span>
                 <span class="font-bold">{{ Math.round(weldProgress) }}%</span>
               </div>
             </div>
@@ -1084,14 +1084,14 @@ onUnmounted(() => {
             :disabled="isElectrodeGrabbed || electrodesInPack <= 0"
             class="w-full p-4 transition-all border-2 rounded-lg bg-gray-700 hover:bg-gray-600 border-yellow-500 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <img src="/images/minigame/tmt/electrode-pack.png" alt="Electrode Pack" class="w-16 h-16 mx-auto mb-2" />
-            <div class="text-lg font-bold text-white">Grab Electrode</div>
-            <div class="text-sm text-gray-300">{{ electrodesInPack }} remaining</div>
+            <img src="/images/minigame/tmt/electrode-pack.png" alt="Kotak Elektroda" class="w-16 h-16 mx-auto mb-2" />
+            <div class="text-lg font-bold text-white">Ambil Elektroda</div>
+            <div class="text-sm text-gray-300">{{ electrodesInPack }} tersisa</div>
           </button>
 
           <!-- Level Selection -->
           <div class="p-4 rounded-lg bg-gray-700">
-            <h3 class="mb-3 text-lg font-bold text-white">Welding Levels</h3>
+            <h3 class="mb-3 text-lg font-bold text-white">Level Pengelasan</h3>
             <div class="space-y-2">
               <div
                 v-for="(level, index) in weldingLevels"
@@ -1114,7 +1114,7 @@ onUnmounted(() => {
                       'bg-red-500 text-white': level.difficulty === 'Hard',
                     }"
                   >
-                    {{ level.difficulty }}
+                    {{ level.difficulty === 'Easy' ? 'Mudah' : level.difficulty === 'Medium' ? 'Sedang' : 'Sulit' }}
                   </span>
                 </div>
               </div>
@@ -1123,13 +1123,13 @@ onUnmounted(() => {
 
           <!-- Instructions -->
           <div class="p-4 border-2 border-blue-500 rounded-lg bg-blue-500 bg-opacity-10">
-            <h3 class="mb-2 text-sm font-bold text-blue-400">💡 Instructions</h3>
+            <h3 class="mb-2 text-sm font-bold text-blue-400">💡 Instruksi</h3>
             <ul class="space-y-1 text-xs text-gray-300">
-              <li>1. Click "Grab Electrode" to start</li>
-              <li>2. Hold mouse down and drag along yellow line</li>
-              <li>3. Maintain steady speed</li>
-              <li>4. Watch electrode length!</li>
-              <li>5. Grab new electrode when depleted</li>
+              <li>1. Klik "Ambil Elektroda" untuk memulai</li>
+              <li>2. Tahan mouse dan seret di sepanjang garis kuning</li>
+              <li>3. Pertahankan kecepatan yang stabil</li>
+              <li>4. Perhatikan panjang elektroda!</li>
+              <li>5. Ambil elektroda baru saat habis</li>
             </ul>
           </div>
         </div>
@@ -1144,14 +1144,14 @@ onUnmounted(() => {
       >
         <div class="space-y-4">
           <div class="p-4 border-2 border-blue-500 rounded-lg bg-blue-500 bg-opacity-10">
-            <h3 class="mb-3 text-lg font-bold text-blue-400">Cleaning Stage</h3>
+            <h3 class="mb-3 text-lg font-bold text-blue-400">Tahap Pembersihan</h3>
             <div class="space-y-2 text-sm text-white">
               <div class="flex justify-between">
-                <span>Slag Removal:</span>
+                <span>Penghapusan Terak:</span>
                 <span class="font-bold">{{ Math.round(slagRemovalProgress) }}%</span>
               </div>
               <div class="flex justify-between">
-                <span>Cleanliness:</span>
+                <span>Kebersihan:</span>
                 <span class="font-bold">{{ Math.round(cleanlinessScore) }}%</span>
               </div>
             </div>
@@ -1168,9 +1168,9 @@ onUnmounted(() => {
                   : 'border-gray-600 bg-gray-700 hover:bg-gray-600'
               "
             >
-              <img src="/images/minigame/tmt/welding-hammer.png" alt="Hammer" class="w-16 h-16 mx-auto mb-2" />
-              <div class="text-lg font-bold text-white">Chipping Hammer</div>
-              <div class="text-sm text-gray-300">Remove slag</div>
+              <img src="/images/minigame/tmt/welding-hammer.png" alt="Palu" class="w-16 h-16 mx-auto mb-2" />
+              <div class="text-lg font-bold text-white">Palu Terak</div>
+              <div class="text-sm text-gray-300">Hapus terak</div>
             </button>
 
             <button
@@ -1182,20 +1182,20 @@ onUnmounted(() => {
                   : 'border-gray-600 bg-gray-700 hover:bg-gray-600'
               "
             >
-              <img src="/images/minigame/tmt/steel-wire-brush.png" alt="Brush" class="w-16 h-16 mx-auto mb-2" />
-              <div class="text-lg font-bold text-white">Wire Brush</div>
-              <div class="text-sm text-gray-300">Polish weld</div>
+              <img src="/images/minigame/tmt/steel-wire-brush.png" alt="Sikat" class="w-16 h-16 mx-auto mb-2" />
+              <div class="text-lg font-bold text-white">Sikat Kawat</div>
+              <div class="text-sm text-gray-300">Poles lasan</div>
             </button>
           </div>
 
           <!-- Instructions -->
           <div class="p-4 border-2 border-yellow-500 rounded-lg bg-yellow-500 bg-opacity-10">
-            <h3 class="mb-2 text-sm font-bold text-yellow-400">💡 Instructions</h3>
+            <h3 class="mb-2 text-sm font-bold text-yellow-400">💡 Instruksi</h3>
             <ul class="space-y-1 text-xs text-gray-300">
-              <li>1. Select Chipping Hammer</li>
-              <li>2. Click on slag to remove it</li>
-              <li>3. Select Wire Brush</li>
-              <li>4. Drag over weld to polish</li>
+              <li>1. Pilih Palu Terak</li>
+              <li>2. Klik pada terak untuk menghapusnya</li>
+              <li>3. Pilih Sikat Kawat</li>
+              <li>4. Seret di atas lasan untuk memoles</li>
             </ul>
           </div>
         </div>
@@ -1211,21 +1211,21 @@ onUnmounted(() => {
         <div class="max-w-2xl p-8 border-2 border-green-500 rounded-lg bg-gray-900 animate-bounce-in">
           <div class="mb-6 text-center">
             <div class="mb-4 text-6xl">🏆</div>
-            <h2 class="mb-2 text-3xl font-bold text-green-400">Welding Complete!</h2>
-            <div class="text-2xl font-bold text-white">Final Score: {{ finalScore }}/100</div>
+            <h2 class="mb-2 text-3xl font-bold text-green-400">Pengelasan Selesai!</h2>
+            <div class="text-2xl font-bold text-white">Skor Akhir: {{ finalScore }}/100</div>
           </div>
 
           <div class="grid grid-cols-3 gap-4 mb-6">
             <div class="p-4 border-2 border-blue-500 rounded-lg bg-gray-800">
-              <div class="text-sm text-gray-400">Accuracy</div>
+              <div class="text-sm text-gray-400">Akurasi</div>
               <div class="text-3xl font-bold text-blue-400">{{ Math.round(accuracyScore) }}%</div>
             </div>
             <div class="p-4 border-2 border-yellow-500 rounded-lg bg-gray-800">
-              <div class="text-sm text-gray-400">Speed</div>
+              <div class="text-sm text-gray-400">Kecepatan</div>
               <div class="text-3xl font-bold text-yellow-400">{{ Math.round(speedScore) }}%</div>
             </div>
             <div class="p-4 border-2 border-green-500 rounded-lg bg-gray-800">
-              <div class="text-sm text-gray-400">Cleanliness</div>
+              <div class="text-sm text-gray-400">Kebersihan</div>
               <div class="text-3xl font-bold text-green-400">{{ Math.round(cleanlinessScore) }}%</div>
             </div>
           </div>
@@ -1235,13 +1235,13 @@ onUnmounted(() => {
               @click="restartGame"
               class="py-3 font-bold text-white transition-all rounded-lg bg-gray-700 hover:bg-gray-600"
             >
-              🔄 Play Again
+              🔄 Main Lagi
             </button>
             <button
               @click="exitFullscreen"
               class="py-3 font-bold text-white transition-all rounded-lg bg-linear-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700"
             >
-              🏠 Exit Game
+              🏠 Keluar Game
             </button>
           </div>
         </div>
