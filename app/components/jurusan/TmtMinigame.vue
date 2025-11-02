@@ -510,7 +510,7 @@ onUnmounted(() => {
                   : 'border-gray-600 bg-gray-800 hover:border-gray-500'
               "
             >
-              <div class="text-3xl">🪖</div>
+              <img src="/images/minigame/tmt/welding-mask.png" alt="Welding Mask" class="w-12 h-12 object-contain" />
               <div class="flex-1">
                 <div class="font-bold text-white">Welding Helmet</div>
                 <div class="text-sm text-gray-400">Protects eyes from arc flash</div>
@@ -528,7 +528,7 @@ onUnmounted(() => {
                   : 'border-gray-600 bg-gray-800 hover:border-gray-500'
               "
             >
-              <div class="text-3xl">🧤</div>
+              <img src="/images/minigame/tmt/glove.png" alt="Glove" class="w-12 h-12 object-contain" />
               <div class="flex-1">
                 <div class="font-bold text-white">Welding Gloves</div>
                 <div class="text-sm text-gray-400">Protects hands from heat & sparks</div>
@@ -546,7 +546,7 @@ onUnmounted(() => {
                   : 'border-gray-600 bg-gray-800 hover:border-gray-500'
               "
             >
-              <div class="text-3xl">🦺</div>
+              <img src="/images/minigame/tmt/welding-suit.png" alt="Welding Suit" class="w-12 h-12 object-contain" />
               <div class="flex-1">
                 <div class="font-bold text-white">Leather Apron</div>
                 <div class="text-sm text-gray-400">Protects body from sparks</div>

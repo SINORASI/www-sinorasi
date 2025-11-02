@@ -2,12 +2,16 @@
 import type { MajorName } from "~/models/MajorName";
 import type { MajorTopic } from "~/models/MajorTopic";
 import { majorColorSchemes } from "~/utils/majorColors";
+import { usePageSections } from "~/composables/usePageSections";
 
 const { motion, AnimatePresence } = await import("motion-v");
 
 const props = defineProps<{
   major?: MajorName;
 }>();
+
+// Extract page sections for sidebar
+const { extractSections } = usePageSections();
 
 const { data: majorTopics } = await useFetch<Record<MajorName, MajorTopic[]>>("/api/major-topics");
 
@@ -47,13 +51,16 @@ const checkVisibility = () => {
 };
 
 onMounted(() => {
-  window.addEventListener('scroll', checkVisibility, { passive: true });
+  window.addEventListener("scroll", checkVisibility, { passive: true });
   // Check initial visibility
   nextTick(() => checkVisibility());
+
+  // Extract page sections for sidebar
+  extractSections();
 });
 
 onUnmounted(() => {
-  window.removeEventListener('scroll', checkVisibility);
+  window.removeEventListener("scroll", checkVisibility);
 });
 
 const route = useRoute();

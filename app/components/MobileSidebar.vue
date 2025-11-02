@@ -325,7 +325,9 @@
 import { computed, ref, watch } from "vue";
 import { motion, AnimatePresence } from "motion-v";
 import type { Extracurricular } from "~/models/Extracurricular";
+import type { JobTitle } from "~/models/JobTitle";
 import type { MajorName } from "~/models/MajorName";
+import type { MajorTopic } from "~/models/MajorTopic";
 import type { News } from "~/models/News";
 import type { Organization } from "~/models/Organization";
 import { majorColorSchemes } from "~/utils/majorColors";
@@ -387,6 +389,10 @@ const extracurricularsData = computed(() => {
   return response?.data || [];
 });
 
+const { data: jobTitlesData } = await useFetch<Record<MajorName, JobTitle[]>>("/api/job-titles");
+
+const { data: majorTopicsData } = await useFetch<Record<MajorName, MajorTopic[]>>("/api/major-topics");
+
 const topExtracurriculars = computed(() => {
   const manualItems = ["Voli", "Basket", "Catur", "Ambalan"];
   return extracurricularsData.value
@@ -405,6 +411,48 @@ const topExtracurriculars = computed(() => {
         ...extra.name.toLowerCase().split(" "),
       ],
     }));
+});
+
+// Get current major from route if on jurusan page
+const currentMajor = computed(() => {
+  if (route.path.startsWith("/jurusan/")) {
+    return (route.params.majorName as MajorName) || (route.path.split("/").pop() as MajorName);
+  }
+  return null;
+});
+
+// Karir section - job titles for current major
+const karirSection = computed(() => {
+  if (!currentMajor.value) return null;
+  const jobs = jobTitlesData.value?.[currentMajor.value] || [];
+  return {
+    title: "Karir",
+    submenu: jobs.map((job) => ({
+      title: job.title,
+      desc: job.description?.substring(0, 100) + "..." || "",
+      icon: `lucide:${job.icon}`,
+      to: `#kesempatan-kerja`,
+      external: false,
+      tags: ["karir", "kerja", job.title.toLowerCase(), ...job.title.toLowerCase().split(" ")],
+    })),
+  };
+});
+
+// Kompetensi section - major topics for current major
+const kompetensiSection = computed(() => {
+  if (!currentMajor.value) return null;
+  const topics = majorTopicsData.value?.[currentMajor.value] || [];
+  return {
+    title: "Kompetensi",
+    submenu: topics.map((topic) => ({
+      title: topic.title,
+      desc: topic.description?.substring(0, 100) + "..." || "",
+      icon: "lucide:book-open",
+      to: `#materi-pembelajaran`,
+      external: false,
+      tags: ["kompetensi", "skill", topic.title.toLowerCase(), ...topic.title.toLowerCase().split(" ")],
+    })),
+  };
 });
 
 const pageSubtitle = computed(() => {
@@ -799,7 +847,20 @@ const menuItems = [
   },
 ];
 
-const currentMenuItems = computed(() => props.menuItems || menuItems);
+const currentMenuItems = computed(() => {
+  let items = props.menuItems || menuItems;
+  
+  // On jurusan pages, add karir and kompetensi sections
+  if (currentMajor.value && karirSection.value && kompetensiSection.value) {
+    items = [
+      ...items,
+      karirSection.value,
+      kompetensiSection.value,
+    ];
+  }
+  
+  return items;
+});
 
 const searchQuery = ref("");
 

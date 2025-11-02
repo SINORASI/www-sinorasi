@@ -27,51 +27,57 @@ const checkVisibility = () => {
 };
 
 onMounted(() => {
-  window.addEventListener('scroll', checkVisibility, { passive: true });
+  window.addEventListener("scroll", checkVisibility, { passive: true });
   // Check initial visibility
   nextTick(() => checkVisibility());
 });
 
 onUnmounted(() => {
-  window.removeEventListener('scroll', checkVisibility);
+  window.removeEventListener("scroll", checkVisibility);
 });
 </script>
 
 <template>
   <section
     id="tools"
-    class="min-h-screen py-16 md:py-24"
-    :style="{ background: `linear-gradient(135deg, ${majorColor.primary}05, ${majorColor.accent}05)` }"
+    class="py-16 md:py-24"
   >
     <div class="container flex flex-col items-center justify-center gap-10 px-4 mx-auto md:gap-12">
       <div v-memo="[majorColor.primary, majorColor.accent, major]" class="max-w-3xl space-y-4 text-center">
-         <div class="inline-block">
-           <span
-             class="px-4 py-2 text-sm font-bold tracking-widest uppercase rounded-full md:text-base"
-             :style="{ background: majorColor.primary, color: 'white' }"
-           >
-             Tools & Equipment
-           </span>
-         </div>
-         <h2
-           class="text-3xl font-extrabold text-transparent md:text-5xl bg-linear-to-r bg-clip-text"
-           :style="{ backgroundImage: `linear-gradient(135deg, ${majorColor.primary}, ${majorColor.accent})` }"
-         >
-           Alat dan Peralatan
-         </h2>
-         <p class="max-w-2xl mx-auto text-sm text-gray-600 md:text-lg">
-           Berbagai tools dan equipment yang digunakan dalam pembelajaran konsentrasi keahlian {{ major }}
-         </p>
-       </div>
+        <div class="inline-block">
+          <span
+            class="px-4 py-2 text-sm font-bold tracking-widest uppercase rounded-full md:text-base"
+            :style="{ background: majorColor.primary, color: 'white' }"
+          >
+            Tools & Equipment
+          </span>
+        </div>
+        <h2
+          class="text-3xl font-extrabold text-transparent md:text-5xl bg-linear-to-r bg-clip-text"
+          :style="{ backgroundImage: `linear-gradient(135deg, ${majorColor.primary}, ${majorColor.accent})` }"
+        >
+          Alat dan Peralatan
+        </h2>
+        <p class="max-w-2xl mx-auto text-sm text-gray-600 md:text-lg">
+          Berbagai tools dan equipment yang digunakan dalam pembelajaran konsentrasi keahlian {{ major }}
+        </p>
+      </div>
 
       <div class="grid w-full max-w-6xl grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         <div
           v-for="(tool, index) in tools"
           :key="tool.name"
-          :ref="(el) => { if (el) cardRefs[index] = el; }"
+          :ref="
+            (el) => {
+              if (el) cardRefs[index] = el;
+            }
+          "
           :data-index="index"
           class="tool-card flex flex-col items-center p-6 bg-white shadow-lg rounded-2xl transition-all duration-600 ease-out hover:scale-105 hover:-translate-y-1 hover:shadow-2xl"
-          :class="{ 'opacity-0 translate-y-12 scale-90': !visibleCards.has(index), 'opacity-100 translate-y-0 scale-100': visibleCards.has(index) }"
+          :class="{
+            'opacity-0 translate-y-12 scale-90': !visibleCards.has(index),
+            'opacity-100 translate-y-0 scale-100': visibleCards.has(index),
+          }"
           :style="{ transitionDelay: `${index * 100}ms` }"
         >
           <div

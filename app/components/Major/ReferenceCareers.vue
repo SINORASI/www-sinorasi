@@ -2,10 +2,14 @@
 import type { JobTitle } from "~/models/JobTitle";
 import type { MajorName } from "~/models/MajorName";
 import { majorColorSchemes } from "~/utils/majorColors";
+import { usePageSections } from "~/composables/usePageSections";
 
 const props = defineProps<{
   major?: MajorName;
 }>();
+
+// Extract page sections for sidebar
+const { pageSections, extractSections } = usePageSections();
 
 interface ExpandedItems {
   [key: string]: boolean;
@@ -37,6 +41,9 @@ onMounted(() => {
   careers.value.forEach((_, idx) => {
     visibleItems.value.add(idx);
   });
+
+  // Extract page sections for sidebar
+  extractSections();
 });
 </script>
 
@@ -63,9 +70,7 @@ onMounted(() => {
               :style="{ animationDelay: `${idx * 300}ms` }"
             ></div>
 
-            <div
-              class="shrink-0 transition-transform duration-300 ease-in-out hover:rotate-12"
-            >
+            <div class="shrink-0 transition-transform duration-300 ease-in-out hover:rotate-12">
               <div
                 class="flex items-center justify-center overflow-hidden md:h-12 md:w-12 lg:h-16 lg:w-16 xl:h-16 xl:w-16 rounded-full bg-white/10"
               >
@@ -81,7 +86,7 @@ onMounted(() => {
               v-if="career.description"
               :class="[
                 'w-5 h-5 sm:w-6 sm:h-6 text-white shrink-0 transition-all duration-300 ease-in-out',
-                items[idx] ? 'rotate-180' : 'rotate-0'
+                items[idx] ? 'rotate-180' : 'rotate-0',
               ]"
               fill="none"
               stroke="currentColor"
@@ -96,7 +101,7 @@ onMounted(() => {
             :style="{ backgroundColor: majorColor.light }"
             :class="[
               'transition-all duration-400 ease-in-out overflow-hidden',
-              items[idx] ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+              items[idx] ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0',
             ]"
           >
             <div

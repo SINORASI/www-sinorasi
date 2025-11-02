@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { motion, AnimatePresence } from "motion-v";
+import { motion } from "motion-v";
 import KaproCarousel from "~/components/Major/KaproCarousel.vue";
 import ReferenceCareers from "~/components/Major/ReferenceCareers.vue";
 import type { MajorData } from "~/models/MajorData";
@@ -20,7 +20,10 @@ definePageMeta({
 
 const major: MajorName = "mekatronika";
 
-const { data: majorDatas } = await useFetch<Record<MajorName, MajorData>>("/api/majors");
+const { data: majorDatas } = await useFetch<Record<MajorName, MajorData>>("/api/majors", {
+  server: true,
+  lazy: false,
+});
 
 const majorColor = computed(
   () =>
@@ -259,7 +262,7 @@ onMounted(() => {
 
     <motion.section
       id="mitra-kerja"
-      class="min-h-screen py-16 md:py-24"
+      class="py-16 md:py-24"
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8, delay: 0.5 }"
@@ -348,10 +351,17 @@ onMounted(() => {
               </p>
               <button
                 @click="startGame"
-                class="px-8 py-3 text-sm font-bold transition-all duration-300 transform bg-white rounded-full shadow-lg md:text-base hover:shadow-xl hover:-translate-y-1"
+                class="px-8 py-3 text-sm font-bold transition-all duration-300 transform bg-white rounded-full shadow-lg md:text-base hover:shadow-xl hover:-translate-y-1 flex"
                 :style="`color: ${majorColor.primary}`"
               >
-                🎮 Play Game
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg> Play Game
               </button>
             </div>
 
@@ -422,7 +432,9 @@ onMounted(() => {
       </motion.button>
     </AnimatePresence>
 
-    <!-- Minigame Component -->
-    <LazyJurusanTmtMinigame v-if="showGame" @close="closeGame" />
+    <!-- Minigame Component (Client Only) -->
+    <ClientOnly>
+      <LazyJurusanTmtAdvancedMinigame v-if="showGame" @close="closeGame" />
+    </ClientOnly>
   </main>
 </template>

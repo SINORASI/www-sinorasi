@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 200">
+  <!-- Left metal plate -->
+  <rect x="20" y="40" width="150" height="120" fill="#606060" stroke="#404040" stroke-width="2"/>
+  
+  <!-- Right metal plate -->
+  <rect x="230" y="40" width="150" height="120" fill="#606060" stroke="#404040" stroke-width="2"/>
+  
+  <!-- Perfect weld bead (smooth S-curve) -->
+  <defs>
+    <linearGradient id="beadGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FFD700;stop-opacity:0.8" />
+      <stop offset="50%" style="stop-color:#FF9500;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#FF6600;stop-opacity:0.7" />
+    </linearGradient>
+    <filter id="beadShadow">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2"/>
+    </filter>
+  </defs>
+  
+  <!-- Weld bead with 3D effect -->
+  <path d="M 170 100 Q 250 85 330 100" stroke="url(#beadGrad)" stroke-width="12" fill="none" stroke-linecap="round" filter="url(#beadShadow)"/>
+  
+  <!-- Highlight on weld bead -->
+  <path d="M 170 98 Q 250 83 330 98" stroke="#FFFF00" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.6"/>
+  
+  <!-- Heat affected zone (lighter areas) -->
+  <path d="M 170 110 Q 250 115 330 110" stroke="#A0A080" stroke-width="20" fill="none" stroke-linecap="round" opacity="0.3"/>
+  <path d="M 170 90 Q 250 75 330 90" stroke="#A0A080" stroke-width="20" fill="none" stroke-linecap="round" opacity="0.3"/>
+  
+  <!-- Reinforcement profile (if over-welded) -->
+  <path d="M 170 99 L 175 92 L 180 98 L 185 91 L 190 97 L 195 90 L 200 96 L 205 89 L 210 95 L 215 88 L 220 94 L 225 87 L 230 93 L 235 86 L 240 92 L 245 85 L 250 91 L 255 84 L 260 90 L 265 83 L 270 89 L 275 82 L 280 88 L 285 81 L 290 87 L 295 80 L 300 86 L 305 79 L 310 85 L 315 78 L 320 84 L 325 77 L 330 83" stroke="#CC7722" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.6"/>
+</svg>

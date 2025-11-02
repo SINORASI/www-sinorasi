@@ -3,12 +3,16 @@ import { computed, onMounted, onUnmounted, ref } from "vue";
 import type { MajorData } from "~/models/MajorData";
 import type { MajorName } from "~/models/MajorName";
 import { useMinigameState } from "~/composables/useMinigameState";
+import { usePageSections } from "~/composables/usePageSections";
 
 const route = useRoute();
 const major = (route.params.majorName as MajorName) || (route.path.split("/").pop() as MajorName);
 
 // Get minigame state from parent
 const minigameState = useMinigameState();
+
+// Extract page sections for navbar
+const { extractSections } = usePageSections();
 
 const { data: majorDatas } = await useFetch<Record<MajorName, MajorData>>("/api/majors");
 const { data: majorMenus } = await useFetch("/api/majors/menus");
@@ -31,6 +35,10 @@ onMounted(() => {
   };
   window.addEventListener("scroll", handleScroll);
   handleScroll();
+
+  // Extract page sections for navbar
+  extractSections();
+
   onUnmounted(() => {
     window.removeEventListener("scroll", handleScroll);
   });
@@ -42,7 +50,13 @@ if (!majorDatas.value?.[major]) {
 </script>
 
 <template>
-  <header :class="['z-100 border-b fixed top-0 left-0 right-0 transition-all duration-500 ease-in-out', headerClass, minigameState.isRunning.value ? 'hidden' : '']">
+  <header
+    :class="[
+      'z-100 border-b fixed top-0 left-0 right-0 transition-all duration-500 ease-in-out',
+      headerClass,
+      minigameState.isRunning.value ? 'hidden' : '',
+    ]"
+  >
     <div
       :class="
         (sizeClass === 'full' ? 'p-4 gap-5' : 'p-3 gap-4') +
@@ -57,7 +71,7 @@ if (!majorDatas.value?.[major]) {
       >
         <button
           @click="navigateTo('/')"
-          class="flex items-center justify-center w-8 h-8 transition-colors duration-300 rounded-full hover:bg-white/20"
+          class="flex items-center justify-center w-8 h-8 transition-colors duration-300 rounded-full hover:bg-white/20 cursor-pointer"
         >
           <Icon name="lucide:house" size="20" class="text-black" />
         </button>

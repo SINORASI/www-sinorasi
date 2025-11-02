@@ -219,7 +219,7 @@ onMounted(() => {
 
     <motion.section
       id="kesempatan-kerja"
-      class="relative min-h-screen py-16 overflow-hidden md:py-24"
+      class="relative py-16 overflow-hidden md:py-24"
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8, delay: 0.4 }"
@@ -258,7 +258,7 @@ onMounted(() => {
 
     <motion.section
       id="mitra-kerja"
-      class="min-h-screen py-16 md:py-24"
+      class="py-16 md:py-24"
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8, delay: 0.5 }"

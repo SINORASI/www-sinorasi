@@ -143,7 +143,7 @@ onMounted(() => {
 
     <motion.section
       id="kepala-program"
-      class="relative min-h-screen py-16 md:py-24"
+      class="relative py-16 md:py-24"
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8, delay: 0.1 }"
@@ -175,7 +175,7 @@ onMounted(() => {
 
     <motion.section
       id="materi-pembelajaran"
-      class="min-h-screen py-16 md:py-24"
+      class="py-16 md:py-24"
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8, delay: 0.2 }"
@@ -220,7 +220,7 @@ onMounted(() => {
 
     <motion.section
       id="kesempatan-kerja"
-      class="relative min-h-screen py-16 overflow-hidden md:py-24"
+      class="relative py-16 overflow-hidden md:py-24"
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8, delay: 0.4 }"
@@ -259,7 +259,7 @@ onMounted(() => {
 
     <motion.section
       id="mitra-kerja"
-      class="min-h-screen py-16 md:py-24"
+      class="py-16 md:py-24"
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8, delay: 0.5 }"
@@ -296,7 +296,7 @@ onMounted(() => {
 
     <motion.section
       id="minigame"
-      class="min-h-screen py-16 md:py-24"
+      class="py-16 md:py-24"
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8, delay: 0.6 }"
@@ -363,8 +363,7 @@ onMounted(() => {
                     stroke-width="2"
                     d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                   />
-                </svg>
-                Play Game
+                </svg> Play Game
               </button>
             </div>
 
@@ -383,7 +382,7 @@ onMounted(() => {
 
     <motion.section
       id="prestasi"
-      class="min-h-screen py-16 md:py-24"
+      class="py-16 mb-24 md:py-24"
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8, delay: 0.7 }"

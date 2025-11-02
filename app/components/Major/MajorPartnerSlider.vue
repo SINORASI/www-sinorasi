@@ -44,15 +44,34 @@ onMounted(async () => {
   // Simple lazy loading with scroll detection
   const checkVisibility = () => {
     imageRefs.value.forEach((img) => {
-      if (img && img.dataset && img.dataset.src && typeof img.getBoundingClientRect === 'function') {
-        const rect = img.getBoundingClientRect();
-        if (rect.top < window.innerHeight + 50 && rect.bottom > -50) {
-          img.src = img.dataset.src;
-          img.classList.remove('lazy');
-          // Remove from array to avoid checking again
-          const index = imageRefs.value.indexOf(img);
-          if (index > -1) imageRefs.value.splice(index, 1);
+      if (!img) return;
+
+      // Resolve to the underlying HTMLElement if this ref is a component instance
+      const maybeEl = (img as any).$el ? (img as any).$el as HTMLElement : img as HTMLElement;
+
+      if (!maybeEl || !maybeEl.dataset || !maybeEl.dataset.src || typeof maybeEl.getBoundingClientRect !== 'function') {
+        return;
+      }
+
+      const rect = maybeEl.getBoundingClientRect();
+      if (rect.top < window.innerHeight + 50 && rect.bottom > -50) {
+        // If it's an actual <img>, set src directly so TypeScript accepts it
+        if (maybeEl instanceof HTMLImageElement) {
+          maybeEl.src = maybeEl.dataset.src;
+          maybeEl.classList.remove('lazy');
+        } else {
+          // Fallback for components where $el is not an HTMLImageElement
+          (maybeEl as any).classList.remove('lazy');
+          try {
+            (maybeEl as any).src = (maybeEl as any).dataset?.src;
+          } catch {
+            // ignore if src cannot be set
+          }
         }
+
+        // Remove from array to avoid checking again
+        const index = imageRefs.value.indexOf(img);
+        if (index > -1) imageRefs.value.splice(index, 1);
       }
     });
   };
