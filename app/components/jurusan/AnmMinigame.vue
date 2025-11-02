@@ -41,11 +41,11 @@ const levels: Level[] = [
   },
   {
     id: 4,
-    name: "Rasi Berjalan - Sulit",
+    name: "Rasi Berjalan - Sedang",
     character: "rasi walk",
-    totalFrames: 8,
+    totalFrames: 6,
     frameRate: 120,
-    correctOrder: [0, 1, 2, 3, 4, 5, 6, 7],
+    correctOrder: [0, 1, 2, 3, 4, 5],
   },
 ];
 
