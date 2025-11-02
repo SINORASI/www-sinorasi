@@ -2,14 +2,10 @@
 import type { JobTitle } from "~/models/JobTitle";
 import type { MajorName } from "~/models/MajorName";
 import { majorColorSchemes } from "~/utils/majorColors";
-import { usePageSections } from "~/composables/usePageSections";
 
 const props = defineProps<{
   major?: MajorName;
 }>();
-
-// Extract page sections for sidebar
-const { pageSections, extractSections } = usePageSections();
 
 interface ExpandedItems {
   [key: string]: boolean;
@@ -41,9 +37,6 @@ onMounted(() => {
   careers.value.forEach((_, idx) => {
     visibleItems.value.add(idx);
   });
-
-  // Extract page sections for sidebar
-  extractSections();
 });
 </script>
 

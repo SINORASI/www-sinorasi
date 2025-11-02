@@ -50,7 +50,7 @@ import { motion } from "motion-v";
 
         <!-- Image -->
         <motion.div
-          class="w-full max-w-xl lg:w-1/5"
+          class="w-full max-w-xl lg:w-4/5"
           :initial="{ opacity: 0, x: 50 }"
           :whileInView="{ opacity: 1, x: 0 }"
           :transition="{ duration: 0.8, delay: 0.4 }"
@@ -62,10 +62,10 @@ import { motion } from "motion-v";
             >
               <NuxtImg
                 src="/images/kepsek.webp"
-                width="600"
-                height="600"
+                width="400"
+                height="500"
                 alt="Foto Kepala Sekolah"
-                class="w-full h-auto"
+                class="w-full h-auto object-cover"
                 loading="lazy"
                 format="webp"
                 quality="85"

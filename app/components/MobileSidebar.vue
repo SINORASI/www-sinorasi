@@ -322,7 +322,7 @@
 </style>
 
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
+import { computed, ref } from "vue";
 import { motion, AnimatePresence } from "motion-v";
 import type { Extracurricular } from "~/models/Extracurricular";
 import type { JobTitle } from "~/models/JobTitle";

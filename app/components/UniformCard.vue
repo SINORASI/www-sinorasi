@@ -1,5 +1,5 @@
 <template>
-  <Motion
+  <motion.div
     :class="[
       'group bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-gray-100 transition-all duration-300 hover:-translate-y-2',
       hoverBorderClass,
@@ -8,6 +8,8 @@
     :initial="{ opacity: 0, scale: 0.9, y: 30 }"
     :animate="{ opacity: 1, scale: 1, y: 0 }"
     :transition="{ duration: 0.5, delay: 0.1 }"
+    :whileInView="{ opacity: 1, scale: 1, y: 0 }"
+    :inViewOptions="{ once: true, amount: 0.5 }"
   >
     <div class="relative overflow-hidden aspect-4/5">
       <div :class="['absolute inset-0', bgGradientClass]"></div>
@@ -162,11 +164,11 @@
         ></button>
       </div>
     </div>
-  </Motion>
+  </motion.div>
 </template>
 
 <script setup lang="ts">
-import { Motion } from "motion-v";
+import { motion } from "motion-v";
 import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 
 interface Props {

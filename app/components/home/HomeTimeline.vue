@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { motion, AnimatePresence } from "motion-v";
+import { ref, computed, onMounted, onUnmounted } from "vue";
 
 const timelineRef = ref<HTMLElement | null>(null);
 const timelineInView = ref(false);
 const isMobile = ref(false);
+const hoveredIndex = ref<number | null>(null);
 
 const timelineItems = [
   {
@@ -111,7 +113,7 @@ onMounted(() => {
   window.addEventListener("resize", checkMobile, { passive: true });
 
   const checkVisibility = () => {
-    if (timelineRef.value && typeof timelineRef.value.getBoundingClientRect === 'function') {
+    if (timelineRef.value && typeof timelineRef.value.getBoundingClientRect === "function") {
       const rect = timelineRef.value.getBoundingClientRect();
       timelineInView.value = rect.top < window.innerHeight && rect.bottom > 0;
       if (timelineInView.value && !animationStarted.value) {
@@ -134,39 +136,87 @@ onMounted(() => {
   <motion.section
     ref="timelineRef"
     id="jejak-sejarah"
-    class="relative py-20 overflow-hidden"
-    :initial="{ opacity: 0, y: 50 }"
-    :whileInView="{ opacity: 1, y: 0 }"
+    class="relative py-24 overflow-hidden"
+    :initial="{ opacity: 0 }"
+    :whileInView="{ opacity: 1 }"
     :transition="{ duration: 0.8 }"
     :inViewOptions="{ once: true }"
   >
-    <div class="container relative flex flex-col items-center gap-8 px-4 mx-auto text-center md:px-10 z-10">
-      <!-- Header -->
-      <div class="flex flex-col items-center gap-4">
-        <div class="inline-block">
+    <!-- Animated Background Elements -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <motion.div
+        class="absolute w-96 h-96 rounded-full bg-blue-200 blur-3xl opacity-20"
+        :initial="{ x: -200, y: -200 }"
+        :animate="{ x: 200, y: 200 }"
+        :transition="{ duration: 20, repeat: Infinity, repeatType: 'reverse' }"
+      ></motion.div>
+      <motion.div
+        class="absolute w-80 h-80 rounded-full bg-orange-200 blur-3xl opacity-20 right-0 top-1/2"
+        :initial="{ x: 200, y: 100 }"
+        :animate="{ x: -200, y: -100 }"
+        :transition="{ duration: 25, repeat: Infinity, repeatType: 'reverse' }"
+      ></motion.div>
+    </div>
+
+    <div class="container relative flex flex-col items-center gap-12 px-4 mx-auto text-center md:px-10 z-10">
+      <!-- Header Section -->
+      <motion.div
+        class="flex flex-col items-center gap-6"
+        :initial="{ opacity: 0, y: 30 }"
+        :whileInView="{ opacity: 1, y: 0 }"
+        :transition="{ duration: 0.8, delay: 0.1 }"
+        :inViewOptions="{ once: true }"
+      >
+        <motion.div class="inline-block" :whileHover="{ scale: 1.05 }" :whileTap="{ scale: 0.95 }"
+          >>
           <span
-            class="px-8 py-3 text-xl font-bold tracking-widest uppercase rounded-full md:text-2xl bg-blue-700 text-white"
+            class="px-8 py-4 text-2xl font-black tracking-widest uppercase rounded-2xl md:text-3xl bg-linear-to-r from-blue-600 to-blue-700 text-white shadow-xl hover:shadow-2xl transition-shadow"
           >
             Jejak Sejarah
           </span>
-        </div>
-        <p class="max-w-2xl my-5 text-lg text-gray-600">
-          Perjalanan panjang SMK Negeri 2 Singosari dalam mengembangkan pendidikan kejuruan berkualitas di Kabupaten
-          Malang.
-        </p>
+        </motion.div>
 
-        <div class="flex items-center gap-3 px-6 py-3 bg-white border border-blue-100 rounded-full shadow-md">
-          <Icon name="lucide:calendar" size="20" class="text-blue-600" />
-          <span class="font-semibold text-gray-700">2007 - 2023</span>
-          <span class="text-gray-400">|</span>
-          <span class="font-bold text-blue-600">{{ timelineItems.length }} Milestone</span>
-        </div>
-      </div>
+        <motion.p
+          class="max-w-3xl text-lg md:text-xl text-gray-700 leading-relaxed font-medium"
+          :initial="{ opacity: 0 }"
+          :whileInView="{ opacity: 1 }"
+          :transition="{ duration: 0.8, delay: 0.2 }"
+          :inViewOptions="{ once: true }"
+        >
+          Perjalanan panjang SMK Negeri 2 Singosari dalam mengembangkan pendidikan kejuruan berkualitas di Kabupaten
+          Malang. Dari pemulaan hingga prestasi gemilang.
+        </motion.p>
+
+        <motion.div
+          class="flex flex-wrap items-center justify-center gap-4 md:gap-6 mt-4"
+          :initial="{ opacity: 0, scale: 0.9 }"
+          :whileInView="{ opacity: 1, scale: 1 }"
+          :transition="{ duration: 0.8, delay: 0.3 }"
+          :inViewOptions="{ once: true }"
+        >
+          <div
+            class="px-6 py-3 bg-white border-2 border-blue-200 rounded-full shadow-md hover:shadow-lg transition-shadow"
+          >
+            <div class="flex items-center gap-2">
+              <Icon name="lucide:calendar" size="20" class="text-blue-600" />
+              <span class="font-bold text-gray-800">2007 - 2023</span>
+            </div>
+          </div>
+          <div
+            class="px-6 py-3 bg-white border-2 border-purple-200 rounded-full shadow-md hover:shadow-lg transition-shadow"
+          >
+            <div class="flex items-center gap-2">
+              <Icon name="lucide:milestone" size="20" class="text-purple-600" />
+              <span class="font-bold text-gray-800">{{ timelineItems.length }} Milestone</span>
+            </div>
+          </div>
+        </motion.div>
+      </motion.div>
 
       <!-- Mobile Timeline -->
       <div v-if="isMobile" class="relative flex flex-col items-center w-full py-10">
         <motion.div
-          class="absolute top-0 w-1 h-full transform rounded-full shadow-lg left-1/2 bg-linear-to-b from-blue-400 via-blue-600 to-blue-400"
+          class="absolute top-0 w-1.5 h-full rounded-full shadow-xl left-1/2 bg-linear-to-b from-blue-400 via-blue-600 to-orange-600"
           :initial="{ scaleY: 0.1 }"
           :animate="{ scaleY: lineScale }"
           :transition="{ duration: 2, ease: 'easeInOut' }"
@@ -176,15 +226,17 @@ onMounted(() => {
         <div
           v-for="(item, index) in timelineItems"
           :key="index"
-          class="relative flex flex-col items-center w-full max-w-md mb-12 group"
-          :class="{ 'opacity-0': !showAllIcons && index > 0 }"
-          :style="{ transition: 'opacity 0.5s ease-in-out' }"
+          class="relative flex flex-col items-center w-full max-w-md mb-16 group"
+          @mouseenter="hoveredIndex = index"
+          @mouseleave="hoveredIndex = null"
         >
           <motion.div
             v-if="showAllIcons || index === 0"
             :class="[
-              'z-20 flex items-center justify-center w-16 h-16 mb-6 transition-all duration-300 border-4 border-white rounded-full shadow-xl bg-linear-to-br from-blue-500 to-blue-700 group-hover:scale-110 cursor-pointer',
-              clickedMarkers[index] ? 'ring-4 ring-yellow-400' : '',
+              'z-20 flex items-center justify-center w-20 h-20 mb-6 border-4 border-white rounded-full shadow-xl cursor-pointer',
+              'bg-linear-to-br from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800',
+              'transition-all duration-300 group-hover:scale-125 group-hover:shadow-2xl',
+              hoveredIndex === index ? 'ring-4 ring-yellow-400 ring-offset-2' : '',
             ]"
             :initial="{ opacity: index === 0 ? 1 : 0, scale: index === 0 ? 1 : 0 }"
             :animate="{
@@ -192,47 +244,50 @@ onMounted(() => {
               scale: clickedMarkers[index] ? 1 : 0,
             }"
             :transition="{ duration: 0.8, delay: index * 0.2 }"
-            @click="index === 0 && toggleMarker(index)"
-            @dblclick="openModal(item)"
+            :whileHover="{ scale: 1.1, rotateZ: 10 }"
+            @click="index === 0 ? toggleMarker(index) : openModal(item)"
           >
-            <Icon :name="item.icon" size="28" class="text-white" />
+            <Icon :name="item.icon" size="32" class="text-white" />
           </motion.div>
 
           <motion.div
             v-if="cardVisibility[index]"
-            :initial="{ opacity: 0, y: -50 }"
-            :whileInView="{ opacity: 1, y: 0 }"
-            :transition="{ duration: 0.8 }"
-            :inViewOptions="{ once: true }"
+            :initial="{ opacity: 0, y: -30, scale: 0.95 }"
+            :animate="{ opacity: 1, y: 0, scale: 1 }"
+            :transition="{ duration: 0.6, delay: 0.1 }"
           >
-            <div
-              class="w-full p-6 text-center bg-white border-2 border-blue-100 shadow-xl rounded-2xl hover:border-blue-300 hover:shadow-2xl transition-all"
+            <motion.div
+              class="w-full p-8 bg-white border-2 border-blue-100 shadow-lg rounded-3xl hover:border-blue-300 hover:shadow-2xl transition-all"
+              :whileHover="{ y: -5, scale: 1.02 }"
             >
-              <div
+              <motion.div
                 :class="[
-                  'inline-block px-6 py-3 rounded-full mb-4 font-bold text-lg',
+                  'inline-block px-6 py-3 rounded-full mb-4 font-bold text-lg shadow-md',
                   index % 2 === 0
                     ? 'bg-linear-to-r from-blue-500 to-blue-600 text-white'
                     : 'bg-linear-to-r from-orange-500 to-orange-600 text-white',
                 ]"
+                :initial="{ scale: 0 }"
+                :animate="{ scale: 1 }"
+                :transition="{ duration: 0.5, type: 'spring' }"
               >
                 {{ item.year }}
-              </div>
-              <h3 class="mb-3 text-xl font-bold text-gray-800">
+              </motion.div>
+              <h3 class="mb-4 text-2xl font-bold text-gray-800 leading-tight">
                 {{ item.title }}
               </h3>
-              <p class="text-sm leading-relaxed text-justify text-gray-600">
+              <p class="text-base leading-relaxed text-gray-600 text-justify">
                 {{ item.description }}
               </p>
-            </div>
+            </motion.div>
           </motion.div>
         </div>
       </div>
 
       <!-- Desktop Timeline -->
-      <div v-else class="relative max-w-[1200px] mx-auto py-24">
+      <div v-else class="relative w-full max-w-6xl mx-auto py-24">
         <motion.div
-          class="absolute left-1/2 top-0 bottom-0 w-1 bg-linear-to-b from-transparent via-blue-500 to-transparent -translate-x-1/2 rounded-sm shadow-lg z-10"
+          class="absolute left-1/2 top-0 bottom-0 w-1 bg-linear-to-b from-transparent via-blue-500 to-transparent -translate-x-1/2 rounded-full shadow-lg z-10"
           :initial="{ scaleY: 0.1 }"
           :animate="{ scaleY: lineScale }"
           :transition="{ duration: 2, ease: 'easeInOut' }"
@@ -242,45 +297,51 @@ onMounted(() => {
         <div
           v-for="(item, index) in timelineItems"
           :key="index"
-          class="relative clear-both mb-12 group"
-          :class="{ 'opacity-0': !showAllIcons && index > 0 }"
-          :style="{ transition: 'opacity 0.5s ease-in-out' }"
+          class="relative clear-both mb-24 group"
+          @mouseenter="hoveredIndex = index"
+          @mouseleave="hoveredIndex = null"
         >
           <motion.div
             v-if="cardVisibility[index]"
-            :initial="{ opacity: 0, y: -50 }"
-            :whileInView="{ opacity: 1, y: 0 }"
-            :transition="{ duration: 0.8 }"
-            :inViewOptions="{ once: true }"
+            :initial="{ opacity: 0, x: index % 2 === 0 ? -100 : 100, scale: 0.9 }"
+            :animate="{ opacity: 1, x: 0, scale: 1 }"
+            :transition="{ duration: 0.8, delay: 0.2 }"
           >
-            <div
+            <motion.div
               :class="[
-                'p-8 bg-white/90 backdrop-blur-lg border border-white/30 shadow-2xl rounded-2xl hover:shadow-3xl hover:scale-105 transition-all h-[300px] w-[42%] z-20 flex flex-col justify-center items-center text-center',
-                index % 2 === 0 ? 'mr-12 float-left' : 'ml-12 float-right',
+                'p-10 bg-white/95 backdrop-blur-xl border-2 shadow-xl rounded-3xl transition-all',
+                'h-auto min-h-80 w-[45%] z-20 flex flex-col justify-center items-center text-center',
+                index % 2 === 0
+                  ? 'mr-12 float-left border-blue-200 hover:border-blue-400'
+                  : 'ml-12 float-right border-orange-200 hover:border-orange-400',
               ]"
+              :whileHover="{ y: -8, boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.2)' }"
             >
-              <div
+              <motion.div
                 :class="[
-                  'inline-block px-6 py-3 rounded-full mb-4 font-bold text-lg shadow-lg',
+                  'inline-block px-8 py-4 rounded-2xl mb-6 font-bold text-xl shadow-lg',
                   index % 2 === 0
                     ? 'bg-linear-to-r from-blue-500 to-blue-600 text-white'
                     : 'bg-linear-to-r from-orange-500 to-orange-600 text-white',
                 ]"
+                :initial="{ scale: 0, rotate: -10 }"
+                :animate="{ scale: 1, rotate: 0 }"
+                :transition="{ duration: 0.6, type: 'spring', stiffness: 100 }"
               >
                 {{ item.year }}
-              </div>
+              </motion.div>
               <h3
                 :class="[
-                  'mb-3 text-2xl font-bold text-gray-800 transition-colors',
+                  'mb-3 text-2xl font-bold text-gray-800 leading-tight transition-colors',
                   index % 2 === 0 ? 'group-hover:text-blue-600' : 'group-hover:text-orange-600',
                 ]"
               >
                 {{ item.title }}
               </h3>
-              <p class="leading-relaxed text-gray-600">
+              <p class="text-base leading-relaxed text-gray-600 mb-6">
                 {{ item.description }}
               </p>
-            </div>
+            </motion.div>
           </motion.div>
 
           <motion.div
@@ -293,109 +354,63 @@ onMounted(() => {
             }"
             :transition="{ duration: 0.8, delay: index * 0.2 }"
           >
-            <div
+            <motion.div
               :class="[
-                'w-16 h-16 rounded-full flex items-center justify-center shadow-xl border-[5px] border-white/80 backdrop-blur-sm transition-all duration-500 group-hover:scale-115 cursor-pointer',
+                'w-20 h-20 rounded-full flex items-center justify-center shadow-2xl border-[6px] border-white/90',
+                'backdrop-blur-lg transition-all duration-500 cursor-pointer',
+                'hover:shadow-3xl hover:ring-4 hover:ring-yellow-300',
                 index % 2 === 0
                   ? 'bg-linear-to-br from-blue-500 to-blue-700'
                   : 'bg-linear-to-br from-orange-500 to-orange-700',
               ]"
-              @click="index === 0 && toggleMarker(index)"
-              @dblclick="openModal(item)"
+              :whileHover="{ scale: 1.1, rotateZ: 5 }"
+              @click="index === 0 ? toggleMarker(index) : openModal(item)"
             >
-              <Icon :name="item.icon" size="28" class="text-white" />
-            </div>
+              <Icon :name="item.icon" size="36" class="text-white" />
+            </motion.div>
           </motion.div>
 
           <motion.div
             v-if="cardVisibility[index]"
             :class="[
-              'absolute top-1/2 w-[60px] h-[3px] -translate-y-1/2 z-1 transition-all duration-500 rounded-full',
+              'absolute top-1/2 w-16 h-1 -translate-y-1/2 z-1 transition-all duration-500 rounded-full',
               index % 2 === 0
-                ? 'right-1/2 mr-8 bg-linear-to-r from-transparent via-blue-500 to-blue-600'
-                : 'left-1/2 ml-8 bg-linear-to-l from-transparent via-blue-500 to-blue-600',
+                ? 'right-1/2 mr-12 bg-linear-to-r from-transparent via-blue-500 to-blue-600'
+                : 'left-1/2 ml-12 bg-linear-to-l from-transparent via-blue-500 to-orange-600',
             ]"
-            :initial="{ scaleX: 0 }"
-            :animate="{ scaleX: cardVisibility[index] ? 1 : 0 }"
-            :transition="{ duration: 0.8 }"
+            :initial="{ scaleX: 0, opacity: 0 }"
+            :animate="{ scaleX: cardVisibility[index] ? 1 : 0, opacity: cardVisibility[index] ? 1 : 0 }"
+            :transition="{ duration: 0.8, delay: 0.3 }"
             :style="{ transformOrigin: index % 2 === 0 ? 'right' : 'left' }"
           ></motion.div>
         </div>
       </div>
 
-      <!-- CTA -->
-      <div class="max-w-2xl px-8 py-6 mt-10 text-white shadow-xl bg-linear-to-r from-blue-600 to-blue-800 rounded-2xl">
-        <div class="flex flex-wrap items-center justify-between gap-6">
-          <div class="flex-1 min-w-[200px]">
-            <h3 class="mb-2 text-xl font-bold">Ingin Tahu Lebih Banyak?</h3>
-            <p class="text-sm text-blue-100">Lihat profil lengkap sekolah kami</p>
+      <!-- CTA Section -->
+      <motion.div
+        class="max-w-3xl w-full px-8 py-10 mt-16 text-white shadow-2xl bg-linear-to-r from-blue-600 via-blue-700 to-blue-800 rounded-3xl border border-blue-500/50"
+        :initial="{ opacity: 0, y: 50, scale: 0.95 }"
+        :whileInView="{ opacity: 1, y: 0, scale: 1 }"
+        :transition="{ duration: 0.8 }"
+        :inViewOptions="{ once: true }"
+        :whileHover="{ y: -5 }"
+      >
+        <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+          <div class="flex-1">
+            <h3 class="mb-3 text-2xl md:text-3xl font-black">Ingin Tahu Lebih Banyak?</h3>
+            <p class="text-blue-100 text-lg">Jelajahi profil lengkap dan prestasi sekolah kami</p>
           </div>
-          <NuxtLink
-            to="/informasi/profile-sekolah"
-            class="inline-flex items-center gap-2 px-6 py-3 font-semibold text-blue-600 bg-white rounded-lg shadow-md hover:bg-blue-50 transition-colors"
-          >
-            Profil Sekolah
-            <Icon name="lucide:arrow-right" size="18" />
-          </NuxtLink>
-        </div>
-      </div>
-
-      <!-- Modal -->
-      <AnimatePresence>
-        <motion.div
-          v-if="showModal && selectedTimelineItem"
-          class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
-          :initial="{ opacity: 0 }"
-          :animate="{ opacity: 1 }"
-          :exit="{ opacity: 0 }"
-          @click="closeModal"
-        >
-          <motion.div
-            class="relative max-w-2xl w-full max-h-[80vh] overflow-y-auto bg-white rounded-2xl shadow-2xl"
-            :initial="{ scale: 0.9, opacity: 0 }"
-            :animate="{ scale: 1, opacity: 1 }"
-            :exit="{ scale: 0.9, opacity: 0 }"
-            @click.stop
-          >
-            <div class="p-8">
-              <div class="flex items-center justify-between mb-6">
-                <div class="flex items-center gap-4">
-                  <div class="p-3 rounded-full bg-blue-100">
-                    <Icon :name="selectedTimelineItem.icon" size="32" class="text-blue-600" />
-                  </div>
-                  <div>
-                    <h3 class="text-2xl font-bold text-gray-800">
-                      {{ selectedTimelineItem.title }}
-                    </h3>
-                    <p class="text-lg font-semibold text-blue-600">
-                      {{ selectedTimelineItem.year }}
-                    </p>
-                  </div>
-                </div>
-                <button @click="closeModal" class="p-2 rounded-full hover:bg-gray-100 transition-colors">
-                  <Icon name="lucide:x" size="24" class="text-gray-500" />
-                </button>
-              </div>
-
-              <div class="prose prose-lg max-w-none">
-                <p class="text-gray-700 leading-relaxed mb-6">
-                  {{ selectedTimelineItem.description }}
-                </p>
-              </div>
-
-              <div class="flex items-center justify-between pt-6 border-t border-gray-200">
-                <div class="text-sm text-gray-500">Klik di luar modal untuk menutup</div>
-                <button
-                  @click="closeModal"
-                  class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                >
-                  Tutup
-                </button>
-              </div>
-            </div>
+          <motion.div :whileHover="{ scale: 1.05 }" :whileTap="{ scale: 0.95 }">
+            <NuxtLink
+              to="/informasi/profile-sekolah"
+              class="inline-flex items-center gap-3 px-8 py-4 font-bold text-blue-600 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all"
+            >
+              <span>Profil Sekolah</span>
+              <Icon name="lucide:arrow-right" size="20" />
+            </NuxtLink>
           </motion.div>
-        </motion.div>
-      </AnimatePresence>
+        </div>
+      </motion.div>
     </div>
   </motion.section>
 </template>

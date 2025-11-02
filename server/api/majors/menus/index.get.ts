@@ -86,27 +86,6 @@ const majorMenus: Record<MajorName, MenuItem[]> = {
         },
       ],
     },
-    {
-      title: "Karir",
-      submenu: [
-        {
-          title: "Software Engineer",
-          desc: "Peluang karir sebagai software engineer",
-          icon: "lucide:briefcase",
-          to: "/jurusan/rpl#kesempatan-kerja",
-          external: false,
-          tags: ["karir", "software engineer", "pekerjaan", "kerja", "profesi"],
-        },
-        {
-          title: "Web Developer",
-          desc: "Karir di bidang web development",
-          icon: "lucide:users",
-          to: "/jurusan/rpl#kesempatan-kerja",
-          external: false,
-          tags: ["karir", "web developer", "pekerjaan", "kerja", "profesi"],
-        },
-      ],
-    },
   ],
   tkj: [
     {
@@ -186,27 +165,6 @@ const majorMenus: Record<MajorName, MenuItem[]> = {
           to: "/jurusan/tkj#fasilitas",
           external: false,
           tags: ["hardware", "tools", "peralatan", "jaringan"],
-        },
-      ],
-    },
-    {
-      title: "Karir",
-      submenu: [
-        {
-          title: "Network Administrator",
-          desc: "Peluang karir sebagai admin jaringan",
-          icon: "lucide:briefcase",
-          to: "/jurusan/tkj#kesempatan-kerja",
-          external: false,
-          tags: ["karir", "network", "administrator", "admin", "jaringan", "pekerjaan", "kerja"],
-        },
-        {
-          title: "Cyber Security Analyst",
-          desc: "Karir di bidang keamanan siber",
-          icon: "lucide:users",
-          to: "/jurusan/tkj#kesempatan-kerja",
-          external: false,
-          tags: ["karir", "cyber", "security", "analyst", "keamanan", "pekerjaan", "kerja"],
         },
       ],
     },
@@ -292,27 +250,6 @@ const majorMenus: Record<MajorName, MenuItem[]> = {
         },
       ],
     },
-    {
-      title: "Karir",
-      submenu: [
-        {
-          title: "Graphic Designer",
-          desc: "Peluang karir sebagai desainer grafis",
-          icon: "lucide:briefcase",
-          to: "/jurusan/dkv#kesempatan-kerja",
-          external: false,
-          tags: ["karir", "graphic", "designer", "desainer", "grafis", "pekerjaan", "kerja"],
-        },
-        {
-          title: "Brand Designer",
-          desc: "Karir di bidang brand design",
-          icon: "lucide:users",
-          to: "/jurusan/dkv#kesempatan-kerja",
-          external: false,
-          tags: ["karir", "brand", "designer", "desainer", "pekerjaan", "kerja"],
-        },
-      ],
-    },
   ],
   animasi: [
     {
@@ -383,27 +320,6 @@ const majorMenus: Record<MajorName, MenuItem[]> = {
           to: "/jurusan/animasi#fasilitas",
           external: false,
           tags: ["animation", "software", "tools", "rendering", "blender", "maya"],
-        },
-      ],
-    },
-    {
-      title: "Karir",
-      submenu: [
-        {
-          title: "3D Animator",
-          desc: "Peluang karir sebagai animator 3D",
-          icon: "lucide:briefcase",
-          to: "/jurusan/animasi#kesempatan-kerja",
-          external: false,
-          tags: ["karir", "3d", "animator", "animasi", "pekerjaan", "kerja"],
-        },
-        {
-          title: "VFX Artist",
-          desc: "Karir di bidang visual effects",
-          icon: "lucide:users",
-          to: "/jurusan/animasi#kesempatan-kerja",
-          external: false,
-          tags: ["karir", "vfx", "artist", "visual", "effects", "pekerjaan", "kerja"],
         },
       ],
     },
@@ -484,27 +400,6 @@ const majorMenus: Record<MajorName, MenuItem[]> = {
           to: "/jurusan/broadcasting#fasilitas",
           external: false,
           tags: ["production", "equipment", "peralatan", "produksi", "media"],
-        },
-      ],
-    },
-    {
-      title: "Karir",
-      submenu: [
-        {
-          title: "Content Creator",
-          desc: "Peluang karir sebagai content creator",
-          icon: "lucide:briefcase",
-          to: "/jurusan/broadcasting#kesempatan-kerja",
-          external: false,
-          tags: ["karir", "content", "creator", "konten", "pekerjaan", "kerja"],
-        },
-        {
-          title: "Camera Operator",
-          desc: "Karir di bidang operasi kamera",
-          icon: "lucide:users",
-          to: "/jurusan/broadcasting#kesempatan-kerja",
-          external: false,
-          tags: ["karir", "camera", "operator", "kamera", "pekerjaan", "kerja"],
         },
       ],
     },
@@ -590,43 +485,6 @@ const majorMenus: Record<MajorName, MenuItem[]> = {
         },
       ],
     },
-    {
-      title: "Karir",
-      submenu: [
-        {
-          title: "Industrial Electrician",
-          desc: "Peluang karir sebagai teknisi elektronika industri",
-          icon: "lucide:briefcase",
-          to: "/jurusan/tei#kesempatan-kerja",
-          external: false,
-          tags: [
-            "karir",
-            "industrial",
-            "electrician",
-            "teknisi",
-            "elektronika",
-            "pekerjaan",
-            "kerja",
-          ],
-        },
-        {
-          title: "Instrumentation Technician",
-          desc: "Karir di bidang instrumentasi",
-          icon: "lucide:users",
-          to: "/jurusan/tei#kesempatan-kerja",
-          external: false,
-          tags: [
-            "karir",
-            "instrumentation",
-            "technician",
-            "teknisi",
-            "instrumentasi",
-            "pekerjaan",
-            "kerja",
-          ],
-        },
-      ],
-    },
   ],
   mekatronika: [
     {
@@ -697,27 +555,6 @@ const majorMenus: Record<MajorName, MenuItem[]> = {
           to: "/jurusan/mekatronika#fasilitas",
           external: false,
           tags: ["automation", "tools", "otomasi", "robotik", "robot"],
-        },
-      ],
-    },
-    {
-      title: "Karir",
-      submenu: [
-        {
-          title: "Automation Engineer",
-          desc: "Peluang karir sebagai engineer otomasi",
-          icon: "lucide:briefcase",
-          to: "/jurusan/mekatronika#kesempatan-kerja",
-          external: false,
-          tags: ["karir", "automation", "engineer", "otomasi", "pekerjaan", "kerja"],
-        },
-        {
-          title: "PLC Programmer",
-          desc: "Karir di bidang programming PLC",
-          icon: "lucide:users",
-          to: "/jurusan/mekatronika#kesempatan-kerja",
-          external: false,
-          tags: ["karir", "plc", "programmer", "programming", "pekerjaan", "kerja"],
         },
       ],
     },
@@ -799,27 +636,6 @@ const majorMenus: Record<MajorName, MenuItem[]> = {
           to: "/jurusan/tav#fasilitas",
           external: false,
           tags: ["av", "equipment", "peralatan", "audio", "video"],
-        },
-      ],
-    },
-    {
-      title: "Karir",
-      submenu: [
-        {
-          title: "Audio Engineer",
-          desc: "Peluang karir sebagai engineer audio",
-          icon: "lucide:briefcase",
-          to: "/jurusan/tav#kesempatan-kerja",
-          external: false,
-          tags: ["karir", "audio", "engineer", "pekerjaan", "kerja"],
-        },
-        {
-          title: "Sound Technician",
-          desc: "Karir di bidang teknisi suara",
-          icon: "lucide:users",
-          to: "/jurusan/tav#kesempatan-kerja",
-          external: false,
-          tags: ["karir", "sound", "technician", "teknisi", "suara", "pekerjaan", "kerja"],
         },
       ],
     },
