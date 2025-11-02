@@ -134,19 +134,95 @@ const getWireLabel = (wireName: string) => {
   return wireColors[wireName]?.label || wireName;
 };
 
+// Track which slot is being dragged over
+const draggedOverSlot = ref<number | null>(null);
+
+// Track dragging slot index
+const draggedSlotIndex = ref<number | null>(null);
+
+// Handle drag start from slot
+const handleSlotDragStart = (index: number, event: any) => {
+  draggedSlotIndex.value = index;
+  event.dataTransfer!.setData("wire", connectorSlots.value[index]);
+  event.dataTransfer!.setData("slotIndex", index.toString());
+};
+
+// Handle drop on slots
+const handleSlotDrop = (index: number, event: any) => {
+  event.preventDefault();
+  
+  // Get the wire that was dragged
+  const draggedWire = event.dataTransfer.getData("wire");
+  const sourceSlotIndex = event.dataTransfer.getData("slotIndex");
+  
+  if (draggedWire) {
+    // If dragging from another slot, swap or move
+    if (sourceSlotIndex !== "") {
+      const slotIdx = parseInt(sourceSlotIndex);
+      // Swap or move wire
+      connectorSlots.value[index] = draggedWire;
+      connectorSlots.value[slotIdx] = "";
+    } else {
+      // Coming from pool
+      connectorSlots.value[index] = draggedWire;
+      
+      // Remove wire from pool
+      const wireIndex = wirePool.value.indexOf(draggedWire);
+      if (wireIndex > -1) {
+        wirePool.value.splice(wireIndex, 1);
+      }
+    }
+    
+    draggedOverSlot.value = null;
+    draggedSlotIndex.value = null;
+  }
+};
+
+// Handle drop on pool (wires returning to pool)
+const handlePoolDrop = (event: any) => {
+  event.preventDefault();
+  
+  const draggedWire = event.dataTransfer.getData("wire");
+  const sourceSlotIndex = event.dataTransfer.getData("slotIndex");
+  
+  if (draggedWire && sourceSlotIndex !== "") {
+    const slotIdx = parseInt(sourceSlotIndex);
+    // Return wire to pool
+    wirePool.value.push(draggedWire);
+    // Clear slot
+    connectorSlots.value[slotIdx] = "";
+    draggedSlotIndex.value = null;
+  }
+};
+
+// Handle drag leave pool
+const handlePoolDragLeave = () => {
+  // Nothing needed here
+};
+
+// Handle drag over slot
+const handleSlotDragOver = (index: number) => {
+  draggedOverSlot.value = index;
+};
+
+// Handle drag leave slot
+const handleSlotDragLeave = () => {
+  draggedOverSlot.value = null;
+};
+
 // Draggable options for pool
 const poolDragOptions = computed(() => ({
   animation: 200,
-  group: "wires",
+  group: { name: "wires", pull: "clone", put: false },
   disabled: false,
   ghostClass: "ghost",
 }));
 
-// Draggable options for slots
+// Draggable options for slots - read only
 const slotDragOptions = computed(() => ({
   animation: 200,
-  group: "wires",
-  disabled: false,
+  group: { name: "wires", pull: "clone", put: false },
+  disabled: true,
   ghostClass: "ghost",
 }));
 
@@ -208,24 +284,33 @@ onMounted(async () => {
             <!-- Wire Pool -->
             <div class="bg-white rounded-2xl shadow-2xl p-6">
               <h3 class="text-lg md:text-xl font-bold text-gray-800 mb-4">🎨 Wire Pool</h3>
-              <draggable
-                v-model="wirePool"
-                :options="poolDragOptions"
-                item-key="id"
+              <div
                 class="min-h-[200px] p-4 bg-gray-50 rounded-xl border-2 border-dashed border-gray-300 grid grid-cols-2 gap-3"
-                group="wires"
+                @drop="handlePoolDrop"
+                @dragover.prevent
+                @dragleave="handlePoolDragLeave"
               >
-                <template #item="{ element }">
-                  <div
-                    class="wire-item p-3 rounded-lg shadow-md cursor-move hover:scale-105 transition-transform duration-200 border-2 border-gray-200"
-                    :style="getWireStyle(element)"
-                  >
-                    <span class="text-xs font-bold text-white drop-shadow-md text-center block">
-                      {{ getWireLabel(element) }}
-                    </span>
-                  </div>
-                </template>
-              </draggable>
+                <draggable
+                  v-model="wirePool"
+                  :options="poolDragOptions"
+                  item-key="id"
+                  class="contents"
+                  group="wires"
+                >
+                  <template #item="{ element }">
+                    <div
+                      class="wire-item p-3 rounded-lg shadow-md cursor-move hover:scale-105 transition-transform duration-200 border-2 border-gray-200"
+                      :style="getWireStyle(element)"
+                      draggable="true"
+                      @dragstart="$event.dataTransfer!.setData('wire', element)"
+                    >
+                      <span class="text-xs font-bold text-white drop-shadow-md text-center block">
+                        {{ getWireLabel(element) }}
+                      </span>
+                    </div>
+                  </template>
+                </draggable>
+              </div>
             </div>
 
             <!-- T568B Reference -->
@@ -259,30 +344,25 @@ onMounted(async () => {
                       {{ index + 1 }}
                     </div>
 
-                    <!-- Drop Zone -->
-                    <draggable
-                      v-model="connectorSlots"
-                      :options="slotDragOptions"
-                      item-key="id"
-                      class="flex-1"
-                      group="wires"
-                      @start="drag = true"
-                      @end="drag = false"
+                    <!-- Wire Slot (Drop Zone) -->
+                    <div
+                      class="h-12 rounded-lg flex-1 flex items-center justify-center cursor-move hover:scale-105 transition-all duration-200 border-2 border-white/20 shadow-lg"
+                      :style="slot ? getWireStyle(slot) : { background: 'rgba(255,255,255,0.1)' }"
+                      :class="[
+                        slot ? 'wire-filled' : 'wire-empty',
+                        draggedOverSlot === index ? 'opacity-80 ring-2 ring-yellow-300' : '',
+                      ]"
+                      @drop="handleSlotDrop(index, $event)"
+                      @dragover.prevent="handleSlotDragOver(index)"
+                      @dragleave="handleSlotDragLeave"
+                      @dragstart="handleSlotDragStart(index, $event)"
+                      draggable="true"
                     >
-                      <template #item="{ element, index: slotIndex }">
-                        <div
-                          v-if="slotIndex === index"
-                          class="h-12 rounded-lg flex items-center justify-center cursor-move hover:scale-105 transition-all duration-200 border-2 border-white/20 shadow-lg"
-                          :style="element ? getWireStyle(element) : { background: 'rgba(255,255,255,0.1)' }"
-                          :class="element ? 'wire-filled' : 'wire-empty'"
-                        >
-                          <span v-if="element" class="text-xs font-bold text-white drop-shadow-md">
-                            {{ getWireLabel(element) }}
-                          </span>
-                          <span v-else class="text-xs text-white/50">Drop wire here</span>
-                        </div>
-                      </template>
-                    </draggable>
+                      <span v-if="slot" class="text-xs font-bold text-white drop-shadow-md">
+                        {{ getWireLabel(slot) }}
+                      </span>
+                      <span v-else class="text-xs text-white/50">Drop wire here</span>
+                    </div>
                   </div>
                 </div>
               </div>
