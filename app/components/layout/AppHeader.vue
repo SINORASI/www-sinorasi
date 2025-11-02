@@ -40,7 +40,7 @@ const populateScrollItems = async () => {
 
     if (populatedSections.length > 0) {
       scrollItems.value = populatedSections;
-      console.log(`Scroll items populated successfully on attempt ${attempt + 1}`);
+      // console.log(`Scroll items populated successfully on attempt ${attempt + 1}`);
       return;
     }
   }

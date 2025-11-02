@@ -2,6 +2,7 @@
 // @ts-nocheck
 import { ref, computed, onMounted, onUnmounted, nextTick } from "vue";
 import draggable from "vuedraggable";
+import { useMinigameState } from "~/composables/useMinigameState";
 
 // T568B Standard wire order (1-8)
 const T568B_STANDARD = ["white-orange", "orange", "white-green", "blue", "white-blue", "green", "white-brown", "brown"];
@@ -25,6 +26,9 @@ const wireColors: Record<string, { bg: string; label: string }> = {
 const gameContainer = ref<HTMLElement | null>(null);
 const isFullscreen = ref(false);
 const gameStatus = ref<"idle" | "checking" | "win" | "lose">("idle");
+
+// Get minigame state from parent
+const minigameState = useMinigameState();
 
 // Wire pool (scrambled initially)
 const wirePool = ref<string[]>([]);
@@ -86,8 +90,10 @@ const exitFullscreen = async () => {
     if (document.fullscreenElement) {
       await document.exitFullscreen();
     }
+    minigameState.setIsRunning(false);
   } catch (error) {
     console.error("Error exiting fullscreen:", error);
+    minigameState.setIsRunning(false);
   }
 };
 
@@ -95,6 +101,7 @@ const exitFullscreen = async () => {
 const handleFullscreenChange = () => {
   isFullscreen.value = !!document.fullscreenElement;
   if (!isFullscreen.value) {
+    minigameState.setIsRunning(false);
     emit("close");
   }
 };
@@ -106,8 +113,11 @@ const enterFullscreen = async () => {
       await gameContainer.value.requestFullscreen();
       isFullscreen.value = true;
     } catch (error) {
-      console.error("Error entering fullscreen:", error);
+      console.warn("Fullscreen request failed, continuing without fullscreen:", error);
+      isFullscreen.value = false;
     }
+    // Always set game as running, whether fullscreen succeeded or not
+    minigameState.setIsRunning(true);
   }
 };
 

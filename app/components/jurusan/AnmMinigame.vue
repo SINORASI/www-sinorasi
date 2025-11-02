@@ -2,6 +2,7 @@
 // @ts-nocheck
 import { ref, computed, onMounted, onUnmounted, nextTick } from "vue";
 import draggable from "vuedraggable";
+import { useMinigameState } from "~/composables/useMinigameState";
 
 // Level configuration
 interface Level {
@@ -54,6 +55,9 @@ const isFullscreen = ref(false);
 const currentLevel = ref(0);
 const gameStatus = ref<"idle" | "checking" | "win" | "lose">("idle");
 const isPlaying = ref(false);
+
+// Get minigame state from parent
+const minigameState = useMinigameState();
 
 // Frame arrays
 const framePool = ref<number[]>([]);
@@ -184,8 +188,10 @@ const exitFullscreen = async () => {
     if (document.fullscreenElement) {
       await document.exitFullscreen();
     }
+    minigameState.setIsRunning(false);
   } catch (error) {
     console.error("Error exiting fullscreen:", error);
+    minigameState.setIsRunning(false);
   }
 };
 
@@ -193,6 +199,7 @@ const exitFullscreen = async () => {
 const handleFullscreenChange = () => {
   isFullscreen.value = !!document.fullscreenElement;
   if (!isFullscreen.value) {
+    minigameState.setIsRunning(false);
     emit("close");
   }
 };
@@ -204,8 +211,11 @@ const enterFullscreen = async () => {
       await gameContainer.value.requestFullscreen();
       isFullscreen.value = true;
     } catch (error) {
-      console.error("Error entering fullscreen:", error);
+      console.warn("Fullscreen request failed, continuing without fullscreen:", error);
+      isFullscreen.value = false;
     }
+    // Always set game as running, whether fullscreen succeeded or not
+    minigameState.setIsRunning(true);
   }
 };
 

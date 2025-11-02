@@ -28,7 +28,6 @@ const { data: achievements, pending } = await useAsyncData(
   {
     server: true,
     transform: (response: any) => {
-      console.log('HomeAchievements API response:', response);
       const transformed = (response.data || []).map((news: any) => ({
         image: news.thumbnail || "/images/placeholder.jpg",
         title: news.title,
@@ -36,7 +35,6 @@ const { data: achievements, pending } = await useAsyncData(
         slug: news.slug,
         year: news.createdAt ? new Date(news.createdAt).getFullYear() : new Date().getFullYear(),
       }));
-      console.log('HomeAchievements transformed data:', transformed);
       return transformed;
     },
   }

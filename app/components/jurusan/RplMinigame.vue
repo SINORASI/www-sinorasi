@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 // @ts-nocheck
 import * as Blockly from "blockly";
+import { useMinigameState } from "~/composables/useMinigameState";
 
 // Game state
 const gameContainer = ref<HTMLElement | null>(null);
@@ -9,6 +10,9 @@ const avatarPos = ref({ x: 0, y: 0 });
 const avatarDirection = ref(0); // 0: right, 1: down, 2: left, 3: up
 const gameStatus = ref<"idle" | "running" | "win" | "lose">("idle");
 const isFullscreen = ref(false);
+
+// Get minigame state from parent
+const minigameState = useMinigameState();
 
 // Simple maze layout (0 = path, 1 = wall, 2 = start, 3 = goal)
 const maze = ref([
@@ -154,11 +158,11 @@ const runProgram = async () => {
   const blocks = workspace.value.getTopBlocks(false);
 
   // Debug: Log blocks found
-  console.log("Total blocks in workspace:", workspace.value.getAllBlocks(false).length);
-  console.log("Top-level blocks:", blocks.length);
-  blocks.forEach((b, i) =>
-    console.log(`Block ${i}:`, b.type, "Previous:", b.getPreviousBlock(), "Next:", b.getNextBlock())
-  );
+  // console.log("Total blocks in workspace:", workspace.value.getAllBlocks(false).length);
+  // console.log("Top-level blocks:", blocks.length);
+  // blocks.forEach((b, i) =>
+    // console.log(`Block ${i}:`, b.type, "Previous:", b.getPreviousBlock(), "Next:", b.getNextBlock())
+  //);
 
   try {
     // Execute only the first top-level block and its chain
@@ -167,7 +171,7 @@ const runProgram = async () => {
       // Skip blocks that are not meant to be executed (e.g., orphaned blocks)
       if (block.getPreviousBlock() === null) {
         // This is a top-level block, execute its chain
-        console.log("Executing block chain starting with:", block.type);
+        // console.log("Executing block chain starting with:", block.type);
         await executeBlock(block);
       }
     }
@@ -240,8 +244,10 @@ const exitFullscreen = async () => {
     if (document.fullscreenElement) {
       await document.exitFullscreen();
     }
+    minigameState.setIsRunning(false);
   } catch (error) {
     console.error("Error exiting fullscreen:", error);
+    minigameState.setIsRunning(false);
   }
 };
 
@@ -249,6 +255,7 @@ const exitFullscreen = async () => {
 const handleFullscreenChange = () => {
   isFullscreen.value = !!document.fullscreenElement;
   if (!isFullscreen.value) {
+    minigameState.setIsRunning(false);
     // Emit event to parent when fullscreen is exited
     emit("close");
   }
@@ -261,8 +268,11 @@ const enterFullscreen = async () => {
       await gameContainer.value.requestFullscreen();
       isFullscreen.value = true;
     } catch (error) {
-      console.error("Error entering fullscreen:", error);
+      console.warn("Fullscreen request failed, continuing without fullscreen:", error);
+      isFullscreen.value = false;
     }
+    // Always set game as running, whether fullscreen succeeded or not
+    minigameState.setIsRunning(true);
   }
 };
 

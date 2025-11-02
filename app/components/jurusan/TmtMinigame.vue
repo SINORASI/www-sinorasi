@@ -2,8 +2,12 @@
 <script lang="ts" setup>
 import { ref, onMounted, onUnmounted } from "vue";
 import * as PIXI from "pixi.js";
+import { useMinigameState } from "~/composables/useMinigameState";
 
 const emit = defineEmits(["close"]);
+
+// Get minigame state from parent
+const minigameState = useMinigameState();
 
 // Game state
 const pixiApp = ref<PIXI.Application | null>(null);
@@ -385,8 +389,10 @@ const exitFullscreen = async () => {
     if (document.fullscreenElement) {
       await document.exitFullscreen();
     }
+    minigameState.setIsRunning(false);
   } catch (error) {
     console.error("Error exiting fullscreen:", error);
+    minigameState.setIsRunning(false);
   }
 
   // Cleanup Pixi
@@ -402,6 +408,7 @@ const exitFullscreen = async () => {
 const handleFullscreenChange = () => {
   isFullscreen.value = !!document.fullscreenElement;
   if (!isFullscreen.value) {
+    minigameState.setIsRunning(false);
     emit("close");
   }
 };
@@ -414,8 +421,11 @@ const enterFullscreen = async () => {
       await container.requestFullscreen();
       isFullscreen.value = true;
     } catch (error) {
-      console.error("Error entering fullscreen:", error);
+      console.warn("Fullscreen request failed, continuing without fullscreen:", error);
+      isFullscreen.value = false;
     }
+    // Always set game as running, whether fullscreen succeeded or not
+    minigameState.setIsRunning(true);
   }
 };
 
