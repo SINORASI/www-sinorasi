@@ -38,10 +38,6 @@ onMounted(() => {
     visibleItems.value.add(idx);
   });
 });
-
-const observeElement = (el: Element, idx: number) => {
-  el.setAttribute('data-idx', idx.toString());
-};
 </script>
 
 <template>
@@ -51,8 +47,7 @@ const observeElement = (el: Element, idx: number) => {
         <div
           v-for="(career, idx) in careers"
           :key="idx"
-          ref="observeElement($el, idx)"
-          v-memo="[career.title, career.icon, majorColor.primary, majorColor.light]"
+          :v-memo="[career.title, career.icon, majorColor.primary, majorColor.light, items[idx]]"
           class="overflow-hidden shadow-md rounded-2xl transition-all duration-300 ease-in-out opacity-100 translate-y-0"
           :style="{ transitionDelay: `${idx * 100}ms` }"
         >
