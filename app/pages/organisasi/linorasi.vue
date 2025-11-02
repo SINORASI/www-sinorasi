@@ -80,7 +80,28 @@ useHead({
         <div v-if="activeTab === 'overview'" class="space-y-8">
           <div class="p-6 bg-white border-2 border-blue-100 shadow-xl rounded-2xl md:p-8">
             <h2 class="mb-4 text-2xl font-bold text-gray-800">Deskripsi Logo</h2>
-            <p class="text-gray-600 leading-relaxed">{{ organization.logoDescription }}</p>
+            
+            <!-- Symbol Meanings -->
+            <div v-if="organization.logoDescriptions?.maknaSimbol?.length" class="mb-6">
+              <h3 class="mb-3 text-lg font-semibold text-gray-700">Makna Simbol:</h3>
+              <ul class="space-y-2 text-gray-600">
+                <li v-for="(makna, index) in organization.logoDescriptions.maknaSimbol" :key="index" class="flex gap-3">
+                  <span class="text-blue-600 font-bold shrink-0">•</span>
+                  <span>{{ makna }}</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Color Meanings -->
+            <div v-if="organization.logoDescriptions?.maknaWarna?.length">
+              <h3 class="mb-3 text-lg font-semibold text-gray-700">Makna Warna:</h3>
+              <ul class="space-y-2 text-gray-600">
+                <li v-for="(warna, index) in organization.logoDescriptions.maknaWarna" :key="index" class="flex gap-3">
+                  <span class="text-blue-600 font-bold shrink-0">•</span>
+                  <span>{{ warna }}</span>
+                </li>
+              </ul>
+            </div>
           </div>
 
           <div class="p-6 bg-white border-2 border-blue-100 shadow-xl rounded-2xl md:p-8">
