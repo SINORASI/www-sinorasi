@@ -2,7 +2,7 @@
   <motion.section
     class="relative w-full py-30 h-screen"
     style="
-      background-image: url('/images/guru/foto-guru-bersama.jpeg');
+      background-image: url('/images/guru/foto-guru-bersama.webp');
       background-size: cover;
       background-position: bottom;
     "

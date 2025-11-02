@@ -5,6 +5,7 @@ import type { MajorName } from "~/models/MajorName";
 import type { JobTitle } from "~/models/JobTitle";
 import type { MajorTopic } from "~/models/MajorTopic";
 import { useMinigameState } from "~/composables/useMinigameState";
+import toolsDataImport from "~/data/toolsData.json";
 
 const route = useRoute();
 const major = (route.params.majorName as MajorName) || (route.path.split("/").pop() as MajorName);
@@ -23,8 +24,9 @@ const { data: majorDatas } = await useFetch<Record<MajorName, MajorData>>("/api/
 const { data: majorMenus } = await useFetch("/api/majors/menus");
 const { data: jobTitles } = await useFetch<Record<MajorName, JobTitle[]>>("/api/job-titles");
 const { data: majorTopics } = await useFetch<Record<MajorName, MajorTopic[]>>("/api/major-topics");
-const { data: toolsData } = await useFetch<Record<string, Array<{ name: string; icon: string; description: string }>>>(
-  "/app/data/toolsData.json"
+// Use a local ref for tools data (imported at build time) so we don't fetch the JSON at runtime
+const toolsData = ref<Record<string, Array<{ name: string; icon: string; description: string }>>>(
+  toolsDataImport as any
 );
 
 const headerClass = ref("bg-white/20 backdrop-blur-[8px] border-b-white/20 shadow-lg shadow-orange-500/10");

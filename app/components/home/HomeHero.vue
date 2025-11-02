@@ -105,7 +105,7 @@ onUnmounted(() => {
       loop
       playsinline
       preload="none"
-      poster="/images/guru/foto-guru-bersama.jpeg"
+      poster="/images/guru/foto-guru-bersama.webp"
       aria-hidden="true"
     />
 
