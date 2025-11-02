@@ -44,6 +44,9 @@ const majorColor = computed(
 const showBackToTop = ref(false);
 const showGame = ref(false);
 
+// Use minigame state to hide header
+const minigameState = useMinigameState();
+
 useHead({
   title: () =>
     majorDatas.value?.[major]?.nameMajor
@@ -66,10 +69,12 @@ const scrollToTop = () => {
 
 const startGame = () => {
   showGame.value = true;
+  minigameState.setIsRunning(true);
 };
 
 const closeGame = () => {
   showGame.value = false;
+  minigameState.setIsRunning(false);
 };
 
 onMounted(() => {
@@ -351,21 +356,23 @@ onMounted(() => {
               <p class="max-w-md mx-auto text-sm text-white/90 md:text-lg">
                 Praktikkan teknik pengelasan virtual! Belajar akurasi dan kecepatan las dengan simulator 2D interaktif
               </p>
-              <button
-                @click="startGame"
-                class="px-8 py-3 text-sm font-bold transition-all duration-300 transform bg-white rounded-full shadow-lg md:text-base hover:shadow-xl hover:-translate-y-1 flex"
-                :style="`color: ${majorColor.primary}`"
-              >
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-                Play Game
-              </button>
+              <div class="flex justify-center">
+                <button
+                  @click="startGame"
+                  class="px-8 py-3 text-sm font-bold transition-all duration-300 transform bg-white rounded-full shadow-lg md:text-base hover:shadow-xl hover:-translate-y-1 flex items-center gap-2"
+                  :style="`color: ${majorColor.primary}`"
+                >
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                  <span>Play Game</span>
+                </button>
+              </div>
             </div>
 
             <div class="absolute w-20 h-20 border-4 rounded-full top-10 right-10 border-white/20 animate-ping"></div>

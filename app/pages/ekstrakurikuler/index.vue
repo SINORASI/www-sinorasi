@@ -22,9 +22,9 @@ const manualItems = ["Voli", "Basket", "Catur"];
 const allowedExtracurricularNames = computed(() => {
   const topExtras = extracurriculars.value
     .filter((extra: any) => !manualItems.includes(extra.name))
-    .slice(0, 3)
+    .slice(0, 9)
     .map((extra: any) => extra.name);
-  return [...manualItems, ...topExtras];
+  return [...new Set([...manualItems, ...topExtras])];
 });
 
 const categories = computed(() => {

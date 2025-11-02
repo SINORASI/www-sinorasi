@@ -271,44 +271,6 @@ export default defineEventHandler(
 
       {
         id: "6",
-        slug: "pmr",
-        name: "PMR",
-        category: "Kesehatan",
-        icon: "lucide:heart",
-        description:
-          "Ekstrakurikuler PMR untuk pengembangan keterampilan kesehatan dan kepalangmerahan",
-        fullDescription:
-          "<p>Ekstrakurikuler PMR sekolah kami telah berdiri sejak tahun 2015 dan menjadi wadah pengembangan siswa di bidang kesehatan dan kemanusiaan. Dengan bimbingan instruktur, kami membentuk siswa yang peduli terhadap kesehatan dan kesejahteraan orang lain.</p><p>Kegiatan meliputi latihan kesehatan, donor darah, dan kegiatan sosial.</p>",
-        image: "/images/placeholder.jpg",
-        coach: "Instruktur Agus Setiawan",
-        schedule: "Senin, Kamis - 13:00-15:00 WIB",
-        location: "Ruang PMR Sekolah",
-
-        memberCount: 28,
-        achievementCount: 7,
-        yearEstablished: 2015,
-        meetingsPerWeek: 2,
-        registrationOpen: true,
-        registrationPeriod: "Pendaftaran dibuka: 1-31 Juli 2024",
-        contactInfo: "Instruktur Agus: 0818-5678-9012",
-        requirements: [
-          "Mengisi formulir pendaftaran",
-          "Surat persetujuan orang tua",
-          "Sertifikat kesehatan",
-          "Pas foto 3x4 (2 lembar)",
-        ],
-        activities: [
-          {
-            id: "pmr-act-1",
-            image: "/images/placeholder.jpg",
-            title: "DIKLAT PALANG MERAH REMAJA SMKN 2 SINGOSARI",
-            description: "Diklat untuk anggota PMR di SMKN 2 Singosari.",
-            date: "2025-02-22",
-          },
-        ],
-      },
-      {
-        id: "7",
         slug: "english-club",
         name: "English Club",
         category: "Bahasa",
@@ -507,7 +469,6 @@ export default defineEventHandler(
         registrationPeriod: "Pendaftaran dibuka: 1-31 Juli 2024",
         contactInfo: "Fotografer Andi: 0822-9012-3456",
         requirements: [
-          "Siswa aktif kelas 8-12",
           "Mengisi formulir pendaftaran",
           "Surat persetujuan orang tua",
           "Memiliki kamera atau smartphone",
@@ -541,6 +502,65 @@ export default defineEventHandler(
             title: "Kompetisi Fotografi",
             description: "Partisipasi dalam kompetisi fotografi tingkat daerah",
             date: "2 Juli 2024",
+          },
+        ],
+      },
+      {
+        id: "11",
+        slug: "robotics",
+        name: "Robotics Club",
+        category: "Teknologi",
+        icon: "lucide:cpu",
+        description:
+          "Ekstrakurikuler robotics untuk pengembangan kemampuan STEM dan robotika",
+        fullDescription:
+          "<p>Ekstrakurikuler robotics sekolah kami telah berdiri sejak tahun 2021 dan menjadi wadah pengembangan bakat siswa di bidang sains dan teknologi. Dengan bimbingan guru teknologi, kami membentuk siswa yang memiliki kemampuan merancang dan memprogram robot.</p><p>Kegiatan meliputi pembelajaran pemrograman, desain mekanik, dan kompetisi robotika.</p>",
+        image: "/images/placeholder.jpg",
+        coach: "Guru Teknik Harendra",
+        schedule: "Senin, Kamis - 15:00-17:00 WIB",
+        location: "Lab Teknologi Sekolah",
+
+        memberCount: 30,
+        achievementCount: 8,
+        yearEstablished: 2021,
+        meetingsPerWeek: 2,
+        registrationOpen: true,
+        registrationPeriod: "Pendaftaran dibuka: 1-31 Juli 2024",
+        contactInfo: "Guru Harendra: 0823-0123-4567",
+        requirements: [
+          "Mengisi formulir pendaftaran",
+          "Surat persetujuan orang tua",
+          "Pengetahuan dasar pemrograman (dianjurkan)",
+          "Pas foto 3x4 (2 lembar)",
+        ],
+        activities: [
+          {
+            id: "1",
+            image: "/images/placeholder.jpg",
+            title: "Kompetisi Robot Balap",
+            description: "Kompetisi merancang dan memprogram robot balap",
+            date: "19 Maret 2024",
+          },
+          {
+            id: "2",
+            image: "/images/placeholder.jpg",
+            title: "Workshop Pemrograman Arduino",
+            description: "Pelatihan pemrograman Arduino untuk robotika",
+            date: "24 April 2024",
+          },
+          {
+            id: "3",
+            image: "/images/placeholder.jpg",
+            title: "Pameran Inovasi Teknologi",
+            description: "Pameran hasil karya robot siswa",
+            date: "29 Mei 2024",
+          },
+          {
+            id: "4",
+            image: "/images/placeholder.jpg",
+            title: "Kompetisi STEM Nasional",
+            description: "Partisipasi dalam kompetisi robotika nasional",
+            date: "5 Juli 2024",
           },
         ],
       },
