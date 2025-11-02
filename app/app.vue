@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { useNuxtApp } from '#app';
 
 const nuxtApp = useNuxtApp();
@@ -26,20 +26,28 @@ useSeoMeta({
   ogUrl: "https://smkn2-singosari.sch.id",
   twitterCard: "summary_large_image",
 });
+
+watch(loading, (isLoading) => {
+  if (typeof document !== 'undefined') {
+    document.body.style.overflow = isLoading ? 'hidden' : '';
+  }
+});
 </script>
 
 <template>
-  <NuxtLayout>
+  <div>
     <Transition name="loading">
-      <div v-if="loading">
-        <div class="flex flex-col items-center justify-center min-h-screen bg-linear-to-br from-slate-50 via-blue-50 to-slate-100">
-          <img src="/images/logo-smk.webp" alt="SMK Negeri 2 Singosari" class="w-48 h-48 mb-4" />
-          <p class="text-xl text-gray-600">Loading...</p>
-        </div>
+      <div v-if="loading" class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-linear-to-br from-slate-50 via-blue-50 to-slate-100">
+        <img src="/images/logo-smk.webp" alt="SMK Negeri 2 Singosari" class="w-48 h-48 mb-4" />
+        <p class="text-xl text-gray-600">Loading...</p>
       </div>
     </Transition>
-    <NuxtPage />
-  </NuxtLayout>
+    <div v-show="!loading">
+      <NuxtLayout>
+        <NuxtPage />
+      </NuxtLayout>
+    </div>
+  </div>
 </template>
 
 <style>
