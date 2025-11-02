@@ -30,7 +30,7 @@ useHead({
 </script>
 
 <template>
-  <div class="min-h-screen py-24 bg-linear-to-b from-white via-blue-50 to-white">
+  <div class="min-h-screen py-32 bg-linear-to-b from-white via-blue-50 to-white">
     <div class="container px-4 mx-auto sm:px-6">
 
       <motion.div
@@ -41,7 +41,7 @@ useHead({
         :inViewOptions="{ once: true, margin: '-100px' }"
       >
         <motion.div
-          class="inline-block px-10 py-6 mb-4 border border-blue-200 shadow-xl bg-linear-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
+          class="inline-block px-8 py-6 mb-4 border border-blue-200 shadow-xl bg-linear-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
           :initial="{ scale: 0.8, opacity: 0 }"
           :whileInView="{ scale: 1, opacity: 1 }"
           :transition="{ duration: 0.6, delay: 0.2, ease: 'easeOut' }"
@@ -193,9 +193,9 @@ useHead({
           >
             <AnimatePresence>
               <motion.img
-                :key="slides[currentIndex].id"
-                :src="slides[currentIndex].src"
-                :alt="slides[currentIndex].alt"
+                :key="slides[currentIndex]?.id"
+                :src="slides[currentIndex]?.src ?? ''"
+                :alt="slides[currentIndex]?.alt ?? ''"
                 class="absolute inset-0 w-full h-full object-cover"
                 :initial="{ opacity: 0, scale: 1.1 }"
                 :animate="{ opacity: 1, scale: 1 }"

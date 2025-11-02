@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { motion } from "motion-v";
 import type { Organization } from "~/models/Organization";
 
 const { data: organizationsResponse } = await useFetch("/api/organizations");
@@ -19,10 +20,16 @@ useHead({
 </script>
 
 <template>
-  <div class="min-h-screen py-24 bg-linear-to-b from-white via-blue-50 to-white">
+  <div class="min-h-screen py-32 bg-linear-to-b from-white via-blue-50 to-white">
     <div class="container px-4 mx-auto sm:px-6">
       <div class="max-w-6xl mx-auto">
-        <div class="mb-8">
+        <motion.div
+          class="mb-8"
+          :initial="{ opacity: 0, y: 30 }"
+          :whileInView="{ opacity: 1, y: 0 }"
+          :transition="{ duration: 0.8 }"
+          :inViewOptions="{ once: true }"
+        >
           <div class="flex flex-col gap-6 md:flex-row md:items-center">
             <NuxtImg
               :src="organization.logo"
@@ -49,9 +56,15 @@ useHead({
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
 
-        <div class="mb-8">
+        <motion.div
+          class="mb-8"
+          :initial="{ opacity: 0, y: 20 }"
+          :whileInView="{ opacity: 1, y: 0 }"
+          :transition="{ duration: 0.6, delay: 0.2 }"
+          :inViewOptions="{ once: true }"
+        >
           <div class="flex border-b border-gray-200">
             <button
               v-for="tab in [
@@ -75,12 +88,19 @@ useHead({
               {{ tab.label }}
             </button>
           </div>
-        </div>
+        </motion.div>
 
-        <div v-if="activeTab === 'overview'" class="space-y-8">
+        <motion.div
+          v-if="activeTab === 'overview'"
+          class="space-y-8"
+          :initial="{ opacity: 0 }"
+          :whileInView="{ opacity: 1 }"
+          :transition="{ duration: 0.6, delay: 0.3 }"
+          :inViewOptions="{ once: true }"
+        >
           <div class="p-6 bg-white border-2 border-blue-100 shadow-xl rounded-2xl md:p-8">
             <h2 class="mb-4 text-2xl font-bold text-gray-800">Deskripsi Logo</h2>
-            
+
             <!-- Symbol Meanings -->
             <div v-if="organization.logoDescriptions?.maknaSimbol?.length" class="mb-6">
               <h3 class="mb-3 text-lg font-semibold text-gray-700">Makna Simbol:</h3>
@@ -143,9 +163,16 @@ useHead({
               <p class="mt-4 text-gray-600">Periode Pendaftaran: {{ organization.recruitmentPeriod }}</p>
             </div>
           </div>
-        </div>
+        </motion.div>
 
-        <div v-if="activeTab === 'photos'" class="space-y-6">
+        <motion.div
+          v-if="activeTab === 'photos'"
+          class="space-y-6"
+          :initial="{ opacity: 0 }"
+          :whileInView="{ opacity: 1 }"
+          :transition="{ duration: 0.6, delay: 0.3 }"
+          :inViewOptions="{ once: true }"
+        >
           <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             <div
               v-for="(photo, index) in organization.photos"
@@ -159,9 +186,16 @@ useHead({
               />
             </div>
           </div>
-        </div>
+        </motion.div>
 
-        <div v-if="activeTab === 'leadership'" class="space-y-6">
+        <motion.div
+          v-if="activeTab === 'leadership'"
+          class="space-y-6"
+          :initial="{ opacity: 0 }"
+          :whileInView="{ opacity: 1 }"
+          :transition="{ duration: 0.6, delay: 0.3 }"
+          :inViewOptions="{ once: true }"
+        >
           <div class="grid gap-6 md:grid-cols-2">
             <div
               v-for="leader in organization.leadership.ketua"
@@ -235,9 +269,16 @@ useHead({
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
 
-        <div v-if="activeTab === 'sections'" class="space-y-6">
+        <motion.div
+          v-if="activeTab === 'sections'"
+          class="space-y-6"
+          :initial="{ opacity: 0 }"
+          :whileInView="{ opacity: 1 }"
+          :transition="{ duration: 0.6, delay: 0.3 }"
+          :inViewOptions="{ once: true }"
+        >
           <div
             v-for="section in organization.sections"
             :key="section.id"
@@ -303,9 +344,16 @@ useHead({
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
 
-        <div v-if="activeTab === 'activities'" class="space-y-6">
+        <motion.div
+          v-if="activeTab === 'activities'"
+          class="space-y-6"
+          :initial="{ opacity: 0 }"
+          :whileInView="{ opacity: 1 }"
+          :transition="{ duration: 0.6, delay: 0.3 }"
+          :inViewOptions="{ once: true }"
+        >
           <div class="grid gap-6 md:grid-cols-2">
             <div
               v-for="activity in organization.activities"
@@ -323,9 +371,16 @@ useHead({
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
 
-        <div v-if="activeTab === 'contact'" class="space-y-6">
+        <motion.div
+          v-if="activeTab === 'contact'"
+          class="space-y-6"
+          :initial="{ opacity: 0 }"
+          :whileInView="{ opacity: 1 }"
+          :transition="{ duration: 0.6, delay: 0.3 }"
+          :inViewOptions="{ once: true }"
+        >
           <div class="grid gap-6 md:grid-cols-2">
             <div
               v-if="organization.contactInfo?.instagram?.length"
@@ -381,7 +436,7 @@ useHead({
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   </div>

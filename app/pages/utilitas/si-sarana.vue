@@ -123,7 +123,7 @@ const submitReport = async () => {
 </script>
 
 <template>
-  <div class="min-h-screen py-24 bg-linear-to-br from-slate-50 via-orange-50 to-orange-100">
+  <div class="min-h-screen py-32 bg-linear-to-br from-slate-50 via-orange-50 to-orange-100">
     <div class="container px-4 mx-auto sm:px-6 lg:px-8">
       <div class="max-w-5xl mx-auto">
         

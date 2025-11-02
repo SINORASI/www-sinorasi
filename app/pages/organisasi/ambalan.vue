@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { motion } from "motion-v";
 import type { Organization } from "~/models/Organization";
 
 const { data: organizationsResponse } = await useFetch("/api/organizations");
@@ -19,7 +20,7 @@ useHead({
 </script>
 
 <template>
-  <div class="min-h-screen py-24 bg-linear-to-b from-white via-blue-50 to-white">
+  <div class="min-h-screen py-32 bg-linear-to-b from-white via-blue-50 to-white">
     <div class="container px-4 mx-auto sm:px-6">
       <div class="max-w-6xl mx-auto">
         <div class="mb-8">
@@ -80,7 +81,7 @@ useHead({
         <div v-if="activeTab === 'overview'" class="space-y-8">
           <div class="p-6 bg-white border-2 border-blue-100 shadow-xl rounded-2xl md:p-8">
             <h2 class="mb-4 text-2xl font-bold text-gray-800">Deskripsi Logo</h2>
-            
+
             <!-- Symbol Meanings -->
             <div v-if="organization.logoDescriptions?.maknaSimbol?.length" class="mb-6">
               <h3 class="mb-3 text-lg font-semibold text-gray-700">Makna Simbol:</h3>

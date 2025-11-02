@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { type TrafficTrackerForm, trafficTrackerSchema } from "~/utils/schema";
+import { motion } from "motion-v";
 
 interface TrafficResults {
   distance: {
@@ -42,8 +43,7 @@ interface TrafficResults {
   };
 }
 
-const schoolAddress =
-  "SMK Negeri 2 Singosari, Jl. Raya Singosari, Singosari, Malang, Jawa Timur, Indonesia";
+const schoolAddress = "SMK Negeri 2 Singosari, Jl. Raya Singosari, Singosari, Malang, Jawa Timur, Indonesia";
 
 const form = ref<TrafficTrackerForm>({
   origin: "",
@@ -68,7 +68,7 @@ const getCurrentLocation = () => {
       },
       (_err) => {
         error.value = "Tidak dapat mendapatkan lokasi saat ini. Pastikan izin lokasi diaktifkan.";
-      },
+      }
     );
   } else {
     error.value = "Geolokasi tidak didukung oleh browser ini.";
@@ -112,31 +112,50 @@ useHead({
   meta: [
     {
       name: "description",
-      content:
-        "Cek estimasi waktu tempuh ke SMK Negeri 2 Singosari dari lokasi Anda dengan traffic tracker.",
+      content: "Cek estimasi waktu tempuh ke SMK Negeri 2 Singosari dari lokasi Anda dengan traffic tracker.",
     },
   ],
 });
 </script>
 
 <template>
-  <div class="min-h-screen py-24 bg-linear-to-b from-white via-blue-50 to-white">
+  <div class="min-h-screen py-32 bg-linear-to-b from-white via-blue-50 to-white">
     <div class="container px-4 mx-auto sm:px-6">
-      
-      <div class="mb-12 text-center">
-        <div
+      <motion.div
+        class="mb-12 text-center"
+        :initial="{ opacity: 0, y: 20 }"
+        :whileInView="{ opacity: 1, y: 0 }"
+        :inViewOptions="{ once: true }"
+        :transition="{ duration: 0.6 }"
+      >
+        <motion.div
           class="inline-block px-10 py-6 mb-4 border border-blue-200 shadow-xl bg-linear-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
+          :initial="{ scale: 0.8, opacity: 0 }"
+          :whileInView="{ scale: 1, opacity: 1 }"
+          :inViewOptions="{ once: true }"
+          :transition="{ duration: 0.6, delay: 0.1 }"
         >
           <h1 class="text-3xl font-bold text-white md:text-4xl">Traffic Tracker</h1>
-        </div>
-        <p class="max-w-3xl mx-auto text-lg text-gray-600">
+        </motion.div>
+        <motion.p
+          class="max-w-3xl mx-auto text-lg text-gray-600"
+          :initial="{ opacity: 0, y: 15 }"
+          :whileInView="{ opacity: 1, y: 0 }"
+          :inViewOptions="{ once: true }"
+          :transition="{ duration: 0.6, delay: 0.2 }"
+        >
           Masukkan alamat rumah Anda untuk mendapatkan estimasi waktu tempuh ke SMK Negeri 2 Singosari, termasuk jarak,
           kondisi lalu lintas, dan informasi lainnya.
-        </p>
-      </div>
+        </motion.p>
+      </motion.div>
 
-      
-      <div class="max-w-md mx-auto mb-12">
+      <motion.div
+        class="max-w-md mx-auto mb-12"
+        :initial="{ opacity: 0, y: 20 }"
+        :whileInView="{ opacity: 1, y: 0 }"
+        :inViewOptions="{ once: true }"
+        :transition="{ duration: 0.6, delay: 0.2 }"
+      >
         <form @submit.prevent="calculateRoute" class="p-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
           <div class="mb-6">
             <label for="address" class="flex items-center mb-3 text-sm font-bold text-gray-800">
@@ -194,23 +213,43 @@ useHead({
             {{ loading ? "Menghitung..." : "Hitung Estimasi" }}
           </button>
         </form>
-      </div>
+      </motion.div>
 
-      
-      <div v-if="error" class="max-w-4xl mx-auto mb-12 p-4 border-l-4 border-red-600 bg-red-50 rounded-r-xl">
+      <motion.div
+        v-if="error"
+        class="max-w-4xl mx-auto mb-12 p-4 border-l-4 border-red-600 bg-red-50 rounded-r-xl"
+        :initial="{ opacity: 0, x: -20 }"
+        :whileInView="{ opacity: 1, x: 0 }"
+        :inViewOptions="{ once: true }"
+        :transition="{ duration: 0.5 }"
+      >
         <div class="flex items-start">
           <Icon name="lucide:alert-circle" size="20" class="text-red-600 mr-3 mt-0.5 shrink-0" />
           <p class="text-red-700">{{ error }}</p>
         </div>
-      </div>
+      </motion.div>
 
-
-      
-      <div v-if="results" class="max-w-6xl mx-auto">
-        
-        <div class="grid grid-cols-1 gap-6 mb-8 md:grid-cols-3">
-          <div
+      <motion.div
+        v-if="results"
+        class="max-w-6xl mx-auto"
+        :initial="{ opacity: 0 }"
+        :whileInView="{ opacity: 1 }"
+        :inViewOptions="{ once: true }"
+        :transition="{ duration: 0.6 }"
+      >
+        <motion.div
+          class="grid grid-cols-1 gap-6 mb-8 md:grid-cols-3"
+          :initial="{ opacity: 0 }"
+          :whileInView="{ opacity: 1 }"
+          :inViewOptions="{ once: true }"
+          :transition="{ duration: 0.6, staggerChildren: 0.1 }"
+        >
+          <motion.div
             class="p-8 text-center transition-shadow bg-white border-2 border-blue-100 shadow-xl rounded-2xl hover:shadow-2xl"
+            :initial="{ y: 30, opacity: 0 }"
+            :whileInView="{ y: 0, opacity: 1 }"
+            :inViewOptions="{ once: true }"
+            :transition="{ duration: 0.5 }"
           >
             <div class="inline-block p-4 mb-4 bg-blue-100 rounded-full">
               <Icon name="lucide:clock" size="32" class="text-blue-600" />
@@ -219,10 +258,14 @@ useHead({
             <p class="mb-2 text-3xl font-bold text-blue-600">{{ results.estimatedTime }}</p>
             <p class="text-sm text-gray-600">{{ results.estimatedMinutes }} menit</p>
             <p class="text-sm text-gray-600">Estimasi dengan kondisi lalu lintas saat ini</p>
-          </div>
+          </motion.div>
 
-          <div
+          <motion.div
             class="p-8 text-center transition-shadow bg-white border-2 border-orange-100 shadow-xl rounded-2xl hover:shadow-2xl"
+            :initial="{ y: 30, opacity: 0 }"
+            :whileInView="{ y: 0, opacity: 1 }"
+            :inViewOptions="{ once: true }"
+            :transition="{ duration: 0.5, delay: 0.1 }"
           >
             <div class="inline-block p-4 mb-4 bg-orange-100 rounded-full">
               <Icon name="lucide:map-pin" size="32" class="text-orange-600" />
@@ -230,10 +273,14 @@ useHead({
             <h3 class="mb-2 text-xl font-bold text-gray-800">Jarak</h3>
             <p class="mb-2 text-3xl font-bold text-orange-600">{{ results.distance.formatted }}</p>
             <p class="text-sm text-gray-600">{{ results.distance.meters }} meter</p>
-          </div>
+          </motion.div>
 
-          <div
+          <motion.div
             class="p-8 text-center transition-shadow bg-white border-2 border-blue-100 shadow-xl rounded-2xl hover:shadow-2xl"
+            :initial="{ y: 30, opacity: 0 }"
+            :whileInView="{ y: 0, opacity: 1 }"
+            :inViewOptions="{ once: true }"
+            :transition="{ duration: 0.5, delay: 0.2 }"
           >
             <div class="inline-block p-4 mb-4 bg-blue-100 rounded-full">
               <Icon name="lucide:traffic-cone" size="32" class="text-blue-600" />
@@ -252,11 +299,16 @@ useHead({
               {{ results.traffic }}
             </p>
             <p class="text-sm text-gray-600">Berdasarkan data real-time</p>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
-        
-        <div class="p-8 mb-8 text-center bg-white border-2 border-orange-100 shadow-xl rounded-2xl">
+        <motion.div
+          class="p-8 mb-8 text-center bg-white border-2 border-orange-100 shadow-xl rounded-2xl"
+          :initial="{ opacity: 0, y: 20 }"
+          :whileInView="{ opacity: 1, y: 0 }"
+          :inViewOptions="{ once: true }"
+          :transition="{ duration: 0.6 }"
+        >
           <div
             class="inline-block px-6 py-3 mb-4 border border-orange-200 bg-linear-to-r from-orange-500 to-orange-600 rounded-xl"
           >
@@ -274,11 +326,22 @@ useHead({
           >
             {{ results.recommendation }}
           </p>
-        </div>
+        </motion.div>
 
-        
-        <div class="grid grid-cols-1 gap-6 mb-8 md:grid-cols-2">
-          <div class="p-8 bg-white border-2 border-green-100 shadow-xl rounded-2xl">
+        <motion.div
+          class="grid grid-cols-1 gap-6 mb-8 md:grid-cols-2"
+          :initial="{ opacity: 0 }"
+          :whileInView="{ opacity: 1 }"
+          :inViewOptions="{ once: true }"
+          :transition="{ duration: 0.6, staggerChildren: 0.1 }"
+        >
+          <motion.div
+            class="p-8 bg-white border-2 border-green-100 shadow-xl rounded-2xl"
+            :initial="{ y: 20, opacity: 0 }"
+            :whileInView="{ y: 0, opacity: 1 }"
+            :inViewOptions="{ once: true }"
+            :transition="{ duration: 0.5 }"
+          >
             <div
               class="inline-block px-6 py-3 mb-6 border border-green-200 bg-linear-to-r from-green-600 to-green-700 rounded-xl"
             >
@@ -310,13 +373,19 @@ useHead({
                 <Icon name="lucide:map" size="20" class="text-green-600 mt-0.5 shrink-0" />
                 <div>
                   <span class="font-semibold">Area sekitar:</span>
-                  <p class="mt-1 text-gray-600">{{ results.analytics.proximity.nearbyAreas.join(', ') }}</p>
+                  <p class="mt-1 text-gray-600">{{ results.analytics.proximity.nearbyAreas.join(", ") }}</p>
                 </div>
               </li>
             </ul>
-          </div>
+          </motion.div>
 
-          <div class="p-8 bg-white border-2 border-purple-100 shadow-xl rounded-2xl">
+          <motion.div
+            class="p-8 bg-white border-2 border-purple-100 shadow-xl rounded-2xl"
+            :initial="{ y: 20, opacity: 0 }"
+            :whileInView="{ y: 0, opacity: 1 }"
+            :inViewOptions="{ once: true }"
+            :transition="{ duration: 0.5, delay: 0.1 }"
+          >
             <div
               class="inline-block px-6 py-3 mb-6 border border-purple-200 bg-linear-to-r from-purple-600 to-purple-700 rounded-xl"
             >
@@ -334,7 +403,7 @@ useHead({
                 <Icon name="lucide:alarm-clock" size="20" class="text-purple-600 mt-0.5 shrink-0" />
                 <div>
                   <span class="font-semibold">Jam sibuk:</span>
-                  <p class="mt-1 text-gray-600">{{ results.analytics.timeAnalytics.peakHours.join(', ') }}</p>
+                  <p class="mt-1 text-gray-600">{{ results.analytics.timeAnalytics.peakHours.join(", ") }}</p>
                 </div>
               </li>
               <li class="flex items-start gap-3 p-4 border-l-4 border-purple-600 bg-purple-50 rounded-xl">
@@ -359,11 +428,16 @@ useHead({
                 </div>
               </li>
             </ul>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
-        
-        <div class="p-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
+        <motion.div
+          class="p-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl"
+          :initial="{ opacity: 0, y: 20 }"
+          :whileInView="{ opacity: 1, y: 0 }"
+          :inViewOptions="{ once: true }"
+          :transition="{ duration: 0.6 }"
+        >
           <div
             class="inline-block px-6 py-3 mb-6 border border-blue-200 bg-linear-to-r from-blue-600 to-blue-800 rounded-xl"
           >
@@ -406,10 +480,15 @@ useHead({
               <p class="text-gray-600">{{ results.analytics.usefulInfo.averageSpeed }}</p>
             </div>
           </div>
-        </div>
+        </motion.div>
 
-        
-        <div class="p-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
+        <motion.div
+          class="p-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl"
+          :initial="{ opacity: 0, y: 20 }"
+          :whileInView="{ opacity: 1, y: 0 }"
+          :inViewOptions="{ once: true }"
+          :transition="{ duration: 0.6 }"
+        >
           <div
             class="inline-block px-6 py-3 mb-6 border border-blue-200 bg-linear-to-r from-blue-600 to-blue-800 rounded-xl"
           >
@@ -438,8 +517,8 @@ useHead({
               </div>
             </li>
           </ul>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </div>
   </div>
 </template>

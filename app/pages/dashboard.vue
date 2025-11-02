@@ -66,7 +66,7 @@ const formatDate = (dateString: string) => {
 </script>
 
 <template>
-  <div class="min-h-screen py-24 bg-linear-to-b from-white via-blue-50 to-white">
+  <div class="min-h-screen py-32 bg-linear-to-b from-white via-blue-50 to-white">
     <div class="container px-4 mx-auto sm:px-6">
       <div class="max-w-6xl mx-auto">
         <div class="mb-8">

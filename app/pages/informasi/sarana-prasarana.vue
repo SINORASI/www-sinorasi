@@ -126,7 +126,7 @@ const getStatusColor = (status: string) => {
 <template>
   <div class="min-h-screen bg-linear-to-b from-white via-blue-50 to-white">
     <!-- Hero Section -->
-    <section class="py-20 pt-32">
+    <section class="py-12 pt-32">
       <div class="container max-w-6xl px-4 mx-auto sm:px-6">
         <div class="text-center mb-16">
           <h1 class="text-5xl font-bold text-gray-900 mb-6">Sarana & Prasarana</h1>
@@ -166,13 +166,13 @@ const getStatusColor = (status: string) => {
     </section>
 
     <!-- Sarana Section -->
-    <section v-show="activeTab === 'sarana'" class="py-16">
-      <div class="container max-w-6xl px-4 mx-auto sm:px-6">
+    <section v-show="activeTab === 'sarana'" class="">
+      <div class="container max-w-6xl px-4 pb-24 mx-auto sm:px-6">
         <!-- Overview Card -->
         <div class="mb-12">
-          <div class="p-8 bg-gradient-to-r from-blue-50 to-blue-100 border-2 border-blue-200 rounded-2xl shadow-lg">
+          <div class="p-8 bg-linear-to-r from-blue-50 to-blue-100 border-2 border-blue-200 rounded-2xl shadow-lg">
             <div class="flex items-start gap-4">
-              <Icon name="lucide:info" size="32" class="text-blue-600 flex-shrink-0 mt-1" />
+              <Icon name="lucide:info" size="32" class="text-blue-600 shrink-0 mt-1" />
               <div>
                 <h2 class="text-2xl font-bold text-gray-900 mb-3">Sarana Pembelajaran</h2>
                 <p class="text-gray-700 leading-relaxed">
@@ -206,9 +206,9 @@ const getStatusColor = (status: string) => {
       <div class="container max-w-6xl px-4 mx-auto sm:px-6">
         <!-- Overview Card -->
         <div class="mb-12">
-          <div class="p-8 bg-gradient-to-r from-orange-50 to-orange-100 border-2 border-orange-200 rounded-2xl shadow-lg">
+          <div class="p-8 bg-linear-to-r from-orange-50 to-orange-100 border-2 border-orange-200 rounded-2xl shadow-lg">
             <div class="flex items-start gap-4">
-              <Icon name="lucide:info" size="32" class="text-orange-600 flex-shrink-0 mt-1" />
+              <Icon name="lucide:info" size="32" class="text-orange-600 shrink-0 mt-1" />
               <div>
                 <h2 class="text-2xl font-bold text-gray-900 mb-3">Prasarana Penunjang</h2>
                 <p class="text-gray-700 leading-relaxed">
@@ -225,7 +225,7 @@ const getStatusColor = (status: string) => {
           <div class="overflow-x-auto rounded-2xl border-2 border-orange-100 shadow-lg">
             <table class="w-full">
               <thead>
-                <tr class="bg-gradient-to-r from-orange-500 to-orange-600">
+                <tr class="bg-linear-to-r from-orange-500 to-orange-600">
                   <th class="px-6 py-4 text-left text-white font-semibold">Fasilitas</th>
                   <th class="px-6 py-4 text-left text-white font-semibold">Kondisi</th>
                   <th class="px-6 py-4 text-center text-white font-semibold">Status</th>
@@ -273,7 +273,7 @@ const getStatusColor = (status: string) => {
 
         <!-- Statistics Cards -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div class="p-6 bg-gradient-to-br from-green-50 to-green-100 border-2 border-green-200 rounded-2xl">
+          <div class="p-6 bg-linear-to-br from-green-50 to-green-100 border-2 border-green-200 rounded-2xl">
             <div class="flex items-center justify-between">
               <div>
                 <p class="text-gray-600 font-medium">Fasilitas Sempurna</p>
@@ -282,7 +282,7 @@ const getStatusColor = (status: string) => {
               <Icon name="lucide:check-circle" size="40" class="text-green-500" />
             </div>
           </div>
-          <div class="p-6 bg-gradient-to-br from-blue-50 to-blue-100 border-2 border-blue-200 rounded-2xl">
+          <div class="p-6 bg-linear-to-br from-blue-50 to-blue-100 border-2 border-blue-200 rounded-2xl">
             <div class="flex items-center justify-between">
               <div>
                 <p class="text-gray-600 font-medium">Fasilitas Baik</p>
@@ -291,7 +291,7 @@ const getStatusColor = (status: string) => {
               <Icon name="lucide:thumbs-up" size="40" class="text-blue-500" />
             </div>
           </div>
-          <div class="p-6 bg-gradient-to-br from-yellow-50 to-yellow-100 border-2 border-yellow-200 rounded-2xl">
+          <div class="p-6 bg-linear-to-br from-yellow-50 to-yellow-100 border-2 border-yellow-200 rounded-2xl">
             <div class="flex items-center justify-between">
               <div>
                 <p class="text-gray-600 font-medium">Perlu Peningkatan</p>

@@ -584,8 +584,6 @@ useHead({
                 <div class="flex items-center space-x-4 bg-blue-50 px-6 py-3 rounded-full">
                   <Icon name="lucide:calendar" size="20" class="text-blue-600" />
                   <span class="text-sm font-semibold text-blue-800">Didirikan: 25 Mei 2007</span>
-                  <Icon name="lucide:award" size="20" class="text-orange-600" />
-                  <span class="text-sm font-semibold text-orange-800">Juara LKS</span>
                 </div>
               </motion.div>
             </div>

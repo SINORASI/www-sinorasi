@@ -185,10 +185,15 @@ onMounted(() => {
                   </div>
                 </div>
                 <div class="flex flex-col gap-4 text-center md:text-left md:w-2/3 md:pr-5 md:justify-center">
-                  <h3 class="text-xl md:text-2xl font-bold text-gray-800">
-                    {{ achievement.title }}
-                  </h3>
-                  <p class="leading-relaxed text-gray-600 text-sm md:text-base line-clamp-4">
+                  <div>
+                    <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-2">
+                      {{ achievement.title }}
+                    </h3>
+                    <p class="text-xs md:text-sm text-gray-500 font-medium">
+                      {{ achievement.year }}
+                    </p>
+                  </div>
+                  <p class="leading-relaxed text-gray-600 text-sm md:text-base">
                     {{ achievement.description }}
                   </p>
                   <div class="flex flex-wrap gap-2 justify-center md:justify-start">

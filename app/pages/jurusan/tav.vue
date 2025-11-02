@@ -70,6 +70,9 @@ const closeGame = () => {
 };
 
 onMounted(() => {
+  // Scroll to top on page mount
+  window.scrollTo(0, 0);
+
   const handleScroll = () => {
     const scrollTop = window.scrollY;
     const scrollThreshold = 300;

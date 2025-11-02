@@ -147,7 +147,7 @@ const submitStory = async () => {
 
 <template>
   <motion.div
-    class="min-h-screen py-24 bg-linear-to-br from-teal-50 via-blue-50 to-indigo-50"
+    class="min-h-screen py-32 bg-linear-to-br from-teal-50 via-blue-50 to-indigo-50"
     :initial="{ opacity: 0 }"
     :animate="{ opacity: 1 }"
     :transition="{ duration: 0.8 }"
