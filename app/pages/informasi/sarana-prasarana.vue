@@ -85,6 +85,16 @@ const prasaranaData = [
   },
 ];
 
+const infrastrukturImages = [
+  { src: "/images/infrastruktur/bkkdepan.jpg", alt: "BKK Depan" },
+  { src: "/images/infrastruktur/depankaproav.jpg", alt: "Depan KAPRO AV" },
+  { src: "/images/infrastruktur/gedunggedungdroneview.jpg", alt: "Gedung Drone View" },
+  { src: "/images/infrastruktur/lapangan.jpg", alt: "Lapangan" },
+  { src: "/images/infrastruktur/lapanganvoli.jpg", alt: "Lapangan Voli" },
+  { src: "/images/infrastruktur/lobbydepan.jpg", alt: "Lobby Depan" },
+  { src: "/images/infrastruktur/masjiddepan.jpg", alt: "Masjid Depan" },
+];
+
 useHead({
   title: "Sarana Prasarana - Informasi - SMKN 2 Singosari",
   meta: [
@@ -210,35 +220,59 @@ const getStatusColor = (status: string) => {
         </div>
 
         <!-- Prasarana Table -->
-        <div class="overflow-x-auto rounded-2xl border-2 border-orange-100 shadow-lg">
-          <table class="w-full">
-            <thead>
-              <tr class="bg-gradient-to-r from-orange-500 to-orange-600">
-                <th class="px-6 py-4 text-left text-white font-semibold">Fasilitas</th>
-                <th class="px-6 py-4 text-left text-white font-semibold">Kondisi</th>
-                <th class="px-6 py-4 text-center text-white font-semibold">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                v-for="(item, index) in prasaranaData"
-                :key="index"
-                :class="[index % 2 === 0 ? 'bg-white' : 'bg-orange-50', 'hover:bg-orange-100 transition-colors']"
-              >
-                <td class="px-6 py-4 text-gray-900 font-medium">{{ item.facility }}</td>
-                <td class="px-6 py-4 text-gray-700">{{ item.condition }}</td>
-                <td class="px-6 py-4 text-center">
-                  <span :class="['inline-block px-4 py-2 rounded-full text-sm font-semibold border', getStatusColor(item.status)]">
-                    {{ item.status }}
-                  </span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="mb-12">
+          <h3 class="text-2xl font-bold text-gray-900 mb-6">Kondisi Fasilitas</h3>
+          <div class="overflow-x-auto rounded-2xl border-2 border-orange-100 shadow-lg">
+            <table class="w-full">
+              <thead>
+                <tr class="bg-gradient-to-r from-orange-500 to-orange-600">
+                  <th class="px-6 py-4 text-left text-white font-semibold">Fasilitas</th>
+                  <th class="px-6 py-4 text-left text-white font-semibold">Kondisi</th>
+                  <th class="px-6 py-4 text-center text-white font-semibold">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  v-for="(item, index) in prasaranaData"
+                  :key="index"
+                  :class="[index % 2 === 0 ? 'bg-white' : 'bg-orange-50', 'hover:bg-orange-100 transition-colors']"
+                >
+                  <td class="px-6 py-4 text-gray-900 font-medium">{{ item.facility }}</td>
+                  <td class="px-6 py-4 text-gray-700">{{ item.condition }}</td>
+                  <td class="px-6 py-4 text-center">
+                    <span :class="['inline-block px-4 py-2 rounded-full text-sm font-semibold border', getStatusColor(item.status)]">
+                      {{ item.status }}
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Infrastruktur Gallery -->
+        <div class="mb-12">
+          <h3 class="text-2xl font-bold text-gray-900 mb-6">Galeri Infrastruktur</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div v-for="(image, index) in infrastrukturImages" :key="index" class="group">
+              <div class="overflow-hidden bg-white border-2 border-orange-100 rounded-2xl shadow-lg hover:shadow-xl hover:border-orange-300 transition-all duration-300">
+                <div class="relative w-full h-48 overflow-hidden bg-gray-200">
+                  <img
+                    :src="image.src"
+                    :alt="image.alt"
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                </div>
+                <div class="p-4">
+                  <p class="text-sm font-semibold text-gray-700 text-center">{{ image.alt }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- Statistics Cards -->
-        <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div class="p-6 bg-gradient-to-br from-green-50 to-green-100 border-2 border-green-200 rounded-2xl">
             <div class="flex items-center justify-between">
               <div>
