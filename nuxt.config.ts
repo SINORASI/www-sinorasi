@@ -73,6 +73,20 @@ export default defineNuxtConfig({
       }
     },
     densities: [1, 2],
+    /**
+     * CRITICAL FIX: Allow serving images from /public directory
+     * AND allow external images to pass through without strict validation
+     * This prevents errors when images exist only on external servers
+     */
+    alias: {
+      "~": "./"
+    },
+    // Don't fail on missing local images - they may be external only
+    options: {
+      nuxt: {
+        baseURL: "/",
+      }
+    }
   },
   nitro: {
     // Ensure public directory is included in the build

@@ -9,22 +9,24 @@ export default defineEventHandler(async (event) => {
 
     let filteredData = [...newsData];
 
-    if (tag && typeof tag === "string") {
+    if (tag && typeof tag === "string" && tag.trim() !== "") {
       filteredData = filteredData.filter((item) =>
         item.tags.some((t) => t.toLowerCase().includes(tag.toLowerCase())),
       );
     }
 
-    if (tags && typeof tags === "string") {
-      const tagArray = tags.split(",").map((t) => t.trim().toLowerCase());
-      filteredData = filteredData.filter((item) =>
-        tagArray.every((searchTag) =>
-          item.tags.some((itemTag) => itemTag.toLowerCase().includes(searchTag)),
-        ),
-      );
+    if (tags && typeof tags === "string" && tags.trim() !== "") {
+      const tagArray = tags.split(",").map((t) => t.trim().toLowerCase()).filter(t => t !== "");
+      if (tagArray.length > 0) {
+        filteredData = filteredData.filter((item) =>
+          tagArray.every((searchTag) =>
+            item.tags.some((itemTag) => itemTag.toLowerCase().includes(searchTag)),
+          ),
+        );
+      }
     }
 
-    if (search && typeof search === "string") {
+    if (search && typeof search === "string" && search.trim() !== "") {
       const searchLower = search.toLowerCase();
       filteredData = filteredData.filter(
         (item) =>

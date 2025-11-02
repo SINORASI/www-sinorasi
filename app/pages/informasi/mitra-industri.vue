@@ -165,7 +165,7 @@ const partners = computed(() => {
                 <div
                   class="relative mb-4 overflow-hidden bg-linear-to-br from-gray-50 to-gray-100 rounded-xl aspect-video group-hover:shadow-md transition-all duration-500 border border-gray-100"
                 >
-                  <NuxtImg
+                  <img
                     :src="partner.logo"
                     :alt="partner.name"
                     class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
@@ -240,7 +240,7 @@ const partners = computed(() => {
                     <div
                       class="flex items-center justify-center w-full h-full p-8 bg-linear-to-br from-white to-gray-50"
                     >
-                      <NuxtImg
+                      <SmartImage
                         :src="selectedPartner.images[currentImageIndex]"
                         :alt="selectedPartner.name"
                         class="object-contain max-w-full max-h-full transition-transform duration-300 hover:scale-105"

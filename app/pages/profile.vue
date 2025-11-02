@@ -144,7 +144,7 @@ const handleLogout = async () => {
           <div class="p-6 bg-white border-2 border-blue-100 shadow-xl rounded-2xl md:p-8">
             <h3 class="mb-6 text-xl font-bold text-gray-800">Foto Profil</h3>
             <div class="flex items-center gap-6">
-              <NuxtImg
+              <SmartImage
                 :src="previewUrl || '/images/profile-placeholder.png'"
                 alt="Profile"
                 class="object-cover w-24 h-24 border-4 border-blue-200 rounded-full shadow-lg md:w-32 md:h-32"

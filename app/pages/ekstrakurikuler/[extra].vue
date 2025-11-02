@@ -111,7 +111,7 @@ useHead({
       >
         <div class="grid gap-0 lg:grid-cols-2">
           <div class="h-80 lg:h-auto">
-            <NuxtImg
+            <SmartImage
               :src="extra.image || '/images/placeholder.jpg'"
               :alt="extra.name"
               class="object-cover w-full h-full"
@@ -195,7 +195,7 @@ useHead({
             :key="idx"
             class="overflow-hidden transition-all duration-300 bg-white border border-gray-100 shadow-lg rounded-2xl hover:shadow-2xl hover:border-blue-200"
           >
-            <NuxtImg
+            <SmartImage
               :src="activity.image || '/images/placeholder.jpg'"
               :alt="activity.title"
               class="object-cover w-full h-56"

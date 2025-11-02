@@ -100,9 +100,9 @@ useHead({
             class="overflow-hidden transition-all bg-white border-2 border-blue-100 shadow-xl rounded-2xl hover:shadow-2xl hover:border-blue-200 group"
           >
             <div class="relative h-80">
-              <NuxtImg
+              <img
                 src="/images/bg-aula.webp"
-                :alt="`Fasilitas ${index}`"
+                alt="Fasilitas"
                 class="object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
               />
               <div class="absolute inset-0 bg-linear-to-t from-black/70 via-black/30 to-transparent"></div>

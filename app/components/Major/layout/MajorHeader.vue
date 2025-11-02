@@ -55,7 +55,7 @@ if (!majorDatas.value?.[major]) {
           ' flex justify-center items-center transition-all duration-500 ease-in-out'
         "
       >
-        <NuxtImg
+        <img
           :src="majorDatas?.[major]?.logo"
           :style="{ width: sizeClass === 'full' ? '60px' : '40px', transition: 'width 0.5s ease-in-out' }"
           alt="Logo Jurusan"
