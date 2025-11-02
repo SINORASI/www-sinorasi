@@ -389,9 +389,15 @@ const exitFullscreen = async () => {
     if (document.fullscreenElement) {
       await document.exitFullscreen();
     }
+    // Re-enable body scroll when exiting fullscreen
+    document.documentElement.style.overflow = '';
+    document.body.style.overflow = '';
     minigameState.setIsRunning(false);
   } catch (error) {
     console.error("Error exiting fullscreen:", error);
+    // Re-enable body scroll even if error occurs
+    document.documentElement.style.overflow = '';
+    document.body.style.overflow = '';
     minigameState.setIsRunning(false);
   }
 
@@ -408,6 +414,9 @@ const exitFullscreen = async () => {
 const handleFullscreenChange = () => {
   isFullscreen.value = !!document.fullscreenElement;
   if (!isFullscreen.value) {
+    // Re-enable body scroll when exiting fullscreen
+    document.documentElement.style.overflow = '';
+    document.body.style.overflow = '';
     minigameState.setIsRunning(false);
     emit("close");
   }
@@ -420,6 +429,9 @@ const enterFullscreen = async () => {
     try {
       await container.requestFullscreen();
       isFullscreen.value = true;
+      // Disable body scroll when fullscreen is active
+      document.documentElement.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';
     } catch (error) {
       console.warn("Fullscreen request failed, continuing without fullscreen:", error);
       isFullscreen.value = false;

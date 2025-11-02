@@ -585,7 +585,7 @@ useHead({
                   <Icon name="lucide:calendar" size="20" class="text-blue-600" />
                   <span class="text-sm font-semibold text-blue-800">Didirikan: 25 Mei 2007</span>
                   <Icon name="lucide:award" size="20" class="text-orange-600" />
-                  <span class="text-sm font-semibold text-orange-800">Juara LKS Nasional</span>
+                  <span class="text-sm font-semibold text-orange-800">Juara LKS</span>
                 </div>
               </motion.div>
             </div>
