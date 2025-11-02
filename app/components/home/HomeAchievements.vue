@@ -56,22 +56,30 @@ const stopAutoPlay = () => {
     autoPlayInterval.value = null;
   }
   if (progressInterval.value) {
-    clearInterval(progressInterval.value);
+    clearTimeout(progressInterval.value);
     progressInterval.value = null;
   }
 };
 
 const resetProgress = () => {
   progressValue.value = 0;
-  if (progressInterval.value) clearInterval(progressInterval.value);
+  if (progressInterval.value) clearTimeout(progressInterval.value);
 
-  progressInterval.value = setInterval(() => {
-    if (progressValue.value < 100) {
-      progressValue.value += 2;
-    } else {
-      progressValue.value = 100;
+  // Animate progress from 0 to 100 over 5 seconds using requestAnimationFrame
+  const startTime = Date.now();
+  const duration = 4950; // Slightly less than 5000ms for auto-play interval
+
+  const animate = () => {
+    const elapsed = Date.now() - startTime;
+    const progress = Math.min((elapsed / duration) * 100, 100);
+    progressValue.value = progress;
+
+    if (progress < 100) {
+      progressInterval.value = requestAnimationFrame(animate) as any;
     }
-  }, 100);
+  };
+
+  progressInterval.value = requestAnimationFrame(animate) as any;
 };
 
 const toggleAutoPlay = () => {
@@ -210,11 +218,10 @@ onMounted(() => {
 
           <!-- Progress Bar -->
           <div class="w-full bg-gray-200 rounded-full h-1 overflow-hidden">
-            <motion.div
-              class="h-full bg-linear-to-r from-blue-500 to-blue-600 rounded-full"
-              :style="{ width: `${progressValue}%` }"
-              :transition="{ duration: 0.1 }"
-            ></motion.div>
+            <div
+              class="h-full bg-linear-to-r from-blue-500 to-blue-600 rounded-full transition-all"
+              :style="{ width: `${progressValue}%`, transitionDuration: '50ms', transitionTimingFunction: 'linear' }"
+            ></div>
           </div>
 
           <!-- Navigation -->
