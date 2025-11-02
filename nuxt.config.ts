@@ -57,6 +57,30 @@ export default defineNuxtConfig({
       xl: 1280,
       xxl: 1536,
     },
+    domains: [
+      "smkn2-singosari.sch.id",
+      "localhost:3000",
+      "localhost",
+      "127.0.0.1",
+    ],
+    provider: "ipx",
+    presets: {
+      default: {
+        modifiers: {
+          format: "webp",
+          quality: "80",
+        }
+      }
+    },
+    densities: [1, 2],
+  },
+  nitro: {
+    // Ensure public directory is included in the build
+    prerender: {
+      crawlLinks: true,
+    },
+    // Serve static files from public directory
+    static: true,
   },
   experimental: {
     viteEnvironmentApi: true,
