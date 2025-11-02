@@ -93,7 +93,7 @@ onMounted(() => {
           <div class="grid items-center grid-cols-1 gap-12 lg:grid-cols-2">
             <div class="flex flex-col items-start justify-center">
               <div class="w-full max-w-md lg:max-w-lg">
-                <NuxtImg
+                <img
                   src="/images/majorIcon/logo-dkv.webp"
                   alt="DKV Logo"
                   class="object-contain w-full h-auto drop-shadow-2xl"
@@ -111,8 +111,8 @@ onMounted(() => {
               </div>
 
               <div class="relative w-full max-w-sm lg:max-w-md">
-                <NuxtImg
-                  src="/images/major/hero-major-ornament/dkv/camera.webp"
+                <img
+                  src="/images/majorIcon/logo-dkv.webp"
                   alt="DKV Ornament"
                   class="object-contain w-full h-auto drop-shadow-2xl"
                 />

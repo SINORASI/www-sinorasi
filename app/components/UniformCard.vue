@@ -19,7 +19,7 @@
           enter-from-class="opacity-0 translate-x-[30px]"
           leave-to-class="opacity-0 -translate-x-[30px]"
         >
-          <NuxtImg
+          <SmartImage
             v-for="(image, index) in currentImages"
             v-show="index === currentImageIndex"
             :key="`${selectedGrade}-${selectedGender}-${index}`"

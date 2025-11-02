@@ -21,7 +21,7 @@
 
         <div class="mb-8 overflow-hidden bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
           <div class="h-64 overflow-hidden md:h-96">
-            <NuxtImg :src="event.imageUrl" :alt="event.title" class="object-cover w-full h-full" />
+            <SmartImage :src="event.imageUrl" :alt="event.title" class="object-cover w-full h-full" />
           </div>
 
           <div class="p-8 md:p-10">

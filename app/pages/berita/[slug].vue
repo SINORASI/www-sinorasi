@@ -14,7 +14,7 @@
 
         <div class="mb-10">
           <div class="mb-6">
-            <NuxtImg
+            <SmartImage
               :src="news.thumbnail"
               :alt="news.title"
               class="w-full h-80 md:h-[500px] object-cover rounded-2xl shadow-2xl border-4 border-white"
@@ -70,7 +70,7 @@
               class="relative flex flex-col overflow-hidden transition-all duration-300 bg-white border border-gray-100 shadow-lg cursor-pointer rounded-2xl group hover:shadow-2xl hover:border-blue-200"
             >
               <div class="h-40 overflow-hidden">
-                <NuxtImg
+                <SmartImage
                   :src="relatedNews.thumbnail"
                   class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
                   :alt="relatedNews.title"

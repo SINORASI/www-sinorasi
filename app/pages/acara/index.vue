@@ -268,7 +268,7 @@ const filterOptions = [
               :whileHover="{ scale: 1.05 }"
               :transition="{ duration: 0.3 }"
             >
-              <NuxtImg :src="event.imageUrl" :alt="event.title" class="object-cover w-full h-full" />
+              <SmartImage :src="event.imageUrl" :alt="event.title" class="object-cover w-full h-full" />
             </motion.div>
 
             <div class="flex flex-col grow p-6">

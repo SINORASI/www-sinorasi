@@ -424,7 +424,7 @@ const formatDate = (dateString: string) => {
             <!-- Image Container -->
             <motion.div :whileHover="{ scale: 1.02 }" :transition="{ duration: 0.4 }" class="h-48 overflow-hidden">
               <motion.div :whileHover="{ scale: 1.15 }" :transition="{ duration: 0.5 }">
-                <NuxtImg :src="news.thumbnail" class="object-cover w-full h-full" :alt="news.title" />
+                <SmartImage :src="news.thumbnail" class="object-cover w-full h-full" :alt="news.title" />
               </motion.div>
             </motion.div>
 
