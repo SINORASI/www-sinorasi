@@ -1,6 +1,6 @@
 <!-- @ts-nocheck -->
 <script lang="ts" setup>
-import { ref, computed, onMounted, onUnmounted } from "vue";
+import { ref, computed, onMounted, onUnmounted, watch, nextTick } from "vue";
 import { useMinigameState } from "~/composables/useMinigameState";
 
 const emit = defineEmits(["close"]);
@@ -17,6 +17,7 @@ const ctx = ref<CanvasRenderingContext2D | null>(null);
 const sketchImage = ref<HTMLImageElement | null>(null);
 const coloredPixels = ref<ImageData | null>(null);
 const isLoading = ref(true);
+const canvasKey = ref(0); // Force canvas recreation
 
 // Available sketches
 const sketches = [
@@ -159,24 +160,49 @@ const enterFullscreen = async () => {
 
 // Load sketch image
 const loadSketch = async () => {
+  if (!currentSketch.value) return;
+  
   isLoading.value = true;
+  
+  // Reset all state completely
+  sketchImage.value = null;
+  coloredPixels.value = null;
+  ctx.value = null;
+  canvasRef.value = null;
+  
+  // Force canvas recreation by changing key
+  canvasKey.value++;
+  
+  // Wait for next tick to ensure canvas is destroyed
+  await nextTick();
+  
+  // Create and load new image
   const img = new Image();
   img.crossOrigin = "anonymous";
 
-  img.onload = () => {
+  img.onload = async () => {
     sketchImage.value = img;
-    initCanvas();
     isLoading.value = false;
+    
+    // Wait for canvas to be rendered in DOM after isLoading becomes false
+    await nextTick();
+    await nextTick();
+    await nextTick();
+    
+    // Now initialize the canvas
+    if (canvasRef.value) {
+      initCanvas();
+    } else {
+      console.error("Canvas ref not available after image load");
+    }
   };
 
   img.onerror = () => {
-    console.error("Failed to load sketch image");
+    console.error("Failed to load sketch image:", currentSketch.value.sketch);
     isLoading.value = false;
   };
 
-  if (currentSketch.value) {
-    img.src = currentSketch.value.sketch;
-  }
+  img.src = currentSketch.value.sketch;
 };
 
 // Initialize canvas
@@ -193,10 +219,14 @@ const initCanvas = () => {
   ctx.value = canvas.getContext("2d", { willReadFrequently: true });
 
   if (ctx.value) {
-    // Draw the sketch
+    // Clear any existing content
     ctx.value.clearRect(0, 0, canvas.width, canvas.height);
+    
+    // Draw white background
     ctx.value.fillStyle = "#FFFFFF";
     ctx.value.fillRect(0, 0, canvas.width, canvas.height);
+    
+    // Draw the sketch on top
     ctx.value.drawImage(image, 0, 0);
 
     // Store the current colored pixels
@@ -337,8 +367,13 @@ const handleCanvasClick = (event: MouseEvent) => {
 // Select sketch
 const selectSketch = (index: number) => {
   currentSketchIndex.value = index;
-  loadSketch();
 };
+
+// Watch for sketch changes
+watch(currentSketchIndex, async () => {
+  await nextTick();
+  loadSketch();
+});
 
 // Reset canvas
 const resetCanvas = () => {
@@ -496,6 +531,7 @@ onUnmounted(() => {
           </div>
           <canvas
             v-else
+            :key="canvasKey"
             ref="canvasRef"
             @click="handleCanvasClick"
             class="max-w-full max-h-full cursor-crosshair"
