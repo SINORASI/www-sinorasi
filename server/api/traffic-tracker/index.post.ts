@@ -1,35 +1,61 @@
 import { defineEventHandler, getQuery, readBody, createError, setCookie, getCookie } from 'h3';
 import { type TrafficTrackerForm, trafficTrackerSchema } from "~/utils/schema";
 
+// School coordinates: SMK Negeri 2 Singosari
+const SCHOOL_COORDINATES = {
+  lat: -7.91390657,
+  lng: 112.64087571,
+};
+
 interface Coordinate {
   lat: number;
   lng: number;
 }
 
+interface MapboxRoute {
+  distance: number; // in meters
+  duration: number; // in seconds
+  geometry?: {
+    coordinates: [number, number][];
+  };
+}
+
 interface TrafficResults {
-  time: string;
-  distance: string;
+  distance: {
+    kilometers: number;
+    meters: number;
+    formatted: string;
+  };
+  estimatedTime: string;
+  estimatedMinutes: number;
   traffic: string;
-  route: string;
   bestTime: string;
   tips: string;
   recommendation: string;
+  route: {
+    summary: string;
+    polyline?: string;
+  };
   analytics: {
     proximity: {
       distanceToSchool: string;
       estimatedArrival: string;
-      timeToSchool: string;
+      travelTime: string;
+      nearbyAreas: string[];
     };
     timeAnalytics: {
       currentCongestion: string;
       peakHours: string[];
       recommendedDeparture: string;
-      alternativeRoutes: number;
+      timeCategory: string;
+      delayTime: string;
     };
     usefulInfo: {
       fuelEstimate: string;
       carbonFootprint: string;
       safetyRating: string;
+      weatherImpact: string;
+      averageSpeed: string;
     };
   };
 }
@@ -47,74 +73,95 @@ export default defineEventHandler(async (event): Promise<TrafficResults> => {
     });
   }
 
-  const _osrmBaseUrl = config.public?.osrmBaseUrl || "https://router.project-osrm.org";
-
-  const schoolAddress =
-    "SMK Negeri 2 Singosari, Jl. Raya Singosari, Singosari, Malang, Jawa Timur, Indonesia";
-
   try {
-    const originCoords = await geocodeAddress(body.origin);
-    if (!originCoords) {
+    // Get Mapbox API key
+    const mapboxToken = config.mapboxToken || config.public?.mapboxToken;
+    if (!mapboxToken) {
+      console.warn("Mapbox token not configured, falling back to coordinate parsing");
+    }
+
+    // Try to geocode the origin address using Mapbox
+    let userCoords = await geocodeAddressMapbox(body.origin, mapboxToken);
+
+    if (!userCoords) {
+      // Fallback to parsing coordinates directly
+      userCoords = parseCoordinates(body.origin);
+    }
+
+    if (!userCoords) {
       throw createError({
         statusCode: 400,
-        statusMessage: "Origin address not found. Please check the address and try again.",
+        statusMessage: "Unable to determine your location. Please provide valid coordinates or address.",
       });
     }
 
-    const destinationCoords = await geocodeAddress(schoolAddress);
-    if (!destinationCoords) {
-      throw createError({
-        statusCode: 500,
-        statusMessage: "School address geocoding failed. Please contact support.",
-      });
-    }
+    // Get route data from Mapbox
+    const routeData = await getMapboxRoute(
+      userCoords,
+      SCHOOL_COORDINATES,
+      body.travelMode,
+      mapboxToken,
+    );
 
-    const routeData = await getOSRMRoute(originCoords, destinationCoords, body.travelMode);
-
-    if (!routeData || routeData.routes.length === 0) {
+    if (!routeData) {
       throw createError({
         statusCode: 400,
-        statusMessage:
-          "Unable to calculate route. The routing service may be temporarily unavailable.",
+        statusMessage: "Unable to calculate route. Please try again.",
       });
     }
 
-    const route = routeData.routes[0];
-    const duration = formatDuration(route.duration);
-    const distance = formatDistance(route.distance);
-    const traffic = getTrafficStatus(route.duration, route.duration);
-    const routeSummary = `Route via ${route.legs[0]?.summary || "main roads"}`;
+    const distanceKm = routeData.distance / 1000;
+    const estimatedMinutes = Math.round(routeData.duration / 60);
+    const estimatedTime = formatDuration(estimatedMinutes);
+
+    // Determine traffic status based on time of day
+    const traffic = getTrafficStatus();
+    const nearbyAreas = getNearbyAreas(distanceKm);
+    const delayTime = calculateDelayTime(estimatedMinutes, traffic);
+
     const bestTime = getBestTime();
-    const tips = getTips(traffic, duration);
-    const recommendation = getRecommendation(duration, traffic);
+    const tips = getTips(traffic, estimatedMinutes);
+    const recommendation = getRecommendation(estimatedMinutes, traffic);
 
     const analytics = {
       proximity: {
-        distanceToSchool: distance,
-        estimatedArrival: calculateEstimatedArrival(duration),
-        timeToSchool: duration,
+        distanceToSchool: `${distanceKm.toFixed(2)} km`,
+        estimatedArrival: calculateEstimatedArrival(estimatedMinutes),
+        travelTime: estimatedTime,
+        nearbyAreas,
       },
       timeAnalytics: {
         currentCongestion: traffic,
         peakHours: ["07:00-09:00", "16:00-18:00"],
         recommendedDeparture: getRecommendedDeparture(),
-        alternativeRoutes: routeData.routes.length,
+        timeCategory: getCongestionTimeCategory(),
+        delayTime,
       },
       usefulInfo: {
-        fuelEstimate: calculateFuelEstimate(distance),
-        carbonFootprint: calculateCarbonFootprint(distance),
+        fuelEstimate: calculateFuelEstimate(distanceKm),
+        carbonFootprint: calculateCarbonFootprint(distanceKm),
         safetyRating: getSafetyRating(traffic),
+        weatherImpact: getWeatherImpact(distanceKm),
+        averageSpeed: calculateAverageSpeed(distanceKm, estimatedMinutes),
       },
     };
 
     return {
-      time: duration,
-      distance,
+      distance: {
+        kilometers: parseFloat(distanceKm.toFixed(2)),
+        meters: Math.round(routeData.distance),
+        formatted: `${distanceKm.toFixed(2)} km`,
+      },
+      estimatedTime,
+      estimatedMinutes,
       traffic,
-      route: routeSummary,
       bestTime,
       tips,
       recommendation,
+      route: {
+        summary: `Route from your location to SMK Negeri 2 Singosari (${body.travelMode})`,
+        polyline: routeData.geometry ? encodePolyline(routeData.geometry.coordinates) : undefined,
+      },
       analytics,
     };
   } catch (error: unknown) {
@@ -124,113 +171,330 @@ export default defineEventHandler(async (event): Promise<TrafficResults> => {
       throw error;
     }
 
-    if (
-      error &&
-      typeof error === "object" &&
-      "message" in error &&
-      typeof error.message === "string" &&
-      error.message.includes("fetch")
-    ) {
-      throw createError({
-        statusCode: 503,
-        statusMessage: "External service temporarily unavailable. Please try again later.",
-      });
-    }
-
-    if (
-      error &&
-      typeof error === "object" &&
-      "message" in error &&
-      typeof error.message === "string" &&
-      error.message.includes("JSON")
-    ) {
-      throw createError({
-        statusCode: 502,
-        statusMessage: "Invalid response from routing service. Please try again.",
-      });
-    }
-
     throw createError({
       statusCode: 500,
-      statusMessage: "An unexpected error occurred while calculating your route. Please try again.",
+      statusMessage: "An unexpected error occurred while calculating your distance. Please try again.",
     });
   }
 });
 
-async function geocodeAddress(address: string): Promise<Coordinate | null> {
+/**
+ * Geocode address using Mapbox Geocoding API
+ */
+async function geocodeAddressMapbox(address: string, token?: string): Promise<Coordinate | null> {
+  if (!token) return null;
+
   try {
-    const nominatimUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}&limit=1&countrycodes=id`;
-    const response = await fetch(nominatimUrl, {
-      headers: {
-        "User-Agent": "SMKN2-Singosari-Traffic-Tracker/1.0",
-      },
-    });
+    const encodedAddress = encodeURIComponent(address);
+    const mapboxUrl = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodedAddress}.json?country=ID&limit=1&access_token=${token}`;
 
+    const response = await fetch(mapboxUrl);
     if (!response.ok) {
-      throw new Error("Geocoding service unavailable");
-    }
-
-    const data = await response.json();
-
-    if (data.length === 0) {
+      console.warn("Mapbox geocoding failed");
       return null;
     }
 
-    return {
-      lat: parseFloat(data[0].lat),
-      lng: parseFloat(data[0].lon),
-    };
+    const data = await response.json();
+    if (!data.features || data.features.length === 0) {
+      return null;
+    }
+
+    const [lng, lat] = data.features[0].geometry.coordinates;
+    return { lat, lng };
   } catch (error) {
-    console.error("Geocoding error:", error);
+    console.error("Mapbox geocoding error:", error);
     return null;
   }
 }
 
-async function getOSRMRoute(origin: Coordinate, destination: Coordinate, travelMode: string) {
+/**
+ * Get route from Mapbox Directions API
+ */
+async function getMapboxRoute(
+  origin: Coordinate,
+  destination: Coordinate,
+  profile: string,
+  token?: string,
+): Promise<MapboxRoute | null> {
   try {
-    const profileMap: { [key: string]: string } = {
-      driving: "driving",
-      walking: "walking",
-      cycling: "cycling",
-      transit: "driving",
-    };
-
-    const profile = profileMap[travelMode] || "driving";
-    const osrmUrl = `https://router.project-osrm.org/route/v1/${profile}/${origin.lng},${origin.lat};${destination.lng},${destination.lat}?overview=full&alternatives=true&steps=true`;
-
-    const response = await fetch(osrmUrl);
-
-    if (!response.ok) {
-      throw new Error("Routing service unavailable");
+    // Default to Haversine if no token
+    if (!token) {
+      const distance = calculateHaversineDistance(
+        origin.lat,
+        origin.lng,
+        destination.lat,
+        destination.lng,
+      );
+      const estimatedMinutes = estimateTravelTime(distance, profile);
+      return {
+        distance: distance * 1000,
+        duration: estimatedMinutes * 60,
+      };
     }
 
-    return await response.json();
+    // Map travel mode to Mapbox profile
+    const profileMap: { [key: string]: string } = {
+      driving: "driving-traffic",
+      walking: "walking",
+      bicycling: "cycling",
+      transit: "driving-traffic",
+      cycling: "cycling",
+    };
+
+    const mapboxProfile = profileMap[profile] || "driving-traffic";
+    const mapboxUrl = `https://api.mapbox.com/directions/v5/mapbox/${mapboxProfile}/${origin.lng},${origin.lat};${destination.lng},${destination.lat}?access_token=${token}&overview=full&geometries=geojson&steps=true`;
+
+    const response = await fetch(mapboxUrl);
+    if (!response.ok) {
+      console.warn("Mapbox directions API failed, falling back to Haversine");
+      // Fallback to Haversine calculation
+      const distance = calculateHaversineDistance(
+        origin.lat,
+        origin.lng,
+        destination.lat,
+        destination.lng,
+      );
+      const estimatedMinutes = estimateTravelTime(distance, profile);
+      return {
+        distance: distance * 1000,
+        duration: estimatedMinutes * 60,
+      };
+    }
+
+    const data = await response.json();
+    if (!data.routes || data.routes.length === 0) {
+      return null;
+    }
+
+    const route = data.routes[0];
+    return {
+      distance: route.distance, // in meters
+      duration: route.duration, // in seconds
+      geometry: route.geometry,
+    };
   } catch (error) {
-    console.error("OSRM routing error:", error);
-    throw error;
+    console.error("Mapbox route error:", error);
+    // Fallback to Haversine
+    const distance = calculateHaversineDistance(
+      origin.lat,
+      origin.lng,
+      destination.lat,
+      destination.lng,
+    );
+    const estimatedMinutes = estimateTravelTime(distance, profile);
+    return {
+      distance: distance * 1000,
+      duration: estimatedMinutes * 60,
+    };
   }
 }
 
-function formatDuration(seconds: number): string {
-  const hours = Math.floor(seconds / 3600);
-  const minutes = Math.floor((seconds % 3600) / 60);
+/**
+ * Encode polyline coordinates (Google polyline algorithm)
+ */
+function encodePolyline(coordinates: [number, number][]): string {
+  let encoded = "";
+  let prevLat = 0;
+  let prevLng = 0;
+
+  for (const [lng, lat] of coordinates) {
+    const latDelta = Math.round((lat - prevLat) * 1e5);
+    const lngDelta = Math.round((lng - prevLng) * 1e5);
+
+    encoded += encodeValue(latDelta);
+    encoded += encodeValue(lngDelta);
+
+    prevLat = lat;
+    prevLng = lng;
+  }
+
+  return encoded;
+}
+
+function encodeValue(value: number): string {
+  let encoded = "";
+  value = value << 1;
+  if (value < 0) {
+    value = ~value;
+  }
+
+  while (value >= 0x20) {
+    encoded += String.fromCharCode((0x20 | (value & 0x1f)) + 63);
+    value >>= 5;
+  }
+
+  encoded += String.fromCharCode(value + 63);
+  return encoded;
+}
+
+/**
+ * Parse coordinates from address string or coordinates
+ * Expects format: "lat,lng" or just coordinates
+ */
+function parseCoordinates(input: string): Coordinate | null {
+  try {
+    // Try parsing as "lat,lng" format
+    const parts = input.split(",").map((p) => parseFloat(p.trim()));
+    if (parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1])) {
+      return { lat: parts[0], lng: parts[1] };
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Calculate distance between two coordinates using Haversine formula
+ * Returns distance in kilometers
+ */
+function calculateHaversineDistance(
+  lat1: number,
+  lng1: number,
+  lat2: number,
+  lng2: number,
+): number {
+  const R = 6371; // Earth's radius in kilometers
+  const dLat = toRad(lat2 - lat1);
+  const dLng = toRad(lng2 - lng1);
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng / 2) * Math.sin(dLng / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+}
+
+function toRad(degrees: number): number {
+  return degrees * (Math.PI / 180);
+}
+
+/**
+ * Estimate travel time based on distance and travel mode
+ * Returns time in minutes
+ */
+function estimateTravelTime(distanceKm: number, travelMode: string): number {
+  // Average speeds by transport mode (km/h)
+  const speeds: { [key: string]: number } = {
+    driving: 40,
+    walking: 5,
+    cycling: 15,
+    bicycling: 15,
+    transit: 25,
+  };
+
+  const speed = speeds[travelMode] || speeds.driving;
+  return Math.round((distanceKm / speed) * 60); // Convert to minutes
+}
+
+/**
+ * Calculate delay time based on traffic conditions
+ */
+function calculateDelayTime(estimatedMinutes: number, traffic: string): string {
+  let delayPercent = 0;
+
+  switch (traffic) {
+    case "Lancar":
+      delayPercent = 0;
+      break;
+    case "Padat":
+      delayPercent = 20;
+      break;
+    case "Macet":
+      delayPercent = 50;
+      break;
+    default:
+      delayPercent = 10;
+  }
+
+  if (delayPercent === 0) {
+    return "Tidak ada delay - jalan lancar";
+  }
+
+  const delayMinutes = Math.round((estimatedMinutes * delayPercent) / 100);
+  return `+${delayMinutes} menit (${delayPercent}% delay)`;
+}
+
+/**
+ * Calculate average speed in km/h
+ */
+function calculateAverageSpeed(distanceKm: number, durationMinutes: number): string {
+  if (durationMinutes === 0) return "0 km/h";
+  const speedKmh = (distanceKm / durationMinutes) * 60;
+  return `${speedKmh.toFixed(1)} km/h`;
+}
+
+/**
+ * Get traffic status based on time of day
+ */
+function getTrafficStatus(): string {
+  const now = new Date();
+  const hour = now.getHours();
+  const minute = now.getMinutes();
+  const timeInMinutes = hour * 60 + minute;
+
+  // Peak hours: 07:00-09:00 and 16:00-18:00
+  const isPeakMorning = timeInMinutes >= 7 * 60 && timeInMinutes < 9 * 60;
+  const isPeakEvening = timeInMinutes >= 16 * 60 && timeInMinutes < 18 * 60;
+
+  if (isPeakMorning || isPeakEvening) return "Macet";
+  if (hour >= 9 && hour < 16) return "Lancar";
+  if (hour >= 18 || hour < 6) return "Lancar";
+
+  return "Padat";
+}
+
+/**
+ * Get nearby areas based on distance
+ */
+function getNearbyAreas(distanceKm: number): string[] {
+  if (distanceKm < 2) return ["Singosari Utama", "Dekat Sekolah"];
+  if (distanceKm < 5) return ["Sekitar Singosari", "Kawasan Sekolah"];
+  if (distanceKm < 10) return ["Kota Malang", "Sekitar Malang"];
+  if (distanceKm < 20) return ["Malang Raya", "Daerah Sekitar Kota"];
+  return ["Area Jauh", "Luar Kota Malang"];
+}
+
+/**
+ * Get congestion category based on time
+ */
+function getCongestionTimeCategory(): string {
+  const now = new Date();
+  const hour = now.getHours();
+  const minute = now.getMinutes();
+  const timeInMinutes = hour * 60 + minute;
+
+  const isPeakMorning = timeInMinutes >= 7 * 60 && timeInMinutes < 9 * 60;
+  const isPeakEvening = timeInMinutes >= 16 * 60 && timeInMinutes < 18 * 60;
+
+  if (isPeakMorning) return "Jam Sibuk Pagi (07:00-09:00)";
+  if (isPeakEvening) return "Jam Sibuk Sore (16:00-18:00)";
+  if (hour >= 9 && hour < 16) return "Jam Normal";
+  if (hour >= 18 || hour < 6) return "Jam Sepi";
+
+  return "Jam Transisi";
+}
+
+/**
+ * Get weather impact info
+ */
+function getWeatherImpact(distanceKm: number): string {
+  const now = new Date();
+  const hour = now.getHours();
+
+  if (hour >= 12 && hour <= 16) return "Berisiko hujan sore (musim hujan)";
+  if (hour >= 18 || hour <= 6) return "Cuaca aman, visibilitas terbatas di malam hari";
+
+  return "Kondisi cuaca normal";
+}
+
+function formatDuration(minutes: number): string {
+  const hours = Math.floor(minutes / 60);
+  const mins = minutes % 60;
 
   if (hours > 0) {
-    return `${hours} jam ${minutes} menit`;
+    return `${hours} jam ${mins} menit`;
   }
-  return `${minutes} menit`;
-}
-
-function formatDistance(meters: number): string {
-  const km = meters / 1000;
-  return `${km.toFixed(1)} km`;
-}
-
-function getTrafficStatus(trafficDuration: number, normalDuration: number): string {
-  const ratio = trafficDuration / normalDuration;
-  if (ratio < 1.2) return "Lancar";
-  if (ratio < 1.5) return "Padat";
-  return "Macet";
+  return `${mins} menit`;
 }
 
 function getBestTime(): string {
@@ -244,30 +508,22 @@ function getBestTime(): string {
   return "Luar jam sibuk";
 }
 
-function getTips(traffic: string, duration: string): string {
+function getTips(traffic: string, minutes: number): string {
   if (traffic === "Macet") return "Pertimbangkan transportasi umum atau berangkat lebih awal.";
-  if (duration.includes("jam")) return "Perjalanan cukup lama, pastikan kondisi kendaraan baik.";
+  if (minutes > 60) return "Perjalanan cukup lama, pastikan kondisi kendaraan baik.";
   return "Perjalanan normal, selamat jalan!";
 }
 
-function getRecommendation(duration: string, traffic: string): string {
-  const durationMin = parseInt(duration.split(" ")[0] || "0", 10);
-  if (traffic === "Macet" || durationMin > 60) return "Tidak direkomendasikan saat ini.";
-  if (durationMin > 30) return "Direkomendasikan jika mendesak.";
+function getRecommendation(minutes: number, traffic: string): string {
+  if (traffic === "Macet" || minutes > 60) return "Tidak direkomendasikan saat ini.";
+  if (minutes > 30) return "Direkomendasikan jika mendesak.";
   return "Direkomendasikan.";
 }
 
-function calculateEstimatedArrival(duration: string): string {
+function calculateEstimatedArrival(minutes: number): string {
   const now = new Date();
-  const durationMin = parseDurationToMinutes(duration);
-  const arrival = new Date(now.getTime() + durationMin * 60000);
+  const arrival = new Date(now.getTime() + minutes * 60000);
   return arrival.toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" });
-}
-
-function parseDurationToMinutes(duration: string): number {
-  const hours = duration.match(/(\d+)\s*jam/);
-  const mins = duration.match(/(\d+)\s*menit/);
-  return (hours ? parseInt(hours[1], 10) * 60 : 0) + (mins ? parseInt(mins[1], 10) : 0);
 }
 
 function getRecommendedDeparture(): string {
@@ -278,18 +534,16 @@ function getRecommendedDeparture(): string {
   return "Besok pagi";
 }
 
-function calculateFuelEstimate(distance: string): string {
-  const distKm = parseFloat(distance.replace(" km", ""));
-  const avgConsumption = 12;
-  const liters = distKm / avgConsumption;
-  return `${liters.toFixed(1)} liter`;
+function calculateFuelEstimate(distanceKm: number): string {
+  const avgConsumption = 12; // km per liter
+  const liters = distanceKm / avgConsumption;
+  return `${liters.toFixed(2)} liter`;
 }
 
-function calculateCarbonFootprint(distance: string): string {
-  const distKm = parseFloat(distance.replace(" km", ""));
-  const co2PerKm = 0.12;
-  const co2 = distKm * co2PerKm;
-  return `${co2.toFixed(1)} kg CO2`;
+function calculateCarbonFootprint(distanceKm: number): string {
+  const co2PerKm = 0.12; // kg CO2 per km
+  const co2 = distanceKm * co2PerKm;
+  return `${co2.toFixed(3)} kg CO2`;
 }
 
 function getSafetyRating(traffic: string): string {
