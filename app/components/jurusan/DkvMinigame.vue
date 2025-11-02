@@ -382,11 +382,11 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="fixed inset-0 z-50 flex flex-col bg-linear-to-br from-purple-50 via-pink-50 to-blue-50">
+  <div class="fixed inset-0 z-50 flex flex-col bg-linear-to-br from-blue-700 via-blue-600 to-blue-900 font-nunito">
     <!-- Header -->
-    <div class="flex items-center justify-between p-4 bg-white shadow-lg md:p-6">
+    <div class="flex items-center justify-between p-4 bg-black/20 md:p-6">
       <div class="flex items-center gap-3">
-        <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-linear-to-r from-purple-500 to-pink-500">
+        <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-linear-to-r from-orange-500 to-yellow-500">
           <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               stroke-linecap="round"
@@ -397,14 +397,14 @@ onUnmounted(() => {
           </svg>
         </div>
         <div>
-          <h1 class="text-lg font-bold text-gray-800 md:text-2xl">Buku Pewarna DKV</h1>
-          <p class="text-xs text-gray-500 md:text-sm">Seni & Desain Digital</p>
+          <h1 class="text-lg font-bold text-white md:text-2xl font-oswald">Buku Pewarna DKV</h1>
+          <p class="text-xs text-gray-200 md:text-sm">Seni & Desain Digital</p>
         </div>
       </div>
 
       <button
         @click="exitFullscreen"
-        class="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white transition-all duration-300 rounded-lg bg-linear-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 hover:shadow-lg"
+        class="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white transition-all duration-300 bg-red-600 rounded-lg hover:bg-red-700 hover:shadow-lg"
       >
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -416,8 +416,8 @@ onUnmounted(() => {
     <!-- Main Content -->
     <div class="flex flex-1 overflow-hidden">
       <!-- Left Sidebar - Sketch Selector -->
-      <div class="w-48 p-4 overflow-y-auto bg-white border-r md:w-64">
-        <h3 class="mb-3 text-sm font-bold text-gray-700 md:text-base">Pilih Sketsa</h3>
+      <div class="w-48 p-4 overflow-y-auto bg-black/20 md:w-64">
+        <h3 class="mb-3 text-sm font-bold text-white md:text-base font-oswald">Pilih Sketsa</h3>
         <div class="space-y-2">
           <button
             v-for="(sketch, index) in sketches"
@@ -426,21 +426,21 @@ onUnmounted(() => {
             class="relative w-full p-2 overflow-hidden text-left transition-all duration-200 border-2 rounded-lg group"
             :class="
               currentSketchIndex === index
-                ? 'border-purple-500 bg-purple-50'
-                : 'border-gray-200 hover:border-purple-300'
+                ? 'border-orange-500 bg-white/20'
+                : 'border-white/20 hover:border-orange-400 bg-white/10'
             "
           >
             <div class="flex items-center gap-2">
-              <div class="shrink-0 w-12 h-12 overflow-hidden bg-gray-100 rounded md:w-16 md:h-16">
+              <div class="shrink-0 w-12 h-12 overflow-hidden bg-gray-800 rounded md:w-16 md:h-16">
                 <img :src="sketch.sketch" :alt="sketch.name" class="object-cover w-full h-full" />
               </div>
               <div class="flex-1 min-w-0">
-                <p class="text-xs font-semibold text-gray-800 truncate md:text-sm">{{ sketch.name }}</p>
-                <p class="text-xs text-gray-500">{{ index + 1 }}/{{ sketches.length }}</p>
+                <p class="text-xs font-semibold text-white truncate md:text-sm">{{ sketch.name }}</p>
+                <p class="text-xs text-gray-300">{{ index + 1 }}/{{ sketches.length }}</p>
               </div>
             </div>
             <div v-if="currentSketchIndex === index" class="absolute top-2 right-2">
-              <div class="w-3 h-3 bg-purple-500 rounded-full"></div>
+              <div class="w-3 h-3 bg-orange-500 rounded-full"></div>
             </div>
           </button>
         </div>
@@ -449,11 +449,11 @@ onUnmounted(() => {
       <!-- Center - Canvas Area -->
       <div class="flex flex-col flex-1 p-4 overflow-hidden md:p-6">
         <div class="flex items-center justify-between mb-4">
-          <h2 class="text-lg font-bold text-gray-800 md:text-xl">{{ currentSketch.name }}</h2>
+          <h2 class="text-lg font-bold text-white md:text-xl font-oswald">{{ currentSketch.name }}</h2>
           <div class="flex gap-2">
             <button
               @click="downloadArtwork"
-              class="flex items-center gap-2 px-3 py-2 text-sm font-semibold text-white transition-all rounded-lg bg-linear-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700"
+              class="flex items-center gap-2 px-3 py-2 text-sm font-semibold text-white transition-all bg-green-500 rounded-lg hover:bg-green-600"
               title="Unduh karya seni Anda"
             >
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -468,7 +468,7 @@ onUnmounted(() => {
             </button>
             <button
               @click="resetCanvas"
-              class="flex items-center gap-2 px-3 py-2 text-sm font-semibold text-white transition-all rounded-lg bg-linear-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700"
+              class="flex items-center gap-2 px-3 py-2 text-sm font-semibold text-white transition-all bg-orange-500 rounded-lg hover:bg-orange-600"
               title="Atur ulang kanvas (tombol R)"
             >
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -486,13 +486,13 @@ onUnmounted(() => {
 
         <!-- Canvas -->
         <div
-          class="flex items-center justify-center flex-1 overflow-auto bg-white border-2 border-gray-200 rounded-lg shadow-inner"
+          class="flex items-center justify-center flex-1 overflow-auto rounded-lg bg-white/10 backdrop-blur-sm border-2 border-white/20"
         >
           <div v-if="isLoading" class="text-center">
             <div
-              class="w-16 h-16 mx-auto border-4 border-purple-200 rounded-full animate-spin border-t-purple-500"
+              class="w-16 h-16 mx-auto border-4 border-orange-300 rounded-full animate-spin border-t-orange-500"
             ></div>
-            <p class="mt-4 text-gray-600">Memuat sketsa...</p>
+            <p class="mt-4 text-gray-200">Memuat sketsa...</p>
           </div>
           <canvas
             v-else
@@ -505,21 +505,23 @@ onUnmounted(() => {
       </div>
 
       <!-- Right Sidebar - Tools & Colors -->
-      <div class="w-48 p-4 overflow-y-auto bg-white border-l md:w-64">
+      <div class="w-48 p-4 overflow-y-auto bg-black/20 md:w-64">
         <!-- Tools -->
         <div class="mb-6">
-          <h3 class="mb-3 text-sm font-bold text-gray-700 md:text-base">Alat</h3>
+          <h3 class="mb-3 text-sm font-bold text-white md:text-base font-oswald">Alat</h3>
           <div class="space-y-2">
             <button
               @click="activeTool = 'bucket'"
               class="flex items-center w-full gap-3 px-3 py-3 text-left transition-all border-2 rounded-lg"
               :class="
-                activeTool === 'bucket' ? 'border-purple-500 bg-purple-50' : 'border-gray-200 hover:border-purple-300'
+                activeTool === 'bucket'
+                  ? 'border-orange-500 bg-white/20'
+                  : 'border-white/20 hover:border-orange-400 bg-white/10'
               "
             >
               <svg
                 class="shrink-0 w-5 h-5"
-                :class="activeTool === 'bucket' ? 'text-purple-500' : 'text-gray-600'"
+                :class="activeTool === 'bucket' ? 'text-orange-400' : 'text-gray-300'"
                 fill="currentColor"
                 viewBox="0 0 20 20"
               >
@@ -528,10 +530,10 @@ onUnmounted(() => {
                 />
               </svg>
               <div class="flex-1 min-w-0">
-                <p class="text-sm font-semibold" :class="activeTool === 'bucket' ? 'text-purple-700' : 'text-gray-800'">
+                <p class="text-sm font-semibold" :class="activeTool === 'bucket' ? 'text-orange-300' : 'text-white'">
                   Ember Cat
                 </p>
-                <p class="text-xs text-gray-500">Tekan B</p>
+                <p class="text-xs text-gray-400">Tekan B</p>
               </div>
             </button>
 
@@ -540,13 +542,13 @@ onUnmounted(() => {
               class="flex items-center w-full gap-3 px-3 py-3 text-left transition-all border-2 rounded-lg"
               :class="
                 activeTool === 'eyedropper'
-                  ? 'border-purple-500 bg-purple-50'
-                  : 'border-gray-200 hover:border-purple-300'
+                  ? 'border-orange-500 bg-white/20'
+                  : 'border-white/20 hover:border-orange-400 bg-white/10'
               "
             >
               <svg
                 class="shrink-0 w-5 h-5"
-                :class="activeTool === 'eyedropper' ? 'text-purple-500' : 'text-gray-600'"
+                :class="activeTool === 'eyedropper' ? 'text-orange-400' : 'text-gray-300'"
                 fill="currentColor"
                 viewBox="0 0 20 20"
               >
@@ -559,11 +561,11 @@ onUnmounted(() => {
               <div class="flex-1 min-w-0">
                 <p
                   class="text-sm font-semibold"
-                  :class="activeTool === 'eyedropper' ? 'text-purple-700' : 'text-gray-800'"
+                  :class="activeTool === 'eyedropper' ? 'text-orange-300' : 'text-white'"
                 >
                   Pipet Warna
                 </p>
-                <p class="text-xs text-gray-500">Tekan I</p>
+                <p class="text-xs text-gray-400">Tekan I</p>
               </div>
             </button>
           </div>
@@ -571,21 +573,21 @@ onUnmounted(() => {
 
         <!-- Active Color -->
         <div class="mb-6">
-          <h3 class="mb-3 text-sm font-bold text-gray-700 md:text-base">Warna Aktif</h3>
-          <div class="flex items-center gap-3 p-3 border-2 border-gray-200 rounded-lg">
+          <h3 class="mb-3 text-sm font-bold text-white md:text-base font-oswald">Warna Aktif</h3>
+          <div class="flex items-center gap-3 p-3 border-2 rounded-lg border-white/20 bg-white/10">
             <div
-              class="shrink-0 w-12 h-12 border-2 border-gray-300 rounded-lg shadow-inner"
+              class="shrink-0 w-12 h-12 border-2 rounded-lg shadow-inner border-white/30"
               :style="{ backgroundColor: activeColor }"
             ></div>
             <div class="flex-1 min-w-0">
-              <p class="text-xs font-mono text-gray-600 uppercase">{{ activeColor }}</p>
+              <p class="text-xs font-mono text-gray-300 uppercase">{{ activeColor }}</p>
             </div>
           </div>
         </div>
 
         <!-- Color Palette -->
         <div>
-          <h3 class="mb-3 text-sm font-bold text-gray-700 md:text-base">Palet Warna</h3>
+          <h3 class="mb-3 text-sm font-bold text-white md:text-base font-oswald">Palet Warna</h3>
           <div class="grid grid-cols-5 gap-2">
             <button
               v-for="color in colorPalette"
@@ -595,7 +597,7 @@ onUnmounted(() => {
                 activeTool = 'bucket';
               "
               class="relative w-full transition-all border-2 rounded-lg shadow-sm aspect-square hover:scale-110"
-              :class="activeColor === color ? 'border-purple-500 ring-2 ring-purple-300' : 'border-gray-300'"
+              :class="activeColor === color ? 'border-orange-500 ring-2 ring-orange-300' : 'border-white/30'"
               :style="{ backgroundColor: color }"
               :title="color"
             >
@@ -618,12 +620,12 @@ onUnmounted(() => {
         </div>
 
         <!-- Quick Tips -->
-        <div class="p-3 mt-6 border-2 border-purple-200 rounded-lg bg-purple-50">
-          <h4 class="mb-2 text-xs font-bold text-purple-700">Tips Cepat:</h4>
-          <ul class="space-y-1 text-xs text-purple-600">
-            <li>• Tekan <kbd class="px-1 bg-white rounded">B</kbd> untuk Ember</li>
-            <li>• Tekan <kbd class="px-1 bg-white rounded">I</kbd> untuk Pipet</li>
-            <li>• Tekan <kbd class="px-1 bg-white rounded">R</kbd> untuk Atur Ulang</li>
+        <div class="p-3 mt-6 border-2 rounded-lg border-orange-500/50 bg-orange-500/10">
+          <h4 class="mb-2 text-xs font-bold text-orange-400 font-oswald">Tips Cepat:</h4>
+          <ul class="space-y-1 text-xs text-orange-200">
+            <li>• Tekan <kbd class="px-1 bg-gray-700 rounded">B</kbd> untuk Ember</li>
+            <li>• Tekan <kbd class="px-1 bg-gray-700 rounded">I</kbd> untuk Pipet</li>
+            <li>• Tekan <kbd class="px-1 bg-gray-700 rounded">R</kbd> untuk Atur Ulang</li>
             <li>• Klik area untuk isi dengan warna</li>
           </ul>
         </div>

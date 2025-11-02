@@ -267,11 +267,11 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="fixed inset-0 z-50 flex flex-col bg-linear-to-br from-gray-900 via-gray-800 to-black">
+  <div class="fixed inset-0 z-50 flex flex-col bg-linear-to-br from-blue-700 via-blue-600 to-blue-900 font-nunito">
     <!-- Header -->
-    <div class="flex items-center justify-between p-4 bg-gray-900 shadow-lg md:p-6">
+    <div class="flex items-center justify-between p-4 bg-black/20 md:p-6">
       <div class="flex items-center gap-3">
-        <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-linear-to-r from-red-500 to-orange-500">
+        <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-linear-to-r from-orange-500 to-yellow-500">
           <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               stroke-linecap="round"
@@ -288,19 +288,19 @@ onUnmounted(() => {
           </svg>
         </div>
         <div>
-          <h1 class="text-lg font-bold text-white md:text-2xl">Simulator Foto BC</h1>
-          <p class="text-xs text-gray-400 md:text-sm">Kuasai Segitiga Exposure</p>
+          <h1 class="text-lg font-bold text-white md:text-2xl font-oswald">Simulator Foto BC</h1>
+          <p class="text-xs text-gray-200 md:text-sm">Kuasai Segitiga Exposure</p>
         </div>
       </div>
 
       <button
         @click="exitFullscreen"
-        class="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white transition-all duration-300 rounded-lg bg-linear-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 hover:shadow-lg"
+        class="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white transition-all duration-300 bg-red-600 rounded-lg hover:bg-red-700 hover:shadow-lg"
       >
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
         </svg>
-        <span class="hidden md:inline">Exit</span>
+        <span class="hidden md:inline">Keluar</span>
       </button>
     </div>
 
@@ -310,10 +310,10 @@ onUnmounted(() => {
       <div class="flex flex-col items-center justify-center flex-1 p-4 md:p-8">
         <div class="w-full max-w-3xl space-y-4">
           <!-- Scenario Info -->
-          <div class="flex items-center justify-between p-4 bg-gray-800 rounded-lg">
+          <div class="flex items-center justify-between p-4 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20">
             <div>
-              <h3 class="text-lg font-bold text-white">{{ currentScenario.name }}</h3>
-              <p class="text-sm text-gray-400">{{ currentScenario.description }}</p>
+              <h3 class="text-lg font-bold text-white font-oswald">{{ currentScenario.name }}</h3>
+              <p class="text-sm text-gray-200">{{ currentScenario.description }}</p>
             </div>
             <div
               class="px-3 py-1 text-xs font-bold text-white rounded-full"
@@ -328,7 +328,7 @@ onUnmounted(() => {
           </div>
 
           <!-- Viewfinder -->
-          <div class="relative overflow-hidden bg-black border-4 border-gray-700 rounded-lg aspect-video shadow-2xl">
+          <div class="relative overflow-hidden bg-black border-4 rounded-lg aspect-video shadow-2xl border-white/20">
             <!-- Image with dynamic filter -->
             <div class="flex items-center justify-center w-full h-full p-8" :style="viewfinderStyle">
               <img
@@ -342,15 +342,15 @@ onUnmounted(() => {
             <div class="absolute inset-0 pointer-events-none">
               <!-- Rule of thirds grid -->
               <div class="absolute inset-0 grid grid-cols-3 grid-rows-3 opacity-30">
-                <div class="border border-white"></div>
-                <div class="border border-white"></div>
-                <div class="border border-white"></div>
-                <div class="border border-white"></div>
-                <div class="border border-white"></div>
-                <div class="border border-white"></div>
-                <div class="border border-white"></div>
-                <div class="border border-white"></div>
-                <div class="border border-white"></div>
+                <div class="border border-white/50"></div>
+                <div class="border border-white/50"></div>
+                <div class="border border-white/50"></div>
+                <div class="border border-white/50"></div>
+                <div class="border border-white/50"></div>
+                <div class="border border-white/50"></div>
+                <div class="border border-white/50"></div>
+                <div class="border border-white/50"></div>
+                <div class="border border-white/50"></div>
               </div>
 
               <!-- Camera info overlay -->
@@ -393,12 +393,12 @@ onUnmounted(() => {
           </div>
 
           <!-- Exposure Meter Bar -->
-          <div class="p-4 space-y-2 bg-gray-800 rounded-lg">
+          <div class="p-4 space-y-2 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20">
               <div class="flex items-center justify-between">
-              <span class="text-sm font-semibold text-gray-300">Akurasi Exposure</span>
+              <span class="text-sm font-semibold text-gray-200">Akurasi Exposure</span>
               <span class="text-lg font-bold text-white">{{ exposureAccuracy }}%</span>
             </div>
-            <div class="h-6 overflow-hidden bg-gray-700 rounded-full">
+            <div class="h-6 overflow-hidden rounded-full bg-black/20">
               <div
                 class="h-full transition-all duration-300 rounded-full"
                 :style="{
@@ -417,27 +417,30 @@ onUnmounted(() => {
           <!-- Result Display -->
           <div
             v-if="showResult"
-            class="p-6 text-center border-2 rounded-lg animate-bounce-in"
-            :style="{ borderColor: resultMessage.color, backgroundColor: resultMessage.color + '20' }"
+            class="p-6 text-center border-2 rounded-lg animate-bounce-in backdrop-blur-sm"
+            :style="{
+              borderColor: resultMessage.color,
+              backgroundColor: resultMessage.color + '30',
+            }"
           >
             <div class="text-4xl font-black md:text-6xl" :style="{ color: resultMessage.color }">
               {{ resultMessage.grade }}
             </div>
-            <div class="mt-2 text-xl font-bold text-white md:text-2xl">
+            <div class="mt-2 text-xl font-bold text-white md:text-2xl font-oswald">
               {{ resultMessage.text }}
             </div>
-            <div class="mt-1 text-sm text-gray-300">Score: {{ score }}%</div>
+            <div class="mt-1 text-sm text-gray-200">Score: {{ score }}%</div>
           </div>
         </div>
       </div>
 
       <!-- Right Side - Controls -->
-      <div class="w-full p-4 overflow-y-auto bg-gray-900 md:w-96 md:p-6">
+      <div class="w-full p-4 overflow-y-auto bg-black/20 md:w-96 md:p-6">
         <div class="space-y-6">
           <!-- ISO Control -->
-          <div class="p-4 bg-gray-800 rounded-lg">
+          <div class="p-4 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20">
             <div class="flex items-center justify-between mb-3">
-              <label class="text-sm font-bold text-gray-300">ISO Sensitivity</label>
+              <label class="text-sm font-bold text-gray-200">ISO Sensitivity</label>
               <span class="text-2xl font-bold text-white">{{ currentISO }}</span>
             </div>
             <input
@@ -446,20 +449,20 @@ onUnmounted(() => {
               :min="isoMin"
               :max="isoMax"
               step="0.1"
-              class="w-full h-3 bg-gray-700 rounded-lg appearance-none cursor-pointer slider-red"
+              class="w-full h-3 rounded-lg appearance-none cursor-pointer bg-black/30 slider-orange"
               :disabled="hasSubmitted"
             />
-            <div class="flex justify-between mt-2 text-xs text-gray-500">
+            <div class="flex justify-between mt-2 text-xs text-gray-400">
               <span>100</span>
-              <span class="text-gray-400">Sensitivitas Cahaya</span>
+              <span class="text-gray-300">Sensitivitas Cahaya</span>
               <span>6400</span>
             </div>
           </div>
 
           <!-- Aperture Control -->
-          <div class="p-4 bg-gray-800 rounded-lg">
+          <div class="p-4 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20">
             <div class="flex items-center justify-between mb-3">
-              <label class="text-sm font-bold text-gray-300">Aperture (f-stop)</label>
+              <label class="text-sm font-bold text-gray-200">Aperture (f-stop)</label>
               <span class="text-2xl font-bold text-white">f/{{ currentAperture }}</span>
             </div>
             <input
@@ -468,20 +471,20 @@ onUnmounted(() => {
               :min="apertureMin"
               :max="apertureMax"
               step="0.1"
-              class="w-full h-3 bg-gray-700 rounded-lg appearance-none cursor-pointer slider-orange"
+              class="w-full h-3 rounded-lg appearance-none cursor-pointer bg-black/30 slider-yellow"
               :disabled="hasSubmitted"
             />
-            <div class="flex justify-between mt-2 text-xs text-gray-500">
+            <div class="flex justify-between mt-2 text-xs text-gray-400">
               <span>f/1.4</span>
-              <span class="text-gray-400">Kedalaman Ruang</span>
+              <span class="text-gray-300">Kedalaman Ruang</span>
               <span>f/22</span>
             </div>
           </div>
 
           <!-- Shutter Speed Control -->
-          <div class="p-4 bg-gray-800 rounded-lg">
+          <div class="p-4 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20">
             <div class="flex items-center justify-between mb-3">
-              <label class="text-sm font-bold text-gray-300">Shutter Speed</label>
+              <label class="text-sm font-bold text-gray-200">Shutter Speed</label>
               <span class="text-2xl font-bold text-white">1/{{ currentShutter }}</span>
             </div>
             <input
@@ -490,12 +493,12 @@ onUnmounted(() => {
               :min="shutterMin"
               :max="shutterMax"
               step="0.1"
-              class="w-full h-3 bg-gray-700 rounded-lg appearance-none cursor-pointer slider-blue"
+              class="w-full h-3 rounded-lg appearance-none cursor-pointer bg-black/30 slider-blue"
               :disabled="hasSubmitted"
             />
-            <div class="flex justify-between mt-2 text-xs text-gray-500">
+            <div class="flex justify-between mt-2 text-xs text-gray-400">
               <span>1/30s</span>
-              <span class="text-gray-400">Bekukan Gerakan</span>
+              <span class="text-gray-300">Bekukan Gerakan</span>
               <span>1/4000s</span>
             </div>
           </div>
@@ -505,7 +508,7 @@ onUnmounted(() => {
             <button
               v-if="!hasSubmitted"
               @click="takePhoto"
-              class="w-full py-4 text-lg font-bold text-white transition-all duration-300 transform rounded-lg shadow-lg bg-linear-to-r from-red-500 to-orange-500 hover:from-red-600 hover:to-orange-600 hover:scale-105 hover:shadow-xl"
+              class="w-full py-4 text-lg font-bold text-white transition-all duration-300 transform bg-orange-500 rounded-lg shadow-lg hover:bg-orange-600 hover:scale-105 hover:shadow-xl"
             >
               📸 Ambil Foto
             </button>
@@ -513,7 +516,7 @@ onUnmounted(() => {
             <button
               v-else
               @click="resetSettings"
-              class="w-full py-4 text-lg font-bold text-white transition-all duration-300 transform rounded-lg shadow-lg bg-linear-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 hover:scale-105"
+              class="w-full py-4 text-lg font-bold text-white transition-all duration-300 transform bg-blue-500 rounded-lg shadow-lg hover:bg-blue-600 hover:scale-105"
             >
               🔄 Coba Lagi
             </button>
@@ -522,14 +525,14 @@ onUnmounted(() => {
               <button
                 @click="previousScenario"
                 :disabled="currentScenarioIndex === 0"
-                class="py-2 text-sm font-semibold text-white transition-all duration-200 bg-gray-700 rounded-lg hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                class="py-2 text-sm font-semibold text-white transition-all duration-200 rounded-lg bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 ← Sebelumnya
               </button>
               <button
                 @click="nextScenario"
                 :disabled="currentScenarioIndex === scenarios.length - 1"
-                class="py-2 text-sm font-semibold text-white transition-all duration-200 bg-gray-700 rounded-lg hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                class="py-2 text-sm font-semibold text-white transition-all duration-200 rounded-lg bg-white/10 hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Berikutnya →
               </button>
@@ -537,8 +540,8 @@ onUnmounted(() => {
           </div>
 
           <!-- Tips -->
-          <div class="p-4 border-2 border-red-500 rounded-lg bg-red-500 bg-opacity-10">
-            <h4 class="mb-2 text-sm font-bold text-red-400">💡 Tips Pro:</h4>
+          <div class="p-4 border-2 border-orange-500 rounded-lg bg-orange-500/10">
+            <h4 class="mb-2 text-sm font-bold text-orange-400 font-oswald">💡 Tips Pro:</h4>
             <ul class="space-y-1 text-xs text-gray-300">
               <li>• <strong>ISO:</strong> Lebih tinggi = lebih terang, tapi lebih banyak noise</li>
               <li>• <strong>Aperture:</strong> f-number rendah = lebih banyak cahaya, DOF dangkal</li>
@@ -549,9 +552,9 @@ onUnmounted(() => {
           </div>
 
           <!-- Scenario Progress -->
-          <div class="p-4 bg-gray-800 rounded-lg">
+          <div class="p-4 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20">
             <div class="flex items-center justify-between mb-2">
-              <span class="text-sm font-semibold text-gray-300">Progres Skenario</span>
+              <span class="text-sm font-semibold text-gray-200">Progres Skenario</span>
               <span class="text-sm text-white">{{ currentScenarioIndex + 1 }} / {{ scenarios.length }}</span>
             </div>
             <div class="flex gap-2">
@@ -559,7 +562,7 @@ onUnmounted(() => {
                 v-for="(scenario, index) in scenarios"
                 :key="scenario.id"
                 class="flex-1 h-2 rounded-full"
-                :class="index === currentScenarioIndex ? 'bg-red-500' : 'bg-gray-700'"
+                :class="index === currentScenarioIndex ? 'bg-orange-500' : 'bg-black/30'"
               ></div>
             </div>
           </div>
@@ -583,7 +586,8 @@ input[type="range"]::-webkit-slider-thumb {
   height: 20px;
   border-radius: 50%;
   cursor: pointer;
-  border: 2px solid white;
+  border: 3px solid white;
+  box-shadow: 0 0 5px rgba(0,0,0,0.5);
 }
 
 input[type="range"]::-moz-range-thumb {
@@ -591,31 +595,29 @@ input[type="range"]::-moz-range-thumb {
   height: 20px;
   border-radius: 50%;
   cursor: pointer;
-  border: 2px solid white;
-}
-
-.slider-red::-webkit-slider-thumb {
-  background: linear-gradient(135deg, #ef4444, #dc2626);
-}
-
-.slider-red::-moz-range-thumb {
-  background: linear-gradient(135deg, #ef4444, #dc2626);
+  border: 3px solid white;
+  box-shadow: 0 0 5px rgba(0,0,0,0.5);
 }
 
 .slider-orange::-webkit-slider-thumb {
-  background: linear-gradient(135deg, #f59e0b, #d97706);
+  background: linear-gradient(135deg, #fb923c, #f97316);
+}
+.slider-orange::-moz-range-thumb {
+  background: linear-gradient(135deg, #fb923c, #f97316);
 }
 
-.slider-orange::-moz-range-thumb {
-  background: linear-gradient(135deg, #f59e0b, #d97706);
+.slider-yellow::-webkit-slider-thumb {
+  background: linear-gradient(135deg, #facc15, #eab308);
+}
+.slider-yellow::-moz-range-thumb {
+  background: linear-gradient(135deg, #facc15, #eab308);
 }
 
 .slider-blue::-webkit-slider-thumb {
-  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  background: linear-gradient(135deg, #60a5fa, #3b82f6);
 }
-
 .slider-blue::-moz-range-thumb {
-  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  background: linear-gradient(135deg, #60a5fa, #3b82f6);
 }
 
 input[type="range"]:disabled {

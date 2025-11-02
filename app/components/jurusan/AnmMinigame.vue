@@ -257,18 +257,18 @@ onMounted(async () => {
 <template>
   <div
     ref="gameContainer"
-    class="game-fullscreen-wrapper fixed inset-0 z-50 bg-linear-to-br from-pink-500 via-pink-400 to-purple-500 overflow-auto"
+    class="game-fullscreen-wrapper fixed inset-0 z-50 bg-linear-to-br from-blue-700 via-blue-600 to-blue-900 overflow-auto"
   >
     <div class="min-h-screen p-4 md:p-8">
       <!-- Header -->
       <div class="flex items-center justify-between mb-6">
         <div>
-          <h1 class="text-2xl md:text-4xl font-black text-white drop-shadow-lg">🎬 Penyusun Sprite ANM</h1>
-          <p class="text-sm md:text-base text-white/90 mt-1">Level {{ currentLevel + 1 }}: {{ level.name }}</p>
+          <h1 class="text-2xl md:text-4xl font-black text-white drop-shadow-lg font-oswald">🎬 Penyusun Sprite ANM</h1>
+          <p class="text-sm md:text-base text-white/90 mt-1 font-nunito">Level {{ currentLevel + 1 }}: {{ level.name }}</p>
         </div>
         <button
           @click="exitFullscreen"
-          class="px-4 py-2 md:px-6 md:py-3 bg-red-500 hover:bg-red-600 text-white font-bold rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center gap-2"
+          class="px-4 py-2 md:px-6 md:py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center gap-2"
         >
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -283,9 +283,9 @@ onMounted(async () => {
           <!-- Left Column: Instructions & Frame Pool -->
           <div class="lg:col-span-1 space-y-6">
             <!-- Instructions -->
-            <div class="bg-white rounded-2xl shadow-2xl p-6">
-              <h2 class="text-xl font-bold text-gray-800 mb-4">📋 Cara Bermain</h2>
-              <div class="space-y-2 text-sm text-gray-700">
+            <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl shadow-2xl p-6 text-white">
+              <h2 class="text-xl font-bold mb-4 font-oswald">📋 Cara Bermain</h2>
+              <div class="space-y-2 text-sm font-nunito">
                 <p><strong>Tujuan:</strong> Susun frame sprite dalam urutan animasi yang benar.</p>
                 <ol class="list-decimal list-inside space-y-1 ml-2">
                   <li>Seret frame dari kumpulan ke timeline</li>
@@ -297,31 +297,31 @@ onMounted(async () => {
             </div>
 
             <!-- Frame Pool -->
-            <div class="bg-white rounded-2xl shadow-2xl p-6">
-              <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+            <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl shadow-2xl p-6 text-white">
+              <h3 class="text-lg font-bold mb-4 flex items-center gap-2 font-oswald">
                 🎨 Kumpulan Frame
-                <span class="text-sm font-normal text-gray-500">({{ framePool.length }} tersisa)</span>
+                <span class="text-sm font-normal text-gray-300">({{ framePool.length }} tersisa)</span>
               </h3>
               <draggable
                 v-model="framePool"
                 :item-key="(item) => `pool-${item}`"
-                class="min-h-[150px] p-4 bg-gray-50 rounded-xl border-2 border-dashed border-gray-300 grid grid-cols-2 gap-3"
+                class="min-h-[150px] p-4 bg-black/20 rounded-xl border-2 border-dashed border-white/30 grid grid-cols-2 gap-3"
                 group="frames"
               >
                 <template #item="{ element }">
                   <div
-                    class="frame-item bg-white p-2 rounded-lg shadow-md cursor-move hover:scale-105 transition-transform duration-200 border-2 border-pink-200"
+                    class="frame-item bg-white/20 p-2 rounded-lg shadow-md cursor-move hover:scale-105 transition-transform duration-200 border-2 border-orange-400"
                   >
                     <img :src="getFrameImage(element)" :alt="`Frame ${element + 1}`" class="w-full h-auto rounded" />
-                    <div class="text-center text-xs font-bold text-pink-600 mt-1">Frame {{ element + 1 }}</div>
+                    <div class="text-center text-xs font-bold text-orange-300 mt-1">Frame {{ element + 1 }}</div>
                   </div>
                 </template>
               </draggable>
             </div>
 
             <!-- Level Selector -->
-            <div class="bg-white rounded-2xl shadow-2xl p-6">
-              <h3 class="text-lg font-bold text-gray-800 mb-4">🎯 Level</h3>
+            <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl shadow-2xl p-6 text-white">
+              <h3 class="text-lg font-bold mb-4 font-oswald">🎯 Level</h3>
               <div class="grid grid-cols-2 gap-2">
                 <button
                   v-for="(lvl, index) in levels"
@@ -329,7 +329,9 @@ onMounted(async () => {
                   @click="selectLevel(index)"
                   :class="[
                     'px-3 py-2 rounded-lg font-bold text-sm transition-all duration-200',
-                    currentLevel === index ? 'bg-pink-500 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200',
+                    currentLevel === index
+                      ? 'bg-orange-500 text-white'
+                      : 'bg-white/10 text-white hover:bg-white/20',
                   ]"
                 >
                   Level {{ index + 1 }}
@@ -341,10 +343,10 @@ onMounted(async () => {
           <!-- Middle & Right Columns: Timeline & Preview -->
           <div class="lg:col-span-2 space-y-6">
             <!-- Preview Window -->
-            <div class="bg-white rounded-2xl shadow-2xl p-6">
-              <h2 class="text-xl font-bold text-gray-800 mb-4 text-center">🎥 Pratinjau Animasi</h2>
+            <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl shadow-2xl p-6">
+              <h2 class="text-xl font-bold text-white mb-4 text-center font-oswald">🎥 Pratinjau Animasi</h2>
               <div class="flex justify-center items-center">
-                <div class="relative bg-gray-900 rounded-xl p-8 min-h-[250px] flex items-center justify-center">
+                <div class="relative bg-black/30 rounded-xl p-8 min-h-[250px] flex items-center justify-center">
                   <div v-if="previewImage" class="w-48 h-48 flex items-center justify-center">
                     <img :src="previewImage" alt="Animation Preview" class="max-w-full max-h-full object-contain" />
                   </div>
@@ -372,7 +374,7 @@ onMounted(async () => {
                 <button
                   @click="playPreview"
                   :disabled="timeline.length === 0"
-                  class="px-6 py-3 bg-purple-500 hover:bg-purple-600 disabled:bg-gray-400 text-white font-bold rounded-xl shadow-lg transition-all duration-300 transform hover:scale-105 disabled:cursor-not-allowed flex items-center gap-2"
+                  class="px-6 py-3 bg-yellow-500 hover:bg-yellow-600 disabled:bg-gray-500 text-black font-bold rounded-xl shadow-lg transition-all duration-300 transform hover:scale-105 disabled:cursor-not-allowed flex items-center gap-2"
                 >
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path
@@ -390,29 +392,29 @@ onMounted(async () => {
             </div>
 
             <!-- Timeline -->
-            <div class="bg-white rounded-2xl shadow-2xl p-6">
-              <h3 class="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+            <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl shadow-2xl p-6">
+              <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2 font-oswald">
                 🎞️ Timeline
-                <span class="text-sm font-normal text-gray-500"
+                <span class="text-sm font-normal text-gray-300"
                   >({{ timeline.length }}/{{ level.totalFrames }} frames)</span
                 >
               </h3>
               <draggable
                 v-model="timeline"
                 :item-key="(item) => `timeline-${item}`"
-                class="min-h-[120px] p-4 bg-linear-to-r from-pink-50 to-purple-50 rounded-xl border-2 border-dashed border-pink-300 flex gap-2 overflow-x-auto"
+                class="min-h-[120px] p-4 bg-black/20 rounded-xl border-2 border-dashed border-white/30 flex gap-2 overflow-x-auto"
                 group="frames"
               >
                 <template #item="{ element, index }">
                   <div
-                    class="frame-item-timeline bg-white p-2 rounded-lg shadow-md cursor-move hover:scale-105 transition-transform duration-200 border-2 border-purple-300 shrink-0"
+                    class="frame-item-timeline bg-white/20 p-2 rounded-lg shadow-md cursor-move hover:scale-105 transition-transform duration-200 border-2 border-yellow-400 shrink-0"
                   >
                     <img
                       :src="getFrameImage(element)"
                       :alt="`Frame ${element + 1}`"
                       class="w-20 h-20 object-contain rounded"
                     />
-                    <div class="text-center text-xs font-bold text-purple-600 mt-1">
+                    <div class="text-center text-xs font-bold text-yellow-300 mt-1">
                       {{ index + 1 }}
                     </div>
                   </div>
@@ -425,7 +427,7 @@ onMounted(async () => {
               <button
                 @click="submitAnswer"
                 :disabled="gameStatus === 'checking' || timeline.length === 0"
-                class="px-6 py-3 bg-green-500 hover:bg-green-600 disabled:bg-gray-400 text-white font-bold rounded-xl shadow-lg transition-all duration-300 transform hover:scale-105 disabled:cursor-not-allowed flex items-center gap-2"
+                class="px-6 py-3 bg-green-500 hover:bg-green-600 disabled:bg-gray-500 text-white font-bold rounded-xl shadow-lg transition-all duration-300 transform hover:scale-105 disabled:cursor-not-allowed flex items-center gap-2"
               >
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
@@ -440,7 +442,7 @@ onMounted(async () => {
 
               <button
                 @click="resetLevel"
-                class="px-6 py-3 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-xl shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center gap-2"
+                class="px-6 py-3 bg-blue-500 hover:bg-blue-600 disabled:bg-gray-500 text-white font-bold rounded-xl shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center gap-2"
               >
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
@@ -463,22 +465,25 @@ onMounted(async () => {
               leave-from-class="opacity-100 scale-100"
               leave-to-class="opacity-0 scale-90"
             >
-              <div v-if="gameStatus === 'win'" class="p-6 bg-green-100 border-4 border-green-500 rounded-2xl shadow-xl">
-                <h3 class="text-2xl font-black text-green-700 text-center mb-2">✨ Animasi Sempurna! ✨</h3>
-                <p class="text-center text-gray-700 mb-4">
+              <div
+                v-if="gameStatus === 'win'"
+                class="p-6 bg-green-500/80 backdrop-blur-sm border-4 border-green-300 rounded-2xl shadow-xl text-white"
+              >
+                <h3 class="text-2xl font-black text-center mb-2 font-oswald">✨ Animasi Sempurna! ✨</h3>
+                <p class="text-center mb-4 font-nunito">
                   Kamu telah menyusun sprite dengan benar! Animasinya berjalan lancar!
                 </p>
                 <div class="flex justify-center gap-4">
                   <button
                     v-if="currentLevel < levels.length - 1"
                     @click="nextLevel"
-                    class="px-6 py-2 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg transition-all duration-200"
+                    class="px-6 py-2 bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-lg transition-all duration-200"
                   >
                     Level Berikutnya →
                   </button>
                   <button
                     @click="resetLevel"
-                    class="px-6 py-2 bg-gray-600 hover:bg-gray-700 text-white font-bold rounded-lg transition-all duration-200"
+                    class="px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-lg transition-all duration-200"
                   >
                     Coba Lagi
                   </button>
@@ -486,10 +491,10 @@ onMounted(async () => {
               </div>
               <div
                 v-else-if="gameStatus === 'lose'"
-                class="p-6 bg-red-100 border-4 border-red-500 rounded-2xl shadow-xl"
+                class="p-6 bg-red-500/80 backdrop-blur-sm border-4 border-red-300 rounded-2xl shadow-xl text-white"
               >
-                <h3 class="text-2xl font-black text-red-700 text-center mb-2">❌ Animasi Rusak!</h3>
-                <p class="text-center text-gray-700">Urutan frame belum benar. Coba lagi!</p>
+                <h3 class="text-2xl font-black text-center mb-2 font-oswald">❌ Animasi Rusak!</h3>
+                <p class="text-center font-nunito">Urutan frame belum benar. Coba lagi!</p>
               </div>
             </Transition>
           </div>
@@ -501,7 +506,7 @@ onMounted(async () => {
 
 <style scoped>
 .game-fullscreen-wrapper {
-  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  font-family: "Nunito", "Inter", system-ui, -apple-system, sans-serif;
 }
 
 .frame-item {
@@ -518,7 +523,7 @@ onMounted(async () => {
 
 .ghost {
   opacity: 0.5;
-  background: #fce7f3;
+  background: #f9a8d4; /* A light pink color for ghost effect */
 }
 
 /* Custom scrollbar */
@@ -528,15 +533,15 @@ onMounted(async () => {
 }
 
 .game-fullscreen-wrapper::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.2);
 }
 
 .game-fullscreen-wrapper::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.4);
   border-radius: 5px;
 }
 
 .game-fullscreen-wrapper::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.6);
 }
 </style>
