@@ -145,16 +145,18 @@ onMounted(() => {
     <!-- Animated Background Elements -->
     <div class="absolute inset-0 overflow-hidden pointer-events-none">
       <motion.div
-        class="absolute w-96 h-96 rounded-full bg-blue-200 blur-3xl opacity-20"
-        :initial="{ x: -200, y: -200 }"
-        :animate="{ x: 200, y: 200 }"
+        class="absolute w-80 h-80 rounded-full bg-blue-200 blur-3xl opacity-20"
+        :initial="{ x: -50, y: -20 }"
+        :animate="{ x: 80, y: 80 }"
         :transition="{ duration: 20, repeat: Infinity, repeatType: 'reverse' }"
+        :whileInView="{ opacity: 1 }"
       ></motion.div>
       <motion.div
-        class="absolute w-80 h-80 rounded-full bg-orange-200 blur-3xl opacity-20 right-0 top-1/2"
-        :initial="{ x: 200, y: 100 }"
-        :animate="{ x: -200, y: -100 }"
-        :transition="{ duration: 25, repeat: Infinity, repeatType: 'reverse' }"
+        class="absolute w-72 h-72 rounded-full bg-orange-200 blur-3xl opacity-20 right-0 top-1/2"
+        :initial="{ x: 50, y: -20 }"
+        :animate="{ x: -80, y: 80 }"
+        :transition="{ duration: 20, repeat: Infinity, repeatType: 'reverse' }"
+        :whileInView="{ opacity: 1 }"
       ></motion.div>
     </div>
 
@@ -167,8 +169,7 @@ onMounted(() => {
         :transition="{ duration: 0.8, delay: 0.1 }"
         :inViewOptions="{ once: true }"
       >
-        <motion.div class="inline-block" :whileHover="{ scale: 1.05 }" :whileTap="{ scale: 0.95 }"
-          >>
+        <motion.div class="inline-block" :whileHover="{ scale: 1.05 }" :whileTap="{ scale: 0.95 }">
           <span
             class="px-8 py-4 text-2xl font-black tracking-widest uppercase rounded-2xl md:text-3xl bg-linear-to-r from-blue-600 to-blue-700 text-white shadow-xl hover:shadow-2xl transition-shadow"
           >

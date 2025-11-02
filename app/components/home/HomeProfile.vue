@@ -36,15 +36,29 @@ onMounted(() => {
   <motion.section
     ref="sectionRef"
     id="profil-sekolah"
-    class="relative py-20 bg-linear-to-b from-white via-blue-50 to-white overflow-hidden"
+    class="relative py-16 bg-linear-to-b from-white via-blue-50 to-white overflow-hidden"
     :initial="{ opacity: 0, y: 50 }"
     :whileInView="{ opacity: 1, y: 0 }"
     :transition="{ duration: 0.8 }"
     :inViewOptions="{ once: true, margin: '-100px' }"
   >
-    <!-- Decorative Elements -->
-    <div class="absolute top-0 left-1/2 w-72 h-72 bg-blue-200 rounded-full opacity-20 blur-3xl"></div>
-    <div class="absolute bottom-0 right-0 w-96 h-96 bg-orange-200 rounded-full opacity-20 blur-3xl"></div>
+    <!-- Animated Background Elements -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <motion.div
+        class="absolute w-80 h-80 rounded-full bg-blue-200 blur-3xl opacity-20"
+        :initial="{ x: -50, y: -20 }"
+        :animate="{ x: 80, y: 80 }"
+        :transition="{ duration: 20, repeat: Infinity, repeatType: 'reverse' }"
+        :whileInView="{ opacity: 1 }"
+      ></motion.div>
+      <motion.div
+        class="absolute w-72 h-72 rounded-full bg-orange-200 blur-3xl opacity-20 right-0 top-1/2"
+        :initial="{ x: 50, y: -20 }"
+        :animate="{ x: -80, y: 80 }"
+        :transition="{ duration: 20, repeat: Infinity, repeatType: 'reverse' }"
+        :whileInView="{ opacity: 1 }"
+      ></motion.div>
+    </div>
 
     <div class="container px-4 mx-auto md:px-10 relative z-10">
       <div class="flex flex-col gap-12 lg:flex-row lg:items-center">

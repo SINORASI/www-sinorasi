@@ -11,6 +11,23 @@ import { motion } from "motion-v";
     :transition="{ duration: 0.8 }"
     :inViewOptions="{ once: true }"
   >
+    <!-- Animated Background Elements -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <motion.div
+        class="absolute w-80 h-80 rounded-full bg-blue-200 blur-3xl opacity-20"
+        :initial="{ x: -50, y: -20 }"
+        :animate="{ x: 80, y: 80 }"
+        :transition="{ duration: 20, repeat: Infinity, repeatType: 'reverse' }"
+        :whileInView="{ opacity: 1 }"
+      ></motion.div>
+      <motion.div
+        class="absolute w-72 h-72 rounded-full bg-purple-200 blur-3xl opacity-20 right-0 top-1/2"
+        :initial="{ x: 50, y: -20 }"
+        :animate="{ x: -80, y: 80 }"
+        :transition="{ duration: 20, repeat: Infinity, repeatType: 'reverse' }"
+        :whileInView="{ opacity: 1 }"
+      ></motion.div>
+    </div>
     <div class="container px-4 mx-auto md:px-10 relative z-10">
       <div class="flex flex-col items-center justify-center gap-12 lg:flex-row">
         <!-- Content -->
@@ -50,13 +67,13 @@ import { motion } from "motion-v";
 
         <!-- Image -->
         <motion.div
-          class="w-full max-w-xl lg:w-4/5"
+          class="w-full max-w-xl lg:w-100"
           :initial="{ opacity: 0, x: 50 }"
           :whileInView="{ opacity: 1, x: 0 }"
           :transition="{ duration: 0.8, delay: 0.4 }"
           :inViewOptions="{ once: true }"
         >
-          <div class="relative max-w-md group">
+          <div class="relative max-w-sm group">
             <div
               class="relative overflow-hidden rounded-2xl border-4 border-white shadow-2xl transition-transform duration-500 group-hover:scale-105"
             >

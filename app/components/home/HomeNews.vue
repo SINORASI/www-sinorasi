@@ -13,12 +13,13 @@ const {
 } = await useAsyncData(
   "homepage-news",
   () =>
-    $fetch("/api/news", {
+    // Cast the $fetch call to unknown and then to Promise<any> to bypass Nuxt's recursive route-type inference
+    ($fetch("/api/news" as string, {
       query: {
         limit: 8,
         tag: selectedCategory.value !== "all" ? selectedCategory.value : undefined,
       },
-    }),
+    }) as unknown as Promise<any>),
   {
     watch: [selectedCategory],
     server: true,
@@ -40,6 +41,23 @@ const filterByCategory = (category: string) => {
     :transition="{ duration: 0.8 }"
     :inViewOptions="{ once: true }"
   >
+    <!-- Animated Background Elements -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <motion.div
+        class="absolute w-80 h-80 rounded-full bg-pink-200 blur-3xl opacity-20"
+        :initial="{ x: -50, y: -20 }"
+        :animate="{ x: 80, y: 80 }"
+        :transition="{ duration: 20, repeat: Infinity, repeatType: 'reverse' }"
+        :whileInView="{ opacity: 1 }"
+      ></motion.div>
+      <motion.div
+        class="absolute w-72 h-72 rounded-full bg-red-200 blur-3xl opacity-20 right-0 top-1/2"
+        :initial="{ x: 50, y: -20 }"
+        :animate="{ x: -80, y: 80 }"
+        :transition="{ duration: 20, repeat: Infinity, repeatType: 'reverse' }"
+        :whileInView="{ opacity: 1 }"
+      ></motion.div>
+    </div>
     <div class="container flex flex-col items-center gap-8 mx-auto relative z-10">
       <!-- Featured News -->
       <motion.div

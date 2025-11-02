@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { motion } from "motion-v";
 interface FAQItem {
   question: string;
   answer: string;
@@ -68,25 +69,35 @@ const toggleFAQ = (item: FAQItem) => {
 </script>
 
 <template>
-  <section id="faq">
-    <div class="container py-28 px-4 mx-auto md:px-10">
+  <section id="faq" class="relative overflow-hidden">
+    <!-- Animated Background Elements -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <motion.div
+        class="absolute w-80 h-80 rounded-full bg-violet-200 blur-3xl opacity-20"
+        :initial="{ x: -50, y: -20 }"
+        :animate="{ x: 80, y: 80 }"
+        :transition="{ duration: 20, repeat: Infinity, repeatType: 'reverse' }"
+        :whileInView="{ opacity: 1 }"
+      ></motion.div>
+      <motion.div
+        class="absolute w-72 h-72 rounded-full bg-fuchsia-200 blur-3xl opacity-20 right-0 top-1/2"
+        :initial="{ x: 50, y: -20 }"
+        :animate="{ x: -80, y: 80 }"
+        :transition="{ duration: 20, repeat: Infinity, repeatType: 'reverse' }"
+        :whileInView="{ opacity: 1 }"
+      ></motion.div>
+    </div>
+    <div class="container py-28 px-4 mx-auto md:px-10 relative z-10">
       <div class="flex flex-col items-center gap-8">
-        <div
-          class="px-8 py-4 rounded-lg shadow-md bg-secondary backdrop-blur-2xl animate-fade-in-up"
-        >
+        <div class="px-8 py-4 rounded-lg shadow-md bg-secondary backdrop-blur-2xl animate-fade-in-up">
           <h2 class="text-3xl font-bold">Pertanyaan yang Sering Diajukan</h2>
         </div>
 
-        <div
-          class="max-w-2xl text-center text-gray-600 animate-fade-in-up animation-delay-200"
-        >
+        <div class="max-w-2xl text-center text-gray-600 animate-fade-in-up animation-delay-200">
           Temukan jawaban atas pertanyaan umum tentang SMK Negeri 2 Singosari
         </div>
 
-        <div
-          class="w-full max-w-4xl animate-fade-in-up animation-delay-400"
-        >
-
+        <div class="w-full max-w-4xl animate-fade-in-up animation-delay-400">
           <div class="space-y-4">
             <div
               v-for="(item, index) in faqItems.slice(0, visibleItems)"
@@ -129,9 +140,7 @@ const toggleFAQ = (item: FAQItem) => {
           </div>
         </div>
 
-        <div
-          class="mt-8 text-center animate-fade-in-up animation-delay-800"
-        >
+        <div class="mt-8 text-center animate-fade-in-up animation-delay-800">
           <p class="mb-4 text-gray-600">Masih ada pertanyaan lain?</p>
           <NuxtLink
             to="/informasi/kontak"

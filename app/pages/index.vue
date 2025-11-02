@@ -17,7 +17,7 @@ useHead({
 </script>
 
 <template>
-  <main class="flex flex-col gap-52">
+  <main class="flex flex-col gap-40">
     <LazyHomeHero />
     <LazyHomeProfile />
     <LazyHomeWelcome />
