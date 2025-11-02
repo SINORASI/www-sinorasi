@@ -87,56 +87,9 @@ const validCircuits = [
   },
 ];
 
-const isFullscreen = ref(false);
-
-// Exit fullscreen
-const exitFullscreen = async () => {
-  try {
-    if (document.fullscreenElement) {
-      await document.exitFullscreen();
-    }
-    // Re-enable body scroll when exiting fullscreen
-    document.documentElement.style.overflow = '';
-    document.body.style.overflow = '';
-    minigameState.setIsRunning(false);
-  } catch (error) {
-    console.error("Error exiting fullscreen:", error);
-    // Re-enable body scroll even if error occurs
-    document.documentElement.style.overflow = '';
-    document.body.style.overflow = '';
-    minigameState.setIsRunning(false);
-  }
-};
-
-// Handle fullscreen change
-const handleFullscreenChange = () => {
-  isFullscreen.value = !!document.fullscreenElement;
-  if (!isFullscreen.value) {
-    // Re-enable body scroll when exiting fullscreen
-    document.documentElement.style.overflow = '';
-    document.body.style.overflow = '';
-    minigameState.setIsRunning(false);
-    emit("close");
-  }
-};
-
-// Enter fullscreen
-const enterFullscreen = async () => {
-  const container = document.documentElement;
-  if (container) {
-    try {
-      await container.requestFullscreen();
-      isFullscreen.value = true;
-      // Disable body scroll when fullscreen is active
-      document.documentElement.style.overflow = 'hidden';
-      document.body.style.overflow = 'hidden';
-    } catch (error) {
-      console.warn("Fullscreen request failed, continuing without fullscreen:", error);
-      isFullscreen.value = false;
-    }
-    // Always set game as running, whether fullscreen succeeded or not
-    minigameState.setIsRunning(true);
-  }
+const exitFullscreen = () => {
+  minigameState.setIsRunning(false);
+  emit("close");
 };
 
 // Wire drawing logic
@@ -290,7 +243,7 @@ const getWireColor = (wire: any) => {
     fromPin?.type === "led-negative" ||
     toPin?.type === "led-negative"
   ) {
-    return "#000000"; // Black for ground
+    return "#404040"; // Dark Gray for ground
   }
   if (
     fromPin?.type === "power" ||
@@ -300,9 +253,9 @@ const getWireColor = (wire: any) => {
     fromPin?.type === "led-positive" ||
     toPin?.type === "led-positive"
   ) {
-    return "#EF4444"; // Red for power/positive
+    return "#f59e0b"; // Amber for power/positive
   }
-  return "#3B82F6"; // Blue for signal
+  return "#06b6d4"; // Cyan for signal
 };
 
 // Keyboard shortcuts
@@ -323,142 +276,118 @@ const handleKeyPress = (event: KeyboardEvent) => {
 };
 
 onMounted(() => {
-  enterFullscreen();
+  minigameState.setIsRunning(true);
   window.addEventListener("mousemove", handleDrag);
   window.addEventListener("mouseup", stopDrag);
   window.addEventListener("keydown", handleKeyPress);
-  document.addEventListener("fullscreenchange", handleFullscreenChange);
 });
 
 onUnmounted(() => {
   window.removeEventListener("mousemove", handleDrag);
   window.removeEventListener("mouseup", stopDrag);
   window.removeEventListener("keydown", handleKeyPress);
-  document.removeEventListener("fullscreenchange", handleFullscreenChange);
 });
 </script>
 
 <template>
-  <div class="fixed inset-0 z-50 flex flex-col bg-linear-to-br from-gray-900 via-gray-800 to-gray-900">
+  <div class="fixed inset-0 z-50 flex flex-col font-nunito bg-linear-to-br from-blue-700 via-blue-600 to-blue-900 text-white p-4 sm:p-6">
     <!-- Header -->
-    <div class="flex items-center justify-between p-4 bg-gray-900 shadow-lg md:p-6">
-      <div class="flex items-center gap-3">
-        <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-linear-to-r from-green-500 to-green-600">
-          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div class="flex items-center justify-between pb-4 border-b border-white/20">
+      <div class="flex items-center gap-4">
+        <div class="p-2 rounded-lg bg-white/10">
+          <svg class="w-6 h-6 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
           </svg>
         </div>
         <div>
-          <h1 class="text-lg font-bold text-white md:text-2xl">Sirkuit Arduino TEI</h1>
-          <p class="text-xs text-gray-400 md:text-sm">Bangun Sirkuit LED Anda</p>
+          <h1 class="text-xl font-bold uppercase font-oswald sm:text-2xl">TEI Arduino Circuit</h1>
+          <p class="text-sm text-white/70">Build Your First LED Circuit</p>
         </div>
       </div>
 
       <button
         @click="exitFullscreen"
-        class="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white transition-all duration-300 rounded-lg bg-linear-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 hover:shadow-lg"
+        class="flex items-center gap-2 px-4 py-2 text-sm font-bold text-white transition-all duration-300 bg-red-600 rounded-lg hover:bg-red-700 hover:shadow-lg hover:scale-105"
       >
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
         </svg>
-        <span class="hidden md:inline">Keluar</span>
+        <span class="hidden md:inline">Exit</span>
       </button>
     </div>
 
     <!-- Main Content -->
-    <div class="flex flex-1 overflow-hidden">
+    <div class="flex flex-1 gap-6 mt-6 overflow-hidden">
       <!-- Left Sidebar - Instructions -->
-      <div class="w-64 p-4 overflow-y-auto bg-gray-800">
-        <div class="space-y-4">
-          <div class="p-4 border-2 border-green-500 rounded-lg bg-green-500 bg-opacity-10">
-            <h3 class="mb-2 text-sm font-bold text-green-400">🎯 Tujuan</h3>
-            <p class="text-xs text-gray-300">
-              Hubungkan Arduino, LED, dan Resistor agar LED menyala saat Pin 13 aktif!
-            </p>
-          </div>
+      <div class="w-full md:w-72 shrink-0 p-4 space-y-4 overflow-y-auto rounded-lg bg-black/20 backdrop-blur-sm border border-white/10">
+        <div class="p-4 border-l-4 border-orange-500 rounded-r-lg bg-black/20">
+          <h3 class="mb-1 text-lg font-bold text-orange-400 font-oswald">Objective</h3>
+          <p class="text-sm text-white/80">
+            Connect the Arduino, LED, and Resistor to make the LED light up when Pin 13 is active!
+          </p>
+        </div>
 
-          <div class="p-4 bg-gray-700 rounded-lg">
-            <h3 class="mb-2 text-sm font-bold text-white">📋 Petunjuk</h3>
-            <ol class="space-y-2 text-xs text-gray-300 list-decimal list-inside">
-              <li>Seret LED dan Resistor ke posisi yang diinginkan</li>
-              <li>Klik pin untuk mulai menggambar kawat</li>
-              <li>Klik pin lain untuk menyelesaikan kawat</li>
-              <li>Hubungkan: <span class="font-mono text-green-400">GND → Resistor → LED → Pin 13</span></li>
-              <li>Klik "Jalankan Simulasi" untuk menguji</li>
-            </ol>
-          </div>
+        <div class="p-4 rounded-lg bg-black/20">
+          <h3 class="mb-2 font-bold text-white font-oswald">Instructions</h3>
+          <ol class="space-y-2 text-sm text-white/80 list-decimal list-inside">
+            <li>Drag the LED and Resistor.</li>
+            <li>Click a pin to start a wire.</li>
+            <li>Click another pin to finish.</li>
+            <li>Connect: <span class="font-mono text-yellow-300">GND → R → LED → Pin 13</span></li>
+            <li>Click "Run Simulation" to test.</li>
+          </ol>
+        </div>
 
-          <div class="p-4 bg-gray-700 rounded-lg">
-            <h3 class="mb-2 text-sm font-bold text-white">🔌 Komponen</h3>
-            <ul class="space-y-1 text-xs text-gray-300">
-              <li>• <span class="font-semibold text-blue-400">Arduino Uno</span> - Mikrokontroler</li>
-              <li>• <span class="font-semibold text-red-400">LED</span> - Dioda pemancar cahaya</li>
-              <li>• <span class="font-semibold text-yellow-400">Resistor</span> - 220Ω (pembatas arus)</li>
-              <li>• <span class="font-semibold text-gray-400">Kawat</span> - Koneksi</li>
-            </ul>
-          </div>
-
-          <div class="p-4 border-2 border-yellow-500 rounded-lg bg-yellow-500 bg-opacity-10">
-            <h3 class="mb-2 text-sm font-bold text-yellow-400">⚡ Aturan Sirkuit</h3>
-            <ul class="space-y-1 text-xs text-gray-300">
-              <li>• LED memiliki polaritas (+ dan -)</li>
-              <li>• Selalu gunakan resistor dengan LED</li>
-              <li>• GND harus terhubung ke sirkuit</li>
-              <li>• Pin 13 menyediakan daya</li>
-            </ul>
-          </div>
-
-          <div class="p-4 bg-gray-700 rounded-lg">
-            <h3 class="mb-2 text-sm font-bold text-white">⌨️ Pintasan</h3>
-            <ul class="space-y-1 text-xs text-gray-300">
-              <li>• <kbd class="px-1 bg-gray-600 rounded">Esc</kbd> Batalkan kawat</li>
-              <li>• <kbd class="px-1 bg-gray-600 rounded">Del</kbd> Hapus kawat terakhir</li>
-              <li>• <kbd class="px-1 bg-gray-600 rounded">C</kbd> Hapus semua</li>
-              <li>• <kbd class="px-1 bg-gray-600 rounded">Enter</kbd> Jalankan simulasi</li>
-            </ul>
-          </div>
-
-          <div class="p-4 bg-gray-700 rounded-lg">
-            <h3 class="mb-2 text-sm font-bold text-white">📊 Status</h3>
-            <div class="space-y-2 text-xs">
-              <div class="flex justify-between">
-                <span class="text-gray-400">Kawat ditempatkan:</span>
-                <span class="font-bold text-white">{{ wires.length }}</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-400">Disimulasikan:</span>
-                <span :class="hasSimulated ? 'text-green-400' : 'text-gray-500'">
-                  {{ hasSimulated ? "Ya" : "Tidak" }}
-                </span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-400">Status LED:</span>
-                <span :class="ledGlowing ? 'text-green-400 animate-pulse' : 'text-gray-500'">
-                  {{ ledGlowing ? "🔆 NYALA" : "⚫ MATI" }}
-                </span>
-              </div>
+        <div class="p-4 rounded-lg bg-black/20">
+          <h3 class="mb-2 font-bold text-white font-oswald">Status</h3>
+          <div class="space-y-2 text-sm">
+            <div class="flex justify-between">
+              <span class="text-white/70">Wires:</span>
+              <span class="font-bold">{{ wires.length }}</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-white/70">Simulated:</span>
+              <span :class="hasSimulated ? 'text-green-400' : 'text-white/50'">
+                {{ hasSimulated ? "Yes" : "No" }}
+              </span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-white/70">LED Status:</span>
+              <span :class="ledGlowing ? 'text-red-400 animate-pulse' : 'text-white/50'">
+                {{ ledGlowing ? "🔆 ON" : "⚫ OFF" }}
+              </span>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Center - Circuit Board -->
-      <div class="relative flex-1 p-8 overflow-auto bg-gray-900" @mousemove="handleMouseMove">
+      <div class="relative flex-1 p-4 sm:p-8 overflow-auto rounded-lg bg-black/20 backdrop-blur-sm border border-white/10" @mousemove="handleMouseMove">
         <!-- SVG Layer for wires -->
         <svg id="wire-svg" class="absolute inset-0 w-full h-full pointer-events-none" style="z-index: 10">
           <!-- Drawn wires -->
-          <line
-            v-for="wire in wires"
-            :key="wire.id"
-            :x1="wire.fromPos.x"
-            :y1="wire.fromPos.y"
-            :x2="wire.toPos.x"
-            :y2="wire.toPos.y"
-            :stroke="getWireColor(wire)"
-            stroke-width="3"
-            class="cursor-pointer pointer-events-auto"
-            @click="removeWire(wire.id)"
-          />
+          <g v-for="wire in wires" :key="wire.id">
+            <line
+              :x1="wire.fromPos.x"
+              :y1="wire.fromPos.y"
+              :x2="wire.toPos.x"
+              :y2="wire.toPos.y"
+              :stroke="getWireColor(wire)"
+              stroke-width="4"
+              class="transition-all"
+            />
+            <line
+              :x1="wire.fromPos.x"
+              :y1="wire.fromPos.y"
+              :x2="wire.toPos.x"
+              :y2="wire.toPos.y"
+              stroke="white"
+              stroke-width="10"
+              stroke-opacity="0"
+              class="cursor-pointer pointer-events-auto"
+              @click="removeWire(wire.id)"
+            />
+          </g>
 
           <!-- Wire being drawn -->
           <line
@@ -467,10 +396,10 @@ onUnmounted(() => {
             :y1="currentWireStart.y"
             :x2="mousePos.x"
             :y2="mousePos.y"
-            stroke="#6B7280"
-            stroke-width="3"
-            stroke-dasharray="5,5"
-            opacity="0.7"
+            stroke="#f59e0b"
+            stroke-width="4"
+            stroke-dasharray="8,6"
+            opacity="0.8"
           />
         </svg>
 
@@ -478,18 +407,18 @@ onUnmounted(() => {
         <div class="relative" style="width: 800px; height: 600px; margin: auto">
           <!-- Arduino Uno -->
           <div class="absolute" style="left: 50px; top: 100px; width: 200px">
-            <div class="p-4 bg-blue-600 border-4 border-blue-800 rounded-lg shadow-2xl">
-              <div class="mb-2 text-xs font-bold text-center text-white">Arduino Uno</div>
-              <img src="/images/minigame/tei/arduino uno.png" alt="Arduino Uno" class="w-full h-auto" />
+            <div class="p-4 bg-cyan-700/80 border-2 border-cyan-500/50 rounded-lg shadow-2xl">
+              <div class="mb-2 text-xs font-bold text-center text-white/80 font-oswald">ARDUINO</div>
+              <img src="/images/minigame/tei/arduino uno.png" alt="Arduino Uno" class="w-full h-auto opacity-80" />
 
               <!-- Arduino pins (clickable) -->
               <div
                 v-for="pin in arduinoPins"
                 :key="pin.id"
-                class="absolute w-4 h-4 transition-all border-2 border-white rounded-full cursor-pointer hover:scale-150"
+                class="absolute w-4 h-4 transition-all border-2 border-white/50 rounded-full cursor-pointer hover:scale-150 hover:border-yellow-400"
                 :class="{
-                  'bg-black': pin.type === 'ground',
-                  'bg-red-500': pin.type === 'power',
+                  'bg-gray-800': pin.type === 'ground',
+                  'bg-red-600': pin.type === 'power',
                   'bg-yellow-500': pin.type === 'digital',
                 }"
                 :style="{ left: `${pin.x - 58}px`, top: `${pin.y - 108}px` }"
@@ -502,15 +431,15 @@ onUnmounted(() => {
           <!-- Breadboard -->
           <div class="absolute" style="left: 300px; top: 100px; width: 300px; height: 400px">
             <div
-              class="w-full h-full bg-linear-to-b from-amber-100 to-amber-200 rounded-lg shadow-2xl border-4 border-amber-300"
+              class="w-full h-full bg-white/5 backdrop-blur-sm rounded-lg shadow-2xl border-2 border-white/10"
             >
-              <div class="p-2 text-xs font-bold text-center text-gray-700">Breadboard</div>
+              <div class="p-2 text-xs font-bold text-center text-white/50 font-oswald">BREADBOARD</div>
 
               <!-- Breadboard connection points -->
               <div
                 v-for="point in breadboardPoints"
                 :key="point.id"
-                class="absolute w-3 h-3 transition-all bg-gray-700 border border-gray-900 rounded-sm cursor-pointer hover:scale-150 hover:bg-green-500"
+                class="absolute w-3 h-3 transition-all bg-gray-900/50 border border-white/20 rounded-sm cursor-pointer hover:scale-150 hover:bg-yellow-500"
                 :style="{ left: `${point.x - 308}px`, top: `${point.y - 108}px` }"
                 @click="isDrawingWire ? finishDrawingWire(point) : startDrawingWire(point)"
                 :title="point.label"
@@ -520,24 +449,24 @@ onUnmounted(() => {
 
           <!-- LED (draggable) -->
           <div
-            class="absolute cursor-move"
+            class="absolute cursor-move group"
             :style="{ left: `${ledPosition.x}px`, top: `${ledPosition.y}px`, transform: 'translate(-50%, -50%)' }"
             @mousedown="startDragLed"
           >
             <div class="relative">
               <div
-                class="w-12 h-16 rounded-full shadow-lg"
-                :class="ledGlowing ? 'bg-red-500 animate-pulse shadow-red-500/50' : 'bg-red-800'"
+                class="w-12 h-16 transition-all duration-300 rounded-full"
+                :class="ledGlowing ? 'bg-red-500 shadow-lg shadow-red-500/50' : 'bg-red-900/80 border-2 border-red-500/30'"
               >
-                <div class="absolute inset-0 flex items-center justify-center text-xs font-bold text-white">LED</div>
+                <div class="absolute inset-0 flex items-center justify-center text-xs font-bold text-white/80">LED</div>
               </div>
 
               <!-- LED pins -->
               <div
                 v-for="pin in getLedPins"
                 :key="pin.id"
-                class="absolute w-3 h-3 transition-all border-2 border-white rounded-full cursor-pointer hover:scale-150"
-                :class="pin.type === 'led-positive' ? 'bg-red-500' : 'bg-black'"
+                class="absolute w-3 h-3 transition-all border-2 border-white/50 rounded-full cursor-pointer group-hover:scale-150 hover:!scale-150 hover:border-yellow-400"
+                :class="pin.type === 'led-positive' ? 'bg-red-600' : 'bg-gray-800'"
                 :style="{
                   left: '50%',
                   top: pin.type === 'led-positive' ? '-8px' : 'calc(100% + 4px)',
@@ -551,7 +480,7 @@ onUnmounted(() => {
 
           <!-- Resistor (draggable) -->
           <div
-            class="absolute cursor-move"
+            class="absolute cursor-move group"
             :style="{
               left: `${resistorPosition.x}px`,
               top: `${resistorPosition.y}px`,
@@ -560,15 +489,15 @@ onUnmounted(() => {
             @mousedown="startDragResistor"
           >
             <div
-              class="relative flex items-center justify-center w-20 h-8 bg-yellow-600 border-4 border-yellow-800 rounded shadow-lg"
+              class="relative flex items-center justify-center w-20 h-8 bg-yellow-800/80 border-2 border-yellow-600/50 rounded shadow-lg"
             >
-              <div class="text-xs font-bold text-white">220Ω</div>
+              <div class="text-xs font-bold text-white/80">220Ω</div>
 
               <!-- Resistor pins -->
               <div
                 v-for="pin in getResistorPins"
                 :key="pin.id"
-                class="absolute w-3 h-3 transition-all bg-gray-700 border-2 border-white rounded-full cursor-pointer hover:scale-150"
+                class="absolute w-3 h-3 transition-all bg-gray-800 border-2 border-white/50 rounded-full cursor-pointer group-hover:scale-150 hover:!scale-150 hover:border-yellow-400"
                 :style="{
                   left: pin.id === 'resistor-1' ? '-8px' : 'calc(100% + 4px)',
                   top: '50%',
@@ -580,101 +509,74 @@ onUnmounted(() => {
             </div>
           </div>
         </div>
+        
+        <!-- Result Display -->
+        <div
+          v-if="hasSimulated"
+          class="absolute inset-0 z-20 flex items-center justify-center p-4 bg-black/60 animate-fade-in"
+          @click="clearAllWires"
+        >
+          <div
+            class="p-8 text-center border-2 rounded-lg backdrop-blur-md animate-bounce-in"
+            :class="isSuccess ? 'border-green-500 bg-blue-900/80' : 'border-red-500 bg-red-900/80'"
+          >
+            <div class="text-6xl mb-4">
+              {{ isSuccess ? "✅" : "❌" }}
+            </div>
+            <div class="text-3xl font-bold mb-2 font-oswald" :class="isSuccess ? 'text-green-400' : 'text-red-400'">
+              {{ isSuccess ? "Success!" : "Circuit Error!" }}
+            </div>
+            <div class="text-lg text-white/90 mb-6">
+              {{ isSuccess ? "The LED is on! Perfect circuit!" : "Check your connections and try again." }}
+            </div>
+            <button class="px-6 py-2 font-bold text-white bg-white/10 rounded-lg hover:bg-white/20">
+              Click to Reset
+            </button>
+          </div>
+        </div>
       </div>
 
       <!-- Right Sidebar - Controls -->
-      <div class="w-64 p-4 overflow-y-auto bg-gray-800">
-        <div class="space-y-4">
-          <!-- Simulation Control -->
-          <button
-            v-if="!hasSimulated"
-            @click="checkCircuit"
-            :disabled="wires.length === 0"
-            class="w-full py-4 text-lg font-bold text-white transition-all duration-300 transform rounded-lg shadow-lg bg-linear-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            ▶️ Jalankan Simulasi
-          </button>
+      <div class="w-full md:w-72 shrink-0 p-4 space-y-4 overflow-y-auto rounded-lg bg-black/20 backdrop-blur-sm border border-white/10">
+        <!-- Simulation Control -->
+        <button
+          v-if="!hasSimulated"
+          @click="checkCircuit"
+          :disabled="wires.length === 0"
+          class="w-full py-4 text-lg font-bold text-white transition-all duration-300 transform rounded-lg shadow-lg bg-gradient-to-r from-orange-500 to-yellow-500 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Run Simulation
+        </button>
 
-          <button
-            v-else
-            @click="clearAllWires"
-            class="w-full py-4 text-lg font-bold text-white transition-all duration-300 transform rounded-lg shadow-lg bg-linear-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 hover:scale-105"
-          >
-            🔄 Atur Ulang Sirkuit
-          </button>
+        <button
+          v-else
+          @click="clearAllWires"
+          class="w-full py-4 text-lg font-bold text-white transition-all duration-300 transform rounded-lg shadow-lg bg-gradient-to-r from-sky-500 to-cyan-500 hover:scale-105"
+        >
+          Reset Circuit
+        </button>
 
-          <button
-            @click="clearAllWires"
-            :disabled="wires.length === 0 && !hasSimulated"
-            class="w-full py-2 text-sm font-semibold text-white transition-all bg-gray-700 rounded-lg hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            🗑️ Hapus Semua Kawat
-          </button>
+        <button
+          @click="clearAllWires"
+          :disabled="wires.length === 0 && !hasSimulated"
+          class="w-full py-2 text-sm font-semibold text-white transition-all bg-white/10 rounded-lg hover:bg-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Clear All Wires
+        </button>
 
-          <!-- Result Display -->
-          <div
-            v-if="hasSimulated"
-            class="p-6 text-center border-2 rounded-lg animate-bounce-in"
-            :class="
-              isSuccess ? 'border-green-500 bg-green-500 bg-opacity-10' : 'border-red-500 bg-red-500 bg-opacity-10'
-            "
-          >
-            <div class="text-4xl mb-2">
-              {{ isSuccess ? "✅" : "❌" }}
+        <!-- Valid Solutions -->
+        <div class="p-4 rounded-lg bg-black/20">
+          <h3 class="mb-2 font-bold text-white font-oswald">Valid Circuits</h3>
+          <div class="space-y-3 text-xs text-white/80">
+            <div class="p-2 rounded bg-black/30">
+              <div class="font-mono text-green-400">GND → R → LED(-) → LED(+) → Pin13</div>
             </div>
-            <div class="text-lg font-bold mb-1" :class="isSuccess ? 'text-green-400' : 'text-red-400'">
-              {{ isSuccess ? "Berhasil!" : "Kesalahan Sirkuit!" }}
+            <div class="p-2 rounded bg-black/30">
+              <div class="font-mono text-green-400">Pin13 → LED(+) → LED(-) → R → GND</div>
             </div>
-            <div class="text-sm text-gray-300">
-              {{ isSuccess ? "LED menyala! Sirkuit sempurna!" : "Periksa koneksi Anda dan coba lagi." }}
-            </div>
-          </div>
-
-          <!-- Connection Hints -->
-          <div class="p-4 bg-gray-700 rounded-lg">
-            <h3 class="mb-2 text-sm font-bold text-white">💡 Panduan Koneksi</h3>
-            <div class="space-y-2 text-xs text-gray-300">
-              <div class="flex items-center gap-2">
-                <div class="w-4 h-4 bg-black rounded-full shrink-0"></div>
-                <span>GND (Ground) - Kawat hitam</span>
-              </div>
-              <div class="flex items-center gap-2">
-                <div class="w-4 h-4 bg-red-500 rounded-full shrink-0"></div>
-                <span>Daya/+ - Kawat merah</span>
-              </div>
-              <div class="flex items-center gap-2">
-                <div class="w-4 h-4 bg-blue-500 rounded-full shrink-0"></div>
-                <span>Sinyal - Kawat biru</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Valid Solutions -->
-          <div class="p-4 bg-gray-700 rounded-lg">
-            <h3 class="mb-2 text-sm font-bold text-white">✓ Sirkuit Yang Valid</h3>
-            <div class="space-y-3 text-xs text-gray-300">
-              <div class="p-2 bg-gray-800 rounded">
-                <div class="font-mono text-green-400">GND → R → LED(-) → LED(+) → Pin13</div>
-              </div>
-              <div class="p-2 bg-gray-800 rounded">
-                <div class="font-mono text-green-400">Pin13 → LED(+) → LED(-) → R → GND</div>
-              </div>
-              <p class="text-xs text-gray-400 italic">
-                * Kedua arah berfungsi!<br />
-                * R = Resistor, LED(+/-) = Pin LED
-              </p>
-            </div>
-          </div>
-
-          <!-- Component Info -->
-          <div class="p-4 bg-gray-700 rounded-lg">
-            <h3 class="mb-2 text-sm font-bold text-white">📖 Pelajari Lebih Lanjut</h3>
-            <div class="space-y-2 text-xs text-gray-300">
-              <p><strong>Pin 13:</strong> Pin output digital yang menyediakan 5V saat HIGH</p>
-              <p><strong>LED:</strong> Dioda Pemancar Cahaya. Arus mengalir dari anode (+) ke katode (-)</p>
-              <p><strong>Resistor:</strong> Membatasi arus untuk melindungi LED agar tidak terbakar</p>
-              <p><strong>GND:</strong> Titik referensi ground (0V)</p>
-            </div>
+            <p class="text-xs text-white/60 italic">
+              * R = Resistor, LED(+/-) = LED Pins
+            </p>
           </div>
         </div>
       </div>
@@ -697,14 +599,16 @@ onUnmounted(() => {
   }
 }
 
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
 .animate-bounce-in {
   animation: bounce-in 0.5s ease-out;
 }
-
-kbd {
-  font-family: monospace;
-  font-size: 0.7rem;
-  font-weight: 600;
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
 }
 
 /* Prevent text selection while dragging */

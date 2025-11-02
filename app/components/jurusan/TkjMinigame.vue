@@ -1,47 +1,59 @@
+<!-- @ts-nocheck -->
 <script lang="ts" setup>
-// @ts-nocheck
-import { ref, computed, onMounted, onUnmounted, nextTick } from "vue";
+import { ref, computed, onMounted, onUnmounted } from "vue";
 import draggable from "vuedraggable";
 import { useMinigameState } from "~/composables/useMinigameState";
+
+const emit = defineEmits(["close"]);
+const minigameState = useMinigameState();
 
 // T568B Standard wire order (1-8)
 const T568B_STANDARD = ["white-orange", "orange", "white-green", "blue", "white-blue", "green", "white-brown", "brown"];
 
 // Wire color mappings for display
-const wireColors: Record<string, { bg: string; label: string }> = {
+const wireColors: Record<string, { bg: string; label: string; text: string }> = {
   "white-orange": {
-    bg: "linear-gradient(135deg, #fff 0%, #fff 45%, #ff6600 55%, #ff6600 100%)",
+    bg: "background-image: linear-gradient(135deg, #fff 48%, #ff9800 52%)",
     label: "White-Orange",
+    text: "text-black",
   },
-  orange: { bg: "#ff6600", label: "Orange" },
-  "white-green": { bg: "linear-gradient(135deg, #fff 0%, #fff 45%, #00cc00 55%, #00cc00 100%)", label: "White-Green" },
-  blue: { bg: "#0066ff", label: "Blue" },
-  "white-blue": { bg: "linear-gradient(135deg, #fff 0%, #fff 45%, #0066ff 55%, #0066ff 100%)", label: "White-Blue" },
-  green: { bg: "#00cc00", label: "Green" },
-  "white-brown": { bg: "linear-gradient(135deg, #fff 0%, #fff 45%, #8B4513 55%, #8B4513 100%)", label: "White-Brown" },
-  brown: { bg: "#8B4513", label: "Brown" },
+  orange: { bg: "background-color: #ff9800", label: "Orange", text: "text-white" },
+  "white-green": {
+    bg: "background-image: linear-gradient(135deg, #fff 48%, #4caf50 52%)",
+    label: "White-Green",
+    text: "text-black",
+  },
+  blue: { bg: "background-color: #2196f3", label: "Blue", text: "text-white" },
+  "white-blue": {
+    bg: "background-image: linear-gradient(135deg, #fff 48%, #2196f3 52%)",
+    label: "White-Blue",
+    text: "text-black",
+  },
+  green: { bg: "background-color: #4caf50", label: "Green", text: "text-white" },
+  "white-brown": {
+    bg: "background-image: linear-gradient(135deg, #fff 48%, #795548 52%)",
+    label: "White-Brown",
+    text: "text-black",
+  },
+  brown: { bg: "background-color: #795548", label: "Brown", text: "text-white" },
 };
 
 // Game state
-const gameContainer = ref<HTMLElement | null>(null);
-const isFullscreen = ref(false);
 const gameStatus = ref<"idle" | "checking" | "win" | "lose">("idle");
-
-// Get minigame state from parent
-const minigameState = useMinigameState();
-
-// Wire pool (scrambled initially)
 const wirePool = ref<string[]>([]);
-
-// Connector slots (user's arrangement)
-const connectorSlots = ref<string[]>(Array(8).fill(""));
+const connectorSlots = ref<string[]>([]);
 
 // Shuffle array helper
 const shuffleArray = <T>(array: T[]): T[] => {
   const newArray = [...array];
   for (let i = newArray.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+    const itemI = newArray[i];
+    const itemJ = newArray[j];
+    if (itemI !== undefined && itemJ !== undefined) {
+      newArray[i] = itemJ;
+      newArray[j] = itemI;
+    }
   }
   return newArray;
 };
@@ -49,34 +61,24 @@ const shuffleArray = <T>(array: T[]): T[] => {
 // Initialize/Reset game
 const initGame = () => {
   wirePool.value = shuffleArray([...T568B_STANDARD]);
-  connectorSlots.value = Array(8).fill("");
+  connectorSlots.value = [];
   gameStatus.value = "idle";
 };
 
 // Crimp cable (check answer)
 const crimpCable = () => {
+  if (connectorSlots.value.length !== 8) return;
   gameStatus.value = "checking";
 
-  // Check if all slots are filled
-  if (connectorSlots.value.some((slot) => !slot)) {
-    gameStatus.value = "lose";
-    setTimeout(() => {
-      gameStatus.value = "idle";
-    }, 2000);
-    return;
-  }
-
-  // Check if order matches T568B standard
   const isCorrect = connectorSlots.value.every((wire, index) => wire === T568B_STANDARD[index]);
 
-  if (isCorrect) {
-    gameStatus.value = "win";
-  } else {
-    gameStatus.value = "lose";
-    setTimeout(() => {
-      gameStatus.value = "idle";
-    }, 2000);
-  }
+  setTimeout(() => {
+    if (isCorrect) {
+      gameStatus.value = "win";
+    } else {
+      gameStatus.value = "lose";
+    }
+  }, 500);
 };
 
 // Reset game
@@ -84,420 +86,201 @@ const resetGame = () => {
   initGame();
 };
 
-// Exit fullscreen
-const exitFullscreen = async () => {
-  try {
-    if (document.fullscreenElement) {
-      await document.exitFullscreen();
-    }
-    // Re-enable body scroll when exiting fullscreen
-    document.documentElement.style.overflow = '';
-    document.body.style.overflow = '';
-    minigameState.setIsRunning(false);
-  } catch (error) {
-    console.error("Error exiting fullscreen:", error);
-    // Re-enable body scroll even if error occurs
-    document.documentElement.style.overflow = '';
-    document.body.style.overflow = '';
-    minigameState.setIsRunning(false);
-  }
-};
-
-// Handle fullscreen change
-const handleFullscreenChange = () => {
-  isFullscreen.value = !!document.fullscreenElement;
-  if (!isFullscreen.value) {
-    // Re-enable body scroll when exiting fullscreen
-    document.documentElement.style.overflow = '';
-    document.body.style.overflow = '';
-    minigameState.setIsRunning(false);
-    emit("close");
-  }
-};
-
-// Enter fullscreen on mount
-const enterFullscreen = async () => {
-  if (gameContainer.value) {
-    try {
-      await gameContainer.value.requestFullscreen();
-      isFullscreen.value = true;
-      // Disable body scroll when fullscreen is active
-      document.documentElement.style.overflow = 'hidden';
-      document.body.style.overflow = 'hidden';
-    } catch (error) {
-      console.warn("Fullscreen request failed, continuing without fullscreen:", error);
-      isFullscreen.value = false;
-    }
-    // Always set game as running, whether fullscreen succeeded or not
-    minigameState.setIsRunning(true);
-  }
+const exitFullscreen = () => {
+  minigameState.setIsRunning(false);
+  emit("close");
 };
 
 // Get wire style
-const getWireStyle = (wireName: string) => {
-  const wire = wireColors[wireName];
-  return {
-    background: wire?.bg || "#ccc",
-  };
-};
+const getWireStyle = (wireName: string) => wireColors[wireName]?.bg || "";
+const getWireLabel = (wireName: string) => wireColors[wireName]?.label || wireName;
+const getWireTextStyle = (wireName: string) => wireColors[wireName]?.text || "text-white";
 
-// Get wire label
-const getWireLabel = (wireName: string) => {
-  return wireColors[wireName]?.label || wireName;
-};
-
-// Track which slot is being dragged over
-const draggedOverSlot = ref<number | null>(null);
-
-// Track dragging slot index
-const draggedSlotIndex = ref<number | null>(null);
-
-// Handle drag start from slot
-const handleSlotDragStart = (index: number, event: any) => {
-  draggedSlotIndex.value = index;
-  event.dataTransfer!.setData("wire", connectorSlots.value[index]);
-  event.dataTransfer!.setData("slotIndex", index.toString());
-};
-
-// Handle drop on slots
-const handleSlotDrop = (index: number, event: any) => {
-  event.preventDefault();
-  
-  // Get the wire that was dragged
-  const draggedWire = event.dataTransfer.getData("wire");
-  const sourceSlotIndex = event.dataTransfer.getData("slotIndex");
-  
-  if (draggedWire) {
-    // If dragging from another slot, swap or move
-    if (sourceSlotIndex !== "") {
-      const slotIdx = parseInt(sourceSlotIndex);
-      // Swap or move wire
-      connectorSlots.value[index] = draggedWire;
-      connectorSlots.value[slotIdx] = "";
-    } else {
-      // Coming from pool
-      connectorSlots.value[index] = draggedWire;
-      
-      // Remove wire from pool
-      const wireIndex = wirePool.value.indexOf(draggedWire);
-      if (wireIndex > -1) {
-        wirePool.value.splice(wireIndex, 1);
-      }
-    }
-    
-    draggedOverSlot.value = null;
-    draggedSlotIndex.value = null;
-  }
-};
-
-// Handle drop on pool (wires returning to pool)
-const handlePoolDrop = (event: any) => {
-  event.preventDefault();
-  
-  const draggedWire = event.dataTransfer.getData("wire");
-  const sourceSlotIndex = event.dataTransfer.getData("slotIndex");
-  
-  if (draggedWire && sourceSlotIndex !== "") {
-    const slotIdx = parseInt(sourceSlotIndex);
-    // Return wire to pool
-    wirePool.value.push(draggedWire);
-    // Clear slot
-    connectorSlots.value[slotIdx] = "";
-    draggedSlotIndex.value = null;
-  }
-};
-
-// Handle drag leave pool
-const handlePoolDragLeave = () => {
-  // Nothing needed here
-};
-
-// Handle drag over slot
-const handleSlotDragOver = (index: number) => {
-  draggedOverSlot.value = index;
-};
-
-// Handle drag leave slot
-const handleSlotDragLeave = () => {
-  draggedOverSlot.value = null;
-};
-
-// Draggable options for pool
-const poolDragOptions = computed(() => ({
+const draggableOptions = {
   animation: 200,
-  group: { name: "wires", pull: "clone", put: false },
-  disabled: false,
+  group: "wires",
   ghostClass: "ghost",
-}));
+  dragClass: "drag",
+};
 
-// Draggable options for slots - read only
-const slotDragOptions = computed(() => ({
-  animation: 200,
-  group: { name: "wires", pull: "clone", put: false },
-  disabled: true,
-  ghostClass: "ghost",
-}));
-
-const emit = defineEmits(["close"]);
-
-onMounted(async () => {
+onMounted(() => {
   initGame();
-  await nextTick();
-  await enterFullscreen();
+  minigameState.setIsRunning(true);
+});
 
-  document.addEventListener("fullscreenchange", handleFullscreenChange);
-
-  onUnmounted(() => {
-    document.removeEventListener("fullscreenchange", handleFullscreenChange);
-  });
+onUnmounted(() => {
+  // Cleanup if needed
 });
 </script>
 
 <template>
-  <div
-    ref="gameContainer"
-    class="game-fullscreen-wrapper fixed inset-0 z-50 bg-linear-to-br from-yellow-500 via-yellow-400 to-orange-400 overflow-auto"
-  >
-    <div class="min-h-screen p-4 md:p-8">
-      <!-- Header -->
-      <div class="flex items-center justify-between mb-6">
-        <h1 class="text-2xl md:text-4xl font-black text-white drop-shadow-lg">🔌 Pengkrimpit Kabel LAN TKJ</h1>
-        <button
-          @click="exitFullscreen"
-          class="px-4 py-2 md:px-6 md:py-3 bg-red-500 hover:bg-red-600 text-white font-bold rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center gap-2"
-        >
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+  <div class="fixed inset-0 z-50 flex flex-col font-nunito bg-linear-to-br from-blue-700 via-blue-600 to-blue-900 text-white p-4 sm:p-6 overflow-hidden">
+    <!-- Header -->
+    <div class="flex items-center justify-between pb-4 border-b border-white/20">
+      <div class="flex items-center gap-4">
+        <div class="p-2 rounded-lg bg-white/10">
+          <svg class="w-6 h-6 text-orange-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
           </svg>
-          Keluar
-        </button>
+        </div>
+        <div>
+          <h1 class="text-xl font-bold uppercase font-oswald sm:text-2xl">TKJ LAN Cable Crimper</h1>
+          <p class="text-sm text-white/70">Arrange the wires to the T568B standard.</p>
+        </div>
+      </div>
+      <button @click="exitFullscreen" class="flex items-center gap-2 px-4 py-2 text-sm font-bold text-white transition-all duration-300 bg-red-600 rounded-lg hover:bg-red-700 hover:shadow-lg hover:scale-105">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+        <span class="hidden md:inline">Exit</span>
+      </button>
+    </div>
+
+    <!-- Main Game Layout -->
+    <div class="flex-1 grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6 overflow-hidden">
+      <!-- Left Side: Instructions & Wire Pool -->
+      <div class="lg:col-span-1 flex flex-col gap-6 overflow-y-auto pr-2">
+        <div class="p-4 rounded-lg bg-black/20 backdrop-blur-sm border border-white/10">
+          <h2 class="text-lg font-bold text-orange-400 font-oswald mb-2">Instructions</h2>
+          <ol class="list-decimal list-inside space-y-1 text-sm text-white/80">
+            <li>Drag wires from the "Wire Pool".</li>
+            <li>Drop them into the RJ45 connector slots.</li>
+            <li>Arrange them in the T568B standard order.</li>
+            <li>Click "Crimp Cable" to check your work.</li>
+          </ol>
+        </div>
+
+        <div class="p-4 rounded-lg bg-black/20 backdrop-blur-sm border border-white/10 flex-1 flex flex-col">
+          <h3 class="text-lg font-bold text-yellow-400 font-oswald mb-3">Wire Pool</h3>
+          <draggable
+            v-model="wirePool"
+            v-bind="draggableOptions"
+            item-key="element"
+            class="grid grid-cols-2 gap-3 flex-1 content-start"
+          >
+            <template #item="{ element }">
+              <div class="wire-item" :style="getWireStyle(element)">
+                <span class="font-bold drop-shadow-md" :class="getWireTextStyle(element)">{{ getWireLabel(element) }}</span>
+              </div>
+            </template>
+          </draggable>
+        </div>
       </div>
 
-      <!-- Main Game Layout -->
-      <div class="max-w-6xl mx-auto">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <!-- Left Side: Instructions & Wire Pool -->
-          <div class="space-y-6">
-            <!-- Instructions -->
-            <div class="bg-white rounded-2xl shadow-2xl p-6">
-              <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-4">📋 Petunjuk</h2>
-              <div class="space-y-3 text-sm md:text-base text-gray-700">
-                <p><strong>Tujuan:</strong> Susun 8 kawat berwarna dalam urutan standar T568B yang benar.</p>
-                <p><strong>Cara Bermain:</strong></p>
-                <ol class="list-decimal list-inside space-y-1 ml-2">
-                  <li>Seret kawat dari kumpulan di bawah</li>
-                  <li>Lepaskan ke slot konektor RJ45 (1-8)</li>
-                  <li>Ikuti standar kabel T568B</li>
-                  <li>Klik "Krimpit Kabel" untuk periksa pekerjaan Anda</li>
-                </ol>
-              </div>
+      <!-- Right Side: RJ45 Connector & Reference -->
+      <div class="lg:col-span-2 flex flex-col gap-6 overflow-y-auto pr-2">
+        <div class="p-6 rounded-lg bg-black/20 backdrop-blur-sm border border-white/10">
+          <h2 class="text-xl font-bold text-center text-white font-oswald mb-4">RJ45 Connector</h2>
+          <div class="max-w-md mx-auto">
+            <div class="relative p-4 bg-black/30 rounded-t-lg">
+              <img src="/images/minigame/tkj/rj45-top.png" alt="RJ45 Connector Top" class="w-full h-auto opacity-80" />
             </div>
-
-            <!-- Wire Pool -->
-            <div class="bg-white rounded-2xl shadow-2xl p-6">
-              <h3 class="text-lg md:text-xl font-bold text-gray-800 mb-4">🎨 Kumpulan Kawat</h3>
-              <div
-                class="min-h-[200px] p-4 bg-gray-50 rounded-xl border-2 border-dashed border-gray-300 grid grid-cols-2 gap-3"
-                @drop="handlePoolDrop"
-                @dragover.prevent
-                @dragleave="handlePoolDragLeave"
-              >
-                <draggable
-                  v-model="wirePool"
-                  :options="poolDragOptions"
-                  item-key="id"
-                  class="contents"
-                  group="wires"
-                >
-                  <template #item="{ element }">
-                    <div
-                      class="wire-item p-3 rounded-lg shadow-md cursor-move hover:scale-105 transition-transform duration-200 border-2 border-gray-200"
-                      :style="getWireStyle(element)"
-                      draggable="true"
-                      @dragstart="$event.dataTransfer!.setData('wire', element)"
-                    >
-                      <span class="text-xs font-bold text-white drop-shadow-md text-center block">
-                        {{ getWireLabel(element) }}
-                      </span>
-                    </div>
-                  </template>
-                </draggable>
-              </div>
-            </div>
-
-            <!-- T568B Reference -->
-            <div class="bg-blue-50 rounded-xl p-4 border-2 border-blue-200">
-              <h4 class="text-sm font-bold text-blue-900 mb-2">💡 Referensi Standar T568B:</h4>
-              <div class="grid grid-cols-4 gap-2 text-xs">
-                <div v-for="(wire, index) in T568B_STANDARD" :key="index" class="text-center">
-                  <div class="font-bold text-blue-900">{{ index + 1 }}</div>
-                  <div class="h-6 rounded mt-1 border border-gray-300" :style="getWireStyle(wire)"></div>
-                  <div class="text-[10px] text-gray-600 mt-1">{{ wire.split("-").join(" ") }}</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Right Side: RJ45 Connector -->
-          <div class="space-y-6">
-            <!-- Connector Display -->
-            <div class="bg-white rounded-2xl shadow-2xl p-6">
-              <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-4 text-center">🔌 Konektor RJ45</h2>
-
-              <!-- RJ45 Visual -->
-              <div class="relative bg-linear-to-b from-gray-700 to-gray-900 rounded-2xl p-8 shadow-inner">
-                <!-- Connector Slots -->
-                <div class="space-y-2">
-                  <div v-for="(slot, index) in connectorSlots" :key="index" class="flex items-center gap-4">
-                    <!-- Slot Number -->
-                    <div
-                      class="w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center font-bold text-gray-900 shrink-0"
-                    >
-                      {{ index + 1 }}
-                    </div>
-
-                    <!-- Wire Slot (Drop Zone) -->
-                    <div
-                      class="h-12 rounded-lg flex-1 flex items-center justify-center cursor-move hover:scale-105 transition-all duration-200 border-2 border-white/20 shadow-lg"
-                      :style="slot ? getWireStyle(slot) : { background: 'rgba(255,255,255,0.1)' }"
-                      :class="[
-                        slot ? 'wire-filled' : 'wire-empty',
-                        draggedOverSlot === index ? 'opacity-80 ring-2 ring-yellow-300' : '',
-                      ]"
-                      @drop="handleSlotDrop(index, $event)"
-                      @dragover.prevent="handleSlotDragOver(index)"
-                      @dragleave="handleSlotDragLeave"
-                      @dragstart="handleSlotDragStart(index, $event)"
-                      draggable="true"
-                    >
-                      <span v-if="slot" class="text-xs font-bold text-white drop-shadow-md">
-                        {{ getWireLabel(slot) }}
-                      </span>
-                      <span v-else class="text-xs text-white/50">Lepaskan kawat di sini</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Control Buttons -->
-            <div class="flex gap-4 justify-center">
-              <button
-                @click="crimpCable"
-                :disabled="gameStatus === 'checking'"
-                class="px-6 py-3 md:px-8 md:py-4 bg-green-500 hover:bg-green-600 disabled:bg-gray-400 text-white font-bold rounded-xl shadow-lg transition-all duration-300 transform hover:scale-105 disabled:cursor-not-allowed flex items-center gap-2"
-              >
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-                Krimpit Kabel
-              </button>
-
-              <button
-                @click="resetGame"
-                class="px-6 py-3 md:px-8 md:py-4 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-xl shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center gap-2"
-              >
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                  />
-                </svg>
-                Atur Ulang
-              </button>
-            </div>
-
-            <!-- Status Messages -->
-            <Transition
-              enter-active-class="transition-all duration-300"
-              enter-from-class="opacity-0 scale-90"
-              enter-to-class="opacity-100 scale-100"
-              leave-active-class="transition-all duration-300"
-              leave-from-class="opacity-100 scale-100"
-              leave-to-class="opacity-0 scale-90"
+            <draggable
+              v-model="connectorSlots"
+              v-bind="draggableOptions"
+              item-key="element"
+              class="connector-slots-container bg-gray-800/50 p-2 grid grid-cols-8 gap-1"
             >
-              <div v-if="gameStatus === 'win'" class="p-6 bg-green-100 border-4 border-green-500 rounded-2xl shadow-xl">
-                <h3 class="text-2xl md:text-3xl font-black text-green-700 text-center mb-2">
-                  ✅ Koneksi Berhasil!
-                </h3>
-                <p class="text-center text-gray-700">
-                  Sempurna! Kabel Anda dikrimpit dengan benar sesuai standar T568B!
-                </p>
-              </div>
-              <div
-                v-else-if="gameStatus === 'lose'"
-                class="p-6 bg-red-100 border-4 border-red-500 rounded-2xl shadow-xl"
-              >
-                <h3 class="text-2xl md:text-3xl font-black text-red-700 text-center mb-2">❌ Koneksi Gagal!</h3>
-                <p class="text-center text-gray-700">
-                  Urutan kawat tidak benar. Periksa standar T568B dan coba lagi!
-                </p>
-              </div>
-            </Transition>
+              <template #item="{ element, index }">
+                <div class="connector-slot" :style="getWireStyle(element)"></div>
+              </template>
+              <template #header>
+                <div v-if="connectorSlots.length < 8" class="empty-state col-span-8 text-center py-10 text-white/40 border-2 border-dashed border-white/20 rounded-lg">
+                  Drop wires here
+                </div>
+              </template>
+            </draggable>
+            <div class="relative p-4 bg-black/30 rounded-b-lg">
+              <img src="/images/minigame/tkj/rj45-bottom.png" alt="RJ45 Connector Bottom" class="w-full h-auto opacity-80" />
+            </div>
           </div>
         </div>
+
+        <div class="flex items-center justify-center gap-4">
+          <button @click="crimpCable" :disabled="gameStatus === 'checking' || connectorSlots.length !== 8" class="px-8 py-3 text-lg font-bold text-white transition-all duration-300 transform rounded-lg shadow-lg bg-gradient-to-r from-orange-500 to-yellow-500 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
+            Crimp Cable
+          </button>
+          <button @click="resetGame" class="px-8 py-3 text-lg font-bold text-white transition-all bg-white/10 rounded-lg hover:bg-white/20">
+            Reset
+          </button>
+        </div>
+
+        <div class="p-4 rounded-lg bg-black/20 backdrop-blur-sm border border-white/10">
+          <h4 class="text-base font-bold text-center text-yellow-300 font-oswald mb-2">T568B Standard Reference</h4>
+          <div class="grid grid-cols-8 gap-2 text-xs">
+            <div v-for="(wire, index) in T568B_STANDARD" :key="index" class="text-center">
+              <div class="font-bold text-white">{{ index + 1 }}</div>
+              <div class="h-8 rounded mt-1 border border-white/20" :style="getWireStyle(wire)"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Status Modal -->
+    <div v-if="gameStatus === 'win' || gameStatus === 'lose'" class="absolute inset-0 z-20 flex items-center justify-center p-4 bg-black/60 animate-fade-in" @click="resetGame">
+      <div class="p-8 text-center border-2 rounded-lg backdrop-blur-md animate-bounce-in" :class="gameStatus === 'win' ? 'border-green-500 bg-blue-900/80' : 'border-red-500 bg-red-900/80'">
+        <div class="text-6xl mb-4">{{ gameStatus === 'win' ? '✅' : '❌' }}</div>
+        <div class="text-3xl font-bold mb-2 font-oswald" :class="gameStatus === 'win' ? 'text-green-400' : 'text-red-400'">
+          {{ gameStatus === 'win' ? 'Connection Success!' : 'Connection Failed!' }}
+        </div>
+        <div class="text-lg text-white/90 mb-6">
+          {{ gameStatus === 'win' ? 'Perfect! Your cable is crimped to the T568B standard!' : 'The wire order is incorrect. Check the reference and try again.' }}
+        </div>
+        <button class="px-6 py-2 font-bold text-white bg-white/10 rounded-lg hover:bg-white/20">
+          Click to Play Again
+        </button>
       </div>
     </div>
   </div>
 </template>
 
-<style scoped>
-.game-fullscreen-wrapper {
-  font-family: "Inter", system-ui, -apple-system, sans-serif;
+<style lang="postcss" scoped>
+@keyframes bounce-in {
+  0% { opacity: 0; transform: scale(0.8); }
+  50% { transform: scale(1.05); }
+  100% { opacity: 1; transform: scale(1); }
 }
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.animate-bounce-in { animation: bounce-in 0.5s ease-out; }
+.animate-fade-in { animation: fade-in 0.3s ease-out; }
 
 .wire-item {
+  @apply p-3 rounded-lg shadow-md cursor-move hover:scale-105 transition-transform duration-200 border-2 border-transparent;
+}
+.wire-item span {
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+.connector-slots-container {
   min-height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
-
-.wire-filled {
-  animation: pulse-subtle 2s ease-in-out infinite;
-}
-
-.wire-empty {
-  border-style: dashed !important;
+.connector-slot {
+  @apply h-12 rounded-sm transition-all duration-200;
+  background-size: 200% 200%;
 }
 
 .ghost {
-  opacity: 0.5;
-  background: #c8ebfb;
+  @apply opacity-50 bg-yellow-400 scale-105;
 }
-
-@keyframes pulse-subtle {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.9;
-  }
+.drag {
+  @apply opacity-100;
 }
 
 /* Custom scrollbar for the game container */
-.game-fullscreen-wrapper::-webkit-scrollbar {
-  width: 10px;
+.overflow-y-auto::-webkit-scrollbar {
+  width: 8px;
 }
-
-.game-fullscreen-wrapper::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.1);
+.overflow-y-auto::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
 }
-
-.game-fullscreen-wrapper::-webkit-scrollbar-thumb {
+.overflow-y-auto::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.3);
-  border-radius: 5px;
+  border-radius: 4px;
 }
-
-.game-fullscreen-wrapper::-webkit-scrollbar-thumb:hover {
+.overflow-y-auto::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.5);
 }
 </style>

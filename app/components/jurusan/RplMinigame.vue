@@ -297,12 +297,12 @@ const avatarRotation = computed(() => {
 // Get cell class
 const getCellClass = (x: number, y: number) => {
   const row = maze.value[y];
-  if (!row) return "bg-white";
+  if (!row) return "bg-white/10";
   const cell = row[x];
-  if (cell === 1) return "bg-gray-800";
-  if (cell === 2) return "bg-green-200";
-  if (cell === 3) return "bg-yellow-300";
-  return "bg-white";
+  if (cell === 1) return "bg-black/40";
+  if (cell === 2) return "bg-green-500/50";
+  if (cell === 3) return "bg-yellow-500/50";
+  return "bg-white/10";
 };
 
 const emit = defineEmits(["close"]);
@@ -336,15 +336,15 @@ onMounted(async () => {
 <template>
   <div
     ref="gameContainer"
-    class="game-fullscreen-wrapper fixed inset-0 z-50 bg-linear-to-br from-orange-500 via-orange-400 to-yellow-400 overflow-auto"
+    class="game-fullscreen-wrapper fixed inset-0 z-50 bg-linear-to-br from-blue-700 via-blue-600 to-blue-900 font-nunito"
   >
     <div class="min-h-screen p-4 md:p-8">
       <!-- Header -->
       <div class="flex items-center justify-between mb-6">
-        <h1 class="text-2xl md:text-4xl font-black text-white drop-shadow-lg">🎮 Koder Labirin RPL</h1>
+        <h1 class="text-2xl md:text-4xl font-black text-white drop-shadow-lg font-oswald">🎮 Koder Labirin RPL</h1>
         <button
           @click="exitFullscreen"
-          class="px-4 py-2 md:px-6 md:py-3 bg-red-500 hover:bg-red-600 text-white font-bold rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center gap-2"
+          class="px-4 py-2 md:px-6 md:py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center gap-2"
         >
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -358,20 +358,20 @@ onMounted(async () => {
         <!-- Left Column: Maze and Controls -->
         <div class="space-y-6">
           <!-- Maze Container -->
-          <div class="bg-white rounded-2xl shadow-2xl p-6 md:p-8">
-            <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-4 text-center">Arahkan ke Tujuan! 🎯</h2>
+          <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl shadow-2xl p-6 md:p-8">
+            <h2 class="text-xl md:text-2xl font-bold text-white mb-4 text-center font-oswald">Arahkan ke Tujuan! 🎯</h2>
 
             <!-- Maze Grid -->
             <div class="flex items-center justify-center">
               <div
-                class="grid gap-1 p-4 bg-gray-100 rounded-xl shadow-inner relative"
+                class="grid gap-1 p-4 bg-black/20 rounded-xl shadow-inner relative"
                 :style="`grid-template-columns: repeat(${MAZE_SIZE}, ${CELL_SIZE}px); grid-template-rows: repeat(${MAZE_SIZE}, ${CELL_SIZE}px);`"
               >
                 <template v-for="(row, y) in maze" :key="`row-${y}`">
                   <div
                     v-for="(cell, x) in row"
                     :key="`${x}-${y}`"
-                    class="border-2 border-gray-300 rounded-lg transition-all duration-300"
+                    class="border-2 border-white/20 rounded-lg transition-all duration-300"
                     :class="getCellClass(x, y)"
                     :style="`width: ${CELL_SIZE}px; height: ${CELL_SIZE}px;`"
                   >
@@ -394,9 +394,10 @@ onMounted(async () => {
             </div>
 
             <!-- Instructions -->
-            <div class="mt-4 p-4 bg-blue-50 rounded-lg">
-              <p class="text-sm md:text-base text-gray-700">
-                <strong>📝 Petunjuk:</strong> Gunakan blok di sebelah kanan untuk menavigasi robot (🤖) dari kotak hijau ke trofi (🏆). Hindari dinding gelap!
+            <div class="mt-4 p-4 bg-blue-500/10 border border-blue-400/30 rounded-lg">
+              <p class="text-sm md:text-base text-blue-200">
+                <strong>📝 Petunjuk:</strong> Gunakan blok di sebelah kanan untuk menavigasi robot (🤖) dari area
+                hijau ke trofi (🏆). Hindari dinding gelap!
               </p>
             </div>
           </div>
@@ -406,7 +407,7 @@ onMounted(async () => {
             <button
               @click="runProgram"
               :disabled="gameStatus === 'running'"
-              class="px-6 py-3 md:px-8 md:py-4 bg-green-500 hover:bg-green-600 disabled:bg-gray-400 text-white font-bold rounded-xl shadow-lg transition-all duration-300 transform hover:scale-105 disabled:cursor-not-allowed flex items-center gap-2"
+              class="px-6 py-3 md:px-8 md:py-4 bg-orange-500 hover:bg-orange-600 disabled:bg-gray-500 text-white font-bold rounded-xl shadow-lg transition-all duration-300 transform hover:scale-105 disabled:cursor-not-allowed flex items-center gap-2"
             >
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
@@ -450,42 +451,48 @@ onMounted(async () => {
             leave-from-class="opacity-100 scale-100"
             leave-to-class="opacity-0 scale-90"
           >
-            <div v-if="gameStatus === 'win'" class="p-6 bg-green-100 border-4 border-green-500 rounded-2xl shadow-xl">
-              <h3 class="text-2xl md:text-3xl font-black text-green-700 text-center mb-2">🎉 Berhasil! 🎉</h3>
-              <p class="text-center text-gray-700">Kamu berhasil menyelesaikan labirin! Kerja bagus, programmer masa depan!</p>
+            <div
+              v-if="gameStatus === 'win'"
+              class="p-6 bg-green-500/80 backdrop-blur-sm border-4 border-green-300 rounded-2xl shadow-xl text-white"
+            >
+              <h3 class="text-2xl md:text-3xl font-black text-center mb-2 font-oswald">🎉 Berhasil! 🎉</h3>
+              <p class="text-center">Kamu berhasil menyelesaikan labirin! Kerja bagus, programmer masa depan!</p>
             </div>
-            <div v-else-if="gameStatus === 'lose'" class="p-6 bg-red-100 border-4 border-red-500 rounded-2xl shadow-xl">
-              <h3 class="text-2xl md:text-3xl font-black text-red-700 text-center mb-2">❌ Coba Lagi! ❌</h3>
-              <p class="text-center text-gray-700">Robot tidak mencapai tujuan. Sesuaikan kode Anda dan coba lagi!</p>
+            <div
+              v-else-if="gameStatus === 'lose'"
+              class="p-6 bg-red-500/80 backdrop-blur-sm border-4 border-red-300 rounded-2xl shadow-xl text-white"
+            >
+              <h3 class="text-2xl md:text-3xl font-black text-center mb-2 font-oswald">❌ Coba Lagi! ❌</h3>
+              <p class="text-center">Robot tidak mencapai tujuan. Sesuaikan kode Anda dan coba lagi!</p>
             </div>
           </Transition>
         </div>
 
         <!-- Right Column: Blockly Workspace -->
         <div class="space-y-4">
-          <div class="bg-white rounded-2xl shadow-2xl p-4 md:p-6">
-            <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-4 text-center">🧩 Bangun Kode Anda</h2>
+          <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl shadow-2xl p-4 md:p-6">
+            <h2 class="text-xl md:text-2xl font-bold text-white mb-4 text-center font-oswald">🧩 Bangun Kode Anda</h2>
             <div
               id="blocklyDiv"
-              class="rounded-xl overflow-hidden border-4 border-gray-200"
+              class="rounded-xl overflow-hidden border-4 border-white/20"
               style="height: 600px; min-height: 400px"
             ></div>
           </div>
 
           <!-- Legend -->
-          <div class="bg-white rounded-2xl shadow-xl p-4 md:p-6">
-            <h3 class="text-lg font-bold text-gray-800 mb-3">📚 Referensi Blok</h3>
-            <div class="space-y-2 text-sm md:text-base">
+          <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl shadow-xl p-4 md:p-6">
+            <h3 class="text-lg font-bold text-white mb-3 font-oswald">📚 Referensi Blok</h3>
+            <div class="space-y-2 text-sm md:text-base text-gray-200">
               <div class="flex items-center gap-3">
-                <div class="w-8 h-8 bg-blue-500 rounded shrink-0"></div>
+                <div class="w-8 h-8 rounded shrink-0" style="background-color: #4c97ff"></div>
                 <span><strong>Maju:</strong> Maju satu langkah dengan arah saat ini</span>
               </div>
               <div class="flex items-center gap-3">
-                <div class="w-8 h-8 bg-green-600 rounded shrink-0"></div>
+                <div class="w-8 h-8 rounded shrink-0" style="background-color: #5ba55b"></div>
                 <span><strong>Belok Kiri:</strong> Putar 90° berlawanan arah jarum jam</span>
               </div>
               <div class="flex items-center gap-3">
-                <div class="w-8 h-8 bg-purple-500 rounded shrink-0"></div>
+                <div class="w-8 h-8 rounded shrink-0" style="background-color: #ac68d9"></div>
                 <span><strong>Belok Kanan:</strong> Putar 90° searah jarum jam</span>
               </div>
             </div>
@@ -496,26 +503,60 @@ onMounted(async () => {
   </div>
 </template>
 
+<style>
+/* Injecting styles for Blockly to match the dark theme */
+.blocklyToolboxDiv {
+  background-color: #1f2937; /* bg-gray-800 */
+  color: white;
+}
+.blocklyTreeRow {
+  color: white;
+}
+.blocklyTreeRow.blocklyTreeSelected {
+  background-color: #374151 !important; /* bg-gray-700 */
+}
+.blocklyFlyoutBackground {
+  fill: #374151; /* bg-gray-700 */
+  fill-opacity: 0.8;
+}
+.blocklyScrollbarHandle {
+  fill: #9ca3af; /* bg-gray-400 */
+}
+.blocklyTrash {
+  opacity: 0.5;
+}
+.blocklyTrash:hover {
+  opacity: 1;
+}
+.blocklyZoom>image {
+  opacity: 0.5;
+}
+.blocklyZoom>image:hover {
+  opacity: 1;
+}
+</style>
+
 <style scoped>
 .game-fullscreen-wrapper {
-  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  font-family: "Nunito", "Inter", system-ui, -apple-system, sans-serif;
 }
 
 /* Custom scrollbar for the game container */
 .game-fullscreen-wrapper::-webkit-scrollbar {
   width: 10px;
+  height: 10px;
 }
 
 .game-fullscreen-wrapper::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.2);
 }
 
 .game-fullscreen-wrapper::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.4);
   border-radius: 5px;
 }
 
 .game-fullscreen-wrapper::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.6);
 }
 </style>

@@ -274,8 +274,7 @@ const startVisualizer = () => {
 
     analyserNode.value!.getByteFrequencyData(dataArray);
 
-    ctx.fillStyle = "rgb(15, 23, 42)"; // Dark background
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     const barWidth = (canvas.width / bufferLength) * 2.5;
     let barHeight;
@@ -290,17 +289,17 @@ const startVisualizer = () => {
       // Gradient based on frequency
       const gradient = ctx.createLinearGradient(0, cHeight - barHeight, 0, cHeight);
       if (i < bufferLength / 3) {
-        // Bass - Red to Orange
-        gradient.addColorStop(0, "#EF4444");
-        gradient.addColorStop(1, "#F97316");
+        // Bass - Orange
+        gradient.addColorStop(0, "rgba(251, 146, 60, 0.8)");
+        gradient.addColorStop(1, "rgba(249, 115, 22, 0.5)");
       } else if (i < (bufferLength * 2) / 3) {
-        // Mid - Yellow to Green
-        gradient.addColorStop(0, "#EAB308");
-        gradient.addColorStop(1, "#22C55E");
+        // Mid - Yellow
+        gradient.addColorStop(0, "rgba(250, 204, 21, 0.9)");
+        gradient.addColorStop(1, "rgba(234, 179, 8, 0.6)");
       } else {
-        // Treble - Cyan to Blue
-        gradient.addColorStop(0, "#06B6D4");
-        gradient.addColorStop(1, "#3B82F6");
+        // Treble - White
+        gradient.addColorStop(0, "rgba(255, 255, 255, 0.8)");
+        gradient.addColorStop(1, "rgba(255, 255, 255, 0.5)");
       }
 
       ctx.fillStyle = gradient;
@@ -313,64 +312,9 @@ const startVisualizer = () => {
   draw();
 };
 
-const isFullscreen = ref(false);
-
-// Exit fullscreen
-const exitFullscreen = async () => {
-  try {
-    if (document.fullscreenElement) {
-      await document.exitFullscreen();
-    }
-    // Re-enable body scroll when exiting fullscreen
-    document.documentElement.style.overflow = '';
-    document.body.style.overflow = '';
-    minigameState.setIsRunning(false);
-  } catch (error) {
-    console.error("Error exiting fullscreen:", error);
-    // Re-enable body scroll even if error occurs
-    document.documentElement.style.overflow = '';
-    document.body.style.overflow = '';
-    minigameState.setIsRunning(false);
-  }
-
-  // Cleanup audio
-  stopAudio();
-  if (audioContext.value) {
-    audioContext.value.close();
-  }
-
+const exitFullscreen = () => {
+  minigameState.setIsRunning(false);
   emit("close");
-};
-
-// Handle fullscreen change
-const handleFullscreenChange = () => {
-  isFullscreen.value = !!document.fullscreenElement;
-  if (!isFullscreen.value) {
-    // Re-enable body scroll when exiting fullscreen
-    document.documentElement.style.overflow = '';
-    document.body.style.overflow = '';
-    minigameState.setIsRunning(false);
-    emit("close");
-  }
-};
-
-// Enter fullscreen
-const enterFullscreen = async () => {
-  const container = document.documentElement;
-  if (container) {
-    try {
-      await container.requestFullscreen();
-      isFullscreen.value = true;
-      // Disable body scroll when fullscreen is active
-      document.documentElement.style.overflow = 'hidden';
-      document.body.style.overflow = 'hidden';
-    } catch (error) {
-      console.warn("Fullscreen request failed, continuing without fullscreen:", error);
-      isFullscreen.value = false;
-    }
-    // Always set game as running, whether fullscreen succeeded or not
-    minigameState.setIsRunning(true);
-  }
 };
 
 // Format dB value
@@ -380,17 +324,16 @@ const formatDB = (value: number) => {
 
 // Get quality grade
 const qualityGrade = computed(() => {
-  if (qualityScore.value >= 90) return { grade: "A+", color: "#22C55E", text: "Perfect!" };
-  if (qualityScore.value >= 80) return { grade: "A", color: "#10B981", text: "Excellent!" };
-  if (qualityScore.value >= 70) return { grade: "B", color: "#3B82F6", text: "Good!" };
-  if (qualityScore.value >= 60) return { grade: "C", color: "#F59E0B", text: "Fair" };
-  return { grade: "D", color: "#EF4444", text: "Keep trying!" };
+  if (qualityScore.value >= 90) return { grade: "A+", color: "text-green-400", text: "Perfect!" };
+  if (qualityScore.value >= 80) return { grade: "A", color: "text-green-500", text: "Excellent!" };
+  if (qualityScore.value >= 70) return { grade: "B", color: "text-sky-400", text: "Good!" };
+  if (qualityScore.value >= 60) return { grade: "C", color: "text-yellow-400", text: "Fair" };
+  return { grade: "D", color: "text-red-400", text: "Keep trying!" };
 });
 
 onMounted(() => {
-  enterFullscreen();
+  minigameState.setIsRunning(true);
   initAudio();
-  document.addEventListener("fullscreenchange", handleFullscreenChange);
 });
 
 onUnmounted(() => {
@@ -398,7 +341,6 @@ onUnmounted(() => {
   if (audioContext.value) {
     audioContext.value.close();
   }
-  document.removeEventListener("fullscreenchange", handleFullscreenChange);
   if (animationFrameId.value) {
     cancelAnimationFrame(animationFrameId.value);
   }
@@ -406,12 +348,12 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="fixed inset-0 z-50 flex flex-col bg-linear-to-br from-slate-900 via-slate-800 to-slate-900">
+  <div class="fixed inset-0 z-50 flex flex-col font-nunito bg-linear-to-br from-blue-700 via-blue-600 to-blue-900 text-white p-4 sm:p-6">
     <!-- Header -->
-    <div class="flex items-center justify-between p-4 shadow-lg bg-slate-900 md:p-6">
-      <div class="flex items-center gap-3">
-        <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-linear-to-r from-teal-500 to-teal-600">
-          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div class="flex items-center justify-between pb-4 border-b border-white/20">
+      <div class="flex items-center gap-4">
+        <div class="p-2 rounded-lg bg-white/10">
+          <svg class="w-6 h-6 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -421,135 +363,108 @@ onUnmounted(() => {
           </svg>
         </div>
         <div>
-          <h1 class="text-lg font-bold text-white md:text-2xl">Tantangan EQ TAV</h1>
-          <p class="text-xs text-gray-400 md:text-sm">Kuasai Pencampuran Audio</p>
+          <h1 class="text-xl font-bold uppercase font-oswald sm:text-2xl">TAV EQ Challenge</h1>
+          <p class="text-sm text-white/70">Master the Art of Audio Mixing</p>
         </div>
       </div>
 
       <button
         @click="exitFullscreen"
-        class="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white transition-all duration-300 rounded-lg bg-linear-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 hover:shadow-lg"
+        class="flex items-center gap-2 px-4 py-2 text-sm font-bold text-white transition-all duration-300 bg-red-600 rounded-lg hover:bg-red-700 hover:shadow-lg hover:scale-105"
       >
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
         </svg>
-        <span class="hidden md:inline">Keluar</span>
+        <span class="hidden md:inline">Exit</span>
       </button>
     </div>
 
     <!-- Main Content -->
-    <div class="flex flex-1 overflow-hidden">
+    <div class="flex flex-1 gap-6 mt-6 overflow-hidden">
       <!-- Left Sidebar - Info -->
-      <div class="w-64 p-4 overflow-y-auto bg-slate-800">
-        <div class="space-y-4">
-          <!-- Level Info -->
-          <div class="p-4 border-2 border-teal-500 rounded-lg bg-teal-500 bg-opacity-10">
-            <h3 class="mb-2 text-sm font-bold text-teal-400">📊 {{ currentLevelData.name }}</h3>
-            <p class="text-xs text-gray-300">
-              {{ currentLevelData.description }}
-            </p>
-          </div>
+      <div class="w-full md:w-72 shrink-0 p-4 space-y-4 overflow-y-auto rounded-lg bg-black/20 backdrop-blur-sm border border-white/10">
+        <!-- Level Info -->
+        <div class="p-4 border-l-4 border-orange-500 rounded-r-lg bg-black/20">
+          <h3 class="mb-1 text-lg font-bold text-orange-400 font-oswald">{{ currentLevelData.name }}</h3>
+          <p class="text-sm text-white/80">
+            {{ currentLevelData.description }}
+          </p>
+        </div>
 
-          <!-- Instructions -->
-          <div class="p-4 rounded-lg bg-slate-700">
-            <h3 class="mb-2 text-sm font-bold text-white">🎯 Misi Anda</h3>
-            <ol class="space-y-2 text-xs text-gray-300 list-decimal list-inside">
-              <li>Putar trek audio</li>
-              <li>Sesuaikan slider EQ (Bass, Mid, Treble)</li>
-              <li>Dengarkan perubahannya</li>
-              <li>Klik "Periksa Pencampuran Saya" untuk melihat skor</li>
-              <li>Dapatkan skor 80% atau lebih untuk lulus!</li>
-            </ol>
-          </div>
+        <!-- Instructions -->
+        <div class="p-4 rounded-lg bg-black/20">
+          <h3 class="mb-2 font-bold text-white font-oswald">Your Mission</h3>
+          <ol class="space-y-2 text-sm text-white/80 list-decimal list-inside">
+            <li>Play the audio track.</li>
+            <li>Adjust the EQ sliders.</li>
+            <li>Listen to the changes.</li>
+            <li>Click "Check My Mix" to see your score.</li>
+            <li>Score 80% or higher to pass!</li>
+          </ol>
+        </div>
 
-          <!-- Hint -->
-          <div class="p-4 border-2 border-yellow-500 rounded-lg bg-yellow-500 bg-opacity-10">
-            <h3 class="mb-2 text-sm font-bold text-yellow-400">💡 Petunjuk</h3>
-            <p class="text-xs text-gray-300">
-              {{ currentLevelData.hint }}
-            </p>
-          </div>
+        <!-- Hint -->
+        <div class="p-4 border-l-4 border-yellow-400 rounded-r-lg bg-black/20">
+          <h3 class="mb-1 font-bold text-yellow-300 font-oswald">Hint</h3>
+          <p class="text-sm text-white/80">
+            {{ currentLevelData.hint }}
+          </p>
+        </div>
 
-          <!-- EQ Guide -->
-          <div class="p-4 rounded-lg bg-slate-700">
-            <h3 class="mb-2 text-sm font-bold text-white">🎚️ Panduan EQ</h3>
-            <div class="space-y-2 text-xs text-gray-300">
-              <div class="flex items-center gap-2">
-                <div class="w-4 h-4 rounded-full bg-red-500 shrink-0"></div>
-                <span><strong>Bass:</strong> 20-200 Hz (Kehangatan, Kekuatan)</span>
-              </div>
-              <div class="flex items-center gap-2">
-                <div class="w-4 h-4 rounded-full bg-yellow-500 shrink-0"></div>
-                <span><strong>Mid:</strong> 200-3200 Hz (Kehadiran)</span>
-              </div>
-              <div class="flex items-center gap-2">
-                <div class="w-4 h-4 rounded-full bg-blue-500 shrink-0"></div>
-                <span><strong>Treble:</strong> 3200+ Hz (Kejernihan)</span>
-              </div>
+        <!-- Progress -->
+        <div class="p-4 rounded-lg bg-black/20">
+          <h3 class="mb-2 font-bold text-white font-oswald">Progress</h3>
+          <div class="space-y-2 text-sm">
+            <div class="flex justify-between">
+              <span class="text-white/70">Level:</span>
+              <span class="font-bold">{{ currentLevel + 1 }} / {{ levels.length }}</span>
             </div>
-          </div>
-
-          <!-- Progress -->
-          <div class="p-4 rounded-lg bg-slate-700">
-            <h3 class="mb-2 text-sm font-bold text-white">📈 Progres</h3>
-            <div class="space-y-2 text-xs">
-              <div class="flex justify-between">
-                <span class="text-gray-400">Level:</span>
-                <span class="font-bold text-white">{{ currentLevel + 1 }} / {{ levels.length }}</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-400">Skor Kualitas:</span>
-                <span class="font-bold" :style="{ color: hasChecked ? qualityGrade.color : '#fff' }">
-                  {{ hasChecked ? `${qualityScore}%` : "Belum diperiksa" }}
-                </span>
-              </div>
+            <div class="flex justify-between">
+              <span class="text-white/70">Quality Score:</span>
+              <span class="font-bold" :class="hasChecked ? qualityGrade.color : ''">
+                {{ hasChecked ? `${qualityScore}%` : "Unchecked" }}
+              </span>
             </div>
           </div>
         </div>
       </div>
 
       <!-- Center - Main Game Area -->
-      <div class="relative flex-1 p-8 overflow-auto bg-slate-900">
+      <div class="relative flex-1 p-4 sm:p-8 flex flex-col items-center justify-center overflow-auto rounded-lg bg-black/20 backdrop-blur-sm border border-white/10">
         <!-- Loading State -->
-        <div v-if="isLoading" class="flex items-center justify-center h-full">
-          <div class="text-center">
-            <div
-              class="w-16 h-16 mx-auto mb-4 border-4 border-teal-500 rounded-full animate-spin border-t-transparent"
-            ></div>
-            <p class="text-white">Loading Audio...</p>
-          </div>
+        <div v-if="isLoading" class="flex flex-col items-center justify-center h-full gap-4">
+          <div class="w-16 h-16 border-4 border-orange-500 rounded-full animate-spin border-t-transparent"></div>
+          <p class="text-lg font-bold font-oswald">Loading Audio...</p>
         </div>
 
         <!-- Error State -->
-        <div v-else-if="loadError" class="flex items-center justify-center h-full">
-          <div class="p-6 text-center border-2 border-red-500 rounded-lg bg-red-500 bg-opacity-10">
-            <p class="mb-4 text-red-400">{{ loadError }}</p>
-            <button
-              @click="initAudio"
-              class="px-4 py-2 text-sm font-bold text-white transition-all rounded-lg bg-teal-500 hover:bg-teal-600"
-            >
-              Retry
-            </button>
-          </div>
+        <div v-else-if="loadError" class="flex flex-col items-center justify-center h-full gap-4 p-6 text-center border-2 border-red-500 rounded-lg bg-red-500/10">
+          <p class="text-red-400">{{ loadError }}</p>
+          <button
+            @click="initAudio"
+            class="px-4 py-2 text-sm font-bold text-white transition-all bg-orange-500 rounded-lg hover:bg-orange-600"
+          >
+            Retry
+          </button>
         </div>
 
         <!-- Main Game -->
-        <div v-else class="flex flex-col items-center justify-center max-w-6xl mx-auto space-y-6">
+        <div v-else class="flex flex-col items-center justify-around w-full h-full max-w-6xl mx-auto">
           <!-- Audio Visualizer -->
-          <div class="w-full p-4 rounded-xl bg-slate-800">
+          <div class="w-full p-2 rounded-xl bg-black/20">
             <canvas
               ref="canvasRef"
               width="1000"
               height="200"
-              class="w-full h-auto border-2 rounded-lg border-slate-700"
+              class="w-full h-auto"
             ></canvas>
           </div>
 
           <!-- Audio Controls -->
-          <div class="flex items-center gap-4">
+          <div class="flex items-center gap-4 my-4">
             <button
               @click="togglePlayback"
-              class="flex items-center justify-center w-16 h-16 transition-all duration-300 rounded-full shadow-lg bg-linear-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 hover:scale-110"
+              class="flex items-center justify-center w-16 h-16 transition-all duration-300 bg-orange-500 rounded-full shadow-lg hover:bg-orange-600 hover:scale-110"
             >
               <svg v-if="!isPlaying" class="w-8 h-8 ml-1 text-white" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M8 5v14l11-7z" />
@@ -559,19 +474,19 @@ onUnmounted(() => {
               </svg>
             </button>
 
-            <div class="text-white">
-              <p class="text-sm font-bold">{{ isPlaying ? "Memutar" : "Dijeda" }}</p>
-              <p class="text-xs text-gray-400">{{ currentLevelData.name }}</p>
+            <div>
+              <p class="text-lg font-bold font-oswald">{{ isPlaying ? "Playing" : "Paused" }}</p>
+              <p class="text-sm text-white/70">{{ currentLevelData.name }}</p>
             </div>
           </div>
 
           <!-- EQ Sliders -->
-          <div class="flex items-end justify-center w-full gap-8 p-8 rounded-xl bg-slate-800">
+          <div class="flex flex-col sm:flex-row items-center sm:items-end justify-center w-full gap-8 p-4 sm:p-8 rounded-xl bg-black/20">
             <!-- Bass Slider -->
             <div class="flex flex-col items-center space-y-3">
               <div class="text-center">
-                <div class="text-2xl font-bold text-red-400">{{ formatDB(bassGain) }} dB</div>
-                <div class="text-sm text-gray-400">Bass</div>
+                <div class="text-2xl font-bold text-orange-400 font-oswald">{{ formatDB(bassGain) }} dB</div>
+                <div class="text-sm text-white/80">Bass</div>
               </div>
               <input
                 v-model.number="bassGain"
@@ -579,17 +494,17 @@ onUnmounted(() => {
                 min="-12"
                 max="12"
                 step="0.5"
-                class="w-64 h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer slider-vertical"
-                style="writing-mode: bt-lr; -webkit-appearance: slider-vertical"
+                class="w-64 h-2 rounded-lg appearance-none cursor-pointer slider-vertical"
+                style="writing-mode: bt-lr; -webkit-appearance: slider-vertical; appearance: slider-vertical;"
               />
-              <div class="text-xs text-gray-500">20-200 Hz</div>
+              <div class="text-xs text-white/60">20-200 Hz</div>
             </div>
 
             <!-- Mid Slider -->
             <div class="flex flex-col items-center space-y-3">
               <div class="text-center">
-                <div class="text-2xl font-bold text-yellow-400">{{ formatDB(midGain) }} dB</div>
-                <div class="text-sm text-gray-400">Mid</div>
+                <div class="text-2xl font-bold text-yellow-400 font-oswald">{{ formatDB(midGain) }} dB</div>
+                <div class="text-sm text-white/80">Mid</div>
               </div>
               <input
                 v-model.number="midGain"
@@ -597,17 +512,17 @@ onUnmounted(() => {
                 min="-12"
                 max="12"
                 step="0.5"
-                class="w-64 h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer slider-vertical"
-                style="writing-mode: bt-lr; -webkit-appearance: slider-vertical"
+                class="w-64 h-2 rounded-lg appearance-none cursor-pointer slider-vertical"
+                style="writing-mode: bt-lr; -webkit-appearance: slider-vertical; appearance: slider-vertical;"
               />
-              <div class="text-xs text-gray-500">200-3200 Hz</div>
+              <div class="text-xs text-white/60">200-3200 Hz</div>
             </div>
 
             <!-- Treble Slider -->
             <div class="flex flex-col items-center space-y-3">
               <div class="text-center">
-                <div class="text-2xl font-bold text-blue-400">{{ formatDB(trebleGain) }} dB</div>
-                <div class="text-sm text-gray-400">Treble</div>
+                <div class="text-2xl font-bold text-sky-300 font-oswald">{{ formatDB(trebleGain) }} dB</div>
+                <div class="text-sm text-white/80">Treble</div>
               </div>
               <input
                 v-model.number="trebleGain"
@@ -615,148 +530,106 @@ onUnmounted(() => {
                 min="-12"
                 max="12"
                 step="0.5"
-                class="w-64 h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer slider-vertical"
-                style="writing-mode: bt-lr; -webkit-appearance: slider-vertical"
+                class="w-64 h-2 rounded-lg appearance-none cursor-pointer slider-vertical"
+                style="writing-mode: bt-lr; -webkit-appearance: slider-vertical; appearance: slider-vertical;"
               />
-              <div class="text-xs text-gray-500">3200+ Hz</div>
+              <div class="text-xs text-white/60">3200+ Hz</div>
             </div>
           </div>
 
           <!-- Quality Bar -->
-          <div v-if="hasChecked" class="w-full p-6 rounded-xl bg-slate-800">
-            <h3 class="mb-3 text-lg font-bold text-center text-white">Mix Quality</h3>
-            <div class="relative w-full h-8 overflow-hidden bg-gray-700 rounded-full">
+          <div v-if="hasChecked" class="w-full max-w-3xl p-4 mt-4 rounded-xl bg-black/20">
+            <h3 class="mb-3 text-lg font-bold text-center font-oswald">Mix Quality</h3>
+            <div class="relative w-full h-8 overflow-hidden rounded-full bg-black/30">
               <div
-                class="h-full transition-all duration-1000 ease-out bg-linear-to-r"
-                :style="{
-                  width: `${qualityScore}%`,
-                  backgroundImage: `linear-gradient(90deg, ${qualityGrade.color}, ${qualityGrade.color})`,
-                }"
+                class="h-full transition-all duration-1000 ease-out bg-green-500"
+                :style="{ width: `${qualityScore}%` }"
               ></div>
-              <div class="absolute inset-0 flex items-center justify-center text-sm font-bold text-white">
+              <div class="absolute inset-0 flex items-center justify-center text-sm font-bold">
                 {{ qualityScore }}% - {{ qualityGrade.text }}
               </div>
             </div>
           </div>
+        </div>
 
-          <!-- Level Complete -->
-          <div
-            v-if="showLevelComplete"
-            class="p-6 text-center border-2 border-green-500 rounded-lg animate-bounce-in bg-green-500 bg-opacity-10"
-          >
-            <div class="mb-2 text-4xl">🎉</div>
-            <div class="mb-1 text-lg font-bold text-green-400">Level Complete!</div>
-            <div class="mb-4 text-sm text-gray-300">Great job! Your mix sounds professional.</div>
+        <!-- Level Complete Modal -->
+        <div
+          v-if="showLevelComplete"
+          class="absolute inset-0 z-20 flex items-center justify-center p-4 bg-black/60 animate-fade-in"
+        >
+          <div class="p-8 text-center border-2 border-green-500 rounded-lg bg-blue-900/80 backdrop-blur-md animate-bounce-in">
+            <div class="mb-2 text-6xl">🎉</div>
+            <div class="mb-2 text-3xl font-bold text-green-400 font-oswald">Level Complete!</div>
+            <div class="mb-6 text-lg text-white/90">Great job! Your mix sounds professional.</div>
             <button
               v-if="currentLevel < levels.length - 1"
               @click="nextLevel"
-              class="px-6 py-3 font-bold text-white transition-all rounded-lg bg-teal-500 hover:bg-teal-600"
+              class="px-8 py-3 font-bold text-white transition-all bg-orange-500 rounded-lg hover:bg-orange-600 hover:scale-105"
             >
               Next Level →
             </button>
-            <div v-else class="text-yellow-400">🏆 You've completed all levels!</div>
+            <div v-else class="text-2xl font-bold text-yellow-400 font-oswald">🏆 You've completed all levels!</div>
           </div>
         </div>
       </div>
 
       <!-- Right Sidebar - Controls -->
-      <div class="w-64 p-4 overflow-y-auto bg-slate-800">
-        <div class="space-y-4">
-          <!-- Check Button -->
-          <button
-            @click="calculateQuality"
-            :disabled="!isPlaying && !hasChecked"
-            class="w-full py-4 text-lg font-bold text-white transition-all duration-300 transform rounded-lg shadow-lg bg-linear-to-r from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            🎚️ Periksa Pencampuran Saya
-          </button>
+      <div class="w-full md:w-72 shrink-0 p-4 space-y-4 overflow-y-auto rounded-lg bg-black/20 backdrop-blur-sm border border-white/10">
+        <!-- Check Button -->
+        <button
+          @click="calculateQuality"
+          :disabled="!isPlaying && !hasChecked"
+          class="w-full py-4 text-lg font-bold text-white transition-all duration-300 transform rounded-lg shadow-lg bg-gradient-to-r from-orange-500 to-yellow-500 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Check My Mix
+        </button>
 
-          <button
-            @click="resetLevel"
-            class="w-full py-2 text-sm font-semibold text-white transition-all rounded-lg bg-slate-700 hover:bg-slate-600"
-          >
-            🔄 Atur Ulang EQ
-          </button>
+        <button
+          @click="resetLevel"
+          class="w-full py-2 text-sm font-semibold text-white transition-all bg-white/10 rounded-lg hover:bg-white/20"
+        >
+          Reset EQ
+        </button>
 
-          <!-- Current Settings -->
-          <div class="p-4 rounded-lg bg-slate-700">
-            <h3 class="mb-2 text-sm font-bold text-white">⚙️ EQ Saat Ini</h3>
-            <div class="space-y-2 text-xs">
-              <div class="flex justify-between">
-                <span class="text-gray-400">Bass:</span>
-                <span class="font-mono font-bold text-red-400">{{ formatDB(bassGain) }} dB</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-400">Mid:</span>
-                <span class="font-mono font-bold text-yellow-400">{{ formatDB(midGain) }} dB</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-400">Treble:</span>
-                <span class="font-mono font-bold text-blue-400">{{ formatDB(trebleGain) }} dB</span>
-              </div>
+        <!-- Current Settings -->
+        <div class="p-4 rounded-lg bg-black/20">
+          <h3 class="mb-2 font-bold text-white font-oswald">Current EQ</h3>
+          <div class="space-y-2 text-sm">
+            <div class="flex justify-between">
+              <span class="text-white/70">Bass:</span>
+              <span class="font-mono font-bold text-orange-400">{{ formatDB(bassGain) }} dB</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-white/70">Mid:</span>
+              <span class="font-mono font-bold text-yellow-400">{{ formatDB(midGain) }} dB</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-white/70">Treble:</span>
+              <span class="font-mono font-bold text-sky-300">{{ formatDB(trebleGain) }} dB</span>
             </div>
           </div>
+        </div>
 
-          <!-- Tips -->
-          <div class="p-4 border-2 border-purple-500 rounded-lg bg-purple-500 bg-opacity-10">
-            <h3 class="mb-2 text-sm font-bold text-purple-400">🎓 Tips EQ</h3>
-            <ul class="space-y-1 text-xs text-gray-300">
-              <li>• Perubahan halus sering terdengar lebih baik</li>
-              <li>• Potong sebelum Anda meningkatkan</li>
-              <li>• Gunakan telinga Anda, bukan mata Anda</li>
-              <li>• Kurang selalu lebih baik</li>
-              <li>• Setiap trek membutuhkan EQ yang berbeda</li>
-            </ul>
-          </div>
-
-          <!-- Score Grading -->
-          <div class="p-4 rounded-lg bg-slate-700">
-            <h3 class="mb-2 text-sm font-bold text-white">📊 Skala Penilaian</h3>
-            <div class="space-y-1 text-xs">
-              <div class="flex justify-between">
-                <span class="text-gray-400">90-100%:</span>
-                <span class="font-bold text-green-400">A+ Sempurna</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-400">80-89%:</span>
-                <span class="font-bold text-green-500">A Sangat Bagus</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-400">70-79%:</span>
-                <span class="font-bold text-blue-400">B Bagus</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-400">60-69%:</span>
-                <span class="font-bold text-yellow-400">C Cukup</span>
-              </div>
-              <div class="flex justify-between">
-                <span class="text-gray-400">&lt;60%:</span>
-                <span class="font-bold text-red-400">D Coba Lagi</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Level Select -->
-          <div class="p-4 rounded-lg bg-slate-700">
-            <h3 class="mb-2 text-sm font-bold text-white">📚 Level</h3>
-            <div class="space-y-2">
-              <button
-                v-for="(level, index) in levels"
-                :key="index"
-                @click="
-                  currentLevel = index;
-                  resetLevel();
-                  stopAudio();
-                  loadAudioFile(level.audioFile);
-                "
-                class="w-full px-3 py-2 text-xs font-semibold text-left transition-all rounded-lg"
-                :class="
-                  currentLevel === index ? 'bg-teal-600 text-white' : 'bg-slate-600 text-gray-300 hover:bg-slate-500'
-                "
-              >
-                {{ index + 1 }}. {{ level.name.replace("Level " + (index + 1) + ": ", "") }}
-              </button>
-            </div>
+        <!-- Level Select -->
+        <div class="p-4 rounded-lg bg-black/20">
+          <h3 class="mb-2 font-bold text-white font-oswald">Levels</h3>
+          <div class="space-y-2">
+            <button
+              v-for="(level, index) in levels"
+              :key="index"
+              @click="
+                currentLevel = index;
+                resetLevel();
+                stopAudio();
+                loadAudioFile(level.audioFile);
+              "
+              class="w-full px-3 py-2 text-sm font-semibold text-left transition-all rounded-lg"
+              :class="
+                currentLevel === index ? 'bg-orange-500 text-white' : 'bg-white/10 text-white/80 hover:bg-white/20'
+              "
+            >
+              {{ index + 1 }}. {{ level.name.replace("Level " + (index + 1) + ": ", "") }}
+            </button>
           </div>
         </div>
       </div>
@@ -779,43 +652,54 @@ onUnmounted(() => {
   }
 }
 
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
 .animate-bounce-in {
   animation: bounce-in 0.5s ease-out;
 }
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
 
 /* Vertical slider styling */
-input[type="range"] {
+input[type="range"].slider-vertical {
   height: 250px;
+  background: rgba(0, 0, 0, 0.3);
 }
 
-input[type="range"]::-webkit-slider-thumb {
+input[type="range"].slider-vertical::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #14b8a6, #06b6d4);
+  background: linear-gradient(135deg, #fb923c, #facc15);
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(20, 184, 166, 0.5);
+  border: 2px solid white;
+  box-shadow: 0 2px 8px rgba(251, 146, 60, 0.5);
+  transition: all 0.2s ease;
 }
 
-input[type="range"]::-webkit-slider-thumb:hover {
-  box-shadow: 0 4px 12px rgba(20, 184, 166, 0.8);
+input[type="range"].slider-vertical::-webkit-slider-thumb:hover {
+  box-shadow: 0 4px 12px rgba(251, 146, 60, 0.8);
   transform: scale(1.1);
 }
 
-input[type="range"]::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
+input[type="range"].slider-vertical::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #14b8a6, #06b6d4);
+  background: linear-gradient(135deg, #fb923c, #facc15);
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(20, 184, 166, 0.5);
-  border: none;
+  border: 2px solid white;
+  box-shadow: 0 2px 8px rgba(251, 146, 60, 0.5);
 }
 
-input[type="range"]::-moz-range-thumb:hover {
-  box-shadow: 0 4px 12px rgba(20, 184, 166, 0.8);
+input[type="range"].slider-vertical::-moz-range-thumb:hover {
+  box-shadow: 0 4px 12px rgba(251, 146, 60, 0.8);
   transform: scale(1.1);
 }
 </style>

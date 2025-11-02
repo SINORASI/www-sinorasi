@@ -145,7 +145,7 @@ const initPixi = async () => {
   await pixiApp.value.init({
     width: 1000,
     height: 600,
-    backgroundColor: 0x2c3e50,
+    backgroundColor: 0x1a202c, // Dark blue-gray, fits the theme
     antialias: true,
   });
 
@@ -875,17 +875,17 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="fixed inset-0 z-50 flex flex-col bg-linear-to-br from-gray-900 via-gray-800 to-gray-900">
+  <div class="fixed inset-0 z-50 flex flex-col font-nunito bg-linear-to-br from-blue-700 via-blue-600 to-blue-900 text-white">
     <!-- Notifications Container -->
-    <div class="fixed top-4 right-4 z-60 space-y-2 pointer-events-none">
+    <div class="fixed top-4 right-4 z-[60] space-y-2 pointer-events-none">
       <Transition v-for="notification in notifications" :key="notification.id" name="notification" appear>
         <div
-          class="pointer-events-auto px-4 py-3 rounded-lg shadow-lg text-white font-semibold animate-in fade-in slide-in-from-right-full"
+          class="pointer-events-auto px-4 py-3 rounded-lg shadow-lg text-white font-semibold border-l-4"
           :class="{
-            'bg-red-500 border-l-4 border-red-700': notification.type === 'error',
-            'bg-yellow-500 border-l-4 border-yellow-700': notification.type === 'warning',
-            'bg-green-500 border-l-4 border-green-700': notification.type === 'success',
-            'bg-blue-500 border-l-4 border-blue-700': notification.type === 'info',
+            'bg-red-600/80 border-red-400': notification.type === 'error',
+            'bg-yellow-500/80 border-yellow-300': notification.type === 'warning',
+            'bg-green-600/80 border-green-400': notification.type === 'success',
+            'bg-blue-600/80 border-blue-400': notification.type === 'info',
           }"
         >
           {{ notification.message }}
@@ -894,17 +894,17 @@ onUnmounted(() => {
     </div>
 
     <!-- Header -->
-    <div class="flex items-center justify-between p-4 shadow-lg bg-gray-900 md:p-6">
-      <div class="flex items-center gap-3">
-        <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-linear-to-r from-orange-500 to-orange-600">
-          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div class="flex items-center justify-between p-4 border-b border-white/20">
+      <div class="flex items-center gap-4">
+        <div class="p-2 rounded-lg bg-white/10">
+          <svg class="w-6 h-6 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
           </svg>
         </div>
         <div>
-          <h1 class="text-lg font-bold text-white md:text-2xl">Simulator Las Lanjutan TMT</h1>
-          <p class="text-xs text-gray-400 md:text-sm">
-            Tahap
+          <h1 class="text-xl font-bold uppercase font-oswald sm:text-2xl">TMT Advanced Welder</h1>
+          <p class="text-sm text-white/70">
+            Stage
             {{
               currentStage === "preparation"
                 ? "1"
@@ -927,22 +927,17 @@ onUnmounted(() => {
         </div>
       </div>
 
-      <button
-        @click="exitFullscreen"
-        class="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white transition-all duration-300 rounded-lg bg-linear-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 hover:shadow-lg"
-      >
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-        </svg>
-        <span class="hidden md:inline">Keluar</span>
+      <button @click="exitFullscreen" class="flex items-center gap-2 px-4 py-2 text-sm font-bold text-white transition-all duration-300 bg-red-600 rounded-lg hover:bg-red-700 hover:shadow-lg hover:scale-105">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+        <span class="hidden md:inline">Exit</span>
       </button>
     </div>
 
     <!-- Main Content Area -->
     <div class="relative flex flex-1 overflow-hidden">
       <!-- Canvas Container (Pixi.js) -->
-      <div class="flex items-center justify-center flex-1 p-8 bg-gray-900">
-        <div ref="canvasContainer" class="relative border-4 border-gray-700 rounded-lg shadow-2xl"></div>
+      <div class="flex items-center justify-center flex-1 p-4 sm:p-8">
+        <div ref="canvasContainer" class="relative border-4 border-white/20 rounded-lg shadow-2xl bg-black/20"></div>
       </div>
 
       <!-- ====================================================================== -->
@@ -950,32 +945,32 @@ onUnmounted(() => {
       <!-- ====================================================================== -->
       <div
         v-if="currentStage === GameStage.PREPARATION"
-        class="absolute inset-0 z-20 flex items-center justify-center bg-black bg-opacity-80"
+        class="absolute inset-0 z-20 flex items-center justify-center bg-black/70 backdrop-blur-sm"
       >
-        <div class="max-w-2xl p-8 border-2 border-orange-500 rounded-lg bg-gray-900">
+        <div class="max-w-2xl w-full p-6 sm:p-8 border-2 border-orange-500/50 rounded-lg bg-black/30 animate-bounce-in">
           <div class="mb-6 text-center">
             <div class="mb-4 text-6xl">⚠️</div>
-            <h2 class="mb-2 text-3xl font-bold text-orange-400">Tahap 1: Keselamatan & Pengaturan</h2>
-            <p class="text-gray-300">Selesaikan semua langkah persiapan sebelum mengelas</p>
+            <h2 class="mb-2 text-3xl font-bold text-orange-400 font-oswald">Stage 1: Safety & Setup</h2>
+            <p class="text-white/70">Complete all preparation steps before welding.</p>
           </div>
 
-          <div class="space-y-4 mb-6">
+          <div class="space-y-3 mb-6">
             <!-- Safety Equipment -->
             <div
               @click="safetyChecklist.apron = !safetyChecklist.apron"
               class="flex items-center gap-4 p-4 transition-all border-2 rounded-lg cursor-pointer"
               :class="
                 safetyChecklist.apron
-                  ? 'border-green-500 bg-green-500 bg-opacity-10'
-                  : 'border-gray-600 bg-gray-800 hover:border-gray-500'
+                  ? 'border-green-500 bg-green-900/50'
+                  : 'border-white/20 bg-white/10 hover:bg-white/20'
               "
             >
               <img src="/images/minigame/tmt/welding-suit.png" alt="Apron" class="w-12 h-12 object-contain" />
               <div class="flex-1">
-                <div class="font-bold text-white">Kenakan Celemek Kulit</div>
-                <div class="text-sm text-gray-400">Melindungi tubuh dari percikan api</div>
+                <div class="font-bold text-white">Wear Leather Apron</div>
+                <div class="text-sm text-white/60">Protects body from sparks</div>
               </div>
-              <div v-if="safetyChecklist.apron" class="text-2xl text-green-500">✓</div>
+              <div v-if="safetyChecklist.apron" class="text-3xl text-green-400">✓</div>
             </div>
 
             <div
@@ -983,16 +978,16 @@ onUnmounted(() => {
               class="flex items-center gap-4 p-4 transition-all border-2 rounded-lg cursor-pointer"
               :class="
                 safetyChecklist.gloves
-                  ? 'border-green-500 bg-green-500 bg-opacity-10'
-                  : 'border-gray-600 bg-gray-800 hover:border-gray-500'
+                  ? 'border-green-500 bg-green-900/50'
+                  : 'border-white/20 bg-white/10 hover:bg-white/20'
               "
             >
               <img src="/images/minigame/tmt/glove.png" alt="Sarung Tangan" class="w-12 h-12 object-contain" />
               <div class="flex-1">
-                <div class="font-bold text-white">Kenakan Sarung Tangan Las</div>
-                <div class="text-sm text-gray-400">Melindungi tangan dari panas</div>
+                <div class="font-bold text-white">Wear Welding Gloves</div>
+                <div class="text-sm text-white/60">Protects hands from heat</div>
               </div>
-              <div v-if="safetyChecklist.gloves" class="text-2xl text-green-500">✓</div>
+              <div v-if="safetyChecklist.gloves" class="text-3xl text-green-400">✓</div>
             </div>
 
             <div
@@ -1000,16 +995,16 @@ onUnmounted(() => {
               class="flex items-center gap-4 p-4 transition-all border-2 rounded-lg cursor-pointer"
               :class="
                 safetyChecklist.mask
-                  ? 'border-green-500 bg-green-500 bg-opacity-10'
-                  : 'border-gray-600 bg-gray-800 hover:border-gray-500'
+                  ? 'border-green-500 bg-green-900/50'
+                  : 'border-white/20 bg-white/10 hover:bg-white/20'
               "
             >
               <img src="/images/minigame/tmt/welding-mask.png" alt="Topeng" class="w-12 h-12 object-contain" />
               <div class="flex-1">
-                <div class="font-bold text-white">Kenakan Topeng Las</div>
-                <div class="text-sm text-gray-400">Melindungi mata dari kilatan las</div>
+                <div class="font-bold text-white">Wear Welding Mask</div>
+                <div class="text-sm text-white/60">Protects eyes from flash</div>
               </div>
-              <div v-if="safetyChecklist.mask" class="text-2xl text-green-500">✓</div>
+              <div v-if="safetyChecklist.mask" class="text-3xl text-green-400">✓</div>
             </div>
 
             <!-- Tool Setup -->
@@ -1018,25 +1013,25 @@ onUnmounted(() => {
               class="flex items-center gap-4 p-4 transition-all border-2 rounded-lg cursor-pointer"
               :class="
                 safetyChecklist.cableConnected
-                  ? 'border-green-500 bg-green-500 bg-opacity-10'
-                  : 'border-gray-600 bg-gray-800 hover:border-gray-500'
+                  ? 'border-green-500 bg-green-900/50'
+                  : 'border-white/20 bg-white/10 hover:bg-white/20'
               "
             >
               <img src="/images/minigame/tmt/electrode-holder.png" alt="Kabel" class="w-12 h-12 object-contain" />
               <div class="flex-1">
-                <div class="font-bold text-white">Hubungkan Kabel Penjepit Elektroda</div>
-                <div class="text-sm text-gray-400">Hubungkan ke mesin las</div>
+                <div class="font-bold text-white">Connect Electrode Holder</div>
+                <div class="text-sm text-white/60">Connect to the welding machine</div>
               </div>
-              <div v-if="safetyChecklist.cableConnected" class="text-2xl text-green-500">✓</div>
+              <div v-if="safetyChecklist.cableConnected" class="text-3xl text-green-400">✓</div>
             </div>
           </div>
 
           <button
             @click="startExecution"
             :disabled="!allSafetyComplete"
-            class="w-full py-4 text-lg font-bold text-white transition-all duration-300 rounded-lg bg-linear-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            class="w-full py-4 text-lg font-bold text-white transition-all duration-300 rounded-lg bg-gradient-to-r from-orange-500 to-yellow-500 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {{ allSafetyComplete ? "✓ Mulai Mengelas" : "Selesaikan Semua Langkah Keselamatan" }}
+            {{ allSafetyComplete ? "✓ Start Welding" : "Complete All Safety Steps" }}
           </button>
         </div>
       </div>
@@ -1046,33 +1041,33 @@ onUnmounted(() => {
       <!-- ====================================================================== -->
       <div
         v-if="currentStage === GameStage.EXECUTION"
-        class="w-80 p-4 overflow-y-auto bg-gray-800 border-l-4 border-orange-500"
+        class="w-80 p-4 overflow-y-auto bg-black/20 border-l-2 border-white/10"
       >
         <div class="space-y-4">
           <!-- Status Panel -->
-          <div class="p-4 border-2 border-orange-500 rounded-lg bg-orange-500 bg-opacity-10">
-            <h3 class="mb-3 text-lg font-bold text-orange-400">Status</h3>
+          <div class="p-4 border border-orange-500/50 rounded-lg bg-black/30">
+            <h3 class="mb-3 text-lg font-bold text-orange-400 font-oswald">Status</h3>
             <div class="space-y-2 text-sm text-white">
               <div class="flex justify-between">
-                <span>Kesempatan:</span>
+                <span>Chances:</span>
                 <span class="font-bold">{{ chances }}/4</span>
               </div>
               <div class="flex justify-between">
-                <span>Elektroda di Kotak:</span>
+                <span>Electrodes in Pack:</span>
                 <span class="font-bold">{{ electrodesInPack }}</span>
               </div>
               <div class="flex justify-between">
-                <span>Panjang Elektroda:</span>
+                <span>Electrode Length:</span>
                 <span class="font-bold">{{ Math.round(currentElectrodeLength) }}%</span>
               </div>
               <div class="flex justify-between">
-                <span>Progres:</span>
+                <span>Progress:</span>
                 <span class="font-bold">{{ Math.round(weldProgress) }}%</span>
               </div>
             </div>
-            <div class="w-full h-2 mt-2 overflow-hidden bg-gray-700 rounded-full">
+            <div class="w-full h-2 mt-2 overflow-hidden bg-white/10 rounded-full">
               <div
-                class="h-full transition-all duration-300 bg-orange-500"
+                class="h-full transition-all duration-300 bg-gradient-to-r from-orange-500 to-yellow-500"
                 :style="{ width: `${weldProgress}%` }"
               ></div>
             </div>
@@ -1082,16 +1077,16 @@ onUnmounted(() => {
           <button
             @click="grabElectrode"
             :disabled="isElectrodeGrabbed || electrodesInPack <= 0"
-            class="w-full p-4 transition-all border-2 rounded-lg bg-gray-700 hover:bg-gray-600 border-yellow-500 disabled:opacity-50 disabled:cursor-not-allowed"
+            class="w-full p-4 transition-all border border-yellow-500/50 rounded-lg bg-black/30 hover:bg-black/50 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <img src="/images/minigame/tmt/electrode-pack.png" alt="Kotak Elektroda" class="w-16 h-16 mx-auto mb-2" />
-            <div class="text-lg font-bold text-white">Ambil Elektroda</div>
-            <div class="text-sm text-gray-300">{{ electrodesInPack }} tersisa</div>
+            <div class="text-lg font-bold text-white">Grab Electrode</div>
+            <div class="text-sm text-white/70">{{ electrodesInPack }} left</div>
           </button>
 
           <!-- Level Selection -->
-          <div class="p-4 rounded-lg bg-gray-700">
-            <h3 class="mb-3 text-lg font-bold text-white">Level Pengelasan</h3>
+          <div class="p-4 rounded-lg bg-black/30 border border-white/10">
+            <h3 class="mb-3 text-lg font-bold text-white font-oswald">Welding Level</h3>
             <div class="space-y-2">
               <div
                 v-for="(level, index) in weldingLevels"
@@ -1100,21 +1095,21 @@ onUnmounted(() => {
                 class="p-3 transition-all border-2 rounded-lg cursor-pointer"
                 :class="
                   selectedLevel === index
-                    ? 'border-orange-500 bg-orange-500 bg-opacity-20'
-                    : 'border-gray-600 hover:border-gray-500'
+                    ? 'border-orange-500 bg-orange-900/50'
+                    : 'border-white/20 bg-white/10 hover:bg-white/20'
                 "
               >
-                <div class="flex justify-between">
+                <div class="flex justify-between items-center">
                   <span class="font-bold text-white">{{ level.name }}</span>
                   <span
-                    class="text-xs px-2 py-1 rounded"
+                    class="text-xs px-2 py-1 rounded font-semibold"
                     :class="{
                       'bg-green-500 text-white': level.difficulty === 'Easy',
                       'bg-yellow-500 text-black': level.difficulty === 'Medium',
                       'bg-red-500 text-white': level.difficulty === 'Hard',
                     }"
                   >
-                    {{ level.difficulty === 'Easy' ? 'Mudah' : level.difficulty === 'Medium' ? 'Sedang' : 'Sulit' }}
+                    {{ level.difficulty }}
                   </span>
                 </div>
               </div>
@@ -1122,14 +1117,14 @@ onUnmounted(() => {
           </div>
 
           <!-- Instructions -->
-          <div class="p-4 border-2 border-blue-500 rounded-lg bg-blue-500 bg-opacity-10">
-            <h3 class="mb-2 text-sm font-bold text-blue-400">💡 Instruksi</h3>
-            <ul class="space-y-1 text-xs text-gray-300">
-              <li>1. Klik "Ambil Elektroda" untuk memulai</li>
-              <li>2. Tahan mouse dan seret di sepanjang garis kuning</li>
-              <li>3. Pertahankan kecepatan yang stabil</li>
-              <li>4. Perhatikan panjang elektroda!</li>
-              <li>5. Ambil elektroda baru saat habis</li>
+          <div class="p-4 border border-blue-500/50 rounded-lg bg-black/30">
+            <h3 class="mb-2 text-sm font-bold text-blue-400 font-oswald">💡 Instructions</h3>
+            <ul class="space-y-1 text-xs text-white/70 list-disc list-inside">
+              <li>Click "Grab Electrode" to start.</li>
+              <li>Hold mouse and drag along the yellow line.</li>
+              <li>Maintain a steady speed.</li>
+              <li>Watch your electrode length!</li>
+              <li>Grab a new electrode when it runs out.</li>
             </ul>
           </div>
         </div>
@@ -1140,18 +1135,18 @@ onUnmounted(() => {
       <!-- ====================================================================== -->
       <div
         v-if="currentStage === GameStage.CLEANING"
-        class="w-80 p-4 overflow-y-auto bg-gray-800 border-l-4 border-blue-500"
+        class="w-80 p-4 overflow-y-auto bg-black/20 border-l-2 border-white/10"
       >
         <div class="space-y-4">
-          <div class="p-4 border-2 border-blue-500 rounded-lg bg-blue-500 bg-opacity-10">
-            <h3 class="mb-3 text-lg font-bold text-blue-400">Tahap Pembersihan</h3>
+          <div class="p-4 border border-blue-500/50 rounded-lg bg-black/30">
+            <h3 class="mb-3 text-lg font-bold text-blue-400 font-oswald">Cleaning Stage</h3>
             <div class="space-y-2 text-sm text-white">
               <div class="flex justify-between">
-                <span>Penghapusan Terak:</span>
+                <span>Slag Removal:</span>
                 <span class="font-bold">{{ Math.round(slagRemovalProgress) }}%</span>
               </div>
               <div class="flex justify-between">
-                <span>Kebersihan:</span>
+                <span>Cleanliness:</span>
                 <span class="font-bold">{{ Math.round(cleanlinessScore) }}%</span>
               </div>
             </div>
@@ -1164,13 +1159,13 @@ onUnmounted(() => {
               class="w-full p-4 transition-all border-2 rounded-lg"
               :class="
                 selectedCleaningTool === CleaningToolType.HAMMER
-                  ? 'border-yellow-500 bg-yellow-500 bg-opacity-20'
-                  : 'border-gray-600 bg-gray-700 hover:bg-gray-600'
+                  ? 'border-yellow-500 bg-yellow-900/50'
+                  : 'border-white/20 bg-white/10 hover:bg-white/20'
               "
             >
               <img src="/images/minigame/tmt/welding-hammer.png" alt="Palu" class="w-16 h-16 mx-auto mb-2" />
-              <div class="text-lg font-bold text-white">Palu Terak</div>
-              <div class="text-sm text-gray-300">Hapus terak</div>
+              <div class="text-lg font-bold text-white">Slag Hammer</div>
+              <div class="text-sm text-white/70">Remove slag</div>
             </button>
 
             <button
@@ -1178,24 +1173,24 @@ onUnmounted(() => {
               class="w-full p-4 transition-all border-2 rounded-lg"
               :class="
                 selectedCleaningTool === CleaningToolType.BRUSH
-                  ? 'border-yellow-500 bg-yellow-500 bg-opacity-20'
-                  : 'border-gray-600 bg-gray-700 hover:bg-gray-600'
+                  ? 'border-yellow-500 bg-yellow-900/50'
+                  : 'border-white/20 bg-white/10 hover:bg-white/20'
               "
             >
               <img src="/images/minigame/tmt/steel-wire-brush.png" alt="Sikat" class="w-16 h-16 mx-auto mb-2" />
-              <div class="text-lg font-bold text-white">Sikat Kawat</div>
-              <div class="text-sm text-gray-300">Poles lasan</div>
+              <div class="text-lg font-bold text-white">Wire Brush</div>
+              <div class="text-sm text-white/70">Polish the weld</div>
             </button>
           </div>
 
           <!-- Instructions -->
-          <div class="p-4 border-2 border-yellow-500 rounded-lg bg-yellow-500 bg-opacity-10">
-            <h3 class="mb-2 text-sm font-bold text-yellow-400">💡 Instruksi</h3>
-            <ul class="space-y-1 text-xs text-gray-300">
-              <li>1. Pilih Palu Terak</li>
-              <li>2. Klik pada terak untuk menghapusnya</li>
-              <li>3. Pilih Sikat Kawat</li>
-              <li>4. Seret di atas lasan untuk memoles</li>
+          <div class="p-4 border border-yellow-500/50 rounded-lg bg-black/30">
+            <h3 class="mb-2 text-sm font-bold text-yellow-400 font-oswald">💡 Instructions</h3>
+            <ul class="space-y-1 text-xs text-white/70 list-disc list-inside">
+              <li>Select the Slag Hammer.</li>
+              <li>Click on the slag to remove it.</li>
+              <li>Select the Wire Brush.</li>
+              <li>Drag over the weld to polish it.</li>
             </ul>
           </div>
         </div>
@@ -1206,26 +1201,26 @@ onUnmounted(() => {
       <!-- ====================================================================== -->
       <div
         v-if="currentStage === GameStage.RESULTS"
-        class="absolute inset-0 z-20 flex items-center justify-center bg-black bg-opacity-90"
+        class="absolute inset-0 z-20 flex items-center justify-center bg-black/70 backdrop-blur-sm"
       >
-        <div class="max-w-2xl p-8 border-2 border-green-500 rounded-lg bg-gray-900 animate-bounce-in">
+        <div class="max-w-2xl w-full p-8 border-2 border-green-500/50 rounded-lg bg-black/30 animate-bounce-in">
           <div class="mb-6 text-center">
             <div class="mb-4 text-6xl">🏆</div>
-            <h2 class="mb-2 text-3xl font-bold text-green-400">Pengelasan Selesai!</h2>
-            <div class="text-2xl font-bold text-white">Skor Akhir: {{ finalScore }}/100</div>
+            <h2 class="mb-2 text-3xl font-bold text-green-400 font-oswald">Welding Complete!</h2>
+            <div class="text-2xl font-bold text-white">Final Score: {{ finalScore }}/100</div>
           </div>
 
-          <div class="grid grid-cols-3 gap-4 mb-6">
-            <div class="p-4 border-2 border-blue-500 rounded-lg bg-gray-800">
-              <div class="text-sm text-gray-400">Akurasi</div>
+          <div class="grid grid-cols-3 gap-4 mb-6 text-center">
+            <div class="p-4 border border-blue-500/50 rounded-lg bg-black/20">
+              <div class="text-sm text-white/70">Accuracy</div>
               <div class="text-3xl font-bold text-blue-400">{{ Math.round(accuracyScore) }}%</div>
             </div>
-            <div class="p-4 border-2 border-yellow-500 rounded-lg bg-gray-800">
-              <div class="text-sm text-gray-400">Kecepatan</div>
+            <div class="p-4 border border-yellow-500/50 rounded-lg bg-black/20">
+              <div class="text-sm text-white/70">Speed</div>
               <div class="text-3xl font-bold text-yellow-400">{{ Math.round(speedScore) }}%</div>
             </div>
-            <div class="p-4 border-2 border-green-500 rounded-lg bg-gray-800">
-              <div class="text-sm text-gray-400">Kebersihan</div>
+            <div class="p-4 border border-green-500/50 rounded-lg bg-black/20">
+              <div class="text-sm text-white/70">Cleanliness</div>
               <div class="text-3xl font-bold text-green-400">{{ Math.round(cleanlinessScore) }}%</div>
             </div>
           </div>
@@ -1233,15 +1228,15 @@ onUnmounted(() => {
           <div class="grid grid-cols-2 gap-4">
             <button
               @click="restartGame"
-              class="py-3 font-bold text-white transition-all rounded-lg bg-gray-700 hover:bg-gray-600"
+              class="py-3 font-bold text-white transition-all rounded-lg bg-white/10 hover:bg-white/20"
             >
-              🔄 Main Lagi
+              🔄 Play Again
             </button>
             <button
               @click="exitFullscreen"
-              class="py-3 font-bold text-white transition-all rounded-lg bg-linear-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700"
+              class="py-3 font-bold text-white transition-all rounded-lg bg-gradient-to-r from-orange-500 to-yellow-500 hover:scale-105"
             >
-              🏠 Keluar Game
+              🏠 Exit Game
             </button>
           </div>
         </div>
@@ -1252,63 +1247,19 @@ onUnmounted(() => {
 
 <style scoped>
 @keyframes bounce-in {
-  0% {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
+  0% { opacity: 0; transform: scale(0.8); }
+  50% { transform: scale(1.05); }
+  100% { opacity: 1; transform: scale(1); }
 }
-
-@keyframes slide-in-from-right {
-  from {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-@keyframes fade-out {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-}
-
-.animate-bounce-in {
-  animation: bounce-in 0.5s ease-out;
-}
+.animate-bounce-in { animation: bounce-in 0.5s ease-out; }
 
 .notification-enter-active,
 .notification-leave-active {
-  transition: all 0.3s ease;
+  transition: all 0.3s ease-out;
 }
-
-.notification-enter-from {
-  opacity: 0;
-  transform: translateX(100%);
-}
-
+.notification-enter-from,
 .notification-leave-to {
   opacity: 0;
   transform: translateX(100%);
-}
-
-.notification-enter-active {
-  animation: slide-in-from-right 0.3s ease-out;
-}
-
-.notification-leave-active {
-  animation: fade-out 0.3s ease-in;
 }
 </style>
