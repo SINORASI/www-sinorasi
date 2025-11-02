@@ -801,10 +801,10 @@ const orgData = ref<OrgNode[]>([
 ]);
 
 const categoryMapping: Record<string, string[]> = {
-  kurikulum: ["PNS", "GTT", "Kapro", "Korlabid"],
-  kesiswaan: ["P3K"],
-  sapras: ["KARYAWAN"],
-  humas: ["KTU"],
+  kurikulum: [],
+  kesiswaan: [],
+  sapras: [],
+  humas: [],
 };
 
 const ktuTeacher = teacherCategories.value.find((cat) => cat.title === "KTU")?.teachers[0];
