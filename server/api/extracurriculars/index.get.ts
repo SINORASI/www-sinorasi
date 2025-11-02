@@ -39,7 +39,6 @@ export default defineEventHandler(
         registrationPeriod: "Pendaftaran dibuka: 1-31 Juli 2024",
         contactInfo: "Coach Budi: 0812-3456-7890",
         requirements: [
-          "Siswa aktif kelas 7-11",
           "Mengisi formulir pendaftaran",
           "Surat persetujuan orang tua",
           "Sertifikat kesehatan",
@@ -104,7 +103,6 @@ export default defineEventHandler(
         registrationPeriod: "Pendaftaran dibuka: 1-31 Juli 2024",
         contactInfo: "Coach Siti: 0814-7890-1234",
         requirements: [
-          "Siswa aktif kelas 7-11",
           "Mengisi formulir pendaftaran",
           "Surat persetujuan orang tua",
           "Sertifikat kesehatan",
@@ -168,7 +166,6 @@ export default defineEventHandler(
         registrationPeriod: "Pendaftaran dibuka: 1-31 Juli 2024",
         contactInfo: "Coach Rina: 0815-2345-6789",
         requirements: [
-          "Siswa aktif kelas 7-12",
           "Mengisi formulir pendaftaran",
           "Surat persetujuan orang tua",
           "Sertifikat kesehatan",
@@ -233,7 +230,6 @@ export default defineEventHandler(
         registrationPeriod: "Pendaftaran dibuka: 1-31 Juli 2024",
         contactInfo: "Coach Dedi: 0816-3456-7890",
         requirements: [
-          "Siswa aktif kelas 7-11",
           "Mengisi formulir pendaftaran",
           "Surat persetujuan orang tua",
           "Sertifikat kesehatan",
@@ -296,7 +292,6 @@ export default defineEventHandler(
         registrationPeriod: "Pendaftaran dibuka: 1-31 Juli 2024",
         contactInfo: "Instruktur Agus: 0818-5678-9012",
         requirements: [
-          "Siswa aktif kelas 7-12",
           "Mengisi formulir pendaftaran",
           "Surat persetujuan orang tua",
           "Sertifikat kesehatan",
@@ -335,7 +330,6 @@ export default defineEventHandler(
         registrationPeriod: "Pendaftaran dibuka: 1-31 Juli 2024",
         contactInfo: "Teacher John: 0819-6789-0123",
         requirements: [
-          "Siswa aktif kelas 7-12",
           "Mengisi formulir pendaftaran",
           "Surat persetujuan orang tua",
           "Tingkat bahasa Inggris dasar",
@@ -395,7 +389,6 @@ export default defineEventHandler(
         registrationPeriod: "Pendaftaran dibuka: 1-31 Juli 2024",
         contactInfo: "Koreografer Dewi: 0820-7890-1234",
         requirements: [
-          "Siswa aktif kelas 7-12",
           "Mengisi formulir pendaftaran",
           "Surat persetujuan orang tua",
           "Tidak ada batasan fisik",
@@ -455,7 +448,6 @@ export default defineEventHandler(
         registrationPeriod: "Pendaftaran dibuka: 1-31 Juli 2024",
         contactInfo: "Guru Surya: 0821-8901-2345",
         requirements: [
-          "Siswa aktif kelas 7-12",
           "Mengisi formulir pendaftaran",
           "Surat persetujuan orang tua",
           "Minat terhadap musik tradisional",

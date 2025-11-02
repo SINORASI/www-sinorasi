@@ -27,7 +27,6 @@ export default defineEventHandler(async (event): Promise<Extracurricular | null>
       registrationPeriod: "Pendaftaran dibuka: 1-31 Juli 2024",
       contactInfo: "Coach Budi: 0812-3456-7890",
       requirements: [
-        "Siswa aktif kelas 7-11",
         "Mengisi formulir pendaftaran",
         "Surat persetujuan orang tua",
         "Sertifikat kesehatan",
@@ -92,7 +91,6 @@ export default defineEventHandler(async (event): Promise<Extracurricular | null>
       registrationPeriod: "Pendaftaran dibuka: 1-31 Juli 2024",
       contactInfo: "Coach Siti: 0814-7890-1234",
       requirements: [
-        "Siswa aktif kelas 7-11",
         "Mengisi formulir pendaftaran",
         "Surat persetujuan orang tua",
         "Sertifikat kesehatan",
@@ -218,7 +216,6 @@ export default defineEventHandler(async (event): Promise<Extracurricular | null>
       registrationPeriod: "Pendaftaran dibuka: 1-31 Juli 2024",
       contactInfo: "Coach Dedi: 0816-3456-7890",
       requirements: [
-        "Siswa aktif kelas 7-11",
         "Mengisi formulir pendaftaran",
         "Surat persetujuan orang tua",
         "Sertifikat kesehatan",
@@ -317,7 +314,6 @@ export default defineEventHandler(async (event): Promise<Extracurricular | null>
       registrationPeriod: "Pendaftaran dibuka: 1-31 Juli 2024",
       contactInfo: "Instruktur Agus: 0818-5678-9012",
       requirements: [
-        "Siswa aktif kelas 7-12",
         "Mengisi formulir pendaftaran",
         "Surat persetujuan orang tua",
         "Sertifikat kesehatan",

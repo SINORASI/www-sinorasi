@@ -82,28 +82,7 @@ useHead({
         <p class="text-lg text-blue-50">{{ extra.description }}</p>
       </div>
 
-      <div class="max-w-4xl p-8 mx-auto mb-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
-        <div class="grid grid-cols-2 gap-6 md:grid-cols-4 md:gap-8">
-          <div v-if="extra.memberCount" class="text-center">
-            <p class="mb-2 text-3xl font-bold text-blue-600 md:text-4xl">{{ extra.memberCount }}+</p>
-            <p class="font-medium text-gray-600">Anggota</p>
-          </div>
-          <div v-if="extra.achievementCount" class="text-center">
-            <p class="mb-2 text-3xl font-bold text-orange-600 md:text-4xl">{{ extra.achievementCount }}+</p>
-            <p class="font-medium text-gray-600">Juara</p>
-          </div>
-          <div v-if="extra.yearEstablished" class="text-center">
-            <p class="mb-2 text-3xl font-bold text-blue-600 md:text-4xl">
-              {{ new Date().getFullYear() - extra.yearEstablished }}
-            </p>
-            <p class="font-medium text-gray-600">Tahun</p>
-          </div>
-          <div v-if="extra.meetingsPerWeek" class="text-center">
-            <p class="mb-2 text-3xl font-bold text-orange-600 md:text-4xl">{{ extra.meetingsPerWeek }}</p>
-            <p class="font-medium text-gray-600">Pertemuan</p>
-          </div>
-        </div>
-      </div>
+
 
       <div
         v-if="extra.fullDescription"
@@ -162,15 +141,16 @@ useHead({
           </div>
         </div>
 
-        <div
-          v-if="extra.requirements && extra.requirements.length > 0"
-          class="p-6 bg-white border-2 border-blue-100 shadow-xl rounded-2xl"
-        >
+        <div class="p-6 bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
           <h2 class="flex items-center mb-4 text-2xl font-bold text-gray-800">
             <Icon name="lucide:clipboard-check" size="24" class="mr-2 text-blue-600" />
             Persyaratan
           </h2>
           <ul class="space-y-3">
+            <li class="flex items-start text-gray-700">
+              <Icon name="lucide:check-circle" size="20" class="text-blue-600 mr-3 mt-0.5 shrink-0" />
+              <span>Siswa kelas 10-12</span>
+            </li>
             <li v-for="(req, idx) in extra.requirements" :key="idx" class="flex items-start text-gray-700">
               <Icon name="lucide:check-circle" size="20" class="text-blue-600 mr-3 mt-0.5 shrink-0" />
               <span>{{ req }}</span>
@@ -179,72 +159,9 @@ useHead({
         </div>
       </div>
 
-      <div v-if="extra.activities && extra.activities.length > 0" class="max-w-6xl mx-auto mb-8">
-        <div class="mb-12 text-center">
-          <div
-            class="inline-block px-10 py-6 mb-4 border border-orange-200 shadow-xl bg-linear-to-r from-orange-500 to-orange-600 backdrop-blur-2xl rounded-2xl"
-          >
-            <h2 class="text-3xl font-bold text-white md:text-4xl">Aktivitas Terkait</h2>
-          </div>
-          <p class="text-lg text-gray-600">Berbagai kegiatan dan prestasi yang telah dicapai</p>
-        </div>
 
-        <div class="grid gap-8 md:grid-cols-2">
-          <div
-            v-for="(activity, idx) in extra.activities"
-            :key="idx"
-            class="overflow-hidden transition-all duration-300 bg-white border border-gray-100 shadow-lg rounded-2xl hover:shadow-2xl hover:border-blue-200"
-          >
-            <SmartImage
-              :src="activity.image || '/images/placeholder.jpg'"
-              :alt="activity.title"
-              class="object-cover w-full h-56"
-            />
-            <div class="p-6">
-              <h3 class="mb-3 text-xl font-bold text-gray-800">{{ activity.title }}</h3>
-              <p class="mb-4 leading-relaxed text-gray-600">{{ activity.description }}</p>
-              <div v-if="activity.date" class="flex items-center font-semibold text-blue-600">
-                <Icon name="lucide:calendar" size="18" class="mr-2" />
-                <span>{{ activity.date }}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      <div v-if="extra.registrationOpen" class="max-w-5xl mx-auto mb-8">
-        <div class="mb-12 text-center">
-          <div
-            class="inline-block px-10 py-6 mb-4 border border-blue-200 shadow-xl bg-linear-to-r from-blue-600 to-blue-800 backdrop-blur-2xl rounded-2xl"
-          >
-            <h2 class="text-3xl font-bold text-white md:text-4xl">Informasi Pendaftaran</h2>
-          </div>
-          <p class="text-lg text-gray-600">
-            Bergabunglah dengan ekstrakurikuler {{ extra.name.toLowerCase() }} dan kembangkan potensi Anda
-          </p>
-        </div>
 
-        <div class="p-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl md:p-12">
-          <div
-            v-if="extra.registrationPeriod"
-            class="p-6 mb-8 text-center border-2 border-blue-200 bg-linear-to-r from-blue-50 to-orange-50 rounded-xl"
-          >
-            <p class="mb-2 text-2xl font-bold text-blue-800">{{ extra.registrationPeriod }}</p>
-            <p v-if="extra.contactInfo" class="mb-4 text-gray-700">Untuk informasi lebih lanjut, hubungi:</p>
-            <div class="flex flex-col items-center justify-center gap-4 text-gray-700 md:flex-row">
-              <div v-if="extra.contactInfo" class="flex items-center">
-                <Icon name="lucide:phone" size="18" class="mr-2 text-blue-600" />
-                <span class="font-semibold">{{ extra.contactInfo }}</span>
-              </div>
-              <span v-if="extra.contactInfo && extra.location" class="hidden text-gray-400 md:inline">|</span>
-              <div v-if="extra.location" class="flex items-center">
-                <Icon name="lucide:map-pin" size="18" class="mr-2 text-orange-600" />
-                <span>{{ extra.location }}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
       <div v-if="relatedExtras.length > 0" class="p-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
         <h2 class="flex items-center mb-6 text-2xl font-bold text-gray-800">
