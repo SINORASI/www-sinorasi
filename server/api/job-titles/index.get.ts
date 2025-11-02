@@ -1,4 +1,4 @@
-import { defineEventHandler, getQuery, readBody, createError, setCookie, getCookie } from 'h3';
+import { defineEventHandler } from "h3";
 import type { JobTitle } from "~/models/JobTitle";
 import type { MajorName } from "~/models/MajorName";
 
@@ -249,7 +249,7 @@ const JobTitles: Record<MajorName, JobTitle[]> = {
     },
     {
       id: "4",
-      icon: "bot",
+      icon: "cog",
       title: "Robotics Engineer",
       description:
         "Robotics Engineer adalah profesional yang merancang dan mengembangkan sistem robotik untuk otomasi dan aplikasi industri. Tanggung jawab utama: mechanical design, control systems, prototyping, testing. Keterampilan yang diperlukan: mechanics, electronics, programming, AI basics. Prospek karir: di research, manufacturing; kemungkinan menjadi R&D lead; gaji tinggi.",

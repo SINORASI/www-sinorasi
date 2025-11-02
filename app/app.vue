@@ -32,7 +32,7 @@ useSeoMeta({
   <NuxtLayout>
     <Transition name="loading">
       <div v-if="loading">
-        <div class="flex flex-col items-center justify-center min-h-screen bg-white">
+        <div class="flex flex-col items-center justify-center min-h-screen bg-linear-to-br from-slate-50 via-blue-50 to-slate-100">
           <img src="/images/logo-smk.webp" alt="SMK Negeri 2 Singosari" class="w-48 h-48 mb-4" />
           <p class="text-xl text-gray-600">Loading...</p>
         </div>

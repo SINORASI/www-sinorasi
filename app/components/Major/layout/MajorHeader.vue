@@ -3,16 +3,12 @@ import { computed, onMounted, onUnmounted, ref } from "vue";
 import type { MajorData } from "~/models/MajorData";
 import type { MajorName } from "~/models/MajorName";
 import { useMinigameState } from "~/composables/useMinigameState";
-import { usePageSections } from "~/composables/usePageSections";
 
 const route = useRoute();
 const major = (route.params.majorName as MajorName) || (route.path.split("/").pop() as MajorName);
 
 // Get minigame state from parent
 const minigameState = useMinigameState();
-
-// Extract page sections for navbar
-const { extractSections } = usePageSections();
 
 const { data: majorDatas } = await useFetch<Record<MajorName, MajorData>>("/api/majors");
 const { data: majorMenus } = await useFetch("/api/majors/menus");
@@ -35,9 +31,6 @@ onMounted(() => {
   };
   window.addEventListener("scroll", handleScroll);
   handleScroll();
-
-  // Extract page sections for navbar
-  extractSections();
 
   onUnmounted(() => {
     window.removeEventListener("scroll", handleScroll);
