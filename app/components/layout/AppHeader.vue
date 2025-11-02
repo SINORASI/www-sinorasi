@@ -72,9 +72,7 @@ onMounted(() => {
     :transition="{ duration: 0.8, ease: 'easeOut' }"
     class="z-999 fixed top-0 left-0 right-0"
   >
-    <header
-      :class="['z-999 border-b fixed top-0 left-0 right-0 transition-all duration-500 ease-in-out', headerClass]"
-    >
+    <header :class="['z-999 border-b fixed top-0 left-0 right-0 transition-all duration-500 ease-in-out', headerClass]">
       <div
         :class="
           (sizeClass === 'full' ? 'p-4 gap-6' : 'p-3 gap-4') +
@@ -95,6 +93,8 @@ onMounted(() => {
               :src="'/images/logo-smk.webp'"
               :style="{ width: sizeClass === 'full' ? '80px' : '50px', transition: 'width 0.5s ease-in-out' }"
               alt="Logo SMKN 2 Singosari"
+              width="1000"
+              height="1000"
             />
             <div class="flex flex-col">
               <h2

@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue';
-import { useNuxtApp } from '#app';
+import { ref, onMounted, watch } from "vue";
+import { useNuxtApp } from "#app";
 
 const nuxtApp = useNuxtApp();
 const loading = ref(true);
 
-nuxtApp.hook('page:loading:end', () => {
+nuxtApp.hook("page:loading:end", () => {
   loading.value = false;
 });
 
@@ -28,8 +28,8 @@ useSeoMeta({
 });
 
 watch(loading, (isLoading) => {
-  if (typeof document !== 'undefined') {
-    document.body.style.overflow = isLoading ? 'hidden' : '';
+  if (typeof document !== "undefined") {
+    document.body.style.overflow = isLoading ? "hidden" : "";
   }
 });
 </script>
@@ -37,8 +37,17 @@ watch(loading, (isLoading) => {
 <template>
   <div>
     <Transition name="loading">
-      <div v-if="loading" class="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-linear-to-br from-slate-50 via-blue-50 to-slate-100">
-        <img src="/images/logo-smk.webp" alt="SMK Negeri 2 Singosari" class="w-48 h-48 mb-4" />
+      <div
+        v-if="loading"
+        class="fixed inset-0 z-9999 flex flex-col items-center justify-center bg-linear-to-br from-slate-50 via-blue-50 to-slate-100"
+      >
+        <NuxtImg
+          src="/images/logo-smk.webp"
+          alt="SMK Negeri 2 Singosari"
+          class="w-48 h-48 mb-4"
+          width="1000"
+          height="1000"
+        />
         <p class="text-xl text-gray-600">Loading...</p>
       </div>
     </Transition>

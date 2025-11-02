@@ -106,6 +106,8 @@ onUnmounted(() => {
       playsinline
       preload="none"
       poster="/images/guru/foto-guru-bersama.webp"
+      width="2000"
+      height="1125"
       aria-hidden="true"
     />
 
