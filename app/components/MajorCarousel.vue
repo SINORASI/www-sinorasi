@@ -43,7 +43,7 @@
                 <button @click.stop="navigateToJurusan(card.slug)" class="learn-more-btn">Pelajari Lebih</button>
               </div>
               <div class="logo">
-                <NuxtImg :src="card.logo" alt="Logo Jurusan" width="60" height="60" />
+                <NuxtImg :src="card.logo" alt="Logo Jurusan" />
               </div>
             </div>
           </div>
@@ -558,12 +558,18 @@ const navigateToMajorsList = () => {
 
 .card-logo {
   flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .card-logo img {
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
   filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
 }
 
@@ -584,7 +590,7 @@ const navigateToMajorsList = () => {
 .content-overlay {
   position: absolute;
   bottom: 0;
-  height: 30%;
+  min-height: 100px;
   width: 100%;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.7) 50%, transparent 100%);
   backdrop-filter: blur(12px);
@@ -593,6 +599,8 @@ const navigateToMajorsList = () => {
   transform: translateY(100%);
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   opacity: 0;
+  display: flex;
+  align-items: flex-end;
 }
 
 .content-visible {
@@ -603,8 +611,10 @@ const navigateToMajorsList = () => {
 .content-wrapper {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
   color: white;
+  width: 100%;
+  gap: 16px;
 }
 
 .content-left {
@@ -613,13 +623,22 @@ const navigateToMajorsList = () => {
 }
 
 .logo {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+  overflow: hidden;
 }
 
 .logo img {
-  width: 60px;
-  height: 60px;
+  max-width: 100%;
+  max-height: 100%;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
+  object-position: center;
 }
 
 .title {
@@ -724,23 +743,32 @@ const navigateToMajorsList = () => {
   }
 
   .content-overlay {
-    padding: 16px;
+    min-height: 90px;
+    padding: 12px;
   }
 
   .content-wrapper {
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
+    align-items: flex-end;
     gap: 12px;
   }
 
   .content-left {
     margin-right: 0;
-    text-align: center;
+    text-align: left;
+    flex: 1;
+  }
+
+  .logo {
+    width: 50px;
+    height: 50px;
   }
 
   .logo img {
-    width: 50px;
-    height: 50px;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
   }
 
   .card-header {
@@ -754,9 +782,16 @@ const navigateToMajorsList = () => {
     gap: 6px;
   }
 
-  .card-logo img {
+  .card-logo {
     width: 28px;
     height: 28px;
+  }
+
+  .card-logo img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
   }
 
   .card-title {
@@ -777,15 +812,21 @@ const navigateToMajorsList = () => {
     font-size: 1rem;
   }
 
+  .content-overlay {
+    min-height: 80px;
+    padding: 10px;
+  }
+
   .content-wrapper {
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 10px;
   }
 
   .content-left {
     margin-right: 0;
-    text-align: center;
+    text-align: left;
+    flex: 1;
   }
 
   .card-header {
@@ -802,6 +843,10 @@ const navigateToMajorsList = () => {
   .card-logo img {
     width: 24px;
     height: 24px;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
   }
 
   .card-title {

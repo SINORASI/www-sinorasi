@@ -56,7 +56,7 @@ onMounted(() => {
             :style="{
               backgroundColor: majorColor.primary,
             }"
-            class="flex items-center w-full gap-3 px-4 py-4 md:gap-4 md:px-5 md:py-5 lg:px-6 lg:py-5 transition-transform duration-200 ease-in-out hover:scale-105 active:scale-95"
+            class="flex items-center w-full gap-3 px-4 py-4 md:gap-4 md:px-5 md:py-5 lg:px-6 lg:py-5 transition-all duration-200 ease-in-out active:scale-95 hover:shadow-xl"
           >
             <div
               class="absolute top-3 right-3 w-1.5 h-1.5 rounded-full bg-white/50 animate-pulse"
