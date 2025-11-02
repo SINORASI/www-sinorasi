@@ -848,18 +848,8 @@ const menuItems = [
 ];
 
 const currentMenuItems = computed(() => {
-  let items = props.menuItems || menuItems;
-  
-  // On jurusan pages, add karir and kompetensi sections
-  if (currentMajor.value && karirSection.value && kompetensiSection.value) {
-    items = [
-      ...items,
-      karirSection.value,
-      kompetensiSection.value,
-    ];
-  }
-  
-  return items;
+  // Use the menu items passed from parent (which already includes dynamic sections from MajorHeader)
+  return props.menuItems || menuItems;
 });
 
 const searchQuery = ref("");

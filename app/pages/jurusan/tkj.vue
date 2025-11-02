@@ -93,19 +93,19 @@ onMounted(() => {
       <div class="absolute inset-0" :style="`background: ${majorColor.gradient}`"></div>
 
       <div class="relative z-10 flex items-center w-full h-full min-h-screen">
-        <div class="container px-8 py-16 mx-auto">
+        <div class="container px-8 py-8 mx-auto">
           <div class="grid items-center grid-cols-1 gap-12 lg:grid-cols-2">
             <div class="flex flex-col items-start justify-center">
               <div class="w-full max-w-md lg:max-w-lg">
                 <img
                   src="/images/majorIcon/logo-tkj.webp"
                   alt="TKJ Logo"
-                  class="object-contain w-full h-auto drop-shadow-2xl"
+                  class="object-contain w-full h-full drop-shadow-2xl"
                 />
               </div>
             </div>
 
-            <div class="flex flex-col items-center justify-center space-y-6 lg:items-end lg:space-y-8">
+            <div class="flex flex-col items-center justify-center gap-2 lg:items-end lg:space-y-8">
               <div class="w-full text-center lg:text-right">
                 <h1
                   class="text-4xl font-black leading-none tracking-tight text-white uppercase sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl drop-shadow-2xl"
@@ -150,9 +150,11 @@ onMounted(() => {
       </div>
     </section>
 
+    <MajorDescription :major="major" />
+
     <motion.section
       id="kepala-program"
-      class="relative min-h-screen py-16 md:py-24"
+      class="relative py-16 md:py-24"
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8, delay: 0.1 }"
@@ -184,7 +186,7 @@ onMounted(() => {
 
     <motion.section
       id="materi-pembelajaran"
-      class="min-h-screen py-16 md:py-24"
+      class="py-16 md:py-24"
       :initial="{ opacity: 0, y: 50 }"
       :whileInView="{ opacity: 1, y: 0 }"
       :transition="{ duration: 0.8, delay: 0.2 }"
@@ -420,6 +422,8 @@ onMounted(() => {
         </div>
       </div>
     </motion.section>
+
+    <MajorNavigation :major="major" />
 
     <AnimatePresence>
       <motion.button

@@ -2,22 +2,96 @@
 import { computed, onMounted, onUnmounted, ref } from "vue";
 import type { MajorData } from "~/models/MajorData";
 import type { MajorName } from "~/models/MajorName";
+import type { JobTitle } from "~/models/JobTitle";
+import type { MajorTopic } from "~/models/MajorTopic";
 import { useMinigameState } from "~/composables/useMinigameState";
 
 const route = useRoute();
 const major = (route.params.majorName as MajorName) || (route.path.split("/").pop() as MajorName);
+
+// Helper function to shorten descriptions to first sentence or 50 chars
+const shortenDescription = (desc: string | undefined): string => {
+  if (!desc) return "";
+  const firstSentence = desc.split(/[.!?]/)[0] || desc;
+  return firstSentence.substring(0, 50).trim();
+};
 
 // Get minigame state from parent
 const minigameState = useMinigameState();
 
 const { data: majorDatas } = await useFetch<Record<MajorName, MajorData>>("/api/majors");
 const { data: majorMenus } = await useFetch("/api/majors/menus");
+const { data: jobTitles } = await useFetch<Record<MajorName, JobTitle[]>>("/api/job-titles");
+const { data: majorTopics } = await useFetch<Record<MajorName, MajorTopic[]>>("/api/major-topics");
+const { data: toolsData } = await useFetch<Record<string, Array<{ name: string; icon: string; description: string }>>>(
+  "/app/data/toolsData.json"
+);
 
 const headerClass = ref("bg-white/20 backdrop-blur-[8px] border-b-white/20 shadow-lg shadow-orange-500/10");
 const sizeClass = ref("compact");
 const isOpen = ref(false);
 
 const menuItems = computed(() => majorMenus.value?.[major] || []);
+
+// Karir section - dynamic from job titles
+const karirSection = computed(() => {
+  const jobs = jobTitles.value?.[major] || [];
+  return {
+    title: "Karir",
+    submenu: jobs.map((job) => ({
+      title: job.title,
+      desc: shortenDescription(job.description),
+      icon: `lucide:${job.icon}`,
+      to: `#kesempatan-kerja`,
+    })),
+  };
+});
+
+// Kompetensi section - dynamic from major topics
+const kompetensiSection = computed(() => {
+  const topics = majorTopics.value?.[major] || [];
+  return {
+    title: "Kompetensi",
+    submenu: topics.map((topic) => ({
+      title: topic.title,
+      desc: shortenDescription(topic.description),
+      icon: "lucide:book-open",
+      to: `#materi-pembelajaran`,
+    })),
+  };
+});
+
+// Tools section - dynamic from toolsData
+const toolsSection = computed(() => {
+  const tools = toolsData.value?.[major] || [];
+  return {
+    title: "Tools & Software",
+    submenu: tools.map((tool: { name: string; icon: string; description: string }) => ({
+      title: tool.name,
+      desc: shortenDescription(tool.description),
+      icon: tool.icon,
+      to: "#tools-software",
+    })),
+  };
+});
+
+// Combined menu items with dynamic sections
+const allMenuItems = computed(() => {
+  const baseItems = menuItems.value || [];
+  const dynamicSections = [];
+
+  if (kompetensiSection.value?.submenu.length > 0) {
+    dynamicSections.push(kompetensiSection.value);
+  }
+  if (karirSection.value?.submenu.length > 0) {
+    dynamicSections.push(karirSection.value);
+  }
+  if (toolsSection.value?.submenu.length > 0) {
+    dynamicSections.push(toolsSection.value);
+  }
+
+  return [...baseItems, ...dynamicSections];
+});
 
 onMounted(() => {
   const handleScroll = () => {
@@ -94,7 +168,7 @@ if (!majorDatas.value?.[major]) {
       <div
         :class="(sizeClass === 'full' ? 'gap-5' : 'gap-4') + ' hidden md:flex transition-all duration-500 ease-in-out'"
       >
-        <div v-for="(item, index) in menuItems" :key="index" class="relative group">
+        <div v-for="(item, index) in allMenuItems" :key="index" class="relative group">
           <div
             :class="
               (sizeClass === 'full' ? 'gap-3' : 'gap-2') +
@@ -158,5 +232,5 @@ if (!majorDatas.value?.[major]) {
       </div>
     </div>
   </header>
-  <MobileSidebar :is-open="isOpen" :menu-items="menuItems" @close="isOpen = false" />
+  <MobileSidebar :is-open="isOpen" :menu-items="allMenuItems" @close="isOpen = false" />
 </template>
