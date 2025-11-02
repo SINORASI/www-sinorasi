@@ -55,6 +55,12 @@ if (!majorDatas.value?.[major]) {
           ' flex justify-center items-center transition-all duration-500 ease-in-out'
         "
       >
+        <button
+          @click="navigateTo('/')"
+          class="flex items-center justify-center w-8 h-8 transition-colors duration-300 rounded-full hover:bg-white/20"
+        >
+          <Icon name="lucide:house" size="20" class="text-black" />
+        </button>
         <NuxtImg
           :src="majorDatas?.[major]?.logo"
           :style="{ width: sizeClass === 'full' ? '60px' : '40px', transition: 'width 0.5s ease-in-out' }"

@@ -342,7 +342,7 @@ const majorMenus: Record<MajorName, MenuItem[]> = {
         {
           title: "3D Animation",
           desc: "Animasi tiga dimensi",
-          icon: "lucide:cube",
+          icon: "lucide:box",
           to: "/jurusan/animasi#materi-pembelajaran",
           external: false,
           tags: ["3d", "animation", "animasi", "dimensi", "modeling"],
@@ -583,7 +583,7 @@ const majorMenus: Record<MajorName, MenuItem[]> = {
         {
           title: "Industrial Tools",
           desc: "Tools dan peralatan industri",
-          icon: "lucide:tool",
+          icon: "lucide:wrench",
           to: "/jurusan/tei#fasilitas",
           external: false,
           tags: ["industrial", "tools", "peralatan", "industri"],
@@ -672,7 +672,7 @@ const majorMenus: Record<MajorName, MenuItem[]> = {
         {
           title: "Automation Systems",
           desc: "Sistem otomasi industri",
-          icon: "lucide:conveyor-belt",
+          icon: "lucide:settings",
           to: "/jurusan/mekatronika#materi-pembelajaran",
           external: false,
           tags: ["automation", "systems", "otomasi", "sistem", "industri"],
@@ -693,7 +693,7 @@ const majorMenus: Record<MajorName, MenuItem[]> = {
         {
           title: "Automation Tools",
           desc: "Tools otomasi dan robotik",
-          icon: "lucide:tool",
+          icon: "lucide:settings-2",
           to: "/jurusan/mekatronika#fasilitas",
           external: false,
           tags: ["automation", "tools", "otomasi", "robotik", "robot"],

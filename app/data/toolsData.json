@@ -214,7 +214,7 @@
     },
     {
       "name": "DaVinci Resolve",
-      "icon": "logos:davinci-resolve",
+      "icon": "lucide:film",
       "description": "Software color grading dan finishing video"
     },
     {
