@@ -336,7 +336,7 @@ onMounted(async () => {
 <template>
   <div
     ref="gameContainer"
-    class="game-fullscreen-wrapper fixed inset-0 z-50 bg-linear-to-br from-blue-700 via-blue-600 to-blue-900 font-nunito"
+    class="game-fullscreen-wrapper fixed inset-0 z-50 bg-linear-to-br from-orange-700 via-orange-600 to-orange-900 font-nunito"
   >
     <div class="min-h-screen p-4 md:p-8">
       <!-- Header -->

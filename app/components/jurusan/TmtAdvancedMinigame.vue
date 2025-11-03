@@ -875,7 +875,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="fixed inset-0 z-50 flex flex-col font-nunito bg-linear-to-br from-blue-700 via-blue-600 to-blue-900 text-white">
+  <div class="fixed inset-0 z-50 flex flex-col font-nunito bg-linear-to-br from-emerald-700 via-emerald-600 to-emerald-900 text-white">
     <!-- Notifications Container -->
     <div class="fixed top-4 right-4 z-[60] space-y-2 pointer-events-none">
       <Transition v-for="notification in notifications" :key="notification.id" name="notification" appear>

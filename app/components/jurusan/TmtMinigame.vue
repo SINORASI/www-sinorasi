@@ -454,7 +454,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="fixed inset-0 z-50 flex flex-col font-nunito bg-linear-to-br from-blue-700 via-blue-600 to-blue-900 text-white">
+  <div class="fixed inset-0 z-50 flex flex-col font-nunito bg-linear-to-br from-emerald-700 via-emerald-600 to-emerald-900 text-white">
     <!-- Header -->
     <div class="flex items-center justify-between p-4 border-b border-white/20">
       <div class="flex items-center gap-4">

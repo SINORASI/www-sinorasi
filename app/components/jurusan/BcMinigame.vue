@@ -267,7 +267,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="fixed inset-0 z-50 flex flex-col bg-linear-to-br from-blue-700 via-blue-600 to-blue-900 font-nunito">
+  <div class="fixed inset-0 z-50 flex flex-col bg-linear-to-br from-red-700 via-red-600 to-red-900 font-nunito">
     <!-- Header -->
     <div class="flex items-center justify-between p-4 bg-black/20 md:p-6">
       <div class="flex items-center gap-3">

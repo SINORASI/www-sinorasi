@@ -31,7 +31,12 @@
       "ekstrakurikuler": "Extracurricular",
       "berita": "News",
       "utilitas": "Utilities",
-      "layanan": "Services"
+      "layanan": "Services",
+      "pengenalan": "Introduction",
+      "kompetensi": "Competencies",
+      "fasilitas": "Facilities",
+      "karir": "Career",
+      "tools&software": "Tools & Software"
     },
     "matches": {
       "perfect": "Perfect match",
