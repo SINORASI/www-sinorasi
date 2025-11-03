@@ -104,7 +104,7 @@ onUnmounted(() => {
             :whileHover="{ scale: 1.05 }"
             :transition="{ type: 'spring', stiffness: 300 }"
           >
-            <div class="absolute inset-0 overflow-hidden rounded-2xl" :style="{ backgroundColor: majorColor.light }">
+            <div class="absolute inset-0 overflow-hidden rounded-2xl flex justify-center items-center" :style="{ backgroundColor: majorColor.light }">
               <motion.div
                 class="absolute top-4 right-4 w-2 h-2 rounded-full opacity-60"
                 :style="{ background: majorColor.primary }"
@@ -126,15 +126,19 @@ onUnmounted(() => {
 
               <motion.div
                 :key="current"
+                class="w-full h-full"
                 :initial="{ scale: 0.8, opacity: 0 }"
                 :animate="{ scale: 1, opacity: 1 }"
                 :transition="{ duration: 0.5 }"
               >
-                <NuxtImg
+                <img
                   :src="kapro[current]?.image"
                   :alt="kapro[current]?.kaproName"
                   class="object-cover w-full h-full"
                   loading="lazy"
+                  decoding="async"
+                  width="320"
+                  height="427"
                 />
               </motion.div>
             </div>
