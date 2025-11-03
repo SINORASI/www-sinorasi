@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 * {
-  font-family: Nunito, sans-serif;
+  font-family: Nunito, Oswald, sans-serif;
   scroll-behavior: smooth;
 }
 

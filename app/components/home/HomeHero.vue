@@ -152,6 +152,7 @@ onUnmounted(() => {
             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
             loading="eager"
             format="webp"
+            fetchpriority="high"
             quality="80"
           />
           <div class="absolute inset-0 bg-linear-to-tr from-blue-900/40 via-transparent to-orange-900/20"></div>
@@ -243,6 +244,7 @@ onUnmounted(() => {
             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
             loading="eager"
             format="webp"
+            fetchpriority="high"
             quality="80"
           />
           <div class="absolute inset-0 bg-linear-to-tl from-orange-900/40 via-transparent to-blue-900/20"></div>
