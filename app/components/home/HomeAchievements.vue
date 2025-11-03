@@ -18,6 +18,39 @@ const autoPlayInterval = ref<ReturnType<typeof setInterval> | null>(null);
 const progressValue = ref(0);
 const progressInterval = ref<ReturnType<typeof setInterval> | null>(null);
 
+// Helper function to extract first N sentences from content
+const extractSentences = (content: string, count: number = 5): string => {
+  if (!content) return "";
+  
+  // Remove HTML tags first
+  let text = content.replace(/<[^>]*>/g, "");
+  
+  // Remove markdown formatting (basic cleanup)
+  text = text
+    .replace(/#{1,6}\s/g, "") // Remove headers
+    .replace(/\*\*([^*]+)\*\*/g, "$1") // Remove bold
+    .replace(/\*([^*]+)\*/g, "$1") // Remove italic
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1") // Remove links
+    .replace(/`([^`]+)`/g, "$1") // Remove code
+    .replace(/&nbsp;/g, " ") // Remove HTML entities
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#039;/g, "'")
+    .replace(/\n+/g, " ") // Replace newlines with spaces
+    .replace(/\s+/g, " ") // Replace multiple spaces with single space
+    .trim();
+  
+  // Split by sentence-ending punctuation
+  const sentences = text.match(/[^.!?]+[.!?]+/g) || [];
+  
+  // Take first N sentences
+  const selectedSentences = sentences.slice(0, count).join(" ");
+  
+  return selectedSentences || text.substring(0, 300) + "...";
+};
+
 // Fetch achievements with SSR
 const { data: achievements, pending } = await useAsyncData(
   "homepage-achievements",
@@ -31,7 +64,7 @@ const { data: achievements, pending } = await useAsyncData(
       const transformed = (response.data || []).map((news: any) => ({
         image: news.thumbnail || "/images/placeholder.jpg",
         title: news.title,
-        description: news.subtitle || news.description || "",
+        description: extractSentences(news.content || news.subtitle || "", 7),
         slug: news.slug,
         year: news.createdAt ? new Date(news.createdAt).getFullYear() : new Date().getFullYear(),
       }));
@@ -193,7 +226,7 @@ onMounted(() => {
                       {{ achievement.year }}
                     </p>
                   </div>
-                  <p class="leading-relaxed text-gray-600 text-sm md:text-base">
+                  <p class="leading-relaxed text-gray-600 text-sm md:text-base line-clamp-3">
                     {{ achievement.description }}
                   </p>
                   <div class="flex flex-wrap gap-2 justify-center md:justify-start">
