@@ -47,13 +47,17 @@ const goToImage = (index: number) => {
   currentImageIndex.value = index;
 };
 
-const { data: businessPartnersData } = await useFetch("/images/industri/business_partners.json");
+let businessPartnersData: any = null;
+try {
+  businessPartnersData = await $fetch("/images/industri/business_partners.json");
+} catch (error) {
+  console.error("Error loading business partners data:", error);
+}
 
 const partners = computed(() => {
-  const data = businessPartnersData.value as any;
-  if (!data?.business_partners) return [];
+  if (!businessPartnersData?.business_partners) return [];
 
-  return data.business_partners.map((partner: any, index: number) => ({
+  return businessPartnersData.business_partners.map((partner: any, index: number) => ({
     id: index + 1,
     name: partner.business_name,
     description: `Mitra industri ${partner.business_name} yang telah berkolaborasi dengan SMK Negeri 2 Singosari dalam program pengembangan keterampilan siswa.`,
