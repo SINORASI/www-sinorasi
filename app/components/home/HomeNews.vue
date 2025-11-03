@@ -14,12 +14,12 @@ const {
   "homepage-news",
   () =>
     // Cast the $fetch call to unknown and then to Promise<any> to bypass Nuxt's recursive route-type inference
-    ($fetch("/api/news" as string, {
+    $fetch("/api/news" as string, {
       query: {
         limit: 8,
         tag: selectedCategory.value !== "all" ? selectedCategory.value : undefined,
       },
-    }) as unknown as Promise<any>),
+    }) as unknown as Promise<any>,
   {
     watch: [selectedCategory],
     server: true,
@@ -77,9 +77,9 @@ const filterByCategory = (category: string) => {
                   <Icon name="lucide:newspaper" size="24" class="text-yellow-400" />
                   <span class="text-sm font-semibold text-yellow-400 uppercase tracking-wide">Berita Utama</span>
                 </div>
-                <h3 class="text-2xl md:text-3xl font-bold mb-4 leading-tight">
+                <h2 class="text-2xl md:text-3xl font-bold mb-4 leading-tight">
                   {{ newsData[0]?.title || "" }}
-                </h3>
+                </h2>
                 <p class="text-blue-100 mb-6 line-clamp-3">
                   {{ newsData[0]?.subtitle || "" }}
                 </p>
