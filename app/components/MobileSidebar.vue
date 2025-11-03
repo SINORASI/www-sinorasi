@@ -322,7 +322,7 @@
 </style>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { motion, AnimatePresence } from "motion-v";
 import type { Extracurricular } from "~/models/Extracurricular";
 import type { JobTitle } from "~/models/JobTitle";
@@ -342,6 +342,17 @@ const props = withDefaults(defineProps<{
 defineEmits<{
   close: [];
 }>();
+
+// Hide body scrollbar when sidebar opens
+watch(() => props.isOpen, (newVal) => {
+  if (newVal) {
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+  } else {
+    document.documentElement.style.overflow = '';
+    document.body.style.overflow = '';
+  }
+});
 
 const { locales, setLocale } = useI18n();
 const currentLanguage = computed(() => {
