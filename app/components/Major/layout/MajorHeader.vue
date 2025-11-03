@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref } from "vue";
+import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import type { MajorData } from "~/models/MajorData";
 import type { MajorName } from "~/models/MajorName";
 import type { JobTitle } from "~/models/JobTitle";
@@ -8,7 +8,21 @@ import { useMinigameState } from "~/composables/useMinigameState";
 import toolsDataImport from "~/data/toolsData.json";
 
 const route = useRoute();
-const major = (route.params.majorName as MajorName) || (route.path.split("/").pop() as MajorName);
+const major = ref<MajorName>((route.params.majorName as MajorName) || (route.path.split("/").pop() as MajorName));
+
+// Watch for route changes to update major
+watch(
+  () => route.path,
+  () => {
+    const newMajor = (route.params.majorName as MajorName) || (route.path.split("/").pop() as MajorName);
+    if (newMajor && newMajor !== major.value) {
+      major.value = newMajor;
+    }
+  },
+  { immediate: true }
+);
+
+const currentMajor = computed(() => major.value);
 
 // Helper function to shorten descriptions to first sentence or 50 chars
 const shortenDescription = (desc: string | undefined): string => {
@@ -33,11 +47,11 @@ const headerClass = ref("bg-white/20 backdrop-blur-[8px] border-b-white/20 shado
 const sizeClass = ref("compact");
 const isOpen = ref(false);
 
-const menuItems = computed(() => majorMenus.value?.[major] || []);
+const menuItems = computed(() => majorMenus.value?.[currentMajor.value] || []);
 
 // Karir section - dynamic from job titles
 const karirSection = computed(() => {
-  const jobs = jobTitles.value?.[major] || [];
+  const jobs = jobTitles.value?.[currentMajor.value] || [];
   return {
     title: "Karir",
     submenu: jobs.map((job) => ({
@@ -51,7 +65,7 @@ const karirSection = computed(() => {
 
 // Kompetensi section - dynamic from major topics
 const kompetensiSection = computed(() => {
-  const topics = majorTopics.value?.[major] || [];
+  const topics = majorTopics.value?.[major.value] || [];
   return {
     title: "Kompetensi",
     submenu: topics.map((topic) => ({
@@ -65,7 +79,7 @@ const kompetensiSection = computed(() => {
 
 // Tools section - dynamic from toolsData
 const toolsSection = computed(() => {
-  const tools = toolsData.value?.[major] || [];
+  const tools = toolsData.value?.[major.value] || [];
   return {
     title: "Tools & Software",
     submenu: tools.map((tool: { name: string; icon: string; description: string }) => ({
@@ -113,7 +127,7 @@ onMounted(() => {
   });
 });
 
-if (!majorDatas.value?.[major]) {
+if (!majorDatas.value?.[major.value]) {
   throw createError({ status: 404, statusMessage: "Jurusan yang Anda cari tidak ditemukan" });
 }
 </script>
@@ -145,7 +159,7 @@ if (!majorDatas.value?.[major]) {
           <Icon name="lucide:house" size="20" class="text-black" />
         </button>
         <NuxtImg
-          :src="majorDatas?.[major]?.logo"
+          :src="majorDatas?.[currentMajor]?.logo"
           :style="{ width: sizeClass === 'full' ? '60px' : '40px', transition: 'width 0.5s ease-in-out' }"
           alt="Logo Jurusan"
         />
@@ -157,12 +171,12 @@ if (!majorDatas.value?.[major]) {
             }"
             class="font-bold"
           >
-            {{ majorDatas?.[major]?.short }}
+            {{ majorDatas?.[currentMajor]?.short }}
           </h2>
           <p
             :style="{ fontSize: sizeClass === 'full' ? '1rem' : '0.875rem', transition: 'font-size 0.5s ease-in-out' }"
           >
-            {{ majorDatas?.[major]?.nameMajor }}
+            {{ majorDatas?.[currentMajor]?.nameMajor }}
           </p>
         </div>
       </div>
@@ -182,7 +196,7 @@ if (!majorDatas.value?.[major]) {
                 fontSize: sizeClass === 'full' ? '1rem' : '0.875rem',
                 transition: 'font-size 0.5s ease-in-out',
               }"
-              :class="`group-hover:${majorDatas?.[major]?.textColor || 'text-gray-900'} transition-colors duration-300`"
+              :class="`group-hover:${majorDatas?.[currentMajor]?.textColor || 'text-gray-900'} transition-colors duration-300`"
             >
               {{ item.title }}
             </p>
@@ -208,7 +222,7 @@ if (!majorDatas.value?.[major]) {
                 @click="navigateTo(sub.to)"
               >
                 <div class="flex items-center gap-3">
-                  <Icon :name="sub.icon" size="20" :class="majorDatas?.[major]?.textColor || 'text-gray-900'" />
+                  <Icon :name="sub.icon" size="20" :class="majorDatas?.[currentMajor]?.textColor || 'text-gray-900'" />
                   <div>
                     <p class="font-medium text-gray-900">{{ sub.title }}</p>
                     <p class="text-sm text-gray-600">{{ sub.desc }}</p>
