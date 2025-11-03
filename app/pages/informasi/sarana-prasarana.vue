@@ -270,37 +270,6 @@ const getStatusColor = (status: string) => {
             </div>
           </div>
         </div>
-
-        <!-- Statistics Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div class="p-6 bg-linear-to-br from-green-50 to-green-100 border-2 border-green-200 rounded-2xl">
-            <div class="flex items-center justify-between">
-              <div>
-                <p class="text-gray-600 font-medium">Fasilitas Sempurna</p>
-                <p class="text-3xl font-bold text-green-700 mt-2">2/8</p>
-              </div>
-              <Icon name="lucide:check-circle" size="40" class="text-green-500" />
-            </div>
-          </div>
-          <div class="p-6 bg-linear-to-br from-blue-50 to-blue-100 border-2 border-blue-200 rounded-2xl">
-            <div class="flex items-center justify-between">
-              <div>
-                <p class="text-gray-600 font-medium">Fasilitas Baik</p>
-                <p class="text-3xl font-bold text-blue-700 mt-2">5/8</p>
-              </div>
-              <Icon name="lucide:thumbs-up" size="40" class="text-blue-500" />
-            </div>
-          </div>
-          <div class="p-6 bg-linear-to-br from-yellow-50 to-yellow-100 border-2 border-yellow-200 rounded-2xl">
-            <div class="flex items-center justify-between">
-              <div>
-                <p class="text-gray-600 font-medium">Perlu Peningkatan</p>
-                <p class="text-3xl font-bold text-yellow-700 mt-2">1/8</p>
-              </div>
-              <Icon name="lucide:alert-circle" size="40" class="text-yellow-500" />
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   </div>
