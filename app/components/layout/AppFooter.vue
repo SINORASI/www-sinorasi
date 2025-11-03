@@ -18,10 +18,8 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
           <div class="flex items-center gap-4 mb-4">
             <NuxtImg
               src="/images/logo-smk.webp"
-              width="1000"
-              height="1000"
               alt="Logo SMKN 2 Singosari"
-              class="rounded-full"
+              class="rounded-full w-16 h-16 flex-shrink-0 object-cover"
             />
             <div>
               <h3 :class="['text-xl font-bold', isColoredBackground ? 'text-white' : 'text-white']">
