@@ -63,22 +63,23 @@ const props = withDefaults(defineProps<Props>(), {
 
 // Decide whether to use direct img tag or NuxtImg
 const shouldUseDirectImg = computed(() => {
-  // CRITICAL: All /images/* paths are static files - use direct img tag
-  if (props.src.startsWith("/images/")) {
+  // Any absolute path is treated as a static asset and should use a plain <img> tag.
+  // This is critical in production to avoid IPX errors for local files.
+  if (props.src.startsWith('/')) {
     return true;
   }
 
   // External URLs always use direct img tag
-  if (props.src.startsWith("http://") || props.src.startsWith("https://")) {
+  if (props.src.startsWith('http://') || props.src.startsWith('https://')) {
     return true;
   }
 
   // WordPress uploads always use direct img tag
-  if (props.src.includes("/wp-content/uploads/")) {
+  if (props.src.includes('/wp-content/uploads/')) {
     return true;
   }
 
-  // Everything else: let NuxtImg handle it (if needed)
+  // Everything else: let NuxtImg handle it
   return false;
 });
 

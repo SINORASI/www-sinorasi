@@ -93,9 +93,9 @@ export default defineNuxtConfig({
   experimental: {
     viteEnvironmentApi: true,
   },
-  nitro: {
-    compressPublicAssets: true,
-  },
+  // nitro: {
+  //   compressPublicAssets: true,
+  // },
   routeRules: {
     "/**": {
       headers: {
