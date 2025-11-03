@@ -30,6 +30,13 @@ export default defineNuxtConfig({
         { rel: "preconnect", href: "https://fonts.googleapis.com" },
         { rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: "anonymous" },
         { rel: "dns-prefetch", href: "https://www.youtube.com" },
+        {
+          rel: "preload",
+          href: "/images/guru/foto-guru-bersama.webp",
+          as: "image",
+          type: "image/webp",
+          fetchpriority: "high",
+        },
       ],
       charset: "utf-8",
       viewport: "width=device-width, initial-scale=1",
