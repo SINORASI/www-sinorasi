@@ -47,6 +47,8 @@ const showGame = ref(false);
 // Use minigame state to hide header
 const minigameState = useMinigameState();
 
+const route = useRoute();
+
 useHead({
   title: () =>
     majorDatas.value?.[major]?.nameMajor
@@ -80,6 +82,11 @@ const closeGame = () => {
 onMounted(() => {
   // Scroll to top on page mount
   window.scrollTo(0, 0);
+
+  // Auto-start game if query parameter is set
+  if (route.query.game === "true") {
+    startGame();
+  }
 
   const handleScroll = () => {
     const scrollTop = window.scrollY;

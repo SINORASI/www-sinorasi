@@ -49,6 +49,8 @@ const closeGame = () => {
   showGame.value = false;
 };
 
+const route = useRoute();
+
 const backToTopStyle = computed(() => ({
   background: `linear-gradient(135deg, ${majorColor.value.primary}, ${majorColor.value.accent})`,
 }));
@@ -76,6 +78,11 @@ const scrollToTop = () => {
 onMounted(() => {
   // Scroll to top on page mount
   window.scrollTo(0, 0);
+
+  // Auto-start game if query parameter is set
+  if (route.query.game === "true") {
+    startGame();
+  }
 
   const handleScroll = () => {
     const scrollTop = window.scrollY;

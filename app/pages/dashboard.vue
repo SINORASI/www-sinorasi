@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { majorColors } from "~/utils/majorColors";
+import type { MajorName } from "~/models/MajorName";
+
 const user = {
   name: "John Doe",
   username: "johndoe",
@@ -25,6 +28,23 @@ useHead({
     },
   ],
 });
+
+const { data: majorDatas } = await useFetch("/api/majors");
+
+const majorMinigames: Array<{
+  id: MajorName;
+  name: string;
+  icon: string;
+}> = [
+  { id: "rpl", name: "RPL", icon: "lucide:code" },
+  { id: "tkj", name: "TKJ", icon: "lucide:network" },
+  { id: "dkv", name: "DKV", icon: "lucide:palette" },
+  { id: "animasi", name: "Animasi", icon: "lucide:film" },
+  { id: "broadcasting", name: "Broadcasting", icon: "lucide:broadcast" },
+  { id: "tei", name: "TEI", icon: "lucide:zap" },
+  { id: "mekatronika", name: "Mekatronika", icon: "lucide:cog" },
+  { id: "tav", name: "TAV", icon: "lucide:building2" },
+];
 
 const utilityFeatures = [
   {
@@ -62,6 +82,10 @@ const formatDate = (dateString: string) => {
     month: "long",
     day: "numeric",
   });
+};
+
+const scrollToMinigame = (majorId: MajorName) => {
+  navigateTo(`/jurusan/${majorId}?game=true`);
 };
 </script>
 
@@ -136,6 +160,45 @@ const formatDate = (dateString: string) => {
               <Icon :name="action.icon" size="32" class="text-blue-600" />
               <span class="text-sm font-semibold text-center text-gray-700">{{ action.title }}</span>
             </NuxtLink>
+          </div>
+        </div>
+
+        <div class="mb-8">
+          <h3 class="mb-4 text-xl font-bold text-gray-800 md:text-2xl">Minigame Jurusan</h3>
+          <div class="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-8">
+            <button
+              v-for="minigame in majorMinigames"
+              :key="minigame.id"
+              @click="scrollToMinigame(minigame.id)"
+              class="flex flex-col items-center gap-2 p-3 transition-all bg-white border-2 shadow-lg rounded-xl hover:shadow-xl hover:-translate-y-1"
+              :style="{
+                borderColor: majorColors[minigame.id]?.primary || '#E5E7EB',
+              }"
+            >
+              <div class="relative flex items-center justify-center w-12 h-12 rounded-lg overflow-hidden">
+                <div
+                  class="absolute inset-0"
+                  :style="{
+                    backgroundColor: majorColors[minigame.id]?.primary || '#3B82F6',
+                    opacity: 0.15,
+                  }"
+                ></div>
+                <NuxtImg
+                  v-if="majorDatas?.[minigame.id]?.logo"
+                  :src="majorDatas[minigame.id].logo"
+                  :alt="`${minigame.name} Logo`"
+                  class="relative z-10 object-contain w-8 h-8"
+                />
+                <Icon
+                  v-else
+                  :name="minigame.icon"
+                  size="24"
+                  class="relative z-10"
+                  :style="{ color: majorColors[minigame.id]?.primary || '#3B82F6' }"
+                />
+              </div>
+              <span class="text-xs font-semibold text-center text-gray-700">{{ minigame.name }}</span>
+            </button>
           </div>
         </div>
 
