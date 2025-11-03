@@ -96,18 +96,17 @@ onUnmounted(() => {
     id="hero"
     class="relative min-h-screen px-4 pt-24 pb-10 md:pt-20 overflow-hidden bg-linear-to-br from-blue-700 via-blue-600 to-blue-900"
   >
-    <!-- Background Video - Lazy Loaded -->
-    <video
+    <!-- Background Image -->
+    <NuxtImg
       v-if="heroInView && !prefersReducedMotion"
+      src="/images/guru/foto-guru-bersama.webp"
+      alt="Hero Background"
       class="absolute inset-0 w-full h-full object-cover z-0"
-      autoplay
-      muted
-      loop
-      playsinline
-      preload="none"
-      poster="/images/guru/foto-guru-bersama.webp"
       width="2000"
       height="1125"
+      format="webp"
+      quality="80"
+      loading="eager"
       aria-hidden="true"
     />
 
@@ -153,8 +152,6 @@ onUnmounted(() => {
             alt="Students in school uniform"
             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
             loading="eager"
-            width="400"
-            height="600"
             format="webp"
             quality="80"
           />
@@ -244,8 +241,6 @@ onUnmounted(() => {
             alt="Diverse students collaborating"
             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
             loading="eager"
-            width="400"
-            height="600"
             format="webp"
             quality="80"
           />
