@@ -274,9 +274,9 @@ onMounted(() => {
               >
                 {{ item.year }}
               </motion.div>
-              <h3 class="mb-4 text-2xl font-bold text-gray-800 leading-tight">
+              <h2 class="mb-4 text-2xl font-bold text-gray-800 leading-tight">
                 {{ item.title }}
-              </h3>
+              </h2>
               <p class="text-base leading-relaxed text-gray-600 text-justify">
                 {{ item.description }}
               </p>
@@ -331,14 +331,14 @@ onMounted(() => {
               >
                 {{ item.year }}
               </motion.div>
-              <h3
+              <h2
                 :class="[
                   'mb-3 text-2xl font-bold text-gray-800 leading-tight transition-colors',
                   index % 2 === 0 ? 'group-hover:text-blue-600' : 'group-hover:text-orange-600',
                 ]"
               >
                 {{ item.title }}
-              </h3>
+              </h2>
               <p class="text-base leading-relaxed text-gray-600 mb-6">
                 {{ item.description }}
               </p>
@@ -398,7 +398,7 @@ onMounted(() => {
       >
         <div class="flex flex-col md:flex-row items-center justify-between gap-8">
           <div class="flex-1">
-            <h3 class="mb-3 text-2xl md:text-3xl font-black">Ingin Tahu Lebih Banyak?</h3>
+            <h2 class="mb-3 text-2xl md:text-3xl font-black">Ingin Tahu Lebih Banyak?</h2>
             <p class="text-blue-100 text-lg">Jelajahi profil lengkap dan prestasi sekolah kami</p>
           </div>
           <motion.div :whileHover="{ scale: 1.05 }" :whileTap="{ scale: 0.95 }">

@@ -47,7 +47,7 @@ import { motion } from "motion-v";
           </div>
 
           <div class="p-8 bg-white border-2 border-blue-100 shadow-xl rounded-2xl">
-            <h3 class="mb-4 text-2xl font-bold text-gray-800">Assalamu'alaikum Wr. Wb.</h3>
+            <h2 class="mb-4 text-2xl font-bold text-gray-800">Assalamu'alaikum Wr. Wb.</h2>
             <div class="space-y-4 leading-relaxed text-gray-600">
               <p>
                 Puji syukur kepada Allah SWT atas terbitnya website SMK Negeri 2 Singosari untuk menjawab kebutuhan

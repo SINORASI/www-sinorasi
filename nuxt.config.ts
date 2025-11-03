@@ -25,7 +25,12 @@ export default defineNuxtConfig({
     head: {
       title: "SMK Negeri 2 Singosari",
       htmlAttrs: { lang: "id" },
-      link: [{ rel: "icon", type: "image/png", href: "/images/logo-smk.webp" }],
+      link: [
+        { rel: "icon", type: "image/png", href: "/images/logo-smk.webp" },
+        { rel: "preconnect", href: "https://fonts.googleapis.com" },
+        { rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: "anonymous" },
+        { rel: "dns-prefetch", href: "https://www.youtube.com" },
+      ],
       charset: "utf-8",
       viewport: "width=device-width, initial-scale=1",
       meta: [
@@ -46,6 +51,16 @@ export default defineNuxtConfig({
   },
   vite: {
     plugins: [tailwindcss()],
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            motion: ["motion-v"],
+            icons: ["@nuxt/icon"],
+          },
+        },
+      },
+    },
   },
   i18n: {
     defaultLocale: "id",
@@ -70,5 +85,20 @@ export default defineNuxtConfig({
   },
   experimental: {
     viteEnvironmentApi: true,
+  },
+  nitro: {
+    compressPublicAssets: true,
+  },
+  routeRules: {
+    "/**": {
+      headers: {
+        "Cache-Control": "public, max-age=31536000, immutable",
+      },
+    },
+    "/api/**": {
+      headers: {
+        "Cache-Control": "no-cache, no-store, must-revalidate",
+      },
+    },
   },
 });

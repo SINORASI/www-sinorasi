@@ -17,7 +17,14 @@
         @click="navigateToJurusan(card.slug)"
       >
         <div class="video-card">
-          <NuxtImg v-show="hoveredCard !== card.id" :src="card.thumbnail" :alt="card.title" class="thumbnail" />
+          <NuxtImg
+            v-show="hoveredCard !== card.id"
+            :src="card.thumbnail"
+            :alt="card.title"
+            class="thumbnail"
+            loading="lazy"
+            sizes="sm:100vw md:50vw lg:50vw"
+          />
 
           <div
             v-if="card.videoType === 'youtube'"
@@ -28,8 +35,8 @@
 
           <div :class="['card-header', { 'card-header-hidden': hoveredCard === card.id }]">
             <div class="card-header-content">
-              <div class="card-logo">
-                <NuxtImg :src="card.logo" alt="Logo Jurusan" width="32" height="32" />
+              <div class="logo">
+                <NuxtImg :src="card.logo" alt="Logo Jurusan" width="32" height="32" loading="lazy" />
               </div>
               <h4 class="card-title">{{ card.title }}</h4>
             </div>
@@ -43,7 +50,7 @@
                 <button @click.stop="navigateToJurusan(card.slug)" class="learn-more-btn">Pelajari Lebih</button>
               </div>
               <div class="logo">
-                <NuxtImg :src="card.logo" alt="Logo Jurusan" />
+                <NuxtImg :src="card.logo" alt="Logo Jurusan" loading="lazy" />
               </div>
             </div>
           </div>
@@ -68,7 +75,6 @@
 // Code-split the carousel logic for better performance
 const { Motion } = await import("motion-v");
 import { computed, onMounted, onUnmounted, ref, watch } from "vue";
-
 
 declare global {
   interface Window {
@@ -286,18 +292,18 @@ const createPlayer = async (id: number, videoId: string) => {
 const setupSlideIntersectionObserver = () => {
   if (typeof window === "undefined") return;
 
-  const container = document.querySelector('.container');
+  const container = document.querySelector(".container");
   if (!container) return;
 
   const checkVisibility = () => {
     const rect = container.getBoundingClientRect();
     if (rect.top < window.innerHeight && rect.bottom > 0) {
       initializePlayers();
-      window.removeEventListener('scroll', checkVisibility);
+      window.removeEventListener("scroll", checkVisibility);
     }
   };
 
-  window.addEventListener('scroll', checkVisibility, { passive: true });
+  window.addEventListener("scroll", checkVisibility, { passive: true });
   checkVisibility(); // Check initial visibility
 };
 
@@ -310,12 +316,12 @@ const setupCardIntersectionObserver = (cardId: number) => {
   const checkCardVisibility = async () => {
     const rect = cardElement.getBoundingClientRect();
     if (rect.top < window.innerHeight + 50 && rect.bottom > -50 && !youtubePlayers.value[cardId]) {
-      await createPlayer(cardId, videoCards.find(c => c.id === cardId)?.videoUrl || '');
-      window.removeEventListener('scroll', checkCardVisibility);
+      await createPlayer(cardId, videoCards.find((c) => c.id === cardId)?.videoUrl || "");
+      window.removeEventListener("scroll", checkCardVisibility);
     }
   };
 
-  window.addEventListener('scroll', checkCardVisibility, { passive: true });
+  window.addEventListener("scroll", checkCardVisibility, { passive: true });
   checkCardVisibility(); // Check initial visibility
 };
 
@@ -324,12 +330,12 @@ const cleanupAllObservers = () => {
 };
 
 const cleanupAllPlayers = () => {
-  Object.values(youtubePlayers.value).forEach(player => {
-    if (player && typeof player.destroy === 'function') {
+  Object.values(youtubePlayers.value).forEach((player) => {
+    if (player && typeof player.destroy === "function") {
       player.destroy();
     }
   });
-  Object.values(playbackIntervals.value).forEach(interval => clearInterval(interval));
+  Object.values(playbackIntervals.value).forEach((interval) => clearInterval(interval));
   youtubePlayers.value = {};
   playersReady.value = {};
   playbackIntervals.value = {};
@@ -895,5 +901,3 @@ const navigateToMajorsList = () => {
   }
 }
 </style>
-
-

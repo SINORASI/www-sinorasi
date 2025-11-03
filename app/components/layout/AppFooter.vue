@@ -20,6 +20,7 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
               src="/images/logo-smk.webp"
               alt="Logo SMKN 2 Singosari"
               class="rounded-full w-16 h-16 shrink-0 object-cover"
+              loading="lazy"
             />
             <div>
               <h3 :class="['text-xl font-bold', isColoredBackground ? 'text-white' : 'text-white']">
@@ -149,6 +150,9 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
                 'flex items-center justify-center w-10 h-10 transition duration-300 rounded-full',
                 isColoredBackground ? 'bg-white/20 hover:bg-pink-600' : 'bg-neutral-700 hover:bg-pink-600',
               ]"
+              aria-label="Visit our Instagram page"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <Icon name="lucide:instagram" size="20" />
             </a>
@@ -158,6 +162,9 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
                 'flex items-center justify-center w-10 h-10 transition duration-300 rounded-full',
                 isColoredBackground ? 'bg-white/20 hover:bg-red-600' : 'bg-neutral-700 hover:bg-red-600',
               ]"
+              aria-label="Visit our YouTube channel"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <Icon name="lucide:youtube" size="20" />
             </a>
@@ -167,6 +174,9 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
                 'flex items-center justify-center w-10 h-10 transition duration-300 rounded-full',
                 isColoredBackground ? 'bg-white/20 hover:bg-black' : 'bg-neutral-700 hover:bg-black',
               ]"
+              aria-label="Visit our TikTok profile"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                 <path
@@ -503,8 +513,9 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
           </h5>
           <NuxtImg
             src="/images/Logo-Jagoan-Hosting-Komdigi-Maspion-IT-Garuda-Spark.png"
-            alt="Sponsor Logos"
+            alt="Sponsor Logos: Jagoan Hosting, Komdigi, Maspion IT, Garuda Spark"
             class="mx-auto h-16 mb-1"
+            loading="lazy"
           />
         </div>
       </div>

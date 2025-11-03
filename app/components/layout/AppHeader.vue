@@ -152,7 +152,7 @@ onMounted(() => {
           :transition="{ delay: 0.4, duration: 0.6 }"
         >
           <div class="transition-all duration-500 ease-in-out">
-            <button class="cursor-pointer" @click="isSidebarOpen = !isSidebarOpen">
+            <button class="cursor-pointer" @click="isSidebarOpen = !isSidebarOpen" aria-label="Toggle navigation menu">
               <Icon
                 name="lucide:align-justify"
                 :size="sizeClass === 'full' ? 30 : 24"

@@ -157,8 +157,8 @@
           :key="index"
           @click="currentImageIndex = index"
           :class="[
-            'w-2 h-2 rounded-full transition-all duration-300',
-            index === currentImageIndex ? 'bg-white w-6' : 'bg-white/50 hover:bg-white/80',
+            'rounded-full transition-all duration-300',
+            index === currentImageIndex ? 'bg-white w-8 h-3' : 'bg-white/50 hover:bg-white/80 w-3 h-3',
           ]"
           :aria-label="`Go to image ${index + 1}`"
         ></button>
