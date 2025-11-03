@@ -66,57 +66,7 @@ export default defineNuxtConfig({
       xl: 1280,
       xxl: 1536,
     },
-    domains: ["smkn2-singosari.sch.id", "localhost:3000", "localhost", "127.0.0.1"],
     provider: "ipx",
-    presets: {
-      default: {
-        modifiers: {
-          quality: "80",
-        },
-      },
-    },
-    densities: [1, 2],
-    /**
-     * CRITICAL FIX: Allow serving images from /public directory
-     * AND allow external images to pass through without strict validation
-     * This prevents errors when images exist only on external servers
-     */
-    alias: {
-      "~": "./",
-    },
-    // Don't fail on missing local images - they may be external only
-    options: {
-      nuxt: {
-        baseURL: "/",
-      },
-    },
-  },
-  nitro: {
-    // Ensure public directory is included in the build
-    prerender: {
-      crawlLinks: true,
-      ignore: ["/admin", "/jurusan/mekatronika", "/en/jurusan/mekatronika"],
-    },
-    // Serve static files from public directory with proper headers
-    static: true,
-    // Ensure public assets are served correctly
-    publicAssets: [
-      {
-        baseURL: "/",
-        dir: "./public",
-      },
-    ],
-    // Add cache headers for images
-    routeRules: {
-      "/images/**": {
-        cache: {
-          maxAge: 60 * 60 * 24 * 365, // 1 year cache for images
-        },
-        headers: {
-          "Cache-Control": "public, max-age=31536000, immutable",
-        },
-      },
-    },
   },
   experimental: {
     viteEnvironmentApi: true,
