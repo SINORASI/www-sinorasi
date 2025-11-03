@@ -38,7 +38,7 @@
               <div class="logo">
                 <NuxtImg :src="card.logo" alt="Logo Jurusan" width="32" height="32" loading="lazy" />
               </div>
-              <h4 class="card-title">{{ card.title }}</h4>
+              <h3 class="card-title">{{ card.title }}</h3>
             </div>
           </div>
 

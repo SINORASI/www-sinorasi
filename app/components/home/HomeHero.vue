@@ -105,6 +105,8 @@ onUnmounted(() => {
       format="webp"
       quality="70"
       loading="eager"
+      fetchpriority="high"
+      aria-hidden="true"
     />
 
     <div class="absolute inset-0 bg-black/40 z-5"></div>
@@ -183,7 +185,7 @@ onUnmounted(() => {
         <div class="flex flex-col sm:flex-row items-center gap-3 mt-4">
           <a
             @click.prevent="smoothScrollTo('#jurusan')"
-            class="flex items-center gap-2 px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-semibold text-white bg-orange-600 rounded-lg hover:bg-orange-700 cursor-pointer shadow-xl hover:scale-105 transition-transform"
+            class="flex items-center gap-2 px-6 md:px-8 py-3 md:py-4 text-base md:text-lg font-semibold text-white bg-orange-700 rounded-lg hover:bg-orange-800 cursor-pointer shadow-xl hover:scale-105 transition-transform"
             role="button"
             aria-label="Jelajahi Program Keahlian"
           >
@@ -192,7 +194,7 @@ onUnmounted(() => {
           </a>
           <a
             @click.prevent="smoothScrollTo('#profil-sekolah')"
-            class="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 text-sm md:text-sm font-semibold text-orange-600 border-2 border-orange-600 rounded-lg hover:bg-orange-600 hover:text-white cursor-pointer shadow-lg hover:scale-105 transition-transform"
+            class="flex items-center gap-2 px-4 md:px-6 py-2 md:py-3 text-sm md:text-sm font-semibold text-orange-700 border-2 border-orange-700 rounded-lg hover:bg-orange-700 hover:text-white cursor-pointer shadow-lg hover:scale-105 transition-transform"
             role="button"
             aria-label="Mulai Tur Virtual Sekolah"
           >

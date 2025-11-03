@@ -21,10 +21,10 @@ const progressInterval = ref<ReturnType<typeof setInterval> | null>(null);
 // Helper function to extract first N sentences from content
 const extractSentences = (content: string, count: number = 5): string => {
   if (!content) return "";
-  
+
   // Remove HTML tags first
   let text = content.replace(/<[^>]*>/g, "");
-  
+
   // Remove markdown formatting (basic cleanup)
   text = text
     .replace(/#{1,6}\s/g, "") // Remove headers
@@ -41,13 +41,13 @@ const extractSentences = (content: string, count: number = 5): string => {
     .replace(/\n+/g, " ") // Replace newlines with spaces
     .replace(/\s+/g, " ") // Replace multiple spaces with single space
     .trim();
-  
+
   // Split by sentence-ending punctuation
   const sentences = text.match(/[^.!?]+[.!?]+/g) || [];
-  
+
   // Take first N sentences
   const selectedSentences = sentences.slice(0, count).join(" ");
-  
+
   return selectedSentences || text.substring(0, 300) + "...";
 };
 
@@ -252,8 +252,8 @@ onMounted(() => {
                 v-for="(achievement, index) in achievements"
                 :key="index"
                 @click="goToAchievement(index)"
-                class="h-2 rounded-full transition-all duration-300 cursor-pointer"
-                :class="index === currentAchievement ? 'bg-blue-600 w-6' : 'bg-gray-300 hover:bg-gray-400 w-2'"
+                class="rounded-full transition-all duration-300 cursor-pointer"
+                :class="index === currentAchievement ? 'bg-blue-600 w-8 h-3' : 'bg-gray-300 hover:bg-gray-400 w-3 h-3'"
                 :aria-label="`Go to achievement ${index + 1}`"
               ></button>
             </div>
