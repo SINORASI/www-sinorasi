@@ -2,7 +2,6 @@
 import { motion } from "motion-v";
 
 const sectionRef = ref<HTMLElement | null>(null);
-const sectionInView = ref(false);
 
 const stats = ref([
   { value: 8, label: "Konsentrasi Keahlian", color: "blue", current: 0 },

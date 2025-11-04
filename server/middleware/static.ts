@@ -32,10 +32,4 @@ export default defineEventHandler((event) => {
       }
     }
   }
-
-  // Cache static assets aggressively
-  if (event.node.req.url?.includes("/images/") || event.node.req.url?.includes("/audio/")) {
-    setHeader(event, "Cache-Control", "public, max-age=31536000, immutable");
-    setHeader(event, "Content-Encoding", "gzip");
-  }
 });

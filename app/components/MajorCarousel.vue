@@ -36,7 +36,7 @@
           <div :class="['card-header', { 'card-header-hidden': hoveredCard === card.id }]">
             <div class="card-header-content">
               <div class="logo">
-                <NuxtImg :src="card.logo" alt="Logo Jurusan" width="32" height="32" loading="lazy" />
+                <NuxtImg :src="card.logo" alt="Logo Jurusan" loading="lazy" />
               </div>
               <h3 class="card-title">{{ card.title }}</h3>
             </div>
