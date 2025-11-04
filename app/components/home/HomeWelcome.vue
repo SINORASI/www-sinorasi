@@ -82,6 +82,9 @@ import { motion } from "motion-v";
                 alt="Foto Kepala Sekolah"
                 class="w-full h-auto object-cover"
                 loading="lazy"
+                width="450"
+                height="540"
+                sizes="(max-width: 640px) 280px, (max-width: 1024px) 350px, 450px"
                 format="webp"
                 quality="85"
               />

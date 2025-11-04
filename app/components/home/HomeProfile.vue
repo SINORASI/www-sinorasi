@@ -78,8 +78,9 @@ onMounted(() => {
                 alt="Drone view of SMK Negeri 2 Singosari"
                 class="object-cover w-full h-auto"
                 loading="lazy"
-                width="800"
-                height="600"
+                width="600"
+                height="450"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px"
                 format="webp"
                 quality="85"
               />
