@@ -1021,7 +1021,7 @@ const connectingLines = computed(() => {
                   node.level
                 )} rounded-full overflow-hidden border-4 border-white ${getNodeShadow(node.level)}`"
               >
-                <img
+                <NuxtImg
                   :src="node.image"
                   :alt="node.name"
                   class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-110"
@@ -1099,7 +1099,7 @@ const connectingLines = computed(() => {
                   node.level
                 )} rounded-full overflow-hidden border-3 border-white ${getNodeShadow(node.level)}`"
               >
-                <img
+                <NuxtImg
                   :src="node.image"
                   :alt="node.name"
                   class="w-full h-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
@@ -1152,7 +1152,8 @@ const connectingLines = computed(() => {
                     node.level
                   )} rounded-full overflow-hidden border-2 border-white ${getNodeShadow(node.level)}`"
                 >
-                  <img
+                  >
+                  <NuxtImg
                     :src="node.image"
                     :alt="node.name"
                     class="w-full h-full object-cover object-top transition-transform duration-300 group-hover:scale-105"

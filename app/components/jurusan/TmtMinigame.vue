@@ -454,7 +454,9 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="fixed inset-0 z-50 flex flex-col font-nunito bg-linear-to-br from-emerald-700 via-emerald-600 to-emerald-900 text-white">
+  <div
+    class="fixed inset-0 z-50 flex flex-col font-nunito bg-linear-to-br from-emerald-700 via-emerald-600 to-emerald-900 text-white"
+  >
     <!-- Header -->
     <div class="flex items-center justify-between p-4 border-b border-white/20">
       <div class="flex items-center gap-4">
@@ -469,8 +471,13 @@ onUnmounted(() => {
         </div>
       </div>
 
-      <button @click="exitFullscreen" class="flex items-center gap-2 px-4 py-2 text-sm font-bold text-white transition-all duration-300 bg-red-600 rounded-lg hover:bg-red-700 hover:shadow-lg hover:scale-105">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+      <button
+        @click="exitFullscreen"
+        class="flex items-center gap-2 px-4 py-2 text-sm font-bold text-white transition-all duration-300 bg-red-600 rounded-lg hover:bg-red-700 hover:shadow-lg hover:scale-105"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
         <span class="hidden md:inline">Exit</span>
       </button>
     </div>
@@ -483,7 +490,10 @@ onUnmounted(() => {
       </div>
 
       <!-- Safety Checklist Overlay -->
-      <div v-if="showSafetyCheck" class="absolute inset-0 z-20 flex items-center justify-center bg-black/70 backdrop-blur-sm">
+      <div
+        v-if="showSafetyCheck"
+        class="absolute inset-0 z-20 flex items-center justify-center bg-black/70 backdrop-blur-sm"
+      >
         <div class="max-w-md w-full p-6 sm:p-8 border-2 border-orange-500/50 rounded-lg bg-black/30 animate-bounce-in">
           <div class="mb-6 text-center">
             <div class="mb-4 text-6xl">⚠️</div>
@@ -502,7 +512,7 @@ onUnmounted(() => {
                   : 'border-white/20 bg-white/10 hover:bg-white/20'
               "
             >
-              <img src="/images/minigame/tmt/welding-mask.png" alt="Topeng Las" class="w-12 h-12 object-contain" />
+              <NuxtImg src="/images/minigame/tmt/welding-mask.png" alt="Topeng Las" class="w-12 h-12 object-contain" />
               <div class="flex-1">
                 <div class="font-bold text-white">Welding Helmet</div>
                 <div class="text-sm text-white/60">Protects eyes from flash</div>
@@ -520,7 +530,7 @@ onUnmounted(() => {
                   : 'border-white/20 bg-white/10 hover:bg-white/20'
               "
             >
-              <img src="/images/minigame/tmt/glove.png" alt="Sarung Tangan" class="w-12 h-12 object-contain" />
+              <NuxtImg src="/images/minigame/tmt/glove.png" alt="Sarung Tangan" class="w-12 h-12 object-contain" />
               <div class="flex-1">
                 <div class="font-bold text-white">Welding Gloves</div>
                 <div class="text-sm text-white/60">Protects hands from heat & sparks</div>
@@ -533,12 +543,10 @@ onUnmounted(() => {
               @click="toggleSafetyItem('apron')"
               class="flex items-center gap-4 p-4 transition-all border-2 rounded-lg cursor-pointer"
               :class="
-                safetyItems.apron
-                  ? 'border-green-500 bg-green-900/50'
-                  : 'border-white/20 bg-white/10 hover:bg-white/20'
+                safetyItems.apron ? 'border-green-500 bg-green-900/50' : 'border-white/20 bg-white/10 hover:bg-white/20'
               "
             >
-              <img src="/images/minigame/tmt/welding-suit.png" alt="Baju Las" class="w-12 h-12 object-contain" />
+              <NuxtImg src="/images/minigame/tmt/welding-suit.png" alt="Baju Las" class="w-12 h-12 object-contain" />
               <div class="flex-1">
                 <div class="font-bold text-white">Leather Apron</div>
                 <div class="text-sm text-white/60">Protects body from sparks</div>
@@ -701,9 +709,19 @@ onUnmounted(() => {
 
 <style scoped>
 @keyframes bounce-in {
-  0% { opacity: 0; transform: scale(0.8); }
-  50% { transform: scale(1.05); }
-  100% { opacity: 1; transform: scale(1); }
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
-.animate-bounce-in { animation: bounce-in 0.5s ease-out; }
+.animate-bounce-in {
+  animation: bounce-in 0.5s ease-out;
+}
 </style>

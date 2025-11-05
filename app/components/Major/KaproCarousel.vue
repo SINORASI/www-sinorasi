@@ -69,17 +69,17 @@ const getTransitionClasses = () => {
 
 onMounted(() => {
   const checkVisibility = () => {
-    const element = document.querySelector('.kapro-carousel-container');
-    if (element && typeof element.getBoundingClientRect === 'function') {
+    const element = document.querySelector(".kapro-carousel-container");
+    if (element && typeof element.getBoundingClientRect === "function") {
       const rect = element.getBoundingClientRect();
       if (rect.top < window.innerHeight && rect.bottom > 0) {
         isVisible.value = true;
-        window.removeEventListener('scroll', checkVisibility);
+        window.removeEventListener("scroll", checkVisibility);
       }
     }
   };
 
-  window.addEventListener('scroll', checkVisibility, { passive: true });
+  window.addEventListener("scroll", checkVisibility, { passive: true });
   // Check initial visibility
   checkVisibility();
 });
@@ -104,7 +104,10 @@ onUnmounted(() => {
             :whileHover="{ scale: 1.05 }"
             :transition="{ type: 'spring', stiffness: 300 }"
           >
-            <div class="absolute inset-0 overflow-hidden rounded-2xl flex justify-center items-center" :style="{ backgroundColor: majorColor.light }">
+            <div
+              class="absolute inset-0 overflow-hidden rounded-2xl flex justify-center items-center"
+              :style="{ backgroundColor: majorColor.light }"
+            >
               <motion.div
                 class="absolute top-4 right-4 w-2 h-2 rounded-full opacity-60"
                 :style="{ background: majorColor.primary }"
@@ -131,7 +134,7 @@ onUnmounted(() => {
                 :animate="{ scale: 1, opacity: 1 }"
                 :transition="{ duration: 0.5 }"
               >
-                <img
+                <NuxtImg
                   :src="kapro[current]?.image"
                   :alt="kapro[current]?.kaproName"
                   class="object-cover w-full h-full"

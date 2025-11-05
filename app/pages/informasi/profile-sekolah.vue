@@ -87,7 +87,7 @@ useHead({
                 :whileHover="{ scale: 1.05 }"
                 :transition="{ duration: 0.3 }"
               >
-                <img src="/images/kepsek.webp" alt="Kepala Sekolah" class="w-64 rounded-xl md:w-80" />
+                <NuxtImg src="/images/kepsek.webp" alt="Kepala Sekolah" class="w-64 rounded-xl md:w-80" />
               </motion.div>
               <motion.div
                 class="max-w-xl mx-5 p-6 mt-6 border-2 border-blue-100 shadow-xl bg-blue-50 rounded-2xl lg:mt-0 hover:shadow-2xl transition-shadow duration-300"
@@ -314,7 +314,7 @@ useHead({
             :transition="{ duration: 0.3 }"
           >
             <div class="relative w-full h-96 overflow-hidden group">
-              <img
+              <NuxtImg
                 src="/images/thumbnail/profile-thumbnail.webp"
                 alt="Video Profil Thumbnail"
                 class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
@@ -344,7 +344,7 @@ useHead({
             :transition="{ duration: 0.3 }"
           >
             <div class="relative w-full h-96 overflow-hidden group">
-              <img
+              <NuxtImg
                 src="/images/thumbnail/mars-thumbnail.webp"
                 alt="Mars SMK Thumbnail"
                 class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"

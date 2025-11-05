@@ -169,7 +169,7 @@ const partners = computed(() => {
                 <div
                   class="relative mb-4 overflow-hidden bg-linear-to-br from-gray-50 to-gray-100 rounded-xl aspect-video group-hover:shadow-md transition-all duration-500 border border-gray-100"
                 >
-                  <img
+                  <NuxtImg
                     :src="partner.logo"
                     :alt="partner.name"
                     class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"

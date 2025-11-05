@@ -103,7 +103,7 @@ onMounted(() => {
           <div class="grid items-center grid-cols-1 gap-12 lg:grid-cols-2">
             <div class="flex flex-col items-start justify-center">
               <div class="w-full max-w-md lg:max-w-lg">
-                <img
+                <NuxtImg
                   src="/images/majorIcon/logo-rpl.webp"
                   alt="RPL Logo"
                   class="object-contain w-full h-full drop-shadow-2xl"
@@ -121,7 +121,7 @@ onMounted(() => {
               </div>
 
               <div class="relative w-full max-w-sm lg:max-w-md">
-                <img
+                <NuxtImg
                   src="/images/major/hero-major-ornament/rpl/laptop.webp"
                   alt="RPL Ornament"
                   class="object-contain w-full h-auto drop-shadow-2xl"

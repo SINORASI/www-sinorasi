@@ -290,7 +290,9 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="fixed inset-0 z-50 flex flex-col font-nunito bg-linear-to-br from-green-700 via-green-600 to-green-900 text-white p-4 sm:p-6">
+  <div
+    class="fixed inset-0 z-50 flex flex-col font-nunito bg-linear-to-br from-green-700 via-green-600 to-green-900 text-white p-4 sm:p-6"
+  >
     <!-- Header -->
     <div class="flex items-center justify-between pb-4 border-b border-white/20">
       <div class="flex items-center gap-4">
@@ -319,7 +321,9 @@ onUnmounted(() => {
     <!-- Main Content -->
     <div class="flex flex-1 gap-6 mt-6 overflow-hidden">
       <!-- Left Sidebar - Instructions -->
-      <div class="w-full md:w-72 shrink-0 p-4 space-y-4 overflow-y-auto rounded-lg bg-black/20 backdrop-blur-sm border border-white/10">
+      <div
+        class="w-full md:w-72 shrink-0 p-4 space-y-4 overflow-y-auto rounded-lg bg-black/20 backdrop-blur-sm border border-white/10"
+      >
         <div class="p-4 border-l-4 border-orange-500 rounded-r-lg bg-black/20">
           <h3 class="mb-1 text-lg font-bold text-orange-400 font-oswald">Objective</h3>
           <p class="text-sm text-white/80">
@@ -362,7 +366,10 @@ onUnmounted(() => {
       </div>
 
       <!-- Center - Circuit Board -->
-      <div class="relative flex-1 p-4 sm:p-8 overflow-auto rounded-lg bg-black/20 backdrop-blur-sm border border-white/10" @mousemove="handleMouseMove">
+      <div
+        class="relative flex-1 p-4 sm:p-8 overflow-auto rounded-lg bg-black/20 backdrop-blur-sm border border-white/10"
+        @mousemove="handleMouseMove"
+      >
         <!-- SVG Layer for wires -->
         <svg id="wire-svg" class="absolute inset-0 w-full h-full pointer-events-none" style="z-index: 10">
           <!-- Drawn wires -->
@@ -409,7 +416,7 @@ onUnmounted(() => {
           <div class="absolute" style="left: 50px; top: 100px; width: 200px">
             <div class="p-4 bg-cyan-700/80 border-2 border-cyan-500/50 rounded-lg shadow-2xl">
               <div class="mb-2 text-xs font-bold text-center text-white/80 font-oswald">ARDUINO</div>
-              <img src="/images/minigame/tei/arduino uno.png" alt="Arduino Uno" class="w-full h-auto opacity-80" />
+              <NuxtImg src="/images/minigame/tei/arduino uno.png" alt="Arduino Uno" class="w-full h-auto opacity-80" />
 
               <!-- Arduino pins (clickable) -->
               <div
@@ -430,9 +437,7 @@ onUnmounted(() => {
 
           <!-- Breadboard -->
           <div class="absolute" style="left: 300px; top: 100px; width: 300px; height: 400px">
-            <div
-              class="w-full h-full bg-white/5 backdrop-blur-sm rounded-lg shadow-2xl border-2 border-white/10"
-            >
+            <div class="w-full h-full bg-white/5 backdrop-blur-sm rounded-lg shadow-2xl border-2 border-white/10">
               <div class="p-2 text-xs font-bold text-center text-white/50 font-oswald">BREADBOARD</div>
 
               <!-- Breadboard connection points -->
@@ -456,7 +461,9 @@ onUnmounted(() => {
             <div class="relative">
               <div
                 class="w-12 h-16 transition-all duration-300 rounded-full"
-                :class="ledGlowing ? 'bg-red-500 shadow-lg shadow-red-500/50' : 'bg-red-900/80 border-2 border-red-500/30'"
+                :class="
+                  ledGlowing ? 'bg-red-500 shadow-lg shadow-red-500/50' : 'bg-red-900/80 border-2 border-red-500/30'
+                "
               >
                 <div class="absolute inset-0 flex items-center justify-center text-xs font-bold text-white/80">LED</div>
               </div>
@@ -509,7 +516,7 @@ onUnmounted(() => {
             </div>
           </div>
         </div>
-        
+
         <!-- Result Display -->
         <div
           v-if="hasSimulated"
@@ -537,7 +544,9 @@ onUnmounted(() => {
       </div>
 
       <!-- Right Sidebar - Controls -->
-      <div class="w-full md:w-72 shrink-0 p-4 space-y-4 overflow-y-auto rounded-lg bg-black/20 backdrop-blur-sm border border-white/10">
+      <div
+        class="w-full md:w-72 shrink-0 p-4 space-y-4 overflow-y-auto rounded-lg bg-black/20 backdrop-blur-sm border border-white/10"
+      >
         <!-- Simulation Control -->
         <button
           v-if="!hasSimulated"
@@ -574,9 +583,7 @@ onUnmounted(() => {
             <div class="p-2 rounded bg-black/30">
               <div class="font-mono text-green-400">Pin13 → LED(+) → LED(-) → R → GND</div>
             </div>
-            <p class="text-xs text-white/60 italic">
-              * R = Resistor, LED(+/-) = LED Pins
-            </p>
+            <p class="text-xs text-white/60 italic">* R = Resistor, LED(+/-) = LED Pins</p>
           </div>
         </div>
       </div>
@@ -600,8 +607,12 @@ onUnmounted(() => {
 }
 
 @keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .animate-bounce-in {

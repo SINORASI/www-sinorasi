@@ -111,7 +111,7 @@ onMounted(() => {
           <div class="grid items-center grid-cols-1 gap-12 lg:grid-cols-2">
             <div class="flex flex-col items-start justify-center">
               <div class="w-full max-w-md lg:max-w-lg">
-                <img
+                <NuxtImg
                   src="/images/majorIcon/logo-mt.webp"
                   alt="TMT Logo"
                   class="object-contain w-full h-full drop-shadow-2xl"
@@ -129,7 +129,7 @@ onMounted(() => {
               </div>
 
               <div class="relative w-full max-w-sm lg:max-w-md">
-                <img
+                <NuxtImg
                   src="/images/major/hero-major-ornament/mt/welding.webp"
                   alt="TMT Ornament"
                   class="object-contain w-full h-auto drop-shadow-2xl"

@@ -114,14 +114,14 @@ const exitFullscreen = async () => {
       await document.exitFullscreen();
     }
     // Re-enable body scroll when exiting fullscreen
-    document.documentElement.style.overflow = '';
-    document.body.style.overflow = '';
+    document.documentElement.style.overflow = "";
+    document.body.style.overflow = "";
     minigameState.setIsRunning(false);
   } catch (error) {
     console.error("Error exiting fullscreen:", error);
     // Re-enable body scroll even if error occurs
-    document.documentElement.style.overflow = '';
-    document.body.style.overflow = '';
+    document.documentElement.style.overflow = "";
+    document.body.style.overflow = "";
     minigameState.setIsRunning(false);
   }
 };
@@ -131,8 +131,8 @@ const handleFullscreenChange = () => {
   isFullscreen.value = !!document.fullscreenElement;
   if (!isFullscreen.value) {
     // Re-enable body scroll when exiting fullscreen
-    document.documentElement.style.overflow = '';
-    document.body.style.overflow = '';
+    document.documentElement.style.overflow = "";
+    document.body.style.overflow = "";
     minigameState.setIsRunning(false);
     // Emit event to parent when fullscreen is exited
     emit("close");
@@ -147,8 +147,8 @@ const enterFullscreen = async () => {
       await container.requestFullscreen();
       isFullscreen.value = true;
       // Disable body scroll when fullscreen is active
-      document.documentElement.style.overflow = 'hidden';
-      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = "hidden";
+      document.body.style.overflow = "hidden";
     } catch (error) {
       console.warn("Fullscreen request failed, continuing without fullscreen:", error);
       isFullscreen.value = false;
@@ -161,21 +161,21 @@ const enterFullscreen = async () => {
 // Load sketch image
 const loadSketch = async () => {
   if (!currentSketch.value) return;
-  
+
   isLoading.value = true;
-  
+
   // Reset all state completely
   sketchImage.value = null;
   coloredPixels.value = null;
   ctx.value = null;
   canvasRef.value = null;
-  
+
   // Force canvas recreation by changing key
   canvasKey.value++;
-  
+
   // Wait for next tick to ensure canvas is destroyed
   await nextTick();
-  
+
   // Create and load new image
   const img = new Image();
   img.crossOrigin = "anonymous";
@@ -183,12 +183,12 @@ const loadSketch = async () => {
   img.onload = async () => {
     sketchImage.value = img;
     isLoading.value = false;
-    
+
     // Wait for canvas to be rendered in DOM after isLoading becomes false
     await nextTick();
     await nextTick();
     await nextTick();
-    
+
     // Now initialize the canvas
     if (canvasRef.value) {
       initCanvas();
@@ -221,11 +221,11 @@ const initCanvas = () => {
   if (ctx.value) {
     // Clear any existing content
     ctx.value.clearRect(0, 0, canvas.width, canvas.height);
-    
+
     // Draw white background
     ctx.value.fillStyle = "#FFFFFF";
     ctx.value.fillRect(0, 0, canvas.width, canvas.height);
-    
+
     // Draw the sketch on top
     ctx.value.drawImage(image, 0, 0);
 
@@ -467,7 +467,7 @@ onUnmounted(() => {
           >
             <div class="flex items-center gap-2">
               <div class="shrink-0 w-12 h-12 overflow-hidden bg-gray-800 rounded md:w-16 md:h-16">
-                <img :src="sketch.sketch" :alt="sketch.name" class="object-cover w-full h-full" />
+                <NuxtImg :src="sketch.sketch" :alt="sketch.name" class="object-cover w-full h-full" />
               </div>
               <div class="flex-1 min-w-0">
                 <p class="text-xs font-semibold text-white truncate md:text-sm">{{ sketch.name }}</p>

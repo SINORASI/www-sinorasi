@@ -189,14 +189,14 @@ const exitFullscreen = async () => {
       await document.exitFullscreen();
     }
     // Re-enable body scroll when exiting fullscreen
-    document.documentElement.style.overflow = '';
-    document.body.style.overflow = '';
+    document.documentElement.style.overflow = "";
+    document.body.style.overflow = "";
     minigameState.setIsRunning(false);
   } catch (error) {
     console.error("Error exiting fullscreen:", error);
     // Re-enable body scroll even if error occurs
-    document.documentElement.style.overflow = '';
-    document.body.style.overflow = '';
+    document.documentElement.style.overflow = "";
+    document.body.style.overflow = "";
     minigameState.setIsRunning(false);
   }
 };
@@ -206,8 +206,8 @@ const handleFullscreenChange = () => {
   isFullscreen.value = !!document.fullscreenElement;
   if (!isFullscreen.value) {
     // Re-enable body scroll when exiting fullscreen
-    document.documentElement.style.overflow = '';
-    document.body.style.overflow = '';
+    document.documentElement.style.overflow = "";
+    document.body.style.overflow = "";
     minigameState.setIsRunning(false);
     emit("close");
   }
@@ -220,8 +220,8 @@ const enterFullscreen = async () => {
       await gameContainer.value.requestFullscreen();
       isFullscreen.value = true;
       // Disable body scroll when fullscreen is active
-      document.documentElement.style.overflow = 'hidden';
-      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = "hidden";
+      document.body.style.overflow = "hidden";
     } catch (error) {
       console.warn("Fullscreen request failed, continuing without fullscreen:", error);
       isFullscreen.value = false;
@@ -264,7 +264,9 @@ onMounted(async () => {
       <div class="flex items-center justify-between mb-6">
         <div>
           <h1 class="text-2xl md:text-4xl font-black text-white drop-shadow-lg font-oswald">🎬 Penyusun Sprite ANM</h1>
-          <p class="text-sm md:text-base text-white/90 mt-1 font-nunito">Level {{ currentLevel + 1 }}: {{ level.name }}</p>
+          <p class="text-sm md:text-base text-white/90 mt-1 font-nunito">
+            Level {{ currentLevel + 1 }}: {{ level.name }}
+          </p>
         </div>
         <button
           @click="exitFullscreen"
@@ -312,7 +314,11 @@ onMounted(async () => {
                   <div
                     class="frame-item bg-white/20 p-2 rounded-lg shadow-md cursor-move hover:scale-105 transition-transform duration-200 border-2 border-orange-400"
                   >
-                    <img :src="getFrameImage(element)" :alt="`Frame ${element + 1}`" class="w-full h-auto rounded" />
+                    <NuxtImg
+                      :src="getFrameImage(element)"
+                      :alt="`Frame ${element + 1}`"
+                      class="w-full h-auto rounded"
+                    />
                     <div class="text-center text-xs font-bold text-orange-300 mt-1">Frame {{ element + 1 }}</div>
                   </div>
                 </template>
@@ -329,9 +335,7 @@ onMounted(async () => {
                   @click="selectLevel(index)"
                   :class="[
                     'px-3 py-2 rounded-lg font-bold text-sm transition-all duration-200',
-                    currentLevel === index
-                      ? 'bg-orange-500 text-white'
-                      : 'bg-white/10 text-white hover:bg-white/20',
+                    currentLevel === index ? 'bg-orange-500 text-white' : 'bg-white/10 text-white hover:bg-white/20',
                   ]"
                 >
                   Level {{ index + 1 }}
@@ -348,7 +352,7 @@ onMounted(async () => {
               <div class="flex justify-center items-center">
                 <div class="relative bg-black/30 rounded-xl p-8 min-h-[250px] flex items-center justify-center">
                   <div v-if="previewImage" class="w-48 h-48 flex items-center justify-center">
-                    <img :src="previewImage" alt="Animation Preview" class="max-w-full max-h-full object-contain" />
+                    <NuxtImg :src="previewImage" alt="Animation Preview" class="max-w-full max-h-full object-contain" />
                   </div>
                   <div v-else class="text-white text-center">
                     <svg
@@ -409,7 +413,7 @@ onMounted(async () => {
                   <div
                     class="frame-item-timeline bg-white/20 p-2 rounded-lg shadow-md cursor-move hover:scale-105 transition-transform duration-200 border-2 border-yellow-400 shrink-0"
                   >
-                    <img
+                    <NuxtImg
                       :src="getFrameImage(element)"
                       :alt="`Frame ${element + 1}`"
                       class="w-20 h-20 object-contain rounded"

@@ -730,7 +730,11 @@ completeGame = () => {
     // proceed to next level
     const next = selectedLevel.value + 1;
     const nextLevel = weldingLevels[next];
-    showNotification(`✅ Level selesai! Lanjut ke level berikutnya: ${nextLevel?.name || "Berikutnya"}`, "success", 2000);
+    showNotification(
+      `✅ Level selesai! Lanjut ke level berikutnya: ${nextLevel?.name || "Berikutnya"}`,
+      "success",
+      2000
+    );
     selectedLevel.value = next;
     weldPath.value = [];
     weldProgress.value = 0;
@@ -813,13 +817,13 @@ const exitFullscreen = async () => {
       await document.exitFullscreen();
     }
     // Re-enable body scroll when exiting fullscreen
-    document.documentElement.style.overflow = '';
-    document.body.style.overflow = '';
+    document.documentElement.style.overflow = "";
+    document.body.style.overflow = "";
   } catch (error) {
     console.error("Error exiting fullscreen:", error);
     // Re-enable body scroll even if error occurs
-    document.documentElement.style.overflow = '';
-    document.body.style.overflow = '';
+    document.documentElement.style.overflow = "";
+    document.body.style.overflow = "";
   }
 
   if (pixiApp.value) {
@@ -834,8 +838,8 @@ const handleFullscreenChange = () => {
   isFullscreen.value = !!document.fullscreenElement;
   if (!isFullscreen.value) {
     // Re-enable body scroll when exiting fullscreen
-    document.documentElement.style.overflow = '';
-    document.body.style.overflow = '';
+    document.documentElement.style.overflow = "";
+    document.body.style.overflow = "";
     emit("close");
   }
 };
@@ -847,8 +851,8 @@ const enterFullscreen = async () => {
       await container.requestFullscreen();
       isFullscreen.value = true;
       // Disable body scroll when fullscreen is active
-      document.documentElement.style.overflow = 'hidden';
-      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = "hidden";
+      document.body.style.overflow = "hidden";
     } catch (error) {
       console.warn("Fullscreen request failed:", error);
       isFullscreen.value = false;
@@ -875,7 +879,9 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="fixed inset-0 z-50 flex flex-col font-nunito bg-linear-to-br from-emerald-700 via-emerald-600 to-emerald-900 text-white">
+  <div
+    class="fixed inset-0 z-50 flex flex-col font-nunito bg-linear-to-br from-emerald-700 via-emerald-600 to-emerald-900 text-white"
+  >
     <!-- Notifications Container -->
     <div class="fixed top-4 right-4 z-[60] space-y-2 pointer-events-none">
       <Transition v-for="notification in notifications" :key="notification.id" name="notification" appear>
@@ -927,8 +933,13 @@ onUnmounted(() => {
         </div>
       </div>
 
-      <button @click="exitFullscreen" class="flex items-center gap-2 px-4 py-2 text-sm font-bold text-white transition-all duration-300 bg-red-600 rounded-lg hover:bg-red-700 hover:shadow-lg hover:scale-105">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+      <button
+        @click="exitFullscreen"
+        class="flex items-center gap-2 px-4 py-2 text-sm font-bold text-white transition-all duration-300 bg-red-600 rounded-lg hover:bg-red-700 hover:shadow-lg hover:scale-105"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
         <span class="hidden md:inline">Exit</span>
       </button>
     </div>
@@ -965,7 +976,7 @@ onUnmounted(() => {
                   : 'border-white/20 bg-white/10 hover:bg-white/20'
               "
             >
-              <img src="/images/minigame/tmt/welding-suit.png" alt="Apron" class="w-12 h-12 object-contain" />
+              <NuxtImg src="/images/minigame/tmt/welding-suit.png" alt="Apron" class="w-12 h-12 object-contain" />
               <div class="flex-1">
                 <div class="font-bold text-white">Wear Leather Apron</div>
                 <div class="text-sm text-white/60">Protects body from sparks</div>
@@ -982,7 +993,7 @@ onUnmounted(() => {
                   : 'border-white/20 bg-white/10 hover:bg-white/20'
               "
             >
-              <img src="/images/minigame/tmt/glove.png" alt="Sarung Tangan" class="w-12 h-12 object-contain" />
+              <NuxtImg src="/images/minigame/tmt/glove.png" alt="Sarung Tangan" class="w-12 h-12 object-contain" />
               <div class="flex-1">
                 <div class="font-bold text-white">Wear Welding Gloves</div>
                 <div class="text-sm text-white/60">Protects hands from heat</div>
@@ -999,7 +1010,7 @@ onUnmounted(() => {
                   : 'border-white/20 bg-white/10 hover:bg-white/20'
               "
             >
-              <img src="/images/minigame/tmt/welding-mask.png" alt="Topeng" class="w-12 h-12 object-contain" />
+              <NuxtImg src="/images/minigame/tmt/welding-mask.png" alt="Topeng" class="w-12 h-12 object-contain" />
               <div class="flex-1">
                 <div class="font-bold text-white">Wear Welding Mask</div>
                 <div class="text-sm text-white/60">Protects eyes from flash</div>
@@ -1017,7 +1028,7 @@ onUnmounted(() => {
                   : 'border-white/20 bg-white/10 hover:bg-white/20'
               "
             >
-              <img src="/images/minigame/tmt/electrode-holder.png" alt="Kabel" class="w-12 h-12 object-contain" />
+              <NuxtImg src="/images/minigame/tmt/electrode-holder.png" alt="Kabel" class="w-12 h-12 object-contain" />
               <div class="flex-1">
                 <div class="font-bold text-white">Connect Electrode Holder</div>
                 <div class="text-sm text-white/60">Connect to the welding machine</div>
@@ -1079,7 +1090,11 @@ onUnmounted(() => {
             :disabled="isElectrodeGrabbed || electrodesInPack <= 0"
             class="w-full p-4 transition-all border border-yellow-500/50 rounded-lg bg-black/30 hover:bg-black/50 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <img src="/images/minigame/tmt/electrode-pack.png" alt="Kotak Elektroda" class="w-16 h-16 mx-auto mb-2" />
+            <NuxtImg
+              src="/images/minigame/tmt/electrode-pack.png"
+              alt="Kotak Elektroda"
+              class="w-16 h-16 mx-auto mb-2"
+            />
             <div class="text-lg font-bold text-white">Grab Electrode</div>
             <div class="text-sm text-white/70">{{ electrodesInPack }} left</div>
           </button>
@@ -1163,7 +1178,7 @@ onUnmounted(() => {
                   : 'border-white/20 bg-white/10 hover:bg-white/20'
               "
             >
-              <img src="/images/minigame/tmt/welding-hammer.png" alt="Palu" class="w-16 h-16 mx-auto mb-2" />
+              <NuxtImg src="/images/minigame/tmt/welding-hammer.png" alt="Palu" class="w-16 h-16 mx-auto mb-2" />
               <div class="text-lg font-bold text-white">Slag Hammer</div>
               <div class="text-sm text-white/70">Remove slag</div>
             </button>
@@ -1177,7 +1192,7 @@ onUnmounted(() => {
                   : 'border-white/20 bg-white/10 hover:bg-white/20'
               "
             >
-              <img src="/images/minigame/tmt/steel-wire-brush.png" alt="Sikat" class="w-16 h-16 mx-auto mb-2" />
+              <NuxtImg src="/images/minigame/tmt/steel-wire-brush.png" alt="Sikat" class="w-16 h-16 mx-auto mb-2" />
               <div class="text-lg font-bold text-white">Wire Brush</div>
               <div class="text-sm text-white/70">Polish the weld</div>
             </button>
@@ -1247,11 +1262,21 @@ onUnmounted(() => {
 
 <style scoped>
 @keyframes bounce-in {
-  0% { opacity: 0; transform: scale(0.8); }
-  50% { transform: scale(1.05); }
-  100% { opacity: 1; transform: scale(1); }
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
-.animate-bounce-in { animation: bounce-in 0.5s ease-out; }
+.animate-bounce-in {
+  animation: bounce-in 0.5s ease-out;
+}
 
 .notification-enter-active,
 .notification-leave-active {

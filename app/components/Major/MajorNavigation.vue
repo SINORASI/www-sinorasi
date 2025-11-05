@@ -101,7 +101,7 @@ const getMajorIcon = (major: MajorName) => `/images/majorIcon/${majorIconMap[maj
                     <div
                       class="flex items-center justify-center w-16 h-16 rounded-full md:w-20 md:h-20 bg-white/20 backdrop-blur-sm group-hover:scale-110 transition-transform duration-300"
                     >
-                      <img
+                      <NuxtImg
                         :src="getMajorIcon(major)"
                         :alt="`${getMajorName(major)} Logo`"
                         class="object-contain w-10 h-10 md:w-12 md:h-12 drop-shadow-lg"

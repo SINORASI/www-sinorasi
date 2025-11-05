@@ -131,7 +131,8 @@ const getStatusColor = (status: string) => {
         <div class="text-center mb-16">
           <h1 class="text-5xl font-bold text-gray-900 mb-6">Sarana & Prasarana</h1>
           <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-            SMK Negeri 2 Singosari dilengkapi dengan berbagai fasilitas modern untuk mendukung proses pembelajaran yang optimal
+            SMK Negeri 2 Singosari dilengkapi dengan berbagai fasilitas modern untuk mendukung proses pembelajaran yang
+            optimal
           </p>
         </div>
 
@@ -176,7 +177,9 @@ const getStatusColor = (status: string) => {
               <div>
                 <h2 class="text-2xl font-bold text-gray-900 mb-3">Sarana Pembelajaran</h2>
                 <p class="text-gray-700 leading-relaxed">
-                  Sarana pembelajaran di SMK Negeri 2 Singosari dapat dikatan cukup baik. Tempat duduk dan meja siswa yang ada di dalam ruangan dalam kondisi cukup baik. Untuk media pembelajaran sudah memadai, dengan tersedianya fasilitas-fasilitas modern untuk menunjang proses belajar mengajar yang efektif.
+                  Sarana pembelajaran di SMK Negeri 2 Singosari dapat dikatan cukup baik. Tempat duduk dan meja siswa
+                  yang ada di dalam ruangan dalam kondisi cukup baik. Untuk media pembelajaran sudah memadai, dengan
+                  tersedianya fasilitas-fasilitas modern untuk menunjang proses belajar mengajar yang efektif.
                 </p>
               </div>
             </div>
@@ -186,7 +189,9 @@ const getStatusColor = (status: string) => {
         <!-- Sarana Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <div v-for="(item, index) in saranaData" :key="index" class="group">
-            <div class="h-full p-6 bg-white border-2 border-blue-100 rounded-2xl shadow-lg hover:shadow-xl hover:border-blue-300 transition-all duration-300">
+            <div
+              class="h-full p-6 bg-white border-2 border-blue-100 rounded-2xl shadow-lg hover:shadow-xl hover:border-blue-300 transition-all duration-300"
+            >
               <div class="flex items-center justify-between mb-4">
                 <Icon :name="item.icon" size="32" class="text-blue-600" />
                 <span class="px-3 py-1 text-xs font-semibold bg-blue-100 text-blue-800 rounded-full">
@@ -212,7 +217,8 @@ const getStatusColor = (status: string) => {
               <div>
                 <h2 class="text-2xl font-bold text-gray-900 mb-3">Prasarana Penunjang</h2>
                 <p class="text-gray-700 leading-relaxed">
-                  Prasarana penunjang pembelajaran pada semua kelas tersedia dan sesuai dengan kondisi masing-masing. Berikut adalah kondisi detail dari setiap fasilitas prasarana yang ada di sekolah kami.
+                  Prasarana penunjang pembelajaran pada semua kelas tersedia dan sesuai dengan kondisi masing-masing.
+                  Berikut adalah kondisi detail dari setiap fasilitas prasarana yang ada di sekolah kami.
                 </p>
               </div>
             </div>
@@ -240,7 +246,12 @@ const getStatusColor = (status: string) => {
                   <td class="px-6 py-4 text-gray-900 font-medium">{{ item.facility }}</td>
                   <td class="px-6 py-4 text-gray-700">{{ item.condition }}</td>
                   <td class="px-6 py-4 text-center">
-                    <span :class="['inline-block px-4 py-2 rounded-full text-sm font-semibold border', getStatusColor(item.status)]">
+                    <span
+                      :class="[
+                        'inline-block px-4 py-2 rounded-full text-sm font-semibold border',
+                        getStatusColor(item.status),
+                      ]"
+                    >
                       {{ item.status }}
                     </span>
                   </td>
@@ -255,9 +266,11 @@ const getStatusColor = (status: string) => {
           <h3 class="text-2xl font-bold text-gray-900 mb-6">Galeri Infrastruktur</h3>
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div v-for="(image, index) in infrastrukturImages" :key="index" class="group">
-              <div class="overflow-hidden bg-white border-2 border-orange-100 rounded-2xl shadow-lg hover:shadow-xl hover:border-orange-300 transition-all duration-300">
+              <div
+                class="overflow-hidden bg-white border-2 border-orange-100 rounded-2xl shadow-lg hover:shadow-xl hover:border-orange-300 transition-all duration-300"
+              >
                 <div class="relative w-full h-48 overflow-hidden bg-gray-200">
-                  <img
+                  <NuxtImg
                     :src="image.src"
                     :alt="image.alt"
                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"

@@ -46,7 +46,7 @@ useHead({
           class="p-6 transition-all duration-300 transform bg-white shadow-lg rounded-2xl hover:shadow-xl hover:-translate-y-1"
         >
           <div class="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full">
-            <img :src="majorData.logo" :alt="`${majorData.short} Logo`" class="object-contain w-10 h-10" />
+            <NuxtImg :src="majorData.logo" :alt="`${majorData.short} Logo`" class="object-contain w-10 h-10" />
           </div>
 
           <h3 class="mb-3 text-xl font-bold text-center text-gray-800">

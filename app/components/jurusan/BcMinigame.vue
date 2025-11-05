@@ -154,14 +154,14 @@ const exitFullscreen = async () => {
       await document.exitFullscreen();
     }
     // Re-enable body scroll when exiting fullscreen
-    document.documentElement.style.overflow = '';
-    document.body.style.overflow = '';
+    document.documentElement.style.overflow = "";
+    document.body.style.overflow = "";
     minigameState.setIsRunning(false);
   } catch (error) {
     console.error("Error exiting fullscreen:", error);
     // Re-enable body scroll even if error occurs
-    document.documentElement.style.overflow = '';
-    document.body.style.overflow = '';
+    document.documentElement.style.overflow = "";
+    document.body.style.overflow = "";
     minigameState.setIsRunning(false);
   }
 };
@@ -171,8 +171,8 @@ const handleFullscreenChange = () => {
   isFullscreen.value = !!document.fullscreenElement;
   if (!isFullscreen.value) {
     // Re-enable body scroll when exiting fullscreen
-    document.documentElement.style.overflow = '';
-    document.body.style.overflow = '';
+    document.documentElement.style.overflow = "";
+    document.body.style.overflow = "";
     minigameState.setIsRunning(false);
     emit("close");
   }
@@ -186,8 +186,8 @@ const enterFullscreen = async () => {
       await container.requestFullscreen();
       isFullscreen.value = true;
       // Disable body scroll when fullscreen is active
-      document.documentElement.style.overflow = 'hidden';
-      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = "hidden";
+      document.body.style.overflow = "hidden";
     } catch (error) {
       console.warn("Fullscreen request failed, continuing without fullscreen:", error);
       isFullscreen.value = false;
@@ -310,7 +310,9 @@ onUnmounted(() => {
       <div class="flex flex-col items-center justify-center flex-1 p-4 md:p-8">
         <div class="w-full max-w-3xl space-y-4">
           <!-- Scenario Info -->
-          <div class="flex items-center justify-between p-4 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20">
+          <div
+            class="flex items-center justify-between p-4 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20"
+          >
             <div>
               <h3 class="text-lg font-bold text-white font-oswald">{{ currentScenario.name }}</h3>
               <p class="text-sm text-gray-200">{{ currentScenario.description }}</p>
@@ -331,7 +333,7 @@ onUnmounted(() => {
           <div class="relative overflow-hidden bg-black border-4 rounded-lg aspect-video shadow-2xl border-white/20">
             <!-- Image with dynamic filter -->
             <div class="flex items-center justify-center w-full h-full p-8" :style="viewfinderStyle">
-              <img
+              <NuxtImg
                 :src="currentScenario.image"
                 :alt="currentScenario.name"
                 class="object-contain max-w-full max-h-full"
@@ -394,7 +396,7 @@ onUnmounted(() => {
 
           <!-- Exposure Meter Bar -->
           <div class="p-4 space-y-2 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20">
-              <div class="flex items-center justify-between">
+            <div class="flex items-center justify-between">
               <span class="text-sm font-semibold text-gray-200">Akurasi Exposure</span>
               <span class="text-lg font-bold text-white">{{ exposureAccuracy }}%</span>
             </div>
@@ -587,7 +589,7 @@ input[type="range"]::-webkit-slider-thumb {
   border-radius: 50%;
   cursor: pointer;
   border: 3px solid white;
-  box-shadow: 0 0 5px rgba(0,0,0,0.5);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
 input[type="range"]::-moz-range-thumb {
@@ -596,7 +598,7 @@ input[type="range"]::-moz-range-thumb {
   border-radius: 50%;
   cursor: pointer;
   border: 3px solid white;
-  box-shadow: 0 0 5px rgba(0,0,0,0.5);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
 .slider-orange::-webkit-slider-thumb {
