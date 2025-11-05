@@ -16,7 +16,7 @@
     "@nuxt/scripts": "^0.11.13",
     "@nuxtjs/color-mode": "^3.5.2",
     "@nuxtjs/i18n": "10.1.1",
-    "@nuxtjs/mdc": "^0.18.0",
+    "@nuxtjs/mdc": "^0.18.2",
     "@tailwindcss/vite": "^4.1.16",
     "@unhead/vue": "^2.0.19",
     "blockly": "^12.3.1",
@@ -38,6 +38,6 @@
     "@iconify-json/material-symbols": "^1.2.44",
     "@iconify-json/simple-icons": "^1.2.57",
     "@iconify-json/vscode-icons": "^1.2.33",
-    "sharp": "^0.33.0"
+    "sharp": "^0.33.5"
   }
 }
