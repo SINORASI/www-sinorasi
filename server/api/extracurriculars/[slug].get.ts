@@ -1,4 +1,4 @@
-import { defineEventHandler, getQuery, readBody, createError, setCookie, getCookie } from 'h3';
+import { defineEventHandler, getQuery, readBody, createError, setCookie, getCookie } from "h3";
 import type { Extracurricular } from "~/models/Extracurricular";
 
 export default defineEventHandler(async (event): Promise<Extracurricular | null> => {
@@ -11,8 +11,7 @@ export default defineEventHandler(async (event): Promise<Extracurricular | null>
       name: "Basket",
       category: "Olahraga",
       icon: "lucide:dribbble",
-      description:
-        "Ekstrakurikuler basket untuk pengembangan keterampilan dan prestasi di bidang olahraga",
+      description: "Ekstrakurikuler basket untuk pengembangan keterampilan dan prestasi di bidang olahraga",
       fullDescription:
         "<p>Ekstrakurikuler basket sekolah kami telah berdiri sejak tahun 2019 dan menjadi salah satu wadah pengembangan bakat siswa di bidang olahraga. Dengan fasilitas lapangan yang memadai dan bimbingan pelatih berpengalaman, kami berkomitmen membentuk karakter sportif dan jiwa kompetitif siswa.</p><p>Kegiatan latihan rutin dilaksanakan tiga kali seminggu dengan fokus pada pengembangan teknik dasar, strategi permainan, dan pembentukan mental juara yang kuat untuk menghadapi berbagai kompetisi.</p>",
       image: "/images/placeholder.jpg",
@@ -117,16 +116,14 @@ export default defineEventHandler(async (event): Promise<Extracurricular | null>
           id: "3",
           image: "/images/placeholder.jpg",
           title: "Turnamen Internal Sekolah",
-          description:
-            "Event tahunan yang melibatkan siswa dalam kompetisi volley untuk mempererat tali persaudaraan",
+          description: "Event tahunan yang melibatkan siswa dalam kompetisi volley untuk mempererat tali persaudaraan",
           date: "15 Mei 2024",
         },
         {
           id: "4",
           image: "/images/placeholder.jpg",
           title: "Workshop Strategi Permainan",
-          description:
-            "Sesi pembelajaran tentang taktik permainan volley yang dipimpin oleh pelatih profesional",
+          description: "Sesi pembelajaran tentang taktik permainan volley yang dipimpin oleh pelatih profesional",
           date: "10 Juni 2024",
         },
       ],
@@ -166,8 +163,7 @@ export default defineEventHandler(async (event): Promise<Extracurricular | null>
           id: "1",
           image: "/images/placeholder.jpg",
           title: "Kejuaraan Badminton Daerah",
-          description:
-            "Pemain berhasil meraih medali emas dalam kompetisi badminton tingkat daerah",
+          description: "Pemain berhasil meraih medali emas dalam kompetisi badminton tingkat daerah",
           date: "20 Februari 2024",
         },
         {
@@ -199,8 +195,7 @@ export default defineEventHandler(async (event): Promise<Extracurricular | null>
       name: "Futsal",
       category: "Olahraga",
       icon: "streamline-sharp:ball",
-      description:
-        "Ekstrakurikuler futsal untuk mengembangkan keterampilan permainan indoor dan kerja sama tim",
+      description: "Ekstrakurikuler futsal untuk mengembangkan keterampilan permainan indoor dan kerja sama tim",
       fullDescription:
         "<p>Ekstrakurikuler futsal sekolah kami telah berdiri sejak tahun 2019 dan menjadi wadah pengembangan bakat siswa di olahraga indoor. Dengan lapangan futsal yang berkualitas, kami membentuk pemain yang memiliki teknik dan strategi permainan yang baik.</p><p>Latihan dilakukan tiga kali seminggu dengan fokus pada teknik dasar, taktik, dan kondisi fisik.</p>",
       image: "/images/placeholder.jpg",
@@ -297,8 +292,7 @@ export default defineEventHandler(async (event): Promise<Extracurricular | null>
       name: "PMR",
       category: "Kesehatan",
       icon: "lucide:heart",
-      description:
-        "Ekstrakurikuler PMR untuk pengembangan keterampilan kesehatan dan kepalangmerahan",
+      description: "Ekstrakurikuler PMR untuk pengembangan keterampilan kesehatan dan kepalangmerahan",
       fullDescription:
         "<p>Ekstrakurikuler PMR sekolah kami telah berdiri sejak tahun 2015 dan menjadi wadah pengembangan siswa di bidang kesehatan dan kemanusiaan. Dengan bimbingan instruktur, kami membentuk siswa yang peduli terhadap kesehatan dan kesejahteraan orang lain.</p><p>Kegiatan meliputi latihan kesehatan, donor darah, dan kegiatan sosial.</p>",
       image: "/images/placeholder.jpg",
@@ -512,8 +506,7 @@ export default defineEventHandler(async (event): Promise<Extracurricular | null>
       name: "Photography",
       category: "Seni",
       icon: "lucide:camera",
-      description:
-        "Ekstrakurikuler photography untuk pengembangan keterampilan fotografi dan kreativitas visual",
+      description: "Ekstrakurikuler photography untuk pengembangan keterampilan fotografi dan kreativitas visual",
       fullDescription:
         "<p>Ekstrakurikuler photography sekolah kami telah berdiri sejak tahun 2020 dan menjadi wadah pengembangan bakat siswa di bidang fotografi. Dengan bimbingan fotografer profesional, kami membentuk siswa yang memiliki kemampuan fotografi yang baik dan mata kreatif.</p><p>Kegiatan meliputi teknik fotografi, editing, dan proyek fotografi.</p>",
       image: "/images/placeholder.jpg",
@@ -563,6 +556,63 @@ export default defineEventHandler(async (event): Promise<Extracurricular | null>
           title: "Kompetisi Fotografi",
           description: "Partisipasi dalam kompetisi fotografi tingkat daerah",
           date: "2 Juli 2024",
+        },
+      ],
+    },
+    {
+      id: "11",
+      slug: "robotics",
+      name: "Robotics Club",
+      category: "Teknologi",
+      icon: "lucide:cpu",
+      description: "Ekstrakurikuler robotics untuk pengembangan kemampuan STEM dan robotika",
+      fullDescription:
+        "<p>Ekstrakurikuler robotics sekolah kami telah berdiri sejak tahun 2021 dan menjadi wadah pengembangan bakat siswa di bidang sains dan teknologi. Dengan bimbingan guru teknologi, kami membentuk siswa yang memiliki kemampuan merancang dan memprogram robot.</p><p>Kegiatan meliputi pembelajaran pemrograman, desain mekanik, dan kompetisi robotika.</p>",
+      image: "/images/placeholder.jpg",
+      coach: "Guru Teknik Harendra",
+      schedule: "Senin, Kamis - 15:00-17:00 WIB",
+      location: "Lab Teknologi Sekolah",
+      memberCount: 30,
+      achievementCount: 8,
+      yearEstablished: 2021,
+      meetingsPerWeek: 2,
+      registrationOpen: true,
+      registrationPeriod: "Pendaftaran dibuka: 1-31 Juli 2024",
+      contactInfo: "Guru Harendra: 0823-0123-4567",
+      requirements: [
+        "Mengisi formulir pendaftaran",
+        "Surat persetujuan orang tua",
+        "Pengetahuan dasar pemrograman (dianjurkan)",
+        "Pas foto 3x4 (2 lembar)",
+      ],
+      activities: [
+        {
+          id: "1",
+          image: "/images/placeholder.jpg",
+          title: "Kompetisi Robot Balap",
+          description: "Kompetisi merancang dan memprogram robot balap",
+          date: "19 Maret 2024",
+        },
+        {
+          id: "2",
+          image: "/images/placeholder.jpg",
+          title: "Workshop Pemrograman Arduino",
+          description: "Pelatihan pemrograman Arduino untuk robotika",
+          date: "24 April 2024",
+        },
+        {
+          id: "3",
+          image: "/images/placeholder.jpg",
+          title: "Pameran Inovasi Teknologi",
+          description: "Pameran hasil karya robot siswa",
+          date: "29 Mei 2024",
+        },
+        {
+          id: "4",
+          image: "/images/placeholder.jpg",
+          title: "Kompetisi STEM Nasional",
+          description: "Partisipasi dalam kompetisi robotika nasional",
+          date: "5 Juli 2024",
         },
       ],
     },

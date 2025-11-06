@@ -59,14 +59,30 @@ export default defineNuxtConfig({
   vite: {
     plugins: [tailwindcss()],
     build: {
+      minify: "terser",
+      terserOptions: {
+        compress: {
+          drop_console: true,
+          drop_debugger: true,
+        },
+      },
       rollupOptions: {
         output: {
           manualChunks: {
-            motion: ["motion-v"],
-            icons: ["@nuxt/icon"],
+            "vendor-motion": ["motion-v"],
+            "vendor-icons": ["@nuxt/icon"],
+            "home-components": [
+              "~/components/home/HomeHero.vue",
+              "~/components/home/HomeProfile.vue",
+              "~/components/home/HomeMajors.vue",
+              "~/components/home/HomeNews.vue",
+            ],
           },
         },
       },
+      chunkSizeWarningLimit: 600,
+      sourcemap: false,
+      reportCompressedSize: true,
     },
   },
   i18n: {
@@ -77,25 +93,31 @@ export default defineNuxtConfig({
     ],
   },
   image: {
-    // quality: 80,
-    // format: ["webp", "avif", "png", "jpg", "jpeg"],
-    // sizes: "320,640,768,1024,1280,1536",
-    // screens: {
-    //   xs: 320,
-    //   sm: 640,
-    //   md: 768,
-    //   lg: 1024,
-    //   xl: 1280,
-    //   xxl: 1536,
-    // },
-    provider: "none",
+    quality: 80,
+    format: ["webp", "avif", "png", "jpg", "jpeg"],
+    sizes: "xs:320px sm:640px md:768px lg:1024px xl:1280px 2xl:1536px",
+    screens: {
+      xs: 320,
+      sm: 640,
+      md: 768,
+      lg: 1024,
+      xl: 1280,
+      xxl: 1536,
+    },
+    provider: "ipx",
   },
   experimental: {
     viteEnvironmentApi: true,
   },
-  // nitro: {
-  //   compressPublicAssets: true,
-  // },
+  nitro: {
+    minify: true,
+    compressPublicAssets: true,
+    prerender: {
+      crawlLinks: true,
+      routes: ["/"],
+    },
+  },
+
   routeRules: {
     "/**": {
       headers: {

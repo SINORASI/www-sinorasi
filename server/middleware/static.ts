@@ -1,22 +1,20 @@
 export default defineEventHandler((event) => {
-  // This middleware ensures that /public static assets are properly served
-  // Static files are automatically handled by Nuxt, but we need to ensure
-  // correct caching headers for non-webp formats in production
-
+  // Optimize static asset serving with compression and caching
   const url = event.node.req.url;
+  const res = event.node.res;
 
-  // Public assets should be served from the /public directory
-  if (url?.startsWith("/images/")) {
-    // Ensure proper cache headers for images
-    const res = event.node.res;
+  if (!url) return;
 
+  // Handle image assets
+  if (url.startsWith("/images/") || url.startsWith("/_ipx/")) {
     // Check file extension
     const ext = url.split(".").pop()?.toLowerCase();
 
-    // For non-webp images, ensure they're served with proper headers
-    if (ext && ["jpg", "jpeg", "png", "gif", "svg", "avif"].includes(ext)) {
-      // Set cache headers for images
+    // Long-term cache for versioned/hashed assets
+    if (ext && ["jpg", "jpeg", "png", "gif", "svg", "avif", "webp"].includes(ext)) {
+      // Set aggressive cache headers for images
       res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+
       // Ensure proper content-type
       const contentTypes: Record<string, string> = {
         jpg: "image/jpeg",
@@ -27,9 +25,32 @@ export default defineEventHandler((event) => {
         avif: "image/avif",
         webp: "image/webp",
       };
+
       if (contentTypes[ext]) {
         res.setHeader("Content-Type", contentTypes[ext]);
       }
+
+      // Enable compression for SVG
+      if (ext === "svg") {
+        res.setHeader("Content-Encoding", "gzip");
+      }
+    }
+  }
+
+  // Handle text-based assets (JS, CSS, fonts)
+  if (url.startsWith("/_nuxt/") || url.endsWith(".js") || url.endsWith(".css") || url.endsWith(".woff2")) {
+    // Cache JS and CSS chunks for 1 year
+    if (url.includes(".") && /\.[a-f0-9]{8}\./.test(url)) {
+      res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+    } else {
+      // Cache with short TTL for non-hashed files
+      res.setHeader("Cache-Control", "public, max-age=3600");
+    }
+
+    // Enable compression for text files (already handled by Nitro compressPublicAssets)
+    const ext = url.split(".").pop()?.toLowerCase();
+    if (ext && ["js", "css", "woff2"].includes(ext)) {
+      res.setHeader("Vary", "Accept-Encoding");
     }
   }
 });
