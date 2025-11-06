@@ -166,10 +166,9 @@ onUnmounted(() => {
         :inViewOptions="{ once: true }"
       >
         <h1
-          class="text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-center font-oswald tracking-wide leading-tight"
+          class="text-2xl font-black sm:text-3xl md:text-4xl lg:text-5xl xl:text-7xl text-center font-quicksand tracking-wide leading-tight"
         >
-          INORASI<span class="text-orange-500">Inovasi</span> Raih
-          <span class="text-yellow-500 font-bold">Prestasi</span>
+          INORASI<br></br><span class="text-orange-500 text-5xl">Inovasi</span><span class="text-5xl"> Raih </span><span class="text-yellow-500 text-5xl font-bold">Prestasi</span>
         </h1>
         <p class="text-base sm:text-lg md:text-xl lg:text-2xl font-nunito leading-relaxed max-w-2xl">
           Pendidikan inovatif untuk pemimpin masa depan. Temukan program-program dinamis kami dan komunitas yang
