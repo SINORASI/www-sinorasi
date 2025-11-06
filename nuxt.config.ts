@@ -88,7 +88,7 @@ export default defineNuxtConfig({
     //   xl: 1280,
     //   xxl: 1536,
     // },
-    provider: "none",
+    // provider: "none",
   },
   experimental: {
     viteEnvironmentApi: true,
