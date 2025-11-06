@@ -96,16 +96,15 @@ onUnmounted(() => {
     id="hero"
     class="relative min-h-screen px-4 pt-24 pb-10 md:pt-20 overflow-hidden bg-linear-to-br from-blue-700 via-blue-600 to-blue-900"
   >
-    <!-- Background Image -->
-    <NuxtImg
+    <!-- Background Image - CRITICAL: Must be eager and fetchpriority high for LCP -->
+    <img
       v-if="heroInView && !prefersReducedMotion"
       src="/images/guru/foto-guru-bersama.webp"
       alt="Hero Background"
       class="absolute inset-0 w-full h-full object-cover z-0"
-      format="webp"
-      quality="70"
+      style="content-visibility: auto"
       loading="eager"
-      fetchpriority="high"
+      decoding="sync"
       aria-hidden="true"
     />
 
@@ -146,14 +145,13 @@ onUnmounted(() => {
         :inViewOptions="{ once: true }"
       >
         <div class="relative group overflow-hidden">
-          <NuxtImg
+          <img
             src="/images/seragam/putih-putih/10-putih-putih-jas-l/DSC04215.webp"
             alt="Students in school uniform"
             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
             loading="eager"
-            format="webp"
-            fetchpriority="high"
-            quality="80"
+            decoding="async"
+            style="content-visibility: auto"
           />
           <div class="absolute inset-0 bg-linear-to-tr from-blue-900/40 via-transparent to-orange-900/20"></div>
         </div>
@@ -170,7 +168,7 @@ onUnmounted(() => {
         <h1
           class="text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-center font-oswald tracking-wide leading-tight"
         >
-          INORASI - <span class="text-orange-500">Inovasi</span> Raih
+          INORASI<span class="text-orange-500">Inovasi</span> Raih
           <span class="text-yellow-500 font-bold">Prestasi</span>
         </h1>
         <p class="text-base sm:text-lg md:text-xl lg:text-2xl font-nunito leading-relaxed max-w-2xl">
@@ -238,14 +236,13 @@ onUnmounted(() => {
         :inViewOptions="{ once: true }"
       >
         <div class="relative group overflow-hidden">
-          <NuxtImg
+          <img
             src="/images/seragam/putih-putih/11-putih-putih-jas-l/DSC04320.webp"
             alt="Diverse students collaborating"
             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
             loading="eager"
-            format="webp"
-            fetchpriority="high"
-            quality="80"
+            decoding="async"
+            style="content-visibility: auto"
           />
           <div class="absolute inset-0 bg-linear-to-tl from-orange-900/40 via-transparent to-blue-900/20"></div>
         </div>

@@ -1,0 +1,51 @@
+# Robots.txt for SMK Negeri 2 Singosari
+# Optimized for SEO and performance
+# Last updated: November 6, 2025
+
+User-agent: *
+Allow: /
+
+# Disallow admin and sensitive areas
+Disallow: /admin/
+Disallow: /dashboard
+Disallow: /login
+Disallow: /register
+Disallow: /profile
+
+# Disallow API routes (internal use only)
+Disallow: /api/
+
+# Disallow development and build files
+Disallow: /_nuxt/
+Disallow: /.nuxt/
+Disallow: /node_modules/
+
+# Allow access to static assets
+Allow: /images/
+Allow: /robots.txt
+Allow: /sitemap.xml
+
+# Crawl delay for performance optimization (1 second)
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://sinorasi.smkn2-singosari.sch.id/sitemap.xml
+
+# Special rules for major search engines
+User-agent: Googlebot
+Crawl-delay: 1
+Allow: /
+
+User-agent: Bingbot
+Crawl-delay: 1
+Allow: /
+
+# Block unwanted bots
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /

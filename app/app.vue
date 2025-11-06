@@ -41,14 +41,17 @@ watch(loading, (isLoading) => {
         v-if="loading"
         class="fixed inset-0 z-9999 flex flex-col items-center justify-center bg-linear-to-br from-slate-50 via-blue-50 to-slate-100"
       >
-        <NuxtImg
+        <img
           src="/images/logo-smk.webp"
           alt="SMK Negeri 2 Singosari"
-          class="w-48 h-48 mb-4"
-          width="1000"
-          height="1000"
+          class="w-32 h-32 mb-4"
+          width="256"
+          height="256"
+          style="content-visibility: auto"
+          loading="eager"
+          decoding="sync"
         />
-        <p class="text-xl text-gray-600">Loading...</p>
+        <p class="text-lg text-gray-600 font-nunito">Memuat...</p>
       </div>
     </Transition>
     <div v-show="!loading">
