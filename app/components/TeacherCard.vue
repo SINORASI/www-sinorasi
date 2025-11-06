@@ -4,11 +4,11 @@
     @click="$emit('showDetails', teacher)"
   >
     <div class="relative aspect-3/4">
-      <NuxtImg :src="teacher.image" :alt="teacher.name" class="object-cover w-full h-full" />
+      <img :src="teacher.image" :alt="teacher.name" class="object-cover w-full h-full" loading="lazy" decoding="async" />
 
       <div class="absolute bottom-0 left-0 right-0 p-4 bg-linear-to-t from-black/70 to-transparent">
         <p class="text-sm font-semibold text-center text-white">
-          {{ teacher.name }}{{ teacher.degree ? ", " + teacher.degree : "" }}
+          {{ teacher.degree ? `${teacher.name}, ${teacher.degree}` : teacher.name }}
         </p>
       </div>
     </div>

@@ -20,7 +20,9 @@ definePageMeta({
 
 const major: MajorName = "rpl";
 
-const { data: majorDatas } = await useFetch<Record<MajorName, MajorData>>("/api/majors");
+const { data: majorDatas, refresh: refreshMajorData } = await useFetch<Record<MajorName, MajorData>>("/api/majors", {
+  key: `major-data-${major}`,
+});
 
 const majorColor = computed(
   () =>
@@ -91,6 +93,15 @@ onMounted(() => {
     window.removeEventListener("scroll", handleScroll);
   });
 });
+
+// Refresh data when route changes
+watch(
+  () => route.path,
+  async () => {
+    // Ensure data is fresh when page changes
+    window.scrollTo(0, 0);
+  }
+);
 </script>
 
 <template>

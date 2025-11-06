@@ -20,7 +20,9 @@ definePageMeta({
 
 const major: MajorName = "tav";
 
-const { data: majorDatas } = await useFetch<Record<MajorName, MajorData>>("/api/majors");
+const { data: majorDatas, refresh: refreshMajorData } = await useFetch<Record<MajorName, MajorData>>("/api/majors", {
+  key: `major-data-${major}`,
+});
 
 const majorColor = computed(
   () =>

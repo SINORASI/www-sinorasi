@@ -6,7 +6,9 @@ definePageMeta({
   layout: "default",
 });
 
-const { data: majorDatas } = await useFetch<Record<MajorName, MajorData>>("/api/majors");
+const { data: majorDatas } = await useFetch<Record<MajorName, MajorData>>("/api/majors", {
+  key: "majors-index",
+});
 
 const showBackToTop = ref(false);
 

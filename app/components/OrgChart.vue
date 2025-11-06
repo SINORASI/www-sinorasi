@@ -147,7 +147,7 @@ const teacherCategories = ref<TeacherCategory[]>([
         id: "pns-14",
         name: "SITI MUZAYYANAH",
         degree: "Dra.",
-        image: "/images/guru/Foto - foto pns/Siti/siti-2.webp",
+        image: "/images/guru/Foto - foto pns/Siti/siti2.webp",
         university: "",
         quote: "",
       },

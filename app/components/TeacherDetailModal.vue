@@ -1,6 +1,6 @@
 <template>
   <motion.div
-    class="fixed inset-0 z-50 flex flex-col items-center justify-center p-4 md:p-8 font-serif text-white bg-neutral-800/95"
+    class="fixed inset-0 z-9999 flex flex-col items-center justify-center p-4 md:p-8 font-serif text-white bg-neutral-800/95"
     @click.self="$emit('close')"
     :whileInView="{ opacity: 1 }"
     :transition="{ duration: 0.3 }"
@@ -14,7 +14,7 @@
     >
       <div class="text-center md:text-left">
         <p class="mb-2 text-lg md:text-xl text-neutral-300">{{ categoryTitle }}</p>
-        <h3 class="text-2xl md:text-3xl lg:text-4xl font-bold">{{ teacher.name }}, {{ teacher.degree }}</h3>
+        <h3 class="text-2xl md:text-3xl lg:text-4xl font-bold">{{ teacher.degree ? `${teacher.name}, ${teacher.degree}` : teacher.name }}</h3>
         <p class="mt-2 text-base md:text-lg text-neutral-400">{{ teacher.university }}</p>
       </div>
 
@@ -22,7 +22,7 @@
         <div
           class="flex items-center justify-center w-48 h-48 md:w-64 md:h-64 rounded-lg bg-neutral-200 overflow-hidden"
         >
-          <NuxtImg :src="teacher.image" :alt="teacher.name" class="object-cover w-full h-full" />
+          <img :src="teacher.image" :alt="teacher.name" class="object-cover w-full h-full" loading="lazy" decoding="async" />
         </div>
       </div>
 

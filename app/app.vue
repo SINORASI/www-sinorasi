@@ -1,12 +1,21 @@
 <script setup lang="ts">
-import { ref, onMounted, watch } from "vue";
+import { ref, watch } from "vue";
 import { useNuxtApp } from "#app";
 
 const nuxtApp = useNuxtApp();
 const loading = ref(true);
 
+// Show loading on route change
+nuxtApp.hook("page:loading:start", () => {
+  loading.value = true;
+});
+
+// Hide loading when page has finished loading
 nuxtApp.hook("page:loading:end", () => {
-  loading.value = false;
+  // Add a small delay to ensure all content is rendered before hiding loading
+  setTimeout(() => {
+    loading.value = false;
+  }, 100);
 });
 
 useHead({

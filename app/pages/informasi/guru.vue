@@ -261,7 +261,7 @@ const teacherCategories = ref([
         id: "pns-14",
         name: "SITI MUZAYYANAH",
         degree: "Dra.",
-        image: "/images/guru/Foto - foto pns/Siti/siti-2.webp",
+        image: "/images/guru/Foto - foto pns/Siti/siti2.webp",
         university: "",
         quote: "",
       },
@@ -380,7 +380,7 @@ const teacherCategories = ref([
       {
         id: "pns-35",
         name: "HERMAWAN",
-        degree: "",
+        degree: "ST, M.Pd",
         image: "/images/guru/Foto - foto pns/Hermawan/hermawan2.webp",
         university: "",
         quote: "",
@@ -736,15 +736,6 @@ const teacherCategories = ref([
         quote: "",
       },
     ],
-  },
-  {
-    title: "KTU",
-    pagination: "01/01",
-    description: "Kepala Tata Usaha yang mengelola administrasi dan operasional sekolah.",
-    classes: [],
-    materialsByClass: [],
-    teachingFocus: "Berperan aktif dalam mendukung visi misi SMK Negeri 02 Singosari.",
-    teachers: [],
   },
   {
     title: "Kapro",
