@@ -883,7 +883,7 @@ onUnmounted(() => {
     class="fixed inset-0 z-50 flex flex-col font-nunito bg-linear-to-br from-emerald-700 via-emerald-600 to-emerald-900 text-white"
   >
     <!-- Notifications Container -->
-    <div class="fixed top-4 right-4 z-[60] space-y-2 pointer-events-none">
+    <div class="fixed top-4 right-4 z-60 space-y-2 pointer-events-none">
       <Transition v-for="notification in notifications" :key="notification.id" name="notification" appear>
         <div
           class="pointer-events-auto px-4 py-3 rounded-lg shadow-lg text-white font-semibold border-l-4"
@@ -1040,7 +1040,7 @@ onUnmounted(() => {
           <button
             @click="startExecution"
             :disabled="!allSafetyComplete"
-            class="w-full py-4 text-lg font-bold text-white transition-all duration-300 rounded-lg bg-gradient-to-r from-orange-500 to-yellow-500 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+            class="w-full py-4 text-lg font-bold text-white transition-all duration-300 rounded-lg bg-linear-to-r from-orange-500 to-yellow-500 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {{ allSafetyComplete ? "✓ Start Welding" : "Complete All Safety Steps" }}
           </button>
@@ -1078,7 +1078,7 @@ onUnmounted(() => {
             </div>
             <div class="w-full h-2 mt-2 overflow-hidden bg-white/10 rounded-full">
               <div
-                class="h-full transition-all duration-300 bg-gradient-to-r from-orange-500 to-yellow-500"
+                class="h-full transition-all duration-300 bg-linear-to-r from-orange-500 to-yellow-500"
                 :style="{ width: `${weldProgress}%` }"
               ></div>
             </div>
@@ -1249,7 +1249,7 @@ onUnmounted(() => {
             </button>
             <button
               @click="exitFullscreen"
-              class="py-3 font-bold text-white transition-all rounded-lg bg-gradient-to-r from-orange-500 to-yellow-500 hover:scale-105"
+              class="py-3 font-bold text-white transition-all rounded-lg bg-linear-to-r from-orange-500 to-yellow-500 hover:scale-105"
             >
               🏠 Exit Game
             </button>

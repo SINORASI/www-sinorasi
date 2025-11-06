@@ -21,6 +21,10 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
               alt="Logo SMKN 2 Singosari"
               class="rounded-full w-16 h-16 shrink-0 object-cover"
               loading="lazy"
+              width="64"
+              height="64"
+              sizes="64px"
+              quality="85"
             />
             <div>
               <h3 :class="['text-xl font-bold', isColoredBackground ? 'text-white' : 'text-white']">
@@ -516,6 +520,10 @@ const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "
             alt="Sponsor Logos: Jagoan Hosting, Komdigi, Maspion IT, Garuda Spark"
             class="mx-auto h-16 mb-1"
             loading="lazy"
+            width="800"
+            height="64"
+            sizes="(max-width: 768px) 100vw, 800px"
+            quality="80"
           />
         </div>
       </div>

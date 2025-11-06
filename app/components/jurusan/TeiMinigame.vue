@@ -472,7 +472,7 @@ onUnmounted(() => {
               <div
                 v-for="pin in getLedPins"
                 :key="pin.id"
-                class="absolute w-3 h-3 transition-all border-2 border-white/50 rounded-full cursor-pointer group-hover:scale-150 hover:!scale-150 hover:border-yellow-400"
+                class="absolute w-3 h-3 transition-all border-2 border-white/50 rounded-full cursor-pointer group-hover:scale-150 hover:scale-150! hover:border-yellow-400"
                 :class="pin.type === 'led-positive' ? 'bg-red-600' : 'bg-gray-800'"
                 :style="{
                   left: '50%',
@@ -504,7 +504,7 @@ onUnmounted(() => {
               <div
                 v-for="pin in getResistorPins"
                 :key="pin.id"
-                class="absolute w-3 h-3 transition-all bg-gray-800 border-2 border-white/50 rounded-full cursor-pointer group-hover:scale-150 hover:!scale-150 hover:border-yellow-400"
+                class="absolute w-3 h-3 transition-all bg-gray-800 border-2 border-white/50 rounded-full cursor-pointer group-hover:scale-150 hover:scale-150! hover:border-yellow-400"
                 :style="{
                   left: pin.id === 'resistor-1' ? '-8px' : 'calc(100% + 4px)',
                   top: '50%',
@@ -552,7 +552,7 @@ onUnmounted(() => {
           v-if="!hasSimulated"
           @click="checkCircuit"
           :disabled="wires.length === 0"
-          class="w-full py-4 text-lg font-bold text-white transition-all duration-300 transform rounded-lg shadow-lg bg-gradient-to-r from-orange-500 to-yellow-500 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+          class="w-full py-4 text-lg font-bold text-white transition-all duration-300 transform rounded-lg shadow-lg bg-linear-to-r from-orange-500 to-yellow-500 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Run Simulation
         </button>
@@ -560,7 +560,7 @@ onUnmounted(() => {
         <button
           v-else
           @click="clearAllWires"
-          class="w-full py-4 text-lg font-bold text-white transition-all duration-300 transform rounded-lg shadow-lg bg-gradient-to-r from-sky-500 to-cyan-500 hover:scale-105"
+          class="w-full py-4 text-lg font-bold text-white transition-all duration-300 transform rounded-lg shadow-lg bg-linear-to-r from-sky-500 to-cyan-500 hover:scale-105"
         >
           Reset Circuit
         </button>

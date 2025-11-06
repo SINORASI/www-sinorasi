@@ -558,7 +558,7 @@ onUnmounted(() => {
           <button
             @click="startWelding"
             :disabled="!allSafetyChecked"
-            class="w-full py-4 text-lg font-bold text-white transition-all duration-300 rounded-lg bg-gradient-to-r from-orange-500 to-yellow-500 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+            class="w-full py-4 text-lg font-bold text-white transition-all duration-300 rounded-lg bg-linear-to-r from-orange-500 to-yellow-500 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {{ allSafetyChecked ? "✓ Start Welding" : "Equip Safety Gear" }}
           </button>
@@ -638,7 +638,7 @@ onUnmounted(() => {
             </button>
             <button
               @click="restartGame"
-              class="py-3 font-bold text-white transition-all rounded-lg bg-gradient-to-r from-orange-500 to-yellow-500 hover:scale-105"
+              class="py-3 font-bold text-white transition-all rounded-lg bg-linear-to-r from-orange-500 to-yellow-500 hover:scale-105"
             >
               🏠 New Session
             </button>
