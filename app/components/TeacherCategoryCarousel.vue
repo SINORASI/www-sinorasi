@@ -199,18 +199,21 @@ const visibleTeachers = computed(() =>
   props.teachers.slice(currentIndex.value, currentIndex.value + visibleCount.value)
 );
 const canScrollLeft = computed(() => currentIndex.value > 0);
-const canScrollRight = computed(() => currentIndex.value + visibleCount.value < props.teachers.length);
+const canScrollRight = computed(() => {
+  const nextIndex = currentIndex.value + visibleCount.value;
+  // Ensure next slide has at least one teacher
+  return nextIndex < props.teachers.length && props.teachers.slice(nextIndex, nextIndex + visibleCount.value).length > 0;
+});
 
 const scrollLeft = () => {
   if (canScrollLeft.value) {
-    currentIndex.value -= visibleCount;
-    if (currentIndex.value < 0) currentIndex.value = 0;
+    currentIndex.value = Math.max(0, currentIndex.value - visibleCount.value);
   }
 };
 
 const scrollRight = () => {
   if (canScrollRight.value) {
-    currentIndex.value += visibleCount;
+    currentIndex.value += visibleCount.value;
   }
 };
 

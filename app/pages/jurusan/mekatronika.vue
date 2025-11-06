@@ -23,6 +23,7 @@ const major: MajorName = "mekatronika";
 const { data: majorDatas } = await useFetch<Record<MajorName, MajorData>>("/api/majors", {
   server: true,
   lazy: false,
+  key: `major-data-${major}`,
 });
 
 const majorColor = computed(
