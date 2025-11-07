@@ -1,4 +1,4 @@
-import { defineEventHandler, getQuery, readBody, createError, setCookie, getCookie } from 'h3';
+import { defineEventHandler, getQuery, readBody, createError, setCookie, getCookie } from "h3";
 import { type TrafficTrackerForm, trafficTrackerSchema } from "~/utils/schema";
 
 // School coordinates: SMK Negeri 2 Singosari
@@ -95,13 +95,11 @@ export default defineEventHandler(async (event): Promise<TrafficResults> => {
       });
     }
 
-    // Get route data from Mapbox
-    const routeData = await getMapboxRoute(
-      userCoords,
-      SCHOOL_COORDINATES,
-      body.travelMode,
-      mapboxToken,
-    );
+    // Get route data from Mapbox with user preferences
+    const routeData = await getMapboxRoute(userCoords, SCHOOL_COORDINATES, body.travelMode, mapboxToken, {
+      avoidTolls: body.avoidTolls,
+      avoidHighways: body.avoidHighways,
+    });
 
     if (!routeData) {
       throw createError({
@@ -111,37 +109,46 @@ export default defineEventHandler(async (event): Promise<TrafficResults> => {
     }
 
     const distanceKm = routeData.distance / 1000;
-    const estimatedMinutes = Math.round(routeData.duration / 60);
-    const estimatedTime = formatDuration(estimatedMinutes);
 
-    // Determine traffic status based on time of day
-    const traffic = getTrafficStatus();
-    const nearbyAreas = getNearbyAreas(distanceKm);
-    const delayTime = calculateDelayTime(estimatedMinutes, traffic);
+    // Use departure time if provided, otherwise use current time
+    const departureTime = body.departureTime ? new Date(body.departureTime) : new Date();
+
+    // Get base estimated minutes from route
+    let estimatedMinutes = Math.round(routeData.duration / 60);
+
+    // Determine traffic status based on departure time
+    const traffic = getTrafficStatus(departureTime);
+
+    // Adjust estimated time based on traffic conditions
+    estimatedMinutes = adjustEstimatedTimeForTraffic(estimatedMinutes, traffic, body.travelMode, distanceKm);
+
+    const estimatedTime = formatDuration(estimatedMinutes);
+    const nearbyAreas = getNearbyAreas(userCoords, distanceKm);
+    const delayTime = calculateDelayTime(estimatedMinutes, traffic, body.travelMode);
 
     const bestTime = getBestTime();
-    const tips = getTips(traffic, estimatedMinutes);
-    const recommendation = getRecommendation(estimatedMinutes, traffic);
+    const tips = getTips(traffic, estimatedMinutes, body.travelMode, distanceKm);
+    const recommendation = getRecommendation(estimatedMinutes, traffic, distanceKm);
 
     const analytics = {
       proximity: {
         distanceToSchool: `${distanceKm.toFixed(2)} km`,
-        estimatedArrival: calculateEstimatedArrival(estimatedMinutes),
+        estimatedArrival: calculateEstimatedArrival(estimatedMinutes, departureTime),
         travelTime: estimatedTime,
         nearbyAreas,
       },
       timeAnalytics: {
         currentCongestion: traffic,
         peakHours: ["07:00-09:00", "16:00-18:00"],
-        recommendedDeparture: getRecommendedDeparture(),
-        timeCategory: getCongestionTimeCategory(),
+        recommendedDeparture: getRecommendedDeparture(departureTime),
+        timeCategory: getCongestionTimeCategory(departureTime),
         delayTime,
       },
       usefulInfo: {
-        fuelEstimate: calculateFuelEstimate(distanceKm),
-        carbonFootprint: calculateCarbonFootprint(distanceKm),
-        safetyRating: getSafetyRating(traffic),
-        weatherImpact: getWeatherImpact(distanceKm),
+        fuelEstimate: calculateFuelEstimate(distanceKm, body.travelMode),
+        carbonFootprint: calculateCarbonFootprint(distanceKm, body.travelMode),
+        safetyRating: getSafetyRating(traffic, distanceKm),
+        weatherImpact: getWeatherImpact(distanceKm, departureTime),
         averageSpeed: calculateAverageSpeed(distanceKm, estimatedMinutes),
       },
     };
@@ -215,16 +222,12 @@ async function getMapboxRoute(
   destination: Coordinate,
   profile: string,
   token?: string,
+  options?: { avoidTolls?: boolean; avoidHighways?: boolean }
 ): Promise<MapboxRoute | null> {
   try {
     // Default to Haversine if no token
     if (!token) {
-      const distance = calculateHaversineDistance(
-        origin.lat,
-        origin.lng,
-        destination.lat,
-        destination.lng,
-      );
+      const distance = calculateHaversineDistance(origin.lat, origin.lng, destination.lat, destination.lng);
       const estimatedMinutes = estimateTravelTime(distance, profile);
       return {
         distance: distance * 1000,
@@ -242,18 +245,25 @@ async function getMapboxRoute(
     };
 
     const mapboxProfile = profileMap[profile] || "driving-traffic";
-    const mapboxUrl = `https://api.mapbox.com/directions/v5/mapbox/${mapboxProfile}/${origin.lng},${origin.lat};${destination.lng},${destination.lat}?access_token=${token}&overview=full&geometries=geojson&steps=true`;
+
+    // Build Mapbox URL with optional parameters
+    let mapboxUrl = `https://api.mapbox.com/directions/v5/mapbox/${mapboxProfile}/${origin.lng},${origin.lat};${destination.lng},${destination.lat}?access_token=${token}&overview=full&geometries=geojson&steps=true`;
+
+    // Add exclude options if provided
+    if (options?.avoidTolls || options?.avoidHighways) {
+      const excludes = [];
+      if (options.avoidTolls) excludes.push("toll");
+      if (options.avoidHighways) excludes.push("motorway");
+      if (excludes.length > 0) {
+        mapboxUrl += `&exclude=${excludes.join(",")}`;
+      }
+    }
 
     const response = await fetch(mapboxUrl);
     if (!response.ok) {
       console.warn("Mapbox directions API failed, falling back to Haversine");
       // Fallback to Haversine calculation
-      const distance = calculateHaversineDistance(
-        origin.lat,
-        origin.lng,
-        destination.lat,
-        destination.lng,
-      );
+      const distance = calculateHaversineDistance(origin.lat, origin.lng, destination.lat, destination.lng);
       const estimatedMinutes = estimateTravelTime(distance, profile);
       return {
         distance: distance * 1000,
@@ -275,12 +285,7 @@ async function getMapboxRoute(
   } catch (error) {
     console.error("Mapbox route error:", error);
     // Fallback to Haversine
-    const distance = calculateHaversineDistance(
-      origin.lat,
-      origin.lng,
-      destination.lat,
-      destination.lng,
-    );
+    const distance = calculateHaversineDistance(origin.lat, origin.lng, destination.lat, destination.lng);
     const estimatedMinutes = estimateTravelTime(distance, profile);
     return {
       distance: distance * 1000,
@@ -348,12 +353,7 @@ function parseCoordinates(input: string): Coordinate | null {
  * Calculate distance between two coordinates using Haversine formula
  * Returns distance in kilometers
  */
-function calculateHaversineDistance(
-  lat1: number,
-  lng1: number,
-  lat2: number,
-  lng2: number,
-): number {
+function calculateHaversineDistance(lat1: number, lng1: number, lat2: number, lng2: number): number {
   const R = 6371; // Earth's radius in kilometers
   const dLat = toRad(lat2 - lat1);
   const dLng = toRad(lng2 - lng1);
@@ -387,17 +387,57 @@ function estimateTravelTime(distanceKm: number, travelMode: string): number {
 }
 
 /**
- * Calculate delay time based on traffic conditions
+ * Adjust estimated travel time based on traffic conditions
  */
-function calculateDelayTime(estimatedMinutes: number, traffic: string): string {
+function adjustEstimatedTimeForTraffic(
+  baseMinutes: number,
+  traffic: string,
+  travelMode: string,
+  distanceKm: number
+): number {
+  // No adjustment for non-motor modes
+  if (travelMode === "walking" || travelMode === "bicycling") {
+    return baseMinutes;
+  }
+
+  let multiplier = 1.0;
+
+  switch (traffic) {
+    case "Lancar":
+      multiplier = 1.0; // No change
+      break;
+    case "Padat":
+      // For moderate congestion, add 10-20% depending on distance
+      multiplier = distanceKm > 10 ? 1.15 : 1.1;
+      break;
+    case "Macet":
+      // For heavy congestion, add 40-60% depending on distance
+      multiplier = distanceKm > 10 ? 1.6 : 1.4;
+      break;
+    default:
+      multiplier = 1.05;
+  }
+
+  return Math.round(baseMinutes * multiplier);
+}
+
+/**
+ * Calculate delay time based on traffic conditions and travel mode
+ */
+function calculateDelayTime(estimatedMinutes: number, traffic: string, travelMode: string = "driving"): string {
   let delayPercent = 0;
+
+  // Only apply delay for motor vehicles, not for walking/cycling
+  if (travelMode === "walking" || travelMode === "bicycling") {
+    return "Tidak ada delay - perjalanan stabil";
+  }
 
   switch (traffic) {
     case "Lancar":
       delayPercent = 0;
       break;
     case "Padat":
-      delayPercent = 20;
+      delayPercent = 15;
       break;
     case "Macet":
       delayPercent = 50;
@@ -426,16 +466,27 @@ function calculateAverageSpeed(distanceKm: number, durationMinutes: number): str
 /**
  * Get traffic status based on time of day
  */
-function getTrafficStatus(): string {
-  const now = new Date();
-  const hour = now.getHours();
-  const minute = now.getMinutes();
+function getTrafficStatus(departureTime: Date = new Date()): string {
+  const hour = departureTime.getHours();
+  const minute = departureTime.getMinutes();
   const timeInMinutes = hour * 60 + minute;
+  const dayOfWeek = departureTime.getDay(); // 0 = Sunday, 6 = Saturday
 
-  // Peak hours: 07:00-09:00 and 16:00-18:00
+  // Peak hours: 07:00-09:00 and 16:00-18:00 on weekdays
   const isPeakMorning = timeInMinutes >= 7 * 60 && timeInMinutes < 9 * 60;
   const isPeakEvening = timeInMinutes >= 16 * 60 && timeInMinutes < 18 * 60;
 
+  // Reduce congestion on weekends (Saturday = 6, Sunday = 0)
+  const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+
+  if (isWeekend) {
+    // Lighter traffic on weekends
+    if (isPeakMorning || isPeakEvening) return "Padat";
+    if (hour >= 9 && hour < 16) return "Lancar";
+    return "Lancar";
+  }
+
+  // Weekday traffic patterns
   if (isPeakMorning || isPeakEvening) return "Macet";
   if (hour >= 9 && hour < 16) return "Lancar";
   if (hour >= 18 || hour < 6) return "Lancar";
@@ -444,45 +495,71 @@ function getTrafficStatus(): string {
 }
 
 /**
- * Get nearby areas based on distance
+ * Get nearby areas based on distance and coordinates
  */
-function getNearbyAreas(distanceKm: number): string[] {
+function getNearbyAreas(userCoords: Coordinate, distanceKm: number): string[] {
+  // Define area zones near Singosari
+  const malangCenter = { lat: -7.9797, lng: 112.6304 };
+  const distanceFromMalangCenter = calculateHaversineDistance(
+    userCoords.lat,
+    userCoords.lng,
+    malangCenter.lat,
+    malangCenter.lng
+  );
+
+  if (distanceKm < 1) return ["Di Depan Sekolah", "Lokasi Sangat Dekat"];
   if (distanceKm < 2) return ["Singosari Utama", "Dekat Sekolah"];
   if (distanceKm < 5) return ["Sekitar Singosari", "Kawasan Sekolah"];
-  if (distanceKm < 10) return ["Kota Malang", "Sekitar Malang"];
+  if (distanceKm < 10) {
+    if (distanceFromMalangCenter < 8) return ["Kota Malang", "Pusat Malang"];
+    return ["Sekitar Malang", "Area Singosari"];
+  }
   if (distanceKm < 20) return ["Malang Raya", "Daerah Sekitar Kota"];
-  return ["Area Jauh", "Luar Kota Malang"];
+  if (distanceKm < 50) return ["Area Jauh", "Luar Kota Malang"];
+  return ["Area Sangat Jauh", "Luar Jawa Timur"];
 }
 
 /**
  * Get congestion category based on time
  */
-function getCongestionTimeCategory(): string {
-  const now = new Date();
-  const hour = now.getHours();
-  const minute = now.getMinutes();
+function getCongestionTimeCategory(departureTime: Date = new Date()): string {
+  const hour = departureTime.getHours();
+  const minute = departureTime.getMinutes();
   const timeInMinutes = hour * 60 + minute;
+  const dayOfWeek = departureTime.getDay();
 
   const isPeakMorning = timeInMinutes >= 7 * 60 && timeInMinutes < 9 * 60;
   const isPeakEvening = timeInMinutes >= 16 * 60 && timeInMinutes < 18 * 60;
 
-  if (isPeakMorning) return "Jam Sibuk Pagi (07:00-09:00)";
-  if (isPeakEvening) return "Jam Sibuk Sore (16:00-18:00)";
-  if (hour >= 9 && hour < 16) return "Jam Normal";
-  if (hour >= 18 || hour < 6) return "Jam Sepi";
+  const dayName = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"][dayOfWeek];
 
-  return "Jam Transisi";
+  if (isPeakMorning) return `Jam Sibuk Pagi (07:00-09:00) - ${dayName}`;
+  if (isPeakEvening) return `Jam Sibuk Sore (16:00-18:00) - ${dayName}`;
+  if (hour >= 9 && hour < 16) return `Jam Normal (09:00-16:00) - ${dayName}`;
+  if (hour >= 18 || hour < 6) return `Jam Sepi (18:00-06:00) - ${dayName}`;
+
+  return `Jam Transisi - ${dayName}`;
 }
 
 /**
- * Get weather impact info
+ * Get weather impact info based on distance and time
  */
-function getWeatherImpact(distanceKm: number): string {
-  const now = new Date();
-  const hour = now.getHours();
+function getWeatherImpact(distanceKm: number, departureTime: Date = new Date()): string {
+  const hour = departureTime.getHours();
+  const month = departureTime.getMonth();
 
-  if (hour >= 12 && hour <= 16) return "Berisiko hujan sore (musim hujan)";
+  // Indonesia has wet and dry seasons
+  // Wet season: November-March (rainy season)
+  const isWetSeason = month >= 10 || month <= 2;
+
+  if (isWetSeason) {
+    if (hour >= 12 && hour <= 16) return "Berisiko hujan sore (musim hujan)";
+    if (hour >= 17 && hour <= 19) return "Kemungkinan besar hujan (musim hujan)";
+    if (distanceKm > 20) return "Perhatikan kondisi cuaca musiman";
+  }
+
   if (hour >= 18 || hour <= 6) return "Cuaca aman, visibilitas terbatas di malam hari";
+  if (hour >= 12 && hour <= 14) return "Cerah, hindari sinar matahari langsung";
 
   return "Kondisi cuaca normal";
 }
@@ -508,45 +585,92 @@ function getBestTime(): string {
   return "Luar jam sibuk";
 }
 
-function getTips(traffic: string, minutes: number): string {
-  if (traffic === "Macet") return "Pertimbangkan transportasi umum atau berangkat lebih awal.";
-  if (minutes > 60) return "Perjalanan cukup lama, pastikan kondisi kendaraan baik.";
+function getTips(traffic: string, minutes: number, travelMode: string = "driving", distanceKm: number = 0): string {
+  if (travelMode === "walking") {
+    if (minutes > 60) return "Perjalanan jalan kaki lebih dari 1 jam, pertimbangkan kendaraan lain.";
+    return "Siapkan pakaian yang nyaman untuk perjalanan jalan kaki.";
+  }
+
+  if (travelMode === "bicycling") {
+    if (distanceKm > 20) return "Jarak cukup jauh untuk sepeda, pertimbangkan kendaraan lain.";
+    return "Siapkan sepeda dan perlengkapan keselamatan.";
+  }
+
+  if (traffic === "Macet") {
+    if (minutes > 120) return "Lalu lintas sangat macet, sangat disarankan menggunakan transportasi umum.";
+    return "Pertimbangkan transportasi umum atau berangkat lebih awal.";
+  }
+
+  if (minutes > 60) return "Perjalanan cukup lama, pastikan kondisi kendaraan baik dan penuh bahan bakar.";
+
   return "Perjalanan normal, selamat jalan!";
 }
 
-function getRecommendation(minutes: number, traffic: string): string {
-  if (traffic === "Macet" || minutes > 60) return "Tidak direkomendasikan saat ini.";
+function getRecommendation(minutes: number, traffic: string, distanceKm: number = 0): string {
+  // Strong recommendation against travelling in heavy traffic over long distance
+  if (traffic === "Macet" && distanceKm > 15) return "Tidak direkomendasikan - lalu lintas macet dan jarak jauh.";
+  if (traffic === "Macet" || minutes > 120) return "Tidak direkomendasikan saat ini.";
+  if (minutes > 45 && traffic !== "Lancar") return "Direkomendasikan jika mendesak, namun siapkan waktu ekstra.";
   if (minutes > 30) return "Direkomendasikan jika mendesak.";
   return "Direkomendasikan.";
 }
 
-function calculateEstimatedArrival(minutes: number): string {
-  const now = new Date();
-  const arrival = new Date(now.getTime() + minutes * 60000);
+function calculateEstimatedArrival(minutes: number, departureTime: Date = new Date()): string {
+  const arrival = new Date(departureTime.getTime() + minutes * 60000);
   return arrival.toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" });
 }
 
-function getRecommendedDeparture(): string {
-  const now = new Date();
-  const hour = now.getHours();
+function getRecommendedDeparture(departureTime: Date = new Date()): string {
+  const hour = departureTime.getHours();
   if (hour >= 6 && hour < 8) return "Sekarang";
   if (hour >= 8 && hour < 16) return "1-2 jam lagi";
-  return "Besok pagi";
+  if (hour >= 16 && hour < 20) return "Hindari jam sibuk pulang (16:00-18:00)";
+  return "Besok pagi lebih baik";
 }
 
-function calculateFuelEstimate(distanceKm: number): string {
+function calculateFuelEstimate(distanceKm: number, travelMode: string = "driving"): string {
+  if (travelMode !== "driving" && travelMode !== "transit") {
+    return "N/A (tidak menggunakan bahan bakar)";
+  }
+
+  // Average consumption for typical car in Indonesia
   const avgConsumption = 12; // km per liter
   const liters = distanceKm / avgConsumption;
-  return `${liters.toFixed(2)} liter`;
+  const estimatedCost = liters * 10000; // Rough estimate based on fuel price
+
+  return `${liters.toFixed(2)} liter (~Rp ${estimatedCost.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ".")})`;
 }
 
-function calculateCarbonFootprint(distanceKm: number): string {
-  const co2PerKm = 0.12; // kg CO2 per km
+function calculateCarbonFootprint(distanceKm: number, travelMode: string = "driving"): string {
+  let co2PerKm = 0.12; // kg CO2 per km for typical car
+
+  // Different emissions for different modes
+  switch (travelMode) {
+    case "walking":
+    case "bicycling":
+      co2PerKm = 0; // Zero emissions
+      break;
+    case "transit":
+      co2PerKm = 0.05; // Lower emissions for public transport
+      break;
+    case "driving":
+      co2PerKm = 0.12;
+      break;
+  }
+
   const co2 = distanceKm * co2PerKm;
-  return `${co2.toFixed(3)} kg CO2`;
+  return co2 === 0 ? "0 kg CO2 (ramah lingkungan)" : `${co2.toFixed(3)} kg CO2`;
 }
 
-function getSafetyRating(traffic: string): string {
+function getSafetyRating(traffic: string, distanceKm: number = 0): string {
+  // Consider both traffic and distance
+  if (distanceKm > 50) {
+    // Long distance travels are riskier
+    if (traffic === "Macet") return "Rendah - jarak jauh dengan lalu lintas macet";
+    if (traffic === "Padat") return "Sedang - jarak jauh dengan lalu lintas padat";
+    return "Sedang - jarak jauh memerlukan fokus ekstra";
+  }
+
   switch (traffic) {
     case "Lancar":
       return "Tinggi";
