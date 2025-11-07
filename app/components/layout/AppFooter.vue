@@ -4,11 +4,13 @@ const props = defineProps<{
 }>();
 
 const isColoredBackground = computed(() => !props.bgColor || props.bgColor !== "#1f2937");
+
+const bgColor = computed(() => props.bgColor);
 </script>
 
 <template>
   <footer
-    :key="$route.fullPath"
+    :key="bgColor"
     class="pt-8 pb-2 mt-16 text-white"
     :style="`background: ${bgColor || 'linear-gradient(135deg, #3598F9, #2E7CE6)'}`"
   >

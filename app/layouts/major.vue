@@ -5,8 +5,9 @@ import MajorHeader from "~/components/Major/layout/MajorHeader.vue";
 import { provideMinigameState } from "~/composables/useMinigameState";
 
 const route = useRoute();
-const major = (route.params.majorName as MajorName) || (route.path.split("/").pop() as MajorName);
-const majorColor = majorColorSchemes[major];
+
+const major = computed(() => (route.params.majorName as MajorName) || (route.path.split("/").pop() as MajorName));
+const majorColor = computed(() => majorColorSchemes[major.value]);
 
 // Provide minigame state for all child components
 provideMinigameState();
@@ -26,7 +27,7 @@ const backgroundStyle = computed(() => {
   if (isTransitioning.value) {
     return "background: transparent";
   }
-  return `background: linear-gradient(135deg, ${majorColor.primary}08, ${majorColor.accent}08)`;
+  return `background: linear-gradient(135deg, ${majorColor.value.primary}08, ${majorColor.value.accent}08)`;
 });
 </script>
 
