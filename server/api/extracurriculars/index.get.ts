@@ -7,6 +7,7 @@ import {
   getCookie,
 } from "h3";
 import type { Extracurricular } from "~/models/Extracurricular";
+import { getCached, setCached, generateCacheKey, CACHE_DEFAULTS } from "../../utils/cache";
 
 export default defineEventHandler(
   async (event): Promise<{ data: Extracurricular[]; total: number }> => {
@@ -14,6 +15,15 @@ export default defineEventHandler(
     const limit = parseInt(query.limit as string, 10) || 50;
     const offset = parseInt(query.offset as string, 10) || 0;
     const category = query.category as string;
+
+    // Generate cache key based on query parameters
+    const cacheKey = generateCacheKey("extracurriculars", { limit, offset, category });
+
+    // Try to get from cache first
+    const cached = getCached<{ data: Extracurricular[]; total: number }>(cacheKey);
+    if (cached) {
+      return cached;
+    }
 
     const allExtracurriculars: Extracurricular[] = [
       {
@@ -573,9 +583,14 @@ export default defineEventHandler(
 
     const paginatedData = filtered.slice(offset, offset + limit);
 
-    return {
+    const result = {
       data: paginatedData,
       total: filtered.length,
     };
+
+    // Cache the result for 15 minutes
+    setCached(cacheKey, result, CACHE_DEFAULTS.MEDIUM);
+
+    return result;
   },
 );

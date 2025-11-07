@@ -117,6 +117,15 @@ const handleLogout = async () => {
     <div class="container px-4 mx-auto sm:px-6">
       <div class="max-w-4xl mx-auto">
         <div class="mb-8">
+          <div class="flex items-center gap-4 mb-4">
+            <NuxtLink
+              to="/dashboard"
+              class="flex items-center gap-2 px-4 py-2 font-semibold text-blue-600 transition-colors bg-blue-100 rounded-lg hover:bg-blue-200"
+            >
+              <Icon name="lucide:arrow-left" size="20" />
+              Kembali ke Dashboard
+            </NuxtLink>
+          </div>
           <h1 class="text-3xl font-bold text-gray-800 md:text-4xl">Edit Profil</h1>
           <p class="mt-2 text-gray-600">Kelola informasi dan pengaturan akun Anda</p>
         </div>

@@ -1,10 +1,20 @@
 import { defineEventHandler, getQuery, createError } from "h3";
+import { getCached, setCached, generateCacheKey, CACHE_DEFAULTS } from "../../utils/cache";
 
 export default defineEventHandler(async (event) => {
   const query = getQuery(event);
   const { tag, tags, search, limit = 10, offset = 0 } = query;
 
   try {
+    // Generate cache key based on query parameters
+    const cacheKey = generateCacheKey("news", { tag, tags, search, limit, offset });
+
+    // Try to get from cache first
+    const cached = getCached<any>(cacheKey);
+    if (cached) {
+      return cached;
+    }
+
     const newsData = await import("~/news_data.json").then((m) => m.default);
 
     let filteredData = [...newsData];
@@ -41,12 +51,17 @@ export default defineEventHandler(async (event) => {
 
     const paginatedData = filteredData.slice(offsetNum, offsetNum + limitNum);
 
-    return {
+    const result = {
       data: paginatedData,
       total,
       offset: offsetNum,
       limit: limitNum,
     };
+
+    // Cache the result for 15 minutes
+    setCached(cacheKey, result, CACHE_DEFAULTS.MEDIUM);
+
+    return result;
   } catch (error) {
     console.error("Error reading news data:", error);
     throw createError({
