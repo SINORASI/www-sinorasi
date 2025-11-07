@@ -49,10 +49,8 @@
           </div>
         </div>
 
-        <article class="p-8 mb-12 bg-white border-2 border-blue-100 shadow-xl rounded-2xl md:p-12">
-          <div class="prose prose-lg max-w-none">
-            <MDC :value="news.content" />
-          </div>
+        <article class="mb-12 bg-white border-2 border-blue-100 shadow-xl rounded-2xl prose-article">
+          <div class="prose-content" v-html="news.content"></div>
         </article>
 
         <section id="berita-lainnya" class="mt-12">
@@ -153,23 +151,273 @@ useHead({
 </script>
 
 <style scoped>
-.prose :deep(h1),
-.prose :deep(h2),
-.prose :deep(h3) {
+.prose-article {
+  padding: 2rem;
+}
+
+@media (min-width: 768px) {
+  .prose-article {
+    padding: 3rem;
+  }
+}
+
+.prose-content :deep(*) {
+  max-width: 100%;
+}
+
+/* Paragraph Styles */
+.prose-content :deep(p) {
+  color: #4b5563;
+  line-height: 1.8;
+  margin-bottom: 1.25rem;
+  font-size: 1rem;
+}
+
+/* Heading Styles */
+.prose-content :deep(h1) {
+  color: #1f2937;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 3px solid #3b82f6;
+  padding-bottom: 0.5rem;
+}
+
+.prose-content :deep(h2) {
+  color: #1f2937;
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-top: 1.75rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #60a5fa;
+  padding-bottom: 0.5rem;
+}
+
+.prose-content :deep(h3) {
+  color: #374151;
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: 1.35;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: #2563eb;
+}
+
+.prose-content :deep(h4) {
+  color: #374151;
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-top: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose-content :deep(h5) {
+  color: #4b5563;
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Text Formatting */
+.prose-content :deep(em),
+.prose-content :deep(i) {
+  color: inherit;
+  font-style: italic;
+  font-weight: 500;
+  color: #2563eb;
+}
+
+.prose-content :deep(strong),
+.prose-content :deep(b) {
+  color: #1f2937;
+  font-weight: 700;
+}
+
+/* Lists */
+.prose-content :deep(ul),
+.prose-content :deep(ol) {
+  color: #4b5563;
+  margin-bottom: 1.5rem;
+  margin-left: 1.5rem;
+}
+
+.prose-content :deep(ul) {
+  list-style-type: disc;
+}
+
+.prose-content :deep(ol) {
+  list-style-type: decimal;
+}
+
+.prose-content :deep(li) {
+  margin-bottom: 0.75rem;
+  line-height: 1.7;
+  color: #4b5563;
+}
+
+.prose-content :deep(li > p) {
+  margin-bottom: 0.5rem;
+}
+
+.prose-content :deep(li > ul),
+.prose-content :deep(li > ol) {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Blockquotes */
+.prose-content :deep(blockquote) {
+  border-left: 4px solid #3b82f6;
+  padding-left: 1.5rem;
+  margin: 1.5rem 0;
+  color: #6b7280;
+  font-style: italic;
+  background-color: #f0f9ff;
+  padding: 1rem;
+  padding-left: 1.5rem;
+  border-radius: 0.5rem;
+}
+
+.prose-content :deep(blockquote p) {
+  margin-bottom: 0;
   color: #1f2937;
 }
 
-.prose :deep(p) {
-  color: #4b5563;
-  line-height: 1.7;
+/* Links */
+.prose-content :deep(a) {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 500;
+  border-bottom: 1px solid #93c5fd;
+  transition: all 0.3s ease;
 }
 
-.prose :deep(ul) {
+.prose-content :deep(a:hover) {
+  color: #1d4ed8;
+  background-color: #eff6ff;
+  border-bottom-color: #3b82f6;
+  padding: 0.125rem 0.25rem;
+}
+
+/* Code */
+.prose-content :deep(code) {
+  background-color: #f3f4f6;
+  color: #d97706;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
+}
+
+.prose-content :deep(pre) {
+  background-color: #1f2937;
+  color: #f3f4f6;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  line-height: 1.5;
+}
+
+.prose-content :deep(pre code) {
+  background-color: transparent;
+  color: #f3f4f6;
+  padding: 0;
+  border-radius: 0;
+}
+
+/* Images & Figures */
+.prose-content :deep(figure) {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.prose-content :deep(figure img) {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: block;
+  margin: 0 auto 1rem;
+}
+
+.prose-content :deep(figcaption) {
+  color: #6b7280;
+  font-size: 0.9rem;
+  font-style: italic;
+  margin-top: 0.75rem;
+}
+
+.prose-content :deep(img) {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin: 1.5rem 0;
+}
+
+/* Horizontal Rules */
+.prose-content :deep(hr) {
+  border: none;
+  height: 2px;
+  background: linear-gradient(to right, transparent, #3b82f6, transparent);
+  margin: 2rem 0;
+}
+
+/* Table Styles */
+.prose-content :deep(table) {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+}
+
+.prose-content :deep(th) {
+  background-color: #dbeafe;
+  color: #1e40af;
+  font-weight: 600;
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 2px solid #3b82f6;
+}
+
+.prose-content :deep(td) {
+  padding: 0.75rem;
+  border-bottom: 1px solid #e5e7eb;
   color: #4b5563;
 }
 
-.prose :deep(li) {
-  margin-bottom: 0.5rem;
+.prose-content :deep(tbody tr:hover) {
+  background-color: #f0f9ff;
+}
+
+/* Entry Content Wrapper */
+.prose-content :deep(.entry-content) {
+  width: 100%;
+}
+
+.prose-content :deep(.entry-content > *:first-child) {
+  margin-top: 0;
+}
+
+/* Images in Figure Elements */
+.prose-content :deep(.wp-block-image) {
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.prose-content :deep(.wp-block-image img) {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.prose-content :deep(.wp-block-image.size-large) {
+  max-width: 100%;
 }
 
 .scrollbar-hide {

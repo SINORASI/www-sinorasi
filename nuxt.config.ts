@@ -8,7 +8,6 @@ export default defineNuxtConfig({
     "@nuxt/fonts",
     "@nuxt/icon",
     "@nuxt/scripts",
-    "@nuxtjs/mdc",
     "@nuxt/image",
     "motion-v/nuxt",
     "@nuxtjs/i18n",
