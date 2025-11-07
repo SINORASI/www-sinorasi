@@ -20,17 +20,17 @@ export default defineNuxtConfig({
     ],
   },
   app: {
-    pageTransition: { 
-      name: "page", 
+    pageTransition: {
+      name: "page",
       mode: "out-in",
       enterActiveClass: "transition duration-400 ease-in-out",
       enterFromClass: "opacity-0 blur",
       leaveActiveClass: "transition duration-300 ease-in-out",
-      leaveToClass: "opacity-0 blur"
+      leaveToClass: "opacity-0 blur",
     },
     layoutTransition: {
       name: "layout",
-      mode: "out-in"
+      mode: "out-in",
     },
     head: {
       title: "SMK Negeri 2 Singosari",
@@ -174,25 +174,10 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    // Cache index pages longer
-    "": { 
-      cache: { maxAge: 60 * 60 * 24 } 
-    },
-    "/": { 
-      cache: { maxAge: 60 * 60 * 24 } 
-    },
-    // Don't cache API routes
     "/api/**": {
       headers: {
         "Cache-Control": "no-cache, no-store, must-revalidate",
       },
-    },
-    // Cache static pages
-    "/jurusan/**": { 
-      cache: { maxAge: 60 * 60 * 24 } 
-    },
-    "/informasi/**": { 
-      cache: { maxAge: 60 * 60 * 24 } 
     },
   },
 });
