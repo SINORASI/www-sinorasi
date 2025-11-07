@@ -1,11 +1,21 @@
 import { defineEventHandler, getQuery, readBody, createError, setCookie, getCookie } from 'h3';
 import type { Organization } from "~/models/Organization";
+import { getCached, setCached, generateCacheKey, CACHE_DEFAULTS } from "../../utils/cache";
 
 export default defineEventHandler(
   async (event): Promise<{ data: Organization[]; total: number }> => {
     const query = getQuery(event);
     const limit = parseInt(query.limit as string, 10) || 10;
     const offset = parseInt(query.offset as string, 10) || 0;
+
+    // Generate cache key based on query parameters
+    const cacheKey = generateCacheKey("organizations", { limit, offset });
+
+    // Try to get from cache first
+    const cached = getCached<{ data: Organization[]; total: number }>(cacheKey);
+    if (cached) {
+      return cached;
+    }
 
     const allOrganizations: Organization[] = [
       {
@@ -1282,9 +1292,14 @@ export default defineEventHandler(
 
     const paginatedData = allOrganizations.slice(offset, offset + limit);
 
-    return {
+    const result = {
       data: paginatedData,
       total: allOrganizations.length,
     };
+
+    // Cache the result for 1 hour
+    setCached(cacheKey, result, CACHE_DEFAULTS.LONG);
+
+    return result;
   },
 );

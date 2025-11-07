@@ -1,11 +1,21 @@
 import { defineEventHandler, getQuery, readBody, createError, setCookie, getCookie } from 'h3';
 import type { Event } from "~/models/Event";
+import { getCached, setCached, generateCacheKey, CACHE_DEFAULTS } from "../../utils/cache";
 
 const eventData: Event[] = [];
 
 export default defineEventHandler(async (event) => {
   const query = getQuery(event);
   const { upcoming, past, limit, offset } = query;
+
+  // Generate cache key based on query parameters
+  const cacheKey = generateCacheKey("events", { upcoming, past, limit, offset });
+
+  // Try to get from cache first
+  const cached = getCached<any>(cacheKey);
+  if (cached) {
+    return cached;
+  }
 
   let filteredEvents = [...eventData];
 
@@ -21,10 +31,15 @@ export default defineEventHandler(async (event) => {
 
   const paginatedEvents = filteredEvents.slice(startIndex, endIndex);
 
-  return {
+  const result = {
     data: paginatedEvents,
     total: filteredEvents.length,
     offset: startIndex,
     limit: endIndex - startIndex,
   };
+
+  // Cache the result for 15 minutes
+  setCached(cacheKey, result, CACHE_DEFAULTS.MEDIUM);
+
+  return result;
 });

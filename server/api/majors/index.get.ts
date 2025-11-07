@@ -1,6 +1,7 @@
 import { defineEventHandler, getQuery, readBody, createError, setCookie, getCookie } from 'h3';
 import type { MajorData } from "~/models/MajorData";
 import type { MajorName } from "~/models/MajorName";
+import { getCached, setCached, CACHE_DEFAULTS } from "../../utils/cache";
 
 const majorDatas: Record<MajorName, MajorData> = {
   rpl: {
@@ -172,5 +173,16 @@ const majorDatas: Record<MajorName, MajorData> = {
 };
 
 export default defineEventHandler(async (_event) => {
+  // Use cache key for majors data
+  const cacheKey = "majors:all";
+  
+  // Try to get from cache
+  const cached = getCached<Record<MajorName, MajorData>>(cacheKey);
+  if (cached) {
+    return cached;
+  }
+
+  // Cache not found or expired, return fresh data and cache it
+  setCached(cacheKey, majorDatas, CACHE_DEFAULTS.LONG);
   return majorDatas;
 });

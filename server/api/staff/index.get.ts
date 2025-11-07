@@ -1,5 +1,6 @@
 import { defineEventHandler, getQuery, readBody, createError, setCookie, getCookie } from 'h3';
 import type { Staff } from "~/models/Staff";
+import { getCached, setCached, generateCacheKey, CACHE_DEFAULTS } from "../../utils/cache";
 
 const staffData = {
   kepsek: [
@@ -60,6 +61,15 @@ export default defineEventHandler(async (event) => {
   const query = getQuery(event);
   const { department } = query;
 
+  // Generate cache key based on department
+  const cacheKey = generateCacheKey("staff", { department });
+
+  // Try to get from cache first
+  const cached = getCached<any>(cacheKey);
+  if (cached) {
+    return cached;
+  }
+
   if (department && typeof department === "string") {
     const deptData = staffData[department as keyof typeof staffData];
     if (!deptData) {
@@ -68,8 +78,13 @@ export default defineEventHandler(async (event) => {
         statusMessage: "Department not found",
       });
     }
+
+    // Cache the result for 1 hour
+    setCached(cacheKey, deptData, CACHE_DEFAULTS.LONG);
     return deptData;
   }
 
+  // Cache the full staff data for 1 hour
+  setCached(cacheKey, staffData, CACHE_DEFAULTS.LONG);
   return staffData;
 });

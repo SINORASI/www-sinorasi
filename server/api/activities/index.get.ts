@@ -1,11 +1,21 @@
 import { defineEventHandler, getQuery, readBody, createError, setCookie, getCookie } from 'h3';
 import type { Activity } from "~/models/Activity";
+import { getCached, setCached, generateCacheKey, CACHE_DEFAULTS } from "../../utils/cache";
 
 export default defineEventHandler(async (event): Promise<{ data: Activity[]; total: number }> => {
   const query = getQuery(event);
   const limit = parseInt(query.limit as string, 10) || 10;
   const offset = parseInt(query.offset as string, 10) || 0;
   const extracurricular = query.extracurricular as string;
+
+  // Generate cache key based on query parameters
+  const cacheKey = generateCacheKey("activities", { limit, offset, extracurricular });
+
+  // Try to get from cache first
+  const cached = getCached<{ data: Activity[]; total: number }>(cacheKey);
+  if (cached) {
+    return cached;
+  }
 
   const allActivities: Activity[] = [
     {
@@ -54,8 +64,13 @@ export default defineEventHandler(async (event): Promise<{ data: Activity[]; tot
 
   const paginatedData = filteredActivities.slice(offset, offset + limit);
 
-  return {
+  const result = {
     data: paginatedData,
     total: filteredActivities.length,
   };
+
+  // Cache the result for 15 minutes
+  setCached(cacheKey, result, CACHE_DEFAULTS.MEDIUM);
+
+  return result;
 });

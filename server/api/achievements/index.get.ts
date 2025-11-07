@@ -1,5 +1,6 @@
 import { defineEventHandler, getQuery, readBody, createError, setCookie, getCookie } from 'h3';
 import type { MajorName } from "~/models/MajorName";
+import { getCached, setCached, generateCacheKey, CACHE_DEFAULTS } from "../../utils/cache";
 
 interface MajorAchievement {
   id: number;
@@ -177,9 +178,24 @@ export default defineEventHandler((event) => {
   const query = getQuery(event);
   const major = query.major as MajorName | undefined;
 
-  if (major) {
-    return achievementsData.filter((achievement) => achievement.majorName === major);
+  // Generate cache key based on major filter
+  const cacheKey = generateCacheKey("achievements", { major });
+
+  // Try to get from cache first
+  const cached = getCached<MajorAchievement[]>(cacheKey);
+  if (cached) {
+    return cached;
   }
 
-  return achievementsData;
+  let result: MajorAchievement[];
+  if (major) {
+    result = achievementsData.filter((achievement) => achievement.majorName === major);
+  } else {
+    result = achievementsData;
+  }
+
+  // Cache the result for 1 hour
+  setCached(cacheKey, result, CACHE_DEFAULTS.LONG);
+
+  return result;
 });
