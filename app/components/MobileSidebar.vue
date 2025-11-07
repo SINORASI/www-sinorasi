@@ -165,7 +165,10 @@
                   <Icon name="lucide:check-circle" size="14" class="inline mr-1" />
                   {{
                     $t("sidebar.search.resultsCount", {
-                      count: (filteredMenuItems as Record<string, unknown>[]).reduce((total: number, section: Record<string, unknown>) => total + ((section.submenu as unknown[]).length), 0),
+                      count: (filteredMenuItems || []).reduce(
+                        (total: number, section: any) => total + (section.submenu || []).length,
+                        0
+                      ),
                     })
                   }}
                 </p>
@@ -173,75 +176,74 @@
             </div>
             <div v-for="(item, index) in filteredMenuItems" :key="index" class="mb-6">
               <h3
-                v-if="((item as Record<string, unknown>).title as string) !== 'Beranda'"
-                @click="toggleSection((item as Record<string, unknown>).title as string)"
+                v-if="item.title !== 'Beranda'"
+                @click="toggleSection(item.title)"
                 class="flex items-center justify-between mb-3 text-base font-semibold text-gray-800 cursor-pointer"
               >
-                {{ $t(`sidebar.sections.${((item as Record<string, unknown>).title as string).toLowerCase().replace(/\s+/g, "")}`) }}
+                {{ $t(`sidebar.sections.${item.title.toLowerCase().replace(/\s+/g, "")}`) }}
                 <div class="flex items-center gap-2">
                   <span v-if="searchQuery.trim()" class="px-2 py-1 text-xs text-blue-700 bg-blue-100 rounded-full">
-                    {{ ((item as Record<string, unknown>).submenu as unknown[]).length }}
+                    {{ (item.submenu || []).length }}
                   </span>
                   <Icon
                     name="lucide:chevron-down"
                     size="16"
                     class="transition-transform"
-                    :class="{ 'rotate-180': openSections[(item as Record<string, unknown>).title as string] ?? false }"
+                    :class="{ 'rotate-180': openSections[item.title] ?? false }"
                   />
                 </div>
               </h3>
-              <h3
-                v-else
-                class="flex items-center justify-between mb-3 text-base font-semibold text-gray-800"
-              >
-                {{ $t(`sidebar.sections.${((item as Record<string, unknown>).title as string).toLowerCase().replace(/\s+/g, "")}`) }}
+              <h3 v-else class="flex items-center justify-between mb-3 text-base font-semibold text-gray-800">
+                {{ $t(`sidebar.sections.${item.title.toLowerCase().replace(/\s+/g, "")}`) }}
                 <div class="flex items-center gap-2">
                   <span v-if="searchQuery.trim()" class="px-2 py-1 text-xs text-blue-700 bg-blue-100 rounded-full">
-                    {{ ((item as Record<string, unknown>).submenu as unknown[]).length }}
+                    {{ (item.submenu || []).length }}
                   </span>
                 </div>
               </h3>
 
               <AnimatePresence>
                 <motion.div
-                  v-if="((item as Record<string, unknown>).title as string) === 'Beranda' || (openSections[(item as Record<string, unknown>).title as string] ?? false) || searchQuery.trim()"
+                  v-if="item.title === 'Beranda' || (openSections[item.title] ?? false) || searchQuery.trim()"
                   :initial="{ opacity: 0, height: 0 }"
                   :animate="{ opacity: 1, height: 'auto' }"
                   :exit="{ opacity: 0, height: 0 }"
                   :transition="{ duration: 0.3, ease: 'easeInOut' }"
-                  class="overflow-hidden" >
+                  class="overflow-hidden"
+                >
                   <div
-                    v-for="(sub, subIndex) in (item as Record<string, unknown>).submenu"
+                    v-for="(sub, subIndex) in item.submenu"
                     :key="subIndex"
                     class="mb-3 ml-4 transition-colors duration-200 border-l-2 border-gray-200 hover:border-blue-300"
                   >
-                    <a v-if="(sub as Record<string, unknown>).external" :href="(sub as Record<string, unknown>).to as string" target="_blank" class="block" @click="$emit('close')">
+                    <a v-if="sub.external" :href="sub.to" target="_blank" class="block" @click="$emit('close')">
                       <div
                         class="flex items-start gap-3 p-2 transition-colors duration-200 rounded cursor-pointer hover:bg-gray-50"
-                        :class="{ 'bg-blue-50 border border-blue-200': searchQuery.trim() && ((sub as Record<string, unknown>).score as number) > 80 }"
+                        :class="{
+                          'bg-blue-50 border border-blue-200': searchQuery.trim() && (Number(sub.score) || 0) > 80,
+                        }"
                       >
-                        <Icon 
-                        :name="(sub as Record<string, unknown>).icon as string" size="18" class="mt-0.5 shrink-0 text-gray-900" />
+                        <Icon :name="sub.icon" size="18" class="mt-0.5 shrink-0 text-gray-900" />
                         <div class="flex-1">
                           <div class="flex items-center gap-2">
                             <p
                               class="text-sm font-medium text-gray-900"
-                              v-html="highlightSearchTerm((sub as Record<string, unknown>).title as string, searchQuery)"
+                              v-html="highlightSearchTerm(sub.title || '', searchQuery)"
                             ></p>
                             <span
-                              v-if="((item as Record<string, unknown>).title as string) === 'Berita' && ((sub as Record<string, unknown>).title as string) !== 'Semua Berita'"
+                              v-if="item.title === 'Berita' && sub.title !== 'Semua Berita'"
                               class="text-xs bg-red-100 text-red-700 px-1.5 py-0.5 rounded"
                             >
                               {{ $t("sidebar.matches.news") }}
                             </span>
                             <span
-                              v-if="searchQuery.trim() && ((sub as Record<string, unknown>).score as number) > 90"
+                              v-if="searchQuery.trim() && (Number(sub.score) || 0) > 90"
                               class="text-xs bg-green-100 text-green-700 px-1.5 py-0.5 rounded"
                             >
                               {{ $t("sidebar.matches.perfect") }}
                             </span>
                             <span
-                              v-else-if="searchQuery.trim() && ((sub as Record<string, unknown>).score as number) > 70"
+                              v-else-if="searchQuery.trim() && (Number(sub.score) || 0) > 70"
                               class="text-xs bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded"
                             >
                               {{ $t("sidebar.matches.good") }}
@@ -249,42 +251,46 @@
                           </div>
                           <p
                             class="text-xs leading-relaxed text-gray-600"
-                            v-html="highlightSearchTerm((sub as Record<string, unknown>).desc as string, searchQuery)"
+                            v-html="highlightSearchTerm(sub.desc || '', searchQuery)"
                           ></p>
                         </div>
                       </div>
                     </a>
-                    <NuxtLink v-else :to="((sub as Record<string, unknown>).to as string) || '#'" class="block" @click="$emit('close')">
+                    <NuxtLink v-else :to="sub.to || '#'" class="block" @click="$emit('close')">
                       <div
                         class="flex items-start gap-3 p-2 transition-colors duration-200 rounded cursor-pointer hover:bg-gray-50"
-                        :class="{ 'bg-blue-50 border border-blue-200': searchQuery.trim() && ((sub as Record<string, unknown>).score as number) > 80 }"
+                        :class="{
+                          'bg-blue-50 border border-blue-200': searchQuery.trim() && (Number(sub.score) || 0) > 80,
+                        }"
                       >
                         <Icon
-                          :name="(sub as Record<string, unknown>).icon as string"
+                          :name="sub.icon"
                           size="18"
                           class="mt-0.5 shrink-0 text-gray-900"
-                          :style="{ color: ((item as Record<string, unknown>).title as string) === 'Konsentrasi Keahlian' ? getIconColor((sub as Record<string, unknown>).title as string) : undefined }"
+                          :style="{
+                            color: item.title === 'Konsentrasi Keahlian' ? getIconColor(sub.title) : undefined,
+                          }"
                         />
                         <div class="flex-1">
                           <div class="flex items-center gap-2">
                             <p
                               class="text-sm font-medium text-gray-900"
-                              v-html="highlightSearchTerm((sub as Record<string, unknown>).title as string, searchQuery)"
+                              v-html="highlightSearchTerm(sub.title || '', searchQuery)"
                             ></p>
                             <span
-                              v-if="((item as Record<string, unknown>).title as string) === 'Berita' && ((sub as Record<string, unknown>).title as string) !== 'Semua Berita'"
+                              v-if="item.title === 'Berita' && sub.title !== 'Semua Berita'"
                               class="text-xs bg-red-100 text-red-700 px-1.5 py-0.5 rounded"
                             >
                               {{ $t("sidebar.matches.news") }}
                             </span>
                             <span
-                              v-if="searchQuery.trim() && ((sub as Record<string, unknown>).score as number) > 90"
+                              v-if="searchQuery.trim() && (Number(sub.score) || 0) > 90"
                               class="text-xs bg-green-100 text-green-700 px-1.5 py-0.5 rounded"
                             >
                               {{ $t("sidebar.matches.perfect") }}
                             </span>
                             <span
-                              v-else-if="searchQuery.trim() && ((sub as Record<string, unknown>).score as number) > 70"
+                              v-else-if="searchQuery.trim() && (Number(sub.score) || 0) > 70"
                               class="text-xs bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded"
                             >
                               {{ $t("sidebar.matches.good") }}
@@ -292,7 +298,7 @@
                           </div>
                           <p
                             class="text-xs leading-relaxed text-gray-600"
-                            v-html="highlightSearchTerm((sub as Record<string, unknown>).desc as string, searchQuery)"
+                            v-html="highlightSearchTerm(sub.desc || '', searchQuery)"
                           ></p>
                         </div>
                       </div>
@@ -332,27 +338,33 @@ import type { News } from "~/models/News";
 import type { Organization } from "~/models/Organization";
 import { majorColorSchemes } from "~/utils/majorColors";
 
-const props = withDefaults(defineProps<{
-  isOpen: boolean;
-  menuItems?: unknown[];
-}>(), {
-  isOpen: false,
-});
+const props = withDefaults(
+  defineProps<{
+    isOpen: boolean;
+    menuItems?: unknown[];
+  }>(),
+  {
+    isOpen: false,
+  }
+);
 
 defineEmits<{
   close: [];
 }>();
 
 // Hide body scrollbar when sidebar opens
-watch(() => props.isOpen, (newVal) => {
-  if (newVal) {
-    document.documentElement.style.overflow = 'hidden';
-    document.body.style.overflow = 'hidden';
-  } else {
-    document.documentElement.style.overflow = '';
-    document.body.style.overflow = '';
+watch(
+  () => props.isOpen,
+  (newVal) => {
+    if (newVal) {
+      document.documentElement.style.overflow = "hidden";
+      document.body.style.overflow = "hidden";
+    } else {
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+    }
   }
-});
+);
 
 const { locales, setLocale } = useI18n();
 const currentLanguage = computed(() => {
@@ -415,12 +427,7 @@ const topExtracurriculars = computed(() => {
       icon: "lucide:users-2",
       to: `/ekstrakurikuler/${extra.slug}`,
       external: false,
-      tags: [
-        "ekstrakurikuler",
-        "extra",
-        extra.name.toLowerCase(),
-        ...extra.name.toLowerCase().split(" "),
-      ],
+      tags: ["ekstrakurikuler", "extra", extra.name.toLowerCase(), ...extra.name.toLowerCase().split(" ")],
     }));
 });
 
@@ -686,9 +693,7 @@ const menuItems = [
         tags: ["organisasi", "semua", "daftar"],
       },
       ...organizationsData.value
-        .filter(
-          (org: Organization) => !["futsal-club", "english-club", "paskibra"].includes(org.slug),
-        )
+        .filter((org: Organization) => !["futsal-club", "english-club", "paskibra"].includes(org.slug))
         .map((org: Organization) => ({
           title: org.name,
           desc: org.shortDescription || org.description,
@@ -773,17 +778,7 @@ const menuItems = [
         icon: "lucide:alert-triangle",
         to: "/utilitas/si-sarana",
         external: false,
-        tags: [
-          "si",
-          "sarana",
-          "prasarana",
-          "report",
-          "laporan",
-          "kerusakan",
-          "fasilitas",
-          "maintenance",
-          "perbaikan",
-        ],
+        tags: ["si", "sarana", "prasarana", "report", "laporan", "kerusakan", "fasilitas", "maintenance", "perbaikan"],
       },
     ],
   },
@@ -872,12 +867,10 @@ const filteredMenuItems = computed(() => {
 
   const calculateRelevanceScore = (item: Record<string, unknown>) => {
     let score = 0;
-    const title = (item.title as string).toLowerCase();
-    const desc = (item.desc as string).toLowerCase();
+    const title = ((item.title as string) || "").toLowerCase();
+    const desc = ((item.desc as string) || "").toLowerCase();
 
-    const tags = (item.tags as string[])
-      ? (item.tags as string[]).map((tag: string) => tag.toLowerCase())
-      : [];
+    const tags = (item.tags as string[]) ? (item.tags as string[]).map((tag: string) => tag.toLowerCase()) : [];
 
     if (title === query) score += 100;
     else if (title.startsWith(query)) score += 80;
@@ -893,7 +886,7 @@ const filteredMenuItems = computed(() => {
 
     if (tags.length === 0) {
       const titleWords = title.split(/\s+/);
-      const descWords = desc.split(/\s+/);
+      const descWords = desc.split(/\s+/).filter((word) => word.length > 0);
       const queryWords = query.split(/\s+/);
 
       queryWords.forEach((queryWord) => {
@@ -936,11 +929,7 @@ const filteredMenuItems = computed(() => {
     fuzzyMatches.forEach(({ pattern, matches }) => {
       if (pattern.test(query)) {
         matches.forEach((match) => {
-          if (
-            title.includes(match) ||
-            desc.includes(match) ||
-            tags.some((tag: string) => tag.includes(match))
-          ) {
+          if (title.includes(match) || desc.includes(match) || tags.some((tag: string) => tag.includes(match))) {
             score += 45;
           }
         });
@@ -956,10 +945,8 @@ const filteredMenuItems = computed(() => {
         .map((item: Record<string, unknown>) => ({ ...item, score: calculateRelevanceScore(item) }))
         .filter((item: Record<string, unknown> & { score: number }) => item.score > 0)
         .sort(
-          (
-            a: Record<string, unknown> & { score: number },
-            b: Record<string, unknown> & { score: number },
-          ) => b.score - a.score,
+          (a: Record<string, unknown> & { score: number }, b: Record<string, unknown> & { score: number }) =>
+            b.score - a.score
         );
 
       return {
@@ -976,13 +963,11 @@ const filteredMenuItems = computed(() => {
   const fallbackItems = (currentMenuItems.value as Record<string, unknown>[])
     .map((section: Record<string, unknown>) => ({
       ...section,
-      submenu: (section.submenu as Record<string, unknown>[]).filter(
-        (item: Record<string, unknown>) => {
-          const tags = (item.tags as string[]) || [];
-          const searchText = `${item.title} ${item.desc} ${tags.join(" ")}`.toLowerCase();
-          return query.split(" ").some((word) => word.length > 2 && searchText.includes(word));
-        },
-      ),
+      submenu: (section.submenu as Record<string, unknown>[]).filter((item: Record<string, unknown>) => {
+        const tags = (item.tags as string[]) || [];
+        const searchText = `${item.title} ${item.desc} ${tags.join(" ")}`.toLowerCase();
+        return query.split(" ").some((word) => word.length > 2 && searchText.includes(word));
+      }),
     }))
     .filter((section) => section.submenu.length > 0);
 
