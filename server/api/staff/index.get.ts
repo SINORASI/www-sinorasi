@@ -1,6 +1,6 @@
-import { defineEventHandler, getQuery, readBody, createError, setCookie, getCookie } from 'h3';
+import { defineEventHandler, getQuery, createError } from "h3";
 import type { Staff } from "~/models/Staff";
-import { getCached, setCached, generateCacheKey, CACHE_DEFAULTS } from "../../utils/cache";
+import { getCached, setCached, generateCacheKey, CACHE_DEFAULTS, setCacheHeaders } from "../../utils/cache";
 
 const staffData = {
   kepsek: [
@@ -67,6 +67,8 @@ export default defineEventHandler(async (event) => {
   // Try to get from cache first
   const cached = getCached<any>(cacheKey);
   if (cached) {
+    // Set cache headers for cached response
+    setCacheHeaders(event, CACHE_DEFAULTS.LONG, { public: true });
     return cached;
   }
 
@@ -81,10 +83,18 @@ export default defineEventHandler(async (event) => {
 
     // Cache the result for 1 hour
     setCached(cacheKey, deptData, CACHE_DEFAULTS.LONG);
+
+    // Set cache headers for fresh response
+    setCacheHeaders(event, CACHE_DEFAULTS.LONG, { public: true });
+
     return deptData;
   }
 
   // Cache the full staff data for 1 hour
   setCached(cacheKey, staffData, CACHE_DEFAULTS.LONG);
+
+  // Set cache headers for fresh response
+  setCacheHeaders(event, CACHE_DEFAULTS.LONG, { public: true });
+
   return staffData;
 });

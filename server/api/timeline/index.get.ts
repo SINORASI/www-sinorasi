@@ -1,7 +1,11 @@
-import { defineEventHandler, getQuery, readBody, createError, setCookie, getCookie } from 'h3';
+import { defineEventHandler } from "h3";
 import type { Timeline } from "~/models/Timeline";
+import { setCacheHeaders, CACHE_DEFAULTS } from "../../utils/cache";
 
-export default defineEventHandler(async (_event): Promise<Timeline[]> => {
+export default defineEventHandler(async (event): Promise<Timeline[]> => {
+  // Set cache headers for static content
+  setCacheHeaders(event, CACHE_DEFAULTS.VERY_LONG, { public: true });
+
   const timelines: Timeline[] = [
     {
       id: "1",

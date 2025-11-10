@@ -1,5 +1,5 @@
 import { defineEventHandler, getQuery, createError } from "h3";
-import { getCached, setCached, generateCacheKey, CACHE_DEFAULTS } from "../../utils/cache";
+import { getCached, setCached, generateCacheKey, CACHE_DEFAULTS, setCacheHeaders } from "../../utils/cache";
 
 export default defineEventHandler(async (event) => {
   const query = getQuery(event);
@@ -12,6 +12,8 @@ export default defineEventHandler(async (event) => {
     // Try to get from cache first
     const cached = getCached<any>(cacheKey);
     if (cached) {
+      // Set cache headers for cached response
+      setCacheHeaders(event, CACHE_DEFAULTS.MEDIUM, { public: true });
       return cached;
     }
 
@@ -20,18 +22,17 @@ export default defineEventHandler(async (event) => {
     let filteredData = [...newsData];
 
     if (tag && typeof tag === "string" && tag.trim() !== "") {
-      filteredData = filteredData.filter((item) =>
-        item.tags.some((t) => t.toLowerCase().includes(tag.toLowerCase())),
-      );
+      filteredData = filteredData.filter((item) => item.tags.some((t) => t.toLowerCase().includes(tag.toLowerCase())));
     }
 
     if (tags && typeof tags === "string" && tags.trim() !== "") {
-      const tagArray = tags.split(",").map((t) => t.trim().toLowerCase()).filter(t => t !== "");
+      const tagArray = tags
+        .split(",")
+        .map((t) => t.trim().toLowerCase())
+        .filter((t) => t !== "");
       if (tagArray.length > 0) {
         filteredData = filteredData.filter((item) =>
-          tagArray.every((searchTag) =>
-            item.tags.some((itemTag) => itemTag.toLowerCase().includes(searchTag)),
-          ),
+          tagArray.every((searchTag) => item.tags.some((itemTag) => itemTag.toLowerCase().includes(searchTag)))
         );
       }
     }
@@ -39,9 +40,7 @@ export default defineEventHandler(async (event) => {
     if (search && typeof search === "string" && search.trim() !== "") {
       const searchLower = search.toLowerCase();
       filteredData = filteredData.filter(
-        (item) =>
-          item.title.toLowerCase().includes(searchLower) ||
-          item.content.toLowerCase().includes(searchLower),
+        (item) => item.title.toLowerCase().includes(searchLower) || item.content.toLowerCase().includes(searchLower)
       );
     }
 
@@ -60,6 +59,9 @@ export default defineEventHandler(async (event) => {
 
     // Cache the result for 15 minutes
     setCached(cacheKey, result, CACHE_DEFAULTS.MEDIUM);
+
+    // Set cache headers for fresh response
+    setCacheHeaders(event, CACHE_DEFAULTS.MEDIUM, { public: true });
 
     return result;
   } catch (error) {

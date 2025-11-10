@@ -62,6 +62,13 @@ export default defineNuxtConfig({
           type: "image/webp",
           fetchpriority: "high",
         },
+        {
+          rel: "preload",
+          href: "/images/logo-smk.webp",
+          as: "image",
+          type: "image/webp",
+          fetchpriority: "high",
+        },
         // Preload fonts
         {
           rel: "preload",
@@ -171,13 +178,31 @@ export default defineNuxtConfig({
       routes: ["/"],
       ignore: ["/admin"],
     },
+    storage: {
+      cache: {
+        driver: "memory",
+      },
+    },
   },
 
   routeRules: {
-    "/api/**": {
-      headers: {
-        "Cache-Control": "no-cache, no-store, must-revalidate",
+    "/": {
+      isr: 60 * 60, // Regenerate every hour with ISR
+    },
+    "/api/news": {
+      cache: {
+        maxAge: 60 * 15, // Cache API responses for 15 minutes
       },
+    },
+    "/api/**": {
+      cache: false, // Disable cache for other API routes
+    },
+    // Cache static pages
+    "/jurusan/**": {
+      cache: { maxAge: 60 * 60 * 24 },
+    },
+    "/informasi/**": {
+      cache: { maxAge: 60 * 60 * 24 },
     },
   },
 });

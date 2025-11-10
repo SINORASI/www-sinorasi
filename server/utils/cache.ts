@@ -60,11 +60,7 @@ export function getCached<T>(key: string): T | null {
  * @param data - Data to cache
  * @param ttl - Time to live in milliseconds (default: 15 minutes)
  */
-export function setCached<T>(
-  key: string,
-  data: T,
-  ttl: number = CACHE_DEFAULTS.MEDIUM,
-): void {
+export function setCached<T>(key: string, data: T, ttl: number = CACHE_DEFAULTS.MEDIUM): void {
   cacheStore[key] = {
     data,
     timestamp: Date.now(),
@@ -157,11 +153,7 @@ export function cleanupExpiredCache(): number {
  * @param ttl - Time to live in milliseconds
  * @returns Cached or newly fetched data
  */
-export async function withCache<T>(
-  key: string,
-  fn: () => Promise<T>,
-  ttl: number = CACHE_DEFAULTS.MEDIUM,
-): Promise<T> {
+export async function withCache<T>(key: string, fn: () => Promise<T>, ttl: number = CACHE_DEFAULTS.MEDIUM): Promise<T> {
   // Check if data is already cached
   const cached = getCached<T>(key);
   if (cached !== null) {
@@ -170,7 +162,12 @@ export async function withCache<T>(
 
   // Execute function and cache result
   const data = await fn();
-  setCached(key, data, ttl);
+
+  // Only cache if data is not null/undefined
+  if (data !== null && data !== undefined) {
+    setCached(key, data, ttl);
+  }
+
   return data;
 }
 
@@ -185,10 +182,60 @@ export function generateCacheKey(prefix: string, params?: Record<string, any>): 
     return prefix;
   }
 
-  const sortedParams = Object.keys(params)
+  // Filter out undefined/null values
+  const filteredParams: Record<string, any> = Object.entries(params)
+    .filter(([_, value]) => value !== undefined && value !== null && value !== "")
+    .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {} as Record<string, any>);
+
+  if (Object.keys(filteredParams).length === 0) {
+    return prefix;
+  }
+
+  const sortedParams = Object.keys(filteredParams)
     .sort()
-    .map((key) => `${key}=${JSON.stringify(params[key])}`)
+    .map((key) => `${key}=${JSON.stringify(filteredParams[key])}`)
     .join("&");
 
   return `${prefix}:${sortedParams}`;
+}
+
+/**
+ * Set cache control headers for HTTP responses
+ * @param event - H3 event object
+ * @param ttl - Time to live in milliseconds
+ * @param options - Additional cache control options
+ */
+export function setCacheHeaders(
+  event: any,
+  ttl: number = CACHE_DEFAULTS.MEDIUM,
+  options: {
+    public?: boolean;
+    mustRevalidate?: boolean;
+    noCache?: boolean;
+    noStore?: boolean;
+  } = {}
+): void {
+  if (options.noStore) {
+    event.node.res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+    event.node.res.setHeader("Pragma", "no-cache");
+    event.node.res.setHeader("Expires", "0");
+    return;
+  }
+
+  if (options.noCache) {
+    event.node.res.setHeader("Cache-Control", "no-cache, must-revalidate");
+    return;
+  }
+
+  const maxAge = Math.floor(ttl / 1000); // Convert to seconds
+  const cacheControl = [
+    options.public ? "public" : "private",
+    `max-age=${maxAge}`,
+    options.mustRevalidate ? "must-revalidate" : "",
+  ]
+    .filter(Boolean)
+    .join(", ");
+
+  event.node.res.setHeader("Cache-Control", cacheControl);
+  event.node.res.setHeader("Expires", new Date(Date.now() + ttl).toUTCString());
 }

@@ -1,6 +1,6 @@
-import { defineEventHandler, getQuery, readBody, createError, setCookie, getCookie } from 'h3';
+import { defineEventHandler, getQuery } from "h3";
 import type { Activity } from "~/models/Activity";
-import { getCached, setCached, generateCacheKey, CACHE_DEFAULTS } from "../../utils/cache";
+import { getCached, setCached, generateCacheKey, CACHE_DEFAULTS, setCacheHeaders } from "../../utils/cache";
 
 export default defineEventHandler(async (event): Promise<{ data: Activity[]; total: number }> => {
   const query = getQuery(event);
@@ -14,6 +14,8 @@ export default defineEventHandler(async (event): Promise<{ data: Activity[]; tot
   // Try to get from cache first
   const cached = getCached<{ data: Activity[]; total: number }>(cacheKey);
   if (cached) {
+    // Set cache headers for cached response
+    setCacheHeaders(event, CACHE_DEFAULTS.MEDIUM, { public: true });
     return cached;
   }
 
@@ -71,6 +73,9 @@ export default defineEventHandler(async (event): Promise<{ data: Activity[]; tot
 
   // Cache the result for 15 minutes
   setCached(cacheKey, result, CACHE_DEFAULTS.MEDIUM);
+
+  // Set cache headers for fresh response
+  setCacheHeaders(event, CACHE_DEFAULTS.MEDIUM, { public: true });
 
   return result;
 });

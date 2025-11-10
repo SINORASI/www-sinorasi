@@ -4,16 +4,20 @@
  * Use cautiously in production - consider adding authentication
  */
 
-import { defineEventHandler, getQuery } from "h3";
+import { defineEventHandler, getQuery, setResponseStatus } from "h3";
 import {
   getCacheStats,
   cleanupExpiredCache,
   clearCache,
   deleteMatchingCache,
   getCacheSize,
+  setCacheHeaders,
 } from "../utils/cache";
 
 export default defineEventHandler(async (event) => {
+  // Never cache this endpoint's responses
+  setCacheHeaders(event, 0, { noStore: true });
+
   const query = getQuery(event);
   const action = query.action as string;
 

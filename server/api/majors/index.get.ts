@@ -1,7 +1,7 @@
-import { defineEventHandler, getQuery, readBody, createError, setCookie, getCookie } from 'h3';
+import { defineEventHandler } from "h3";
 import type { MajorData } from "~/models/MajorData";
 import type { MajorName } from "~/models/MajorName";
-import { getCached, setCached, CACHE_DEFAULTS } from "../../utils/cache";
+import { getCached, setCached, CACHE_DEFAULTS, setCacheHeaders } from "../../utils/cache";
 
 const majorDatas: Record<MajorName, MajorData> = {
   rpl: {
@@ -172,17 +172,23 @@ const majorDatas: Record<MajorName, MajorData> = {
   },
 };
 
-export default defineEventHandler(async (_event) => {
+export default defineEventHandler(async (event) => {
   // Use cache key for majors data
   const cacheKey = "majors:all";
-  
+
   // Try to get from cache
   const cached = getCached<Record<MajorName, MajorData>>(cacheKey);
   if (cached) {
+    // Set cache headers for cached response
+    setCacheHeaders(event, CACHE_DEFAULTS.VERY_LONG, { public: true });
     return cached;
   }
 
   // Cache not found or expired, return fresh data and cache it
-  setCached(cacheKey, majorDatas, CACHE_DEFAULTS.LONG);
+  setCached(cacheKey, majorDatas, CACHE_DEFAULTS.VERY_LONG);
+
+  // Set cache headers for fresh response
+  setCacheHeaders(event, CACHE_DEFAULTS.VERY_LONG, { public: true });
+
   return majorDatas;
 });

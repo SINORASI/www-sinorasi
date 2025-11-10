@@ -1,6 +1,6 @@
-import { defineEventHandler, getQuery, readBody, createError, setCookie, getCookie } from 'h3';
+import { defineEventHandler, getQuery } from "h3";
 import type { MajorName } from "~/models/MajorName";
-import { getCached, setCached, generateCacheKey, CACHE_DEFAULTS } from "../../utils/cache";
+import { getCached, setCached, generateCacheKey, CACHE_DEFAULTS, setCacheHeaders } from "../../utils/cache";
 
 interface MajorAchievement {
   id: number;
@@ -184,6 +184,8 @@ export default defineEventHandler((event) => {
   // Try to get from cache first
   const cached = getCached<MajorAchievement[]>(cacheKey);
   if (cached) {
+    // Set cache headers for cached response
+    setCacheHeaders(event, CACHE_DEFAULTS.LONG, { public: true });
     return cached;
   }
 
@@ -196,6 +198,9 @@ export default defineEventHandler((event) => {
 
   // Cache the result for 1 hour
   setCached(cacheKey, result, CACHE_DEFAULTS.LONG);
+
+  // Set cache headers for fresh response
+  setCacheHeaders(event, CACHE_DEFAULTS.LONG, { public: true });
 
   return result;
 });
