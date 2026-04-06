@@ -68,6 +68,13 @@ const utilityFeatures = [
     href: "/utilitas/traffic-tracker",
     color: "green",
   },
+  {
+    title: "Belajar ERD",
+    description: "Panduan membuat ERD dari dasar hingga lanjutan",
+    icon: "lucide:database",
+    href: "/utilitas/erd-learning",
+    color: "indigo",
+  },
 ];
 
 const quickActions = [

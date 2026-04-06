@@ -489,6 +489,7 @@ const pageSubtitle = computed(() => {
   if (path === "/utilitas/anonymous-bk") return "Konsultasi anonim";
   if (path === "/utilitas/traffic-tracker") return "Cek waktu perjalanan";
   if (path === "/utilitas/si-sarana") return "Sistem Informasi Sarana Prasarana";
+  if (path === "/utilitas/erd-learning") return "Belajar ERD dari dasar ke lanjutan";
 
   if (path.startsWith("/jurusan/")) {
     const majorName = (route.params.majorName as string) || (path.split("/").pop() as string);
@@ -779,6 +780,14 @@ const menuItems = [
         to: "/utilitas/si-sarana",
         external: false,
         tags: ["si", "sarana", "prasarana", "report", "laporan", "kerusakan", "fasilitas", "maintenance", "perbaikan"],
+      },
+      {
+        title: "Belajar ERD",
+        desc: "Panduan ERD dari dasar hingga advanced",
+        icon: "lucide:database",
+        to: "/utilitas/erd-learning",
+        external: false,
+        tags: ["erd", "database", "entity", "relationship", "diagram", "normalisasi"],
       },
     ],
   },
