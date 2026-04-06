@@ -382,6 +382,16 @@ const bgColor = computed(() => props.bgColor);
               </li>
               <li>
                 <NuxtLink
+                  :to="'/utilitas/erd-tutorial'"
+                  :class="[
+                    'text-sm transition duration-300',
+                    isColoredBackground ? 'text-white/70 hover:text-white' : 'text-neutral-400 hover:text-white',
+                  ]"
+                  >Tutorial ERD</NuxtLink
+                >
+              </li>
+              <li>
+                <NuxtLink
                   :to="'/utilitas/si-sarana'"
                   :class="[
                     'text-sm transition duration-300',
