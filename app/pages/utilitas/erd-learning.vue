@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { motion } from "motion-v";
 
-const learningPath = [
+type LearningColor = "blue" | "emerald" | "violet";
+
+const learningLevels = [
   {
     level: "Dasar",
     icon: "lucide:book-open",
-    color: "blue",
+    color: "blue" as LearningColor,
     goals: [
       "Memahami apa itu ERD dan kenapa penting dalam perancangan database.",
       "Mengenal entitas, atribut, primary key, dan foreign key.",
@@ -21,7 +23,7 @@ const learningPath = [
   {
     level: "Menengah",
     icon: "lucide:layers",
-    color: "emerald",
+    color: "emerald" as LearningColor,
     goals: [
       "Menerapkan normalisasi hingga 3NF untuk mengurangi duplikasi.",
       "Membuat tabel penghubung untuk relasi many-to-many.",
@@ -37,7 +39,7 @@ const learningPath = [
   {
     level: "Lanjutan",
     icon: "lucide:graduation-cap",
-    color: "violet",
+    color: "violet" as LearningColor,
     goals: [
       "Merancang ERD untuk sistem skala besar dengan modul terpisah.",
       "Menerapkan supertype-subtype (inheritance) bila dibutuhkan.",
@@ -62,7 +64,7 @@ const commonMistakes = [
 const practiceCase = {
   title: "Studi Kasus: Sistem Perpustakaan Sekolah",
   brief:
-    "Bangun ERD untuk proses peminjaman buku oleh siswa, pengelolaan stok buku, dan pencatatan denda keterlambatan.",
+    "Buat ERD untuk proses peminjaman buku oleh siswa, pengelolaan stok buku, dan pencatatan denda keterlambatan.",
   checklist: [
     "Entitas minimal: Siswa, Buku, Peminjaman, DetailPeminjaman, Petugas.",
     "Relasi: Siswa 1:N Peminjaman, Peminjaman 1:N DetailPeminjaman, Buku 1:N DetailPeminjaman.",
@@ -71,7 +73,7 @@ const practiceCase = {
   ],
 };
 
-const levelStyles: Record<string, { border: string; bg: string; text: string }> = {
+const colorStyles: Record<LearningColor, { border: string; bg: string; text: string }> = {
   blue: { border: "border-blue-100", bg: "bg-blue-100", text: "text-blue-600" },
   emerald: { border: "border-emerald-100", bg: "bg-emerald-100", text: "text-emerald-600" },
   violet: { border: "border-violet-100", bg: "bg-violet-100", text: "text-violet-600" },
@@ -112,17 +114,17 @@ useHead({
 
           <div class="grid gap-6 mb-8 md:grid-cols-3">
             <div
-              v-for="path in learningPath"
+              v-for="path in learningLevels"
               :key="path.level"
               class="p-6 bg-white border-2 shadow-lg rounded-2xl"
-              :class="levelStyles[path.color]?.border || 'border-gray-100'"
+              :class="colorStyles[path.color].border"
             >
               <div class="flex items-center gap-3 mb-4">
                 <div
                   class="flex items-center justify-center w-10 h-10 rounded-xl"
-                  :class="levelStyles[path.color]?.bg || 'bg-gray-100'"
+                  :class="colorStyles[path.color].bg"
                 >
-                  <Icon :name="path.icon" size="20" :class="levelStyles[path.color]?.text || 'text-gray-600'" />
+                  <Icon :name="path.icon" size="20" :class="colorStyles[path.color].text" />
                 </div>
                 <h2 class="text-lg font-bold text-gray-800">{{ path.level }}</h2>
               </div>
@@ -141,7 +143,7 @@ useHead({
               Langkah Belajar Bertahap
             </h2>
             <div class="grid gap-6 md:grid-cols-3">
-              <div v-for="path in learningPath" :key="`${path.level}-steps`">
+              <div v-for="path in learningLevels" :key="`${path.level}-steps`">
                 <h3 class="mb-3 font-bold text-gray-800">{{ path.level }}</h3>
                 <ol class="space-y-2 text-sm text-gray-700 list-decimal list-inside">
                   <li v-for="step in path.steps" :key="step">{{ step }}</li>
