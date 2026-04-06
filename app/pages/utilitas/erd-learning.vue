@@ -71,6 +71,12 @@ const practiceCase = {
   ],
 };
 
+const levelStyles: Record<string, { border: string; bg: string; text: string }> = {
+  blue: { border: "border-blue-100", bg: "bg-blue-100", text: "text-blue-600" },
+  emerald: { border: "border-emerald-100", bg: "bg-emerald-100", text: "text-emerald-600" },
+  violet: { border: "border-violet-100", bg: "bg-violet-100", text: "text-violet-600" },
+};
+
 useHead({
   title: "Belajar ERD Dasar hingga Lanjutan - Utilitas - SMKN 2 Singosari",
   meta: [
@@ -84,7 +90,7 @@ useHead({
 </script>
 
 <template>
-  <div class="min-h-screen py-32 bg-linear-to-b from-white via-blue-50 to-white">
+  <div class="min-h-screen py-32 bg-gradient-to-b from-white via-blue-50 to-white">
     <div class="container px-4 mx-auto sm:px-6">
       <motion.div
         class="max-w-5xl mx-auto"
@@ -105,10 +111,18 @@ useHead({
           </div>
 
           <div class="grid gap-6 mb-8 md:grid-cols-3">
-            <div v-for="path in learningPath" :key="path.level" class="p-6 bg-white border-2 shadow-lg rounded-2xl" :class="`border-${path.color}-100`">
+            <div
+              v-for="path in learningPath"
+              :key="path.level"
+              class="p-6 bg-white border-2 shadow-lg rounded-2xl"
+              :class="levelStyles[path.color]?.border || 'border-gray-100'"
+            >
               <div class="flex items-center gap-3 mb-4">
-                <div class="flex items-center justify-center w-10 h-10 rounded-xl" :class="`bg-${path.color}-100`">
-                  <Icon :name="path.icon" size="20" :class="`text-${path.color}-600`" />
+                <div
+                  class="flex items-center justify-center w-10 h-10 rounded-xl"
+                  :class="levelStyles[path.color]?.bg || 'bg-gray-100'"
+                >
+                  <Icon :name="path.icon" size="20" :class="levelStyles[path.color]?.text || 'text-gray-600'" />
                 </div>
                 <h2 class="text-lg font-bold text-gray-800">{{ path.level }}</h2>
               </div>
@@ -165,7 +179,7 @@ useHead({
             </div>
           </div>
 
-          <div class="p-8 text-center border-2 border-blue-200 shadow-xl bg-linear-to-r from-blue-50 to-indigo-50 rounded-2xl">
+          <div class="p-8 text-center border-2 border-blue-200 shadow-xl bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl">
             <h2 class="mb-3 text-2xl font-bold text-gray-900">Siap praktik ERD?</h2>
             <p class="max-w-2xl mx-auto mb-5 text-gray-700">
               Mulai dari kasus kecil, validasi relasi, lalu tingkatkan kompleksitasnya. Semakin sering latihan, semakin
