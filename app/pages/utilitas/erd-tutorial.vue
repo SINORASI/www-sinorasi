@@ -74,12 +74,12 @@ const finalChecklist = [
 </script>
 
 <template>
-  <div class="min-h-screen py-32 bg-linear-to-b from-white via-blue-50 to-white">
+  <div class="min-h-screen py-32 bg-gradient-to-b from-white via-blue-50 to-white">
     <div class="container px-4 mx-auto sm:px-6">
       <div class="max-w-5xl mx-auto">
         <div class="mb-10 text-center">
           <div
-            class="inline-block px-8 py-5 mb-4 border border-blue-200 shadow-xl bg-linear-to-r from-blue-600 to-blue-800 rounded-2xl"
+            class="inline-block px-8 py-5 mb-4 border border-blue-200 shadow-xl bg-gradient-to-r from-blue-600 to-blue-800 rounded-2xl"
           >
             <h1 class="text-3xl font-bold text-white md:text-4xl">Tutorial ERD</h1>
           </div>
